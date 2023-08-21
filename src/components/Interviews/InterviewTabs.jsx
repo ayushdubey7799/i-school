@@ -49,29 +49,64 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useState,useEffect} from 'react';
+import { getData } from '../../functions/getData';
+import InterviewList from './InterviewList';
 
-export default function InterviewTabs() {
-  const [value, setValue] = useState('one');
+export default function InterviewTabs({data}) {
+  const [value, setValue] = useState('all');
+  const [filteredData,setFilteredData] = useState(data);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  useEffect(() => {
+    setFilteredData(data);
+  },[]);
+
+  useEffect(() => {
+    switch (value) {
+      case 'completed':
+        setFilteredData(data.filter(item => item.status === 'completed'));
+        break;
+      case 'not-completed':
+        setFilteredData(data.filter(item => item.status === 'not completed'));
+        break;
+      case 'not-started':
+        setFilteredData(data.filter(item => item.status === 'not started'));
+        break;
+      default:
+        setFilteredData(data); // Default case: return unfiltered data
+    }
+  },[value])
+
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%'}}>
       <Tabs
         value={value}
         onChange={handleChange}
-        textColor="green"
-        indicatorColor="green"
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: 'green',
+          },
+        }}
         aria-label="wrapped label tabs example"
       >
-       <Tab value="one" label="Item one" />
-        <Tab value="two" label="Item Two" />
-        <Tab value="three" label="Item Three" />
-        <Tab value="four" label="Item four" />
+       <Tab value="all" label="All Interviews" sx={{
+            color: 'green',
+          }}/>
+        <Tab value="completed" label="Completed" sx={{
+            color: 'green', 
+          }}/>
+        <Tab value="not-completed" label="Not Completed" sx={{
+            color: 'green', 
+          }}/>
+        <Tab value="not-started" label="Not Started" sx={{
+            color: 'green', 
+          }}/>
       </Tabs>
+      <InterviewList filteredData={filteredData}/>
     </Box>
   );
 }
