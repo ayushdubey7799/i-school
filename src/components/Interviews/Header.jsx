@@ -1,16 +1,27 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { styled } from 'styled-components';
+import NewInterviewModal from '../Modals/NewInterviewModal';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import { IconButton } from '@mui/material';
+import MyDrawer from './Drawer';
 
-const Header = () => {
+const Header = ({openNewInterviewModal, setOpenNewInterviewModal}) => {
+  const [openDrawer,setOpenDrawer] = useState(false);
+
+
+
   return (
     <StyledHeading>
         <div id="heading">
+          <IconButton onClick={() => setOpenDrawer(true)}><MenuRoundedIcon className='link'/></IconButton>
+          <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}/>
             <h1>My Interviews</h1>
         </div>
         <div id="start">
-            <button>
+            <button onClick={() => setOpenNewInterviewModal(true)}>
                 Start New Interview
             </button>
+            <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal}/>
         </div>
     </StyledHeading>
   )

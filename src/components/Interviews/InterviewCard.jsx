@@ -18,10 +18,9 @@ const StyledCard = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #c2d4f2;
-  width: 20%;
+  width: 28%;
   height: 40vh;
   border-radius: 1rem;
-  margin: 3rem;
 `;
 
 //   background-color: #c2d4f2;

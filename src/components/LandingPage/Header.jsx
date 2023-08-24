@@ -61,7 +61,7 @@ const StyledDiv = styled.div`
         height: 3rem;
         border-radius: 0.5rem;
         cursor: pointer;
-        
+        padding: 0 1rem;
     }
   }
 

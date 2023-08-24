@@ -4,6 +4,7 @@ import Home from "./components/LandingPage"
 import Signup from "./components/Authentication/Signup"
 import Login from "./components/Authentication/Login"
 import InterviewPage from "./components/Interviews"
+import OngoingInterview from "./components/Interviews/OngoingInterview"
 const App = () => {
   return (
     <BrowserRouter>
@@ -12,6 +13,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/interview" element={<InterviewPage />} />
+        <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview/>} />
      </Routes>
     </BrowserRouter>
   )
