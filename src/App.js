@@ -4,7 +4,7 @@ import Home from "./components/LandingPage"
 import Signup from "./components/Authentication/Signup"
 import Login from "./components/Authentication/Login"
 import InterviewPage from "./components/Interviews"
-import OngoingInterview from "./components/Interviews/OngoingInterview"
+import OngoingInterview from "./components/Interviews/CurrentInterview/OngoingInterview"
 const App = () => {
   return (
     <BrowserRouter>
