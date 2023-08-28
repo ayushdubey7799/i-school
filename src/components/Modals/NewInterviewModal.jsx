@@ -88,13 +88,13 @@ const navigate = useNavigate();
             <div>
               <label for="jobSummary">Job Summary:</label>
               <br />
-              <input type="text" value={interviewDetails.jobSummary} name="jobSummary" onChange={handleChange}/>
+              <textarea rows={5} type="text" value={interviewDetails.jobSummary} name="jobSummary" onChange={handleChange}/>
             </div>
 
             <div>
-              <label for="resume">Skills:</label>
+              <label for="resumeText">ResumeText:</label>
               <br />
-             <input type="text" value={interviewDetails.resumeText} name="resumeText" onChange={handleChange}/>
+             <textarea rows={5} type="text" value={interviewDetails.resumeText} name="resumeText" onChange={handleChange}/>
             </div>
 
             <div>
@@ -120,12 +120,12 @@ const StyledForm = styled.form`
     font-weight: bold;
   }
   
-  input{
-    height: 3rem;
+  textarea{
+    // height: 3rem;
     width: 100%;
     margin-top: 0.5rem;
     border-radius: 0.5rem;
-    padding: 0 0.5rem;
+    padding: 0.5rem 0.5rem;
     font-size: 1rem;
   }
 
