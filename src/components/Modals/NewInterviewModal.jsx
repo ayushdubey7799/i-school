@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
+import { createInterview } from "../../functions/api/createInterview";
+import { updateStatus } from "../../functions/api/updateStatus";
 
 const style = {
   position: "absolute",
@@ -22,6 +24,8 @@ const style = {
 export default function NewInterviewModal({
   openNewInterviewModal,
   setOpenNewInterviewModal,
+  isLoading,
+  setIsLoading
 }) {
 const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -32,15 +36,26 @@ const navigate = useNavigate();
   });
 
 
+
+
   const handleOpen = () => {
     setOpenNewInterviewModal(true);
   };
   const handleClose = () => {
     setOpenNewInterviewModal(false);
   };
-  const handleCreateInterview = () => {
-    const ongoing = `${interviewDetails.jobRole}-${interviewDetails.skill}-${interviewDetails.experience}`
-    navigate(`/ongoing-interview/${ongoing}`)
+  const handleCreateInterview = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const ongoing = await createInterview()
+    console.log(ongoing);
+    if(ongoing?.data?.id){
+      console.log("data");
+      const statusResponse = await updateStatus(ongoing.data.id,"started");
+      console.log(statusResponse);
+      setIsLoading(false);
+      if(statusResponse?.status == "SUCCESS")navigate(`/ongoing-interview/${ongoing.data.id}`);
+    }
   }
 
   const handleSelect = (e) => {
@@ -105,7 +120,7 @@ const navigate = useNavigate();
             </div>
 
             <div>
-              <button onClick={() => handleCreateInterview()}>
+              <button onClick={(e) => handleCreateInterview(e)}>
                 Create Interview
               </button>
             </div>

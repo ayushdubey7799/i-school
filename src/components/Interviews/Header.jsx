@@ -5,7 +5,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { IconButton } from '@mui/material';
 import MyDrawer from './Drawer';
 
-const Header = ({openNewInterviewModal, setOpenNewInterviewModal}) => {
+const Header = ({openNewInterviewModal, setOpenNewInterviewModal, isLoading, setIsLoading}) => {
   const [openDrawer,setOpenDrawer] = useState(false);
 
 
@@ -21,7 +21,7 @@ const Header = ({openNewInterviewModal, setOpenNewInterviewModal}) => {
             <button onClick={() => setOpenNewInterviewModal(true)}>
                 Start New Interview
             </button>
-            <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal}/>
+            <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading}/>
         </div>
     </StyledHeading>
   )
