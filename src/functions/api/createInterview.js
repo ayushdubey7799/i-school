@@ -1,10 +1,7 @@
 import axios from "axios"
 
 const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsImdyYW50cyI6IlJPTEVfVVNFUiIsImlhdCI6MTY5MzE4NTY4NCwiZXhwIjoxNjkzNzkwNDg0fQ.Vi5Fx26gwqsQaVVhUhlPAJtkZHCyXj8DNbf1vUYCA-tSffBbloCd6mkXJIUBjmBYAH5CEf9LSbnr_WjAt70tTQ';
-const requestData = {
-  jobSummary: 'jobSummary example',
-  resumeText: 'resumeText example'
-};
+
 
 const config = {
   headers: {
@@ -14,7 +11,12 @@ const config = {
 };
 
 
-export const createInterview = async () => {
+export const createInterview = async (jobSummary,resumeText) => {
+  const requestData = {
+    jobSummary,
+    resumeText
+  };
+
     try {
         const response = await axios.post('https://dev-api.intelliview.in/api/interviews',requestData,config);
         console.log('Data:', response.data);

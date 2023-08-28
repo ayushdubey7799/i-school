@@ -30,9 +30,8 @@ export default function NewInterviewModal({
 const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [interviewDetails,setInterviewDetails] = useState({
-    jobRole : "developer",
-    skill: "Programming",
-    experience: "Beginner"
+    jobSummary : "developer",
+    resumeText: "Programming",
   });
 
 
@@ -47,7 +46,7 @@ const navigate = useNavigate();
   const handleCreateInterview = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const ongoing = await createInterview()
+    const ongoing = await createInterview(interviewDetails.jobSummary,interviewDetails.resumeText)
     console.log(ongoing);
     if(ongoing?.data?.id){
       console.log("data");
@@ -58,19 +57,16 @@ const navigate = useNavigate();
     }
   }
 
-  const handleSelect = (e) => {
+  const handleChange = (e) => {
     const name = e.target.name;
     const val = e.target.value;
    console.log(name,val);
     switch (name) {
-      case 'jobRole':
-        setInterviewDetails({...interviewDetails,jobRole : val})
+      case 'jobSummary':
+        setInterviewDetails({...interviewDetails,jobSummary : val})
         break;
-      case 'skill':
-        setInterviewDetails({...interviewDetails,skill : val})
-        break;
-      case 'experience':
-        setInterviewDetails({...interviewDetails,experience : val})
+      case 'resumeText':
+        setInterviewDetails({...interviewDetails,resumeText : val})
         break;
       default:
         console.log('Hello there!');
@@ -90,33 +86,15 @@ const navigate = useNavigate();
           <h1>Create Interview</h1>
           <StyledForm>
             <div>
-              <label for="jobRole">Job Role:</label>
+              <label for="jobSummary">Job Summary:</label>
               <br />
-              <select id="jobRole" name="jobRole" onChange={(e) => handleSelect(e)}>
-                <option value="developer">Developer</option>
-                <option value="designer">Designer</option>
-                <option value="manager">Manager</option>
-              </select>
+              <input type="text" value={interviewDetails.jobSummary} name="jobSummary" onChange={handleChange}/>
             </div>
 
             <div>
-              <label for="skills">Skills:</label>
+              <label for="resume">Skills:</label>
               <br />
-              <select id="skill" name="skill" onChange={(e) => handleSelect(e)}>
-                <option value="programming">Programming</option>
-                <option value="design">Design</option>
-                <option value="communication">Communication</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="experience">Level of Experience:</label>
-              <br />
-              <select id="experience" name="experience" onChange={(e) => handleSelect(e)}>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-              </select>
+             <input type="text" value={interviewDetails.resumeText} name="resumeText" onChange={handleChange}/>
             </div>
 
             <div>
@@ -142,7 +120,7 @@ const StyledForm = styled.form`
     font-weight: bold;
   }
   
-  select{
+  input{
     height: 3rem;
     width: 100%;
     margin-top: 0.5rem;
