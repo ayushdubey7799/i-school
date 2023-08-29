@@ -2,15 +2,19 @@ import React,{useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { authenticate } from "../../functions/authenticate";
+import { auth } from "../../functions/api/auth";
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
   
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      if(authenticate({ email, password })){
+      const accessToken  = await auth(password,email)
+      console.log(accessToken);
+      if(accessToken){
+        localStorage.setItem("token",accessToken);
         navigate('/interview')  
       }
       

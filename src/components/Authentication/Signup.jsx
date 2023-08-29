@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { addUser } from "../../functions/addUser";
+import { register } from "../../functions/api/register";
 
 
 const Signup = () => {
@@ -10,14 +11,13 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
   
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      if(addUser({ name, email, password }))navigate("/login");
+      const registerRes = await register(email,name,password)
+      if(registerRes)navigate("/login");
       console.log('Signed up ', { email, password, name });
     };
   return (
-
-    
     <StyledSignup>
          <div id="cover"></div>
     <div id="form">
