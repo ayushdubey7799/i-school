@@ -36,6 +36,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitInterview = async () => {
+    setIsLoading(true);
     const submitRes = await updateStatus(interviewId, "completed");
     console.log(submitRes);
     if (submitRes) setScoreModal(true);

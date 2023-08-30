@@ -10,8 +10,8 @@ const config = {
 };
 
 export const getScore = async ({interviewId}) => {
-  // interviewId = "123";
-    try {
+  console.log(interviewId)
+  try {
         const response = await axios.get(`https://dev-api.intelliview.in/api/interviews/${interviewId}/score`,config);
         console.log('Data:', response.data);
         return response.data;

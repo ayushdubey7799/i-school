@@ -22,7 +22,7 @@ const InterviewPage = () => {
             openNewInterviewModal={openNewInterviewModal}
             setOpenNewInterviewModal={setOpenNewInterviewModal}
           />
-          <InterviewTabs data={data} />
+          <InterviewTabs/>
         </>
       )}
     </StyledContent>

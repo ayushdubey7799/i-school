@@ -38,30 +38,52 @@ const StyledDiv = styled.div`
   display : flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
   color: black;
-  width: 65%;
+  width: 100%;
   margin: 0 auto;
+  height: 3.5rem;
   #middle{
     display : flex;
     gap: 1rem;
+  }
+
+  h1{
+    margin: 0;
   }
 
   li{
     list-style-type: none;
   }
 
+  #middle{
+    font-size: 1.3rem;
+    li{
+      cursor:pointer;
+    }
+  }
+
   #right{
     display: flex;
     gap: 1rem;
-    button{
-        background-color: green;
-        color: white;
-        font-weight: 300;
-        height: 3rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        padding: 0 1rem;
+    #sign-in{
+      border: none;
+      background-color: white;
+      height: 3.5rem;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor:pointer;
+
+    }
+
+    #free{
+      border: none;
+      background-color: green;
+      height: 3.5rem;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor:pointer;
+
     }
   }
 

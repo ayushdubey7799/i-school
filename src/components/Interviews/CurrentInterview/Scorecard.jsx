@@ -14,6 +14,7 @@ const Scorecard = () => {
 
   useEffect(() => { 
     async function fetchScore(id){
+        
        setIsLoading(true);
        const scoreRes = await getScore(id);
        console.log(scoreRes?.data?.questions[0]);
