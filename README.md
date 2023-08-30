@@ -279,7 +279,7 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 }
 ```
 
-Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
+Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the rgb(62,185,111) debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
 ## Changing the Page `<title>`
 

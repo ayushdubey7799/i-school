@@ -34,4 +34,6 @@ export default InterviewPage;
 const StyledContent = styled.div`
   width: 70%;
   margin: 0 auto;
+  background-color: rgb(245,247,250);
+  color: rgb(27,30,38);
 `;

@@ -19,4 +19,5 @@ export const StyledLanding = styled.div`
     flex-direction: column;
     width: 70%;
     margin: 0 auto;
+    color: rgb(27,30,38);
 `

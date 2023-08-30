@@ -133,7 +133,7 @@ const StyledInterview = styled.div`
   button {
     width: 20%;
     height: 3rem;
-    background-color: green;
+    background-color: rgb(62,185,111);
     color: white;
     border-radius: 0.5rem;
     font-size: 1rem;

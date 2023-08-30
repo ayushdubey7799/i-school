@@ -58,7 +58,7 @@ export const StyledContent = styled.div`
     margin-top: 3rem;
 
     span{
-        color: green;
+        color: rgb(62,185,111);
     }
   }
 
@@ -70,7 +70,7 @@ export const StyledContent = styled.div`
 
   .image{
     width: 45%;
-    background-color: green;
+    background-color: rgb(62,185,111);
   }
 
   .register{
@@ -91,7 +91,7 @@ export const StyledContent = styled.div`
     button{
         height: 4.1rem;
         width: 32%;
-        background-color: green;
+        background-color: rgb(62,185,111);
         color: white;
         font-weight: bold;
         font-size: 1rem;

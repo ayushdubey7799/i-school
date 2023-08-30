@@ -77,7 +77,7 @@ const StyledDiv = styled.div`
 
     #free{
       border: none;
-      background-color: green;
+      background-color: rgb(62,185,111);
       height: 3.5rem;
       color: white;
       font-weight: bold;

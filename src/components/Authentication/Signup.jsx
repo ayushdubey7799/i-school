@@ -94,7 +94,7 @@ const StyledSignup = styled.div`
   #cover {
     width: 60%;
     height: 100vh;
-    background-color: green;
+    background-color: rgb(62,185,111);
   }
 
   input{
@@ -105,7 +105,7 @@ const StyledSignup = styled.div`
   }
 
   button{
-    background-color: green;
+    background-color: rgb(62,185,111);
     color: white;
     height: 4rem;
     border-radius: 0.4rem;
