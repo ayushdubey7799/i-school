@@ -14,7 +14,8 @@ const config = {
 export const updateStatus = async (id,data) => {
     const requestData = {
         data,
-        op: "statusUpdate"
+        op: "statusUpdate",
+        // extra: "enforceSecLimit"
       };
 
     try {

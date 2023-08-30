@@ -7,9 +7,8 @@
 
 // const tabIndicatorStyle = {
 
-//     borderColor: 'green', 
+//     borderColor: 'green',
 //   };
-  
 
 // export default function Tabs() {
 //   const [value, setValue] = React.useState('1');
@@ -22,11 +21,11 @@
 //     <Box sx={{ width: '100%', typography: 'body1' }}>
 //       <TabContext value={value}>
 //         <Box sx={{ borderBottom: 1, borderColor: 'green'}}>
-//           <TabList 
-//              onChange={handleChange} 
+//           <TabList
+//              onChange={handleChange}
 //              TabIndicatorProps={{
 //                 style: {
-//                     borderColor: 'green', 
+//                     borderColor: 'green',
 //                   }
 //            }}>
 //             <Tab label="All Interviews" value="1" style={{color: 'green'}}/>
@@ -45,68 +44,83 @@
 //   );
 // }
 
-import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import { useState,useEffect} from 'react';
-import { getData } from '../../functions/getData';
-import InterviewList from './InterviewList';
+import * as React from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { useState, useEffect } from "react";
+import InterviewList from "./InterviewList";
+import { getInterviewByStatus } from "../../functions/api/getInterviewByStatus";
 
-export default function InterviewTabs({data}) {
-  const [value, setValue] = useState('all');
-  const [filteredData,setFilteredData] = useState(data);
+export default function InterviewTabs() {
+  const [value, setValue] = useState("STARTED");
+  const [filteredData, setFilteredData] = useState({});
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   useEffect(() => {
-    setFilteredData(data);
-  },[]);
-
-  useEffect(() => {
-    switch (value) {
-      case 'completed':
-        setFilteredData(data.filter(item => item.status === 'completed'));
-        break;
-      case 'not-completed':
-        setFilteredData(data.filter(item => item.status === 'not completed'));
-        break;
-      case 'not-started':
-        setFilteredData(data.filter(item => item.status === 'not started'));
-        break;
-      default:
-        setFilteredData(data); // Default case: return unfiltered data
+    async function getData(value) {
+      const response = await getInterviewByStatus(value);
+      if (response) {
+        setFilteredData(response);
+      }
     }
-  },[value])
+    getData(value);
+  }, [value]);
 
   return (
-    <Box sx={{ width: '100%'}}>
+    <Box sx={{ width: "100%" }}>
       <Tabs
         value={value}
         onChange={handleChange}
         TabIndicatorProps={{
           style: {
-            backgroundColor: 'green',
+            backgroundColor: "green",
           },
         }}
         aria-label="wrapped label tabs example"
       >
-       <Tab value="all" label="All Interviews" sx={{
-            color: 'green',
-          }}/>
-        <Tab value="completed" label="Completed" sx={{
-            color: 'green', 
-          }}/>
-        <Tab value="not-completed" label="Not Completed" sx={{
-            color: 'green', 
-          }}/>
-        <Tab value="not-started" label="Not Started" sx={{
-            color: 'green', 
-          }}/>
+        <Tab
+          value="STARTED"
+          label="Started"
+          sx={{
+            color: "green",
+          }}
+        />
+        <Tab
+          value="COMPLETED"
+          label="Completed"
+          sx={{
+            color: "green",
+          }}
+        />
+        <Tab
+          value="NOT_STARTED"
+          label="Not Started"
+          sx={{
+            color: "green",
+          }}
+        />
+        <Tab
+          value="CANCELED"
+          label="Canceled"
+          sx={{
+            color: "green",
+          }}
+        />
+        <Tab
+          value="EXPIRED"
+          label="Expired"
+          sx={{
+            color: "green",
+          }}
+        />
       </Tabs>
-      <InterviewList filteredData={filteredData}/>
+      <InterviewList filteredData={filteredData} />
     </Box>
   );
 }
+
+// NOT_STARTED,CANCELED,STARTED,COMPLETED,EXPIRED;

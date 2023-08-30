@@ -9,12 +9,13 @@ const config = {
   }
 };
 
-export const getScore = async (id) => {
+export const getScore = async ({interviewId}) => {
+  // interviewId = "123";
     try {
-        const response = await axios.get(`https://dev-api.intelliview.in/api/interviews/${id}/score`,config);
+        const response = await axios.get(`https://dev-api.intelliview.in/api/interviews/${interviewId}/score`,config);
         console.log('Data:', response.data);
         return response.data;
       } catch (error) {
-        console.error('Error:', error);
+        console.log('Error:', error);
       }
 }
