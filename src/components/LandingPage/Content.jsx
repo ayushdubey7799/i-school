@@ -3,34 +3,40 @@ import { useNavigate } from "react-router";
 import { styled } from "styled-components";
 
 const Content = () => {
-  const [email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setEmail(e.target.value);
-  }
+  };
 
   const handleSubmit = () => {
-    if(email.trim().length<0){
-        alert("Enter your email");
-        return;
+    if (email.trim().length == 0) {
+      alert("Enter your email");
+      return;
     }
-    navigate('/signup')
-
-  }
+    navigate("/signup");
+  };
 
   return (
     <StyledContent>
       <div className="heading">
-        <p className="ultimate">THE ULTIMATE MOCK <span>INTERVIEW</span> SOFTWARE</p>
+        <p className="ultimate">
+          UNLOCK YOUR POTENTIAL: <br /> YOUR <span>LAUNCHPAD</span> FOR
+          INTERVIEW <span>SUCCESS</span>
+        </p>
         <p className="desc">
-          Interview School is a suite of tools ranging from mock interviews with
-          AI feedback, live interview coaching, and job tracking. Prepare for
-          your next interview with our AI mock interview software
+          Introducing Intelliview, your personal platform to enhance interview
+          skills through simulated mock interviews. Prepare for success, one
+          practice session at a time.
         </p>
         <div className="register">
-            <input type="email" placeholder="Enter your email" onChange={handleChange}/>
-            <button onClick={handleSubmit}>Get Started</button>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            onChange={handleChange}
+          />
+          <button onClick={handleSubmit}>Get Started</button>
         </div>
       </div>
       <div className="image"></div>
@@ -52,25 +58,26 @@ export const StyledContent = styled.div`
   }
 
   .ultimate{
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: bold;
     margin: 1rem 0;
     margin-top: 3rem;
 
     span{
-        color: rgb(62,185,111);
+        color: #ADD8E6;
     }
   }
 
   .desc{
     font-size: 1.5rem;
-    padding: 9 1rem;
+    padding: 2rem 1rem;
+    margin-right: 0.5rem;
     line-height: 1.5;
   }
 
   .image{
     width: 45%;
-    background-color: rgb(62,185,111);
+    background-color: #ADD8E6;
   }
 
   .register{
@@ -91,8 +98,8 @@ export const StyledContent = styled.div`
     button{
         height: 4.1rem;
         width: 32%;
-        background-color: rgb(62,185,111);
-        color: white;
+        background-color: #ADD8E6;
+        color: rgb(128,128,128);
         font-weight: bold;
         font-size: 1rem;
         border-radius: 0 0.4rem 0.4rem 0;

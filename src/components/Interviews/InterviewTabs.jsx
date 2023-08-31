@@ -7,7 +7,7 @@
 
 // const tabIndicatorStyle = {
 
-//     borderColor: 'rgb(62,185,111)',
+//     borderColor: '#ADD8E6',
 //   };
 
 // export default function Tabs() {
@@ -20,18 +20,18 @@
 //   return (
 //     <Box sx={{ width: '100%', typography: 'body1' }}>
 //       <TabContext value={value}>
-//         <Box sx={{ borderBottom: 1, borderColor: 'rgb(62,185,111)'}}>
+//         <Box sx={{ borderBottom: 1, borderColor: '#ADD8E6'}}>
 //           <TabList
 //              onChange={handleChange}
 //              TabIndicatorProps={{
 //                 style: {
-//                     borderColor: 'rgb(62,185,111)',
+//                     borderColor: '#ADD8E6',
 //                   }
 //            }}>
-//             <Tab label="All Interviews" value="1" style={{color: 'rgb(62,185,111)'}}/>
-//             <Tab label="Completed" value="2" style={{color: 'rgb(62,185,111)'}}/>
-//             <Tab label="Not Completed" value="3" style={{color: 'rgb(62,185,111)'}}/>
-//             <Tab label="Not Started" value="4" style={{color: 'rgb(62,185,111)'}}/>
+//             <Tab label="All Interviews" value="1" style={{color: '#ADD8E6'}}/>
+//             <Tab label="Completed" value="2" style={{color: '#ADD8E6'}}/>
+//             <Tab label="Not Completed" value="3" style={{color: '#ADD8E6'}}/>
+//             <Tab label="Not Started" value="4" style={{color: '#ADD8E6'}}/>
 //           </TabList>
 //         </Box>
 //         <TabPanel value="1">All Interviews</TabPanel>
@@ -77,7 +77,7 @@ export default function InterviewTabs() {
         onChange={handleChange}
         TabIndicatorProps={{
           style: {
-            backgroundColor: "rgb(62,185,111)",
+            backgroundColor: "#ADD8E6",
           },
         }}
         aria-label="wrapped label tabs example"
@@ -86,35 +86,35 @@ export default function InterviewTabs() {
           value="STARTED"
           label="Started"
           sx={{
-            color: "rgb(62,185,111)",
+            color: "#ADD8E6",
           }}
         />
         <Tab
           value="COMPLETED"
           label="Completed"
           sx={{
-            color: "rgb(62,185,111)",
+            color: "#ADD8E6",
           }}
         />
         <Tab
           value="NOT_STARTED"
           label="Not Started"
           sx={{
-            color: "rgb(62,185,111)",
+            color: "#ADD8E6",
           }}
         />
         <Tab
           value="CANCELED"
           label="Canceled"
           sx={{
-            color: "rgb(62,185,111)",
+            color: "#ADD8E6",
           }}
         />
         <Tab
           value="EXPIRED"
           label="Expired"
           sx={{
-            color: "rgb(62,185,111)",
+            color: "#ADD8E6",
           }}
         />
       </Tabs>

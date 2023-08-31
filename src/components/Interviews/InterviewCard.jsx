@@ -35,14 +35,14 @@ const StyledCard = styled.div`
   align-items: center;
   padding: 1rem 1rem;
   gap: 0.3rem;
-  background-color: white;
+  background-color: rgb(128,128,128);
   width: 28%;
   // height: 40vh;
   border-radius: 1rem;
 
   button{
-    background-color: rgb(62,185,111);
-    color: white;
+    background-color: #ADD8E6;
+    color: rgb(128,128,128);
     height: 3rem;
     padding: 0.5rem 1rem;
     border-radius: 0.4rem;

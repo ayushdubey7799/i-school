@@ -17,8 +17,8 @@ const InterviewPage = () => {
       ) : (
         <>
           <Header
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
             openNewInterviewModal={openNewInterviewModal}
             setOpenNewInterviewModal={setOpenNewInterviewModal}
           />

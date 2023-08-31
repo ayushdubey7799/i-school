@@ -75,7 +75,7 @@ export const StyledScorecard = styled.div`
    justify-content: space-evenly;
 
    h3{
-    border: 1px solid rgb(62,185,111);
+    border: 1px solid #ADD8E6;
     padding: 0.7rem;
    }
  }

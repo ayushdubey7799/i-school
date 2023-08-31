@@ -15,7 +15,7 @@ export const updateStatus = async (id,data) => {
     const requestData = {
         data,
         op: "statusUpdate",
-        // extra: "enforceSecLimit"
+        extra: "enforceSecLimit"
       };
 
     try {

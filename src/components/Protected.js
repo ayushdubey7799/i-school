@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 const Protected = () => {
     const navigate = useNavigate();
-    let currentUser = JSON.parse(localStorage.getItem("current"));
+    let currentUser = JSON.parse(localStorage.getItem("token"));
     if(!currentUser.name){
            navigate('/login');
     }

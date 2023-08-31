@@ -36,8 +36,8 @@ const StyledHeading = styled.div`
   align-items: center;
 
   button{
-    background-color: rgb(62,185,111);
-    color: white;
+    background-color: #ADD8E6;
+    color: rgb(128,128,128);
     font-size; 1.5rem;
     height: 3rem;
     border-radius: 0.3rem;

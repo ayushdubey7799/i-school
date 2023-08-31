@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <StyledDiv>
         <div id="left">
-            <h1>INTERVIEW SCHOOL</h1>
+            <h1>Intelliview</h1>
         </div>
         <div id="middle">
             <li>About</li>
@@ -34,7 +34,7 @@ const Header = () => {
 export default Header
 
 const StyledDiv = styled.div`
-  background-color: white;
+  // background-color: rgb(128,128,128);
   display : flex;
   justify-content: space-between;
   align-items: center;
@@ -49,6 +49,7 @@ const StyledDiv = styled.div`
 
   h1{
     margin: 0;
+    color: #ADD8E6;
   }
 
   li{
@@ -72,14 +73,18 @@ const StyledDiv = styled.div`
       font-weight: bold;
       font-size: 1rem;
       cursor:pointer;
-
     }
+
+    #sign-in:hover, #free:hover{
+      background-color: #ADD8E6;
+    }
+
+    
 
     #free{
       border: none;
-      background-color: rgb(62,185,111);
+      background-color: white;
       height: 3.5rem;
-      color: white;
       font-weight: bold;
       font-size: 1rem;
       cursor:pointer;

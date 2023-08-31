@@ -85,7 +85,7 @@ const StyledLogin = styled.div`
   #cover {
     width: 60%;
     height: 100vh;
-    background-color: rgb(62,185,111);
+    background-color: #ADD8E6;
   }
 
   input{
@@ -96,8 +96,8 @@ const StyledLogin = styled.div`
   }
 
   button{
-    background-color: rgb(62,185,111);
-    color: white;
+    background-color: #ADD8E6;
+    color: rgb(128,128,128);
     height: 4rem;
     border-radius: 0.4rem;
     font-size: 1.5rem;

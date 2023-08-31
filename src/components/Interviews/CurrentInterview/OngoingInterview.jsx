@@ -88,10 +88,8 @@ const OngoingInterview = () => {
                 <>
                   <button
                     onClick={() => {
-                    
                         handleSubmitAnswer(data.id, data.lastQuestion);
                         getData();
-                    
                     }}
                   >
                     NEXT QUESTION
@@ -133,8 +131,8 @@ const StyledInterview = styled.div`
   button {
     width: 20%;
     height: 3rem;
-    background-color: rgb(62,185,111);
-    color: white;
+    background-color: #ADD8E6;
+    color: rgb(128,128,128);
     border-radius: 0.5rem;
     font-size: 1rem;
   }

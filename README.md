@@ -279,7 +279,7 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
 }
 ```
 
-Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the rgb(62,185,111) debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
+Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the #ADD8E6 debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
 
 ## Changing the Page `<title>`
 
@@ -732,7 +732,7 @@ life of the shell session.
 set REACT_APP_SECRET_CODE=abcdef&&npm start
 ```
 
-(Note: the lack of whitespace is intentional.)
+(Note: the lack of rgb(128,128,128)space is intentional.)
 
 #### Linux, macOS (Bash)
 
@@ -838,7 +838,7 @@ To do this, set the `HTTPS` environment variable to `true`, then start the dev s
 set HTTPS=true&&npm start
 ```
 
-(Note: the lack of whitespace is intentional.)
+(Note: the lack of rgb(128,128,128)space is intentional.)
 
 #### Linux, macOS (Bash)
 
@@ -1109,7 +1109,7 @@ set CI=true&&npm test
 set CI=true&&npm run build
 ```
 
-(Note: the lack of whitespace is intentional.)
+(Note: the lack of rgb(128,128,128)space is intentional.)
 
 ##### Linux, macOS (Bash)
 
@@ -1562,12 +1562,12 @@ You can adjust various development and production settings by setting environmen
 
 Variable | Development | Production | Usage
 :--- | :---: | :---: | :---
-BROWSER | :white_check_mark: | :x: | By default, Create React App will open the default system browser, favoring Chrome on macOS. Specify a [browser](https://github.com/sindresorhus/opn#app) to override this behavior, or set it to `none` to disable it completely.
-HOST | :white_check_mark: | :x: | By default, the development web server binds to `localhost`. You may use this variable to specify a different host.
-PORT | :white_check_mark: | :x: | By default, the development web server will attempt to listen on port 3000 or prompt you to attempt the next available port. You may use this variable to specify a different port.
-HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
-PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
-CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
+BROWSER | :rgb(128,128,128)_check_mark: | :x: | By default, Create React App will open the default system browser, favoring Chrome on macOS. Specify a [browser](https://github.com/sindresorhus/opn#app) to override this behavior, or set it to `none` to disable it completely.
+HOST | :rgb(128,128,128)_check_mark: | :x: | By default, the development web server binds to `localhost`. You may use this variable to specify a different host.
+PORT | :rgb(128,128,128)_check_mark: | :x: | By default, the development web server will attempt to listen on port 3000 or prompt you to attempt the next available port. You may use this variable to specify a different port.
+HTTPS | :rgb(128,128,128)_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
+PUBLIC_URL | :x: | :rgb(128,128,128)_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
+CI | :large_orange_diamond: | :rgb(128,128,128)_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
 
 ## Troubleshooting
 

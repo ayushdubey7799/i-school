@@ -89,8 +89,8 @@ const StyledForm = styled.form`
   }
 
   button{
-    background-color: rgb(62,185,111);
-    color: white;
+    background-color: #ADD8E6;
+    color: rgb(128,128,128);
     height: 3rem;
     border-radius: 0.4rem;
     width: 100%
