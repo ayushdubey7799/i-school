@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from "./components/LandingPage"
 import Signup from "./components/Authentication/Signup"
 import Login from "./components/Authentication/Login"
@@ -10,14 +10,14 @@ import ScorecardTemplate from "./components/Interviews/CurrentInterview/Scorecar
 const App = () => {
   return (
     <BrowserRouter>
-     <Routes>
+      <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/interview" element={<InterviewPage />} />
-        <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview/>} />
-        <Route path="/score/:interviewId" element={<Scorecard/>} />
-     </Routes>
+        <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
+        <Route path="/score/:interviewId" element={<Scorecard />} />
+      </Routes>
     </BrowserRouter>
   )
 }

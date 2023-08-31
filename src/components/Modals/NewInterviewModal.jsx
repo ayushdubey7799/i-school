@@ -27,10 +27,10 @@ export default function NewInterviewModal({
   isLoading,
   setIsLoading
 }) {
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [interviewDetails,setInterviewDetails] = useState({
-    jobSummary : "developer",
+  const [interviewDetails, setInterviewDetails] = useState({
+    jobSummary: "developer",
     resumeText: "Programming",
   });
 
@@ -46,27 +46,27 @@ const navigate = useNavigate();
   const handleCreateInterview = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const ongoing = await createInterview(interviewDetails.jobSummary,interviewDetails.resumeText)
+    const ongoing = await createInterview(interviewDetails.jobSummary, interviewDetails.resumeText)
     console.log(ongoing);
-    if(ongoing?.data?.id){
+    if (ongoing?.data?.id) {
       console.log("data");
-      const statusResponse = await updateStatus(ongoing.data.id,"started");
+      const statusResponse = await updateStatus(ongoing.data.id, "started");
       console.log(statusResponse);
       setIsLoading(false);
-      if(statusResponse?.status == "SUCCESS")navigate(`/ongoing-interview/${ongoing.data.id}`);
+      if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);
     }
   }
 
   const handleChange = (e) => {
     const name = e.target.name;
     const val = e.target.value;
-   console.log(name,val);
+    console.log(name, val);
     switch (name) {
       case 'jobSummary':
-        setInterviewDetails({...interviewDetails,jobSummary : val})
+        setInterviewDetails({ ...interviewDetails, jobSummary: val })
         break;
       case 'resumeText':
-        setInterviewDetails({...interviewDetails,resumeText : val})
+        setInterviewDetails({ ...interviewDetails, resumeText: val })
         break;
       default:
         console.log('Hello there!');
@@ -88,13 +88,13 @@ const navigate = useNavigate();
             <div>
               <label for="jobSummary">Job Summary:</label>
               <br />
-              <textarea rows={5} type="text" value={interviewDetails.jobSummary} name="jobSummary" onChange={handleChange}/>
+              <textarea rows={5} type="text" value={interviewDetails.jobSummary} name="jobSummary" onChange={handleChange} />
             </div>
 
             <div>
               <label for="resumeText">ResumeText:</label>
               <br />
-             <textarea rows={5} type="text" value={interviewDetails.resumeText} name="resumeText" onChange={handleChange}/>
+              <textarea rows={5} type="text" value={interviewDetails.resumeText} name="resumeText" onChange={handleChange} />
             </div>
 
             <div>

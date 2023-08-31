@@ -19,3 +19,7 @@ export const getScore = async ({interviewId}) => {
         console.log('Error:', error);
       }
 }
+
+
+
+
