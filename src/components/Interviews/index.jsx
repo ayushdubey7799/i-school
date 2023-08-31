@@ -3,6 +3,7 @@ import Header from "./Header";
 import InterviewTabs from "./InterviewTabs";
 import { getData } from "../../functions/getData";
 import { styled } from "styled-components";
+import Loader from "../commonComponents/Loader";
 
 const InterviewPage = () => {
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
@@ -13,7 +14,7 @@ const InterviewPage = () => {
   return (
     <StyledContent>
       {isLoading ? (
-        <h1>LOADING...</h1>
+        <Loader message="Generating Interview Questions " />
       ) : (
         <>
           <Header
@@ -22,7 +23,7 @@ const InterviewPage = () => {
             openNewInterviewModal={openNewInterviewModal}
             setOpenNewInterviewModal={setOpenNewInterviewModal}
           />
-          <InterviewTabs/>
+          <InterviewTabs />
         </>
       )}
     </StyledContent>
