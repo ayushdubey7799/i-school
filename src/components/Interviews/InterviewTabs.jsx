@@ -77,7 +77,7 @@ export default function InterviewTabs() {
         onChange={handleChange}
         TabIndicatorProps={{
           style: {
-            backgroundColor: "#ADD8E6",
+            backgroundColor: "var(--lightBlue)",
           },
         }}
         aria-label="wrapped label tabs example"
@@ -86,35 +86,35 @@ export default function InterviewTabs() {
           value="STARTED"
           label="Started"
           sx={{
-            color: "#ADD8E6",
+            color: "var(--lightBlue)",
           }}
         />
         <Tab
           value="COMPLETED"
           label="Completed"
           sx={{
-            color: "#ADD8E6",
+            color: "var(--lightBlue)",
           }}
         />
         <Tab
           value="NOT_STARTED"
           label="Not Started"
           sx={{
-            color: "#ADD8E6",
+            color: "var(--lightBlue)",
           }}
         />
         <Tab
           value="CANCELED"
           label="Canceled"
           sx={{
-            color: "#ADD8E6",
+            color: "var(--lightBlue)",
           }}
         />
         <Tab
           value="EXPIRED"
           label="Expired"
           sx={{
-            color: "#ADD8E6",
+            color: "var(--lightBlue)",
           }}
         />
       </Tabs>
