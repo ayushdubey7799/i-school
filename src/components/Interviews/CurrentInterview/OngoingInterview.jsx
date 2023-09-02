@@ -24,6 +24,9 @@ const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
   const [started, setStarted] = useState(false);
 
+
+  console.log("InterviewID", interviewId);
+
   const handleChange = (e) => {
     setInput(e.target.value);
   };
@@ -57,6 +60,7 @@ setLoaderMessage("Getting new Question")
     setStarted(true);
   }
 
+
   return (
     <>
       <IconButton
@@ -71,7 +75,6 @@ setLoaderMessage("Getting new Question")
       ) : (
         <StyledInterview>
           <h1>INTERVIEW FOR {interviewId}</h1>
-          
           {started ? (
             <>
               <div>{data?.question}</div>
