@@ -20,7 +20,7 @@ const OngoingInterview = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [scoreModal, setScoreModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [loaderMessage, setLoaderMessage] = useState("");
+const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
   const [started, setStarted] = useState(false);
 
@@ -29,7 +29,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitAnswer = async (id, lastQuestion) => {
-    setLoaderMessage("Submitting Answer")
+setLoaderMessage("Submitting Answer")
     setIsLoading(true);
     setId(id + 1);
     const res = await submitAnswer(input, id, lastQuestion, interviewId);
@@ -39,7 +39,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitInterview = async () => {
-    setLoaderMessage("Evaluating the Score")
+setLoaderMessage("Evaluating the Score")
     setIsLoading(true);
     const submitRes = await updateStatus(interviewId, "completed");
     console.log(submitRes);
@@ -48,7 +48,7 @@ const OngoingInterview = () => {
   };
 
   async function getData() {
-    setLoaderMessage("Getting new Question")
+setLoaderMessage("Getting new Question")
     setIsLoading(true);
     const fetchedData = await getQuestion(interviewId);
     console.log(fetchedData);
@@ -71,7 +71,7 @@ const OngoingInterview = () => {
       ) : (
         <StyledInterview>
           <h1>INTERVIEW FOR {interviewId}</h1>
-
+          
           {started ? (
             <>
               <div>{data?.question}</div>
@@ -93,8 +93,8 @@ const OngoingInterview = () => {
                 <>
                   <button
                     onClick={() => {
-                      handleSubmitAnswer(data.id, data.lastQuestion);
-                      getData();
+                        handleSubmitAnswer(data.id, data.lastQuestion);
+                        getData();
                     }}
                   >
                     NEXT QUESTION
