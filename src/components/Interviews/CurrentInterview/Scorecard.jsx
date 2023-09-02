@@ -5,13 +5,16 @@ import ScorecardTemplate from "./ScorecardTemplate";
 import { styled } from "styled-components";
 import Loader from "../../commonComponents/Loader";
 
+
+
 const Scorecard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchAgainOption, setFetchAgainOption] = useState(true);
   const interviewId = useParams();
-  const [trigger, setTrigger] = useState(false);
+  const [trigger, setTrigger] = useState(true);
   const [data, setData] = useState(null);
   const [scoreArray, setScoreArray] = useState([]);
+  const [countDown, setCountDown] = useState(5);
 
   useEffect(() => {
     async function fetchScore(id) {
@@ -20,6 +23,8 @@ const Scorecard = () => {
       console.log(scoreRes?.data?.questions[0]);
       if (!scoreRes) {
         setFetchAgainOption(true);
+        setTrigger(false);
+        setCountDown(5);
       } else {
         setData(scoreRes);
         setScoreArray(scoreRes.data.questions);
@@ -27,8 +32,28 @@ const Scorecard = () => {
       }
       setIsLoading(false);
     }
-    fetchScore(interviewId);
-  }, [trigger]);
+
+    if (fetchAgainOption && countDown > 0) {
+      let intervalId = setInterval(() => {
+        setCountDown((prevCd) => prevCd - 1);
+        if (!fetchAgainOption) {
+          setCountDown(0);
+        }
+        if (countDown === 0) {
+          clearInterval(intervalId);
+        }
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+
+    if (trigger === true) {
+      fetchScore(interviewId);
+    }
+
+  }, [trigger, countDown]);
+
+
   console.log(scoreArray);
 
   return (
@@ -36,9 +61,9 @@ const Scorecard = () => {
       {isLoading ? (
         <Loader message="Fetching the Score" />
       ) : fetchAgainOption ? (
-        <div>
-          <h1>Something went wrong</h1>
-          <button onClick={() => setTrigger(!trigger)}>TRY AGAIN</button>
+        <div className="scoreEvalStyle">
+          <h1>Score evaluation</h1>
+          <button onClick={() => setTrigger(true)} disabled={countDown > 0} className="scoreEvalStyleBtn">{countDown === 0 ? "TRY AGAIN" : `TRY AGAIN IN ${countDown}s`} </button>
         </div>
       ) : (
         <div>
@@ -77,5 +102,27 @@ export const StyledScorecard = styled.div`
       padding: 0.7rem;
     }
   }
+
+  .scoreEvalStyle  {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .scoreEvalStyleBtn {
+    padding: 0.5rem;
+    border: none;
+    background-color: var(--lightBlue);
+    color: var(--color);
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
 `;
 

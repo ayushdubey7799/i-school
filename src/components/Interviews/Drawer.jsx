@@ -16,6 +16,8 @@ export default function MyDrawer({ openDrawer, setOpenDrawer }) {
       >
         <StyledDrawer className='drawer-div'>
           <Link to="/"><p className="link">Home</p></Link>
+          <Link to="/profile"><p className="link">Profile</p></Link>
+          <Link to="/setting"><p className="link">Setting</p></Link>
         </StyledDrawer>
       </Drawer>
     </div>
