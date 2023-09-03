@@ -22,7 +22,7 @@ const Content = () => {
     <StyledContent>
       <div className="heading">
         <p className="ultimate">
-          UNLOCK YOUR POTENTIAL: <br /> YOUR <span>LAUNCHPAD</span> FOR
+          UNLOCK YOUR POTENTIAL: <br />YOUR <span>LAUNCHPAD</span> FOR
           INTERVIEW <span>SUCCESS</span>
         </p>
         <p className="desc">
@@ -39,7 +39,7 @@ const Content = () => {
           <button onClick={handleSubmit}>Get Started</button>
         </div>
       </div>
-      <div className="image"></div>
+      {/* <div className="image"></div> */}
     </StyledContent>
   );
 };
@@ -47,14 +47,42 @@ const Content = () => {
 export default Content;
 
 export const StyledContent = styled.div`
+  // display: grid;
+  // grid-template-columns: 5.5fr 4.5fr;
+  // grid-template-rows: 1fr 1fr;
   display: flex;
-  width: 100%;
-  height: 85vh;
+  width: 75%;
+  margin-bottom: 4rem;
+  justify-content: center;
+  align-items: center;
+  // height: 85vh;
+
+  @media(max-width: 800px) {
+    width: 80%;
+  }
+
+  @media(max-width: 720px) {
+    width: 85%;
+  }
+
+  @media(max-width: 600px) {
+    width: 90%;
+  }
+
 
   .heading {
     display: flex;
     flex-direction: column;
-    width:55%;
+    width:100%;
+    // grid-column: 1/2;
+    // grid-row: 1/3;
+    text-align: center;
+    align-items: center;
+
+    // @media(max-width: 600px){
+    //   grid-column: 1/3;
+    //   grid-row: 1/2;
+    // }
   }
 
   .ultimate{
@@ -75,20 +103,28 @@ export const StyledContent = styled.div`
     line-height: 1.5;
   }
 
-  .image{
-    width: 45%;
-    background-color: #ADD8E6;
-  }
+  // .image{
+  //   width: 100%;
+  //   background-color: #ADD8E6;
+  //   grid-column: 2/3;
+  //   grid-row: 1/3;
+
+  //   @media (max-width: 600px) {
+  //     grid-column: 1/3;
+  //       grid-row: 2/3;
+  //   }
+  // }
 
   .register{
     display: flex;
     width: 80%;
     align-items; center;
-    justify-content: flez-start;
+    justify-content: flex-start;
 
     input{
         height: 3.8rem;
         width: 68%;
+        border: 0.2rem solid gray;
         border-radius: 0.4rem 0 0 0.4rem;
         border-right: none;
         font-size: 1.5rem;
@@ -96,15 +132,19 @@ export const StyledContent = styled.div`
     }
 
     button{
-        height: 4.1rem;
+        height: 4.2rem;
         width: 32%;
         background-color: #ADD8E6;
         color: rgb(128,128,128);
         font-weight: bold;
-        font-size: 1rem;
+        font-size: 1.5rem;
+        border: 0.2rem solid gray;
         border-radius: 0 0.4rem 0.4rem 0;
         cursor:pointer;
 
     }
+
+
+    
   }
 `;

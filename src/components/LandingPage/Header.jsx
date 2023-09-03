@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { IconButton } from '@mui/material';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import MyDrawer from './Drawer';
 
 const Header = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+
   return (
     <StyledDiv>
       <div id="left">
@@ -26,6 +32,10 @@ const Header = () => {
             START FOR FREE
           </button>
         </Link>
+      </div>
+      <div id="drawer">
+        <IconButton onClick={() => setOpenDrawer(true)}><MenuRoundedIcon className='link' /></IconButton>
+        <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </div>
     </StyledDiv>
   )
@@ -60,6 +70,10 @@ const StyledDiv = styled.div`
     li{
       cursor:pointer;
     }
+
+    @media(max-width: 600px) {
+      display: none;
+    }
   }
 
   #right{
@@ -91,6 +105,13 @@ const StyledDiv = styled.div`
     }
   }
 
+  #drawer {
+    display: none;
+
+    @media(max-width: 600px){
+      display: block;
+    }
+  }
 `;
 
 
