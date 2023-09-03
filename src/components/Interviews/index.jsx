@@ -33,7 +33,7 @@ const InterviewPage = () => {
 export default InterviewPage;
 
 const StyledContent = styled.div`
-  width: 90%;
+  width: 70%;
   margin: 0 auto;
   background-color: var(--backgroundColor);
   color: var(--color);

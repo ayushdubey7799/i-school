@@ -49,7 +49,7 @@ export default Content;
 export const StyledContent = styled.div`
   display: flex;
   width: 100%;
-  height: 85vh;
+  height: 90vh;
 
   .heading {
     display: flex;

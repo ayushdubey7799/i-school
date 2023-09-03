@@ -9,6 +9,8 @@ import Scorecard from "./components/Interviews/CurrentInterview/Scorecard"
 import ScorecardTemplate from "./components/Interviews/CurrentInterview/ScorecardTemplate"
 import ProfilePage from "./components/ProfilePage"
 import SettingPage from "./components/SettingPage"
+import NewInterviewDetails from "./components/Interviews/CreateInterview/NewInterviewDetails"
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -17,6 +19,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/interview" element={<InterviewPage />} />
+        <Route path="/create" element={<NewInterviewDetails />} />
         <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
         <Route path="/score/:interviewId" element={<Scorecard />} />
         <Route path="/profile" element={<ProfilePage />} />

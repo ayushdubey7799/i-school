@@ -17,7 +17,7 @@ export default Home
 export const StyledLanding = styled.div`
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 70%;
     margin: 0 auto;
     color: var(--color);
 `

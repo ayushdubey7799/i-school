@@ -4,6 +4,7 @@ import NewInterviewModal from '../Modals/NewInterviewModal';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { IconButton } from '@mui/material';
 import MyDrawer from './Drawer';
+import { Link } from 'react-router-dom';
 
 const Header = ({ openNewInterviewModal, setOpenNewInterviewModal, isLoading, setIsLoading }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -17,11 +18,14 @@ const Header = ({ openNewInterviewModal, setOpenNewInterviewModal, isLoading, se
         <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         <h1>My Interviews</h1>
       </div>
+
       <div id="start">
-        <button onClick={() => setOpenNewInterviewModal(true)}>
+        <Link to='/create'>
+        <button>
           Start New Interview
         </button>
-        <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} />
+        </Link>
+        {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
       </div>
     </StyledHeading>
   )
