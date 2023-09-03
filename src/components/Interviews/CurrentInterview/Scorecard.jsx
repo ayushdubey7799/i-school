@@ -4,6 +4,7 @@ import { getScore } from "../../../functions/api/getScore";
 import ScorecardTemplate from "./ScorecardTemplate";
 import { styled } from "styled-components";
 import Loader from "../../commonComponents/Loader";
+import { Link } from "react-router-dom";
 
 
 
@@ -80,8 +81,10 @@ const Scorecard = () => {
           <h1>
             Your total score is {data.data.score} out of {data.data.maxScore}
           </h1>
+          <Link  to='/interview'><button id="another">Give Another Interview</button></Link>
         </div>
       )}
+      
     </StyledScorecard>
   );
 };
@@ -122,6 +125,15 @@ export const StyledScorecard = styled.div`
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
+  }
+
+  #another{
+    background-color: #ADD8E6;
+    color: rgb(128,128,128);
+    height: 4rem;
+    border-radius: 0.4rem;
+    font-size: 1.2rem;
+    padding: 0.2rem 1.5rem;
   }
 
 `;

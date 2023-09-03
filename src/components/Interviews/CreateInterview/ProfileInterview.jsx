@@ -80,7 +80,7 @@ const ProfileInterview = () => {
           </div>
           <div>
             <button onClick={(e) => handleCreateInterview(e)}>
-              Create Interview
+              Start Interview
             </button>
           </div>
         </StyledForm>
