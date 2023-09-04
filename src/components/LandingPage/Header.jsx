@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { IconButton } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import MyDrawer from './Drawer';
+import logo from '../../assets/IntelliViewLogo.png'
 
 const Header = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -12,14 +13,15 @@ const Header = () => {
   return (
     <StyledDiv>
       <div id="left">
-        <h1>Intelliview</h1>
+        <img src={logo}/>
       </div>
       <div id="middle">
-        <li>About</li>
-        <li>Pricing</li>
-        <li>Features</li>
-        <li>Institutions</li>
-        <li>Blog</li>
+        <li>About Us</li>
+        <li>Products</li>
+        <li>Services</li>
+        <li>Research Papers</li>
+        <li>Contact Us</li>
+        <li>Case Studies</li>
       </div>
       <div id="right">
         <Link to="/login">
@@ -29,7 +31,7 @@ const Header = () => {
         </Link>
         <Link to="/signup">
           <button id="free">
-            START FOR FREE
+            TRY IT NOW
           </button>
         </Link>
       </div>
@@ -48,9 +50,19 @@ const StyledDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   color: black;
-  width: 100%;
-  margin: 0 auto;
-  height: 3.5rem;
+  width: 90%;
+  padding: 0% 5%;
+  height: 6rem;
+  position: fixed;
+  z-index: 2000;
+  background-color: var(--white);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+
+  #left > img {
+    height: 15rem;
+    margin-left: -20%;
+  }
+
   #middle{
     display : flex;
     gap: 1rem;
@@ -66,12 +78,21 @@ const StyledDiv = styled.div`
   }
 
   #middle{
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+
+    @media(max-width: 980px) {
+      font-size: 1.05rem;
+    }
+
     li{
       cursor:pointer;
     }
 
-    @media(max-width: 600px) {
+    li:hover {
+      font-weight: 600;
+    }
+
+    @media(max-width: 900px) {
       display: none;
     }
   }
@@ -81,37 +102,44 @@ const StyledDiv = styled.div`
     gap: 1rem;
     #sign-in{
       border: none;
+      border-radius: 0.5rem;
       background-color: white;
       height: 3.5rem;
-      font-weight: bold;
+      padding: 0.2rem 0.8rem;
+      font-weight: 600;
       font-size: 1rem;
       cursor:pointer;
     }
 
     #sign-in:hover, #free:hover{
-      background-color: #ADD8E6;
+      background-color: var(--lightOrange);
+      color: var(--white)
     }
 
     
 
     #free{
       border: none;
+      border-radius: 0.5rem;
       background-color: white;
       height: 3.5rem;
-      font-weight: bold;
+      padding: 0.2rem 0.8rem;
+      font-weight: 600;
       font-size: 1rem;
       cursor:pointer;
-
+      
     }
   }
 
   #drawer {
     display: none;
 
-    @media(max-width: 600px){
+    @media(max-width: 900px){
       display: block;
     }
   }
+
+  
 `;
 
 
