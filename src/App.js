@@ -30,3 +30,5 @@ const App = () => {
 }
 // http://localhost:3000/score/f437ad9e-2429-4bca-aea1-6c812d237fc4
 export default App
+
+// git@bitbucket.org:crystalsky/intelliview-web.git
