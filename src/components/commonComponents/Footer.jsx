@@ -8,53 +8,53 @@ import linkedin from '../../assets/linkedin-50.png'
 
 
 const Footer = () => {
+
+
     return (
         <StyledFooter>
             <div className='child1'>
-                <div className='grandChild footerDesc'>Introducing Intelliview, your personal platform to enhance interview skills through simulated mock interviews. Prepare for success, one practice session at a time.</div>
-                <div className='grandChild hidden'>
-                    <span className='grandChildTitle'>Information</span>
-                    <StyledLink to="/">
-                        <span className="link">Interviews</span>
-                    </StyledLink>
-                    <StyledLink to="/">
-                        <span className="link">About Us</span>
-                    </StyledLink>
-                    <StyledLink to="/">
-                        <span className="link">Contact Us</span>
-                    </StyledLink>
-                    <StyledLink to="/">
-                        <span className="link">Support</span>
-                    </StyledLink>
-                </div>
-                <div className='grandChild hidden'>
-                    <span className='grandChildTitle'>Popular Industries</span>
-                </div>
-                <div className='grandChild hidden'>
-                    <span className='grandChildTitle'>Popular Questions</span>
+                <div className='socialIcons'>
+                    <a href='/'><img src={linkedin} alt='linkedin' /></a>
+                    <a href='/'><img src={facebook} alt='facebook' /></a>
+                    <a href='/'><img src={twitter} alt='twitter' /></a>
+                    <a href='/'><img src={insta} alt='instagram' /></a>
                 </div>
             </div>
 
             <div className='child2'>
-                <div>Copyright © 2023 Intelliview.</div>
-                <div className='socialIcons'>
-                    <img src={linkedin} />
-                    <img src={facebook} />
-                    <img src={twitter} />
-                    <img src={insta} />
+                <div className='grandChild hidden'>
+                    <span className='grandChildTitle'>Company</span>
+                    <StyledLink to="/about">
+                        <span className="link">About Us</span>
+                    </StyledLink>
+                    <a className="link" href="mailto:care@intelliview.in"
+                        target="_blank"
+                        rel="noreferrer">Contact Us</a>
+                    <StyledLink to="/support">
+                        <span className="link">Support</span>
+                    </StyledLink>
+                    <StyledLink to="/">
+                        <span className="link">Careers</span>
+                    </StyledLink>
+                    <a className="link" href="mailto:sales@intelliview.in"
+                        target="_blank"
+                        rel="noreferrer">Sales</a>
                 </div>
-                <div className='privacyComp'>
-                    <StyledLink to="/">
-                        <span className="linkR">Privacy Policy</span>
+                <div className='grandChild hidden'>
+                    <span className='grandChildTitle'>Legal</span>
+                    <StyledLink to="/privacy">
+                        <span className="link">Privacy Policy</span>
                     </StyledLink>
-                    <StyledLink to="/">
-                        <span className="linkR">Terms of Use</span>
+                    <StyledLink to="/terms">
+                        <span className="link">Terms of Use</span>
                     </StyledLink>
-                    <StyledLink to="/">
-                        <span className="linkR">Disclaimer</span>
+                    <StyledLink to="/disclaimer">
+                        <span className="link">Disclaimer</span>
                     </StyledLink>
                 </div>
             </div>
+
+            <div className='child3'>Copyright © 2023 Intelliview.</div>
         </StyledFooter>
     )
 }
@@ -63,62 +63,44 @@ export default Footer
 
 
 const StyledFooter = styled.div`
-background-color: #1A1F26;
+background-color: #3d3342;
 display: flex;
 flex-direction: column;
+align-items: center;
+justify-content: center;
 width: 100%;
-gap: 4rem;
-color: var(--backgroundColor);
-
-@media(max-width: 950px) {
-    gap: 2rem;
-}
-
-.linkR {
-    color: var(--backgroundColor);
-}
-
-.child1 {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    width: 90%;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    margin-left: 5%;
-    margin-right: 5%;
-    column-gap: 2rem;
-
-    @media(max-width: 950px){
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-}
+gap: 2rem;
+color: var(--white);
 
 .child2 {
     display: flex;
-    // grid-template-columns: 2fr 1.4fr 1.8fr;
-    margin: 2rem 5rem 4rem 5rem;
-    column-gap: 2rem;
+    margin-left: 5%;
+    margin-right: 5%;
+    column-gap: 8rem;
+    justify-content: center;
+}
+
+.child1 {
+    display: flex;
+    margin-top: 2rem;
     align-items: center;
     justify-content: space-between;
+}
 
-    @media(max-width: 950px){
-        flex-direction: column;
-        gap: 3rem;
-    }
+.child3 {
+    margin-bottom: 2rem;
 }
 
 .grandChild {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.6rem;
     align-items: flex-start;
 }
 
 .grandChildTitle {
     font-weight: 600;
-    font-size: 1.3rem
+    font-size: 1.2rem
 }
 
 .socialIcons {
@@ -126,45 +108,27 @@ color: var(--backgroundColor);
     gap: 1rem;
 }
 
-.socialIcons > img {
-    width: 2.4rem;
+.socialIcons > a > img {
+    width: 2.5rem;
+    cursor: pointer;
 }
 
-.footerDesc {
-    line-height: 1.8rem;
-    letter-spacing: 0.02rem;
-    width: 80%;
-
-    @media(max-width: 950px){
-        grid-column: 1/5;
-        width: 100%;
-    }
+.link {
+    text-decoration: none;
+    color: rgb(204, 208, 219);
+    font-size: 0.95rem;
 }
 
-
-
-.privacyComp {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.linkR {
+.link:hover {
     font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.hidden {
-    @media(max-width: 950px){
-        display: none;
-    }
 }
 
 `
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: gray;
-  font-size: 1.2rem;
+  color: rgb(204, 208, 219);
+  font-size: 0.95rem;
 `;
 
 
