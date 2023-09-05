@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IconButton } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
@@ -7,21 +7,24 @@ import MyDrawer from './Drawer';
 import logo from '../../assets/IntelliViewLogo.png'
 
 const Header = () => {
+  const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
 
 
   return (
     <StyledDiv>
       <div id="left">
-        <img src={logo}/>
+        <img src={logo} onClick={() => navigate('/')} />
       </div>
       <div id="middle">
-        <li>About Us</li>
-        <li>Products</li>
-        <li>Services</li>
-        <li>Research Papers</li>
-        <li>Contact Us</li>
-        <li>Case Studies</li>
+        <li onClick={() => navigate('/about')}>About Us</li>
+        <li onClick={() => navigate('/products')}>Products</li>
+        <li onClick={() => navigate('/services')}>Services</li>
+        <li onClick={() => navigate('/research-paper')}>Research Papers</li>
+        <li ><a href="mailto:care@intelliview.in"
+          target="_blank"
+          rel="noreferrer" className='contactLink'>Contact Us</a></li>
+        <li onClick={() => navigate('/case-studies')}>Case Studies</li>
       </div>
       <div id="right">
         <Link to="/login">
@@ -61,6 +64,7 @@ const StyledDiv = styled.div`
   #left > img {
     height: 15rem;
     margin-left: -20%;
+    cursor: pointer;
   }
 
   #middle{
@@ -78,14 +82,16 @@ const StyledDiv = styled.div`
   }
 
   #middle{
-    font-size: 1.1rem;
+    font-size: 0.9rem;
 
-    @media(max-width: 980px) {
-      font-size: 1.05rem;
-    }
 
     li{
       cursor:pointer;
+
+      .contactLink {
+        text-decoration: none;
+        color: black;
+      }
     }
 
     li:hover {
@@ -111,23 +117,29 @@ const StyledDiv = styled.div`
       cursor:pointer;
     }
 
-    #sign-in:hover, #free:hover{
+    #sign-in:hover{
       background-color: var(--lightOrange);
       color: var(--white)
     }
 
+    #free:hover {
+      background-color: var(--white);
+      color: black;
+      border: 0.1rem solid var(--lightOrange);
+      padding: 0.2rem 0.75rem;
+    }
     
 
     #free{
       border: none;
       border-radius: 0.5rem;
-      background-color: white;
       height: 3.5rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
       font-size: 1rem;
       cursor:pointer;
-      
+      background-color: var(--lightOrange);
+      color: var(--white);
     }
   }
 
