@@ -30,14 +30,13 @@ const App = () => {
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/activation" element={<Activate />} />
+        <Route path="/activate" element={<Activate />} />
         <Route path="/interview" element={<InterviewPage />} />
         <Route path="/create" element={<NewInterviewDetails />} />
         <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
         <Route path="/score/:interviewId" element={<Scorecard />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/setting" element={<SettingPage />} />
-
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
         <Route path="/services" element={<Service />} />
