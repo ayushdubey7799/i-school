@@ -10,6 +10,8 @@ import ScorecardTemplate from "./components/Interviews/CurrentInterview/Scorecar
 import ProfilePage from "./components/ProfilePage"
 import SettingPage from "./components/SettingPage"
 import NewInterviewDetails from "./components/Interviews/CreateInterview/NewInterviewDetails"
+import Activate from "./components/Authentication/Activate"
+
 
 const App = () => {
   return (
@@ -18,6 +20,7 @@ const App = () => {
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/activation" element={<Activate />} />
         <Route path="/interview" element={<InterviewPage />} />
         <Route path="/create" element={<NewInterviewDetails />} />
         <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
