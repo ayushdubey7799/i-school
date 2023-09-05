@@ -14,23 +14,23 @@ export default function MyDrawer({ openDrawer, setOpenDrawer }) {
                 onClose={() => setOpenDrawer(false)}
             >
                 <StyledDrawer className="drawer-div">
-                    <StyledLink to="/">
-                        <p className="link">About Us</p>
+                    <StyledLink to="/about">
+                        <span className="link">About Us</span>
                     </StyledLink>
-                    <StyledLink to="/">
-                        <p className="link">Products</p>
+                    <StyledLink to="/products">
+                        <span className="link">Products</span>
                     </StyledLink>
-                    <StyledLink to="/">
-                        <p className="link">Services</p>
+                    <StyledLink to="/services">
+                        <span className="link">Services</span>
                     </StyledLink>
-                    <StyledLink to="/">
-                        <p className="link">Research Papers</p>
+                    <StyledLink to="/research-paper">
+                        <span className="link">Research Papers</span>
                     </StyledLink>
-                    <StyledLink to="/">
-                        <p className="link">Contact Us</p>
-                    </StyledLink>
-                    <StyledLink to="/">
-                        <p className="link">Case Studies</p>
+                    <a href="mailto:care@intelliview.in"
+                        target="_blank"
+                        rel="noreferrer" className='contactLink'><span>Contact Us</span></a>
+                    <StyledLink to="/case-studies">
+                        <span className="link">Case Studies</span>
                     </StyledLink>
                 </StyledDrawer>
             </Drawer>
@@ -44,10 +44,17 @@ const StyledDrawer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 6rem;
+  gap: 1.2rem;
+
+  .contactLink {
+    text-decoration: none;
+    font-size: 1.15rem;
+    color: var(--grey);
+  }
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: var(--grey);
-  font-size: 1.3rem;
+  font-size: 1.15rem;
 `;

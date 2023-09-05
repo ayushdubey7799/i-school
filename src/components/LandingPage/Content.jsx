@@ -144,12 +144,18 @@ export const StyledContent = styled.div`
     .btn {
       background-color: var(--lightOrange);
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.7rem 1rem;
       color: var(--white);
       font-size: 1.4rem;
       border-radius: 0.5rem;
       cursor: pointer;
     }
+
+    // .btn:hover {
+    //   background-color: var(--white);
+    //   color: black;
+    //   border: 0.1rem solid var(--lightOrange)
+    // }
 
 
   }

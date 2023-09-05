@@ -10,8 +10,20 @@ import ScorecardTemplate from "./components/Interviews/CurrentInterview/Scorecar
 import ProfilePage from "./components/ProfilePage"
 import SettingPage from "./components/SettingPage"
 import NewInterviewDetails from "./components/Interviews/CreateInterview/NewInterviewDetails"
+<<<<<<< HEAD
 import Activate from "./components/Authentication/Activate"
 
+=======
+import About from "./components/menuPages/About"
+import Products from "./components/menuPages/Products"
+import Service from "./components/menuPages/Service"
+import ResearchPaper from "./components/menuPages/ResearchPaper"
+import CaseStudies from './components/menuPages/CaseStudies'
+import Support from './components/menuPages/Support'
+import Privacy from './components/menuPages/Privacy'
+import Terms from './components/menuPages/Terms'
+import Disclaimer from './components/menuPages/Disclaimer'
+>>>>>>> dfce042cff745edae911a35d874ec071e5011e2d
 
 const App = () => {
   return (
@@ -27,6 +39,16 @@ const App = () => {
         <Route path="/score/:interviewId" element={<Scorecard />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/setting" element={<SettingPage />} />
+
+        <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/services" element={<Service />} />
+        <Route path="/research-paper" element={<ResearchPaper />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
       </Routes>
     </BrowserRouter>
   )
