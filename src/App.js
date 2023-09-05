@@ -10,10 +10,8 @@ import ScorecardTemplate from "./components/Interviews/CurrentInterview/Scorecar
 import ProfilePage from "./components/ProfilePage"
 import SettingPage from "./components/SettingPage"
 import NewInterviewDetails from "./components/Interviews/CreateInterview/NewInterviewDetails"
-<<<<<<< HEAD
-import Activate from "./components/Authentication/Activate"
 
-=======
+import Activate from "./components/Authentication/Activate"
 import About from "./components/menuPages/About"
 import Products from "./components/menuPages/Products"
 import Service from "./components/menuPages/Service"
@@ -23,7 +21,7 @@ import Support from './components/menuPages/Support'
 import Privacy from './components/menuPages/Privacy'
 import Terms from './components/menuPages/Terms'
 import Disclaimer from './components/menuPages/Disclaimer'
->>>>>>> dfce042cff745edae911a35d874ec071e5011e2d
+
 
 const App = () => {
   return (
