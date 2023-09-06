@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { register } from "../../functions/api/register";
+import signupImg from '../../assets/signupPageSecureImg.png'
 import { toast } from "react-toastify";
 import validate from "../../functions/validate";
 
@@ -13,7 +14,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name.trim()) {
+   if (!name.trim()) {
       toast.error("Fill all fields");
       return;
     }
@@ -32,47 +33,38 @@ const Signup = () => {
 
   return (
     <StyledSignup>
-      <div id="cover"></div>
+      <div id="cover">
+        <img src={signupImg} />
+      </div>
       <div id="form">
-        <h1>CREATE YOUR ACCOUNT</h1>
+        <h2>CREATE YOUR ACCOUNT</h2>
         <p>Enter your details below to create your account.</p>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Name</label>
-            <br />
-            <input
-              type="name"
-              id="name"
-              value={name}
-              placeholder="Enter Name"
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <br />
-            <input
-              type="email"
-              id="email"
-              value={email}
-              placeholder="Enter Email Address"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <br />
-            <input
-              type="password"
-              id="password"
-              value={password}
-              placeholder="Enter Password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          <input
+            type="name"
+            id="name"
+            value={name}
+            placeholder="Enter Name"
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            id="email"
+            value={email}
+            placeholder="Enter Email Address"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            id="password"
+            value={password}
+            placeholder="Enter Password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
           <button type="submit">Create Account</button>
         </form>
         <p>
@@ -88,42 +80,79 @@ export default Signup;
 const StyledSignup = styled.div`
   display: flex;
   width: 100%;
-  h1,
-  p,
-  form {
-    padding: 1rem 3rem;
-  }
-
+  registerPage
+  min-height: 100vh;
   form {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-  }
+    align-items: center;
+    gap: 1rem;
+    width: 80%;
+      
+    }
+
+
 
   #form {
-    margin-top: 4rem;
-
-    width: 40%;
-    height: 100vh;
+    width: 50%;
+    background-color: var(--backgroundColor);
+    // height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
   }
 
   #cover {
-    width: 60%;
-    height: 100vh;
-    background-color: #add8e6;
+    width: 50%;
+    min-height: 100vh;
+    background-color: var(--backgroundColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 50%;
+    }
   }
 
   input {
-    width: 97.5%;
+    width: 80%;
     height: 3rem;
     margin-top: 0.7rem;
     padding-left: 0.5rem;
+    border-radius: 0.3rem;
+    border: 0.1rem solid var(--color)
   }
 
   button {
-    background-color: #add8e6;
-    color: rgb(128, 128, 128);
-    height: 4rem;
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
+    font-size: 1.2rem;
     border-radius: 0.4rem;
+    border: none;
+    padding: 1rem 1rem;
+    width: 50%;
+    cursor: pointer;
   }
+
+
+
+  @media (max-width: 800px) {
+    flex-direction: column; /* Stack the form and cover divs on small screens */
+    align-items: center;
+    justify-content: center;
+    margin-top: 50%;
+    
+    #form {
+      width: 100%; /* Make the form div take 100% width on small screens */
+    }
+
+    #cover {
+      display: none; /* Hide the cover div on small screens */
+    }
+  }
+
 `;
+

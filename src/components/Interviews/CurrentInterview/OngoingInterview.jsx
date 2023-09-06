@@ -20,7 +20,7 @@ const OngoingInterview = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [scoreModal, setScoreModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-const [loaderMessage, setLoaderMessage] = useState("");
+  const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
   const [started, setStarted] =  useState(false);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const [loaderMessage, setLoaderMessage] = useState("");
   };
 
   const handleSubmitAnswer = async (id, lastQuestion) => {
-setLoaderMessage("Submitting Answer")
+    setLoaderMessage("Submitting Answer")
     setIsLoading(true);
     setId(id + 1);
     const res = await submitAnswer(input, id, lastQuestion, interviewId);
@@ -46,7 +46,7 @@ setLoaderMessage("Submitting Answer")
   };
 
   const handleSubmitInterview = async () => {
-setLoaderMessage("Evaluating the Score")
+    setLoaderMessage("Evaluating the Score")
     setIsLoading(true);
     const submitRes = await updateStatus(interviewId, "completed");
     console.log(submitRes);
@@ -55,7 +55,7 @@ setLoaderMessage("Evaluating the Score")
   };
 
   async function getData() {
-setLoaderMessage("Getting new Question")
+    setLoaderMessage("Getting new Question")
     setIsLoading(true);
     const fetchedData = await getQuestion(interviewId);
     console.log(fetchedData);
@@ -78,7 +78,7 @@ setLoaderMessage("Getting new Question")
         <Loader message={loaderMessage} />
       ) : (
         <StyledInterview>
-          <h1>INTERVIEW FOR {interviewId}</h1>
+          <h3>INTERVIEW FOR {interviewId}</h3>
           {started ? (
             <>
               <div>{data?.question}</div>
@@ -100,8 +100,8 @@ setLoaderMessage("Getting new Question")
                 <>
                   <button
                     onClick={() => {
-                        handleSubmitAnswer(data.id, data.lastQuestion);
-                        getData();
+                      handleSubmitAnswer(data.id, data.lastQuestion);
+                      getData();
                     }}
                   >
                     NEXT QUESTION
@@ -143,10 +143,12 @@ const StyledInterview = styled.div`
   button {
     width: 20%;
     height: 3rem;
-    background-color: #ADD8E6;
-    color: rgb(128,128,128);
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
     border-radius: 0.5rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
   }
 
   input {
