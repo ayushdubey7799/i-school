@@ -15,13 +15,13 @@ export default function MyDrawer({ openDrawer, setOpenDrawer }) {
       >
         <StyledDrawer className="drawer-div">
           <StyledLink to="/">
-            <p className="link">Home</p>
+            <span className="link">Home</span>
           </StyledLink>
           <StyledLink to="/profile">
-            <p className="link">Profile</p>
+            <span className="link">Profile</span>
           </StyledLink>
           <StyledLink to="/setting">
-            <p className="link">Setting</p>
+            <span className="link">Setting</span>
           </StyledLink>
         </StyledDrawer>
       </Drawer>
@@ -30,14 +30,20 @@ export default function MyDrawer({ openDrawer, setOpenDrawer }) {
 }
 
 const StyledDrawer = styled.div`
-  width: 16rem;
-  padding: 2rem;
+  width: 10rem;
+  padding: 3rem 2rem 2rem 3rem;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: var(--lightBlue);
-  font-size: 1.3rem;
+  color: var(--grey);
+  font-size: 1.4rem;
+
+  .link:hover {
+    font-weight: 600;
+  }
 `;

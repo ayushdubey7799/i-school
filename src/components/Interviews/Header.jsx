@@ -16,14 +16,14 @@ const Header = ({ openNewInterviewModal, setOpenNewInterviewModal, isLoading, se
       <div id="heading">
         <IconButton onClick={() => setOpenDrawer(true)}><MenuRoundedIcon className='link' /></IconButton>
         <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
-        <h1>My Interviews</h1>
+        <h1 className='title'>My Interviews</h1>
       </div>
 
       <div id="start">
         <Link to='/create'>
-        <button>
-          Start New Interview
-        </button>
+          <button>
+            Start New Interview
+          </button>
         </Link>
         {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
       </div>
@@ -39,17 +39,24 @@ const StyledHeading = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  button{
-    background-color: var(--lightBlue);
+  .title {
     color: var(--color);
-    font-size; 1.5rem;
+  }
+
+  button{
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
     height: 3rem;
     border-radius: 0.3rem;
     border: none;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 600;
     padding: 0.2rem 1rem;
     cursor: pointer;
+  }
+
+  button:hover {
+    background-color: var(--blue)
   }
 `
 

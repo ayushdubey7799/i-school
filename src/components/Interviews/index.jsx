@@ -33,9 +33,8 @@ const InterviewPage = () => {
 export default InterviewPage;
 
 const StyledContent = styled.div`
-  width: 70%;
-  margin: 0 auto;
+  width: 80%;
+  margin: 1rem auto;
   background-color: var(--backgroundColor);
   color: var(--color);
-  margin-bottom: 30px;
 `;

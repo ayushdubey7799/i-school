@@ -50,6 +50,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
 import InterviewList from "./InterviewList";
+import '../../App.css';
 import { getInterviewByStatus } from "../../functions/api/getInterviewByStatus";
 
 export default function InterviewTabs() {
@@ -71,13 +72,13 @@ export default function InterviewTabs() {
   }, [value]);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", }}>
       <Tabs
         value={value}
         onChange={handleChange}
         TabIndicatorProps={{
           style: {
-            backgroundColor: "var(--lightBlue)",
+            backgroundColor: "var(--lightOrange)",
           },
         }}
         aria-label="wrapped label tabs example"
@@ -86,35 +87,38 @@ export default function InterviewTabs() {
           value="STARTED"
           label="Started"
           sx={{
-            color: "var(--lightBlue)",
+            color: "var(--lightOrange)",
+          }}
+          style={{
+            minWidth: "10%"
           }}
         />
         <Tab
           value="COMPLETED"
           label="Completed"
           sx={{
-            color: "var(--lightBlue)",
+            color: "var(--lightOrange)",
           }}
         />
         <Tab
           value="NOT_STARTED"
           label="Not Started"
           sx={{
-            color: "var(--lightBlue)",
+            color: "var(--lightOrange)",
           }}
         />
         <Tab
           value="CANCELED"
           label="Canceled"
           sx={{
-            color: "var(--lightBlue)",
+            color: "var(--lightOrange)",
           }}
         />
         <Tab
           value="EXPIRED"
           label="Expired"
           sx={{
-            color: "var(--lightBlue)",
+            color: "var(--lightOrange)",
           }}
         />
       </Tabs>
