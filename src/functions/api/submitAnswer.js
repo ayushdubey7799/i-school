@@ -1,6 +1,10 @@
 import axios from "axios";
 
-const token = JSON.parse(localStorage.getItem("token"));
+
+
+export const submitAnswer = async (answer,id,lastQuestion,interviewId) => {
+
+  const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {
   headers: {
@@ -9,8 +13,6 @@ const config = {
   }
 };
 
-
-export const submitAnswer = async (answer,id,lastQuestion,interviewId) => {
     const requestData = {
         answer,
         id,

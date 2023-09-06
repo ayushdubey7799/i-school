@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const token = JSON.parse(localStorage.getItem("token"));
 
 
 
 export const getInterviewByStatus = async (status) => {
+  const token = JSON.parse(localStorage.getItem("token"));
 
     const config = {
         headers: {

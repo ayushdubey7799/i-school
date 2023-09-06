@@ -1,6 +1,11 @@
 import axios from "axios"
 
-const token = JSON.parse(localStorage.getItem("token"));
+
+
+
+export const createInterview = async (jobSummary,resumeText) => {
+
+  const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {
   headers: {
@@ -8,9 +13,6 @@ const config = {
     'Content-Type': 'application/json'
   }
 };
-
-
-export const createInterview = async (jobSummary,resumeText) => {
   const requestData = {
     jobSummary,
     resumeText

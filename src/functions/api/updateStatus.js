@@ -1,17 +1,19 @@
 import axios from "axios"
 
-const token = JSON.parse(localStorage.getItem("token"));
 
-
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  }
-};
 
 
 export const updateStatus = async (id,data) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  };
+
     const requestData = {
         data,
         op: "statusUpdate",
