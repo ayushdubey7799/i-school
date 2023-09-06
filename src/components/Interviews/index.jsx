@@ -4,8 +4,10 @@ import InterviewTabs from "./InterviewTabs";
 import { getData } from "../../functions/getData";
 import { styled } from "styled-components";
 import Loader from "../commonComponents/Loader";
+import { useNavigate } from "react-router";
 
 const InterviewPage = () => {
+  const navigate = useNavigate();
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
