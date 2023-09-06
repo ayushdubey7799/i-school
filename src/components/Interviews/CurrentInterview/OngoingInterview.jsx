@@ -22,10 +22,14 @@ const OngoingInterview = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
-  const [started, setStarted] = useState(false);
+  const [started, setStarted] =  useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("token");
+    if(!accessToken)navigate("/login");
+  },[])
 
-  console.log("InterviewID", interviewId);
 
   const handleChange = (e) => {
     setInput(e.target.value);

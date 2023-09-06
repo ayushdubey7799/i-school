@@ -1,16 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router';
 
-const Protected = () => {
-    const navigate = useNavigate();
-    let currentUser = JSON.parse(localStorage.getItem("token"));
-    if(!currentUser.name){
-           navigate('/login');
+const Protected = (Component) => {
+    let accessToken = JSON.parse(localStorage.getItem("token"));
+    if(!accessToken){
+           return <p>Page Not Found</p>
     }
 
-  return (
-    <div>Protected</div>
-  )
+  return <Component/>
 }
 
 export default Protected

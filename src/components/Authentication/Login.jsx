@@ -3,22 +3,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { authenticate } from "../../functions/authenticate";
 import { auth } from "../../functions/api/auth";
+import validate from "../../functions/validate";
 import loginImg from '../../assets/loginPageSecureImg.png'
-
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const accessToken = await auth(password, email)
-    console.log(accessToken);
-    if (accessToken) {
-      localStorage.setItem("token", JSON.stringify(accessToken));
-      navigate('/interview')
+    let val = validate(email, password);
+    if (val) {
+      const accessToken = await auth(password, email);
+      console.log(accessToken);
+      if (accessToken) {
+        localStorage.setItem("token", JSON.stringify(accessToken));
+        navigate("/interview");
+      }
     }
-
+    setEmail("");
+    setPassword("");
   };
 
   return (

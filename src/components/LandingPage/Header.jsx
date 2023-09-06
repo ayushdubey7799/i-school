@@ -1,55 +1,69 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { IconButton } from '@mui/material';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import MyDrawer from './Drawer';
-import logo from '../../assets/IntelliViewLogo.png'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { IconButton } from "@mui/material";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import MyDrawer from "./Drawer";
+import logo from "../../assets/IntelliViewLogo.png";
 
 const Header = () => {
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
-
+  let accessToken = localStorage.getItem("token");
+  console.log(accessToken);
+  if (accessToken) accessToken = JSON.parse(accessToken);
 
   return (
     <StyledDiv>
       <div id="left">
-        <img src={logo} onClick={() => navigate('/')} />
+        <img src={logo} onClick={() => navigate("/")} />
       </div>
       <div id="middle">
-        <li onClick={() => navigate('/about')}>About Us</li>
-        <li onClick={() => navigate('/products')}>Products</li>
-        <li onClick={() => navigate('/services')}>Services</li>
-        <li onClick={() => navigate('/research-paper')}>Research Papers</li>
-        <li ><a href="mailto:care@intelliview.in"
-          target="_blank"
-          rel="noreferrer" className='contactLink'>Contact Us</a></li>
-        <li onClick={() => navigate('/case-studies')}>Case Studies</li>
+        <li onClick={() => navigate("/about")}>About Us</li>
+        <li onClick={() => navigate("/products")}>Products</li>
+        <li onClick={() => navigate("/services")}>Services</li>
+        <li onClick={() => navigate("/research-paper")}>Research Papers</li>
+        <li>
+          <a
+            href="mailto:care@intelliview.in"
+            target="_blank"
+            rel="noreferrer"
+            className="contactLink"
+          >
+            Contact Us
+          </a>
+        </li>
+        <li onClick={() => navigate("/case-studies")}>Case Studies</li>
       </div>
       <div id="right">
-        <Link to="/login">
-          <button id="sign-in">
-            SIGN IN
-          </button>
-        </Link>
+        {accessToken ? (
+          <Link to="/interview">
+            {" "}
+            <button id="sign-in">GO TO DASHBOARD</button>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <button id="sign-in">SIGN IN</button>
+          </Link>
+        )}
         <Link to="/signup">
-          <button id="free">
-            TRY IT NOW
-          </button>
+          <button id="free">TRY IT NOW</button>
         </Link>
       </div>
       <div id="drawer">
-        <IconButton onClick={() => setOpenDrawer(true)}><MenuRoundedIcon className='link' /></IconButton>
+        <IconButton onClick={() => setOpenDrawer(true)}>
+          <MenuRoundedIcon className="link" />
+        </IconButton>
         <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </div>
     </StyledDiv>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
 
 const StyledDiv = styled.div`
-  display : flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   color: black;
@@ -67,26 +81,25 @@ const StyledDiv = styled.div`
     cursor: pointer;
   }
 
-  #middle{
-    display : flex;
+  #middle {
+    display: flex;
     gap: 1rem;
   }
 
-  h1{
+  h1 {
     margin: 0;
-    color: #ADD8E6;
+    color: #add8e6;
   }
 
-  li{
+  li {
     list-style-type: none;
   }
 
-  #middle{
+  #middle {
     font-size: 0.9rem;
 
-
-    li{
-      cursor:pointer;
+    li {
+      cursor: pointer;
 
       .contactLink {
         text-decoration: none;
@@ -98,16 +111,16 @@ const StyledDiv = styled.div`
       font-weight: 600;
     }
 
-    @media(max-width: 900px) {
+    @media (max-width: 900px) {
       display: none;
     }
   }
 
-  #right{
+  #right {
     display: flex;
     align-items: center;
     gap: 1rem;
-    #sign-in{
+    #sign-in {
       border: none;
       border-radius: 0.5rem;
       background-color: var(--lightOrange);
@@ -116,10 +129,10 @@ const StyledDiv = styled.div`
       padding: 0.2rem 0.8rem;
       font-weight: 600;
       font-size: 0.8rem;
-      cursor:pointer;
+      cursor: pointer;
     }
 
-    #sign-in:hover{
+    #sign-in:hover {
       background-color: var(--white);
       color: black;
       border: 0.1rem solid var(--lightOrange);
@@ -132,16 +145,15 @@ const StyledDiv = styled.div`
       border: 0.1rem solid var(--lightOrange);
       padding: 0.2rem 0.75rem;
     }
-    
 
-    #free{
+    #free {
       border: none;
       border-radius: 0.5rem;
       height: 3rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
       font-size: 0.8rem;
-      cursor:pointer;
+      cursor: pointer;
       background-color: var(--lightOrange);
       color: var(--white);
     }
@@ -150,13 +162,8 @@ const StyledDiv = styled.div`
   #drawer {
     display: none;
 
-    @media(max-width: 900px){
+    @media (max-width: 900px) {
       display: block;
     }
   }
-
-  
 `;
-
-
-

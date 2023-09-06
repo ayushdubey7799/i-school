@@ -35,7 +35,7 @@ export default function InterviewSubmittedModal({ scoreModal, setScoreModal, int
     <div>
       <Modal
         open={scoreModal}
-        onClose={handleClose}
+        // onClose={handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >

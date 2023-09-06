@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import InterviewTabs from "./InterviewTabs";
 import { getData } from "../../functions/getData";
@@ -9,7 +9,11 @@ const InterviewPage = () => {
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const data = getData();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("token");
+    if(!accessToken)navigate("/login")
+  },[])
 
   return (
     <StyledContent>

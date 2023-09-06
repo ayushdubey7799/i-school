@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { addUser } from "../../functions/addUser";
 import { register } from "../../functions/api/register";
 import signupImg from '../../assets/signupPageSecureImg.png'
+import { toast } from "react-toastify";
+import validate from "../../functions/validate";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,10 +14,23 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const registerRes = await register(email, name, password);
-    if (registerRes) navigate("/login");
-    console.log("Signed up ", { email, password, name });
+   if (!name.trim()) {
+      toast.error("Fill all fields");
+      return;
+    }
+    let val = validate(email, password);
+    if (val) {
+      const registerRes = await register(email, name, password);
+      if (registerRes) {
+        toast.success("Successfully signed up");
+        navigate("/login");
+      }
+      else{
+        toast.error("Email already exists");
+      }
+    }
   };
+
   return (
     <StyledSignup>
       <div id="cover">
@@ -66,9 +80,8 @@ export default Signup;
 const StyledSignup = styled.div`
   display: flex;
   width: 100%;
-  // min-height: 100vh;
-
-
+  registerPage
+  min-height: 100vh;
   form {
     display: flex;
     flex-direction: column;
@@ -77,6 +90,7 @@ const StyledSignup = styled.div`
     width: 80%;
       
     }
+
 
 
   #form {
