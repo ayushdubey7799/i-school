@@ -101,8 +101,9 @@ export const StyledScorecard = styled.div`
     justify-content: space-evenly;
 
     h3 {
-      border: 1px solid #add8e6;
+      border: 0.1rem solid var(--color);
       padding: 0.7rem;
+      border-radius: 0.2rem;
     }
   }
 
@@ -119,8 +120,8 @@ export const StyledScorecard = styled.div`
   .scoreEvalStyleBtn {
     padding: 0.5rem;
     border: none;
-    background-color: var(--lightBlue);
-    color: var(--color);
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
     border-radius: 0.3rem;
     font-size: 1.1rem;
     font-weight: 600;
@@ -128,12 +129,14 @@ export const StyledScorecard = styled.div`
   }
 
   #another{
-    background-color: #ADD8E6;
-    color: rgb(128,128,128);
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
     height: 4rem;
     border-radius: 0.4rem;
     font-size: 1.2rem;
     padding: 0.2rem 1.5rem;
+    cursor: pointer;
+    border: none;
   }
 
 `;

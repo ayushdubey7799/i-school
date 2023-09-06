@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { createInterview } from '../../../functions/api/createInterview';
 import { updateStatus } from '../../../functions/api/updateStatus';
@@ -7,101 +7,101 @@ import Loader from "../../commonComponents/Loader";
 
 
 const SkillInterview = () => {
-    const [interviewDetails, setInterviewDetails] = useState({
-        skills: "",
-        experience: "",
-        difficulty: "",
-        interviewType: ""
-      });
+  const [interviewDetails, setInterviewDetails] = useState({
+    skills: "",
+    experience: "",
+    difficulty: "",
+    interviewType: ""
+  });
 
-      const [ isLoading,setIsLoading] = useState(false);
-      const [loaderMessage, setLoaderMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loaderMessage, setLoaderMessage] = useState("");
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleInputChange = (e) => {
-        const name = e.target.name;
-        const val = e.target.value;
-        console.log(name, val);
-        switch (name) {
-          case 'skill':
-            setInterviewDetails({ ...interviewDetails, skills: val })
-            break;
-          case 'experience':
-            setInterviewDetails({ ...interviewDetails, experience: val })
-            break;
-          case 'difficulty':
-            setInterviewDetails({ ...interviewDetails, difficulty: val })
-            break;
-          case 'interviewType':
-                setInterviewDetails({ ...interviewDetails, interviewType: val })
-                break;
-          default:
-            console.log('Hello there!');
-        }
-        console.log(interviewDetails)
-      }
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const val = e.target.value;
+    console.log(name, val);
+    switch (name) {
+      case 'skill':
+        setInterviewDetails({ ...interviewDetails, skills: val })
+        break;
+      case 'experience':
+        setInterviewDetails({ ...interviewDetails, experience: val })
+        break;
+      case 'difficulty':
+        setInterviewDetails({ ...interviewDetails, difficulty: val })
+        break;
+      case 'interviewType':
+        setInterviewDetails({ ...interviewDetails, interviewType: val })
+        break;
+      default:
+        console.log('Hello there!');
+    }
+    console.log(interviewDetails)
+  }
 
-      const handleCreateInterview = async (e) => {
-        e.preventDefault();
-        setLoaderMessage("Creating Interview");
-        setIsLoading(true);
-        const ongoing = await createInterview(interviewDetails.skills, `Experience:- ${interviewDetails.experience}`)
-        console.log(ongoing);
-        if (ongoing?.data?.id) {
-          console.log("data");
-          const statusResponse = await updateStatus(ongoing.data.id, "started");
-          console.log(statusResponse);
-          setIsLoading(false);
-          if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);
-        }
-      }
-    
+  const handleCreateInterview = async (e) => {
+    e.preventDefault();
+    setLoaderMessage("Creating Interview");
+    setIsLoading(true);
+    const ongoing = await createInterview(interviewDetails.skills, `Experience:- ${interviewDetails.experience}`)
+    console.log(ongoing);
+    if (ongoing?.data?.id) {
+      console.log("data");
+      const statusResponse = await updateStatus(ongoing.data.id, "started");
+      console.log(statusResponse);
+      setIsLoading(false);
+      if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);
+    }
+  }
+
 
   return (
     <div>
-         {isLoading ? (
+      {isLoading ? (
         <Loader message={loaderMessage} />
       ) : (
         <StyledSkillForm>
-        <div>
+          <div>
             <label htmlFor="skill">Skills:</label>
-            <br/>
+            <br />
             <input type="text" id="skill" name="skill" onChange={handleInputChange} required />
-        </div>
+          </div>
 
-        <div>
+          <div>
             <label htmlFor="experience">Experience (in years):</label>
-            <br/>
+            <br />
             <input type="text" id="experience" name="experience" onChange={handleInputChange} required />
-        </div>
+          </div>
 
-        <div>
+          <div>
             <label htmlFor="difficulty">Difficulty Level:</label>
-            <br/>
+            <br />
             <select id="difficulty" name="difficulty" onChange={handleInputChange}>
-                <option value="easy">Easy</option>
-                <option value="moderate">Moderate</option>
-                <option value="difficult">Difficult</option>
+              <option value="easy">Easy</option>
+              <option value="moderate">Moderate</option>
+              <option value="difficult">Difficult</option>
             </select>
-        </div>
+          </div>
 
-        <div>
+          <div>
             <label htmlFor="interviewType">Type of Interview:</label>
-            <br/>
+            <br />
             <select id="interviewType" name="interviewType" onChange={handleInputChange}>
-                <option value="mcq">MCQ</option>
-                <option value="questionnaire">Questionnaire</option>
-                <option value="descriptive">Descriptive</option>
+              <option value="mcq">MCQ</option>
+              <option value="questionnaire">Questionnaire</option>
+              <option value="descriptive">Descriptive</option>
             </select>
-        </div>
+          </div>
 
-        <button onClick={handleCreateInterview}>Start Interview</button>
-    </StyledSkillForm>
+          <button onClick={handleCreateInterview}>Start Interview</button>
+        </StyledSkillForm>
       )
-}
+      }
     </div>
-       
+
   )
 }
 
@@ -114,8 +114,8 @@ gap: 3.5rem;
 margin-top: 3rem;
 
 label{
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 input, select{
@@ -123,7 +123,7 @@ input, select{
   margin-top: 0.5rem;
   border-radius: 0.5rem;
   padding: 0.5rem 0.5rem;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   height: 3rem;
   padding: 0.5rem 0.5rem;
   option{
@@ -133,18 +133,21 @@ input, select{
 
 input{
     width: 98.5%;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    border: 0.1rem solid var(--color);
 }
 
 
 button{
-  background-color: #ADD8E6;
-  color: rgb(128,128,128);
-  height: 4rem;
-  border-radius: 0.4rem;
-  width: 100%;
-  font-size: 1.5rem;
+  background-color: var(--lightOrange);
+    color: var(--backgroundColor);
+    height: 4rem;
+    border-radius: 0.4rem;
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
 }`
-  
 
-   
+

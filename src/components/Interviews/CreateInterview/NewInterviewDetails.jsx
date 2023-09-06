@@ -15,48 +15,48 @@ export default function NewInterviewDetails() {
   };
 
 
- 
-  
+
+
 
   return (
     <StyledCreateInterview>
-    <Box sx={{ width: "100%" }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        TabIndicatorProps={{
-          style: {
-            backgroundColor: "var(--lightBlue)",
-          },
-        }}
-        variant="fullWidth"
-        aria-label="wrapped label tabs example"
-      >
-        <Tab
-          value="profile-interview"
-          label="Profile Interview"
-          sx={{
-            color: "var(--lightBlue)",
-            fontSize: "1.5rem;"
+      <Box sx={{ width: "100%" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          TabIndicatorProps={{
+            style: {
+              backgroundColor: "var(--lightOrange)",
+            },
           }}
-        />
-        <Tab
-          value="skill-interview"
-          label="Skill Interview"
-          sx={{
-            color: "var(--lightBlue)",
-            fontSize: "1.5rem;"
-          }}
-        />
-      </Tabs>
-      {
-        value=='profile-interview'?
-         <ProfileInterview/>
-          :
-        <SkillInterview/>
-      }
-      
-    </Box>
+          variant="fullWidth"
+          aria-label="wrapped label tabs example"
+        >
+          <Tab
+            value="profile-interview"
+            label="Profile Interview"
+            sx={{
+              color: "var(--lightOrange)",
+              fontSize: "1.5rem;"
+            }}
+          />
+          <Tab
+            value="skill-interview"
+            label="Skill Interview"
+            sx={{
+              color: "var(--lightOrange)",
+              fontSize: "1.5rem;"
+            }}
+          />
+        </Tabs>
+        {
+          value == 'profile-interview' ?
+            <ProfileInterview />
+            :
+            <SkillInterview />
+        }
+
+      </Box>
     </StyledCreateInterview>
   );
 }

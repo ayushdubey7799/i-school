@@ -98,8 +98,8 @@ const StyledForm = styled.form`
   margin-top: 3rem;
 
   label {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 
   textarea {
@@ -115,11 +115,17 @@ const StyledForm = styled.form`
   }
 
   button {
-    background-color: #add8e6;
-    color: rgb(128, 128, 128);
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
     height: 4rem;
     border-radius: 0.4rem;
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+
   }
 `;
+
+

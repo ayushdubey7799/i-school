@@ -14,7 +14,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "0.1rem solid var(--color)",
   boxShadow: 24,
   pt: 3,
   px: 6,
@@ -22,10 +22,10 @@ const style = {
   borderRadius: 2
 };
 
-export default function InterviewSubmittedModal({scoreModal,setScoreModal, interviewId}) {
+export default function InterviewSubmittedModal({ scoreModal, setScoreModal, interviewId }) {
   const navigate = useNavigate();
   const handleGetScore = async () => {
-     navigate(`/score/${interviewId}`)
+    navigate(`/score/${interviewId}`)
   }
 
   const handleClose = () => {
@@ -39,17 +39,17 @@ export default function InterviewSubmittedModal({scoreModal,setScoreModal, inter
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
-          <h1>Interview Submitted Successfully</h1>
+        <Box sx={{ ...style, width: '40%' }}>
+          <h2>Interview Submitted Successfully</h2>
           <StyledForm>
             <div>
               <label for="reviews">Reviews:</label>
               <br />
-              <textarea rows={7} type="text" name="reviews"/>
+              <textarea rows={7} type="text" name="reviews" />
             </div>
 
-           
-            <div>
+
+            <div className="buttonBox">
               <button onClick={(e) => handleGetScore(e)}>
                 Get Score
               </button>
@@ -71,7 +71,7 @@ const StyledForm = styled.form`
   gap: 1.5rem;
 
   label{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
   }
   
@@ -89,11 +89,26 @@ const StyledForm = styled.form`
   }
 
   button{
-    background-color: #ADD8E6;
-    color: rgb(128,128,128);
+    background-color: var(--lightOrange);
+    color: var(--colbackgroundColoror);
     height: 3rem;
     border-radius: 0.4rem;
-    width: 100%
+    font-size: 1rem;
+    border: none;
+    width: 50%;
+    cursor: pointer;
+    color: var(--backgroundColor);
+
+    @media(max-width: 500px){
+      font-size: 0.8rem;
+    }
+  }
+
+  .buttonBox {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    justify-content: center;
   }
 
 `
