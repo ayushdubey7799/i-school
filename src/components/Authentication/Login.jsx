@@ -14,7 +14,7 @@ const Login = () => {
       const accessToken  = await auth(password,email)
       console.log(accessToken);
       if(accessToken){
-        localStorage.setItem("token",accessToken);
+        localStorage.setItem("token",JSON.stringify(accessToken));
         navigate('/interview')  
       }
       

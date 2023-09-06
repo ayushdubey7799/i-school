@@ -9,14 +9,15 @@ const config = {
   }
 };
 
-export const activate = async () => {
+export const activate = async (id) => {
 
-    let id = "9ddfb0dc-8811-43ad-bdc8-54e90b6b6fe5"
     try {
-        const response = await axios.get(`https://dev-api.intelliview.in/api/interviews/${id}/questions`,config);
+        const response = await axios.get(`https://dev-api.intelliview.in/api/auth/activate/${id}`);
         console.log('Data:', response.data);
         return response.data;
       } catch (error) {
         console.error('Error:', error);
       }
 }
+
+// https://dev-api.intelliview.in/api/auth/activate/237274f9-ce42-4429-bbba-26672effb5f1

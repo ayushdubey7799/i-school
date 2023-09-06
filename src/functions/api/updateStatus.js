@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsImdyYW50cyI6IlJPTEVfVVNFUiIsImlhdCI6MTY5MzE4NTY4NCwiZXhwIjoxNjkzNzkwNDg0fQ.Vi5Fx26gwqsQaVVhUhlPAJtkZHCyXj8DNbf1vUYCA-tSffBbloCd6mkXJIUBjmBYAH5CEf9LSbnr_WjAt70tTQ';
+const token = JSON.parse(localStorage.getItem("token"));
 
 
 const config = {
@@ -17,7 +17,7 @@ export const updateStatus = async (id,data) => {
         op: "statusUpdate",
         extra: "enforceSecLimit"
       };
-
+ console.log(token);
     try {
         const response = await axios.patch(`https://dev-api.intelliview.in/api/interviews/${id}`,requestData,config);
         console.log('Data:', response.data);
