@@ -1,24 +1,29 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { authenticate } from "../../functions/authenticate";
 import { auth } from "../../functions/api/auth";
+import validate from "../../functions/validate";
 
 const Login = () => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const accessToken  = await auth(password,email)
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let val = validate(email, password);
+    if (val) {
+      const accessToken = await auth(password, email);
       console.log(accessToken);
-      if(accessToken){
-        localStorage.setItem("token",JSON.stringify(accessToken));
-        navigate('/interview')  
+      if (accessToken) {
+        localStorage.setItem("token", JSON.stringify(accessToken));
+        navigate("/interview");
       }
-      
-    };
+    }
+    setEmail("");
+    setPassword("");
+  };
 
   return (
     <StyledLogin>
@@ -28,7 +33,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>
-            <br/>
+            <br />
             <input
               type="email"
               id="email"
@@ -40,7 +45,7 @@ const Login = () => {
           </div>
           <div>
             <label htmlFor="password">Password</label>
-            <br/>
+            <br />
             <input
               type="password"
               id="password"
@@ -52,7 +57,9 @@ const Login = () => {
           </div>
           <button type="submit">Login</button>
         </form>
-        <p>Don't have an account? <Link to='/signup'>Sign Up</Link> now</p>
+        <p>
+          Don't have an account? <Link to="/signup">Sign Up</Link> now
+        </p>
       </div>
       <div id="cover"></div>
     </StyledLogin>
@@ -64,14 +71,15 @@ export default Login;
 const StyledLogin = styled.div`
   display: flex;
   width: 100%;
-  h1, p, form{
+  h1,
+  p,
+  form {
     padding: 1rem 3rem;
   }
 
-
-  form{
+  form {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     gap: 3rem;
   }
 
@@ -85,19 +93,19 @@ const StyledLogin = styled.div`
   #cover {
     width: 60%;
     height: 100vh;
-    background-color: #ADD8E6;
+    background-color: #add8e6;
   }
 
-  input{
+  input {
     width: 97.5%;
     height: 3rem;
     margin-top: 0.7rem;
     padding-left: 0.5rem;
   }
 
-  button{
-    background-color: #ADD8E6;
-    color: rgb(128,128,128);
+  button {
+    background-color: #add8e6;
+    color: rgb(128, 128, 128);
     height: 4rem;
     border-radius: 0.4rem;
     font-size: 1.5rem;

@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import {toast} from "react-toastify"
 const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -18,6 +18,7 @@ export const auth = async (password,email) => {
         console.log('Data:', response.data);
         return response.data.data.accessToken;
       } catch (error) {
+        toast.error("Bad Credentials");
         console.error('Error:', error);
       }
 }

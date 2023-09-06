@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { getScore } from "../../../functions/api/getScore";
 import ScorecardTemplate from "./ScorecardTemplate";
 import { styled } from "styled-components";
@@ -16,8 +16,11 @@ const Scorecard = () => {
   const [data, setData] = useState(null);
   const [scoreArray, setScoreArray] = useState([]);
   const [countDown, setCountDown] = useState(5);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const accessToken = localStorage.getItem("token");
+    if(!accessToken)navigate("/login");
     async function fetchScore(id) {
       setIsLoading(true);
       const scoreRes = await getScore(id);

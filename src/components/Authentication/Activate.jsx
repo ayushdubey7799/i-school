@@ -16,7 +16,6 @@ const Activate = () => {
             navigate("/login");
            }
         }
-
         act();
     })
 

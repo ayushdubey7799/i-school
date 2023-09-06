@@ -4,12 +4,15 @@ import NewInterviewModal from '../Modals/NewInterviewModal';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { IconButton } from '@mui/material';
 import MyDrawer from './Drawer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = ({ openNewInterviewModal, setOpenNewInterviewModal, isLoading, setIsLoading }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
-
-
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
 
   return (
     <StyledHeading>
@@ -25,6 +28,7 @@ const Header = ({ openNewInterviewModal, setOpenNewInterviewModal, isLoading, se
             Start New Interview
           </button>
         </Link>
+        <button onClick={handleLogout}>LOGOUT</button>
         {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
       </div>
     </StyledHeading>
@@ -41,6 +45,11 @@ const StyledHeading = styled.div`
 
   .title {
     color: var(--color);
+  }
+
+  #start{
+    display: flex;
+    gap: 1rem;
   }
 
   button{

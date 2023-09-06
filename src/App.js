@@ -22,6 +22,8 @@ import Privacy from './components/menuPages/Privacy'
 import Terms from './components/menuPages/Terms'
 import Disclaimer from './components/menuPages/Disclaimer'
 import ScrollToTop from "./components/commonComponents/ScrollToTop"
+import { ToastContainer } from 'react-toastify';
+
 
 
 const App = () => {
