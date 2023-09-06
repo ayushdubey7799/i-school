@@ -66,7 +66,7 @@ export default Signup;
 const StyledSignup = styled.div`
   display: flex;
   width: 100%;
-  min-height: 100vh;
+  // min-height: 100vh;
 
 
   form {
@@ -79,8 +79,6 @@ const StyledSignup = styled.div`
     }
 
 
-  }
-
   #form {
     width: 50%;
     background-color: var(--backgroundColor);
@@ -89,12 +87,13 @@ const StyledSignup = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
   }
 
   #cover {
     width: 50%;
     min-height: 100vh;
-    background-color: var(--lightOrange);
+    background-color: var(--backgroundColor);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,5 +122,23 @@ const StyledSignup = styled.div`
     width: 50%;
     cursor: pointer;
   }
+
+
+
+  @media (max-width: 800px) {
+    flex-direction: column; /* Stack the form and cover divs on small screens */
+    align-items: center;
+    justify-content: center;
+    margin-top: 50%;
+    
+    #form {
+      width: 100%; /* Make the form div take 100% width on small screens */
+    }
+
+    #cover {
+      display: none; /* Hide the cover div on small screens */
+    }
+  }
+
 `;
 

@@ -83,7 +83,7 @@ const StyledLogin = styled.div`
   #cover {
     width: 50%;
     min-height: 100vh;
-    background-color: var(--lightOrange);
+    background-color: var(--backgroundColor);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,5 +111,22 @@ const StyledLogin = styled.div`
     padding: 1rem 1rem;
     width: 50%;
     cursor: pointer;
+  }
+
+
+
+  @media (max-width: 800px) {
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    margin-top: 50%;
+    
+    #form {
+      width: 100%; 
+    }
+
+    #cover {
+      display: none; 
+    }
   }
 `;
