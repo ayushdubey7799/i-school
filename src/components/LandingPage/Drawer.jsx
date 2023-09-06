@@ -57,4 +57,8 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: var(--grey);
   font-size: 1.15rem;
+
+  .link:hover {
+    font-weight: 600;
+  }
 `;

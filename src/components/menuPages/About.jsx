@@ -53,21 +53,21 @@ gap: 2rem;
 
 .mainTitle {
     font-weight: 900;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .title {
     word-wrap: break-word;
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     line-height: 1.7rem;
     color:  rgb(70, 78, 98);
 }
 
 .text {
     word-wrap: break-word;
-    font-size: 1.2rem;
-    line-height: 1.7rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
     font-weight: 500;
     color:  rgb(70, 78, 98);
 }

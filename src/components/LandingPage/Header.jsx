@@ -105,21 +105,25 @@ const StyledDiv = styled.div`
 
   #right{
     display: flex;
+    align-items: center;
     gap: 1rem;
     #sign-in{
       border: none;
       border-radius: 0.5rem;
-      background-color: white;
-      height: 3.5rem;
+      background-color: var(--lightOrange);
+      color: var(--white);
+      height: 3rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.8rem;
       cursor:pointer;
     }
 
     #sign-in:hover{
-      background-color: var(--lightOrange);
-      color: var(--white)
+      background-color: var(--white);
+      color: black;
+      border: 0.1rem solid var(--lightOrange);
+      padding: 0.2rem 0.75rem;
     }
 
     #free:hover {
@@ -133,10 +137,10 @@ const StyledDiv = styled.div`
     #free{
       border: none;
       border-radius: 0.5rem;
-      height: 3.5rem;
+      height: 3rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.8rem;
       cursor:pointer;
       background-color: var(--lightOrange);
       color: var(--white);

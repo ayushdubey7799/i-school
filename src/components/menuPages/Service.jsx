@@ -1,14 +1,23 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import Header from '../LandingPage/Header'
+import Footer from '../commonComponents/Footer'
 
 const Service = () => {
     return (
         <StyledPage>
             <Header />
             <StyledContent>
-                Content Not Available
+                <span className="mainTitle">Services</span>
+
+                <span className='text'>1. AI Powered Interview for Employers and Candidates</span>
+                <span className='text'>2. AI Backed Sourcing for Employers and Consuilting Firms</span>
+                <span className='text'>3. JD, Resume builder powered by AI</span>
+                <span className='text'>4. Real Time Interview Services</span>
+                <span className='text'>5. Extensive Reporting for indepth view of your applicants</span>
+                <span className='text'>6. Application Tracking System for employer and candidates</span>
             </StyledContent>
+            <Footer/>
         </StyledPage>
     )
 }
@@ -36,20 +45,20 @@ gap: 2rem;
 
 .mainTitle {
     font-weight: 900;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .title {
     word-wrap: break-word;
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     line-height: 1.7rem;
     color:  rgb(70, 78, 98);
 }
 
 .text {
     word-wrap: break-word;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.7rem;
     font-weight: 500;
     color:  rgb(70, 78, 98);
@@ -67,6 +76,4 @@ gap: 2rem;
     gap: 0.7rem;
 }
 `
-
-
 

@@ -21,32 +21,35 @@ import Support from './components/menuPages/Support'
 import Privacy from './components/menuPages/Privacy'
 import Terms from './components/menuPages/Terms'
 import Disclaimer from './components/menuPages/Disclaimer'
+import ScrollToTop from "./components/commonComponents/ScrollToTop"
 
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/activate" element={<Activate />} />
-        <Route path="/interview" element={<InterviewPage />} />
-        <Route path="/create" element={<NewInterviewDetails />} />
-        <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
-        <Route path="/score/:interviewId" element={<Scorecard />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/setting" element={<SettingPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/services" element={<Service />} />
-        <Route path="/research-paper" element={<ResearchPaper />} />
-        <Route path="/case-studies" element={<CaseStudies />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/disclaimer" element={<Disclaimer />} />
-      </Routes>
+      <ScrollToTop>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/activate" element={<Activate />} />
+          <Route path="/interview" element={<InterviewPage />} />
+          <Route path="/create" element={<NewInterviewDetails />} />
+          <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
+          <Route path="/score/:interviewId" element={<Scorecard />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/setting" element={<SettingPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/services" element={<Service />} />
+          <Route path="/research-paper" element={<ResearchPaper />} />
+          <Route path="/case-studies" element={<CaseStudies />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+        </Routes>
+      </ScrollToTop>
     </BrowserRouter>
   )
 }

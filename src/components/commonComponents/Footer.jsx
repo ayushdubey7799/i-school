@@ -23,7 +23,6 @@ const Footer = () => {
 
             <div className='child2'>
                 <div className='grandChild hidden'>
-                    <span className='grandChildTitle'>Company</span>
                     <StyledLink to="/about">
                         <span className="link">About Us</span>
                     </StyledLink>
@@ -41,15 +40,14 @@ const Footer = () => {
                         rel="noreferrer">Sales</a>
                 </div>
                 <div className='grandChild hidden'>
-                    <span className='grandChildTitle'>Legal</span>
                     <StyledLink to="/privacy">
-                        <span className="link">Privacy Policy</span>
+                        <span className="link link2">Privacy Policy</span>
                     </StyledLink>
                     <StyledLink to="/terms">
-                        <span className="link">Terms of Use</span>
+                        <span className="link link2">Terms of Use</span>
                     </StyledLink>
                     <StyledLink to="/disclaimer">
-                        <span className="link">Disclaimer</span>
+                        <span className="link link2">Disclaimer</span>
                     </StyledLink>
                 </div>
             </div>
@@ -74,9 +72,11 @@ color: var(--white);
 
 .child2 {
     display: flex;
+    flex-direction: column;
     margin-left: 5%;
     margin-right: 5%;
-    column-gap: 8rem;
+    row-gap: 1rem;
+    align-items: center;
     justify-content: center;
 }
 
@@ -89,18 +89,14 @@ color: var(--white);
 
 .child3 {
     margin-bottom: 2rem;
+    font-size: 0.9rem;
 }
 
 .grandChild {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.6rem;
-    align-items: flex-start;
-}
-
-.grandChildTitle {
-    font-weight: 600;
-    font-size: 1.2rem
+    align-items: center;
 }
 
 .socialIcons {
@@ -116,7 +112,11 @@ color: var(--white);
 .link {
     text-decoration: none;
     color: rgb(204, 208, 219);
-    font-size: 0.95rem;
+    font-size: 0.90rem;
+}
+
+.link2 {
+    font-size: 0.8rem;
 }
 
 .link:hover {
