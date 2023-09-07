@@ -45,7 +45,7 @@ const SkillInterview = () => {
 
   const handleCreateInterview = async (e) => {
     e.preventDefault();
-    setLoaderMessage("Creating Interview");
+    setLoaderMessage("Creating Interview... please wait");
     setIsLoading(true);
 
     if (!interviewDetails.skills || !interviewDetails.experience || !interviewDetails.difficulty || !interviewDetails.interviewType) {

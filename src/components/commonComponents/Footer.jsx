@@ -26,9 +26,9 @@ const Footer = () => {
                     <StyledLink to="/about">
                         <span className="link">About Us</span>
                     </StyledLink>
-                    <a className="link" href="mailto:care@intelliview.in"
-                        target="_blank"
-                        rel="noreferrer">Contact Us</a>
+                    <StyledLink to="/contact">
+                        <span className="link">Contact Us</span>
+                    </StyledLink>
                     <StyledLink to="/support">
                         <span className="link">Support</span>
                     </StyledLink>

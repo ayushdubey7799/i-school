@@ -36,7 +36,7 @@ const ProfileInterview = () => {
 
   const handleCreateInterview = async (e) => {
     e.preventDefault();
-    setLoaderMessage("Creating Interview... Please wait");
+    setLoaderMessage("Creating Interview... please wait");
     setIsLoading(true);
 
     if(interviewDetails.jobSummary.length < 30 || interviewDetails.resumeText.length < 30) {

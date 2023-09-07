@@ -21,7 +21,7 @@ const InterviewPage = () => {
   return (
     <StyledContent>
       {isLoading ? (
-        <Loader message="Generating Interview Questions " />
+        <Loader message="Generating Interview Questions... please wait " />
       ) : (
         <>
           <Header

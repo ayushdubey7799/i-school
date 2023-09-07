@@ -36,7 +36,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitAnswer = async (id, lastQuestion) => {
-    setLoaderMessage("Submitting Answer... Please wait")
+    setLoaderMessage("Submitting Answer... please wait")
     setIsLoading(true);
     setId(id + 1);
     const res = await submitAnswer(input, id, lastQuestion, interviewId);
@@ -55,7 +55,7 @@ const OngoingInterview = () => {
   };
 
   async function getData() {
-    setLoaderMessage("Getting new Question... Please wait")
+    setLoaderMessage("Getting new Question... please wait")
     setIsLoading(true);
     const fetchedData = await getQuestion(interviewId);
     console.log(fetchedData);
