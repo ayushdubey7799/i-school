@@ -182,7 +182,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 function Row(props) {
   const { row } = props;
-
+  let expected = "";
+ if(row.summaryJson)expected = JSON.parse(row.summaryJson)["Expected answer"].expected_answer;
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -203,9 +204,12 @@ function Row(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
           <Collapse in={row.open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box sx={{ margin: 1}}>
               <Typography variant="body1" gutterBottom>
-                <strong>Answer:</strong> {row.answer}
+                <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:"skipped"}</div>
+                <br/>
+                <br/>
+                <strong>Expected Answer:</strong> <div style={{fontSize: "0.7rem"}}>{expected?expected:"skipped"}</div>
               </Typography>
             </Box>
           </Collapse>
