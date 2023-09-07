@@ -74,7 +74,7 @@ const StyledDiv = styled.div`
 
   #left > img {
     height: 15rem;
-    margin-left: -20%;
+    margin-left: -10%;
     cursor: pointer;
   }
 
