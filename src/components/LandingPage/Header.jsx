@@ -47,7 +47,7 @@ const Header = () => {
           </Link>
         )}
         <Link to="/signup">
-          <button id="free">Try it</button>
+          <button id="free">Try it Now</button>
         </Link>
       </div>
       <div id="drawer">
