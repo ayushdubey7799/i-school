@@ -23,15 +23,8 @@ const Header = () => {
         <li onClick={() => navigate("/products")}>Products</li>
         <li onClick={() => navigate("/services")}>Services</li>
         <li onClick={() => navigate("/research-paper")}>Research Papers</li>
-        <li>
-          <a
-            href="mailto:care@intelliview.in"
-            target="_blank"
-            rel="noreferrer"
-            className="contactLink"
-          >
-            Contact Us
-          </a>
+        <li onClick={() => navigate("/contact")}>
+          Contact Us
         </li>
         <li onClick={() => navigate("/case-studies")}>Case Studies</li>
       </div>
@@ -77,7 +70,7 @@ const StyledDiv = styled.div`
 
   #left > img {
     height: 15rem;
-    margin-left: -20%;
+    margin-left: -10%;
     cursor: pointer;
   }
 
@@ -125,7 +118,7 @@ const StyledDiv = styled.div`
       border-radius: 0.5rem;
       background-color: var(--lightOrange);
       color: var(--white);
-      height: 3rem;
+      height: 2.3rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
       font-size: 0.8rem;
@@ -149,7 +142,7 @@ const StyledDiv = styled.div`
     #free {
       border: none;
       border-radius: 0.5rem;
-      height: 3rem;
+      height: 2.3rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
       font-size: 0.8rem;

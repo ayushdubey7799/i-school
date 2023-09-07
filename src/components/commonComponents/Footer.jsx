@@ -26,9 +26,9 @@ const Footer = () => {
                     <StyledLink to="/about">
                         <span className="link">About Us</span>
                     </StyledLink>
-                    <a className="link" href="mailto:care@intelliview.in"
-                        target="_blank"
-                        rel="noreferrer">Contact Us</a>
+                    <StyledLink to="/contact">
+                        <span className="link">Contact Us</span>
+                    </StyledLink>
                     <StyledLink to="/support">
                         <span className="link">Support</span>
                     </StyledLink>
@@ -52,7 +52,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className='child3'>Copyright © 2023 Intelliview.</div>
+            <div className='child3'>Copyright © 2023 Miledge Technologies LLP</div>
         </StyledFooter>
     )
 }
@@ -89,7 +89,7 @@ color: var(--white);
 
 .child3 {
     margin-bottom: 2rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .grandChild {

@@ -5,6 +5,8 @@ import { register } from "../../functions/api/register";
 import signupImg from '../../assets/signupPageSecureImg.png'
 import { toast } from "react-toastify";
 import validate from "../../functions/validate";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { IconButton } from "@mui/material";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   if (!name.trim()) {
+    if (!name.trim()) {
       toast.error("Fill all fields");
       return;
     }
@@ -25,7 +27,7 @@ const Signup = () => {
         toast.success("Successfully signed up");
         navigate("/login");
       }
-      else{
+      else {
         toast.error("Email already exists");
       }
     }
@@ -33,44 +35,49 @@ const Signup = () => {
 
   return (
     <StyledSignup>
-      <div id="cover">
-        <img src={signupImg} />
-      </div>
-      <div id="form">
-        <h2>CREATE YOUR ACCOUNT</h2>
-        <p>Enter your details below to create your account.</p>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="name"
-            id="name"
-            value={name}
-            placeholder="Enter Name"
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            type="email"
-            id="email"
-            value={email}
-            placeholder="Enter Email Address"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <IconButton onClick={() => navigate('/')} className="prev">
+        <ArrowBackIcon sx={{ fontSize: '30px' }} />
+      </IconButton>
+      <>
+        <div id="cover">
+          <img src={signupImg} />
+        </div>
+        <div id="form">
+          <h2>CREATE YOUR ACCOUNT</h2>
+          <p>Enter your details below to create your account.</p>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="name"
+              id="name"
+              value={name}
+              placeholder="Enter Name"
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <input
+              type="email"
+              id="email"
+              value={email}
+              placeholder="Enter Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-          <input
-            type="password"
-            id="password"
-            value={password}
-            placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Create Account</button>
-        </form>
-        <p>
-          Have an account ? <Link to="/login">Sign In</Link>
-        </p>
-      </div>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              placeholder="Enter Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit" className="btn">Create Account</button>
+          </form>
+          <p>
+            Have an account ? <Link to="/login">Sign In</Link>
+          </p>
+        </div>
+      </>
     </StyledSignup>
   );
 };
@@ -80,8 +87,7 @@ export default Signup;
 const StyledSignup = styled.div`
   display: flex;
   width: 100%;
-  registerPage
-  min-height: 100vh;
+
   form {
     display: flex;
     flex-direction: column;
@@ -127,7 +133,7 @@ const StyledSignup = styled.div`
     font-size: 1rem;
   }
 
-  button {
+  .btn {
     background-color: var(--lightOrange);
     color: var(--backgroundColor);
     font-size: 1.2rem;
@@ -138,6 +144,18 @@ const StyledSignup = styled.div`
     cursor: pointer;
   }
 
+  .prev {
+    background-color: var(--lightOrange);
+    padding: 0.1rem;
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+    color: var(--white);
+  }
+
+  .prev:hover {
+    color: var(--color);
+  }
 
 
   @media (max-width: 800px) {

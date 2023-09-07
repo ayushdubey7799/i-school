@@ -4,11 +4,12 @@ import { createInterview } from "../../../functions/api/createInterview";
 import { updateStatus } from "../../../functions/api/updateStatus";
 import { useNavigate } from "react-router";
 import Loader from "../../commonComponents/Loader";
+import { toast } from "react-toastify";
 
 const ProfileInterview = () => {
   const [interviewDetails, setInterviewDetails] = useState({
-    jobSummary: "developer",
-    resumeText: "Programming",
+    jobSummary: "",
+    resumeText: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,7 @@ const ProfileInterview = () => {
     const name = e.target.name;
     const val = e.target.value;
     console.log(name, val);
+
     switch (name) {
       case "jobSummary":
         setInterviewDetails({ ...interviewDetails, jobSummary: val });
@@ -29,17 +31,27 @@ const ProfileInterview = () => {
       default:
         console.log("Hello there!");
     }
-    console.log(interviewDetails);
+    console.log(interviewDetails.jobSummary, interviewDetails.resumeText);
   };
 
   const handleCreateInterview = async (e) => {
     e.preventDefault();
-    setLoaderMessage("Creating Interview");
+    setLoaderMessage("Creating Interview... please wait");
     setIsLoading(true);
+
+    if(interviewDetails.jobSummary.length < 30 || interviewDetails.resumeText.length < 30) {
+      toast.warning('Too short inputs');
+      setIsLoading(false);
+      setLoaderMessage('');
+      return;
+    }
+
+
     const ongoing = await createInterview(
       interviewDetails.jobSummary,
       interviewDetails.resumeText
     );
+
     console.log(ongoing);
     if (ongoing?.data?.id) {
       console.log("data");
@@ -63,7 +75,7 @@ const ProfileInterview = () => {
             <textarea
               rows={7}
               type="text"
-              name="jobDescription"
+              name="jobSummary"
               onChange={handleInputChange}
             />
           </div>
@@ -78,11 +90,9 @@ const ProfileInterview = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <button onClick={(e) => handleCreateInterview(e)}>
-              Start Interview
-            </button>
-          </div>
+          <button onClick={(e) => handleCreateInterview(e)}>
+            Start Interview
+          </button>
         </StyledForm>
       )}
     </div>
@@ -94,8 +104,15 @@ export default ProfileInterview;
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
   gap: 1rem;
   margin-top: 3rem;
+  margin-bottom: 2rem;
+
+  div {
+    width: 100%;
+  }
 
   label {
     font-size: 1.2rem;
@@ -116,16 +133,15 @@ const StyledForm = styled.form`
   }
 
   button {
-    background-color: var(--lightOrange);
-    color: var(--backgroundColor);
-    height: 4rem;
+    background-color: var(--backgroundColor);
+    color: var(--color);
+    padding: 1rem 2rem;
+    border: 0.1rem solid var(--lightOrange);
     border-radius: 0.4rem;
-    width: 100%;
+    // width: 100%;
     font-size: 1.4rem;
     font-weight: 500;
-    border: none;
     cursor: pointer;
-
   }
 `;
 

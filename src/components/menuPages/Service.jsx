@@ -17,7 +17,7 @@ const Service = () => {
                 <span className='text'>5. Extensive Reporting for indepth view of your applicants</span>
                 <span className='text'>6. Application Tracking System for employer and candidates</span>
             </StyledContent>
-            <Footer/>
+            <Footer />
         </StyledPage>
     )
 }
@@ -43,22 +43,30 @@ margin-left: 10%;
 margin-right: 10%;
 gap: 2rem;
 
+@media (max-width: 700px) {
+    margin-bottom: 15rem;
+}
+
+@media (max-width: 500px) {
+    margin-bottom: 34rem;
+}
+
 .mainTitle {
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .title {
     word-wrap: break-word;
     font-weight: 600;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1.7rem;
     color:  rgb(70, 78, 98);
 }
 
 .text {
     word-wrap: break-word;
-    font-size: 1rem;
+    font-size: 0.8rem;
     line-height: 1.7rem;
     font-weight: 500;
     color:  rgb(70, 78, 98);

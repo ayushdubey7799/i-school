@@ -36,7 +36,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitAnswer = async (id, lastQuestion) => {
-    setLoaderMessage("Submitting Answer")
+    setLoaderMessage("Submitting Answer... please wait")
     setIsLoading(true);
     setId(id + 1);
     const res = await submitAnswer(input, id, lastQuestion, interviewId);
@@ -46,7 +46,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitInterview = async () => {
-    setLoaderMessage("Evaluating the Score")
+    setLoaderMessage("Evaluating the Score... please wait")
     setIsLoading(true);
     const submitRes = await updateStatus(interviewId, "completed");
     console.log(submitRes);
@@ -55,7 +55,7 @@ const OngoingInterview = () => {
   };
 
   async function getData() {
-    setLoaderMessage("Getting new Question")
+    setLoaderMessage("Getting new Question... please wait")
     setIsLoading(true);
     const fetchedData = await getQuestion(interviewId);
     console.log(fetchedData);
@@ -67,13 +67,6 @@ const OngoingInterview = () => {
 
   return (
     <>
-      <IconButton
-        style={{ margin: "3rem 3rem" }}
-        onClick={() => setOpenDrawer(true)}
-      >
-        <MenuRoundedIcon className="link" />
-      </IconButton>
-      <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       {isLoading ? (
         <Loader message={loaderMessage} />
       ) : (
@@ -104,7 +97,7 @@ const OngoingInterview = () => {
                       getData();
                     }}
                   >
-                    NEXT QUESTION
+                    Next Question
                   </button>
                   <button
                     onClick={() => {
@@ -138,6 +131,7 @@ const StyledInterview = styled.div`
   flex-direction: column;
   width: 70%;
   margin: 3rem auto;
+  margin-top: 8rem;
   gap: 2rem;
 
   button {

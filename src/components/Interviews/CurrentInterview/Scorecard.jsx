@@ -20,7 +20,7 @@ const Scorecard = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
-    if(!accessToken)navigate("/login");
+    if (!accessToken) navigate("/login");
     async function fetchScore(id) {
       setIsLoading(true);
       const scoreRes = await getScore(id);
@@ -63,7 +63,7 @@ const Scorecard = () => {
   return (
     <StyledScorecard>
       {isLoading ? (
-        <Loader message="Fetching the Score" />
+        <Loader message="Fetching Your Score... please wait" />
       ) : fetchAgainOption ? (
         <div className="scoreEvalStyle">
           <h1>Score evaluation</h1>
@@ -72,10 +72,10 @@ const Scorecard = () => {
       ) : (
         <div>
           <div className="head">
-          <h1>SCORECARD</h1>
-          <Link  to='/interview'><button id="another">Back to Dashboard</button></Link>
+            <h2>SCORECARD</h2>
+            <Link to='/interview'><button id="another">Back to Dashboard</button></Link>
           </div>
-        
+
           <div className="summary">
             <h3>Total Questions: {data.data.totalQuestions}</h3>
             <h3>Attempted: {data.data.answeredCnt}</h3>
@@ -85,13 +85,13 @@ const Scorecard = () => {
           <div>
             <ScorecardTemplate rows={scoreArray} />
           </div>
-          <h1>
+          <h2>
             Your total score is {data.data.score} out of {data.data.maxScore}
-          </h1>
-          
+          </h2>
+
         </div>
       )}
-      
+
     </StyledScorecard>
   );
 };
@@ -143,7 +143,7 @@ export const StyledScorecard = styled.div`
   #another{
     background-color: var(--lightOrange);
     color: var(--backgroundColor);
-    height: 4rem;
+    height: 2.4rem;
     border-radius: 0.4rem;
     font-size: 1.2rem;
     padding: 0.2rem 1.5rem;

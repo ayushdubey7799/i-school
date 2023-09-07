@@ -22,8 +22,8 @@ export default function NewInterviewDetails() {
 
   return (
     <StyledCreateInterview>
-      <Header/>
-      <Box sx={{ width: "95%", position: "relative", top: "7rem", margin: "0 2rem" }}>
+      <Header />
+      <Box sx={{ width: "75%", position: "relative", top: "7rem", margin: "0 2rem", marginBottom: '7rem' }} className='box'>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -60,7 +60,7 @@ export default function NewInterviewDetails() {
         }
 
       </Box>
-      {/* <Footer /> */}
+      <Footer />
 
     </StyledCreateInterview>
   );
@@ -69,8 +69,25 @@ export default function NewInterviewDetails() {
 const StyledCreateInterview = styled.div`
    display: flex;
    flex-direction: column;
+   align-items: center;
    width: 100%;
    margin: 0rem auto;
+
+   .box {
+    min-height: 38rem;
+
+    @media(max-width: 720px){
+      min-height: 45rem;
+    }
+
+    @media(max-width: 680px){
+      min-height: 52rem;
+    }
+
+   }
 `
+
+
+
 
 

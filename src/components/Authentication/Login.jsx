@@ -5,6 +5,11 @@ import { authenticate } from "../../functions/authenticate";
 import { auth } from "../../functions/api/auth";
 import validate from "../../functions/validate";
 import loginImg from '../../assets/loginPageSecureImg.png'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { IconButton } from "@mui/material";
+
+
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -27,34 +32,39 @@ const Login = () => {
 
   return (
     <StyledLogin>
-      <div id="form">
-        <h1>Login</h1>
-        <p>Enter your details below and login into your account</p>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            placeholder="Enter Email Address"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <IconButton onClick={() => navigate('/')} className="prev">
+        <ArrowBackIcon sx={{ fontSize: '30px' }} />
+      </IconButton>
+      <>
+        <div id="form">
+          <h1>Login</h1>
+          <p>Enter your details below and login into your account</p>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              placeholder="Enter Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-          <input
-            type="password"
-            id="password"
-            value={password}
-            placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <Link to='/signup'>Sign Up</Link></p>
-      </div>
-      <div id="cover">
-        <img src={loginImg} />
-      </div>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              placeholder="Enter Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit" className="btn">Login</button>
+          </form>
+          <p>Don't have an account? <Link to='/signup'>Sign Up</Link></p>
+        </div>
+        <div id="cover">
+          <img src={loginImg} />
+        </div>
+      </>
     </StyledLogin>
   );
 };
@@ -107,7 +117,7 @@ const StyledLogin = styled.div`
     font-size: 1rem;
   }
 
-  button{
+  .btn{
     background-color: var(--lightOrange);
     color: var(--backgroundColor);
     font-size: 1.2rem;
@@ -119,6 +129,18 @@ const StyledLogin = styled.div`
   }
 
 
+  .prev {
+    background-color: var(--lightOrange);
+    padding: 0.1rem;
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+    color: var(--white);
+  }
+
+  .prev:hover {
+    color: var(--color);
+  }
 
   @media (max-width: 800px) {
     flex-direction: column; 

@@ -71,8 +71,15 @@ export default function InterviewTabs() {
     getData(value);
   }, [value]);
 
+  const style = {
+    width: '95%',
+    minHeight: '30rem',
+    margin: '0 3rem',
+    marginTop: '6rem'
+  }
+
   return (
-    <Box sx={{ width: "100%", position: "absolute", top: "6rem", margin: "0 2rem"}}>
+    <Box sx={style}>
       <h1>My Interviews</h1>
       <Tabs
         value={value}

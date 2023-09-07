@@ -26,9 +26,9 @@ export default function MyDrawer({ openDrawer, setOpenDrawer }) {
                     <StyledLink to="/research-paper">
                         <span className="link">Research Papers</span>
                     </StyledLink>
-                    <a href="mailto:care@intelliview.in"
-                        target="_blank"
-                        rel="noreferrer" className='contactLink'><span>Contact Us</span></a>
+                    <StyledLink to="/contact">
+                        <span className="link">Contact Us</span>
+                    </StyledLink>
                     <StyledLink to="/case-studies">
                         <span className="link">Case Studies</span>
                     </StyledLink>

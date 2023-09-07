@@ -3,12 +3,12 @@ import { styled } from 'styled-components'
 import Header from '../LandingPage/Header'
 import Footer from '../commonComponents/Footer'
 
-const Support = () => {
+const Contact = () => {
     return (
         <StyledPage>
             <Header />
             <StyledContent>
-                <span className='mainTitle'>Customer Support:</span>
+                <span className='mainTitle'>Contact Us:</span>
                 <span className='title'>Get in Touch with IntelliView</span>
 
                 <span className='text'>We're here to assist you on your journey to smarter, more efficient hiring through our AI-based interview portal, IntelliView. Whether you have questions, feedback, or need technical support, our dedicated team is ready to provide you with the assistance you need.</span>
@@ -53,7 +53,7 @@ const Support = () => {
     )
 }
 
-export default Support
+export default Contact
 
 export const StyledPage = styled.div`
 width: 100%;
