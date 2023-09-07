@@ -11,18 +11,18 @@ const InterviewCard = ({ data }) => {
 
   return (
     <StyledCard>
-      <div className='title'>JOB SUMMARY: </div>
+      <div className='title'>Job Summary: </div>
       <div >{data.jobSummary?.length > 250 ? `${data.jobSummary.slice(0, 150)}...` : data.jobSummary}</div>
-      <div className='title'>RESUME TEXT: </div>
+      <div className='title'>Resume Text: </div>
       <div className='text'>{data.resumeText?.length > 250 ? `${data.resumeText.slice(0, 150)}...` : data.resumeText}</div>
-      <div className='title'>STATUS: </div>
+      <div className='title'>Status: </div>
       <div className='text'>{data.status}</div>
       {data.status == 'COMPLETED' && <button
         onClick={() => {
           navigate(`/score/${data.id}`)
         }}
       >
-        GET SCORE
+        Get Score
       </button>}
     </StyledCard>
   )

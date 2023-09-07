@@ -72,7 +72,8 @@ export default function InterviewTabs() {
   }, [value]);
 
   return (
-    <Box sx={{ width: "100%", }}>
+    <Box sx={{ width: "100%", position: "absolute", top: "6rem", margin: "0 2rem"}}>
+      <h1>My Interviews</h1>
       <Tabs
         value={value}
         onChange={handleChange}

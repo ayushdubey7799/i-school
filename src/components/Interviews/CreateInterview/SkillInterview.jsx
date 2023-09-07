@@ -110,7 +110,7 @@ export default SkillInterview
 
 const StyledSkillForm = styled.form`display: flex;
 flex-direction: column;
-gap: 3.5rem;
+gap: 1.5rem;
 margin-top: 3rem;
 
 label{
@@ -123,8 +123,8 @@ input, select{
   margin-top: 0.5rem;
   border-radius: 0.5rem;
   padding: 0.5rem 0.5rem;
-  font-size: 1.2rem;
-  height: 3rem;
+  font-size: 1rem;
+  height: 2.2rem;
   padding: 0.5rem 0.5rem;
   option{
     height: 100rem;

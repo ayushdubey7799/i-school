@@ -1,72 +1,164 @@
-import React, { useState } from 'react'
-import { styled } from 'styled-components';
-import NewInterviewModal from '../Modals/NewInterviewModal';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import { IconButton } from '@mui/material';
-import MyDrawer from './Drawer';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { styled } from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/IntelliViewLogo.png";
 
-const Header = ({ openNewInterviewModal, setOpenNewInterviewModal, isLoading, setIsLoading }) => {
+const Header = ({
+  openNewInterviewModal,
+  setOpenNewInterviewModal,
+  isLoading,
+  setIsLoading,
+}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
-  }
+  };
 
   return (
-    <StyledHeading>
-      <div id="heading">
-        <IconButton onClick={() => setOpenDrawer(true)}><MenuRoundedIcon className='link' /></IconButton>
-        <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
-        <h1 className='title'>My Interviews</h1>
-      </div>
+    
+      
+      <StyledDiv>
+        <div id="left">
+          <img src={logo} onClick={() => navigate("/")} />
+        </div>
+        <div id="middle">
+          <li onClick={() => navigate("/about")}>About Us</li>
+          <li onClick={() => navigate("/products")}>Products</li>
+          <li onClick={() => navigate("/services")}>Services</li>
+          <li onClick={() => navigate("/research-paper")}>Research Papers</li>
+          <li>
+            <a
+              href="mailto:care@intelliview.in"
+              target="_blank"
+              rel="noreferrer"
+              className="contactLink"
+            >
+              Contact Us
+            </a>
+          </li>
+          <li onClick={() => navigate("/case-studies")}>Case Studies</li>
+        </div>
+        
+        <div id="right">
+          <Link to="/create">
+            <button id="free">Start New Interview</button>
+          </Link>
+          <button onClick={handleLogout} id="sign-in">Logout</button>
+          {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
+        </div>
+      </StyledDiv>
+    
+  
+  );
+};
 
-      <div id="start">
-        <Link to='/create'>
-          <button>
-            Start New Interview
-          </button>
-        </Link>
-        <button onClick={handleLogout}>LOGOUT</button>
-        {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
-      </div>
-    </StyledHeading>
-  )
-}
+export default Header;
 
-export default Header
 
-const StyledHeading = styled.div`
+const StyledDiv = styled.div`
   display: flex;
-  padding: 0.5rem 2rem;
   justify-content: space-between;
   align-items: center;
+  color: black;
+  width: 90%;
+  padding: 0% 5%;
+  height: 6rem;
+  position: fixed;
+  z-index: 2000;
+  background-color: var(--white);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
 
-  .title {
-    color: var(--color);
+  #left > img {
+    height: 15rem;
+    margin-left: -20%;
+    cursor: pointer;
   }
 
-  #start{
+  #middle {
     display: flex;
     gap: 1rem;
   }
 
-  button{
-    background-color: var(--lightOrange);
-    color: var(--backgroundColor);
-    height: 3rem;
-    border-radius: 0.3rem;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.2rem 1rem;
-    cursor: pointer;
+  h1 {
+    margin: 0;
+    color: #add8e6;
   }
 
-  button:hover {
-    background-color: var(--blue)
+  li {
+    list-style-type: none;
   }
-`
 
+  #middle {
+    font-size: 0.9rem;
 
+    li {
+      cursor: pointer;
+
+      .contactLink {
+        text-decoration: none;
+        color: black;
+      }
+    }
+
+    li:hover {
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      display: none;
+    }
+  }
+
+  #right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    #sign-in {
+      border: none;
+      border-radius: 0.5rem;
+      background-color: var(--lightOrange);
+      color: var(--white);
+      height: 3rem;
+      padding: 0.2rem 0.8rem;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    #sign-in:hover {
+      background-color: var(--white);
+      color: black;
+      border: 0.1rem solid var(--lightOrange);
+      padding: 0.2rem 0.75rem;
+    }
+
+    #free:hover {
+      background-color: var(--white);
+      color: black;
+      border: 0.1rem solid var(--lightOrange);
+      padding: 0.2rem 0.75rem;
+    }
+
+    #free {
+      border: none;
+      border-radius: 0.5rem;
+      height: 3rem;
+      padding: 0.2rem 0.8rem;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background-color: var(--lightOrange);
+      color: var(--white);
+    }
+  }
+
+  #drawer {
+    display: none;
+
+    @media (max-width: 900px) {
+      display: block;
+    }
+  }
+`;

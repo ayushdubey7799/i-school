@@ -5,7 +5,7 @@ import { authenticate } from "../../functions/authenticate";
 import { auth } from "../../functions/api/auth";
 import validate from "../../functions/validate";
 import loginImg from '../../assets/loginPageSecureImg.png'
-const Login = () => {
+const Reset = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,7 +59,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Reset;
 
 const StyledLogin = styled.div`
   display: flex;

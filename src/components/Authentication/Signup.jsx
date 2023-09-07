@@ -123,7 +123,8 @@ const StyledSignup = styled.div`
     margin-top: 0.7rem;
     padding-left: 0.5rem;
     border-radius: 0.3rem;
-    border: 0.1rem solid var(--color)
+    border: 0.1rem solid var(--color);
+    font-size: 1rem;
   }
 
   button {

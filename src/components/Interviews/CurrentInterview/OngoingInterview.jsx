@@ -78,7 +78,7 @@ const OngoingInterview = () => {
         <Loader message={loaderMessage} />
       ) : (
         <StyledInterview>
-          <h3>INTERVIEW FOR {interviewId}</h3>
+          <h3>Interview Id : {interviewId}</h3>
           {started ? (
             <>
               <div>{data?.question}</div>
@@ -164,7 +164,7 @@ const StyledInterview = styled.div`
 
   textarea {
     padding: 1rem;
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
 

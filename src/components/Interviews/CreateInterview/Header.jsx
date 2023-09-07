@@ -1,66 +1,61 @@
 import React, { useState } from "react";
+import { styled } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { IconButton } from "@mui/material";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import MyDrawer from "./Drawer";
-import logo from "../../assets/IntelliViewLogo.png";
+import logo from "../../../assets/IntelliViewLogo.png";
 
-const Header = () => {
-  const navigate = useNavigate();
+const Header = ({
+  openNewInterviewModal,
+  setOpenNewInterviewModal,
+  isLoading,
+  setIsLoading,
+}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  let accessToken = localStorage.getItem("token");
-  console.log(accessToken);
-  if (accessToken) accessToken = JSON.parse(accessToken);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   return (
-    <StyledDiv>
-      <div id="left">
-        <img src={logo} onClick={() => navigate("/")} />
-      </div>
-      <div id="middle">
-        <li onClick={() => navigate("/about")}>About Us</li>
-        <li onClick={() => navigate("/products")}>Products</li>
-        <li onClick={() => navigate("/services")}>Services</li>
-        <li onClick={() => navigate("/research-paper")}>Research Papers</li>
-        <li>
-          <a
-            href="mailto:care@intelliview.in"
-            target="_blank"
-            rel="noreferrer"
-            className="contactLink"
-          >
-            Contact Us
-          </a>
-        </li>
-        <li onClick={() => navigate("/case-studies")}>Case Studies</li>
-      </div>
-      <div id="right">
-        {accessToken ? (
+    
+      
+      <StyledDiv>
+        <div id="left">
+          <img src={logo} onClick={() => navigate("/")} />
+        </div>
+        <div id="middle">
+          <li onClick={() => navigate("/about")}>About Us</li>
+          <li onClick={() => navigate("/products")}>Products</li>
+          <li onClick={() => navigate("/services")}>Services</li>
+          <li onClick={() => navigate("/research-paper")}>Research Papers</li>
+          <li>
+            <a
+              href="mailto:care@intelliview.in"
+              target="_blank"
+              rel="noreferrer"
+              className="contactLink"
+            >
+              Contact Us
+            </a>
+          </li>
+          <li onClick={() => navigate("/case-studies")}>Case Studies</li>
+        </div>
+        
+        <div id="right">
           <Link to="/interview">
-            {" "}
-            <button id="sign-in">Go to Dashboard</button>
+            <button id="free">Back to Dashboard</button>
           </Link>
-        ) : (
-          <Link to="/login">
-            <button id="sign-in">Sign in</button>
-          </Link>
-        )}
-        <Link to="/signup">
-          <button id="free">Try it</button>
-        </Link>
-      </div>
-      <div id="drawer">
-        <IconButton onClick={() => setOpenDrawer(true)}>
-          <MenuRoundedIcon className="link" />
-        </IconButton>
-        <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
-      </div>
-    </StyledDiv>
+          <button onClick={handleLogout} id="sign-in">Logout</button>
+          {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
+        </div>
+      </StyledDiv>
+    
+  
   );
 };
 
 export default Header;
+
 
 const StyledDiv = styled.div`
   display: flex;

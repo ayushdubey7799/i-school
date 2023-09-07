@@ -71,7 +71,11 @@ const Scorecard = () => {
         </div>
       ) : (
         <div>
+          <div className="head">
           <h1>SCORECARD</h1>
+          <Link  to='/interview'><button id="another">Back to Dashboard</button></Link>
+          </div>
+        
           <div className="summary">
             <h3>Total Questions: {data.data.totalQuestions}</h3>
             <h3>Attempted: {data.data.answeredCnt}</h3>
@@ -84,7 +88,7 @@ const Scorecard = () => {
           <h1>
             Your total score is {data.data.score} out of {data.data.maxScore}
           </h1>
-          <Link  to='/interview'><button id="another">Give Another Interview</button></Link>
+          
         </div>
       )}
       
@@ -98,6 +102,11 @@ export const StyledScorecard = styled.div`
   display: flex;
   margin: 2rem auto;
   width: 75%;
+
+  .head{
+    display: flex;
+    justify-content: space-between;
+  }
 
   .summary {
     display: flex;

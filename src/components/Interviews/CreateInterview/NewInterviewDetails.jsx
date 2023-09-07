@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import ProfileInterview from "./ProfileInterview";
 import SkillInterview from "./SkillInterview";
+import Header from "./Header";
+import Footer from "../../commonComponents/Footer";
 
 export default function NewInterviewDetails() {
   const [value, setValue] = useState("profile-interview");
@@ -20,7 +22,8 @@ export default function NewInterviewDetails() {
 
   return (
     <StyledCreateInterview>
-      <Box sx={{ width: "100%" }}>
+      <Header/>
+      <Box sx={{ width: "95%", position: "relative", top: "7rem", margin: "0 2rem" }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -57,14 +60,17 @@ export default function NewInterviewDetails() {
         }
 
       </Box>
+      {/* <Footer /> */}
+
     </StyledCreateInterview>
   );
 }
 
 const StyledCreateInterview = styled.div`
    display: flex;
-   width: 70%;
-   margin: 2rem auto;
+   flex-direction: column;
+   width: 100%;
+   margin: 0rem auto;
 `
 
 

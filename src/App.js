@@ -23,6 +23,7 @@ import Terms from './components/menuPages/Terms'
 import Disclaimer from './components/menuPages/Disclaimer'
 import ScrollToTop from "./components/commonComponents/ScrollToTop"
 import { ToastContainer } from 'react-toastify';
+import Reset from "./components/Authentication/Reset"
 
 
 
@@ -33,6 +34,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/reset" element={<Reset />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/activate" element={<Activate />} />
           <Route path="/interview" element={<InterviewPage />} />

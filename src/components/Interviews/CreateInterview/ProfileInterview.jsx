@@ -61,7 +61,7 @@ const ProfileInterview = () => {
             <label for="jobDescription">Job Description:</label>
             <br />
             <textarea
-              rows={12}
+              rows={7}
               type="text"
               name="jobDescription"
               onChange={handleInputChange}
@@ -72,7 +72,7 @@ const ProfileInterview = () => {
             <label for="resumeText">Resume:</label>
             <br />
             <textarea
-              rows={12}
+              rows={7}
               type="text"
               name="resumeText"
               onChange={handleInputChange}
@@ -94,7 +94,7 @@ export default ProfileInterview;
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   margin-top: 3rem;
 
   label {
@@ -103,7 +103,8 @@ const StyledForm = styled.form`
   }
 
   textarea {
-    width: 98.5%;
+    box-sizing: border-box;
+    width: 100%;
     margin-top: 0.5rem;
     border-radius: 0.5rem;
     padding: 0.5rem 0.5rem;
