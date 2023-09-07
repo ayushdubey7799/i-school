@@ -143,7 +143,7 @@ export const StyledScorecard = styled.div`
   #another{
     background-color: var(--lightOrange);
     color: var(--backgroundColor);
-    height: 4rem;
+    height: 3rem;
     border-radius: 0.4rem;
     font-size: 1.2rem;
     padding: 0.2rem 1.5rem;

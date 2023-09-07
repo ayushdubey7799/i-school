@@ -109,9 +109,17 @@ export default SkillInterview
 
 
 const StyledSkillForm = styled.form`display: flex;
+display: flex;
 flex-direction: column;
+align-items: center;
 gap: 1.5rem;
 margin-top: 3rem;
+margin-bottom: 2rem;
+
+
+div {
+  width: 100%;
+}
 
 label{
   font-size: 1.2rem;
@@ -139,14 +147,13 @@ input{
 
 
 button{
-  background-color: var(--lightOrange);
-    color: var(--backgroundColor);
-    height: 4rem;
+  background-color: var(--backgroundColor);
+    color: var(--color);
+    padding: 1rem 2rem;
+    border: 0.1rem solid var(--lightOrange);
     border-radius: 0.4rem;
-    width: 100%;
     font-size: 1.4rem;
     font-weight: 500;
-    border: none;
     cursor: pointer;
 }`
 

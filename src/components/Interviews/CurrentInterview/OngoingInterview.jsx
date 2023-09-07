@@ -55,7 +55,7 @@ const OngoingInterview = () => {
   };
 
   async function getData() {
-    setLoaderMessage("Getting new Question")
+    setLoaderMessage("Getting new Question... Please wait")
     setIsLoading(true);
     const fetchedData = await getQuestion(interviewId);
     console.log(fetchedData);
@@ -67,13 +67,6 @@ const OngoingInterview = () => {
 
   return (
     <>
-      <IconButton
-        style={{ margin: "3rem 3rem" }}
-        onClick={() => setOpenDrawer(true)}
-      >
-        <MenuRoundedIcon className="link" />
-      </IconButton>
-      <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       {isLoading ? (
         <Loader message={loaderMessage} />
       ) : (
@@ -138,6 +131,7 @@ const StyledInterview = styled.div`
   flex-direction: column;
   width: 70%;
   margin: 3rem auto;
+  margin-top: 8rem;
   gap: 2rem;
 
   button {

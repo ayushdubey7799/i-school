@@ -130,20 +130,20 @@ gap: 2rem;
 
 .mainTitle {
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .title {
     word-wrap: break-word;
     font-weight: 600;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1.7rem;
     color:  rgb(70, 78, 98);
 }
 
 .text {
     word-wrap: break-word;
-    font-size: 1rem;
+    font-size: 0.8rem;
     line-height: 1.7rem;
     font-weight: 500;
     color:  rgb(70, 78, 98);

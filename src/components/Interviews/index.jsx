@@ -5,6 +5,7 @@ import { getData } from "../../functions/getData";
 import { styled } from "styled-components";
 import Loader from "../commonComponents/Loader";
 import { useNavigate } from "react-router";
+import Footer from "../commonComponents/Footer";
 
 const InterviewPage = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const InterviewPage = () => {
             setOpenNewInterviewModal={setOpenNewInterviewModal}
           />
           <InterviewTabs />
+          <Footer/>
         </>
       )}
     </StyledContent>
@@ -40,6 +42,8 @@ export default InterviewPage;
 
 const StyledContent = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
   // margin: 1rem auto;
   background-color: var(--backgroundColor);
   color: var(--color);

@@ -24,6 +24,7 @@ import Disclaimer from './components/menuPages/Disclaimer'
 import ScrollToTop from "./components/commonComponents/ScrollToTop"
 import { ToastContainer } from 'react-toastify';
 import Reset from "./components/Authentication/Reset"
+import Contact from "./components/menuPages/Contact"
 
 
 
@@ -52,6 +53,7 @@ const App = () => {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/IntelliViewLogo.png";
+import { IconButton } from "@mui/material";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import MyDrawer from "../../LandingPage/Drawer";
 
 const Header = ({
   openNewInterviewModal,
@@ -17,40 +20,46 @@ const Header = ({
   };
 
   return (
-    
-      
-      <StyledDiv>
-        <div id="left">
-          <img src={logo} onClick={() => navigate("/")} />
-        </div>
-        <div id="middle">
-          <li onClick={() => navigate("/about")}>About Us</li>
-          <li onClick={() => navigate("/products")}>Products</li>
-          <li onClick={() => navigate("/services")}>Services</li>
-          <li onClick={() => navigate("/research-paper")}>Research Papers</li>
-          <li>
-            <a
-              href="mailto:care@intelliview.in"
-              target="_blank"
-              rel="noreferrer"
-              className="contactLink"
-            >
-              Contact Us
-            </a>
-          </li>
-          <li onClick={() => navigate("/case-studies")}>Case Studies</li>
-        </div>
-        
-        <div id="right">
-          <Link to="/interview">
-            <button id="free">Back to Dashboard</button>
-          </Link>
-          <button onClick={handleLogout} id="sign-in">Logout</button>
-          {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
-        </div>
-      </StyledDiv>
-    
-  
+
+
+    <StyledDiv>
+      <div id="left">
+        <img src={logo} onClick={() => navigate("/")} />
+      </div>
+      <div id="middle">
+        <li onClick={() => navigate("/about")}>About Us</li>
+        <li onClick={() => navigate("/products")}>Products</li>
+        <li onClick={() => navigate("/services")}>Services</li>
+        <li onClick={() => navigate("/research-paper")}>Research Papers</li>
+        <li>
+          <a
+            href="mailto:care@intelliview.in"
+            target="_blank"
+            rel="noreferrer"
+            className="contactLink"
+          >
+            Contact Us
+          </a>
+        </li>
+        <li onClick={() => navigate("/case-studies")}>Case Studies</li>
+      </div>
+
+      <div id="right">
+        <Link to="/interview">
+          <button id="free">Back to Dashboard</button>
+        </Link>
+        <button onClick={handleLogout} id="sign-in">Logout</button>
+        {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
+      </div>
+      <div id="drawer">
+        <IconButton onClick={() => setOpenDrawer(true)}>
+          <MenuRoundedIcon className="link" />
+        </IconButton>
+        <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+      </div>
+    </StyledDiv>
+
+
   );
 };
 
@@ -120,7 +129,7 @@ const StyledDiv = styled.div`
       border-radius: 0.5rem;
       background-color: var(--lightOrange);
       color: var(--white);
-      height: 3rem;
+      height: 2.3rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
       font-size: 0.8rem;
@@ -144,7 +153,7 @@ const StyledDiv = styled.div`
     #free {
       border: none;
       border-radius: 0.5rem;
-      height: 3rem;
+      height: 2.3rem;
       padding: 0.2rem 0.8rem;
       font-weight: 600;
       font-size: 0.8rem;
