@@ -4,14 +4,15 @@ import { createInterview } from '../../../functions/api/createInterview';
 import { updateStatus } from '../../../functions/api/updateStatus';
 import { useNavigate } from 'react-router';
 import Loader from "../../commonComponents/Loader";
+import { toast } from 'react-toastify';
 
 
 const SkillInterview = () => {
   const [interviewDetails, setInterviewDetails] = useState({
     skills: "",
     experience: "",
-    difficulty: "",
-    interviewType: ""
+    difficulty: "easy",
+    interviewType: "mcq"
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -46,6 +47,15 @@ const SkillInterview = () => {
     e.preventDefault();
     setLoaderMessage("Creating Interview");
     setIsLoading(true);
+
+    if (!interviewDetails.skills || !interviewDetails.experience || !interviewDetails.difficulty || !interviewDetails.interviewType) {
+
+      toast.warning('Please fill all inputs');
+      setIsLoading(false);
+      setLoaderMessage('');
+      return;
+    }
+
     const ongoing = await createInterview(interviewDetails.skills, `Experience:- ${interviewDetails.experience}`)
     console.log(ongoing);
     if (ongoing?.data?.id) {

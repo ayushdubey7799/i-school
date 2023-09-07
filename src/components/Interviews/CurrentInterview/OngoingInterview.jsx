@@ -36,7 +36,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitAnswer = async (id, lastQuestion) => {
-    setLoaderMessage("Submitting Answer")
+    setLoaderMessage("Submitting Answer... Please wait")
     setIsLoading(true);
     setId(id + 1);
     const res = await submitAnswer(input, id, lastQuestion, interviewId);
@@ -46,7 +46,7 @@ const OngoingInterview = () => {
   };
 
   const handleSubmitInterview = async () => {
-    setLoaderMessage("Evaluating the Score")
+    setLoaderMessage("Evaluating the Score... please wait")
     setIsLoading(true);
     const submitRes = await updateStatus(interviewId, "completed");
     console.log(submitRes);
@@ -97,7 +97,7 @@ const OngoingInterview = () => {
                       getData();
                     }}
                   >
-                    NEXT QUESTION
+                    Next Question
                   </button>
                   <button
                     onClick={() => {

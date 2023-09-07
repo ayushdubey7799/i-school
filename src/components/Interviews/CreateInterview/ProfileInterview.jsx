@@ -4,11 +4,12 @@ import { createInterview } from "../../../functions/api/createInterview";
 import { updateStatus } from "../../../functions/api/updateStatus";
 import { useNavigate } from "react-router";
 import Loader from "../../commonComponents/Loader";
+import { toast } from "react-toastify";
 
 const ProfileInterview = () => {
   const [interviewDetails, setInterviewDetails] = useState({
-    jobSummary: "developer",
-    resumeText: "Programming",
+    jobSummary: "",
+    resumeText: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,7 @@ const ProfileInterview = () => {
     const name = e.target.name;
     const val = e.target.value;
     console.log(name, val);
+
     switch (name) {
       case "jobSummary":
         setInterviewDetails({ ...interviewDetails, jobSummary: val });
@@ -29,17 +31,27 @@ const ProfileInterview = () => {
       default:
         console.log("Hello there!");
     }
-    console.log(interviewDetails);
+    console.log(interviewDetails.jobSummary, interviewDetails.resumeText);
   };
 
   const handleCreateInterview = async (e) => {
     e.preventDefault();
     setLoaderMessage("Creating Interview... Please wait");
     setIsLoading(true);
+
+    if(interviewDetails.jobSummary.length < 30 || interviewDetails.resumeText.length < 30) {
+      toast.warning('Too short inputs');
+      setIsLoading(false);
+      setLoaderMessage('');
+      return;
+    }
+
+
     const ongoing = await createInterview(
       interviewDetails.jobSummary,
       interviewDetails.resumeText
     );
+
     console.log(ongoing);
     if (ongoing?.data?.id) {
       console.log("data");
