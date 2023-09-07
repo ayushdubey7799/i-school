@@ -31,15 +31,8 @@ const Header = ({
         <li onClick={() => navigate("/products")}>Products</li>
         <li onClick={() => navigate("/services")}>Services</li>
         <li onClick={() => navigate("/research-paper")}>Research Papers</li>
-        <li>
-          <a
-            href="mailto:care@intelliview.in"
-            target="_blank"
-            rel="noreferrer"
-            className="contactLink"
-          >
-            Contact Us
-          </a>
+        <li onClick={() => navigate("/contact")}>
+          Contact Us
         </li>
         <li onClick={() => navigate("/case-studies")}>Case Studies</li>
       </div>
