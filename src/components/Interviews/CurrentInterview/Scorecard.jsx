@@ -16,7 +16,7 @@ const Scorecard = () => {
   const [data, setData] = useState(null);
   const [scoreArray, setScoreArray] = useState([]);
   const [countDown, setCountDown] = useState(5);
-  const [time,setTime] = useState("");
+  const [time, setTime] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
@@ -56,9 +56,9 @@ const Scorecard = () => {
     }
 
     let timer = localStorage.getItem("time");
-    if(timer){
+    if (timer) {
       timer = JSON.parse(timer);
-      let str = `${60-timer.minutes}min-${60-timer.seconds}sec`;
+      let str = `${(60 - timer.minutes) - 1}min-${60 - timer.seconds}sec`;
       setTime(str);
     }
 
@@ -81,7 +81,7 @@ const Scorecard = () => {
           <button onClick={() => setTrigger(true)} disabled={countDown > 0} className="scoreEvalStyleBtn">{countDown === 0 ? "TRY AGAIN" : `TRY AGAIN IN ${countDown}s`} </button>
         </div>
       ) : (
-        <div>
+        <div className="mainContainer">
           <div className="head">
             <h2>SCORECARD</h2>
             <Link to='/interview'><button id="another">Back to Dashboard</button></Link>
@@ -97,9 +97,9 @@ const Scorecard = () => {
           <div>
             <ScorecardTemplate rows={scoreArray} />
           </div>
-          <h2>
+          <span className="bottomText">
             Your total score is {data.data.score} out of {data.data.maxScore}
-          </h2>
+          </span>
 
         </div>
       )}
@@ -163,5 +163,17 @@ export const StyledScorecard = styled.div`
     border: none;
   }
 
+  .bottomText {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 5rem;
+    text-align: center;
+  }
+
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 

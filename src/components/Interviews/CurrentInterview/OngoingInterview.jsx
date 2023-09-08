@@ -13,6 +13,7 @@ import { getScore } from "../../../functions/api/getScore";
 import InterviewSubmittedModal from "../../Modals/InterviewSubmittedModal";
 import Loader from "../../commonComponents/Loader";
 import Timer from "./Timer";
+import logo from '../../../assets/IntelliViewLogo.png'
 
 const OngoingInterview = () => {
   const { interviewId } = useParams();
@@ -23,7 +24,7 @@ const OngoingInterview = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
-  const [started, setStarted] =  useState(false);
+  const [started, setStarted] = useState(false);
   const navigate = useNavigate();
 
   ////////////////////////////////////////////////// TIMER CODE
@@ -69,11 +70,11 @@ const OngoingInterview = () => {
     setMinutes(initialMinutes);
     setSeconds(0);
   };
-/////////////////////////////////////////////// TIMER CODE ENDS
+  /////////////////////////////////////////////// TIMER CODE ENDS
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
-    if(!accessToken)navigate("/login");
-  },[])
+    if (!accessToken) navigate("/login");
+  }, [])
 
 
   const handleChange = (e) => {
@@ -97,8 +98,16 @@ const OngoingInterview = () => {
     console.log(submitRes);
     if (submitRes) setScoreModal(true);
     setIsLoading(false);
-    localStorage.setItem("time",JSON.stringify({minutes,seconds}));
+    localStorage.setItem("time", JSON.stringify({ minutes, seconds }));
     stopTimer();
+  };
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+  };
+
+  const handleCutCopy = (e) => {
+    e.preventDefault();
   };
 
   async function getData() {
@@ -115,19 +124,25 @@ const OngoingInterview = () => {
 
   return (
     <>
+      <div style={{height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem'}}>
+        <img src={logo} style={{height: '100%'}}/>
+      </div>
       {isLoading ? (
         <Loader message={loaderMessage} />
       ) : (
         <StyledInterview>
           <div className="head">
             <h3>Interview Id : {interviewId}</h3>
-            <Timer minutes={minutes} seconds={seconds}/>
+            <Timer minutes={minutes} seconds={seconds} />
           </div>
-         
+
           {started ? (
             <>
               <div>{data?.question}</div>
               <textarea
+                onPaste={handlePaste}
+                onCut={handleCutCopy}
+                onCopy={handleCutCopy}
                 rows={10}
                 value={input}
                 onChange={(e) => handleChange(e)}
@@ -230,5 +245,6 @@ const StyledInterview = styled.div`
     padding: 1rem;
     font-size: 1rem;
   }
+
 `;
 
