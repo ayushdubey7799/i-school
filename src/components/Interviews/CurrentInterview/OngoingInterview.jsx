@@ -13,6 +13,7 @@ import { getScore } from "../../../functions/api/getScore";
 import InterviewSubmittedModal from "../../Modals/InterviewSubmittedModal";
 import Loader from "../../commonComponents/Loader";
 import Timer from "./Timer";
+import logo from '../../../assets/IntelliViewLogo.png'
 
 const OngoingInterview = () => {
   const { interviewId } = useParams();
@@ -123,6 +124,9 @@ const OngoingInterview = () => {
 
   return (
     <>
+      <div style={{height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem'}}>
+        <img src={logo} style={{height: '100%'}}/>
+      </div>
       {isLoading ? (
         <Loader message={loaderMessage} />
       ) : (
@@ -241,5 +245,6 @@ const StyledInterview = styled.div`
     padding: 1rem;
     font-size: 1rem;
   }
+
 `;
 
