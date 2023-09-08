@@ -19,6 +19,7 @@ const Header = () => {
         <img src={logo} onClick={() => navigate("/")} />
       </div>
       <div id="middle">
+        <li onClick={() => navigate("/")}>Home</li>
         <li onClick={() => navigate("/about")}>About Us</li>
         <li onClick={() => navigate("/products")}>Products</li>
         <li onClick={() => navigate("/services")}>Services</li>
@@ -69,8 +70,8 @@ const StyledDiv = styled.div`
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
 
   #left > img {
-    height: 15rem;
-    margin-left: -10%;
+    height: 3.5rem;
+    margin-left: -5%;
     cursor: pointer;
   }
 

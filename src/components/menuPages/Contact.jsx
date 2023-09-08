@@ -2,50 +2,55 @@ import React from 'react'
 import { styled } from 'styled-components'
 import Header from '../LandingPage/Header'
 import Footer from '../commonComponents/Footer'
+import contactMail from '../../assets/contactMail.png'
+import contactPartner from '../../assets/contactPartner.png'
+import { useNavigate } from 'react-router'
+
 
 const Contact = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
             <StyledContent>
-                <span className='mainTitle'>Contact Us:</span>
-                <span className='title'>Get in Touch with IntelliView</span>
 
-                <span className='text'>We're here to assist you on your journey to smarter, more efficient hiring through our AI-based interview portal, IntelliView. Whether you have questions, feedback, or need technical support, our dedicated team is ready to provide you with the assistance you need.</span>
-
-                <span className='title'>Here's how you can reach out to us:</span>
-
-                <span className='text'>Our customer support team is available to address your inquiries and concerns. We understand that timely assistance is crucial, and we're committed to providing you with prompt and helpful responses. Reach out to us at:</span>
-                <div className='contactBox'>
-                    <span className='text'>- <b>Email:</b> care@intelliview.in</span>
-                    <span className='text'>- <b>Live Chat:</b> Visit our website and click on the live chat icon to connect with a representative in real-time.</span>
+                <div className='topBox'>
+                    <span className='mainTitle'>Contact Us</span>
+                    <span className='titleTop'>Have any questions? We'd love to hear from you.</span>
                 </div>
 
 
-                <span className='title'>General Inquiries:</span>
-                <span className='text'>Have a general question or want to learn more about our services? We're here to provide you with the information you need. Feel free to contact our team at:</span>
-                <div className='contactBox'>
-                    <span className='text'>- <b>Email:</b> care@intelliview.in</span>
-                    <span className='text'>- <b>Contact Form:</b> Visit our website and fill out the contact form, and we'll get back to you as soon as possible.</span>
+                <div className='cardBox'>
+                    <div>
+                        <span className='title'>Press</span>
+                        <span className='text'>Are you interested in our latest news or working on a IntelliView story and need to get in touch?</span>
+                        <button className='btn' onClick={() => navigate('/about')}>Visit Press Page</button>
+                    </div>
+                    <div>
+                        <span className='title'>Help & Support</span>
+                        <span className='text'>Our support team is spread across the globe to give you answers fast.</span>
+                        <button className='btn' onClick={() => navigate('/support')}>Visit Support Page</button>
+                    </div>
+                    <div>
+                        <span className='title'>Sales</span>
+                        <span className='text'>Get in touch with our sales team to see how we can work together.</span>
+                        <button className='btn' onClick={() => navigate('/support')}>Contact Sales</button>
+                    </div>
                 </div>
 
-                <span className='title'>Technical Support:</span>
-                <span className='text'>Encountering technical issues or need assistance with our platform? Our technical support experts are here to ensure a smooth experience. Reach out to us at:</span>
-                <div className='contactBox'>
-                    <span className='text'>- <b>Email:</b> care@intelliview.in</span>
-                    <span className='text'>- <b>Troubleshooting Guide:</b> Check our online troubleshooting guide for quick solutions to common technical issues.</span>
+                <div className='bottomContainer'>
+                    <img src={contactPartner} />
+                    <span className='title'>Partnership Requests</span>
+                    <span className='text'>sales@intelliview.in</span>
                 </div>
 
-                <span className='title'>Partnerships and Collaboration:</span>
-                <span className='text'>Interested in partnering with IntelliView or exploring collaboration opportunities? We're always open to discussions and new ventures. Contact our partnership team at:</span>
-                <div className='contactBox'>
-                    <span className='text'>- <b>Email:</b> care@intelliview.in</span>
-                    <span className='text'>- <b>Partnership Inquiry Form:</b> Visit our website and complete the partnership inquiry form, and our team will be in touch with you.</span>
+                <div className='bottomContainer'>
+                    <img src={contactMail} />
+                    <span className='title'>Mailing Address</span>
+                    <span className='text'>Miledge Technologies</span>
+                    <span className='text'>Sector 79, Noida 201301 IN</span>
                 </div>
-
-                <span className='text'>We're excited to connect with you and provide you with the support and information you need. Your feedback and inquiries are valuable to us, and we're committed to helping you make the most of AI technology in your interview process. Contact us today, and let's embark on the journey of smarter hiring together!</span>
-
-
 
             </StyledContent>
             <Footer />
@@ -65,45 +70,86 @@ flex-direction: column;
 `
 
 export const StyledContent = styled.div`
-margin-top: 7rem;
+margin-top: 10rem;
 margin-bottom: 3rem;
 display: flex;
 flex-direction: column;
+align-items: center;
 margin-left: 10%;
 margin-right: 10%;
-gap: 2rem;
+gap: 4rem;
 
 .mainTitle {
     font-weight: 900;
+    font-size: 1.7rem;
+}
+
+.titleTop {
+    font-weight: 500;
     font-size: 1.3rem;
 }
 
 .title {
     word-wrap: break-word;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 1000;
+    font-size: 1.3rem;
     line-height: 1.7rem;
-    color:  rgb(70, 78, 98);
+    color:  var(--color);
 }
 
 .text {
     word-wrap: break-word;
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.7rem;
-    font-weight: 500;
+    font-weight: 600;
     color:  rgb(70, 78, 98);
 }
 
-.contactBox {
+.bottomContainer {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    align-items: center;
+    gap: 0.3rem;
 }
 
-.researchBox {
+.bottomContainer > img {
+    width: 5rem; 
+}
+
+.cardBox {
+    display: flex;
+    flex-direction: row;
+    gap: 3%;
+}
+
+.topBox {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    align-items: center;
+    gap: 2rem;
 }
+
+.cardBox > div {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 3rem;
+    text-align: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.btn {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--lightOrange);
+    background-color: var(--backgroundColor);
+    border: 0.1rem solid var(--lightOrange);
+    padding: 0.7rem 1.3rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
 `
 

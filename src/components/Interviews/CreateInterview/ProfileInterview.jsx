@@ -39,8 +39,18 @@ const ProfileInterview = () => {
     setLoaderMessage("Creating Interview... please wait");
     setIsLoading(true);
 
-    if(interviewDetails.jobSummary.length < 30 || interviewDetails.resumeText.length < 30) {
-      toast.warning('Too short inputs');
+    if (interviewDetails.jobSummary.length < 30 && interviewDetails.resumeText.length < 30) {
+      toast.warning('Too short inputs, it should be minimum 30 chars.');
+      setIsLoading(false);
+      setLoaderMessage('');
+      return;
+    } else if (interviewDetails.jobSummary.length < 30) {
+      toast.warning('Too short JobSummary, it should be minimum 30 chars.');
+      setIsLoading(false);
+      setLoaderMessage('');
+      return;
+    } else if (interviewDetails.resumeText.length < 30) {
+      toast.warning('Too short ResumeText, it should be minimum 30 chars.');
       setIsLoading(false);
       setLoaderMessage('');
       return;
