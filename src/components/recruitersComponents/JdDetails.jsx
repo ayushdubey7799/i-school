@@ -1,37 +1,48 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import { useParams } from "react-router";
 import { styled } from "styled-components";
+import { getCandidatesScore } from "../../functions/api/getCandidatesScore";
 
 const JdDetails = () => {
-  let data = [
-    { name: "John Doe", score: 85, maxScore: 100 },
-    { name: "Alice Smith", score: 92, maxScore: 100 },
-    { name: "Bob Johnson", score: 78, maxScore: 100 },
-    { name: "Eva Brown", score: 94, maxScore: 100 },
-    { name: "Michael Clark", score: 89, maxScore: 100 },
-    { name: "Sarah White", score: 75, maxScore: 100 },
-  ];
+  const { jobSummary } = useParams();
 
+ const [data,setData] = useState([]);
+
+ useEffect(() => {
+  async function getData(){
+    const res = await getCandidatesScore(jobSummary);
+    if(!res){
+      return;
+    }
+    setData(res.data);
+  }
+
+  getData();
+},[])
+console.log(data);
   return (
     <StyledJdDetails>
       <div className="jd">
         <p>
-          Software Engineer with experience in web development. Strong knowledge
-          of JavaScript, HTML, CSS, and React. Responsible for designing and
-          implementing new features and optimizing existing code.
+          {jobSummary}
         </p>
-        <p>No of interviewees :- 6</p>
       </div>
       <h3>List Of Interviewees attended this JD</h3>
       <div id="container">
         {
-            data.map((item) => {
+            data?.scoreList?.length !== 0 ? data?.scoreList?.map((item) => {
                 return (
                     <div className="card">
                     <p>{item.name}</p>
+                    <p>{item.email}</p>
                     <p>Score: {item.score}/{item.maxScore}</p>
                   </div>
                 )
             })
+            :
+            (
+              <p>No Candidates yet</p>
+            )
         }
       </div>
      
@@ -46,34 +57,30 @@ const StyledJdDetails = styled.div`
   flex-direction: column;
   width: 80%;
   margin: 2rem auto;
-  font-weight: bold;
   align-items: center;
   #container{
     width: 100%;
   }
   .jd{
     width: 100%;
-    height: 5rem;
+    // height: 5rem;
     padding: 1rem;
-    background-color: var(--lightOrange);
-    color: white;
+    background-color: var(--white);
+    color: black;
     border-radius: 1rem;
-    font-weight: bold;
     margin: 1rem;
-    p{
-        margin: 0.5rem;
-    }
+    border: 1px solid var(--lightOrange);
    }
 
    .card{
-    width: 40%;
+    width: 60%;
     display: flex;
     margin: 1rem auto;
-    // height: 1.5rem;
     justify-content: space-between;
     border-radius: 0.5rem;
     padding: 0 0.7rem;
-    background-color: var(--lightOrange);
-    color: white;
+    background-color: var(--white);
+    color: black;
+    border: 1px solid var(--lightOrange);
    }
 `;

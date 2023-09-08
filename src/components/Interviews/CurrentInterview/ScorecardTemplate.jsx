@@ -209,7 +209,7 @@ function Row(props) {
                 <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:"skipped"}</div>
                 <br/>
                 <br/>
-                <strong>Expected Answer:</strong> <div style={{fontSize: "0.7rem"}}>{expected?expected:"skipped"}</div>
+                <strong>Expected Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.expectedAnswer?row.expectedAnswer:"Not Available"}</div>
               </Typography>
             </Box>
           </Collapse>
