@@ -14,6 +14,9 @@ export default function MyDrawer({ openDrawer, setOpenDrawer }) {
                 onClose={() => setOpenDrawer(false)}
             >
                 <StyledDrawer className="drawer-div">
+                    <StyledLink to="/">
+                        <span className="link">Home</span>
+                    </StyledLink>
                     <StyledLink to="/about">
                         <span className="link">About Us</span>
                     </StyledLink>
