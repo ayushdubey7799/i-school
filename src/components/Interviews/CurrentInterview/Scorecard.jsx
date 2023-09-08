@@ -16,8 +16,8 @@ const Scorecard = () => {
   const [data, setData] = useState(null);
   const [scoreArray, setScoreArray] = useState([]);
   const [countDown, setCountDown] = useState(5);
+  const [time,setTime] = useState("");
   const navigate = useNavigate();
-
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
     if (!accessToken) navigate("/login");
@@ -55,6 +55,17 @@ const Scorecard = () => {
       fetchScore(interviewId);
     }
 
+    let timer = localStorage.getItem("time");
+    if(timer){
+      timer = JSON.parse(timer);
+      let str = `${60-timer.minutes}min-${60-timer.seconds}sec`;
+      setTime(str);
+    }
+
+    return () => {
+      localStorage.removeItem("time");
+    }
+
   }, [trigger, countDown]);
 
 
@@ -79,6 +90,7 @@ const Scorecard = () => {
           <div className="summary">
             <h3>Total Questions: {data.data.totalQuestions}</h3>
             <h3>Attempted: {data.data.answeredCnt}</h3>
+            {time && <h3>Time Taken: {time}</h3>}
             <h3>Your Score: {data.data.score}</h3>
             <h3>Maximum Score: {data.data.maxScore}</h3>
           </div>

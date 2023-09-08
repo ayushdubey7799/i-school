@@ -25,6 +25,9 @@ import ScrollToTop from "./components/commonComponents/ScrollToTop"
 import { ToastContainer } from 'react-toastify';
 import Reset from "./components/Authentication/Reset"
 import Contact from "./components/menuPages/Contact"
+import JobDescriptions from "./components/recruitersComponents/JobDescriptions"
+import JdDetails from "./components/recruitersComponents/JdDetails"
+import Timer from "./components/Interviews/CurrentInterview/Timer"
 
 
 
@@ -60,6 +63,10 @@ const App = () => {
   )
 }
 // http://localhost:3000/score/f437ad9e-2429-4bca-aea1-6c812d237fc4
-export default App
 
 // git@bitbucket.org:crystalsky/intelliview-web.git
+// const App = () => {
+//   return <Timer/>
+// }
+
+export default App

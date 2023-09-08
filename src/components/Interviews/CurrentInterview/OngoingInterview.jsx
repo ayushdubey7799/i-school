@@ -12,6 +12,7 @@ import { submitAnswer } from "../../../functions/api/submitAnswer";
 import { getScore } from "../../../functions/api/getScore";
 import InterviewSubmittedModal from "../../Modals/InterviewSubmittedModal";
 import Loader from "../../commonComponents/Loader";
+import Timer from "./Timer";
 
 const OngoingInterview = () => {
   const { interviewId } = useParams();
@@ -25,6 +26,50 @@ const OngoingInterview = () => {
   const [started, setStarted] =  useState(false);
   const navigate = useNavigate();
 
+  ////////////////////////////////////////////////// TIMER CODE
+  const initialMinutes = 60;
+  const [minutes, setMinutes] = useState(initialMinutes);
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    let timer;
+
+    if (isRunning) {
+      timer = setInterval(() => {
+        if (minutes === 0 && seconds === 0) {
+          setIsRunning(false);
+          clearInterval(timer);
+        } else {
+          if (seconds === 0) {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          } else {
+            setSeconds(seconds - 1);
+          }
+        }
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
+
+    return () => clearInterval(timer);
+  }, [isRunning, minutes, seconds]);
+
+  const startTimer = () => {
+    setIsRunning(true);
+  };
+
+  const stopTimer = () => {
+    setIsRunning(false);
+  };
+
+  const resetTimer = () => {
+    setIsRunning(false);
+    setMinutes(initialMinutes);
+    setSeconds(0);
+  };
+/////////////////////////////////////////////// TIMER CODE ENDS
   useEffect(() => {
     const accessToken = localStorage.getItem("token");
     if(!accessToken)navigate("/login");
@@ -52,6 +97,8 @@ const OngoingInterview = () => {
     console.log(submitRes);
     if (submitRes) setScoreModal(true);
     setIsLoading(false);
+    localStorage.setItem("time",JSON.stringify({minutes,seconds}));
+    stopTimer();
   };
 
   async function getData() {
@@ -62,6 +109,7 @@ const OngoingInterview = () => {
     setData(fetchedData?.data[0]);
     setIsLoading(false);
     setStarted(true);
+    startTimer();
   }
 
 
@@ -71,7 +119,11 @@ const OngoingInterview = () => {
         <Loader message={loaderMessage} />
       ) : (
         <StyledInterview>
-          <h3>Interview Id : {interviewId}</h3>
+          <div className="head">
+            <h3>Interview Id : {interviewId}</h3>
+            <Timer minutes={minutes} seconds={seconds}/>
+          </div>
+         
           {started ? (
             <>
               <div>{data?.question}</div>
@@ -133,6 +185,24 @@ const StyledInterview = styled.div`
   margin: 3rem auto;
   margin-top: 8rem;
   gap: 2rem;
+
+  .timer{
+    width: 100%;
+    // height: 3rem;
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+  }
+
+  .head{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    width: 100%;
+  }
 
   button {
     width: 20%;
