@@ -64,11 +64,7 @@ const App = () => {
     </BrowserRouter>
   )
 }
-// http://localhost:3000/score/f437ad9e-2429-4bca-aea1-6c812d237fc4
 
 // git@bitbucket.org:crystalsky/intelliview-web.git
-// const App = () => {
-//   return <Timer/>
-// }
 
 export default App
