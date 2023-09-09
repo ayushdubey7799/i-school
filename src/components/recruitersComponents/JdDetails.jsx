@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { styled } from "styled-components";
 import { getCandidatesScore } from "../../functions/api/getCandidatesScore";
 
@@ -7,16 +7,17 @@ const JdDetails = () => {
   const { jobSummary } = useParams();
 
  const [data,setData] = useState([]);
-
+ const navigate = useNavigate();
  useEffect(() => {
   async function getData(){
     const res = await getCandidatesScore(jobSummary);
+    console.log("Working")
     if(!res){
+      navigate("/employers/jds");
       return;
     }
     setData(res.data);
   }
-
   getData();
 },[])
 console.log(data);
@@ -30,7 +31,7 @@ console.log(data);
       <h3>List Of Interviewees attended this JD</h3>
       <div id="container">
         {
-            data?.scoreList?.length !== 0 ? data?.scoreList?.map((item) => {
+            data?.scoreList?.length !== 0 ? data?.scoreList?.sort((a,b) => b.score-a.score).map((item) => {
                 return (
                     <div className="card">
                     <p>{item.name}</p>

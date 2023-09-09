@@ -1,36 +1,35 @@
-import React, { useEffect,useState } from "react";
-import { getJDs } from "../../functions/getData";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import { getJds } from "../../functions/api/getJds";
 
 const JobDescriptions = () => {
-  const [JDsArray,setJDsArray] = useState([]);
-   
+  const [JDsArray, setJDsArray] = useState([]);
+
   useEffect(() => {
-    async function getData(){
-      const res = await getJDs();
-      if(!res){
+    async function getData() {
+      const res = await getJds();
+      if (!res) {
+       
         return;
       }
-      setJDsArray(res);
+
+      setJDsArray(res.data);
     }
 
     getData();
-  },[])
-
+  }, []);
+  console.log(JDsArray);
   return (
     <StyledJDs>
       <h3>Here are the list of JDs and no of interviewees for each of them</h3>
-      {
-        JDsArray.map((item) =>  <div className="card">
-          <Link to={`/employers/${item.JD}`}>
-        <p>
-         {item.JD}
-        </p>
-        </Link>
-        </div>)
-      }
-     
+      {JDsArray.filter((item) => item != null).map((item) => (
+        <div className="card">
+          <Link to={`/employers/${item}`}>
+            <p>{item}</p>
+          </Link>
+        </div>
+      ))}
     </StyledJDs>
   );
 };
@@ -38,23 +37,24 @@ const JobDescriptions = () => {
 export default JobDescriptions;
 
 const StyledJDs = styled.div`
-   width: 80%;
-   display: flex;
-   flex-direction: column;
-   margin: 2rem auto;
-   
-   a{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  font-size: 1rem;
+
+  a {
     color: black;
     text-decoration: none;
-   }
-    
-   .card{
+  }
+
+  .card {
     width: 100%;
-    height: 5rem;
     padding: 1rem;
     background-color: var(--white);
     border-radius: 1rem;
     margin: 1rem;
     border: 1px solid var(--lightOrange);
-   }
-`
+    // font-size: 1rem;
+  }
+`;

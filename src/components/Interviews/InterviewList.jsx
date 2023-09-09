@@ -1,5 +1,4 @@
 import React from "react";
-import { getData } from "../../functions/getData";
 import InterviewCard from "./InterviewCard";
 import { styled } from "styled-components";
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import InterviewTabs from "./InterviewTabs";
-import { getData } from "../../functions/getData";
 import { styled } from "styled-components";
 import Loader from "../commonComponents/Loader";
 import { useNavigate } from "react-router";
