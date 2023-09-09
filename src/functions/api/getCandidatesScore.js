@@ -8,7 +8,7 @@ export const getCandidatesScore = async (jobSummary) => {
  
 
     try {
-        const response = await axios.get(`https://dev-api.intelliview.in/api/interviews/employers/candidateScores?jobSummary=${jobSummary}`);
+        const response = await axios.post(`https://dev-api.intelliview.in/api/interviews/employers/candidateScores`,{jobSummary:jobSummary});
         console.log('Data:', response.data);
         return response.data;
       } catch (error) {
