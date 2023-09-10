@@ -15,6 +15,7 @@ const JobDescriptions = () => {
       }
 
       setJDsArray(res.data);
+      localStorage.setItem("jdData",JSON.stringify(res.data));
     }
 
     getData();
@@ -25,8 +26,8 @@ const JobDescriptions = () => {
       <h3>Here are the list of JDs and no of interviewees for each of them</h3>
       {JDsArray.filter((item) => item != null).map((item) => (
         <div className="card">
-          <Link to={`/employers/${item}`}>
-            <p>{item}</p>
+          <Link to={`/employers/${item.jobSummaryHash}`}>
+            <p>{item.jobSummary}</p>
           </Link>
         </div>
       ))}
