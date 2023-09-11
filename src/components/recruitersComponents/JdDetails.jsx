@@ -4,13 +4,19 @@ import { styled } from "styled-components";
 import { getCandidatesScore } from "../../functions/api/getCandidatesScore";
 
 const JdDetails = () => {
-  const { jobSummary } = useParams();
-
+  const { jobSummaryHash} = useParams();
  const [data,setData] = useState([]);
+ const [jobSummary,setJobSummary] = useState([]);
  const navigate = useNavigate();
  useEffect(() => {
+  const jdDataStr=localStorage.getItem("jdData");
+   if(jdDataStr){
+      let jdData=JSON.parse(jdDataStr);
+      let jobSummary=jdData.find(e=>e.jobSummaryHash==jobSummaryHash).jobSummary;
+      setJobSummary(jobSummary);
+   }
   async function getData(){
-    const res = await getCandidatesScore(jobSummary.trim());
+    const res = await getCandidatesScore(jobSummaryHash);
     console.log("Working")
     if(!res){
       navigate("/employers/jds");

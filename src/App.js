@@ -59,7 +59,7 @@ const App = () => {
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/employers/jds" element={<JobDescriptions />} />
-          <Route path="/employers/:jobSummary" element={<JdDetails />} />
+          <Route path="/employers/:jobSummaryHash" element={<JdDetails />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
