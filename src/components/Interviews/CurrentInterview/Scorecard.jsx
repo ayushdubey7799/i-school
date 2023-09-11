@@ -5,6 +5,7 @@ import ScorecardTemplate from "./ScorecardTemplate";
 import { styled } from "styled-components";
 import Loader from "../../commonComponents/Loader";
 import { Link } from "react-router-dom";
+import logo from '../../../assets/IntelliViewLogo.png'
 
 
 
@@ -82,6 +83,9 @@ const Scorecard = () => {
         </div>
       ) : (
         <div className="mainContainer">
+          <div style={{ height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem' }}>
+            <img src={logo} style={{ height: '100%' }} />
+          </div>
           <div className="head">
             <h2>SCORECARD</h2>
             <Link to='/interview'><button id="another">Back to Dashboard</button></Link>
@@ -174,6 +178,7 @@ export const StyledScorecard = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 3rem;
   }
 `;
 

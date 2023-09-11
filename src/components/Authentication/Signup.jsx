@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import validate from "../../functions/validate";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { IconButton } from "@mui/material";
+import logo from '../../assets/IntelliViewLogo.png'
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -35,6 +36,9 @@ const Signup = () => {
 
   return (
     <StyledSignup>
+      <div style={{ height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem' }}>
+        <img src={logo} style={{ height: '100%' }} />
+      </div>
       <IconButton onClick={() => navigate('/')} className="prev">
         <ArrowBackIcon sx={{ fontSize: '30px' }} />
       </IconButton>
@@ -87,6 +91,7 @@ export default Signup;
 const StyledSignup = styled.div`
   display: flex;
   width: 100%;
+
 
   form {
     display: flex;
@@ -148,8 +153,8 @@ const StyledSignup = styled.div`
     background-color: var(--lightOrange);
     padding: 0.1rem;
     position: absolute;
-    top: 2.5rem;
-    left: 2.5rem;
+    top: 6rem;
+    left: 3rem;
     color: var(--white);
   }
 
