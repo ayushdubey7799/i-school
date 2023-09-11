@@ -10,7 +10,7 @@ const JdDetails = () => {
  const navigate = useNavigate();
  useEffect(() => {
   async function getData(){
-    const res = await getCandidatesScore(jobSummary);
+    const res = await getCandidatesScore(jobSummary.trim());
     console.log("Working")
     if(!res){
       navigate("/employers/jds");

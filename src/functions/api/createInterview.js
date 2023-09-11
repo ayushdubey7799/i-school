@@ -4,7 +4,7 @@ import axios from "axios"
 
 
 export const createInterview = async (jobSummary,resumeText) => {
-
+  console.log(jobSummary,resumeText);
   const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {

@@ -58,8 +58,8 @@ const ProfileInterview = () => {
 
 
     const ongoing = await createInterview(
-      interviewDetails.jobSummary,
-      interviewDetails.resumeText
+      interviewDetails.jobSummary.trim(),
+      interviewDetails.resumeText.trim()
     );
 
     console.log(ongoing);

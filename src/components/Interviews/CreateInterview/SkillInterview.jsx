@@ -56,7 +56,7 @@ const SkillInterview = () => {
       return;
     }
 
-    const ongoing = await createInterview(interviewDetails.skills, `Experience:- ${interviewDetails.experience}`)
+    const ongoing = await createInterview(interviewDetails.skills.trim(), `Experience:- ${interviewDetails.experience.trim()}`)
     console.log(ongoing);
     if (ongoing?.data?.id) {
       console.log("data");

@@ -165,21 +165,6 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-// function createData(question, answer, score) {
-//   return {
-//     question,
-//     answer,
-//     score,
-//     open: false,
-//   };
-// }
-
-// const rows = [
-//   createData("What is your favorite color?", "Blue", 10),
-//   createData("How old are you?", "25", 5),
-//   // Add more rows here...
-// ];
-
 function Row(props) {
   const { row } = props;
   let expected = "";
