@@ -1,33 +1,31 @@
 import React from "react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from "./components/LandingPage"
-import Signup from "./components/Authentication/Signup"
-import Login from "./components/Authentication/Login"
-import InterviewPage from "./components/Interviews"
-import OngoingInterview from "./components/Interviews/CurrentInterview/OngoingInterview"
-import Scorecard from "./components/Interviews/CurrentInterview/Scorecard"
-import ScorecardTemplate from "./components/Interviews/CurrentInterview/ScorecardTemplate"
-import ProfilePage from "./components/ProfilePage"
-import SettingPage from "./components/SettingPage"
-import NewInterviewDetails from "./components/Interviews/CreateInterview/NewInterviewDetails"
+import Signup from "./pages/Signup"
+import Login from "./pages/Login"
+import OngoingInterview from "./pages/OngoingInterview"
+import Scorecard from "./pages/Scorecard"
+import ProfilePage from "./pages/ProfilePage"
+import SettingPage from "./pages/SettingPage"
+import NewInterviewDetails from "./pages/NewInterviewDetails"
 
-import Activate from "./components/Authentication/Activate"
-import About from "./components/menuPages/About"
-import Products from "./components/menuPages/Products"
-import Service from "./components/menuPages/Service"
-import ResearchPaper from "./components/menuPages/ResearchPaper"
-import CaseStudies from './components/menuPages/CaseStudies'
-import Support from './components/menuPages/Support'
-import Privacy from './components/menuPages/Privacy'
-import Terms from './components/menuPages/Terms'
-import Disclaimer from './components/menuPages/Disclaimer'
+import Activate from "./pages/Activate"
+import About from "./pages/menuPages/About"
+import Products from "./pages/menuPages/Products"
+import Service from "./pages/menuPages/Service"
+import ResearchPaper from "./pages/menuPages/ResearchPaper"
+import CaseStudies from './pages/menuPages/CaseStudies'
+import Support from './pages/menuPages/Support'
+import Privacy from './pages/menuPages/Privacy'
+import Terms from './pages/menuPages/Terms'
+import Disclaimer from './pages/menuPages/Disclaimer'
 import ScrollToTop from "./components/commonComponents/ScrollToTop"
 import { ToastContainer } from 'react-toastify';
-import Reset from "./components/Authentication/Reset"
-import Contact from "./components/menuPages/Contact"
-import JobDescriptions from "./components/recruitersComponents/JobDescriptions"
-import JdDetails from "./components/recruitersComponents/JdDetails"
-import Timer from "./components/Interviews/CurrentInterview/Timer"
+import Reset from "./pages/Reset"
+import Contact from "./pages/menuPages/Contact"
+import JobDescriptions from "./pages/JobDescriptions"
+import JdDetails from "./pages/JdDetails"
+import Home from "./pages/Home"
+import InterviewPage from "./pages/InterviewPage"
 
 
 

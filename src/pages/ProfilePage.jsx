@@ -7,8 +7,8 @@ const ProfilePage = () => {
 
     useEffect(() => {
         const accessToken = localStorage.getItem("token");
-    if(!accessToken)navigate("/login");
-    },[]);
+        if (!accessToken) navigate("/login");
+    }, []);
     return (
         <div>ProfilePage</div>
     )
