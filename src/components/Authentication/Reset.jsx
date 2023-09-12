@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useParams,useSearchParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { authenticate } from "../../functions/authenticate";
-import { auth } from "../../functions/api/auth";
 import validate from "../../functions/validate";
-import loginImg from '../../assets/loginPageSecureImg.png'
+import loginImg from "../../assets/loginPageSecureImg.png";
+import { toast } from "react-toastify";
+import { reset } from "../../functions/api/reset";
 const Reset = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const {id} = useParams()
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const [confirm,setConfirm] = useState("");
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     let val = validate(email, password);
-    if (val) {
-      const accessToken = await auth(password, email);
-      console.log(accessToken);
-      if (accessToken) {
-        localStorage.setItem("token", JSON.stringify(accessToken));
-        navigate("/interview");
-      }
+    if(password!==confirm){
+      toast.error("Confirm Password didn't match");
+      return;
     }
+    const res = await reset(confirm,password,email,id);
+    if(res)navigate("/login");
     setEmail("");
     setPassword("");
   };
@@ -28,8 +28,7 @@ const Reset = () => {
   return (
     <StyledLogin>
       <div id="form">
-        <h1>Login</h1>
-        <p>Enter your details below and login into your account</p>
+        <h1>Reset Password</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -48,9 +47,20 @@ const Reset = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+
+          <input
+            type="password"
+            id="cnfpassword"
+            value={confirm}
+            placeholder="Enter Password"
+            onChange={(e) => setConfirm(e.target.value)}
+            required
+          />
           <button type="submit">Login</button>
         </form>
-        <p>Don't have an account? <Link to='/signup'>Sign Up</Link></p>
+        <p>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
       </div>
       <div id="cover">
         <img src={loginImg} />
@@ -65,7 +75,7 @@ const StyledLogin = styled.div`
   display: flex;
   width: 100%;
 
-  form{
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,8 +90,7 @@ const StyledLogin = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center
-    
+    justify-content: center;
   }
 
   #cover {
@@ -97,7 +106,7 @@ const StyledLogin = styled.div`
     }
   }
 
-  input{
+  input {
     width: 80%;
     height: 3rem;
     margin-top: 0.7rem;
@@ -107,7 +116,7 @@ const StyledLogin = styled.div`
     font-size: 1rem;
   }
 
-  button{
+  button {
     background-color: var(--lightOrange);
     color: var(--backgroundColor);
     font-size: 1.2rem;
@@ -118,20 +127,18 @@ const StyledLogin = styled.div`
     cursor: pointer;
   }
 
-
-
   @media (max-width: 800px) {
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 50%;
-    
+
     #form {
-      width: 100%; 
+      width: 100%;
     }
 
     #cover {
-      display: none; 
+      display: none;
     }
   }
 `;

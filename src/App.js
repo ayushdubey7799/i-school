@@ -38,10 +38,9 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/reset" element={<Reset />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/activate" element={<Activate />} />
-          <Route path="/pwdreset" element={<Reset />} />
+          <Route path="/pwdreset/:id" element={<Reset />} />
           <Route path="/interview" element={<InterviewPage />} />
           <Route path="/create" element={<NewInterviewDetails />} />
           <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />

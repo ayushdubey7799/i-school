@@ -4,28 +4,40 @@ import { styled } from "styled-components";
 import { authenticate } from "../../functions/authenticate";
 import { auth } from "../../functions/api/auth";
 import validate from "../../functions/validate";
-import loginImg from '../../assets/loginPageSecureImg.png'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import loginImg from "../../assets/loginPageSecureImg.png";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton } from "@mui/material";
-import logo from '../../assets/IntelliViewLogo.png'
-
-
+import logo from "../../assets/IntelliViewLogo.png";
+import { forgetPassword } from "../../functions/api/forget";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [forget, setForget] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let val = validate(email, password);
-    if (val) {
-      const accessToken = await auth(password, email);
-      console.log(accessToken);
-      if (accessToken) {
-        localStorage.setItem("token", JSON.stringify(accessToken));
-        navigate("/interview");
+    if (!forget) {
+      let val = validate(email, password);
+      if (val) {
+        {
+          const accessToken = await auth(password, email);
+          console.log(accessToken);
+          if (accessToken) {
+            localStorage.setItem("token", JSON.stringify(accessToken));
+            navigate("/interview");
+          }
+        }
       }
+    }
+
+    if (forget) {
+      const res = await forgetPassword(email);
+      toast.success(res.message);
+      setForget(false)
     }
     setEmail("");
     setPassword("");
@@ -33,17 +45,28 @@ const Login = () => {
 
   return (
     <StyledLogin>
-      <div style={{height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem'}}>
-        <img src={logo} style={{height: '100%'}}/>
+      <div
+        style={{
+          height: "3.5rem",
+          position: "absolute",
+          top: "1rem",
+          left: "3rem",
+        }}
+      >
+        <img src={logo} style={{ height: "100%" }} />
       </div>
 
-      <IconButton onClick={() => navigate('/')} className="prev">
-        <ArrowBackIcon sx={{ fontSize: '30px' }} />
+      <IconButton onClick={() => navigate("/")} className="prev">
+        <ArrowBackIcon sx={{ fontSize: "30px" }} />
       </IconButton>
       <>
         <div id="form">
-          <h1>Login</h1>
-          <p>Enter your details below and login into your account</p>
+          {!forget && <h1>Login</h1>}
+          {forget ? (
+            <p>Enter your Email</p>
+          ) : (
+            <p>Enter your details below and login into your account</p>
+          )}
           <form onSubmit={handleSubmit}>
             <input
               type="email"
@@ -54,17 +77,26 @@ const Login = () => {
               required
             />
 
-            <input
-              type="password"
-              id="password"
-              value={password}
-              placeholder="Enter Password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button type="submit" className="btn">Login</button>
+            {!forget && (
+              <input
+                type="password"
+                id="password"
+                value={password}
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            )}
+            <button type="submit" className="btn">
+              {forget ? "Reset" : "Login"}
+            </button>
           </form>
-          <p>Don't have an account? <Link to='/signup'>Sign Up</Link></p>
+          <p>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
+          <p onClick={() => setForget(true)}>
+            Forgot Password? <Link to="">Reset</Link>
+          </p>
         </div>
         <div id="cover">
           <img src={loginImg} />
@@ -81,7 +113,7 @@ const StyledLogin = styled.div`
   width: 100%;
   margin-top: 0rem;
 
-  form{
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -96,8 +128,7 @@ const StyledLogin = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center
-    
+    justify-content: center;
   }
 
   #cover {
@@ -113,7 +144,7 @@ const StyledLogin = styled.div`
     }
   }
 
-  input{
+  input {
     width: 80%;
     height: 3rem;
     margin-top: 0.7rem;
@@ -123,7 +154,7 @@ const StyledLogin = styled.div`
     font-size: 1rem;
   }
 
-  .btn{
+  .btn {
     background-color: var(--lightOrange);
     color: var(--backgroundColor);
     font-size: 1.2rem;
@@ -133,7 +164,6 @@ const StyledLogin = styled.div`
     width: 50%;
     cursor: pointer;
   }
-
 
   .prev {
     background-color: var(--lightOrange);
@@ -149,17 +179,17 @@ const StyledLogin = styled.div`
   }
 
   @media (max-width: 800px) {
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 50%;
-    
+
     #form {
-      width: 100%; 
+      width: 100%;
     }
 
     #cover {
-      display: none; 
+      display: none;
     }
   }
 `;
