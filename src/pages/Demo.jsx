@@ -172,6 +172,25 @@ select {
     cursor: pointer;
   }
 
+  @media(max-width: 800px) {
+
+    .left {
+        display: none;
+    }
+
+    .right {
+        width: 100%;
+    }
+
+    form {
+        width: 90%;
+    }
+
+    select {
+        width: 80%;
+    }
+
+  }
 
 
 `
