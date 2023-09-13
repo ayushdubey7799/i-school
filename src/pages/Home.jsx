@@ -1,19 +1,20 @@
 import React from 'react'
-import Header from './Header'
-import Content from './Content'
+
 import { styled } from 'styled-components'
-import Footer from '../commonComponents/Footer'
+import Header from '../components/LandingPage/Header'
+import Content from '../components/LandingPage/Content'
+import Footer from '../components/commonComponents/Footer'
 
 const Home = () => {
-  return (
-    <StyledLanding>
-      <StyledLandingTop>
-        <Header />
-        <Content />
-      </StyledLandingTop>
-      <Footer />
-    </StyledLanding>
-  )
+    return (
+        <StyledLanding>
+            <StyledLandingTop>
+                <Header />
+                <Content />
+            </StyledLandingTop>
+            <Footer />
+        </StyledLanding>
+    )
 }
 
 export default Home

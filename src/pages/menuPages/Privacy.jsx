@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import Header from '../LandingPage/Header'
-import Footer from '../commonComponents/Footer'
+import Header from '../../components/LandingPage/Header';
+import Footer from '../../components/commonComponents/Footer';
 
 const Privacy = () => {
     return (

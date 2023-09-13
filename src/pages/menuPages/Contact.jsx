@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import Header from '../LandingPage/Header'
-import Footer from '../commonComponents/Footer'
+import Header from '../../components/LandingPage/Header';
+import Footer from '../../components/commonComponents/Footer';
 import contactMail from '../../assets/contactMail.png'
 import contactPartner from '../../assets/contactPartner.png'
 import { useNavigate } from 'react-router'
