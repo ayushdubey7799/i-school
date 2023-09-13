@@ -26,6 +26,7 @@ import JobDescriptions from "./pages/JobDescriptions"
 import JdDetails from "./pages/JdDetails"
 import Home from "./pages/Home"
 import InterviewPage from "./pages/InterviewPage"
+import Demo from "./pages/Demo"
 
 
 
@@ -57,6 +58,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/employers/jds" element={<JobDescriptions />} />
           <Route path="/employers/:jobSummaryHash" element={<JdDetails />} />
+          <Route path="/demo" element={<Demo />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

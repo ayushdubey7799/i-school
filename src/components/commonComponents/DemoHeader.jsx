@@ -3,57 +3,54 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IconButton } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import MyDrawer from "./Drawer";
+import MyDrawer from "../LandingPage/Drawer";
 import logo from "../../assets/IntelliViewLogo.png";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const [openDrawer, setOpenDrawer] = useState(false);
-  let accessToken = localStorage.getItem("token");
-  console.log(accessToken);
-  if (accessToken) accessToken = JSON.parse(accessToken);
+    const navigate = useNavigate();
+    const [openDrawer, setOpenDrawer] = useState(false);
+    let accessToken = localStorage.getItem("token");
+    console.log(accessToken);
+    if (accessToken) accessToken = JSON.parse(accessToken);
 
-  return (
-    <StyledDiv>
-      <div id="left">
-        <img src={logo} onClick={() => navigate("/")} />
-      </div>
-      <div id="middle">
-        <li onClick={() => navigate("/")}>Home</li>
-        <li onClick={() => navigate("/about")}>About Us</li>
-        <li onClick={() => navigate("/products")}>Products</li>
-        <li onClick={() => navigate("/services")}>Services</li>
-        <li onClick={() => navigate("/research-paper")}>Research Papers</li>
-        <li onClick={() => navigate("/contact")}>
-          Contact Us
-        </li>
-      </div>
-      <div id="right">
-        {accessToken ? (
-          <Link to="/interview">
-            {" "}
-            <button id="sign-in">Go to Dashboard</button>
-          </Link>
-        ) : (
-          <Link to="/login">
-            <button id="sign-in">Sign in</button>
-          </Link>
-        )}
-        <Link to="/signup">
-          <button id="free">Try it Now</button>
-        </Link>
-        <Link to="/demo">
-          <button id="free">Request a Demo</button>
-        </Link>
-      </div>
-      <div id="drawer">
-        <IconButton onClick={() => setOpenDrawer(true)}>
-          <MenuRoundedIcon className="link" />
-        </IconButton>
-        <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
-      </div>
-    </StyledDiv>
-  );
+    return (
+        <StyledDiv>
+            <div id="left">
+                <img src={logo} onClick={() => navigate("/")} />
+            </div>
+            <div id="middle">
+                <li onClick={() => navigate("/")}>Home</li>
+                <li onClick={() => navigate("/about")}>About Us</li>
+                <li onClick={() => navigate("/products")}>Products</li>
+                <li onClick={() => navigate("/services")}>Services</li>
+                <li onClick={() => navigate("/research-paper")}>Research Papers</li>
+                <li onClick={() => navigate("/contact")}>
+                    Contact Us
+                </li>
+            </div>
+            <div id="right">
+                {accessToken ? (
+                    <Link to="/interview">
+                        {" "}
+                        <button id="sign-in">Go to Dashboard</button>
+                    </Link>
+                ) : (
+                    <Link to="/login">
+                        <button id="sign-in">Sign in</button>
+                    </Link>
+                )}
+                <Link to="/signup">
+                    <button id="free">Try it Now</button>
+                </Link>
+            </div>
+            <div id="drawer">
+                <IconButton onClick={() => setOpenDrawer(true)}>
+                    <MenuRoundedIcon className="link" />
+                </IconButton>
+                <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+            </div>
+        </StyledDiv>
+    );
 };
 
 export default Header;
