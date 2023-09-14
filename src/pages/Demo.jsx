@@ -168,7 +168,7 @@ select {
     font-size: 1.2rem;
     border-radius: 0.4rem;
     border: none;
-    padding: 1rem 1rem;
+    padding: 0.7rem 1rem;
     cursor: pointer;
   }
 

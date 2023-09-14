@@ -7,16 +7,14 @@ import loginImg from "../assets/loginPageSecureImg.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton } from "@mui/material";
 import logo from "../assets/IntelliViewLogo.png";
-import { forgetPassword } from "../functions/api/forget";
-import { toast } from "react-toastify";
 import { performLogin } from "../slices/authSlice"
 import { useDispatch, useSelector } from "react-redux";
+
 
 const Login2 = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
-  const [forget, setForget] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // if(loggedIn)navigate("/interview");
@@ -25,19 +23,11 @@ const Login2 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!forget) {
-      let val = validate(email, password);
-      if (val) {
-        {
-          await dispatch(performLogin({ password, email }));
-        }
+    let val = validate(email, password);
+    if (val) {
+      {
+        await dispatch(performLogin({ password, email }));
       }
-    }
-
-    if (forget) {
-      const res = await forgetPassword(email);
-      toast.success(res.message);
-      setForget(false)
     }
     setEmail("");
     setPassword("");
@@ -61,12 +51,10 @@ const Login2 = () => {
       </IconButton>
       <>
         <div id="form">
-          {!forget && <h1>Login</h1>}
-          {forget ? (
-            <p>Enter your Email</p>
-          ) : (
-            <p>Enter your details below and login into your account</p>
-          )}
+          <h1>Login</h1>
+
+          <p>Enter your details below and login into your account</p>
+
           <form onSubmit={handleSubmit}>
             <input
               type="email"
@@ -77,25 +65,23 @@ const Login2 = () => {
               required
             />
 
-            {!forget && (
-              <input
-                type="password"
-                id="password"
-                value={password}
-                placeholder="Enter Password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            )}
+            <input
+              type="password"
+              id="password"
+              value={password}
+              placeholder="Enter Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <button type="submit" className="btn">
-              {forget ? "Reset" : "Login"}
+              Login
             </button>
           </form>
           <p>
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </p>
-          <p onClick={() => setForget(true)}>
-            Forgot Password? <Link to="">Reset</Link>
+          <p>
+            Forgot Password? <Link to="/reset">Reset</Link>
           </p>
         </div>
         <div id="cover">

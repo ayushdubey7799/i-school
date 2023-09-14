@@ -27,6 +27,7 @@ import JdDetails from "./pages/JdDetails"
 import Home from "./pages/Home"
 import InterviewPage from "./pages/InterviewPage"
 import Demo from "./pages/Demo"
+import Forgot from "./pages/Forgot"
 
 
 
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />
+          <Route path="/reset" element={<Forgot />} />
           <Route path="/interview" element={<InterviewPage />} />
           <Route path="/create" element={<NewInterviewDetails />} />
           <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
