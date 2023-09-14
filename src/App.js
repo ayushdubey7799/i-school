@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
+import Login2 from "./pages/Login2"
 import OngoingInterview from "./pages/OngoingInterview"
 import Scorecard from "./pages/Scorecard"
 import ProfilePage from "./pages/ProfilePage"
@@ -36,7 +37,7 @@ const App = () => {
       <ScrollToTop>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login2 />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />

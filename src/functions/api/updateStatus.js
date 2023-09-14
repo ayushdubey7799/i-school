@@ -3,13 +3,11 @@ import axios from "axios"
 
 
 
-export const updateStatus = async (id,data) => {
-  const token = JSON.parse(localStorage.getItem("token"));
-
+export const updateStatus = async (id,data,accessToken) => {
 
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
     }
   };

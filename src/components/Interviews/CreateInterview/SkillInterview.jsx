@@ -5,9 +5,10 @@ import { updateStatus } from '../../../functions/api/updateStatus';
 import { useNavigate } from 'react-router';
 import Loader from "../../commonComponents/Loader";
 import { toast } from 'react-toastify';
-
+import { useSelector } from 'react-redux';
 
 const SkillInterview = () => {
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [interviewDetails, setInterviewDetails] = useState({
     skills: "",
     experience: "",
@@ -56,11 +57,11 @@ const SkillInterview = () => {
       return;
     }
 
-    const ongoing = await createInterview(interviewDetails.skills.trim(), `Experience:- ${interviewDetails.experience.trim()}`)
+    const ongoing = await createInterview(interviewDetails.skills.trim(), `Experience ${interviewDetails.experience.trim()}`,accessToken)
     console.log(ongoing);
     if (ongoing?.data?.id) {
       console.log("data");
-      const statusResponse = await updateStatus(ongoing.data.id, "started");
+      const statusResponse = await updateStatus(ongoing.data.id, "started",accessToken);
       console.log(statusResponse);
       setIsLoading(false);
       if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);

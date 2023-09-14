@@ -3,13 +3,13 @@ import axios from "axios"
 
 
 
-export const createInterview = async (jobSummary,resumeText) => {
+export const createInterview = async (jobSummary,resumeText, accessToken) => {
   console.log(jobSummary,resumeText);
-  const token = JSON.parse(localStorage.getItem("token"));
+  // const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {
   headers: {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${accessToken}`,
     'Content-Type': 'application/json'
   }
 };

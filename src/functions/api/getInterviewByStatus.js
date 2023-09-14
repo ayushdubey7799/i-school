@@ -3,12 +3,12 @@ import axios from "axios";
 
 
 
-export const getInterviewByStatus = async (status) => {
-  const token = JSON.parse(localStorage.getItem("token"));
+export const getInterviewByStatus = async (status,accessToken) => {
+  // const token = JSON.parse(localStorage.getItem("token"));
 
     const config = {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
         },
       

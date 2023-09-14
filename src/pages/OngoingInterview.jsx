@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { useSelector } from "react-redux";
 import Content from "../components/Interviews/CurrentInterview/Content";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { IconButton, Input } from "@mui/material";
@@ -16,6 +17,7 @@ import Timer from "../components/Interviews/CurrentInterview/Timer";
 import logo from '../assets/IntelliViewLogo.png'
 
 const OngoingInterview = () => {
+    const accessToken = useSelector(state => state.auth.userData?.accessToken)
     const { interviewId } = useParams();
     const [data, setData] = useState(null);
     const [id, setId] = useState(1);
@@ -72,7 +74,6 @@ const OngoingInterview = () => {
     };
     /////////////////////////////////////////////// TIMER CODE ENDS
     useEffect(() => {
-        const accessToken = localStorage.getItem("token");
         if (!accessToken) navigate("/login");
     }, [])
 
@@ -85,7 +86,7 @@ const OngoingInterview = () => {
         setLoaderMessage("Submitting Answer... please wait")
         setIsLoading(true);
         setId(id + 1);
-        const res = await submitAnswer(input, id, lastQuestion, interviewId);
+        const res = await submitAnswer(input, id, lastQuestion, interviewId,accessToken);
         console.log(res);
         setInput("");
         setIsLoading(false);
@@ -94,7 +95,7 @@ const OngoingInterview = () => {
     const handleSubmitInterview = async () => {
         setLoaderMessage("Evaluating the Score... please wait")
         setIsLoading(true);
-        const submitRes = await updateStatus(interviewId, "completed");
+        const submitRes = await updateStatus(interviewId, "completed",accessToken);
         console.log(submitRes);
         if (submitRes) setScoreModal(true);
         setIsLoading(false);
@@ -113,7 +114,7 @@ const OngoingInterview = () => {
     async function getData() {
         setLoaderMessage("Getting new Question... please wait")
         setIsLoading(true);
-        const fetchedData = await getQuestion(interviewId);
+        const fetchedData = await getQuestion(interviewId,accessToken);
         console.log(fetchedData);
         setData(fetchedData?.data[0]);
         setIsLoading(false);

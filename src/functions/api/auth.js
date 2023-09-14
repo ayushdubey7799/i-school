@@ -16,7 +16,7 @@ export const auth = async (password, email) => {
   try {
     const response = await axios.post('https://dev-api.intelliview.in/api/auth/login', requestData);
     console.log('Data:', response.data);
-    return response.data.data.accessToken;
+    return response.data;
   } catch (error) {
     toast.error("Bad Credentials");
     console.error('Error:', error);

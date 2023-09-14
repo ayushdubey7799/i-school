@@ -2,13 +2,12 @@ import axios from "axios";
 
 
 
-export const submitAnswer = async (answer,id,lastQuestion,interviewId) => {
+export const submitAnswer = async (answer,id,lastQuestion,interviewId,accessToken) => {
 
-  const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {
   headers: {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${accessToken}`,
     'Content-Type': 'application/json'
   }
 };

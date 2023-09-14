@@ -2,12 +2,12 @@ import axios from "axios";
 
 
 
-export const getQuestion = async (id) => {
+export const getQuestion = async (id,accessToken) => {
   const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {
   headers: {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${accessToken}`,
     'Content-Type': 'application/json'
   }
 };

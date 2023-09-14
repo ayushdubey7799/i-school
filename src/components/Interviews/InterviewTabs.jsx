@@ -49,11 +49,13 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import InterviewList from "./InterviewList";
 import '../../App.css';
 import { getInterviewByStatus } from "../../functions/api/getInterviewByStatus";
 
 export default function InterviewTabs() {
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [value, setValue] = useState("STARTED");
   const [filteredData, setFilteredData] = useState({});
 
@@ -63,7 +65,7 @@ export default function InterviewTabs() {
 
   useEffect(() => {
     async function getData(value) {
-      const response = await getInterviewByStatus(value);
+      const response = await getInterviewByStatus(value,accessToken);
       if (response) {
         setFilteredData(response);
       }

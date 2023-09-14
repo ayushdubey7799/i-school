@@ -5,8 +5,10 @@ import { updateStatus } from "../../../functions/api/updateStatus";
 import { useNavigate } from "react-router";
 import Loader from "../../commonComponents/Loader";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const ProfileInterview = () => {
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [interviewDetails, setInterviewDetails] = useState({
     jobSummary: "",
     resumeText: "",
@@ -58,7 +60,8 @@ const ProfileInterview = () => {
 
     const ongoing = await createInterview(
       interviewDetails.jobSummary.trim(),
-      interviewDetails.resumeText.trim()
+      interviewDetails.resumeText.trim(),
+      accessToken
     );
 
     console.log(ongoing);

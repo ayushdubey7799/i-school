@@ -6,13 +6,16 @@ import { styled } from "styled-components";
 import Loader from "../components/commonComponents/Loader";
 import { Link } from "react-router-dom";
 import logo from '../assets/IntelliViewLogo.png'
+import { useSelector } from "react-redux";
 
 
 
 const Scorecard = () => {
+    const accessToken = useSelector(state => state.auth.userData?.accessToken)
+
     const [isLoading, setIsLoading] = useState(true);
     const [fetchAgainOption, setFetchAgainOption] = useState(true);
-    const interviewId = useParams();
+    const {interviewId} = useParams();
     const [trigger, setTrigger] = useState(true);
     const [data, setData] = useState(null);
     const [scoreArray, setScoreArray] = useState([]);
@@ -20,11 +23,10 @@ const Scorecard = () => {
     const [time, setTime] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
-        const accessToken = localStorage.getItem("token");
         if (!accessToken) navigate("/login");
-        async function fetchScore(id) {
+        async function fetchScore(id,accessToken) {
             setIsLoading(true);
-            const scoreRes = await getScore(id);
+            const scoreRes = await getScore(id,accessToken);
             console.log(scoreRes?.data?.questions[0]);
             if (!scoreRes) {
                 setFetchAgainOption(true);
@@ -53,7 +55,7 @@ const Scorecard = () => {
         }
 
         if (trigger === true) {
-            fetchScore(interviewId);
+            fetchScore(interviewId,accessToken);
         }
 
         let timer = localStorage.getItem("time");

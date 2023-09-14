@@ -9,12 +9,19 @@ import { IconButton } from "@mui/material";
 import logo from "../assets/IntelliViewLogo.png";
 import { forgetPassword } from "../functions/api/forget";
 import { toast } from "react-toastify";
+import {performLogin} from "../slices/authSlice"
+import { useDispatch, useSelector } from "react-redux";
 
-const Login = () => {
+const Login2 = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const accessToken = useSelector(state => state.auth.userData?.accessToken)
     const [forget, setForget] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    // if(loggedIn)navigate("/interview");
+    console.log(accessToken);
+    if(accessToken)navigate("/interview")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,12 +29,8 @@ const Login = () => {
             let val = validate(email, password);
             if (val) {
                 {
-                    const accessToken = await auth(password, email);
-                    console.log(accessToken);
-                    if (accessToken) {
-                        localStorage.setItem("token", JSON.stringify(accessToken));
-                        navigate("/interview");
-                    }
+                   await dispatch(performLogin({password, email}));
+
                 }
             }
         }
@@ -104,7 +107,7 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Login2;
 
 const StyledLogin = styled.div`
   display: flex;
