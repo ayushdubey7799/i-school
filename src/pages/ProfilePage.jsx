@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router'
 
 const ProfilePage = () => {
-
+    const accessToken = useSelector(state => state.auth.userData?.accessToken)
     const navigate = useNavigate();
 
     useEffect(() => {
-        const accessToken = localStorage.getItem("token");
-        if (!accessToken) navigate("/login");
+        if (!accessToken) {
+            navigate("/login");
+        } else {
+            navigate('/profile');
+        }
     }, []);
     return (
         <div>ProfilePage</div>

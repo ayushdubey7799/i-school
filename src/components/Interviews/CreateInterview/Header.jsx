@@ -6,6 +6,9 @@ import { IconButton } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MyDrawer from "../../LandingPage/Drawer";
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
+import { useDispatch } from "react-redux";
+import { logout } from "../../../slices/authSlice";
+import { persistor } from "../../../store";
 
 const Header = ({
   openNewInterviewModal,
@@ -15,8 +18,11 @@ const Header = ({
 }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    persistor.purge();
+    dispatch(logout())
     navigate("/");
   };
 

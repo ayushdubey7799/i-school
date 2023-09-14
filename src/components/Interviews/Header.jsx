@@ -218,6 +218,21 @@ const StyledDiv = styled.div`
     display: block;
 }
 
+@media(max-width: 900px) {
+  
+  .dropdown {
+    right: 30%;
+  }
+}
+
+@media(max-width: 550px) {
+  
+  .dropdown {
+    right: 20%;
+  }
+}
+
+
   #drawer {
     display: none;
 

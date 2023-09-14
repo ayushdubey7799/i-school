@@ -5,13 +5,13 @@ import { IconButton } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MyDrawer from "./Drawer";
 import logo from "../../assets/IntelliViewLogo.png";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [openDrawer, setOpenDrawer] = useState(false);
-  let accessToken = localStorage.getItem("token");
   console.log(accessToken);
-  if (accessToken) accessToken = JSON.parse(accessToken);
 
   return (
     <StyledDiv>

@@ -9,102 +9,104 @@ import { IconButton } from "@mui/material";
 import logo from "../assets/IntelliViewLogo.png";
 import { forgetPassword } from "../functions/api/forget";
 import { toast } from "react-toastify";
+import { performLogin } from "../slices/authSlice"
+import { useDispatch, useSelector } from "react-redux";
 
-const Login = () => {
-    const navigate = useNavigate();
-    const [forget, setForget] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+const Login2 = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const [forget, setForget] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // if(loggedIn)navigate("/interview");
+  console.log(accessToken);
+  if (accessToken) navigate("/interview")
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!forget) {
-            let val = validate(email, password);
-            if (val) {
-                {
-                    const accessToken = await auth(password, email);
-                    console.log(accessToken);
-                    if (accessToken) {
-                        localStorage.setItem("token", JSON.stringify(accessToken));
-                        navigate("/interview");
-                    }
-                }
-            }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!forget) {
+      let val = validate(email, password);
+      if (val) {
+        {
+          await dispatch(performLogin({ password, email }));
         }
+      }
+    }
 
-        if (forget) {
-            const res = await forgetPassword(email);
-            toast.success(res.message);
-            setForget(false)
-        }
-        setEmail("");
-        setPassword("");
-    };
+    if (forget) {
+      const res = await forgetPassword(email);
+      toast.success(res.message);
+      setForget(false)
+    }
+    setEmail("");
+    setPassword("");
+  };
 
-    return (
-        <StyledLogin>
-            <div
-                style={{
-                    height: "3.5rem",
-                    position: "absolute",
-                    top: "1rem",
-                    left: "3rem",
-                }}
-            >
-                <img src={logo} style={{ height: "100%" }} />
-            </div>
+  return (
+    <StyledLogin>
+      <div
+        style={{
+          height: "3.5rem",
+          position: "absolute",
+          top: "1rem",
+          left: "3rem",
+        }}
+      >
+        <img src={logo} style={{ height: "100%" }} />
+      </div>
 
-            <IconButton onClick={() => navigate("/")} className="prev">
-                <ArrowBackIcon sx={{ fontSize: "30px" }} />
-            </IconButton>
-            <>
-                <div id="form">
-                    {!forget && <h1>Login</h1>}
-                    {forget ? (
-                        <p>Enter your Email</p>
-                    ) : (
-                        <p>Enter your details below and login into your account</p>
-                    )}
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            placeholder="Enter Email Address"
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
+      <IconButton onClick={() => navigate("/")} className="prev">
+        <ArrowBackIcon sx={{ fontSize: "30px" }} />
+      </IconButton>
+      <>
+        <div id="form">
+          {!forget && <h1>Login</h1>}
+          {forget ? (
+            <p>Enter your Email</p>
+          ) : (
+            <p>Enter your details below and login into your account</p>
+          )}
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              placeholder="Enter Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-                        {!forget && (
-                            <input
-                                type="password"
-                                id="password"
-                                value={password}
-                                placeholder="Enter Password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        )}
-                        <button type="submit" className="btn">
-                            {forget ? "Reset" : "Login"}
-                        </button>
-                    </form>
-                    <p>
-                        Don't have an account? <Link to="/signup">Sign Up</Link>
-                    </p>
-                    <p onClick={() => setForget(true)}>
-                        Forgot Password? <Link to="">Reset</Link>
-                    </p>
-                </div>
-                <div id="cover">
-                    <img src={loginImg} />
-                </div>
-            </>
-        </StyledLogin>
-    );
+            {!forget && (
+              <input
+                type="password"
+                id="password"
+                value={password}
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            )}
+            <button type="submit" className="btn">
+              {forget ? "Reset" : "Login"}
+            </button>
+          </form>
+          <p>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
+          <p onClick={() => setForget(true)}>
+            Forgot Password? <Link to="">Reset</Link>
+          </p>
+        </div>
+        <div id="cover">
+          <img src={loginImg} />
+        </div>
+      </>
+    </StyledLogin>
+  );
 };
 
-export default Login;
+export default Login2;
 
 const StyledLogin = styled.div`
   display: flex;
