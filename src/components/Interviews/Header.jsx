@@ -5,7 +5,7 @@ import logo from "../../assets/IntelliViewLogo.png";
 import { IconButton } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MyDrawer from "../LandingPage/Drawer";
-import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
+import profileIcon from '../../assets/profileIcon.png'
 import { persistor } from "../../store";
 import { logout } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
@@ -55,13 +55,13 @@ const Header = ({
 
         <div className="profileIcon">
           <IconButton>
-            <AccountCircleSharpIcon className="profileIcon" />
+            <img src={profileIcon} className="profileImg"/>
           </IconButton>
         </div>
 
         <div class="dropdown" id="dropdown">
           <span onClick={() => navigate('/profile')}>View/Edit Profile</span>
-          <span onClick={() => navigate('/login')}>Reset Password</span>
+          <span onClick={() => navigate('/reset')}>Reset Password</span>
           <span onClick={handleLogout}>Logout</span>
           <span onClick={() => navigate('/support')}>Help</span>
         </div>
@@ -180,8 +180,11 @@ const StyledDiv = styled.div`
   }
 
   .profileIcon {
-    font-size: 2.5rem;
     position: relative;
+  }
+
+  .profileImg {
+    width: 1.8rem;
   }
 
   .dropdown {
@@ -192,7 +195,8 @@ const StyledDiv = styled.div`
     background-color: white;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
     padding: 1rem;
-    font-weight: 600;
+    font-weight: 400;
+    font-size: 0.8rem;
     border-radius: 0.5rem;
 }
 

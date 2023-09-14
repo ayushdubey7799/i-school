@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import Loader from "../../commonComponents/Loader";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import CustomInput from "../../commonComponents/CustomInput";
 
 const ProfileInterview = () => {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
@@ -17,6 +18,9 @@ const ProfileInterview = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
   const navigate = useNavigate();
+  const [jd, setJd] = useState();
+  const [resume, setResume] = useState();
+
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -67,7 +71,7 @@ const ProfileInterview = () => {
     console.log(ongoing);
     if (ongoing?.data?.id) {
       console.log("data");
-      const statusResponse = await updateStatus(ongoing.data.id, "started");
+      const statusResponse = await updateStatus(ongoing.data.id, "started", accessToken);
       console.log(statusResponse);
       setIsLoading(false);
       if (statusResponse?.status == "SUCCESS")
@@ -75,39 +79,67 @@ const ProfileInterview = () => {
     }
   };
 
+  const handleJd = (file) => {
+    setJd(file);
+  }
+
+  const handleResume = (file) => {
+    setResume(file);
+  }
+
   return (
     <div>
       {isLoading ? (
         <Loader message={loaderMessage} />
       ) : (
         <StyledForm>
-          <div>
-            <label for="jobDescription">Job Description:</label>
-            <br />
-            <textarea
-              rows={7}
-              type="text"
-              name="jobSummary"
-              onChange={handleInputChange}
+          <div className="inputCont">
+            <div>
+              <label for="jobDescription">Job Description:</label>
+              <br />
+              <textarea
+                rows={7}
+                type="text"
+                name="jobSummary"
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <CustomInput
+              accept={".pdf, .doc, .docx, .txt, application/*"}
+              id='jdInput'
+              fileHandleFnc={handleJd}
+              text={"Upload JD"}
             />
           </div>
 
-          <div>
-            <label for="resumeText">Resume:</label>
-            <br />
-            <textarea
-              rows={7}
-              type="text"
-              name="resumeText"
-              onChange={handleInputChange}
+          <div className="inputCont">
+            <div>
+              <label for="resumeText">Resume:</label>
+              <br />
+              <textarea
+                rows={7}
+                type="text"
+                name="resumeText"
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <CustomInput
+              accept={".pdf, .doc, .docx, .txt, application/*"}
+              id='resumeInput'
+              fileHandleFnc={handleResume}
+              text={"Upload Resume"}
             />
           </div>
+
           <button onClick={(e) => handleCreateInterview(e)}>
             Start Interview
           </button>
         </StyledForm>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 
@@ -117,8 +149,9 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-top: 3rem;
   margin-bottom: 2rem;
 
@@ -155,6 +188,13 @@ const StyledForm = styled.form`
     font-weight: 500;
     cursor: pointer;
   }
+
+  .inputCont {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+  }
+
 `;
 
 
