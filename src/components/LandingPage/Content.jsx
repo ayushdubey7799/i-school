@@ -59,7 +59,7 @@ export const StyledContent = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #f0b27a;
+    background-color: var(--lightOrange);
     clip-path: polygon(0% 0%, 100% -30%, -15% 100%, 0% 100%);
     transform: rotate(180deg);
   }
