@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import mammoth from 'mammoth/mammoth.browser';
 import { styled } from "styled-components";
 import { createInterview } from "../../../functions/api/interview/createInterview";
 import { updateStatus } from "../../../functions/api/interview/updateStatus";
@@ -15,12 +16,39 @@ const ProfileInterview = () => {
     resumeText: "",
   });
 
+
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
   const navigate = useNavigate();
   const [jd, setJd] = useState();
   const [resume, setResume] = useState();
 
+
+
+  useEffect(() => {
+    if (resume) {
+      if (resume.type === 'text/plain') {
+        handleTxtFile(resume, 'resume');
+      } else if (resume.type === 'application/msword' || resume.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+        handleDocxFile(resume, 'resume');
+      } else {
+        console.log('Unsupported file type');
+      }
+    }
+  }, [resume]);
+
+
+  useEffect(() => {
+    if (jd) {
+      if (jd.type === 'text/plain') {
+        handleTxtFile(jd, 'jd');
+      } else if (jd.type === 'application/msword' || jd.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+        handleDocxFile(jd, 'jd');
+      } else {
+        console.log('Unsupported file type');
+      }
+    }
+  }, [jd]);
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -87,6 +115,41 @@ const ProfileInterview = () => {
     setResume(file);
   }
 
+
+  // reading the uploaded .txt, .doc, .docx file
+
+  const handleTxtFile = (file, type) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const fileContent = event.target.result;
+      if (type === 'jd') {
+        setInterviewDetails({ ...interviewDetails, jobSummary: fileContent });
+      } else if (type === 'resume') {
+        setInterviewDetails({ ...interviewDetails, resumeText: fileContent });
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleDocxFile = (file, type) => {
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const arrayBuffer = event.target.result;
+      const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+      if (type === 'jd') {
+        setInterviewDetails({ ...interviewDetails, jobSummary: result.value });
+      } else if (type === 'resume') {
+        setInterviewDetails({ ...interviewDetails, resumeText: result.value });
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  };
+
+
+
+
+
+
   return (
     <div>
       {isLoading ? (
@@ -100,13 +163,14 @@ const ProfileInterview = () => {
               <textarea
                 rows={7}
                 type="text"
+                value={interviewDetails.jobSummary}
                 name="jobSummary"
                 onChange={handleInputChange}
               />
             </div>
 
             <CustomInput
-              accept={".pdf, .doc, .docx, .txt, application/*"}
+              accept={".doc, .docx, .txt"}
               id='jdInput'
               fileHandleFnc={handleJd}
               text={"Upload JD"}
@@ -120,13 +184,14 @@ const ProfileInterview = () => {
               <textarea
                 rows={7}
                 type="text"
+                value={interviewDetails.resumeText}
                 name="resumeText"
                 onChange={handleInputChange}
               />
             </div>
 
             <CustomInput
-              accept={".pdf, .doc, .docx, .txt, application/*"}
+              accept={".doc, .docx, .txt"}
               id='resumeInput'
               fileHandleFnc={handleResume}
               text={"Upload Resume"}
@@ -142,6 +207,8 @@ const ProfileInterview = () => {
     </div >
   );
 };
+
+
 
 export default ProfileInterview;
 
