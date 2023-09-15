@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import { createInterview } from "../../../functions/api/createInterview";
-import { updateStatus } from "../../../functions/api/updateStatus";
+import { createInterview } from "../../../functions/api/interview/createInterview";
+import { updateStatus } from "../../../functions/api/interview/updateStatus";
 import { useNavigate } from "react-router";
 import Loader from "../../commonComponents/Loader";
 import { toast } from "react-toastify";

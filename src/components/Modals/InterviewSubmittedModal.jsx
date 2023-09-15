@@ -3,9 +3,9 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
-import { createInterview } from "../../functions/api/createInterview";
-import { updateStatus } from "../../functions/api/updateStatus";
-import { getScore } from "../../functions/api/getScore";
+import { createInterview } from "../../functions/api/interview/createInterview";
+import { updateStatus } from "../../functions/api/interview/updateStatus";
+import { getScore } from "../../functions/api/interview/getScore";
 
 const style = {
   position: "absolute",

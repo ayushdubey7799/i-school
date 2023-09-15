@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { styled } from "styled-components";
 import validate from "../functions/validate";
 import loginImg from "../assets/loginPageSecureImg.png";
 import { toast } from "react-toastify";
-import { reset } from "../functions/api/reset";
-import logo from '../assets/IntelliViewLogo.png'
+import { reset } from "../functions/api/authentication/reset";
+import logo from "../assets/IntelliViewLogo.png";
 
 const Reset = () => {
   const navigate = useNavigate();
-  const { id } = useParams()
+  const { id } = useParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -23,7 +28,7 @@ const Reset = () => {
     }
     const res = await reset(confirm, password, email, id);
     if (res) {
-      toast.success('Password reseted successfully');
+      toast.success("Password reseted successfully");
       navigate("/login");
       setEmail("");
       setPassword("");

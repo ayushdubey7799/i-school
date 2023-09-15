@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import { forgetPassword } from '../functions/api/forget';
+import { forgetPassword } from '../functions/api/authentication/forget';
 import styled from 'styled-components';
 import logo from '../assets/IntelliViewLogo.png'
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

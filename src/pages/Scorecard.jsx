@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { getScore } from "../functions/api/getScore";
+import { getScore } from "../functions/api/interview/getScore";
 import ScorecardTemplate from "../components/Interviews/CurrentInterview/ScorecardTemplate";
 import { styled } from "styled-components";
 import Loader from "../components/commonComponents/Loader";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { styled } from "styled-components";
-import { getCandidatesScore } from "../functions/api/getCandidatesScore";
+import { getCandidatesScore } from "../functions/api/employers/getCandidatesScore";
 import Loader from "../components/commonComponents/Loader";
 
 const JdDetails = () => {

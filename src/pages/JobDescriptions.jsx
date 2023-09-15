@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-import { getJds } from "../functions/api/getJds";
+import { getJds } from "../functions/api/employers/getJds";
 import Loader from "../components/commonComponents/Loader";
 
 const JobDescriptions = () => {

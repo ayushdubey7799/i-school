@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { auth } from "../functions/api/auth";
+import { auth } from "../functions/api/authentication/auth";
 import validate from "../functions/validate";
 import loginImg from "../assets/loginPageSecureImg.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

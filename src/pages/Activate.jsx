@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { activate } from '../functions/api/activate';
+import { activate } from '../functions/api/authentication/activate';
 
 const Activate = () => {
     const navigate = useNavigate();

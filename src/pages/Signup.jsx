@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { register } from "../functions/api/register";
+import { register } from "../functions/api/authentication/register";
 import signupImg from '../assets/signupPageSecureImg.png'
 import { toast } from "react-toastify";
 import validate from "../functions/validate";
