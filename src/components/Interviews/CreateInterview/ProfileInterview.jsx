@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import mammoth from 'mammoth/mammoth.browser';
+import mammoth from "mammoth/mammoth.browser";
 import { styled } from "styled-components";
 import { createInterview } from "../../../functions/api/interview/createInterview";
 import { updateStatus } from "../../../functions/api/interview/updateStatus";
@@ -8,14 +8,18 @@ import Loader from "../../commonComponents/Loader";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import CustomInput from "../../commonComponents/CustomInput";
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
+
+
 
 const ProfileInterview = () => {
-  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const [interviewDetails, setInterviewDetails] = useState({
     jobSummary: "",
     resumeText: "",
   });
-
 
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
@@ -23,29 +27,40 @@ const ProfileInterview = () => {
   const [jd, setJd] = useState();
   const [resume, setResume] = useState();
 
-
-
   useEffect(() => {
     if (resume) {
-      if (resume.type === 'text/plain') {
-        handleTxtFile(resume, 'resume');
-      } else if (resume.type === 'application/msword' || resume.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-        handleDocxFile(resume, 'resume');
+      if (resume.type === "text/plain") {
+        handleTxtFile(resume, "resume");
+      } else if (
+        resume.type === "application/msword" ||
+        resume.type ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        handleDocxFile(resume, "resume");
+      } else if (resume.type === "application/pdf") {
+        handlePdfFile(resume, "resume");
       } else {
-        console.log('Unsupported file type');
+        console.log("Unsupported file type");
       }
     }
   }, [resume]);
 
-
   useEffect(() => {
     if (jd) {
-      if (jd.type === 'text/plain') {
-        handleTxtFile(jd, 'jd');
-      } else if (jd.type === 'application/msword' || jd.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-        handleDocxFile(jd, 'jd');
+      console.log(jd.type);
+
+      if (jd.type === "text/plain") {
+        handleTxtFile(jd, "jd");
+      } else if (
+        jd.type === "application/msword" ||
+        jd.type ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        handleDocxFile(jd, "jd");
+      } else if (jd.type === "application/pdf") {
+        handlePdfFile(jd, "jd");
       } else {
-        console.log('Unsupported file type');
+        console.log("Unsupported file type");
       }
     }
   }, [jd]);
@@ -73,20 +88,23 @@ const ProfileInterview = () => {
     setLoaderMessage("Creating Interview... please wait");
     setIsLoading(true);
 
-    if (interviewDetails.jobSummary.length < 30 && interviewDetails.resumeText.length < 30) {
-      toast.warning('Too short inputs, it should be minimum 30 chars.');
+    if (
+      interviewDetails.jobSummary.length < 30 &&
+      interviewDetails.resumeText.length < 30
+    ) {
+      toast.warning("Too short inputs, it should be minimum 30 chars.");
       setIsLoading(false);
-      setLoaderMessage('');
+      setLoaderMessage("");
       return;
     } else if (interviewDetails.jobSummary.length < 30) {
-      toast.warning('Too short JobSummary, it should be minimum 30 chars.');
+      toast.warning("Too short JobSummary, it should be minimum 30 chars.");
       setIsLoading(false);
-      setLoaderMessage('');
+      setLoaderMessage("");
       return;
     } else if (interviewDetails.resumeText.length < 30) {
-      toast.warning('Too short ResumeText, it should be minimum 30 chars.');
+      toast.warning("Too short ResumeText, it should be minimum 30 chars.");
       setIsLoading(false);
-      setLoaderMessage('');
+      setLoaderMessage("");
       return;
     }
 
@@ -99,7 +117,11 @@ const ProfileInterview = () => {
     console.log(ongoing);
     if (ongoing?.data?.id) {
       console.log("data");
-      const statusResponse = await updateStatus(ongoing.data.id, "started", accessToken);
+      const statusResponse = await updateStatus(
+        ongoing.data.id,
+        "started",
+        accessToken
+      );
       console.log(statusResponse);
       setIsLoading(false);
       if (statusResponse?.status == "SUCCESS")
@@ -109,12 +131,11 @@ const ProfileInterview = () => {
 
   const handleJd = (file) => {
     setJd(file);
-  }
+  };
 
   const handleResume = (file) => {
     setResume(file);
-  }
-
+  };
 
   // reading the uploaded .txt, .doc, .docx file
 
@@ -122,9 +143,9 @@ const ProfileInterview = () => {
     const reader = new FileReader();
     reader.onload = (event) => {
       const fileContent = event.target.result;
-      if (type === 'jd') {
+      if (type === "jd") {
         setInterviewDetails({ ...interviewDetails, jobSummary: fileContent });
-      } else if (type === 'resume') {
+      } else if (type === "resume") {
         setInterviewDetails({ ...interviewDetails, resumeText: fileContent });
       }
     };
@@ -136,19 +157,42 @@ const ProfileInterview = () => {
     reader.onload = async (event) => {
       const arrayBuffer = event.target.result;
       const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
-      if (type === 'jd') {
+      if (type === "jd") {
         setInterviewDetails({ ...interviewDetails, jobSummary: result.value });
-      } else if (type === 'resume') {
+      } else if (type === "resume") {
         setInterviewDetails({ ...interviewDetails, resumeText: result.value });
       }
     };
     reader.readAsArrayBuffer(file);
   };
 
+  const handlePdfFile =  async (file, type) => {
+    
+    if (file) {
+      const pdfData = await file.arrayBuffer();
+  
+      // Initialize PDF.js
+      const pdf = await pdfjs.getDocument({ data: pdfData }).promise;
+      const textArray = [];
+  
+      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+        const page = await pdf.getPage(pageNumber);
+        const textContent = await page.getTextContent();
+  
+        // Extract text from the page
+        const pageText = textContent.items.map((item) => item.str).join(' ');
+        textArray.push(pageText);
+      }
+  
+      const fullText = textArray.join('\n');
+      if (type === "jd") {
+        setInterviewDetails({ ...interviewDetails, jobSummary: fullText });
+      } else if (type === "resume") {
+        setInterviewDetails({ ...interviewDetails, resumeText: fullText });
+      }
+    }
 
-
-
-
+  }
 
   return (
     <div>
@@ -168,10 +212,10 @@ const ProfileInterview = () => {
                 onChange={handleInputChange}
               />
             </div>
-
+           {/* <PdfTextExtractor/> */}
             <CustomInput
-              accept={".doc, .docx, .txt"}
-              id='jdInput'
+              accept={".doc, .docx, .txt, .pdf"}
+              id="jdInput"
               fileHandleFnc={handleJd}
               text={"Upload JD"}
             />
@@ -189,10 +233,10 @@ const ProfileInterview = () => {
                 onChange={handleInputChange}
               />
             </div>
-
+             
             <CustomInput
-              accept={".doc, .docx, .txt"}
-              id='resumeInput'
+              accept={".doc, .docx, .txt, .pdf"}
+              id="resumeInput"
               fileHandleFnc={handleResume}
               text={"Upload Resume"}
             />
@@ -202,13 +246,10 @@ const ProfileInterview = () => {
             Start Interview
           </button>
         </StyledForm>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 };
-
-
 
 export default ProfileInterview;
 
@@ -261,7 +302,4 @@ const StyledForm = styled.form`
     flex-direction: column;
     gap: 0rem;
   }
-
 `;
-
-
