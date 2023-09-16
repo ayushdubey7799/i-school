@@ -64,7 +64,7 @@ export default Footer
 
 
 const StyledFooter = styled.div`
-background-color: #3d3342;
+background-color: var(--grey);
 display: flex;
 flex-direction: column;
 align-items: center;

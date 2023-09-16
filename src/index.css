@@ -4,12 +4,11 @@
 :root {
   --color: #1B1E26;
   --backgroundColor: #ffffff;
-  --lightBlue: #ADD8E6;
-  --grey: #808080;
+  --grey: #4d4d4d;
   --white: #ffffff;
-  --blue: #000080;
-  --lightOrange: #f0b27a;
+  --lightOrange: #0066ff;
 }
+
 
 body {
   margin: 0;
@@ -130,5 +129,3 @@ html {
     font-size: 9px;
   }
 }
-
-

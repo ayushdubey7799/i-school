@@ -19,36 +19,59 @@ const Header = () => {
         <img src={logo} onClick={() => navigate("/")} />
       </div>
       <div id="middle">
-        <li onClick={() => navigate("/")}>Home</li>
+        <div className="nav-item1 dropdown1">
+          <li className="dropdown-toggle1">Products</li>
+          <div className="dropdown-menu1">
+            <a href="/">IntelliView</a>
+            <a href="/">IntelliSource</a>
+            <a href="/">IntelliBoard</a>
+          </div>
+        </div>
+        <div className="nav-item2 dropdown2">
+          <li className="dropdown-toggle2">Services</li>
+          <div className="dropdown-menu2">
+            <a href="/">Screening</a>
+            <a href="/">Data Analytics</a>
+            <a href="/">Talent Management</a>
+          </div>
+        </div>
+
+        <div className="nav-item3 dropdown3">
+          <li className="dropdown-toggle3">Solutions</li>
+          <div className="dropdown-menu3">
+            <a href="/">For Enterprises</a>
+            <a href="/">For Recruitment Agencies</a>
+            <a href="/">For Job Seekers</a>
+          </div>
+        </div>
+
+        <li onClick={() => navigate("/contact")}>Support</li>
         <li onClick={() => navigate("/about")}>About Us</li>
-        <li onClick={() => navigate("/products")}>Products</li>
-        <li onClick={() => navigate("/services")}>Services</li>
-        <li onClick={() => navigate("/research-paper")}>Research Papers</li>
-        <li onClick={() => navigate("/contact")}>
-          Contact Us
-        </li>
+        <li onClick={() => navigate('/case-studies')} >Case Studies</li>
       </div>
       <div id="right">
         {accessToken ? (
-          <Link to="/interview">
+          <Link to="/interview" className="link">
             {" "}
-            <button id="sign-in">Go to Dashboard</button>
+            <span id="sign-in">Go to Dashboard</span>
           </Link>
         ) : (
-          <Link to="/login">
-            <button id="sign-in">Sign in</button>
+          <Link to="/login" className="link">
+            <span id="sign-in">Login</span>
           </Link>
         )}
-        <Link to="/signup">
-          <button id="free">Try it Now</button>
+        <span>|</span>
+        <Link to="/signup" className="link">
+          <span id="free">Register</span>
         </Link>
-        <Link to="/demo">
-          <button id="free">Request a Demo</button>
+        <span>|</span>
+        <Link to="/demo" className="link">
+          <span id="free">Request Demo</span>
         </Link>
       </div>
       <div id="drawer">
         <IconButton onClick={() => setOpenDrawer(true)}>
-          <MenuRoundedIcon className="link" />
+          <MenuRoundedIcon className="Icon" />
         </IconButton>
         <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </div>
@@ -62,13 +85,13 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: black;
+  color: var(--white);
   width: 90%;
   padding: 0% 5%;
-  height: 6rem;
+  height: 5rem;
   position: fixed;
   z-index: 2000;
-  background-color: var(--white);
+  background-color: var(--grey);
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
 
   #left > img {
@@ -89,10 +112,13 @@ const StyledDiv = styled.div`
 
   li {
     list-style-type: none;
+    height: 5rem;
+    display: flex;
+    align-items: center;
   }
 
   #middle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 
     li {
       cursor: pointer;
@@ -104,7 +130,7 @@ const StyledDiv = styled.div`
     }
 
     li:hover {
-      font-weight: 600;
+      font-weight: 500;
     }
 
     @media (max-width: 900px) {
@@ -115,45 +141,124 @@ const StyledDiv = styled.div`
   #right {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     #sign-in {
-      border: none;
-      border-radius: 0.5rem;
-      background-color: var(--lightOrange);
       color: var(--white);
-      height: 2.3rem;
-      padding: 0.2rem 0.5rem;
-      font-weight: 600;
-      font-size: 0.8rem;
+      font-weight: 500;
+      font-size: 0.9rem;
       cursor: pointer;
-    }
-
-    #sign-in:hover {
-      background-color: var(--white);
-      color: black;
-      border: 0.1rem solid var(--lightOrange);
-      padding: 0.2rem 0.45rem;
-    }
-
-    #free:hover {
-      background-color: var(--white);
-      color: black;
-      border: 0.1rem solid var(--lightOrange);
-      padding: 0.2rem 0.45rem;
     }
 
     #free {
-      border: none;
-      border-radius: 0.5rem;
-      height: 2.3rem;
-      padding: 0.2rem 0.5rem;
-      font-weight: 600;
-      font-size: 0.8rem;
+      font-weight: 500;
+      font-size: 0.9rem;
       cursor: pointer;
-      background-color: var(--lightOrange);
       color: var(--white);
     }
   }
+
+  .link {
+    text-decoration: none;
+  }
+
+
+  .Icon {
+    color: var(--white);
+  }
+
+
+
+  // Products Menu
+
+  .dropdown-toggle1 {
+    position: relative;
+  }
+  
+  .dropdown-menu1 {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background-color: var(--white);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.7rem;
+  }
+  
+  .dropdown-menu1 a {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: var(--grey);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .nav-item1:hover .dropdown-menu1 {
+    display: block;
+  }
+
+
+  // Services Menu
+
+  .dropdown-toggle2 {
+    position: relative;
+  }
+  
+  .dropdown-menu2 {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background-color: var(--white);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.7rem;
+  }
+  
+  .dropdown-menu2 a {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: var(--grey);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .nav-item2:hover .dropdown-menu2 {
+    display: block;
+  }
+  
+
+  // Solutions Menu
+
+  .dropdown-toggle3 {
+    position: relative;
+  }
+  
+  .dropdown-menu3 {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background-color: var(--white);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.7rem;
+  }
+  
+  .dropdown-menu3 a {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: var(--grey);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .nav-item3:hover .dropdown-menu3 {
+    display: block;
+  }
+
+
+
 
   #drawer {
     display: none;
