@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IconButton } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MyDrawer from "./Drawer";
-import logo from "../../assets/IntelliViewLogo.png";
+import logo from "../../assets/IntelliViewLogoDark.png";
 import { useSelector } from "react-redux";
 
 const Header = () => {
@@ -192,6 +192,10 @@ const StyledDiv = styled.div`
     font-size: 0.9rem;
     font-weight: 500;
   }
+
+  .dropdown-menu1 a:hover {
+    font-weight: 600;
+  }
   
   .nav-item1:hover .dropdown-menu1 {
     display: block;
@@ -221,6 +225,10 @@ const StyledDiv = styled.div`
     color: var(--grey);
     font-size: 0.9rem;
     font-weight: 500;
+  }
+
+  .dropdown-menu2 a:hover {
+    font-weight: 600;
   }
   
   .nav-item2:hover .dropdown-menu2 {
@@ -253,6 +261,11 @@ const StyledDiv = styled.div`
     font-weight: 500;
   }
   
+
+  .dropdown-menu3 a:hover {
+    font-weight: 600;
+  }
+
   .nav-item3:hover .dropdown-menu3 {
     display: block;
   }

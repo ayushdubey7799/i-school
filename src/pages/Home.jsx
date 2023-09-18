@@ -4,6 +4,7 @@ import { styled } from 'styled-components'
 import Header from '../components/LandingPage/Header'
 import Content from '../components/LandingPage/Content'
 import Footer from '../components/commonComponents/Footer'
+import DetailedContent from '../components/LandingPage/DetailedContent'
 
 const Home = () => {
     return (
@@ -11,6 +12,7 @@ const Home = () => {
             <StyledLandingTop>
                 <Header />
                 <Content />
+                <DetailedContent />
             </StyledLandingTop>
             <Footer />
         </StyledLanding>
