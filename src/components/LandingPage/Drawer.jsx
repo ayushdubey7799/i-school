@@ -14,23 +14,20 @@ export default function MyDrawer({ openDrawer, setOpenDrawer }) {
                 onClose={() => setOpenDrawer(false)}
             >
                 <StyledDrawer className="drawer-div">
-                    <StyledLink to="/">
-                        <span className="link">Home</span>
-                    </StyledLink>
-                    <StyledLink to="/about">
-                        <span className="link">About Us</span>
-                    </StyledLink>
                     <StyledLink to="/products">
                         <span className="link">Products</span>
                     </StyledLink>
                     <StyledLink to="/services">
                         <span className="link">Services</span>
                     </StyledLink>
-                    <StyledLink to="/research-paper">
-                        <span className="link">Research Papers</span>
+                    <StyledLink to="/">
+                        <span className="link">Solutions</span>
                     </StyledLink>
-                    <StyledLink to="/contact">
-                        <span className="link">Contact Us</span>
+                    <StyledLink to="/support">
+                        <span className="link">Support</span>
+                    </StyledLink>
+                    <StyledLink to="/about">
+                        <span className="link">About Us</span>
                     </StyledLink>
                     <StyledLink to="/case-studies">
                         <span className="link">Case Studies</span>

@@ -23,7 +23,7 @@ const Content = () => {
               </div>
               <span className="desc">AI-Powered, Smarter,<br /> Structured and More Efficient!</span>
             </div>
-            <button onClick={handleSubmit} className="btn">Try it Now</button>
+            <button onClick={handleSubmit} className="btn">Know More</button>
           </div>
           <div className="right">
             <img src={landingPageTopImg} />
