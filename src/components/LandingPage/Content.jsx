@@ -77,7 +77,7 @@ export const StyledContent = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     column-gap: 2rem;
-    margin: 6rem 0rem;
+    margin: 4rem 0rem;
   }
 
   .left {

@@ -88,7 +88,7 @@ const StyledDiv = styled.div`
   color: var(--white);
   width: 90%;
   padding: 0% 5%;
-  height: 5rem;
+  height: 4rem;
   position: fixed;
   z-index: 2000;
   background-color: var(--grey);
