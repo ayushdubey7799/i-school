@@ -5,6 +5,8 @@ import homepage3 from '../../assets/homepage3.png'
 import productCard1 from '../../assets/homepage2.jpg'
 import productCard2 from '../../assets/homepage4.jpeg'
 import productCard3 from '../../assets/homepage6.jpeg'
+import bg1 from '../../assets/bg1.jpg'
+import bg2 from '../../assets/bg5.jpg'
 import { useNavigate } from 'react-router'
 
 const DetailedContent = () => {
@@ -46,7 +48,7 @@ const DetailedContent = () => {
                 <div className='visualDetailBox'>
                     <div className='visualDetailTextBox'>
                         <span className='visualDetailTitle'>Efficient Sourcing</span>
-                        <span className='visualDetailText'>One of the most time-consuming tasks in recruitment is reviewing resumes and job applications. AI-powered resume screening systems can significantly improve this process. These systems use natural language processing (NLP) and machine learning algorithms to quickly analyze and rank resumes based on their relevance to the job description.  They can identify keywords, relevant skills, and qualifications, helping recruiters focus on the most promising candidates. This not only saves time but also ensures that no qualified candidates are overlooked</span>
+                        <span className='visualDetailText'>One of the most time-consuming tasks in recruitment is reviewing resumes and job applications. AI-powered resume screening systems can significantly improve this process. These systems use natural language processing (NLP) and machine learning algorithms to quickly analyze and rank resumes based on their relevance to the job description.</span>
 
                         {/* <div className='visualDetailSpecBox'>
                             <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Tristique senectus et netus</span>
@@ -237,6 +239,7 @@ margin-top: 5rem;
 .visualDetailTitle {
     font-size: 2.5rem;
     font-weight: 600;
+    text-align: center;
 }
 
 .visualDetailText {
@@ -284,6 +287,10 @@ margin-top: 5rem;
     padding: 6rem 7.5%;
     width: 85%;
     gap: 2rem;
+
+    background-image: url(${bg1});
+    background-size: cover;
+    background-repeat: no-repeat; 
 }
 
 
@@ -298,8 +305,8 @@ margin-top: 5rem;
 .contactSectionBtn {
     background-color: var(--white);
     color: var(--color);
-    padding: 1rem 1.5rem;
-    font-size: 1.1rem;
+    padding: 0.7rem 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     border: none;
     border-radius: 0.5rem;
@@ -386,7 +393,7 @@ margin-top: 5rem;
 
 .productCardText {
     width: 80%;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 600;
 }
 
@@ -405,6 +412,11 @@ margin-top: 5rem;
     gap: 2rem;
     border-radius: 1rem;
     margin-bottom: 5rem;
+
+
+    background-image: url(${bg2});
+    background-size: cover;
+    background-repeat: no-repeat; 
 }
 
 
@@ -427,8 +439,8 @@ margin-top: 5rem;
 .contactSectionBottomBtn {
     background-color: var(--white);
     color: var(--color);
-    padding: 1rem 1.5rem;
-    font-size: 1.1rem;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
     font-weight: 500;
     border: none;
     border-radius: 0.5rem;
