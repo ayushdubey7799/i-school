@@ -77,7 +77,7 @@ export const StyledContent = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     column-gap: 2rem;
-    margin: 6rem 0rem;
+    margin: 3rem 0rem 3rem 0rem;
   }
 
   .left {
@@ -144,10 +144,10 @@ export const StyledContent = styled.div`
     .btn {
       background-color: var(--lightOrange);
       border: none;
-      padding: 0.7rem 1rem;
+      padding: 0.5rem 0.8rem;
       color: var(--white);
-      font-size: 1.4rem;
-      border-radius: 0.5rem;
+      font-size: 1.2rem;
+      border-radius: 0.3rem;
       cursor: pointer;
     }
 

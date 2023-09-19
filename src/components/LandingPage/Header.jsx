@@ -88,7 +88,7 @@ const StyledDiv = styled.div`
   color: var(--white);
   width: 90%;
   padding: 0% 5%;
-  height: 5rem;
+  height: 4rem;
   position: fixed;
   z-index: 2000;
   background-color: var(--grey);
@@ -145,13 +145,13 @@ const StyledDiv = styled.div`
     #sign-in {
       color: var(--white);
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
     }
 
     #free {
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
       color: var(--white);
     }
@@ -195,6 +195,7 @@ const StyledDiv = styled.div`
 
   .dropdown-menu1 a:hover {
     font-weight: 600;
+    text-decoration: underline;
   }
   
   .nav-item1:hover .dropdown-menu1 {
@@ -229,6 +230,7 @@ const StyledDiv = styled.div`
 
   .dropdown-menu2 a:hover {
     font-weight: 600;
+    text-decoration: underline;
   }
   
   .nav-item2:hover .dropdown-menu2 {
@@ -264,6 +266,7 @@ const StyledDiv = styled.div`
 
   .dropdown-menu3 a:hover {
     font-weight: 600;
+    text-decoration: underline;
   }
 
   .nav-item3:hover .dropdown-menu3 {

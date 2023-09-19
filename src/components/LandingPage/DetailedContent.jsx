@@ -5,49 +5,56 @@ import homepage3 from '../../assets/homepage3.png'
 import productCard1 from '../../assets/homepage2.jpg'
 import productCard2 from '../../assets/homepage4.jpeg'
 import productCard3 from '../../assets/homepage6.jpeg'
+import bg1 from '../../assets/bg1.jpg'
+import bg2 from '../../assets/bg5.jpg'
+import { useNavigate } from 'react-router'
 
 const DetailedContent = () => {
+    const navigate = useNavigate();
+
+
+
     return (
         <StyledBox>
             <div className='topTextBox'>
-                <span className='topTitle'>Power your online visibility</span>
-                <span className='topText'>We design, build and support websites and apps for clients worldwide. We make your business stand out. Interested? Let's chat.</span>
+                <span className='topTitle'>Empower your hiring ecosystem</span>
+                <span className='topText'>IntelliView enables you with tools powered by AI & system that give you an edge, speed and cost effectiiveness on your regular and special hirng neeeds</span>
             </div>
 
             <div className='topBox'>
                 <div className='topBoxChild'>
                     <div className='topBoxChildAnime'>1</div>
-                    <span className='topBoxChildTitle'>Develop objectives</span>
-                    <span className='topBoxChildText'>Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia</span>
+                    <span className='topBoxChildTitle'>AI powred Systems</span>
+                    <span className='topBoxChildText'>IntelliView provide you an edge with its AI enabled tools to power your HR systems</span>
                 </div>
                 <div className='topBoxChild'>
                     <div className='topBoxChildAnime'>2</div>
-                    <span className='topBoxChildTitle'>Determine resources</span>
-                    <span className='topBoxChildText'>Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia</span>
+                    <span className='topBoxChildTitle'>Automate Manual Tasks</span>
+                    <span className='topBoxChildText'>Leave behind time and bandwidth consuming manual hiring processed to utilize your manpower better and getthing things done with few clicks</span>
                 </div>
                 <div className='topBoxChild'>
                     <div className='topBoxChildAnime'>3</div>
-                    <span className='topBoxChildTitle'>Create a timeline</span>
-                    <span className='topBoxChildText'>Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia</span>
+                    <span className='topBoxChildTitle'>Stream Line Processes</span>
+                    <span className='topBoxChildText'>Simplify complex recrutment processes for smooth operations</span>
                 </div>
                 <div className='topBoxChild'>
                     <div className='topBoxChildAnime'>4</div>
-                    <span className='topBoxChildTitle'>Finalize plan</span>
-                    <span className='topBoxChildText'>Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia</span>
+                    <span className='topBoxChildTitle'>Speed Up growth</span>
+                    <span className='topBoxChildText'>We know what matter most and that where all we build aims to fuel your growth</span>
                 </div>
             </div>
 
             <div className='visualDetail'>
                 <div className='visualDetailBox'>
                     <div className='visualDetailTextBox'>
-                        <span className='visualDetailTitle'>Search engine optimization</span>
-                        <span className='visualDetailText'>Arcu felis bibendum ut tristique et egestas quis bibendum ut tristique et egestas quis ipsum suspendisse. Eget egestas purus.</span>
+                        <span className='visualDetailTitle'>Efficient Sourcing</span>
+                        <span className='visualDetailText'>One of the most time-consuming tasks in recruitment is reviewing resumes and job applications. AI-powered resume screening systems can significantly improve this process. These systems use natural language processing (NLP) and machine learning algorithms to quickly analyze and rank resumes based on their relevance to the job description.</span>
 
-                        <div className='visualDetailSpecBox'>
+                        {/* <div className='visualDetailSpecBox'>
                             <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Tristique senectus et netus</span>
                             <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Pharetra sit amet aliquam</span>
                             <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Vitae suscipit tellus mauris</span>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='visualDetailImgBox'>
                         <img src={homepage1} />
@@ -58,67 +65,66 @@ const DetailedContent = () => {
                         <img src={homepage3} />
                     </div>
                     <div className='visualDetailTextBox'>
-                        <span className='visualDetailTitle'>Page changes monitoring</span>
-                        <span className='visualDetailText'>Integer feugiat scelerisque varius morbi enim nunc faucibus. Egestas erat imperdiet sed euismod nisi elementum eu facilisis.</span>
+                        <span className='visualDetailTitle'>Processes to Fuel Growth</span>
+                        <span className='visualDetailText'>To fully leverage the growth potential of AI in hiring processes, it's essential to choose the right AI tools and platforms, integrate them seamlessly into your existing systems, and provide appropriate training to HR professionals to use these tools effectively. Additionally, continuous monitoring and refinement of AI-driven processes are crucial to ensure ongoing success and alignment with your organization's growth goals.</span>
 
-                        <div className='visualDetailSpecBox'>
+                        {/* <div className='visualDetailSpecBox'>
                             <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Integer feugiat scelerisque varius</span>
                             <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Ornare arcu dui vivamus arcu</span>
                             <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Nec tincidunt praesent semper feugiat</span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
 
             <div className='contactSection'>
-                <span className='contactSectionTitle'>Join the ranks of more than 5,000 leading companies
-                    and see what we can do for your business.</span>
-                <button className='contactSectionBtn'>Contact Us</button>
+                <span className='contactSectionTitle'>Become part of advanced Recruitment Solutions powered by AI, same time with Human Touch in your journey of growth.</span>
+                <button className='contactSectionBtn' onClick={() => navigate('/contact')}>Contact Us</button>
             </div>
 
             <div className='achievedNumber'>
                 <div className='achievedNumberBox'>
                     <span className='achievedNumberDigit'>150</span>
-                    <span className='achievedNumberText'>Daily subscribers</span>
+                    <span className='achievedNumberText'>Registered job seekers</span>
                 </div>
                 <div className='achievedNumberBox'>
                     <span className='achievedNumberDigit'>300</span>
-                    <span className='achievedNumberText'>Active members</span>
+                    <span className='achievedNumberText'>Employers on board</span>
                 </div>
                 <div className='achievedNumberBox'>
                     <span className='achievedNumberDigit'>450</span>
-                    <span className='achievedNumberText'>Completed projects</span>
+                    <span className='achievedNumberText'>Interviews completed</span>
                 </div>
                 <div className='achievedNumberBox'>
                     <span className='achievedNumberDigit'>600</span>
-                    <span className='achievedNumberText'>Happy clients</span>
+                    <span className='achievedNumberText'>Processes Automated</span>
                 </div>
             </div>
 
             <div className='product'>
-                <span className='productTitle'>What's on our mind</span>
+                <span className='productTitle'>Whats the latest we have built</span>
                 <span className='productText'>Explore our blog for insightful articles, personal reflections and ideas that inspire action on the topics you care about.</span>
 
                 <div className='productCardBox'>
                     <div className='productCard'>
                         <img className='productCardImg' src={productCard1} />
-                        <span className='productCardText'>Self-discipline and taking action is key to a happy, balanced mind</span>
+                        <span className='productCardText'>AI benefits with human touch</span>
                     </div>
                     <div className='productCard'>
                         <img className='productCardImg' src={productCard2} />
-                        <span className='productCardText'>Technology and innovation events that will inspire you</span>
+                        <span className='productCardText'>Streamline and Automate processes for better Opex</span>
                     </div>
                     <div className='productCard'>
                         <img className='productCardImg' src={productCard3} />
-                        <span className='productCardText'>Shanghai is a mythical, magical metropolis of beauty and wealth</span>
+                        <span className='productCardText'>Technology and innovation  that will inspire you</span>
                     </div>
                 </div>
             </div>
 
             <div className='contactSectionBottom'>
-                <span className='contactSectionBottomTitle'>Ready to get started? Contact us!</span>
-                <span className='contactSectionBottomText'>Ekko is a fully packed practical tool of premium built and design. Let your creativity loose and start building your website now.</span>
-                <button className='contactSectionBottomBtn'>Contact Us</button>
+                <span className='contactSectionBottomTitle'>Ready to get started?</span>
+                <span className='contactSectionBottomText'>IntelliView is a highly automated set of AI tools and systems. Let your start your journey to build team of best talent available!</span>
+                <button className='contactSectionBottomBtn' onClick={() => navigate('/signup')}>Try Now</button>
             </div>
         </StyledBox>
     )
@@ -158,8 +164,9 @@ margin-top: 5rem;
 
 .topBox {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     align-items: center;
+    justify-content: space-between;
     gap: 5%;
     margin-top: 5rem;
     margin-bottom: 5rem;
@@ -170,9 +177,11 @@ margin-top: 5rem;
 .topBoxChild {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 1.5rem;
+    width: 20%;
+    min-height: 15rem;
 }
 
 .topBoxChildTitle {
@@ -186,6 +195,7 @@ margin-top: 5rem;
     font-weight: 400;
     line-height: 1.5rem;
     text-align: center;
+    word-wrap: break-word;
 }
 
 .topBoxChildAnime {
@@ -196,9 +206,9 @@ margin-top: 5rem;
     color: white;
     width: 2.5rem;
     height: 2.5rem;
-    background-color: var(--orange);
+    background-color: var(--lightOrange);
     border-radius: 50%;
-    box-shadow: 0 0 1rem var(--orange);
+    box-shadow: 0 0 1rem var(--lightOrange);
 }
 
 
@@ -220,7 +230,7 @@ margin-top: 5rem;
 
 
 .visualDetailTextBox {
-    width: 35%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -229,6 +239,7 @@ margin-top: 5rem;
 .visualDetailTitle {
     font-size: 2.5rem;
     font-weight: 600;
+    text-align: center;
 }
 
 .visualDetailText {
@@ -255,7 +266,7 @@ margin-top: 5rem;
 }
 
 .visualDetailImgBox {
-    width: 60%;
+    width: 55%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -276,6 +287,10 @@ margin-top: 5rem;
     padding: 6rem 7.5%;
     width: 85%;
     gap: 2rem;
+
+    background-image: url(${bg1});
+    background-size: cover;
+    background-repeat: no-repeat; 
 }
 
 
@@ -288,12 +303,14 @@ margin-top: 5rem;
 
 
 .contactSectionBtn {
-    background-color: var(--orange);
-    color: var(--white);
-    padding: 1rem 1.5rem;
-    font-size: 1.1rem;
+    background-color: var(--white);
+    color: var(--color);
+    padding: 0.7rem 1.1rem;
+    font-size: 1rem;
+    font-weight: 500;
     border: none;
     border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 .achievedNumber {
@@ -315,13 +332,14 @@ margin-top: 5rem;
 .achievedNumberDigit {
     font-size: 2.5rem;
     font-weight: 600;
-    color: var(--orange);
+    color: var(--lightOrange);
 }
 
 .achievedNumberText {
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--color);
+    text-align: center;
 }
 
 
@@ -360,8 +378,8 @@ margin-top: 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 20rem;
+    justify-content: space-between;
+    // min-height: 20rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
     gap: 1rem;
     padding: 2rem 0rem;
@@ -370,12 +388,12 @@ margin-top: 5rem;
 
 .productCardImg {
     width: 80%;
-    height: 15rem;
+    // height: 15rem;
 }
 
 .productCardText {
     width: 80%;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 600;
 }
 
@@ -394,6 +412,11 @@ margin-top: 5rem;
     gap: 2rem;
     border-radius: 1rem;
     margin-bottom: 5rem;
+
+
+    background-image: url(${bg2});
+    background-size: cover;
+    background-repeat: no-repeat; 
 }
 
 
@@ -414,12 +437,22 @@ margin-top: 5rem;
 }
 
 .contactSectionBottomBtn {
-    background-color: var(--lightOrange);
-    color: var(--white);
-    padding: 1rem 1.5rem;
-    font-size: 1.1rem;
+    background-color: var(--white);
+    color: var(--color);
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
     border: none;
     border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+
+@media (max-width: 500px) {
+    .topBoxChild {
+        width: 40%;
+        margin-top: 1rem;
+    }
 }
 
 `
