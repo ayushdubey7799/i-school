@@ -27,6 +27,7 @@ const Signup = () => {
 
   const [company, setCompany] = useState('');
   const [coOrdinator, setCoOrdinator] = useState('');
+  const [employees, setEmployees] = useState('');
   const [address, setAddress] = useState('');
   const [industry, setIndustry] = useState('');
   const [location, setLocation] = useState('');
@@ -51,6 +52,7 @@ const Signup = () => {
     setGender('');
     setCompany('');
     setCoOrdinator('');
+    setEmployees('');
     setAddress('');
     setLocation('');
     setIndustry('');
@@ -157,7 +159,7 @@ const Signup = () => {
                     onChange={(e) => setGender(e.target.value)}
                   >
                     <option value="" disabled selected>
-                      Select Gender
+                      Select
                     </option>
                     <option value='male'>Male</option>
                     <option value='female'>Female</option>
@@ -238,7 +240,7 @@ const Signup = () => {
                       onChange={(e) => setCoOrdinator(e.target.value)}
                       required
                     />
-                    <label htmlFor="co-Ordinator">Co-ordinator</label>
+                    <label htmlFor="co-Ordinator">Co-ordinator name</label>
                   </div>
 
                   <div className="inputBox">
@@ -250,6 +252,28 @@ const Signup = () => {
                       required
                     />
                     <label htmlFor="industry">Industry</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <select
+                      value={employees}
+                      onChange={(e) => setEmployees(e.target.value)}
+                      id="employees"
+                    >
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                      <option value='1'>1</option>
+                      <option value='2-5'>2-5</option>
+                      <option value='6-10'>6-10</option>
+                      <option value='11-25'>11-25</option>
+                      <option value='26-50'>26-50</option>
+                      <option value='51-200'>51-200</option>
+                      <option value='201-1000'>201-1000</option>
+                      <option value='1001-10000'>1001-10000</option>
+                      <option value='10001+'>10001+</option>
+                    </select>
+                    <label htmlFor="employees">Number of Employees</label>
                   </div>
 
                   <div className="inputBox">
@@ -343,7 +367,7 @@ const Signup = () => {
                       onChange={(e) => setCoOrdinator(e.target.value)}
                       required
                     />
-                    <label htmlFor="co-Ordinator">Co-ordinator</label>
+                    <label htmlFor="co-Ordinator">Co-ordinator name</label>
                   </div>
 
                   <div className="inputBox">
@@ -355,6 +379,29 @@ const Signup = () => {
                       required
                     />
                     <label htmlFor="industry">Industry</label>
+                  </div>
+
+
+                  <div className="inputBox">
+                    <select
+                      value={employees}
+                      onChange={(e) => setEmployees(e.target.value)}
+                      id="employees"
+                    >
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                      <option value='1'>1</option>
+                      <option value='2-5'>2-5</option>
+                      <option value='6-10'>6-10</option>
+                      <option value='11-25'>11-25</option>
+                      <option value='26-50'>26-50</option>
+                      <option value='51-200'>51-200</option>
+                      <option value='201-1000'>201-1000</option>
+                      <option value='1001-10000'>1001-10000</option>
+                      <option value='10001+'>10001+</option>
+                    </select>
+                    <label htmlFor="employees">Number of Employees</label>
                   </div>
 
                   <div className="inputBox">
