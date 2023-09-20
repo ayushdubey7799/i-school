@@ -380,10 +380,16 @@ margin-top: 5rem;
     align-items: center;
     justify-content: space-between;
     // min-height: 20rem;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     gap: 1rem;
     padding: 2rem 0rem;
     border-radius: 1rem;
+}
+
+.productCard:hover {
+    cursor: pointer;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    background-color: #99d6ff;
 }
 
 .productCardImg {
