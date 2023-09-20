@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { register } from "../functions/api/authentication/register";
-import signupImg from '../assets/signupPageSecureImg.png'
 import { toast } from "react-toastify";
 import validate from "../functions/validate";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -11,8 +10,11 @@ import logo from '../assets/IntelliViewLogo.png'
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import ProfileInterview from "../components/Interviews/CreateInterview/ProfileInterview";
-import SkillInterview from "../components/Interviews/CreateInterview/SkillInterview";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import registerIcon1 from '../assets/registerIcon1.jpg'
+import registerIcon2 from '../assets/registerIcon2.jpg'
+import registerIcon3 from '../assets/registerIcon3.jpg'
 
 
 const Signup = () => {
@@ -25,14 +27,20 @@ const Signup = () => {
 
   const [company, setCompany] = useState('');
   const [coOrdinator, setCoOrdinator] = useState('');
+  const [employees, setEmployees] = useState('');
   const [address, setAddress] = useState('');
   const [industry, setIndustry] = useState('');
   const [location, setLocation] = useState('');
 
 
-
-
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [value, setValue] = useState("job-seeker");
+
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -44,12 +52,16 @@ const Signup = () => {
     setGender('');
     setCompany('');
     setCoOrdinator('');
+    setEmployees('');
     setAddress('');
     setLocation('');
     setIndustry('');
+    setPasswordVisible(false);
 
     console.log(newValue);
   };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,24 +112,27 @@ const Signup = () => {
             label="Job Seeker"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1.2rem;"
+              fontSize: "1rem",
             }}
+            icon={<img src={registerIcon1} className="icon" />}
           />
           <Tab
             value="employer"
             label="Employer"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1.2rem;"
+              fontSize: "1rem;"
             }}
+            icon={<img src={registerIcon2} className="icon" />}
           />
           <Tab
             value="recruitment-agency"
             label="Recruitment Agency"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1.2rem;"
+              fontSize: "1rem;"
             }}
+            icon={<img src={registerIcon3} className="icon" />}
           />
         </Tabs>
         {
@@ -125,52 +140,75 @@ const Signup = () => {
             <div id="form">
               <p>Enter your details below to create your account.</p>
               <form onSubmit={handleSubmit}>
-                <input
-                  type="name"
-                  id="name"
-                  value={name}
-                  placeholder="Enter Name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="" disabled selected>
-                    Select Gender
-                  </option>
-                  <option value='male'>Male</option>
-                  <option value='female'>Female</option>
-                  <option value='not-disclose'>Rather not disclose</option>
-                </select>
 
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  placeholder="Enter Email Address"
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <div className="inputBox">
+                  <input
+                    type="name"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="name" className="label">Name</label>
+                </div>
 
-                <input
-                  type="tel"
-                  id="contact"
-                  value={contact}
-                  placeholder="Enter Phone Number"
-                  onChange={(e) => setContact(e.target.value)}
-                  required
-                />
+                <div className="inputBox">
+                  <select
+                    id="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option value="" disabled selected>
+                      Select
+                    </option>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
+                    <option value='not-disclose'>Rather not disclose</option>
+                  </select>
+                  <label htmlFor="gender">Gender</label>
+                </div>
 
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  placeholder="Enter Password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+
+                <div className="inputBox">
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="email">Email</label>
+                </div>
+
+
+                <div className="inputBox">
+                  <input
+                    type="tel"
+                    id="contact"
+                    value={contact}
+                    onChange={(e) => setContact(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="contact">Phone number</label>
+                </div>
+
+
+                <div className="inputBox">
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="password">Password</label>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    id="eye"
+                    onClick={togglePasswordVisibility}
+                    className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                  />
+                </div>
 
                 <button type="submit" className="btn">Create Account</button>
               </form>
@@ -182,77 +220,123 @@ const Signup = () => {
               <div id="form">
                 <p>Enter your details below to create your account.</p>
                 <form onSubmit={handleSubmit}>
-                  <input
-                    type="name"
-                    id="company"
-                    value={company}
-                    placeholder="Enter Company Name"
-                    onChange={(e) => setCompany(e.target.value)}
-                    required
-                  />
 
-                  <input
-                    type="text"
-                    id="co-Ordinator"
-                    value={coOrdinator}
-                    placeholder="Enter Co-Ordinator Name"
-                    onChange={(e) => setCoOrdinator(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="name"
+                      id="company"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="company">Company</label>
+                  </div>
 
-                  <input
-                    type="text"
-                    id="industry"
-                    value={industry}
-                    placeholder="Enter Industry"
-                    onChange={(e) => setIndustry(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="co-Ordinator"
+                      value={coOrdinator}
+                      onChange={(e) => setCoOrdinator(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="co-Ordinator">Co-ordinator name</label>
+                  </div>
 
-                  <input
-                    type="text"
-                    id="location"
-                    value={location}
-                    placeholder="Enter Location"
-                    onChange={(e) => setLocation(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="industry"
+                      value={industry}
+                      onChange={(e) => setIndustry(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="industry">Industry</label>
+                  </div>
 
-                  <input
-                    type="text"
-                    id="address"
-                    value={address}
-                    placeholder="Enter Address"
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <select
+                      value={employees}
+                      onChange={(e) => setEmployees(e.target.value)}
+                      id="employees"
+                    >
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                      <option value='1'>1</option>
+                      <option value='2-5'>2-5</option>
+                      <option value='6-10'>6-10</option>
+                      <option value='11-25'>11-25</option>
+                      <option value='26-50'>26-50</option>
+                      <option value='51-200'>51-200</option>
+                      <option value='201-1000'>201-1000</option>
+                      <option value='1001-10000'>1001-10000</option>
+                      <option value='10001+'>10001+</option>
+                    </select>
+                    <label htmlFor="employees">Number of Employees</label>
+                  </div>
 
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    placeholder="Enter Email Address"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="location"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="location">Location</label>
+                  </div>
 
-                  <input
-                    type="tel"
-                    id="contact"
-                    value={contact}
-                    placeholder="Enter Phone Number"
-                    onChange={(e) => setContact(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="address">Address</label>
+                  </div>
 
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    placeholder="Enter Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="email">Email</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type="tel"
+                      id="contact"
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="contact">Phone number</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type={passwordVisible ? 'text' : 'password'}
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="password">Password</label>
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      id="eye"
+                      onClick={togglePasswordVisibility}
+                      className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                    />
+                  </div>
+
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
@@ -263,78 +347,124 @@ const Signup = () => {
               : <div id="form">
                 <p>Enter your details below to create your account.</p>
                 <form onSubmit={handleSubmit}>
-                  <input
-                    type="name"
-                    id="company"
-                    value={company}
-                    placeholder="Enter Company Name"
-                    onChange={(e) => setCompany(e.target.value)}
-                    required
-                  />
 
-                  <input
-                    type="text"
-                    id="co-Ordinator"
-                    value={coOrdinator}
-                    placeholder="Enter Co-Ordinator Name"
-                    onChange={(e) => setCoOrdinator(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="name"
+                      id="company"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="company">Company</label>
+                  </div>
 
-                  <input
-                    type="text"
-                    id="industry"
-                    value={industry}
-                    placeholder="Enter Industry"
-                    onChange={(e) => setIndustry(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="co-Ordinator"
+                      value={coOrdinator}
+                      onChange={(e) => setCoOrdinator(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="co-Ordinator">Co-ordinator name</label>
+                  </div>
 
-                  <input
-                    type="text"
-                    id="location"
-                    value={location}
-                    placeholder="Enter Location"
-                    onChange={(e) => setLocation(e.target.value)}
-                    required
-                  />
-
-                  <input
-                    type="text"
-                    id="address"
-                    value={address}
-                    placeholder="Enter Address"
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                  />
-
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    placeholder="Enter Email Address"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-
-                  <input
-                    type="tel"
-                    id="contact"
-                    value={contact}
-                    placeholder="Enter Phone Number"
-                    onChange={(e) => setContact(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="industry"
+                      value={industry}
+                      onChange={(e) => setIndustry(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="industry">Industry</label>
+                  </div>
 
 
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    placeholder="Enter Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <div className="inputBox">
+                    <select
+                      value={employees}
+                      onChange={(e) => setEmployees(e.target.value)}
+                      id="employees"
+                    >
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                      <option value='1'>1</option>
+                      <option value='2-5'>2-5</option>
+                      <option value='6-10'>6-10</option>
+                      <option value='11-25'>11-25</option>
+                      <option value='26-50'>26-50</option>
+                      <option value='51-200'>51-200</option>
+                      <option value='201-1000'>201-1000</option>
+                      <option value='1001-10000'>1001-10000</option>
+                      <option value='10001+'>10001+</option>
+                    </select>
+                    <label htmlFor="employees">Number of Employees</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="location"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="location">Location</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="address">Address</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="email">Email</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type="tel"
+                      id="contact"
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="contact">Phone number</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type={passwordVisible ? 'text' : 'password'}
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="password">Password</label>
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      id="eye"
+                      onClick={togglePasswordVisibility}
+                      className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                    />
+                  </div>
+
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
@@ -362,6 +492,9 @@ const StyledSignup = styled.div`
     align-items: center;
   }
 
+  p {
+    font-size: 1rem;
+  }
 
   form {
     display: flex;
@@ -372,7 +505,9 @@ const StyledSignup = styled.div`
     width: 100%;
     }
 
-
+    .icon {
+      width: 2rem;
+    }
 
   #form {
     width: 80%;
@@ -381,17 +516,48 @@ const StyledSignup = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+  }
+
+  .inputBox {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 1rem;
   }
 
   input {
-    width: 80%;
-    height: 3rem;
+    width: 100%;
+    height: 2.5rem;
     margin-top: 0.7rem;
     padding-left: 0.5rem;
     border-radius: 0.3rem;
-    border: 0.1rem solid var(--color);
+    border: 0.05rem solid lightgrey;
+    background-color: var(--white);
     font-size: 1rem;
+  }
+
+  input:focus {
+    outline-color: var(--lightOrange);
+  }
+
+  
+  label {
+    position: absolute;
+    top: -0.8rem;
+    left: 0rem;
+    transition: color 0.3s;
+  }
+
+  input:focus + label {
+    color: var(--lightOrange);
+  }
+
+
+  label {
+    color: var(--color);
+    font-size: 0.8rem;
+    font-weight: 600;
   }
 
   .btn {
@@ -401,7 +567,7 @@ const StyledSignup = styled.div`
     border-radius: 0.4rem;
     border: none;
     padding: 1rem 1rem;
-    width: 50%;
+    width: 40%;
     cursor: pointer;
   }
 
@@ -421,14 +587,40 @@ const StyledSignup = styled.div`
   select {
     padding: 0.7rem 0.5rem;
     margin-top: 0.7rem;
-    height: 3rem;
-    border: 0.1rem solid var(--color);
+    height: 2.5rem;
+    border: 0.05rem solid lightgrey;
+    background-color: var(--white);
     border-radius: 0.3rem;
-    font-size: 1rem;
-    width: 82%;
+    font-size: 0.9rem;
+    width: 102%;
 }
 
 
+select:focus {
+  outline-color: var(--lightOrange);
+}
+
+select:focus + label {
+  color: var(--lightOrange);
+}
+
+option {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 60%;
+  right: 2%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: lightgray;
+}
+
+.eye-icon.visible {
+  color: blue; /* Change to your desired color when password is visible */
+}
 
   @media (max-width: 800px) {
     justify-content: center;

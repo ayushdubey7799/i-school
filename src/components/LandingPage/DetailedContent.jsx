@@ -313,6 +313,11 @@ margin-top: 5rem;
     cursor: pointer;
 }
 
+.contactSectionBtn:hover {
+    cursor: pointer;
+    background-color: #FFD580;
+}
+
 .achievedNumber {
     display: flex;
     flex-direction: row;
@@ -356,6 +361,7 @@ margin-top: 5rem;
 .productTitle {
     font-size: 2.5rem;
     font-weight: 800;
+    text-align: center;
 }
 
 .productText {
@@ -380,10 +386,16 @@ margin-top: 5rem;
     align-items: center;
     justify-content: space-between;
     // min-height: 20rem;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     gap: 1rem;
     padding: 2rem 0rem;
     border-radius: 1rem;
+}
+
+.productCard:hover {
+    cursor: pointer;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    background-color: #99d6ff;
 }
 
 .productCardImg {
@@ -395,6 +407,7 @@ margin-top: 5rem;
     width: 80%;
     font-size: 1.1rem;
     font-weight: 600;
+    text-align: center;
 }
 
 
@@ -445,6 +458,11 @@ margin-top: 5rem;
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
+}
+
+.contactSectionBottomBtn:hover {
+    cursor: pointer;
+    background-color: #FFD580;
 }
 
 
