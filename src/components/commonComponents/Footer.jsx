@@ -5,6 +5,7 @@ import facebook from '../../assets/facebook-50.png'
 import insta from '../../assets/instagram-50.png'
 import twitter from '../../assets/twitter-50.png'
 import linkedin from '../../assets/linkedin-50.png'
+import footerBg from '../../assets/footerBg.jpg'
 
 
 const Footer = () => {
@@ -72,6 +73,9 @@ justify-content: center;
 width: 100%;
 gap: 2rem;
 color: var(--white);
+background-image: url(${footerBg});
+background-size: cover;
+background-repeat: no-repeat; 
 
 .child2 {
     display: flex;
