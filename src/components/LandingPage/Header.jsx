@@ -197,6 +197,7 @@ const StyledDiv = styled.div`
     font-weight: 600;
     text-decoration: underline;
     text-decoration-color: var(--lightOrange);
+    text-decoration-thickness: 2px;
   }
   
   .nav-item1:hover .dropdown-menu1 {
@@ -233,6 +234,7 @@ const StyledDiv = styled.div`
     font-weight: 600;
     text-decoration: underline;
     text-decoration-color: var(--lightOrange);
+    text-decoration-thickness: 2px;
   }
   
   .nav-item2:hover .dropdown-menu2 {
@@ -270,6 +272,7 @@ const StyledDiv = styled.div`
     font-weight: 600;
     text-decoration: underline;
     text-decoration-color: var(--lightOrange);
+    text-decoration-thickness: 2px;
   }
 
   .nav-item3:hover .dropdown-menu3 {
