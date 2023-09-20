@@ -28,6 +28,7 @@ import Home from "./pages/Home"
 import InterviewPage from "./pages/InterviewPage"
 import Demo from "./pages/Demo"
 import Forgot from "./pages/Forgot"
+import InterviewPage2 from "./pages/InterviewPage2"
 
 
 
@@ -42,7 +43,7 @@ const App = () => {
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />
           <Route path="/reset" element={<Forgot />} />
-          <Route path="/interview" element={<InterviewPage />} />
+          <Route path="/interview" element={<InterviewPage2/>} />
           <Route path="/create" element={<NewInterviewDetails />} />
           <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
           <Route path="/score/:interviewId" element={<Scorecard />} />
