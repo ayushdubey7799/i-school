@@ -151,11 +151,12 @@ export const StyledContent = styled.div`
       cursor: pointer;
     }
 
-    // .btn:hover {
-    //   background-color: var(--white);
-    //   color: black;
-    //   border: 0.1rem solid var(--lightOrange)
-    // }
+    .btn:hover {
+      background-color: var(--white);
+      color: black;
+      border: 0.1rem solid var(--lightOrange);
+      padding: 0.4rem 0.7rem;
+    }
 
 
   }
