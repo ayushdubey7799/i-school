@@ -213,7 +213,7 @@ const Signup = () => {
                 <button type="submit" className="btn">Create Account</button>
               </form>
               <p>
-                Have an account ? <Link to="/login">Sign In</Link>
+                Have an account ? <Link to="/login" className="link">Sign In</Link>
               </p>
             </div>
             : value == 'employer' ?
@@ -244,13 +244,29 @@ const Signup = () => {
                   </div>
 
                   <div className="inputBox">
-                    <input
-                      type="text"
-                      id="industry"
+                    <select
                       value={industry}
                       onChange={(e) => setIndustry(e.target.value)}
-                      required
-                    />
+                      id="industry"
+                    >
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                      <option value='technology'>Technology</option>
+                      <option value='telecom'>Telecom</option>
+                      <option value='services'>Services</option>
+                      <option value='manufacturing'>Manufacturing</option>
+                      <option value='engineering'>Engineering</option>
+                      <option value='bfsi'>BFSI</option>
+                      <option value='commerce'>Commerce</option>
+                      <option value='construction'>Construction</option>
+                      <option value='powerEnergy'>Power & Energy</option>
+                      <option value='healthcare'>Healthcare</option>
+                      <option value='logistics'>Logistics</option>
+                      <option value='agriculture'>Agriculture</option>
+                      <option value='lifestyle'>Lifestyle</option>
+                      <option value='others'>Others</option>
+                    </select>
                     <label htmlFor="industry">Industry</label>
                   </div>
 
@@ -340,7 +356,7 @@ const Signup = () => {
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
-                  Have an account ? <Link to="/login">Sign In</Link>
+                  Have an account ? <Link to="/login" className="link">Sign In</Link>
                 </p>
               </div>
 
@@ -371,13 +387,29 @@ const Signup = () => {
                   </div>
 
                   <div className="inputBox">
-                    <input
-                      type="text"
-                      id="industry"
+                    <select
                       value={industry}
                       onChange={(e) => setIndustry(e.target.value)}
-                      required
-                    />
+                      id="industry"
+                    >
+                      <option value="" disabled selected>
+                        Select
+                      </option>
+                      <option value='technology'>Technology</option>
+                      <option value='telecom'>Telecom</option>
+                      <option value='services'>Services</option>
+                      <option value='manufacturing'>Manufacturing</option>
+                      <option value='engineering'>Engineering</option>
+                      <option value='bfsi'>BFSI</option>
+                      <option value='commerce'>Commerce</option>
+                      <option value='construction'>Construction</option>
+                      <option value='powerEnergy'>Power & Energy</option>
+                      <option value='healthcare'>Healthcare</option>
+                      <option value='logistics'>Logistics</option>
+                      <option value='agriculture'>Agriculture</option>
+                      <option value='lifestyle'>Lifestyle</option>
+                      <option value='others'>Others</option>
+                    </select>
                     <label htmlFor="industry">Industry</label>
                   </div>
 
@@ -468,7 +500,7 @@ const Signup = () => {
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
-                  Have an account ? <Link to="/login">Sign In</Link>
+                  Have an account ? <Link to="/login" className="link">Sign In</Link>
                 </p>
               </div>
         }
@@ -507,6 +539,11 @@ const StyledSignup = styled.div`
 
     .icon {
       width: 2rem;
+    }
+
+    .link {
+      color: var(--lightOrange);
+      text-decoration: none;
     }
 
   #form {
