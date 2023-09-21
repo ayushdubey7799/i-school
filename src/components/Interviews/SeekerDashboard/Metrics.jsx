@@ -11,12 +11,10 @@ const Container = styled.div`
 `;
 
 const Square = styled.div`
-//   flex: 1;
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-//   border: 1px solid black;
   width: 20%;
   border-radius: 1rem;
   font-size: 0.8rem;

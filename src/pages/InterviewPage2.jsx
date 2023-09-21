@@ -9,9 +9,10 @@ import InterviewTabs from "../components/Interviews/InterviewTabs";
 import { useSelector } from "react-redux";
 import JobSeekerSidebar from "../components/Interviews/SeekerDashboard/jobSeekerSidebar";
 import Metrics from "../components/Interviews/SeekerDashboard/Metrics";
+import Profile from "../components/Interviews/SeekerDashboard/Profile";
 
 const JobSearch = () => <div>Job Search Content</div>;
-const Profile = () => <div>Profile Content</div>;
+// const Profile = () => <div>Profile Content</div>;
 const Verification = () => <div>Verification Content</div>;
 const Inbox = () => <div>Inbox Content</div>;
 const PracticeInterview = () => <div>Practice Interview Content</div>;
@@ -59,7 +60,7 @@ const MainContent = styled.div`
 const StyledContent = styled.div`
   width: 100%;
   display: flex;
-  height: 85vh;
+  height: 70vh;
 //   margin: 5rem auto;
   background-color: var(--backgroundColor);
   color: var(--color);
