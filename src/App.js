@@ -28,6 +28,15 @@ import Home from "./pages/Home"
 import InterviewPage from "./pages/InterviewPage"
 import Demo from "./pages/Demo"
 import Forgot from "./pages/Forgot"
+import Intelliview from "./pages/submenuPages/Intelliview"
+import IntelliBoard from "./pages/submenuPages/IntelliBoard"
+import IntelliSource from "./pages/submenuPages/IntelliSource"
+import Screening from "./pages/submenuPages/Screening"
+import DataAnalytics from "./pages/submenuPages/DataAnalytics"
+import TalentManagement from "./pages/submenuPages/TalentManagement"
+import Enterprises from "./pages/submenuPages/Enterprises"
+import RecruitmentAgency from "./pages/submenuPages/RecruitmentAgency"
+import JobSeeker from "./pages/submenuPages/JobSeeker"
 
 
 
@@ -61,6 +70,20 @@ const App = () => {
           <Route path="/employers/jds" element={<JobDescriptions />} />
           <Route path="/employers/:jobSummaryHash" element={<JdDetails />} />
           <Route path="/demo" element={<Demo />} />
+
+          {/* Submenu Pages  */}
+          <Route path="/product/intelliview" element={<Intelliview />} />
+          <Route path="/product/intellisource" element={<IntelliSource />} />
+          <Route path="/product/intelliboard" element={<IntelliBoard />} />
+
+          <Route path="/service/screening" element={<Screening />} />
+          <Route path="/service/data-analytics" element={<DataAnalytics />} />
+          <Route path="/service/talent-management" element={<TalentManagement />} />
+
+          <Route path="/solution/enterprise" element={<Enterprises />} />
+          <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
+          <Route path="/solution/job-seeker" element={<JobSeeker />} />
+
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
