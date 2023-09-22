@@ -106,15 +106,15 @@ const DetailedContent = () => {
                 <span className='productText'>Explore our blog for insightful articles, personal reflections and ideas that inspire action on the topics you care about.</span>
 
                 <div className='productCardBox'>
-                    <div className='productCard'>
+                    <div className='productCard' onClick={() => navigate("/product/intelliview")}>
                         <img className='productCardImg' src={productCard1} />
                         <span className='productCardText'>AI benefits with human touch</span>
                     </div>
-                    <div className='productCard'>
+                    <div className='productCard' onClick={() => navigate("/product/intellisource")}>
                         <img className='productCardImg' src={productCard2} />
                         <span className='productCardText'>Streamline and Automate processes for better Opex</span>
                     </div>
-                    <div className='productCard'>
+                    <div className='productCard' onClick={() => navigate("/product/intelliboard")}>
                         <img className='productCardImg' src={productCard3} />
                         <span className='productCardText'>Technology and innovation  that will inspire you</span>
                     </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from '../../components/LandingPage/Header'
+import Footer from '../../components/commonComponents/Footer'
 
 const RecruitmentAgency = () => {
     return (
@@ -9,6 +10,7 @@ const RecruitmentAgency = () => {
             <StyledContent>
                 RecruitmentAgency
             </StyledContent>
+            <Footer />
         </StyledPage>
     )
 }
