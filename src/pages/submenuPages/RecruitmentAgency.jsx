@@ -99,8 +99,6 @@ const RecruitmentAgency = () => {
 
                     </div>
 
-                    <span className='smallTitle'>Conclusion</span>
-
                     <span className='text'>Embracing IntelliView's AI-based solutions for recruitment agencies is more than a modernization—it's a strategic move toward a more efficient, inclusive, and data-driven future. By automating time-consuming tasks, eliminating bias, and leveraging predictive analytics, your agency can not only save costs but also unlock the potential of a diverse, high-performing workforce. Join the AI revolution with IntelliView and experience recruitment like never before. Contact us today to get started.</span>
 
                 </div>

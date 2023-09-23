@@ -86,7 +86,6 @@ const Screening = () => {
                         </div>
                     </div>
 
-                    <span className='smallTitle'>Conclusion</span>
 
                     <span className='text'>Our AI-based resume screening solution is not just a technological advancement; it's a game-changer in modern recruitment. Join the ranks of forward-thinking companies that are revolutionizing their hiring processes, improving their talent acquisition, and driving growth. Contact us today to learn more about how we can help you make data-driven hiring decisions and secure the top talent your organization deserves.</span>
                 </div>

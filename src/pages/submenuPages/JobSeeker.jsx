@@ -81,7 +81,6 @@ const JobSeeker = () => {
                         </div>
                     </div>
 
-                    <span className='smallTitle'>Conclusion</span>
 
                     <span className='text'>Embracing AI-based solutions for job seekers can be a game-changer in today's competitive job market. With smarter job matching, enhanced interview preparation, improved resumes, and access to invaluable insights, you can supercharge your job search. The impressive data speaks for itself, demonstrating that AI-driven tools can significantly increase your chances of landing your dream job. So why settle for the traditional approach when you can leverage the power of AI to accelerate your career goals? Try AI-based solutions today and experience the difference firsthand. Your future career success awaits!</span>
                 </div>

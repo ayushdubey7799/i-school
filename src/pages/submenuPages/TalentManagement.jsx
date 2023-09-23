@@ -81,7 +81,6 @@ const TalentManagement = () => {
                         </div>
                     </div>
 
-                    <span className='smallTitle'>Conclusion</span>
 
                     <span className='text'>Embracing AI-based hiring tools is the future of talent management. The data speaks for itself: increased efficiency, reduced bias, improved candidate matching, and predictive analytics contribute to better hires, lower turnover, and a more competitive edge in the market. Don't get left behind in the talent race – leverage AI to unlock the full potential of your workforce.</span>
                     <span className='text'>Ready to experience the benefits of AI-powered talent management? Contact us today to learn how our AI-based hiring solutions can transform your recruitment process and drive organizational growth.</span>

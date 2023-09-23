@@ -84,7 +84,6 @@ const IntelliBoard = () => {
                     <span className='text'><b>Enhanced Candidate Experience</b>: We prioritize creating a positive candidate experience, ensuring your organization's reputation as a top employer is maintained.</span>
 
 
-                    <span className='smallTitle'>Conclusion</span>
                     <span className='text'>Experience the future of recruitment with IntelliBoard. Say goodbye to traditional, time-consuming methods, and embrace the efficiency, fairness, and cost savings that our AI-powered platform brings. Join the ranks of forward-thinking organizations that are shaping the future of talent acquisition.</span>
                     <span className='smallTitle'>Unlock the Power of IntelliBoard - Revolutionize Your Recruitment Process Today!</span>
 
