@@ -18,7 +18,9 @@ const Header = () => {
       <div id="left">
         <img src={logo} onClick={() => navigate("/")} />
       </div>
+
       <div id="middle">
+        <li onClick={() => navigate("/")}>Home</li>
         <div className="nav-item1 dropdown1">
           <li className="dropdown-toggle1">Products</li>
           <div className="dropdown-menu1">
