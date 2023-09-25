@@ -197,6 +197,10 @@ margin-right: 5%;
     row-gap: 2rem;
     margin-bottom: 2rem;
     justify-content: center;
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {

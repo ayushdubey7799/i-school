@@ -56,9 +56,7 @@ const Intelliview = () => {
                     </div>
 
 
-                    <span className='smallTitle part'>Precision Matching</span>
-
-                    <div className='cardBox1'>
+                    <div className='cardBox1 part'>
                         <div className='card1'>
                             <span className='cardTitle1'>Predictive Analytics</span>
                             <span className='cardText1'>IntelliView utilizes predictive analytics to identify candidates who are the best fit for your organization based on historical data. Expect reduced turnover and higher retention rates.</span>
@@ -218,7 +216,10 @@ margin-right: 5%;
     flex-flow: row wrap;
     column-gap: 5%;
     row-gap: 2rem;
-
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {

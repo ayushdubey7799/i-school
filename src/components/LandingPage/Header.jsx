@@ -196,7 +196,7 @@ const StyledDiv = styled.div`
   .dropdown-menu1 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
   }
   
@@ -233,7 +233,7 @@ const StyledDiv = styled.div`
   .dropdown-menu2 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
   }
   
@@ -271,7 +271,7 @@ const StyledDiv = styled.div`
   .dropdown-menu3 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
   }
 

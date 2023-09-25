@@ -37,6 +37,8 @@ import TalentManagement from "./pages/submenuPages/TalentManagement"
 import Enterprises from "./pages/submenuPages/Enterprises"
 import RecruitmentAgency from "./pages/submenuPages/RecruitmentAgency"
 import JobSeeker from "./pages/submenuPages/JobSeeker"
+import Career from "./pages/menuPages/Career"
+import Sales from "./pages/menuPages/Sales"
 
 
 
@@ -67,6 +69,9 @@ const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/career" element={<Career />} />
+          <Route path="/sales" element={<Sales />} />
+
           <Route path="/employers/jds" element={<JobDescriptions />} />
           <Route path="/employers/:jobSummaryHash" element={<JdDetails />} />
           <Route path="/demo" element={<Demo />} />

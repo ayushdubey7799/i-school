@@ -377,15 +377,15 @@ margin-top: 5rem;
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 2rem;
+    padding: 0rem 2rem;
 }
 
 .productCard {
-    width: 30%;
+    width: 22.5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    // min-height: 20rem;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     gap: 1rem;
     padding: 2rem 0rem;
@@ -399,13 +399,12 @@ margin-top: 5rem;
 }
 
 .productCardImg {
-    width: 80%;
-    // height: 15rem;
+    width: 60%;
 }
 
 .productCardText {
     width: 80%;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     text-align: center;
 }

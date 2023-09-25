@@ -209,6 +209,10 @@ margin-right: 5%;
     column-gap: 5%;
     row-gap: 2rem;
     margin-top: 2rem;
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {

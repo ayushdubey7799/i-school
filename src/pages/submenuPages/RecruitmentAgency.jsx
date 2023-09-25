@@ -227,7 +227,10 @@ margin-right: 5%;
     flex-flow: row wrap;
     column-gap: 5%;
     row-gap: 2rem;
-
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {
