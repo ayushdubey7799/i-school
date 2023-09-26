@@ -116,7 +116,7 @@ const Career = () => {
                 <span className='text'>To apply for any of our open positions, please click on the respective job link and follow the application instructions. We look forward to welcoming talented and motivated individuals to the IntelliView family.</span>
 
                 <span className='smallTitle contact' onClick={() => navigate('/contact')}>Contact Us</span>
-                <span className='text'>If you have any questions about our career opportunities or working at IntelliView, please don't hesitate to <span className='contact' onClick={() => navigate('/contact')}>contact us</span>. We're here to help!.</span>
+                <span className='text'>If you have any questions about our career opportunities or working at IntelliView, please don't hesitate to <span className='linkNav' onClick={() => navigate('/contact')}>contact us</span>. We're here to help!.</span>
 
                 <span className='text'>Join us in shaping the future of recruitment with AI. Your career at IntelliView begins here!</span>
             </StyledContent>
@@ -305,13 +305,15 @@ b {
 }
 
 
-.contact {
-    cursor: pointer;
+.linkNav {
+    color: var(--lightOrange);
     font-weight: 600;
 }
 
-.contact:hover {
-    color: var(--lightOrange);
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
 }
 
 

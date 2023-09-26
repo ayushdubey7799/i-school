@@ -5,8 +5,12 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/screening.jpg'
 import img2 from '../../assets/VectorImg/IntelliBoard.jpg'
+import { useNavigate } from 'react-router'
 
 const Screening = () => {
+    const navigate = useNavigate();
+
+
     return (
         <StyledPage>
             <Header />
@@ -87,7 +91,7 @@ const Screening = () => {
                     </div>
 
 
-                    <span className='text'>Our AI-based resume screening solution is not just a technological advancement; it's a game-changer in modern recruitment. Join the ranks of forward-thinking companies that are revolutionizing their hiring processes, improving their talent acquisition, and driving growth. Contact us today to learn more about how we can help you make data-driven hiring decisions and secure the top talent your organization deserves.</span>
+                    <span className='text'>Our AI-based resume screening solution is not just a technological advancement; it's a game-changer in modern recruitment. Join the ranks of forward-thinking companies that are revolutionizing their hiring processes, improving their talent acquisition, and driving growth. <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to learn more about how we can help you make data-driven hiring decisions and secure the top talent your organization deserves.</span>
                 </div>
             </StyledContent>
             <Footer />
@@ -243,7 +247,16 @@ margin-right: 5%;
 
 }
 
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
 
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
 
 `
 

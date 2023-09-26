@@ -5,8 +5,11 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/talentManage.png'
 import img2 from '../../assets/VectorImg/talent2.png'
+import { useNavigate } from 'react-router'
 
 const TalentManagement = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
@@ -83,7 +86,7 @@ const TalentManagement = () => {
 
 
                     <span className='text'>Embracing AI-based hiring tools is the future of talent management. The data speaks for itself: increased efficiency, reduced bias, improved candidate matching, and predictive analytics contribute to better hires, lower turnover, and a more competitive edge in the market. Don't get left behind in the talent race – leverage AI to unlock the full potential of your workforce.</span>
-                    <span className='text'>Ready to experience the benefits of AI-powered talent management? Contact us today to learn how our AI-based hiring solutions can transform your recruitment process and drive organizational growth.</span>
+                    <span className='text'>Ready to experience the benefits of AI-powered talent management? <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to learn how our AI-based hiring solutions can transform your recruitment process and drive organizational growth.</span>
 
                 </div>
             </StyledContent>
@@ -239,7 +242,16 @@ margin-right: 5%;
 
 }
 
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
 
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
 
 `
 

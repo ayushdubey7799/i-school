@@ -209,6 +209,7 @@ margin-right: 5%;
     color: white;
     padding: 2rem 5%;
     border-radius: 1rem;
+    justify-content: center;
 }
 
 .card1 {

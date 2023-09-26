@@ -5,8 +5,11 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/SolutionEnterprise.png'
 import img2 from '../../assets/VectorImg/talentManage.png'
+import { useNavigate } from 'react-router'
 
 const Enterprises = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
@@ -77,7 +80,7 @@ const Enterprises = () => {
                     </div>
 
                     <span className='text part'>Are you ready to supercharge your enterprise's hiring process with AI-driven solutions from IntelliView? Embrace the future of recruitment and gain a competitive edge in securing top-tier talent. Join the growing number of enterprises experiencing the transformative power of AI in hiring.</span>
-                    <span className='text'>Contact us today to schedule a demo and witness the IntelliView advantage firsthand.</span>
+                    <span className='text'><span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to schedule a demo and witness the IntelliView advantage firsthand.</span>
                 </div>
             </StyledContent>
             <Footer />
@@ -231,6 +234,20 @@ margin-right: 5%;
     font-weight: 400;
 
 }
+
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
+
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
+
+
+
 
 
 

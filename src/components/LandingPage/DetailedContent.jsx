@@ -169,7 +169,7 @@ margin-top: 5rem;
     justify-content: space-between;
     gap: 5%;
     margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     margin-left: 5%;
     margin-right: 5%;
 }
@@ -215,9 +215,9 @@ margin-top: 5rem;
 .visualDetail {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
-    margin-top: 3rem;
-    margin-bottom: 5rem;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
     margin-left: 5%;
     margin-right: 5%;
 }
@@ -266,7 +266,7 @@ margin-top: 5rem;
 }
 
 .visualDetailImgBox {
-    width: 55%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -324,7 +324,7 @@ margin-top: 5rem;
     width: 90%;
     justify-content: space-between;
     align-items: center;
-    padding: 4rem 5%;
+    padding: 3rem 5% 2rem 5%;
 }
 
 .achievedNumberBox {
@@ -353,7 +353,7 @@ margin-top: 5rem;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 5rem;
+    margin-top: 3rem;
     margin-bottom: 5rem;
     gap: 2rem;
 }

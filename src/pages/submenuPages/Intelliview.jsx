@@ -5,8 +5,11 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/intelliView.jpg'
 import img2 from '../../assets/VectorImg/about.png'
+import { useNavigate } from 'react-router'
 
 const Intelliview = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
@@ -91,7 +94,7 @@ const Intelliview = () => {
                     <span className='smallTitle'>Experience the Future of Recruitment with IntelliView</span>
 
                     <span className='text'>Don't let outdated hiring practices hold your organization back. Join the ranks of forward-thinking companies that are revolutionizing recruitment with IntelliView. With our AI-based interview tool, you'll save time, make better hires, and drive growth.</span>
-                    <span className='text'>Ready to get started? Contact us today to schedule a demo and discover how IntelliView can transform your hiring process. Welcome to the future of recruitment. Welcome to IntelliView.</span>
+                    <span className='text'>Ready to get started? <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to schedule a demo and discover how IntelliView can transform your hiring process. Welcome to the future of recruitment. Welcome to IntelliView.</span>
 
                 </div>
             </StyledContent>
@@ -248,6 +251,16 @@ margin-right: 5%;
 
 }
 
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
+
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
 
 
 `
