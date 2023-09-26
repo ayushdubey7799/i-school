@@ -113,6 +113,10 @@ const Sales = () => {
 
                 <span className='text'>As market trends evolve, embracing AI in recruitment is no longer an option but a necessity. IntelliView empowers you to make data-driven decisions, reduce bias, and create a superior candidate experience. Join the ranks of industry leaders who have already harnessed the power of AI in recruitment. Revolutionize your hiring process with IntelliView and stay ahead in the competitive world of talent acquisition. Your future success begins here.</span>
 
+                <span className='smallTitle'>Contact us by emailing <a className="link" href="mailto:sales@intelliview.in"
+                    target="_blank"
+                    rel="noreferrer">sales@intelliview.in</a></span>
+
             </StyledContent>
             <Footer />
         </StyledBox>
@@ -333,8 +337,15 @@ b {
     color: var(--lightOrange);
 }
 
+.link {
+    color: var(--lightOrange);
+    text-decoration: none;
 
+}
 
+.link:hover {
+    text-decoration: underline;
+}
 
 `
 

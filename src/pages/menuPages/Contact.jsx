@@ -35,7 +35,7 @@ const Contact = () => {
                     <div>
                         <span className='title'>Sales</span>
                         <span className='text'>Get in touch with our sales team to see how we can work together.</span>
-                        <button className='btn' onClick={() => navigate('/support')}>Contact Sales</button>
+                        <button className='btn' onClick={() => navigate('/sales')}>Contact Sales</button>
                     </div>
                 </div>
 

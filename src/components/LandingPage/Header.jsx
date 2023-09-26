@@ -47,7 +47,7 @@ const Header = () => {
           </div>
         </div>
 
-        <li onClick={() => navigate("/contact")}>Support</li>
+        <li onClick={() => navigate("/support")}>Support</li>
         <li onClick={() => navigate("/about")}>About Us</li>
         <li onClick={() => navigate('/case-studies')} >Case Studies</li>
       </div>
@@ -200,6 +200,7 @@ const StyledDiv = styled.div`
     text-decoration: underline;
     text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
   
   .nav-item1:hover .dropdown-menu1 {
@@ -237,6 +238,7 @@ const StyledDiv = styled.div`
     text-decoration: underline;
     text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
   
   .nav-item2:hover .dropdown-menu2 {
@@ -275,6 +277,7 @@ const StyledDiv = styled.div`
     text-decoration: underline;
     text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
 
   .nav-item3:hover .dropdown-menu3 {

@@ -108,15 +108,15 @@ const DetailedContent = () => {
                 <div className='productCardBox'>
                     <div className='productCard'>
                         <img className='productCardImg' src={productCard1} />
-                        <span className='productCardText'>AI benefits with human touch <b onClick={() => navigate("/product/intelliview")} className='kMore'>Know more...</b></span>
+                        <span className='productCardText'>AI benefits with human touch <br/> <b onClick={() => navigate("/product/intelliview")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                     <div className='productCard' >
                         <img className='productCardImg' src={productCard2} />
-                        <span className='productCardText'>Streamline and Automate processes for better Opex <b onClick={() => navigate("/product/intellisource")} className='kMore'>Know more...</b></span>
+                        <span className='productCardText'>Streamline and Automate processes for better Opex <br/> <b onClick={() => navigate("/product/intellisource")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                     <div className='productCard' >
                         <img className='productCardImg' src={productCard3} />
-                        <span className='productCardText'>Technology and innovation  that will inspire you <b onClick={() => navigate("/product/intelliboard")} className='kMore'>Know more...</b></span>
+                        <span className='productCardText'>Technology and innovation  that will inspire you <br/> <b onClick={() => navigate("/product/intelliboard")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                 </div>
             </div>
