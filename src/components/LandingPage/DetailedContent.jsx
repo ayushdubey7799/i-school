@@ -410,6 +410,7 @@ margin-top: 5rem;
 
 .kMore {
     cursor: pointer;
+    color: var(--lightOrange);
 }
 
 
