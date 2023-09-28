@@ -6,10 +6,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   width: 90%;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 4rem 5%;
- background-color: rgb(239,241,247);
+
 
 .achievedNumberBox {
   display: flex;
@@ -50,27 +50,27 @@ const Content = styled.div`
   text-align: center;
 `;
 
-const Metrics = () => {
+const EmployeMetrics= () => {
   return (
     <Container>
     <div className='achievedNumberBox'>
         <span className='achievedNumberDigit'>15</span>
-        <span className='achievedNumberText'>Recommended Jobs</span>
+        <span className='achievedNumberText'>Active Reqs</span>
     </div>
     <div className='achievedNumberBox'>
         <span className='achievedNumberDigit'>30</span>
-        <span className='achievedNumberText'>Applied Jobs</span>
+        <span className='achievedNumberText'>Applications</span>
+    </div>
+    <div className='achievedNumberBox'>
+        <span className='achievedNumberDigit'>17</span>
+        <span className='achievedNumberText'>Interviews</span>
     </div>
     <div className='achievedNumberBox'>
         <span className='achievedNumberDigit'>12</span>
-        <span className='achievedNumberText'>Interviews Completed</span>
-    </div>
-    <div className='achievedNumberBox'>
-        <span className='achievedNumberDigit'>5</span>
-        <span className='achievedNumberText'>Interview Scheduled</span>
+        <span className='achievedNumberText'>Registered Candidates</span>
     </div>
 </Container>
   );
 };
 
-export default Metrics;
+export default EmployeMetrics;

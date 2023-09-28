@@ -10,8 +10,9 @@ import { useSelector } from "react-redux";
 import JobSeekerSidebar from "../components/Interviews/SeekerDashboard/jobSeekerSidebar";
 import Metrics from "../components/Interviews/SeekerDashboard/Metrics";
 import Profile from "../components/Interviews/SeekerDashboard/Profile";
+import JobSearchBar from "../components/Interviews/SeekerDashboard/JobSearchBar";
 
-const JobSearch = () => <div>Job Search Content</div>;
+// const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 const Verification = () => <div>Verification Content</div>;
 const Inbox = () => <div>Inbox Content</div>;
@@ -27,7 +28,7 @@ const InterviewPage2 = () => {
         if (!accessToken) navigate("/login");
     }, []);
 
-    const [currentItem, setCurrentItem] = useState('job search');
+    const [currentItem, setCurrentItem] = useState('profile');
 
   return (
     <>
@@ -36,9 +37,8 @@ const InterviewPage2 = () => {
       <JobSeekerSidebar currentItem={currentItem} setCurrentItem={setCurrentItem} />
       <MainContent>
         <Metrics/>
-        {currentItem === 'job search' && <JobSearch />}
         {currentItem === 'profile' && <Profile />}
-        {currentItem === 'verification' && <Verification />}
+        {currentItem === 'job-search' && <JobSearchBar />}
         {currentItem === 'inbox' && <Inbox />}
         {currentItem === 'practice interview' && <PracticeInterview />}
       </MainContent>
@@ -61,7 +61,7 @@ const StyledContent = styled.div`
   width: 100%;
   display: flex;
   height: 70vh;
-//   margin: 5rem auto;
-  background-color: var(--backgroundColor);
+//margin: 1rem auto;
+  background-color: rgb(239,241,247);
   color: var(--color);
 `;

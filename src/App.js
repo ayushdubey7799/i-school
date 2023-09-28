@@ -37,6 +37,9 @@ import TalentManagement from "./pages/submenuPages/TalentManagement"
 import Enterprises from "./pages/submenuPages/Enterprises"
 import RecruitmentAgency from "./pages/submenuPages/RecruitmentAgency"
 import JobSeeker from "./pages/submenuPages/JobSeeker"
+import InterviewPage2 from "./pages/InterviewPage2"
+import EmployerDashboard from "./pages/EmployerDashboard"
+import ScheduleInterview from "./components/Interviews/EmployerDashboard/ScheduleInterview"
 
 
 
@@ -51,7 +54,10 @@ const App = () => {
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />
           <Route path="/reset" element={<Forgot />} />
-          <Route path="/interview" element={<InterviewPage />} />
+          <Route path="/interview" element={<InterviewPage2 />} />
+          <Route path="/interview2" element={<EmployerDashboard />} />
+          <Route path="/schedule" element={<ScheduleInterview />} />
+
           <Route path="/create" element={<NewInterviewDetails />} />
           <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
           <Route path="/score/:interviewId" element={<Scorecard />} />
