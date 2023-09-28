@@ -18,34 +18,36 @@ const Header = () => {
       <div id="left">
         <img src={logo} onClick={() => navigate("/")} />
       </div>
+
       <div id="middle">
+        <li onClick={() => navigate("/")}>Home</li>
         <div className="nav-item1 dropdown1">
           <li className="dropdown-toggle1">Products</li>
           <div className="dropdown-menu1">
-            <a href="/product/intelliview" target="_blank">IntelliView</a>
-            <a href="/product/intellisource" target="_blank">IntelliSource</a>
-            <a href="/product/intelliboard" target="_blank">IntelliBoard</a>
+            <a href="/product/intelliview">IntelliView</a>
+            <a href="/product/intellisource">IntelliSource</a>
+            <a href="/product/intelliboard">IntelliBoard</a>
           </div>
         </div>
         <div className="nav-item2 dropdown2">
           <li className="dropdown-toggle2">Services</li>
           <div className="dropdown-menu2">
-            <a href="/service/screening" target="_blank">Screening</a>
-            <a href="/service/data-analytics" target="_blank">Data Analytics</a>
-            <a href="/service/talent-management" target="_blank">Talent Management</a>
+            <a href="/service/screening">Screening</a>
+            <a href="/service/data-analytics">Data Analytics</a>
+            <a href="/service/talent-management">Talent Management</a>
           </div>
         </div>
 
         <div className="nav-item3 dropdown3">
           <li className="dropdown-toggle3">Solutions</li>
           <div className="dropdown-menu3">
-            <a href="/solution/enterprise" target="_blank">For Enterprises</a>
-            <a href="/solution/recruitment-agency" target="_blank">For Recruitment Agencies</a>
-            <a href="/solution/job-seeker" target="_blank">For Job Seekers</a>
+            <a href="/solution/enterprise">For Enterprises</a>
+            <a href="/solution/recruitment-agency">For Recruitment Agencies</a>
+            <a href="/solution/job-seeker">For Job Seekers</a>
           </div>
         </div>
 
-        <li onClick={() => navigate("/contact")}>Support</li>
+        <li onClick={() => navigate("/support")}>Support</li>
         <li onClick={() => navigate("/about")}>About Us</li>
         <li onClick={() => navigate('/case-studies')} >Case Studies</li>
       </div>
@@ -196,8 +198,9 @@ const StyledDiv = styled.div`
   .dropdown-menu1 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
   
   .nav-item1:hover .dropdown-menu1 {
@@ -233,8 +236,9 @@ const StyledDiv = styled.div`
   .dropdown-menu2 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
   
   .nav-item2:hover .dropdown-menu2 {
@@ -271,8 +275,9 @@ const StyledDiv = styled.div`
   .dropdown-menu3 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
 
   .nav-item3:hover .dropdown-menu3 {

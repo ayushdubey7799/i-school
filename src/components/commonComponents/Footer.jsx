@@ -36,12 +36,13 @@ const Footer = () => {
                     <StyledLink to='/case-studies'>
                         <span className='link'>Case Studies</span>
                     </StyledLink>
-                    <StyledLink to="/">
+                    <StyledLink to="/career">
                         <span className="link">Careers</span>
                     </StyledLink>
-                    <a className="link" href="mailto:sales@intelliview.in"
-                        target="_blank"
-                        rel="noreferrer">Sales</a>
+                    <StyledLink to="/sales">
+                        <span className="link">Sales</span>
+                    </StyledLink>
+                    
                 </div>
                 <div className='grandChild hidden'>
                     <StyledLink to="/privacy">
