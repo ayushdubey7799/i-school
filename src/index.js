@@ -13,13 +13,12 @@ import { PersistGate } from 'redux-persist/integration/react';
 const rootElement = document.getElementById('root');
 
 ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
-    <ToastContainer />
 
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+      <ToastContainer />
+
         <App />
       </PersistGate>
     </Provider>
-  </React.StrictMode>
 );

@@ -17,6 +17,7 @@ import JdRegistration from "../components/Interviews/EmployerDashboard/JdRegistr
 import CreateQuestion from "../components/Interviews/EmployerDashboard/CreateQuestion";
 import ScheduleInterview from "../components/Interviews/EmployerDashboard/ScheduleInterview";
 import ActiveJds from "../components/Interviews/EmployerDashboard/ActiveJds";
+import ManageTests from "../components/Interviews/EmployerDashboard/ManageTests";
 
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
@@ -31,7 +32,7 @@ const EmployerDashboard = () => {
 
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentItem, setCurrentItem] = useState("activeJds");
+  const [currentItem, setCurrentItem] = useState("profile");
 
   useEffect(() => {
     if (!accessToken) navigate("/login");
@@ -62,7 +63,7 @@ const EmployerDashboard = () => {
           {currentItem === "candidate-register" && <Profile />}
           {currentItem === "manage-tests" && <CreateQuestion />}
           {currentItem === "activeJds" && <ActiveJds />}
-          {currentItem === "create-tests" && <ActiveJds />}
+          {currentItem === "create-tests" && <ManageTests/>}
           {currentItem === "inbox" && <Inbox />}
         </MainContent>
       </StyledContent>
@@ -73,6 +74,7 @@ const EmployerDashboard = () => {
 export default EmployerDashboard;
 
 const MainContent = styled.div`
+width: 80%;
   flex-grow: 1;
   padding: 20px;
   margin-top: 4rem;
@@ -82,7 +84,6 @@ const StyledContent = styled.div`
   width: 100%;
   display: flex;
   height: 70vh;
-  //   margin: 5rem auto;
   background-color: var(--backgroundColor);
   color: var(--color);
 `;
