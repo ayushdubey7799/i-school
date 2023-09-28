@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 4rem 5%;
- background-color: rgb(239,241,247);
+
 
 .achievedNumberBox {
   display: flex;
