@@ -5,8 +5,11 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img from '../../assets/VectorImg/intelliSource.png'
 import img2 from '../../assets/VectorImg/intelliView.jpg'
+import { useNavigate } from 'react-router'
 
 const IntelliSource = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
@@ -75,7 +78,7 @@ const IntelliSource = () => {
                     </div>
 
                     <span className='text'>Join the growing number of forward-thinking organizations that are reaping the benefits of AI-based resume and candidate sourcing with IntelliSource. Stay ahead in the talent game, make data-driven decisions, and build a diverse, high-performing team that propels your business to new heights.</span>
-                    <span className='text'>Contact us today to learn more about how IntelliSource can transform your recruitment process and drive your organization's success.</span>
+                    <span className='text'> <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to learn more about how IntelliSource can transform your recruitment process and drive your organization's success.</span>
 
                 </div>
             </StyledContent>
@@ -197,6 +200,10 @@ margin-right: 5%;
     row-gap: 2rem;
     margin-bottom: 2rem;
     justify-content: center;
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {
@@ -223,6 +230,18 @@ margin-right: 5%;
     line-height: 1.5rem;
     font-weight: 400;
 }
+
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
+
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
+
 
 
 

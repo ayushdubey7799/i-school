@@ -108,15 +108,15 @@ const DetailedContent = () => {
                 <div className='productCardBox'>
                     <div className='productCard'>
                         <img className='productCardImg' src={productCard1} />
-                        <span className='productCardText'>AI benefits with human touch <b onClick={() => navigate("/product/intelliview")}>Read more...</b></span>
+                        <span className='productCardText'>AI benefits with human touch <br/> <b onClick={() => navigate("/product/intelliview")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                     <div className='productCard' >
                         <img className='productCardImg' src={productCard2} />
-                        <span className='productCardText'>Streamline and Automate processes for better Opex <b onClick={() => navigate("/product/intellisource")}>Read more...</b></span>
+                        <span className='productCardText'>Streamline and Automate processes for better Opex <br/> <b onClick={() => navigate("/product/intellisource")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                     <div className='productCard' >
                         <img className='productCardImg' src={productCard3} />
-                        <span className='productCardText'>Technology and innovation  that will inspire you <b onClick={() => navigate("/product/intelliboard")}>Read more...</b></span>
+                        <span className='productCardText'>Technology and innovation  that will inspire you <br/> <b onClick={() => navigate("/product/intelliboard")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@ margin-top: 5rem;
     justify-content: space-between;
     gap: 5%;
     margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     margin-left: 5%;
     margin-right: 5%;
 }
@@ -215,9 +215,9 @@ margin-top: 5rem;
 .visualDetail {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
-    margin-top: 3rem;
-    margin-bottom: 5rem;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
     margin-left: 5%;
     margin-right: 5%;
 }
@@ -266,7 +266,7 @@ margin-top: 5rem;
 }
 
 .visualDetailImgBox {
-    width: 55%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -324,7 +324,7 @@ margin-top: 5rem;
     width: 90%;
     justify-content: space-between;
     align-items: center;
-    padding: 4rem 5%;
+    padding: 3rem 5% 2rem 5%;
 }
 
 .achievedNumberBox {
@@ -353,7 +353,7 @@ margin-top: 5rem;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 5rem;
+    margin-top: 3rem;
     margin-bottom: 5rem;
     gap: 2rem;
 }
@@ -377,15 +377,15 @@ margin-top: 5rem;
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 2rem;
+    padding: 0rem 2rem;
 }
 
 .productCard {
-    width: 30%;
+    width: 22.5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    // min-height: 20rem;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     gap: 1rem;
     padding: 2rem 0rem;
@@ -393,24 +393,25 @@ margin-top: 5rem;
 }
 
 .productCard:hover {
-    cursor: pointer;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
     background-color: #99d6ff;
 }
 
 .productCardImg {
-    width: 80%;
-    // height: 15rem;
+    width: 60%;
 }
 
 .productCardText {
     width: 80%;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     text-align: center;
 }
 
-
+.kMore {
+    cursor: pointer;
+    color: var(--lightOrange);
+}
 
 
 .contactSectionBottom {

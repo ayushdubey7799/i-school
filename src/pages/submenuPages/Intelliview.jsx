@@ -5,8 +5,11 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/intelliView.jpg'
 import img2 from '../../assets/VectorImg/about.png'
+import { useNavigate } from 'react-router'
 
 const Intelliview = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
@@ -56,9 +59,7 @@ const Intelliview = () => {
                     </div>
 
 
-                    <span className='smallTitle part'>Precision Matching</span>
-
-                    <div className='cardBox1'>
+                    <div className='cardBox1 part'>
                         <div className='card1'>
                             <span className='cardTitle1'>Predictive Analytics</span>
                             <span className='cardText1'>IntelliView utilizes predictive analytics to identify candidates who are the best fit for your organization based on historical data. Expect reduced turnover and higher retention rates.</span>
@@ -93,7 +94,7 @@ const Intelliview = () => {
                     <span className='smallTitle'>Experience the Future of Recruitment with IntelliView</span>
 
                     <span className='text'>Don't let outdated hiring practices hold your organization back. Join the ranks of forward-thinking companies that are revolutionizing recruitment with IntelliView. With our AI-based interview tool, you'll save time, make better hires, and drive growth.</span>
-                    <span className='text'>Ready to get started? Contact us today to schedule a demo and discover how IntelliView can transform your hiring process. Welcome to the future of recruitment. Welcome to IntelliView.</span>
+                    <span className='text'>Ready to get started? <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to schedule a demo and discover how IntelliView can transform your hiring process. Welcome to the future of recruitment. Welcome to IntelliView.</span>
 
                 </div>
             </StyledContent>
@@ -218,7 +219,10 @@ margin-right: 5%;
     flex-flow: row wrap;
     column-gap: 5%;
     row-gap: 2rem;
-
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {
@@ -247,6 +251,16 @@ margin-right: 5%;
 
 }
 
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
+
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
 
 
 `

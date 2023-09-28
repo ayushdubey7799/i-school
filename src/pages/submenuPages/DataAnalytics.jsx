@@ -5,8 +5,11 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/dataAnalytics.png'
 import img2 from '../../assets/VectorImg/screening.jpg'
+import { useNavigate } from 'react-router'
 
 const DataAnalytics = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
@@ -109,7 +112,7 @@ const DataAnalytics = () => {
                     <span className='smallTitle part'>Unveil the Power of AI in Recruitment</span>
 
                     <span className='text'>Embrace the future of recruitment with our AI-Based Recruitment Data Analytics and Reports solution. Leverage data to make more informed, unbiased, and efficient hiring decisions. Boost your organization's growth by securing the best talent the smart way.</span>
-                    <span className='text'>Are you ready to transform your hiring process? Contact us today to learn more about our AI-driven solutions and embark on a journey to a more effective, efficient, and data-driven recruitment strategy.</span>
+                    <span className='text'>Are you ready to transform your hiring process? <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to learn more about our AI-driven solutions and embark on a journey to a more effective, efficient, and data-driven recruitment strategy.</span>
         
                 </div>
             </StyledContent>
@@ -233,7 +236,10 @@ margin-right: 5%;
     flex-flow: row wrap;
     column-gap: 5%;
     row-gap: 2rem;
-
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {
@@ -262,6 +268,16 @@ margin-right: 5%;
 
 }
 
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
+
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
 
 
 `

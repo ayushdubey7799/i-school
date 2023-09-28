@@ -5,9 +5,12 @@ import Footer from '../../components/commonComponents/Footer'
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/recruitment.png'
 import img2 from '../../assets/VectorImg/recruitment2.png'
+import { useNavigate } from 'react-router'
 
 
 const RecruitmentAgency = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledPage>
             <Header />
@@ -99,7 +102,7 @@ const RecruitmentAgency = () => {
 
                     </div>
 
-                    <span className='text'>Embracing IntelliView's AI-based solutions for recruitment agencies is more than a modernization—it's a strategic move toward a more efficient, inclusive, and data-driven future. By automating time-consuming tasks, eliminating bias, and leveraging predictive analytics, your agency can not only save costs but also unlock the potential of a diverse, high-performing workforce. Join the AI revolution with IntelliView and experience recruitment like never before. Contact us today to get started.</span>
+                    <span className='text'>Embracing IntelliView's AI-based solutions for recruitment agencies is more than a modernization—it's a strategic move toward a more efficient, inclusive, and data-driven future. By automating time-consuming tasks, eliminating bias, and leveraging predictive analytics, your agency can not only save costs but also unlock the potential of a diverse, high-performing workforce. Join the AI revolution with IntelliView and experience recruitment like never before. <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to get started.</span>
 
                 </div>
             </StyledContent>
@@ -227,7 +230,10 @@ margin-right: 5%;
     flex-flow: row wrap;
     column-gap: 5%;
     row-gap: 2rem;
-
+    background: linear-gradient(to bottom, var(--grey), black);
+    color: white;
+    padding: 2rem 5%;
+    border-radius: 1rem;
 }
 
 .card1 {
@@ -262,7 +268,16 @@ ul, li {
 
 }
 
+.linkNav {
+    color: var(--lightOrange);
+    font-weight: 600;
+}
 
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+}
 
 `
 

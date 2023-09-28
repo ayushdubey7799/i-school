@@ -18,7 +18,9 @@ const Header = () => {
       <div id="left">
         <img src={logo} onClick={() => navigate("/")} />
       </div>
+
       <div id="middle">
+        <li onClick={() => navigate("/")}>Home</li>
         <div className="nav-item1 dropdown1">
           <li className="dropdown-toggle1">Products</li>
           <div className="dropdown-menu1">
@@ -45,7 +47,7 @@ const Header = () => {
           </div>
         </div>
 
-        <li onClick={() => navigate("/contact")}>Support</li>
+        <li onClick={() => navigate("/support")}>Support</li>
         <li onClick={() => navigate("/about")}>About Us</li>
         <li onClick={() => navigate('/case-studies')} >Case Studies</li>
       </div>
@@ -196,8 +198,9 @@ const StyledDiv = styled.div`
   .dropdown-menu1 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
   
   .nav-item1:hover .dropdown-menu1 {
@@ -233,8 +236,9 @@ const StyledDiv = styled.div`
   .dropdown-menu2 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
   
   .nav-item2:hover .dropdown-menu2 {
@@ -271,8 +275,9 @@ const StyledDiv = styled.div`
   .dropdown-menu3 a:hover {
     font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--lightOrange);
+    text-decoration-color: var(--color);
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.3rem;
   }
 
   .nav-item3:hover .dropdown-menu3 {

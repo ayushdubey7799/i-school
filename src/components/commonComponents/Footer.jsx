@@ -30,18 +30,19 @@ const Footer = () => {
                     <StyledLink to="/contact">
                         <span className="link">Contact Us</span>
                     </StyledLink>
-                    <StyledLink to="/contact">
+                    <StyledLink to="/support">
                         <span className="link">Support</span>
                     </StyledLink>
                     <StyledLink to='/case-studies'>
                         <span className='link'>Case Studies</span>
                     </StyledLink>
-                    <StyledLink to="/">
+                    <StyledLink to="/career">
                         <span className="link">Careers</span>
                     </StyledLink>
-                    <a className="link" href="mailto:sales@intelliview.in"
-                        target="_blank"
-                        rel="noreferrer">Sales</a>
+                    <StyledLink to="/sales">
+                        <span className="link">Sales</span>
+                    </StyledLink>
+                    
                 </div>
                 <div className='grandChild hidden'>
                     <StyledLink to="/privacy">

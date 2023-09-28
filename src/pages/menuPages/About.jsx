@@ -5,8 +5,12 @@ import Footer from '../../components/commonComponents/Footer';
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/about.png'
 import img2 from '../../assets/VectorImg/intelliView.jpg'
+import { useNavigate } from 'react-router';
 
 const About = () => {
+    const navigate = useNavigate();
+
+
     return (
         <StyledPage>
             <Header />
@@ -61,7 +65,7 @@ const About = () => {
 
                 <span className='text'>Whether you're a job seeker looking for your dream position or an employer seeking top talent, IntelliView is here to make the interview process more efficient, effective, and fair for everyone involved.</span>
 
-                <span className='text'>Join us on the journey to a brighter, more innovative future of hiring. Explore our platform today and experience the future of interviews with AI at your side.</span>
+                <span className='text'><b className='linkNav' onClick={() => navigate('/sales')}>Join us</b> on the journey to a brighter, more innovative future of hiring. Explore our platform today and experience the future of interviews with AI at your side.</span>
             </StyledContent>
             <Footer />
         </StyledPage>
@@ -182,6 +186,17 @@ gap: 2rem;
     line-height: 1.5rem;
     font-weight: 500;
     color:  rgb(70, 78, 98);
+}
+
+.linkNav {
+    color: var(--lightOrange);
+
+}
+
+.linkNav:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
 }
 
 `
