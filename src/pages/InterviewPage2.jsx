@@ -61,6 +61,6 @@ const StyledContent = styled.div`
   width: 100%;
   display: flex;
   height: 70vh;
-  margin: 1rem auto;
+//margin: 1rem auto;
   color: var(--color);
 `;
