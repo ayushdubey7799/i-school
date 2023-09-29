@@ -13,14 +13,6 @@ const Footer = () => {
 
     return (
         <StyledFooter>
-            <div className='child1'>
-                <div className='socialIcons'>
-                    <a href='/'><img src={linkedin} alt='linkedin' /></a>
-                    <a href='/'><img src={facebook} alt='facebook' /></a>
-                    <a href='/'><img src={twitter} alt='twitter' /></a>
-                    <a href='/'><img src={insta} alt='instagram' /></a>
-                </div>
-            </div>
 
             <div className='child2'>
                 <div className='grandChild hidden'>
@@ -57,6 +49,15 @@ const Footer = () => {
                 </div>
             </div>
 
+            <div className='child1'>
+                <div className='socialIcons'>
+                    <a href='/'><img src={linkedin} alt='linkedin' /></a>
+                    <a href='/'><img src={facebook} alt='facebook' /></a>
+                    <a href='/'><img src={twitter} alt='twitter' /></a>
+                    <a href='/'><img src={insta} alt='instagram' /></a>
+                </div>
+            </div>
+
             <div className='child3'>Copyright © 2023 Miledge Technologies LLP</div>
         </StyledFooter>
     )
@@ -74,15 +75,13 @@ justify-content: center;
 width: 100%;
 gap: 2rem;
 color: var(--white);
-background-image: url(${footerBg});
-background-size: cover;
-background-repeat: no-repeat; 
 
 .child2 {
     display: flex;
     flex-direction: column;
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 2rem;
     row-gap: 1rem;
     align-items: center;
     justify-content: center;
@@ -90,7 +89,6 @@ background-repeat: no-repeat;
 
 .child1 {
     display: flex;
-    margin-top: 2rem;
     align-items: center;
     justify-content: space-between;
 }

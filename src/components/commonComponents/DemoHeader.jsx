@@ -4,13 +4,43 @@ import styled from "styled-components";
 import { IconButton } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MyDrawer from "../LandingPage/Drawer";
-import logo from "../../assets/IntelliViewLogoDark.png";
+import logo from "../../assets/IntelliViewLogo.png";
 import { useSelector } from "react-redux";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const Header = () => {
   const navigate = useNavigate();
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [hover1, setHover1] = useState(false);
+  const [hover2, setHover2] = useState(false);
+  const [hover3, setHover3] = useState(false);
+
+  const handleMouseEnter1 = () => {
+    setHover1(true);
+  };
+
+  const handleMouseLeave1 = () => {
+    setHover1(false);
+  };
+
+  const handleMouseEnter2 = () => {
+    setHover2(true);
+  };
+
+  const handleMouseLeave2 = () => {
+    setHover2(false);
+  };
+
+  const handleMouseEnter3 = () => {
+    setHover3(true);
+  };
+
+  const handleMouseLeave3 = () => {
+    setHover3(false);
+  };
+
   console.log(accessToken);
 
   return (
@@ -21,16 +51,16 @@ const Header = () => {
 
       <div id="middle">
         <li onClick={() => navigate("/")}>Home</li>
-        <div className="nav-item1 dropdown1">
-          <li className="dropdown-toggle1">Products</li>
+        <div className="nav-item1 dropdown1" onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
+          <li className="dropdown-toggle1" >Products {!hover1 ? <KeyboardArrowDownIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} /> : <KeyboardArrowUpIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} />}</li>
           <div className="dropdown-menu1">
             <a href="/product/intelliview">IntelliView</a>
             <a href="/product/intellisource">IntelliSource</a>
             <a href="/product/intelliboard">IntelliBoard</a>
           </div>
         </div>
-        <div className="nav-item2 dropdown2">
-          <li className="dropdown-toggle2">Services</li>
+        <div className="nav-item2 dropdown2" onMouseEnter={handleMouseEnter2} onMouseLeave={handleMouseLeave2}>
+          <li className="dropdown-toggle2">Services {!hover2 ? <KeyboardArrowDownIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} /> : <KeyboardArrowUpIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} />}</li>
           <div className="dropdown-menu2">
             <a href="/service/screening">Screening</a>
             <a href="/service/data-analytics">Data Analytics</a>
@@ -38,8 +68,8 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="nav-item3 dropdown3">
-          <li className="dropdown-toggle3">Solutions</li>
+        <div className="nav-item3 dropdown3" onMouseEnter={handleMouseEnter3} onMouseLeave={handleMouseLeave3}>
+          <li className="dropdown-toggle3" >Solutions {!hover3 ? <KeyboardArrowDownIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} /> : <KeyboardArrowUpIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} />}</li>
           <div className="dropdown-menu3">
             <a href="/solution/enterprise">For Enterprises</a>
             <a href="/solution/recruitment-agency">For Recruitment Agencies</a>
@@ -83,13 +113,13 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--white);
+  color: var(--color);
   width: 90%;
   padding: 0% 5%;
   height: 4rem;
   position: fixed;
   z-index: 2000;
-  background-color: var(--grey);
+  background-color: var(--white);
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
 
   #left > img {
@@ -141,7 +171,7 @@ const StyledDiv = styled.div`
     align-items: center;
     gap: 0.5rem;
     #sign-in {
-      color: var(--white);
+      color: var(--color);
       font-weight: 500;
       font-size: 0.85rem;
       cursor: pointer;
@@ -151,7 +181,7 @@ const StyledDiv = styled.div`
       font-weight: 500;
       font-size: 0.85rem;
       cursor: pointer;
-      color: var(--white);
+      color: var(--color);
     }
   }
 
@@ -161,7 +191,7 @@ const StyledDiv = styled.div`
 
 
   .Icon {
-    color: var(--white);
+    color: var(--color);
   }
 
 
@@ -171,6 +201,14 @@ const StyledDiv = styled.div`
   .dropdown-toggle1 {
     position: relative;
   }
+
+  .dropdown1:hover .dropdown-toggle1{
+    background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
+    background-size: 100% 3px;
+    background-repeat: no-repeat;
+    background-position: 0 70%;
+  }
+  
   
   .dropdown-menu1 {
     display: none;
@@ -209,6 +247,14 @@ const StyledDiv = styled.div`
   .dropdown-toggle2 {
     position: relative;
   }
+
+  .dropdown2:hover .dropdown-toggle2{
+    background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
+    background-size: 100% 3px;
+    background-repeat: no-repeat;
+    background-position: 0 70%;
+  }
+  
   
   .dropdown-menu2 {
     display: none;
@@ -247,6 +293,14 @@ const StyledDiv = styled.div`
   .dropdown-toggle3 {
     position: relative;
   }
+
+  .dropdown3:hover .dropdown-toggle3{
+    background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
+    background-size: 100% 3px;
+    background-repeat: no-repeat;
+    background-position: 0 70%;
+  }
+  
   
   .dropdown-menu3 {
     display: none;
