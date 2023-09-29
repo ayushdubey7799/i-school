@@ -223,14 +223,14 @@
 // }
 
 // @media(max-width: 900px) {
-  
+
 //   .dropdown {
 //     right: 30%;
 //   }
 // }
 
 // @media(max-width: 550px) {
-  
+
 //   .dropdown {
 //     right: 20%;
 //   }
@@ -297,7 +297,8 @@ const Header = () => {
         <img src={logo} onClick={() => navigate("/")} />
       </div>
       <div id="middle">
-      <div className="nav-item1 dropdown1" onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
+        <li onClick={() => navigate("/")}>Home</li>
+        <div className="nav-item1 dropdown1" onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
           <li className="dropdown-toggle1" >Products {!hover1 ? <KeyboardArrowDownIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} /> : <KeyboardArrowUpIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} />}</li>
           <div className="dropdown-menu1">
             <a href="/product/intelliview">IntelliView</a>
@@ -448,9 +449,10 @@ const StyledDiv = styled.div`
 
   // Products Menu
 
-  .dropdown-toggle1 {
+  .dropdown-toggle1{
     position: relative;
   }
+  
 
   .dropdown1:hover .dropdown-toggle1{
     background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
@@ -458,8 +460,8 @@ const StyledDiv = styled.div`
     background-repeat: no-repeat;
     background-position: 0 70%;
   }
-  
-  
+
+
   .dropdown-menu1 {
     display: none;
     position: absolute;
@@ -468,11 +470,13 @@ const StyledDiv = styled.div`
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
     border-radius: 0.5rem;
     padding: 0.7rem 0.7rem;
+    flex-direction: column;
   }
   
   .dropdown-menu1 a {
-    display: block;
-    padding: 0.5rem;
+    display: inline-block;
+    padding: 0.5rem 0;
+    margin: 0 0.5rem;
     text-decoration: none;
     color: var(--grey);
     font-size: 0.9rem;
@@ -480,12 +484,15 @@ const StyledDiv = styled.div`
   }
 
   .dropdown-menu1 a:hover {
-    font-weight: 600;
-    text-decoration: underline;
+    background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
+    background-size: 100% 2.4px;
+    background-repeat: no-repeat;
+    background-position: 0 90%;
   }
-  
+
   .nav-item1:hover .dropdown-menu1 {
-    display: block;
+    display: flex;
+    align-items: start;
   }
 
 
@@ -494,6 +501,7 @@ const StyledDiv = styled.div`
   .dropdown-toggle2 {
     position: relative;
   }
+  
 
   .dropdown2:hover .dropdown-toggle2{
     background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
@@ -501,8 +509,8 @@ const StyledDiv = styled.div`
     background-repeat: no-repeat;
     background-position: 0 70%;
   }
-  
-  
+
+
   .dropdown-menu2 {
     display: none;
     position: absolute;
@@ -511,11 +519,13 @@ const StyledDiv = styled.div`
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
     border-radius: 0.5rem;
     padding: 0.7rem 0.7rem;
+    flex-direction: column;
   }
   
   .dropdown-menu2 a {
-    display: block;
-    padding: 0.5rem;
+    display: inline-block;
+    padding: 0.5rem 0;
+    margin: 0 0.5rem;
     text-decoration: none;
     color: var(--grey);
     font-size: 0.9rem;
@@ -523,12 +533,15 @@ const StyledDiv = styled.div`
   }
 
   .dropdown-menu2 a:hover {
-    font-weight: 600;
-    text-decoration: underline;
+    background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
+    background-size: 100% 2.4px;
+    background-repeat: no-repeat;
+    background-position: 0 90%;
   }
-  
+
   .nav-item2:hover .dropdown-menu2 {
-    display: block;
+    display: flex;
+    align-items: start;
   }
   
 
@@ -538,13 +551,14 @@ const StyledDiv = styled.div`
     position: relative;
   }
   
+
   .dropdown3:hover .dropdown-toggle3{
     background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
     background-size: 100% 3px;
     background-repeat: no-repeat;
     background-position: 0 70%;
   }
-  
+
 
   .dropdown-menu3 {
     display: none;
@@ -554,26 +568,31 @@ const StyledDiv = styled.div`
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
     border-radius: 0.5rem;
     padding: 0.7rem 0.7rem;
+    flex-direction: column;
   }
   
   .dropdown-menu3 a {
-    display: block;
-    padding: 0.5rem;
+    display: inline-block;
+    padding: 0.5rem 0;
+    margin: 0 0.5rem;
     text-decoration: none;
     color: var(--grey);
     font-size: 0.9rem;
     font-weight: 500;
   }
-  
 
   .dropdown-menu3 a:hover {
-    font-weight: 600;
-    text-decoration: underline;
+    background-image: linear-gradient(to right, var(--grey), var(--lightOrange));
+    background-size: 100% 2.4px;
+    background-repeat: no-repeat;
+    background-position: 0 90%;
   }
 
   .nav-item3:hover .dropdown-menu3 {
-    display: block;
+    display: flex;
+    align-items: start;
   }
+
 
 
 
