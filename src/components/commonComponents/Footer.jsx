@@ -75,6 +75,9 @@ justify-content: center;
 width: 100%;
 gap: 2rem;
 color: var(--white);
+background-image: url(${footerBg});
+background-size: cover;
+background-repeat: no-repeat;
 
 .child2 {
     display: flex;

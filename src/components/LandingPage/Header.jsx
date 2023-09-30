@@ -54,26 +54,44 @@ const Header = () => {
         <div className="nav-item1 dropdown1" onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
           <li className="dropdown-toggle1" >Products {!hover1 ? <KeyboardArrowDownIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} /> : <KeyboardArrowUpIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} />}</li>
           <div className="dropdown-menu1">
-            <a href="/product/intelliview">IntelliView</a>
-            <a href="/product/intellisource">IntelliSource</a>
-            <a href="/product/intelliboard">IntelliBoard</a>
+            <div className="menuBox1">
+              <a href="/product/intelliview">IntelliView</a>
+              <a href="/product/intellisource">IntelliSource</a>
+              <a href="/product/intelliboard">IntelliBoard</a>
+            </div>
+            <div className="menuBox2">
+              <span className="menuBox2Title">Streamline your recruitment process with our AI-powered recruitment software.</span>
+              <span className="menuBox2Text">Our software uses artificial intelligence to automate tasks, identify qualified candidates, and improve the overall hiring experience.</span>
+            </div>
           </div>
         </div>
         <div className="nav-item2 dropdown2" onMouseEnter={handleMouseEnter2} onMouseLeave={handleMouseLeave2}>
           <li className="dropdown-toggle2">Services {!hover2 ? <KeyboardArrowDownIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} /> : <KeyboardArrowUpIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} />}</li>
           <div className="dropdown-menu2">
-            <a href="/service/screening">Screening</a>
-            <a href="/service/data-analytics">Data Analytics</a>
-            <a href="/service/talent-management">Talent Management</a>
+            <div className="menuBox1">
+              <a href="/service/screening">Screening</a>
+              <a href="/service/data-analytics">Data Analytics</a>
+              <a href="/service/talent-management">Talent Management</a>
+            </div>
+            <div className="menuBox2">
+              <span className="menuBox2Title">We offer AI-powered interviewing services to help you hire the best talent.</span>
+              <span className="menuBox2Text">Our software uses artificial intelligence to assess candidates' skills and experience, and provide you with insights into their fit for the role.</span>
+            </div>
           </div>
         </div>
 
         <div className="nav-item3 dropdown3" onMouseEnter={handleMouseEnter3} onMouseLeave={handleMouseLeave3}>
           <li className="dropdown-toggle3" >Solutions {!hover3 ? <KeyboardArrowDownIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} /> : <KeyboardArrowUpIcon sx={{ fontSize: '1.1rem', color: 'var(--color)', }} />}</li>
           <div className="dropdown-menu3">
-            <a href="/solution/enterprise">For Enterprises</a>
-            <a href="/solution/recruitment-agency">For Recruitment Agencies</a>
-            <a href="/solution/job-seeker">For Job Seekers</a>
+            <div className="menuBox1">
+              <a href="/solution/enterprise">For Enterprises</a>
+              <a href="/solution/recruitment-agency">For Recruitment Agencies</a>
+              <a href="/solution/job-seeker">For Job Seekers</a>
+            </div>
+            <div className="menuBox2">
+              <span className="menuBox2Title">Our AI-powered systems for Enterprises, Recruitment Agencies and Job Seekers helps to manage things more efficiently.</span>
+              <span className="menuBox2Text">Our software automatically screens resumes, schedules interviews, and tracks candidate progress throughout the hiring process.</span>
+            </div>
           </div>
         </div>
 
@@ -98,7 +116,7 @@ const Header = () => {
         </Link>
         <span>|</span>
         <Link to="/demo" className="link">
-          <span id="free">Request Demo</span>
+          <span className="demo">Schedule Demo</span>
         </Link>
       </div>
       <div id="drawer">
@@ -189,6 +207,18 @@ const StyledDiv = styled.div`
     }
   }
 
+  .demo {
+    background-color: var(--lightOrange);
+    padding: 0.6rem 1rem;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+
+  }
+  
+
   .link {
     text-decoration: none;
   }
@@ -198,6 +228,43 @@ const StyledDiv = styled.div`
     color: var(--color);
   }
 
+  // Menu dropdown Boxes
+
+  .menuBox1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 2rem 1rem 1rem;
+    min-width: 12rem;
+  }
+
+  .menuBox2 {
+    display: flex;
+    flex-direction: column;
+    width: 40rem;
+    background: linear-gradient(to top left, #fafafa, var(--lightOrange));
+    align-items: center;
+    min-height: 7rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 2rem 2rem;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .menuBox2Title {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color);
+  }
+
+  .menuBox2Text {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color);
+  }
 
 
   // Products Menu
@@ -219,12 +286,15 @@ const StyledDiv = styled.div`
     display: none;
     position: absolute;
     top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--white);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 0.5rem;
-    padding: 0.7rem 0.7rem;
-    flex-direction: column;
+    border-radius: 1rem;
   }
+
+  
+
   
   .dropdown-menu1 a {
     display: inline-block;
@@ -268,11 +338,11 @@ const StyledDiv = styled.div`
     display: none;
     position: absolute;
     top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--white);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 0.5rem;
-    padding: 0.7rem 0.7rem;
-    flex-direction: column;
+    border-radius: 1rem;
   }
   
   .dropdown-menu2 a {
@@ -317,11 +387,11 @@ const StyledDiv = styled.div`
     display: none;
     position: absolute;
     top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--white);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 0.5rem;
-    padding: 0.7rem 0.7rem;
-    flex-direction: column;
+    border-radius: 1rem;
   }
   
   .dropdown-menu3 a {

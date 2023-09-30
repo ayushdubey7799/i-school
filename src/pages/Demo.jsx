@@ -81,7 +81,7 @@ const Demo = () => {
                         </MenuItem>
                     </TextField>
 
-                    <button className='btn' onClick={handleSubmit}>Request a free Demo</button>
+                    <button className='btn' onClick={handleSubmit}>Schedule a Demo</button>
                 </div>
             </div>
             <Footer />
