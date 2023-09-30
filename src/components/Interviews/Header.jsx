@@ -462,7 +462,13 @@ const StyledDiv = styled.div`
     font-size: 0.85rem;
     cursor: pointer;
     border-radius: 0.5rem;
+    border: 0.1rem solid var(--lightOrange);
+  }
 
+  .demo:hover {
+    background-color: var(--white);
+    border: 0.1rem solid var(--lightOrange);
+    color: var(--lightOrange);
   }
   
 
