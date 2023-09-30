@@ -216,6 +216,8 @@ const StyledDiv = styled.div`
 
   // Menu dropdown Boxes
 
+  // Menu dropdown Boxes
+
   .menuBox1 {
     display: flex;
     flex-direction: column;
@@ -227,10 +229,10 @@ const StyledDiv = styled.div`
   .menuBox2 {
     display: flex;
     flex-direction: column;
-    width: 40rem;
+    width: 25rem;
     background: linear-gradient(to top left, #fafafa, var(--lightOrange));
     align-items: center;
-    min-height: 7rem;
+    min-height: 5rem;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
     padding: 2rem 2rem;
@@ -240,14 +242,14 @@ const StyledDiv = styled.div`
 
   .menuBox2Title {
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--color);
   }
 
   .menuBox2Text {
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--color);
   }

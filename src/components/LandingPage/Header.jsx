@@ -114,7 +114,6 @@ const Header = () => {
         <Link to="/signup" className="link">
           <span id="free">Register</span>
         </Link>
-        <span>|</span>
         <Link to="/demo" className="link">
           <span className="demo">Schedule Demo</span>
         </Link>
@@ -208,20 +207,17 @@ const StyledDiv = styled.div`
   }
 
   .demo {
-    background-color: var(--lightOrange);
-    padding: 0.6rem 1rem;
+    background: linear-gradient(to bottom, #2282A4, var(--lightOrange));
+    padding: 0.6rem 0.6rem;
     color: var(--white);
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
     border-radius: 0.5rem;
-    border: 0.1rem solid var(--lightOrange);
   }
 
   .demo:hover {
-    background-color: var(--white);
-    border: 0.1rem solid var(--lightOrange);
-    color: var(--lightOrange);
+    background: linear-gradient(to bottom, #8ACCDC, var(--lightOrange));
   }
   
 
@@ -247,10 +243,10 @@ const StyledDiv = styled.div`
   .menuBox2 {
     display: flex;
     flex-direction: column;
-    width: 40rem;
+    width: 25rem;
     background: linear-gradient(to top left, #fafafa, var(--lightOrange));
     align-items: center;
-    min-height: 7rem;
+    min-height: 5rem;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
     padding: 2rem 2rem;
@@ -260,14 +256,14 @@ const StyledDiv = styled.div`
 
   .menuBox2Title {
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--color);
   }
 
   .menuBox2Text {
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--color);
   }
