@@ -288,8 +288,8 @@ const StyledDiv = styled.div`
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    // left: 50%;
+    // transform: translateX(-50%);
     background-color: var(--white);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
     border-radius: 1rem;
@@ -340,8 +340,8 @@ const StyledDiv = styled.div`
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    // left: 50%;
+    // transform: translateX(-50%);
     background-color: var(--white);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
     border-radius: 1rem;
@@ -389,8 +389,8 @@ const StyledDiv = styled.div`
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    // left: 50%;
+    // transform: translateX(-50%);
     background-color: var(--white);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
     border-radius: 1rem;
