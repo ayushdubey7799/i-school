@@ -100,15 +100,15 @@ const Career = () => {
                 <div className='jobBox'>
                     <div className='jobCard'>
                         <span className='jobTitle'>AI/ML Engineer</span>
-                        <button className='jobBtn'>Apply</button>
+                        <button className='jobBtn' onClick = {() => navigate('/signup')}>Apply</button>
                     </div>
                     <div className='jobCard'>
                         <span className='jobTitle'>Lead Developer</span>
-                        <button className='jobBtn'>Apply</button>
+                        <button className='jobBtn' onClick = {() => navigate('/signup')}>Apply</button>
                     </div>
                     <div className='jobCard'>
                         <span className='jobTitle'>UI/UX Designer</span>
-                        <button className='jobBtn'>Apply</button>
+                        <button className='jobBtn' onClick = {() => navigate('/signup')}>Apply</button>
                     </div>
                 </div>
                 
