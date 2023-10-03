@@ -37,6 +37,7 @@ const Signup = () => {
   const [value, setValue] = useState("job-seeker");
 
 
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -95,8 +96,9 @@ const Signup = () => {
 
 
       <Box sx={{ width: "70%", position: "relative", top: "6rem", margin: "0 1rem", marginBottom: '7rem' }} className='box'>
+
         <Tabs
-          style={{ width: '90%' }}
+          style={{ width: '90%', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
           value={value}
           onChange={handleChange}
           TabIndicatorProps={{
@@ -115,6 +117,7 @@ const Signup = () => {
               fontSize: "1rem",
             }}
             icon={<img src={registerIcon1} className="icon" />}
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
             value="employer"
@@ -124,6 +127,7 @@ const Signup = () => {
               fontSize: "1rem;"
             }}
             icon={<img src={registerIcon2} className="icon" />}
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
             value="recruitment-agency"
@@ -133,6 +137,7 @@ const Signup = () => {
               fontSize: "1rem;"
             }}
             icon={<img src={registerIcon3} className="icon" />}
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
         </Tabs>
         {
@@ -665,6 +670,28 @@ option {
     #form {
       width: 100%;
     }
+  }
+
+
+  // Custom styled for tabs
+
+  .custom-tab {
+    color: white;
+    background-color: var(--lightOrange);
+    transition: background-color 0.3s;
+    text-decoration: none !important;
+  }
+  
+  .custom-tab-selected {
+    background-color: white;
+    color: var(--lightOrange) !important;
+    border: 0.1rem solid var(--lightOrange);
+    border-radius: 3rem;
+    text-decoration: none !important;
+  }
+  
+  .custom-tab-selected .MuiTab-label {
+    text-transform: none;
   }
 
 `;

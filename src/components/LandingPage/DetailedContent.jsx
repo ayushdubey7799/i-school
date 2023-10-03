@@ -84,19 +84,19 @@ const DetailedContent = () => {
 
             <div className='achievedNumber'>
                 <div className='achievedNumberBox'>
-                    <span className='achievedNumberDigit'>150</span>
+                    <span className='achievedNumberDigit'>1500</span>
                     <span className='achievedNumberText'>Registered job seekers</span>
                 </div>
                 <div className='achievedNumberBox'>
-                    <span className='achievedNumberDigit'>300</span>
+                    <span className='achievedNumberDigit'>30</span>
                     <span className='achievedNumberText'>Employers on board</span>
                 </div>
                 <div className='achievedNumberBox'>
-                    <span className='achievedNumberDigit'>450</span>
+                    <span className='achievedNumberDigit'>4500</span>
                     <span className='achievedNumberText'>Interviews completed</span>
                 </div>
                 <div className='achievedNumberBox'>
-                    <span className='achievedNumberDigit'>600</span>
+                    <span className='achievedNumberDigit'>150</span>
                     <span className='achievedNumberText'>Processes Automated</span>
                 </div>
             </div>
@@ -108,15 +108,15 @@ const DetailedContent = () => {
                 <div className='productCardBox'>
                     <div className='productCard'>
                         <img className='productCardImg' src={productCard1} />
-                        <span className='productCardText'>AI benefits with human touch <br/> <b onClick={() => navigate("/product/intelliview")} className='kMore'>Know more &gt;&gt;</b></span>
+                        <span className='productCardText'>AI benefits with human touch <br /> <b onClick={() => navigate("/product/intelliview")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                     <div className='productCard' >
                         <img className='productCardImg' src={productCard2} />
-                        <span className='productCardText'>Streamline and Automate processes for better Opex <br/> <b onClick={() => navigate("/product/intellisource")} className='kMore'>Know more &gt;&gt;</b></span>
+                        <span className='productCardText'>Streamline and Automate processes for better Opex <br /> <b onClick={() => navigate("/product/intellisource")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                     <div className='productCard' >
                         <img className='productCardImg' src={productCard3} />
-                        <span className='productCardText'>Technology and innovation  that will inspire you <br/> <b onClick={() => navigate("/product/intelliboard")} className='kMore'>Know more &gt;&gt;</b></span>
+                        <span className='productCardText'>Technology and innovation  that will inspire you <br /> <b onClick={() => navigate("/product/intelliboard")} className='kMore'>Know more &gt;&gt;</b></span>
                     </div>
                 </div>
             </div>
@@ -394,7 +394,7 @@ margin-top: 5rem;
 
 .productCard:hover {
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
-    background-color: #99d6ff;
+    background-color: #c0f8f4;
 }
 
 .productCardImg {
@@ -412,6 +412,7 @@ margin-top: 5rem;
     cursor: pointer;
     color: var(--lightOrange);
 }
+
 
 
 .contactSectionBottom {

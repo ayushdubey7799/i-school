@@ -90,7 +90,7 @@ const Login = () => {
 
       <Box sx={{ width: "70%", position: "relative", top: "6rem", margin: "0 1rem", marginBottom: '7rem' }} className='box'>
         <Tabs
-          style={{ width: '90%' }}
+          style={{ width: '90%', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
           value={value}
           onChange={handleChange}
           TabIndicatorProps={{
@@ -106,27 +106,30 @@ const Login = () => {
             label="Job Seeker"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1rem",
+              fontSize: "0.9rem",
             }}
             icon={<img src={registerIcon1} className="icon" />}
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
             value="employer"
             label="Employer"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1rem;"
+              fontSize: "0.9rem",
             }}
             icon={<img src={registerIcon2} className="icon" />}
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
             value="recruitment-agency"
             label="Recruitment Agency"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1rem;"
+              fontSize: "0.9rem",
             }}
             icon={<img src={registerIcon3} className="icon" />}
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }} 
           />
         </Tabs>
         {value == 'job-seeker' ?
@@ -421,4 +424,26 @@ const StyledLogin = styled.div`
       width: 100%;
     }
   }
+
+
+  // Custom styled for tabs
+
+.custom-tab {
+  color: white;
+  background-color: var(--lightOrange);
+  transition: background-color 0.3s;
+  text-decoration: none !important;
+}
+
+.custom-tab-selected {
+  background-color: white;
+  color: var(--lightOrange) !important;
+  border: 0.1rem solid var(--lightOrange);
+  border-radius: 3rem;
+  text-decoration: none !important;
+}
+
+.custom-tab-selected .MuiTab-label {
+  text-transform: none;
+}
 `;
