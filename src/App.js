@@ -40,7 +40,7 @@ import JobSeeker from "./pages/submenuPages/JobSeeker"
 
 import InterviewPage2 from "./pages/InterviewPage2"
 import EmployerDashboard from "./pages/EmployerDashboard"
-import ScheduleInterview from "./components/Interviews/EmployerDashboard/ScheduleInterview"
+import ScheduleInterview from "./components/Interviews/EmployerDashboard/Schedule/ScheduleInterview"
 
 import Career from "./pages/menuPages/Career"
 import Sales from "./pages/menuPages/Sales"
@@ -59,7 +59,9 @@ const App = () => {
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />
           <Route path="/reset" element={<Forgot />} />
-          <Route path="/interview" element={<InterviewPage2 />} />
+          <Route path="/interview" element={<InterviewPage />} />
+          <Route path="/interview3" element={<InterviewPage2 />} />
+
           <Route path="/interview2" element={<EmployerDashboard />} />
           <Route path="/schedule" element={<ScheduleInterview />} />
 

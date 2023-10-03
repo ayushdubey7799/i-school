@@ -8,7 +8,7 @@ const Container = styled.div`
   width: 90%;
   justify-content: space-evenly;
   align-items: center;
-  padding: 4rem 5%;
+  padding: 2rem 5%;
 
 
 .achievedNumberBox {
@@ -19,13 +19,13 @@ const Container = styled.div`
 }
 
 .achievedNumberDigit {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 600;
   color: var(--lightOrange);
 }
 
 .achievedNumberText {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--color);
   text-align: center;

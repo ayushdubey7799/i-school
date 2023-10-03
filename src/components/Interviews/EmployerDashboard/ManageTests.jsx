@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
@@ -88,11 +88,18 @@ const TestContainer = styled.div`
   font-size: 0.7rem;
   box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.5);
   border-radius: 0.5rem;
-
+  height: auto;
 `;
 
 const ListTitle = styled.h3`
   text-align: center;
+  span{
+    margin-left: 1rem;
+    font-size: 0.7rem;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const ListItem = styled.div`
@@ -111,6 +118,14 @@ const ListItem = styled.div`
 
 const ManageTests = () => {
   const [data, setData] = useState(initialData);
+  const [createVisible, setCreateVisible] = useState(false);
+
+  useEffect(() => {
+    if(data.list2.length>=3){setCreateVisible(true)}else{
+        setCreateVisible(false);
+    };
+
+  },[data])
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -149,7 +164,7 @@ const ManageTests = () => {
     }
   };
   
- console.log(data);
+  
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container>
@@ -159,7 +174,7 @@ const ManageTests = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <ListTitle>List of existing questions</ListTitle>
+              <ListTitle>List of existing questions <span>Add Question</span></ListTitle>
               {data.list1.map((item, index) => (
                 <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                   {(provided) => (
@@ -186,7 +201,9 @@ const ManageTests = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <ListTitle>Drop Questions here to create a test</ListTitle>
+              <ListTitle>Drop Questions here to create a test              {createVisible && <span>Create Test</span>}
+</ListTitle>
+
               {data.list2.map((item, index) => (
                 <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                   {(provided) => (

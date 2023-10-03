@@ -43,7 +43,7 @@ const JobSeekerSidebar = ({currentItem,setCurrentItem}) => {
         Job Search
       </MenuItem>
       <MenuItem isSelected={currentItem === 'practice interview'} onClick={() => handleItemClick('practice interview')}>
-        <Link to='/create'>Practice Interview</Link>
+        <Link to='/interview'>Practice Interview</Link>
       </MenuItem>
       <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
         Inbox

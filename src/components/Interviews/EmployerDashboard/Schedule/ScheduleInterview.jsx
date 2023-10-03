@@ -1,8 +1,11 @@
 import React from 'react'
+import ManageJds from './ManageJds'
+
+
 
 const ScheduleInterview = () => {
   return (
-    <div>ScheduleInterviewPage</div>
+    <div><ManageJds rows={rows}/></div>
   )
 }
 

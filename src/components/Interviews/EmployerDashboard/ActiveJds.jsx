@@ -74,7 +74,7 @@ const ActiveJds = () => {
           <p>JD-ID: 1 Test-ID: 1a</p>
           <p>As an AI/Machine Learning Engineer, you'll design and implement machine learning algorithms and models. You'll work on data analysis, training models, and deploying AI solutions for various applications,
 </p>
-        </Container>;
+        </Container>
       {
       jds.map((item) => {
         return <Container>

@@ -55,7 +55,10 @@ const EmployerSidebar = ({currentItem,setCurrentItem, open, setOpen}) => {
       <MenuItem onClick={() => handleItemClick('profile')}>
         Profile
       </MenuItem>
-      <MenuItem onClick={() => handleItemClick('jd-register')}>
+      <MenuItem onClick={() => handleItemClick('manage-subscriptions')}>
+      Manage Subscriptions
+      </MenuItem>
+      <MenuItem onClick={() => handleItemClick('manage-jds')}>
         Manage JDs
       </MenuItem>
       <MenuItem onClick={() => handleItemClick('candidate-register')}>

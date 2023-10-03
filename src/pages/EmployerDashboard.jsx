@@ -15,12 +15,14 @@ import EmployerSidebar from "../components/Interviews/EmployerDashboard/Employer
 import EmployeProfile from "../components/Interviews/EmployerDashboard/EmployerProfile";
 import JdRegistration from "../components/Interviews/EmployerDashboard/JdRegistration";
 import CreateQuestion from "../components/Interviews/EmployerDashboard/CreateQuestion";
-import ScheduleInterview from "../components/Interviews/EmployerDashboard/ScheduleInterview";
+import ScheduleInterview from "../components/Interviews/EmployerDashboard/Schedule/ScheduleInterview";
 import ActiveJds from "../components/Interviews/EmployerDashboard/ActiveJds";
 import ManageTests from "../components/Interviews/EmployerDashboard/ManageTests";
+import ManageJds from "../components/Interviews/EmployerDashboard/Schedule/ManageJds";
 
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
+
 const Verification = () => <div>Verification Content</div>;
 const Inbox = () => <div>Inbox Content</div>;
 const PracticeInterview = () => <div>Practice Interview Content</div>;
@@ -60,6 +62,9 @@ const EmployerDashboard = () => {
           <EmployeMetrics />
           {currentItem === "profile" && <EmployeProfile />}
           {currentItem === "jd-register" && <JdRegistration />}
+          {/* {currentItem === "manage-jds" && <ManageJds rows={rows}/>} */}
+          {currentItem === "manage-ssubscriptions" && <JdRegistration />}
+
           {currentItem === "candidate-register" && <Profile />}
           {currentItem === "manage-tests" && <CreateQuestion />}
           {currentItem === "activeJds" && <ActiveJds />}
