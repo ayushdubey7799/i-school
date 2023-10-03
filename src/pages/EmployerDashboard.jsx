@@ -49,7 +49,7 @@ const EmployerDashboard = () => {
 
   console.log("ITEM-->", currentItem);
   return (
-    <>
+    <MainBox>
       <Header />
       <StyledContent>
         <EmployerSidebar
@@ -68,27 +68,33 @@ const EmployerDashboard = () => {
           {currentItem === "candidate-register" && <Profile />}
           {currentItem === "manage-tests" && <CreateQuestion />}
           {currentItem === "activeJds" && <ActiveJds />}
-          {currentItem === "create-tests" && <ManageTests/>}
+          {currentItem === "create-tests" && <ManageTests />}
           {currentItem === "inbox" && <Inbox />}
         </MainContent>
       </StyledContent>
-    </>
+    </MainBox>
   );
 };
 
 export default EmployerDashboard;
 
+
+const MainBox = styled.div`
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+`
+
 const MainContent = styled.div`
-width: 80%;
   flex-grow: 1;
-  padding: 20px;
-  margin-top: 4rem;
+  margin-left: 16rem;
 `;
 
 const StyledContent = styled.div`
   width: 100%;
   display: flex;
-  height: 70vh;
-  background-color: var(--backgroundColor);
+  height: calc(100vh - 4rem);
+  margin-top: 4rem;
+  background-color: var(--white);
   color: var(--color);
 `;

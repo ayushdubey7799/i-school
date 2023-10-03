@@ -90,7 +90,7 @@ const Login = () => {
 
       <Box sx={{ width: "70%", position: "relative", top: "6rem", margin: "0 1rem", marginBottom: '7rem' }} className='box'>
         <Tabs
-          style={{ width: '90%', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
+          style={{ width: '35rem', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
           value={value}
           onChange={handleChange}
           TabIndicatorProps={{
@@ -106,9 +106,8 @@ const Login = () => {
             label="Job Seeker"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "0.9rem",
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon1} className="icon" />}
             classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
@@ -116,9 +115,8 @@ const Login = () => {
             label="Employer"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "0.9rem",
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon2} className="icon" />}
             classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
@@ -126,10 +124,9 @@ const Login = () => {
             label="Recruitment Agency"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "0.9rem",
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon3} className="icon" />}
-            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }} 
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
         </Tabs>
         {value == 'job-seeker' ?
@@ -319,10 +316,6 @@ const StyledLogin = styled.div`
     width: 100%;
   }
 
-  .icon {
-    width: 2rem;
-  }
-
   #form {
     width: 80%;
     background-color: var(--backgroundColor);
@@ -386,8 +379,8 @@ const StyledLogin = styled.div`
     font-size: 1.2rem;
     border-radius: 0.4rem;
     border: none;
-    padding: 1rem 1rem;
-    width: 40%;
+    padding: 0.5rem 0.8rem;
+    width: 20%;
     cursor: pointer;
   }
 
