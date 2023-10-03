@@ -215,7 +215,7 @@ const Signup = () => {
                 <button type="submit" className="btn">Create Account</button>
               </form>
               <p>
-                Have an account ? <Link to="/login" className="link">Sign In</Link>
+                Have an account ? <Link to="/login" className="link link1">Sign In</Link>
               </p>
             </div>
             : value == 'employer' ?
@@ -358,7 +358,7 @@ const Signup = () => {
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
-                  Have an account ? <Link to="/login" className="link">Sign In</Link>
+                  Have an account ? <Link to="/login" className="link link1">Sign In</Link>
                 </p>
               </div>
 
@@ -502,7 +502,7 @@ const Signup = () => {
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
-                  Have an account ? <Link to="/login" className="link">Sign In</Link>
+                  Have an account ? <Link to="/login" className="link link1">Sign In</Link>
                 </p>
               </div>
         }
@@ -544,6 +544,10 @@ const StyledSignup = styled.div`
       text-decoration: none;
     }
 
+    .link1 {
+      color: var(--color);
+    }
+
   #form {
     width: 80%;
     background-color: var(--backgroundColor);
@@ -554,7 +558,7 @@ const StyledSignup = styled.div`
   }
 
   .inputBox {
-    width: 70%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     position: relative;
