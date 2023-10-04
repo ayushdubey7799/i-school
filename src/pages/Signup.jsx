@@ -98,7 +98,7 @@ const Signup = () => {
       <Box sx={{ width: "70%", position: "relative", top: "6rem", margin: "0 1rem", marginBottom: '7rem' }} className='box'>
 
         <Tabs
-          style={{ width: '90%', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
+          style={{ width: '35rem', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
           value={value}
           onChange={handleChange}
           TabIndicatorProps={{
@@ -114,9 +114,8 @@ const Signup = () => {
             label="Job Seeker"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon1} className="icon" />}
             classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
@@ -124,9 +123,8 @@ const Signup = () => {
             label="Employer"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1rem;"
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon2} className="icon" />}
             classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
@@ -134,9 +132,8 @@ const Signup = () => {
             label="Recruitment Agency"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "1rem;"
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon3} className="icon" />}
             classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
         </Tabs>
@@ -218,7 +215,7 @@ const Signup = () => {
                 <button type="submit" className="btn">Create Account</button>
               </form>
               <p>
-                Have an account ? <Link to="/login" className="link">Sign In</Link>
+                Have an account ? <Link to="/login" className="link link1">Sign In</Link>
               </p>
             </div>
             : value == 'employer' ?
@@ -361,7 +358,7 @@ const Signup = () => {
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
-                  Have an account ? <Link to="/login" className="link">Sign In</Link>
+                  Have an account ? <Link to="/login" className="link link1">Sign In</Link>
                 </p>
               </div>
 
@@ -505,7 +502,7 @@ const Signup = () => {
                   <button type="submit" className="btn">Create Account</button>
                 </form>
                 <p>
-                  Have an account ? <Link to="/login" className="link">Sign In</Link>
+                  Have an account ? <Link to="/login" className="link link1">Sign In</Link>
                 </p>
               </div>
         }
@@ -542,13 +539,13 @@ const StyledSignup = styled.div`
     width: 100%;
     }
 
-    .icon {
-      width: 2rem;
-    }
-
     .link {
       color: var(--lightOrange);
       text-decoration: none;
+    }
+
+    .link1 {
+      color: var(--color);
     }
 
   #form {
@@ -561,7 +558,7 @@ const StyledSignup = styled.div`
   }
 
   .inputBox {
-    width: 70%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -608,8 +605,8 @@ const StyledSignup = styled.div`
     font-size: 1.2rem;
     border-radius: 0.4rem;
     border: none;
-    padding: 1rem 1rem;
-    width: 40%;
+    padding: 0.5rem 0.8rem;
+    width: 30%;
     cursor: pointer;
   }
 
