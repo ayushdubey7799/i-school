@@ -3,8 +3,6 @@ import { styled } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/IntelliViewLogo.png";
 import { IconButton } from "@mui/material";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import MyDrawer from "../../LandingPage/Drawer";
 import profileIcon from '../../../assets/profileIcon.png'
 import { useDispatch } from "react-redux";
 import { logout } from "../../../slices/authSlice";
@@ -16,9 +14,9 @@ const Header = ({
   isLoading,
   setIsLoading,
 }) => {
-  const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
 
   const handleLogout = () => {
     persistor.purge();
@@ -33,43 +31,22 @@ const Header = ({
       <div id="left">
         <img src={logo} onClick={() => navigate("/")} />
       </div>
-      <div id="middle">
-        <li onClick={() => navigate("/")}>Home</li>
-        <li onClick={() => navigate("/about")}>About Us</li>
-        <li onClick={() => navigate("/products")}>Products</li>
-        <li onClick={() => navigate("/services")}>Services</li>
-        <li onClick={() => navigate("/research-paper")}>Research Papers</li>
-        <li onClick={() => navigate("/contact")}>
-          Contact Us
-        </li>
-        <li onClick={() => navigate("/case-studies")}>Case Studies</li>
-      </div>
 
       <div id="right">
-        <Link to="/interview">
-          <button id="free">Back to Dashboard</button>
+        <Link to="/interview" className="link">
+          <button className="demo">Back to Dashboard</button>
         </Link>
-        {/* <button onClick={handleLogout} id="sign-in">Logout</button> */}
-        {/* <NewInterviewModal openNewInterviewModal={openNewInterviewModal} setOpenNewInterviewModal={setOpenNewInterviewModal} isLoading={isLoading} setIsLoading={setIsLoading} /> */}
-
         <div className="profileIcon">
           <IconButton>
-            <img src={profileIcon} className="profileImg"/>
+            <img src={profileIcon} className="profileImg" />
           </IconButton>
         </div>
 
         <div class="dropdown" id="dropdown">
-          <span onClick={() => navigate('/profile')}>View/Edit Profile</span>
           <span onClick={() => navigate('/reset')}>Reset Password</span>
           <span onClick={handleLogout}>Logout</span>
-          <span onClick={() => navigate('/support')}>Help</span>
+          <span onClick={() => navigate('/support')}>Support</span>
         </div>
-      </div>
-      <div id="drawer">
-        <IconButton onClick={() => setOpenDrawer(true)}>
-          <MenuRoundedIcon className="link" />
-        </IconButton>
-        <MyDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </div>
     </StyledDiv>
 
@@ -84,10 +61,10 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: black;
+  color: var(--color);
   width: 90%;
   padding: 0% 5%;
-  height: 6rem;
+  height: 4rem;
   position: fixed;
   z-index: 2000;
   background-color: var(--white);
@@ -99,82 +76,16 @@ const StyledDiv = styled.div`
     cursor: pointer;
   }
 
-  #middle {
-    display: flex;
-    gap: 1rem;
-  }
-
   h1 {
     margin: 0;
     color: #add8e6;
   }
 
-  li {
-    list-style-type: none;
-  }
-
-  #middle {
-    font-size: 0.9rem;
-
-    li {
-      cursor: pointer;
-
-      .contactLink {
-        text-decoration: none;
-        color: black;
-      }
-    }
-
-    li:hover {
-      font-weight: 600;
-    }
-
-    @media (max-width: 900px) {
-      display: none;
-    }
-  }
 
   #right {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    #sign-in {
-      border: none;
-      border-radius: 0.5rem;
-      background-color: var(--lightOrange);
-      color: var(--white);
-      height: 2.3rem;
-      padding: 0.2rem 0.8rem;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-
-    #sign-in:hover {
-      background-color: var(--white);
-      color: black;
-      border: 0.1rem solid var(--lightOrange);
-      padding: 0.2rem 0.75rem;
-    }
-
-    #free:hover {
-      background-color: var(--white);
-      color: black;
-      border: 0.1rem solid var(--lightOrange);
-      padding: 0.2rem 0.75rem;
-    }
-
-    #free {
-      border: none;
-      border-radius: 0.5rem;
-      height: 2.3rem;
-      padding: 0.2rem 0.8rem;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-      background-color: var(--lightOrange);
-      color: var(--white);
-    }
+    gap: 0.5rem;
   }
 
   .profileIcon {
@@ -220,25 +131,29 @@ const StyledDiv = styled.div`
     display: block;
 }
 
-@media(max-width: 900px) {
-  
-  .dropdown {
-    right: 30%;
-  }
+
+.demo {
+  background: linear-gradient(to bottom, #2282A4, var(--lightOrange));
+  padding: 0.6rem 0.6rem;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border: none;
 }
 
-@media(max-width: 550px) {
-  
-  .dropdown {
-    right: 20%;
-  }
+.demo:hover {
+  background: linear-gradient(to bottom, #8ACCDC, var(--lightOrange));
 }
 
-  #drawer {
-    display: none;
 
-    @media (max-width: 900px) {
-      display: block;
-    }
-  }
+.link {
+  text-decoration: none;
+}
+
+.Icon {
+  color: var(--white);
+}
+
 `;

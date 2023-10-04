@@ -54,33 +54,37 @@ const LocationInput = styled.input`
 
 const JobSearchBar = () => {
   return (
-    <>
-    <SearchBarContainer>
-      <SkillInput
-        type="text"
-        placeholder="Enter your skills..."
-      />
-      <FilterDropdown>
-        <option value="">Select Experience</option>
-        <option value="0-1">0-1 Years</option>
-        <option value="1-3">1-3 Years</option>
-        <option value="3+">3+ Years</option>
-      </FilterDropdown>
-      <LocationInput
-        type="text"
-        placeholder="Location"
-      />
-    </SearchBarContainer>
-    <StyledJobSearch>
-      <ProfileFilter/>
-    </StyledJobSearch>
-    </>
-    
+    <JobSearchBox>
+      <SearchBarContainer>
+        <SkillInput
+          type="text"
+          placeholder="Enter your skills..."
+        />
+        <FilterDropdown>
+          <option value="">Select Experience</option>
+          <option value="0-1">0-1 Years</option>
+          <option value="1-3">1-3 Years</option>
+          <option value="3+">3+ Years</option>
+        </FilterDropdown>
+        <LocationInput
+          type="text"
+          placeholder="Location"
+        />
+      </SearchBarContainer>
+      <StyledJobSearch>
+        <ProfileFilter />
+      </StyledJobSearch>
+    </JobSearchBox>
+
   );
 };
 
 export default JobSearchBar;
 
+
+const JobSearchBox = styled.div`
+padding-bottom: 4rem;
+`
 
 const StyledJobSearch = styled.div`
     display: flex;

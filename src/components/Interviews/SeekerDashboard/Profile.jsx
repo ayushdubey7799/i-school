@@ -14,6 +14,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
+  padding-bottom: 4rem;
 `;
 
 const Component = styled.div`
@@ -64,12 +65,12 @@ const SubmitButton = styled.button`
 
 
 const Profile = () => {
-  const [ openBasic, setOpenBasic] = useState(false);
-  const [ openSkills, setOpenSkills] = useState(false);
-  const [ openEducation, setOpenEducation] = useState(false);
-  const [ openProjects, setOpenProjects] = useState(false);
+  const [openBasic, setOpenBasic] = useState(false);
+  const [openSkills, setOpenSkills] = useState(false);
+  const [openEducation, setOpenEducation] = useState(false);
+  const [openProjects, setOpenProjects] = useState(false);
 
-    const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -107,20 +108,20 @@ const Profile = () => {
         <EditButton>Edit</EditButton>
       </Component>
       <Component>
-       
-      <Form onSubmit={handleSubmit}>
-      <span>Resume</span>
-       <br/>
-        <Label>Choose a resume file:</Label>
-        <FileInput
-          type="file"
-          accept=".pdf,.doc,.docx"
-          onChange={handleFileChange}
-        />
-        <SubmitButton type="submit">Upload</SubmitButton>
-      </Form>
+
+        <Form onSubmit={handleSubmit}>
+          <span>Resume</span>
+          <br />
+          <Label>Choose a resume file:</Label>
+          <FileInput
+            type="file"
+            accept=".pdf,.doc,.docx"
+            onChange={handleFileChange}
+          />
+          <SubmitButton type="submit">Upload</SubmitButton>
+        </Form>
       </Component>
-      
+
       <ModalHOC openNewInterviewModal={openEducation} setOpenNewInterviewModal={setOpenEducation} Component={Education} />
       <Component>
         <span>Education</span>
@@ -131,7 +132,7 @@ const Profile = () => {
         <span>Projects</span>
         <EditButton onClick={() => setOpenProjects(true)}>Edit</EditButton>
       </Component>
-     
+
     </Container>
   );
 };

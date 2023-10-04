@@ -90,7 +90,7 @@ const Login = () => {
 
       <Box sx={{ width: "70%", position: "relative", top: "6rem", margin: "0 1rem", marginBottom: '7rem' }} className='box'>
         <Tabs
-          style={{ width: '90%', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
+          style={{ width: '35rem', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
           value={value}
           onChange={handleChange}
           TabIndicatorProps={{
@@ -106,9 +106,8 @@ const Login = () => {
             label="Job Seeker"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "0.9rem",
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon1} className="icon" />}
             classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
@@ -116,9 +115,8 @@ const Login = () => {
             label="Employer"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "0.9rem",
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon2} className="icon" />}
             classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
           <Tab
@@ -126,10 +124,9 @@ const Login = () => {
             label="Recruitment Agency"
             sx={{
               color: "var(--lightOrange)",
-              fontSize: "0.9rem",
+              fontSize: "0.8rem",
             }}
-            icon={<img src={registerIcon3} className="icon" />}
-            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }} 
+            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
           />
         </Tabs>
         {value == 'job-seeker' ?
@@ -166,6 +163,10 @@ const Login = () => {
                 />
               </div>
 
+              <div className="resetBox">
+                <span ><Link to="/reset" className="reset">Forgot Password</Link></span>
+                </div>
+
               <ReCAPTCHA
                 sitekey='6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM'
                 ref={captchaRef}
@@ -178,10 +179,7 @@ const Login = () => {
               </button>
             </form>
             <p>
-              <Link to="/signup" className="link">Sign Up</Link>
-            </p>
-            <p>
-              Forgot Password? <Link to="/reset" className="link">Reset</Link>
+              <Link to="/signup" className="link link1">Don't have an account ? Sign Up</Link>
             </p>
           </div> : value == 'employer' ?
             <div id="form">
@@ -217,6 +215,10 @@ const Login = () => {
                   />
                 </div>
 
+                <div className="resetBox">
+                <span ><Link to="/reset" className="reset">Forgot Password</Link></span>
+                </div>
+
                 <ReCAPTCHA
                   sitekey='6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM'
                   ref={captchaRef}
@@ -229,10 +231,7 @@ const Login = () => {
                 </button>
               </form>
               <p>
-                <Link to="/signup" className="link">Sign Up</Link>
-              </p>
-              <p>
-                Forgot Password? <Link to="/reset" className="link">Reset</Link>
+              <Link to="/signup" className="link link1">Don't have an account ? Sign Up</Link>
               </p>
             </div>
             : <div id="form">
@@ -268,22 +267,22 @@ const Login = () => {
                   />
                 </div>
 
+                <div className="resetBox">
+                <span ><Link to="/reset" className="reset">Forgot Password</Link></span>
+                </div>
+
                 <ReCAPTCHA
                   sitekey='6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM'
                   ref={captchaRef}
                   size="normal"
                 />
 
-
                 <button type="submit" className="btn">
                   Login
                 </button>
               </form>
               <p>
-                <Link to="/signup" className="link">Sign Up</Link>
-              </p>
-              <p>
-                Forgot Password? <Link to="/reset" className="link">Reset</Link>
+              <Link to="/signup" className="link link1">Don't have an account ? Sign Up</Link>
               </p>
             </div>
         }
@@ -319,10 +318,6 @@ const StyledLogin = styled.div`
     width: 100%;
   }
 
-  .icon {
-    width: 2rem;
-  }
-
   #form {
     width: 80%;
     background-color: var(--backgroundColor);
@@ -338,8 +333,24 @@ const StyledLogin = styled.div`
     color: var(--lightOrange);
   }
 
+  .link1 {
+    color: var(--color);
+  }
+
+  .resetBox {
+    display: flex;
+    width: 60%;
+    justify-content: flex-end;
+  }
+
+  .reset {
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
   .inputBox {
-    width: 70%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -386,8 +397,8 @@ const StyledLogin = styled.div`
     font-size: 1.2rem;
     border-radius: 0.4rem;
     border: none;
-    padding: 1rem 1rem;
-    width: 40%;
+    padding: 0.5rem 0.8rem;
+    width: 20%;
     cursor: pointer;
   }
 
