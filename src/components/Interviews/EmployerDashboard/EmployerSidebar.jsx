@@ -11,6 +11,8 @@ import subsIcon from '../../../assets/icons/subscription.png'
 import jdIcon from '../../../assets/icons/job-description.png'
 import candidatesIcon from '../../../assets/icons/manage-candidates.png'
 import testIcon from '../../../assets/icons/test-management.png'
+import activeJdIcon from '../../../assets/icons/active-job-desc.png'
+import createTestIcon from '../../../assets/icons/create-test.png'
 
 
 const Container = styled.div`
@@ -19,10 +21,10 @@ const Container = styled.div`
   height: calc(100% - 4rem);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 1rem;
-  padding: 1rem;
+  padding: 2rem 1rem;
   font-size: 0.9rem;
   font-weight: 500;
   background-color: var(--white);
@@ -116,6 +118,12 @@ const Submenu = styled.div`
     color: black;
     text-decoration: none;
   }
+
+  .submenuItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 `;
 
 
@@ -150,11 +158,18 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
         <KeyboardArrowDownIcon className='arrowDown' />
         <KeyboardArrowUpIcon className='arrowUp' />
       </MenuItem>
-      <MenuSubmenu isSelected={currentItem === 'manage-test'} onClick={() => setOpen(!open)}>
-        <div className='manageTest'><img src={testIcon} className='icon' /> Manage Tests</div>
+
+      <MenuSubmenu isSelected={currentItem === 'manage-test'} onClick={() => {
+        setOpen(!open);
+        // handleItemClick('manage-test');
+      }}>
+        <div className='manageTest'>
+          <img src={testIcon} className='icon' />
+          Manage Tests
+        </div>
         <Submenu style={{ display: `${open ? 'block' : 'none'}` }}>
-          <p onClick={() => handleItemClick('activeJds')}>Active JDs</p>
-          <p onClick={() => handleItemClick('create-tests')}>Create Tests</p>
+          <p onClick={() => handleItemClick('activeJds')} className='submenuItem'><img src={activeJdIcon} className='icon' /> Active JDs</p>
+          <p onClick={() => handleItemClick('create-tests')} className='submenuItem'><img src={createTestIcon} className='icon' /> Create Tests</p>
         </Submenu>
       </MenuSubmenu>
       <MenuItem isSelected={currentItem === 'schedule-Interview'} onClick={() => handleItemClick('schedule')}>

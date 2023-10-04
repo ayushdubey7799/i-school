@@ -15,7 +15,7 @@ const Scorecard = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [fetchAgainOption, setFetchAgainOption] = useState(true);
-    const {interviewId} = useParams();
+    const { interviewId } = useParams();
     const [trigger, setTrigger] = useState(true);
     const [data, setData] = useState(null);
     const [scoreArray, setScoreArray] = useState([]);
@@ -24,9 +24,9 @@ const Scorecard = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (!accessToken) navigate("/login");
-        async function fetchScore(id,accessToken) {
+        async function fetchScore(id, accessToken) {
             setIsLoading(true);
-            const scoreRes = await getScore(id,accessToken);
+            const scoreRes = await getScore(id, accessToken);
             console.log(scoreRes?.data?.questions[0]);
             if (!scoreRes) {
                 setFetchAgainOption(true);
@@ -55,7 +55,7 @@ const Scorecard = () => {
         }
 
         if (trigger === true) {
-            fetchScore(interviewId,accessToken);
+            fetchScore(interviewId, accessToken);
         }
 
         let timer = localStorage.getItem("time");

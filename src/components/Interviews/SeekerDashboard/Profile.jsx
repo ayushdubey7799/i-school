@@ -6,6 +6,7 @@ import KeySkills from './Keyskills';
 import Education from './Education';
 import Projects from './Projects';
 import ProfessionalInfo from './ProfessionalInfo';
+import editIcon from '../../../assets/icons/edit.png'
 
 const Container = styled.div`
   width:90%;
@@ -19,25 +20,26 @@ const Container = styled.div`
 
 const Component = styled.div`
   width: 100%;
-  height: 16.66%; 
   border: 1px solid #ccc;
-  padding: 2rem 1rem;;
+  padding: 1.5rem 1rem;;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 0.7rem;
-  font-size: 0.8rem;
-
+  font-size: 0.9rem;
 `;
 
 const EditButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: blue;
   text-decoration: underline;
-  font-size: 14px;
-  margin-right: 10px;
+  width: 2rem;
+  margin-right: 0.6rem;
+
+  img {
+    width: 90%;
+  }
 `;
 
 const Form = styled.form`
@@ -96,17 +98,29 @@ const Profile = () => {
       <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={BasicDetails} />
       <Component>
         <span>Basic Details</span>
-        <EditButton onClick={() => setOpenBasic(true)}>Edit</EditButton>
+        <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon}/></EditButton>
       </Component>
       <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} Component={ProfessionalInfo} />
       <Component>
         <span>Professional Information</span>
-        <EditButton onClick={() => setOpenSkills(true)}>Edit</EditButton>
+        <EditButton onClick={() => setOpenSkills(true)}><img src={editIcon}/></EditButton>
       </Component>
       <Component>
         <span>Verification</span>
-        <EditButton>Edit</EditButton>
+        <EditButton><img src={editIcon}/></EditButton>
       </Component>
+
+      <ModalHOC openNewInterviewModal={openEducation} setOpenNewInterviewModal={setOpenEducation} Component={Education} />
+      <Component>
+        <span>Education</span>
+        <EditButton onClick={() => setOpenEducation(true)}><img src={editIcon}/></EditButton>
+      </Component>
+      <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} Component={Projects} />
+      <Component>
+        <span>Projects</span>
+        <EditButton onClick={() => setOpenProjects(true)}><img src={editIcon}/></EditButton>
+      </Component>
+
       <Component>
 
         <Form onSubmit={handleSubmit}>
@@ -120,17 +134,6 @@ const Profile = () => {
           />
           <SubmitButton type="submit">Upload</SubmitButton>
         </Form>
-      </Component>
-
-      <ModalHOC openNewInterviewModal={openEducation} setOpenNewInterviewModal={setOpenEducation} Component={Education} />
-      <Component>
-        <span>Education</span>
-        <EditButton onClick={() => setOpenEducation(true)}>Edit</EditButton>
-      </Component>
-      <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} Component={Projects} />
-      <Component>
-        <span>Projects</span>
-        <EditButton onClick={() => setOpenProjects(true)}>Edit</EditButton>
       </Component>
 
     </Container>
