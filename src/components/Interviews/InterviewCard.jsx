@@ -15,8 +15,6 @@ const InterviewCard = ({ data }) => {
       <div >{data.jobSummary?.length > 250 ? `${data.jobSummary.slice(0, 150)}...` : data.jobSummary}</div>
       <div className='title'>Resume Text: </div>
       <div className='text'>{data.resumeText?.length > 250 ? `${data.resumeText.slice(0, 150)}...` : data.resumeText}</div>
-      <div className='title'>Status: </div>
-      <div className='text'>{data.status}</div>
       {data.status == 'COMPLETED' && <button
         onClick={() => {
           navigate(`/score/${data.id}`)
@@ -40,12 +38,10 @@ const StyledCard = styled.div`
   gap: 0.8rem;
   background-color: var(--backgroundColor);
   width: 32%;
-  // height: 40vh;
   word-wrap: break-word;
   border-radius: 1rem;
-  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.25);
-  border: 0.1rem solid var(--color);
-  color: rgb(67, 67, 67);
+  box-shadow: 0px 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+  color: var(--color);
 
   @media(max-width: 1600px) {
     width: 34%;

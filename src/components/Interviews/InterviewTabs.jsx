@@ -1,48 +1,3 @@
-// import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import Tab from '@mui/material/Tab';
-// import TabContext from '@mui/lab/TabContext';
-// import TabList from '@mui/lab/TabList';
-// import TabPanel from '@mui/lab/TabPanel';
-
-// const tabIndicatorStyle = {
-
-//     borderColor: '#ADD8E6',
-//   };
-
-// export default function Tabs() {
-//   const [value, setValue] = React.useState('1');
-
-//   const handleChange = (event, newValue) => {
-//     setValue(newValue);
-//   };
-
-//   return (
-//     <Box sx={{ width: '100%', typography: 'body1' }}>
-//       <TabContext value={value}>
-//         <Box sx={{ borderBottom: 1, borderColor: '#ADD8E6'}}>
-//           <TabList
-//              onChange={handleChange}
-//              TabIndicatorProps={{
-//                 style: {
-//                     borderColor: '#ADD8E6',
-//                   }
-//            }}>
-//             <Tab label="All Interviews" value="1" style={{color: '#ADD8E6'}}/>
-//             <Tab label="Completed" value="2" style={{color: '#ADD8E6'}}/>
-//             <Tab label="Not Completed" value="3" style={{color: '#ADD8E6'}}/>
-//             <Tab label="Not Started" value="4" style={{color: '#ADD8E6'}}/>
-//           </TabList>
-//         </Box>
-//         <TabPanel value="1">All Interviews</TabPanel>
-//         <TabPanel value="2">Completed</TabPanel>
-//         <TabPanel value="3">Not Completed</TabPanel>
-//         <TabPanel value="4">Not Started</TabPanel>
-
-//       </TabContext>
-//     </Box>
-//   );
-// }
 
 import * as React from "react";
 import Tabs from "@mui/material/Tabs";
@@ -56,7 +11,7 @@ import { getInterviewByStatus } from "../../functions/api/getInterviewByStatus";
 
 export default function InterviewTabs() {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
-  const [value, setValue] = useState("STARTED");
+  const [value, setValue] = useState("COMPLETED");
   const [filteredData, setFilteredData] = useState({});
 
   const handleChange = (event, newValue) => {
@@ -65,7 +20,7 @@ export default function InterviewTabs() {
 
   useEffect(() => {
     async function getData(value) {
-      const response = await getInterviewByStatus(value,accessToken);
+      const response = await getInterviewByStatus(value, accessToken);
       if (response) {
         setFilteredData(response);
       }
@@ -94,16 +49,6 @@ export default function InterviewTabs() {
         aria-label="wrapped label tabs example"
       >
         <Tab
-          value="STARTED"
-          label="Started"
-          sx={{
-            color: "var(--lightOrange)",
-          }}
-          style={{
-            minWidth: "10%"
-          }}
-        />
-        <Tab
           value="COMPLETED"
           label="Completed"
           sx={{
@@ -112,21 +57,7 @@ export default function InterviewTabs() {
         />
         <Tab
           value="NOT_STARTED"
-          label="Not Started"
-          sx={{
-            color: "var(--lightOrange)",
-          }}
-        />
-        <Tab
-          value="CANCELED"
-          label="Canceled"
-          sx={{
-            color: "var(--lightOrange)",
-          }}
-        />
-        <Tab
-          value="EXPIRED"
-          label="Expired"
+          label="Scheduled"
           sx={{
             color: "var(--lightOrange)",
           }}

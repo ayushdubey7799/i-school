@@ -68,15 +68,16 @@ const Container = styled.div`
 width: 90%;
   display: flex;
   margin: 0 auto;
+  padding-bottom: 3rem;
 `;
 
 const QuestionContainer = styled.div`
   width: 50%;
-  padding: 16px;
-  border: 1px solid #ddd;
-  margin: 8px;
+  padding: 1rem;
+  border: 0.08rem solid #ddd;
+  margin: 0.5rem;
   font-size: 0.7rem;
-  box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
 `;
 
@@ -86,7 +87,7 @@ const TestContainer = styled.div`
   border: 1px solid #ddd;
   margin: 8px;
   font-size: 0.7rem;
-  box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   height: auto;
 `;
@@ -104,15 +105,15 @@ const ListTitle = styled.h3`
 
 const ListItem = styled.div`
   background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: 8px;
-  margin-bottom: 8px;
+  border: 0.08rem solid #ddd;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
   border-radius: 0.3rem;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
   &:hover{
-      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
-      transform: scale(1.1)
+      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+      transform: scale(1.02)
   }
 `;
 

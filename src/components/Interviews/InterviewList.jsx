@@ -3,7 +3,7 @@ import InterviewCard from "./InterviewCard";
 import { styled } from "styled-components";
 
 const InterviewList = ({ filteredData }) => {
-  console.log(filteredData?.data?.data.length);
+  console.log(filteredData?.data?.data);
 
   if (!filteredData?.data?.data.length) {
     console.log("working");

@@ -14,10 +14,10 @@ const Container = styled.div`
   height: calc(100% - 4rem);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   gap:2rem;
-  padding: 1rem;
+  padding: 2rem 1rem;
   font-size: 0.9rem;
   font-weight: 500;
   background-color: var(--white);

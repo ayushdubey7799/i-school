@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ModalHOC from '../SeekerDashboard/ModalHOC';
 import EmployerDetails from './EmployerDetails';
+import editIcon from '../../../assets/icons/edit.png'
 
 const Container = styled.div`
   width:90%;
@@ -14,14 +15,13 @@ const Container = styled.div`
 
 const Component = styled.div`
   width: 100%;
-  height: 16.66%; 
-  border: 1px solid #ccc;
-  padding: 2rem 1rem;;
+  border: 0.08rem solid #ccc;
+  padding: 1.5rem 1rem;;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 0.7rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 
 `;
 
@@ -29,10 +29,13 @@ const EditButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: blue;
   text-decoration: underline;
-  font-size: 14px;
-  margin-right: 10px;
+  width: 2rem;
+  margin-right: 0.6rem;
+
+  img {
+    width: 90%;
+  }
 `;
 
 const Form = styled.form`
@@ -67,7 +70,7 @@ const EmployeProfile = () => {
       <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={EmployerDetails} />
       <Component>
         <span>Employer Details</span>
-        <EditButton onClick={() => setOpenBasic(true)}>Edit</EditButton>
+        <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon}/></EditButton>
       </Component>
     </Container>
   );
