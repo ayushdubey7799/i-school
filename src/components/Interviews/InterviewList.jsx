@@ -1,22 +1,128 @@
-import React from "react";
+import React, { useState } from "react";
 import InterviewCard from "./InterviewCard";
 import { styled } from "styled-components";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Loader from "../commonComponents/Loader";
+import { useNavigate } from "react-router";
+
+
+const Row = (props) => {
+  const { row } = props;
+
+  const navigate = useNavigate();
+
+  return (
+    <React.Fragment>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell>
+          {row.status == 'COMPLETED' &&
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => props.onToggle(row)}
+            >
+              {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          }
+        </TableCell>
+        <TableCell component="th" scope="row">
+          1
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.id.slice(0, 8)}
+        </TableCell>{" "}
+        <TableCell component="th" scope="row">
+          {row.createdAt.split('T')[0]}
+        </TableCell>{" "}
+        {row.status == 'COMPLETED' &&
+          <TableCell component="th" scope="row">
+            65/100
+          </TableCell>
+        }
+        {row.status == 'COMPLETED' &&
+          <TableCell component="th" scope="row" align="center">
+            <button onClick={() => navigate(`/score/${row.id}`)} className="btn">Get Details</button>
+          </TableCell>
+        }
+      </TableRow>
+      {row.status === 'COMPLETED' &&
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+            <Collapse in={row.open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="body1" gutterBottom style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', }}>
+                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Job Summary:- </span> {row.jobSummary.length > 250 ? row.jobSummary.slice(0, 250) + "..." : row.jobSummary}</div>
+                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Resume Text:- </span> {row.resumeText.length > 250 ? row.resumeText.slice(0, 250) + "..." : row.resumeText}</div>
+                </Typography>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      }
+    </React.Fragment>
+  );
+}
 
 const InterviewList = ({ filteredData }) => {
-  console.log(filteredData?.data?.data);
+  const [tableRows, setTableRows] = useState(filteredData.data.data);
 
-  if (!filteredData?.data?.data.length) {
+  const handleToggle = (row) => {
+    const updatedRows = [...tableRows];
+    const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
+    if (updatedRows[rowIndex].open === true) {
+      updatedRows[rowIndex].open = false;
+    } else {
+      updatedRows[rowIndex].open = true;
+    }
+    setTableRows(updatedRows);
+  };
+
+
+
+  console.log(filteredData);
+
+  if (!filteredData?.data?.data?.length) {
     console.log("working");
     return <h6 style={{ fontSize: '1.2rem' }}>No interview Here</h6>
   }
 
-  
-
   return (
     <StyledInterviews>
-      {filteredData?.data?.data?.map((item, ind) => {
-        return <InterviewCard key={ind} data={item} />
-      })}
+      <TableContainer component={Paper} className="tableBox">
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Jd_id</TableCell>
+              <TableCell>Test_id</TableCell>
+              <TableCell>Date of Creation</TableCell>
+              <TableCell>Score</TableCell>
+              <TableCell align="center">Details</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredData?.data?.data?.map((row, index) => (
+              row.status === 'COMPLETED' ? (
+                <Row key={index} row={row} onToggle={handleToggle} />
+              ) : (
+                <Row key={index} row={row} />
+              )
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </StyledInterviews>
   );
 };
@@ -25,9 +131,29 @@ export default InterviewList;
 
 const StyledInterviews = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 2.5rem;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
+
+  .tableBox {
+    box-shadow: 0 0 0.7rem 0 rgba(0, 0, 0, 0.25);
+    border-radius: 1rem;
+  }
+
+  .MuiTableCell-root {
+    border: none;
+  }
+
+  .MuiTableRow-root {
+    border-bottom: none;
+  }
+
+  .btn {
+    background-color: var(--lightOrange);
+    padding: 0.4rem 0.7rem;
+    border: none;
+    color: var(--white);
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
 `;

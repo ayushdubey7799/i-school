@@ -75,7 +75,7 @@ const Signup = () => {
       const registerRes = await register(email, name, password);
       if (registerRes) {
         toast.success("Successfully signed up");
-        navigate("/interview");
+        navigate("/dashboard/jobseeker");
       }
       else {
         toast.error("Email already exists");

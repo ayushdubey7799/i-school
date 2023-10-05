@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
-import Header from "../components/Interviews/Header";
-
-import Footer from '../components/commonComponents/Footer'
 import Loader from "../components/commonComponents/Loader";
 import InterviewTabs from "../components/Interviews/InterviewTabs";
 import { useSelector } from "react-redux";
@@ -11,14 +8,14 @@ import JobSeekerSidebar from "../components/Interviews/SeekerDashboard/jobSeeker
 import Metrics from "../components/Interviews/SeekerDashboard/Metrics";
 import Profile from "../components/Interviews/SeekerDashboard/Profile";
 import JobSearchBar from "../components/Interviews/SeekerDashboard/JobSearchBar";
+import JobSeekerHeader from "../components/commonComponents/JobSeekerHeader";
 
-// const JobSearch = () => <div>Job Search Content</div>;
-// const Profile = () => <div>Profile Content</div>;
+
 const Verification = () => <div>Verification Content</div>;
-const Inbox = () => <div style={{padding: '2rem'}}>Inbox Content</div>;
+const Inbox = () => <div style={{ padding: '2rem' }}>Inbox Content</div>;
 const PracticeInterview = () => <div>Practice Interview Content</div>;
 
-const InterviewPage2 = () => {
+const JobSeekerDashboard = () => {
   const navigate = useNavigate();
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
@@ -32,7 +29,7 @@ const InterviewPage2 = () => {
 
   return (
     <MainBox>
-      <Header />
+      <JobSeekerHeader />
       <StyledContent>
         <JobSeekerSidebar currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <MainContent>
@@ -47,7 +44,7 @@ const InterviewPage2 = () => {
   );
 };
 
-export default InterviewPage2;
+export default JobSeekerDashboard;
 
 
 const MainBox = styled.div`

@@ -51,7 +51,7 @@ const Login = () => {
 
   // if(loggedIn)navigate("/interview");
   console.log(accessToken);
-  if (accessToken) navigate("/interview")
+  if (accessToken) navigate("/dashboard/jobseeker")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
