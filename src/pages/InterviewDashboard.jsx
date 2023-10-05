@@ -7,7 +7,7 @@ import Footer from "../components/commonComponents/Footer";
 import InterviewTabs from "../components/Interviews/InterviewTabs";
 import { useSelector } from "react-redux";
 
-const InterviewPage = () => {
+const InterviewDashboard = () => {
     const navigate = useNavigate();
     const accessToken = useSelector(state => state.auth.userData?.accessToken)
     const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
@@ -38,7 +38,7 @@ const InterviewPage = () => {
     );
 };
 
-export default InterviewPage;
+export default InterviewDashboard;
 
 const StyledContent = styled.div`
   width: 100%;

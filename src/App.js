@@ -25,7 +25,7 @@ import Contact from "./pages/menuPages/Contact"
 import JobDescriptions from "./pages/JobDescriptions"
 import JdDetails from "./pages/JdDetails"
 import Home from "./pages/Home"
-import InterviewPage from "./pages/InterviewPage"
+import InterviewDashboard from "./pages/InterviewDashboard"
 import Demo from "./pages/Demo"
 import Forgot from "./pages/Forgot"
 import Intelliview from "./pages/submenuPages/Intelliview"
@@ -38,7 +38,7 @@ import Enterprises from "./pages/submenuPages/Enterprises"
 import RecruitmentAgency from "./pages/submenuPages/RecruitmentAgency"
 import JobSeeker from "./pages/submenuPages/JobSeeker"
 
-import InterviewPage2 from "./pages/InterviewPage2"
+import JobSeekerDashboard from "./pages/JobSeekerDashboard"
 import EmployerDashboard from "./pages/EmployerDashboard"
 import ScheduleInterview from "./components/Interviews/EmployerDashboard/Schedule/ScheduleInterview"
 
@@ -59,10 +59,10 @@ const App = () => {
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />
           <Route path="/reset" element={<Forgot />} />
-          <Route path="/interview" element={<InterviewPage />} />
-          <Route path="/interview3" element={<InterviewPage2 />} />
+          <Route path="/dashboard/interviews" element={<InterviewDashboard />} />
+          <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
 
-          <Route path="/interview2" element={<EmployerDashboard />} />
+          <Route path="/dashboard/employer" element={<EmployerDashboard />} />
           <Route path="/schedule" element={<ScheduleInterview />} />
 
           <Route path="/create" element={<NewInterviewDetails />} />

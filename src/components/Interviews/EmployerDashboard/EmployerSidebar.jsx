@@ -140,12 +140,6 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
         <img src={profileIcon} className='icon' />
         Profile
       </MenuItem>
-      <MenuItem isSelected={currentItem === 'manage-subscriptions'} onClick={() => handleItemClick('manage-subscriptions')}>
-        <img src={subsIcon} className='icon' />
-        Manage Subscriptions
-        <KeyboardArrowDownIcon className='arrowDown' />
-        <KeyboardArrowUpIcon className='arrowUp' />
-      </MenuItem>
       <MenuItem isSelected={currentItem === 'manage-jds'} onClick={() => handleItemClick('manage-jds')}>
         <img src={jdIcon} className='icon' />
         Manage JDs
@@ -176,6 +170,12 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
         <img src={scheduleIcon} className='icon' />
         <Link to="/schedule">Schedule Interview</Link>
         <OpenInNewIcon className='arrowDown' />
+      </MenuItem>
+      <MenuItem isSelected={currentItem === 'manage-subscriptions'} onClick={() => handleItemClick('manage-subscriptions')}>
+        <img src={subsIcon} className='icon' />
+        Manage Subscriptions
+        <KeyboardArrowDownIcon className='arrowDown' />
+        <KeyboardArrowUpIcon className='arrowUp' />
       </MenuItem>
       <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
         <img src={inboxIcon} className='icon' />
