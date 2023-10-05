@@ -90,7 +90,7 @@ const Scorecard = () => {
                     </div>
                     <div className="head">
                         <h2>SCORECARD</h2>
-                        <Link to='/interview'><button id="another">Back to Dashboard</button></Link>
+                        <Link to='/dashboard/interviews'><button id="another">Back to Dashboard</button></Link>
                     </div>
 
                     <div className="summary">

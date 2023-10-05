@@ -11,48 +11,48 @@ import { persistor } from "../../store";
 import { logout } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
 
-const Header = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+const JobSeekerHeader = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
 
-  const handleLogout = () => {
-    persistor.purge();
-    dispatch(logout())
-    navigate("/");
-  };
+    const handleLogout = () => {
+        persistor.purge();
+        dispatch(logout())
+        navigate("/");
+    };
 
-  console.log(accessToken);
+    console.log(accessToken);
 
-  return (
-    <StyledDiv>
-      <div id="left">
-        <img src={logo} onClick={() => navigate("/")} />
-      </div>
+    return (
+        <StyledDiv>
+            <div id="left">
+                <img src={logo} onClick={() => navigate("/")} />
+            </div>
 
-      <div id="right">
-        <Link to="/create" className="link">
-          <span className="demo">Start New Interview</span>
-        </Link>
+            <div id="right">
+                <Link to="/demo" className="link">
+                    <span className="demo">Schedule Demo</span>
+                </Link>
 
 
-        <div className="profileIcon">
-          <IconButton>
-            <img src={profileIcon} className="profileImg" />
-          </IconButton>
-        </div>
+                <div className="profileIcon">
+                    <IconButton>
+                        <img src={profileIcon} className="profileImg" />
+                    </IconButton>
+                </div>
 
-        <div class="dropdown" id="dropdown">
-          <span onClick={() => navigate('/reset')}>Reset Password</span>
-          <span onClick={handleLogout}>Logout</span>
-        </div>
-      </div>
-    </StyledDiv>
-  );
+                <div class="dropdown" id="dropdown">
+                    <span onClick={() => navigate('/reset')}>Reset Password</span>
+                    <span onClick={handleLogout}>Logout</span>
+                </div>
+            </div>
+        </StyledDiv>
+    );
 };
 
-export default Header;
+export default JobSeekerHeader;
 
 const StyledDiv = styled.div`
   display: flex;

@@ -5,6 +5,7 @@ import profileIcon from '../../../assets/icons/profile.png'
 import jobSearchIcon from '../../../assets/icons/job-search.png'
 import practiceInterviewIcon from '../../../assets/icons/practice.png'
 import inboxIcon from '../../../assets/icons/inbox.png'
+import subsIcon from '../../../assets/icons/subscription.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -82,8 +83,14 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
       </MenuItem>
       <MenuItem isSelected={currentItem === 'practice interview'} onClick={() => handleItemClick('practice interview')}>
         <img src={practiceInterviewIcon} className='icon' />
-        <Link to='/interview'>Practice Interview</Link>
+        <Link to='/dashboard/interviews'>Practice Interview</Link>
         <OpenInNewIcon className='arrowDown' />
+      </MenuItem>
+      <MenuItem isSelected={currentItem === 'manage-subscriptions'} onClick={() => handleItemClick('manage-subscriptions')}>
+        <img src={subsIcon} className='icon' />
+        Manage Subscriptions
+        <KeyboardArrowDownIcon className='arrowDown' />
+        <KeyboardArrowUpIcon className='arrowUp' />
       </MenuItem>
       <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
         <img src={inboxIcon} className='icon' />

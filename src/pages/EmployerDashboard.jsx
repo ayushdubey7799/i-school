@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
-import Header from "../components/Interviews/Header";
 
 import Footer from "../components/commonComponents/Footer";
 import Loader from "../components/commonComponents/Loader";
@@ -19,6 +18,7 @@ import ScheduleInterview from "../components/Interviews/EmployerDashboard/Schedu
 import ActiveJds from "../components/Interviews/EmployerDashboard/ActiveJds";
 import ManageTests from "../components/Interviews/EmployerDashboard/ManageTests";
 import ManageJds from "../components/Interviews/EmployerDashboard/Schedule/ManageJds";
+import EmployerHeader from "../components/commonComponents/EmployerHeader";
 
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
@@ -50,7 +50,7 @@ const EmployerDashboard = () => {
   console.log("ITEM-->", currentItem);
   return (
     <MainBox>
-      <Header />
+      <EmployerHeader />
       <StyledContent>
         <EmployerSidebar
           currentItem={currentItem}

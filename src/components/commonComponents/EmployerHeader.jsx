@@ -1,21 +1,20 @@
-import React, { useState } from "react";
-import { styled } from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../../../assets/IntelliViewLogo.png";
-import { IconButton } from "@mui/material";
-import profileIcon from '../../../assets/profileIcon.png'
-import { useDispatch } from "react-redux";
-import { logout } from "../../../slices/authSlice";
-import { persistor } from "../../../store";
 
-const Header = ({
-  openNewInterviewModal,
-  setOpenNewInterviewModal,
-  isLoading,
-  setIsLoading,
-}) => {
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { IconButton } from "@mui/material";
+import logo from "../../assets/IntelliViewLogo.png";
+import { useSelector } from "react-redux";
+import profileIcon from '../../assets/profileIcon.png'
+
+import { persistor } from "../../store";
+import { logout } from "../../slices/authSlice";
+import { useDispatch } from "react-redux";
+
+const EmployerHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
 
   const handleLogout = () => {
@@ -24,18 +23,20 @@ const Header = ({
     navigate("/");
   };
 
+  console.log(accessToken);
+
   return (
-
-
     <StyledDiv>
       <div id="left">
         <img src={logo} onClick={() => navigate("/")} />
       </div>
 
       <div id="right">
-        <Link to="/dashboard/interviews" className="link">
-          <button className="demo">Back to Dashboard</button>
+        <Link to="/demo" className="link">
+          <span className="demo">Schedule Demo</span>
         </Link>
+
+
         <div className="profileIcon">
           <IconButton>
             <img src={profileIcon} className="profileImg" />
@@ -45,17 +46,13 @@ const Header = ({
         <div class="dropdown" id="dropdown">
           <span onClick={() => navigate('/reset')}>Reset Password</span>
           <span onClick={handleLogout}>Logout</span>
-          <span onClick={() => navigate('/support')}>Support</span>
         </div>
       </div>
     </StyledDiv>
-
-
   );
 };
 
-export default Header;
-
+export default EmployerHeader;
 
 const StyledDiv = styled.div`
   display: flex;
@@ -81,12 +78,36 @@ const StyledDiv = styled.div`
     color: #add8e6;
   }
 
-
   #right {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
+
+  .demo {
+    background: linear-gradient(to bottom, #2282A4, var(--lightOrange));
+    padding: 0.6rem 0.6rem;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
+
+  .demo:hover {
+    background: linear-gradient(to bottom, #8ACCDC, var(--lightOrange));
+  }
+  
+
+  .link {
+    text-decoration: none;
+  }
+
+
+  .Icon {
+    color: var(--white);
+  }
+
 
   .profileIcon {
     position: relative;
@@ -131,29 +152,5 @@ const StyledDiv = styled.div`
     display: block;
 }
 
-
-.demo {
-  background: linear-gradient(to bottom, #2282A4, var(--lightOrange));
-  padding: 0.6rem 0.6rem;
-  color: var(--white);
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  border: none;
-}
-
-.demo:hover {
-  background: linear-gradient(to bottom, #8ACCDC, var(--lightOrange));
-}
-
-
-.link {
-  text-decoration: none;
-}
-
-.Icon {
-  color: var(--white);
-}
-
 `;
+

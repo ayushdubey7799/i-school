@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ProfileFilter from './ProfileFilter';
+import { technicalSkills } from '../../../utils/contantData';
+import { locations } from '../../../utils/contantData';
 
 // Styled Components
 const SearchBarContainer = styled.div`
@@ -50,18 +52,50 @@ const SearchBarContainer = styled.div`
     font-weight: 500;
     cursor: pointer;
   }
-  
-`;
 
-const SkillInput = styled.input`
+
+  .skillBox {
+    position: relative;
+    width: 100%;
+  }
+
+
+
+  .skillInput {
   flex-grow: 1;
   border: none;
   height: 100%;
+  width: 90%;
   padding: 0.5rem;
   font-size: 1rem;
   background-color: #f2f2f2;
   outline: none;
+  }
+
+  #skillDropdown {
+    display: ${(props) => (props.skillDropdownVisible ? 'block' : 'none')};
+    position: absolute;
+    top: 100%;
+    background-color: var(--white);
+    box-shadow: 0 0.15rem 0.2rem rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    border-radius: 1rem;
+  }
+
+  .skillDropdownContent {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem 1rem 1rem;
+    gap: 0.8rem;
+  }
+
+  .skill {
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
 `;
+
 
 const FilterDropdown = styled.select`
   height: 100%;
@@ -80,11 +114,6 @@ const FilterDropdown = styled.select`
 }
 `;
 
-const locations = ['Delhi', 'Mumbai', 'Bengaluru', 'Bengaluru/Bangalore', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad', 'Noida', 'Gurgaon', 'Gurugram', 'Jaipur', 'Lucknow', 'Kanpur',
-  'Nagpur', 'Indore', 'Patna', 'Chandigarh', 'Coimbatore', 'Vadodara', 'Ludhiana', 'Agra', 'Kochi', 'Surat', 'Visakhapatnam', 'Bhopal', 'Amritsar', 'Raipur', 'Ranchi', 'Varanasi', 'Jodhpur', 'Udaipur', 'Shimla', 'Manali', 'Mysuru/Mysore', 'Goa', 'Kochi',
-  'Thiruvananthapuram', 'Ooty'];
-
-
 
 const JobSearchBar = () => {
   const [location, setLocation] = useState('');
@@ -92,6 +121,22 @@ const JobSearchBar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
 
+  const [skill, setSkill] = useState('');
+  const [filteredSkills, setFilteredSkills] = useState([]);
+  const [skillDropdownVisible, setSkillDropdownVisible] = useState(false);
+  const skillDropdownRef = useRef(null);
+
+  useEffect(() => {
+    if (skill != '') {
+      var filteredData = technicalSkills.filter(s => s.toLocaleLowerCase().includes(skill.toLocaleLowerCase().trim()));
+      setFilteredSkills(filteredData);
+    } else {
+      var filteredData = '';
+      setFilteredSkills(filteredData);
+      setSkillDropdownVisible(false);
+    }
+
+  }, [skill])
 
 
   useEffect(() => {
@@ -114,6 +159,15 @@ const JobSearchBar = () => {
     };
   }, []);
 
+
+  useEffect(() => {
+    window.addEventListener('mousedown', handleSkillClickOutside);
+
+    return () => {
+      window.removeEventListener('mousedown', handleSkillClickOutside);
+    };
+  }, []);
+
   const handleLocationClick = (selectedLocation) => {
     setLocation(selectedLocation);
     setDropdownVisible(false);
@@ -125,15 +179,45 @@ const JobSearchBar = () => {
     }
   };
 
+  const handleSkillClick = (selectedSkill) => {
+    setSkill(selectedSkill);
+    setSkillDropdownVisible(false);
+  }
 
+  const handleSkillClickOutside = (event) => {
+    if (skillDropdownRef.current && !skillDropdownRef.current.contains(event.target)) {
+      setSkillDropdownVisible(false);
+    }
+  };
 
   return (
     <JobSearchBox>
-      <SearchBarContainer dropdownVisible={dropdownVisible}>
-        <SkillInput
-          type="text"
-          placeholder="Enter your skills..."
-        />
+      <SearchBarContainer dropdownVisible={dropdownVisible} skillDropdownVisible={skillDropdownVisible}>
+        <div className='skillBox' ref={skillDropdownRef}>
+          <input
+            className='skillInput'
+            type="text"
+            placeholder="Enter your skills..."
+            value={skill}
+            onChange={(e) => {
+              setSkill(e.target.value);
+              setSkillDropdownVisible(true);
+            }}
+          />
+          <div class="skillDropdown" id="skillDropdown" ref={skillDropdownRef}>
+            {(filteredSkills.length > 0 && skillDropdownVisible) &&
+              <div className='skillDropdownContent'>
+                {
+                  filteredSkills.length > 8 ? filteredSkills.slice(0, 8).map((skill) => (
+                    <span className='skill' key={skill} onClick={() => handleSkillClick(skill)}>{skill}</span>
+                  )) : filteredSkills.map((skill) => (
+                    <span className='skill' key={skill} onClick={() => handleSkillClick(skill)}>{skill}</span>
+                  ))
+                }
+              </div>
+            }
+          </div>
+        </div>
         <FilterDropdown>
           <option value="">Select Experience</option>
           <option value="0-1">0-1 Years</option>

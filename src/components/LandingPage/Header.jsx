@@ -101,7 +101,7 @@ const Header = () => {
       </div>
       <div id="right">
         {accessToken ? (
-          <Link to="/interview" className="link">
+          <Link to="/dashboard/jobseeker" className="link">
             {" "}
             <span id="sign-in">Go to Dashboard</span>
           </Link>
