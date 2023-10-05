@@ -62,7 +62,7 @@ const EmployerDashboard = () => {
           <EmployeMetrics />
           {currentItem === "profile" && <EmployeProfile />}
           {currentItem === "jd-register" && <JdRegistration />}
-          {/* {currentItem === "manage-jds" && <ManageJds rows={rows}/>} */}
+          {currentItem === "manage-jds" && <JdRegistration/>}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
 
           {currentItem === "candidate-register" && <Profile />}
