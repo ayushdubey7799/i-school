@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { addJd } from '../../../functions/api/employers/addJd';
 
 const Container = styled.div`
  width: 100%;
@@ -83,10 +84,10 @@ function JdForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here, e.g., send data to the server
-    console.log(formData);
+    const resObj = await addJd(formData);
+    console.log(resObj);
   };
 
   return (

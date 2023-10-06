@@ -29,10 +29,10 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.jd_id}
+          {row.jdId}
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.req_id}
+          {row.reqNumber}
         </TableCell>{" "}
         <TableCell component="th" scope="row">
           {row["Date of creation"]}
@@ -50,11 +50,20 @@ function Row(props) {
           <Collapse in={row.open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
-                {/* <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:"skipped"}</div>
+                <div style={{ fontSize: "0.7rem" }}>Title: {row.title}</div>
                 <br/>
+                <div style={{ fontSize: "0.7rem" }}>Description: {row.description}</div>
                 <br/>
-                <strong>Expected Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.expectedAnswer?row.expectedAnswer:"Not Available"}</div> */}
-                <div style={{ fontSize: "0.7rem" }}>{row["description"]}</div>
+                <div style={{ fontSize: "0.7rem" }}>Skills: {row.skills}</div>
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>Experience: {row.experience}</div>
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>Location: {row.location}</div>
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>WorkType: {row.workType}</div>
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>CTC: {row.ctc}</div>
+                <br/>
               </Typography>
             </Box>
           </Collapse>
