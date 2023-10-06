@@ -32,6 +32,9 @@ const Header = () => {
       </div>
 
       <div id="right">
+        <Link to="/dashboard/jobseeker" className="link">
+          <span className="demo">Back to Dashboard</span>
+        </Link>
         <Link to="/create" className="link">
           <span className="demo">Start New Interview</span>
         </Link>

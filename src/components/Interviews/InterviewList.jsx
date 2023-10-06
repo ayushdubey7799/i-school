@@ -16,22 +16,33 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Loader from "../commonComponents/Loader";
 import { useNavigate } from "react-router";
+import ScoreChart from "../commonComponents/ScoreChart";
 
 
 const Row = (props) => {
-  const { row } = props;
+  const { row, isSelected, onToggle } = props;
 
   const navigate = useNavigate();
 
+  const score = 65;
+  const maxScore = 100;
+
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow
+        className={isSelected ? "selected" : ""}
+        sx={{ "& > *": { borderBottom: "unset" } }}
+        onClick={() => onToggle(row)}
+      >
         <TableCell>
           {row.status == 'COMPLETED' &&
             <IconButton
               aria-label="expand row"
               size="small"
-              onClick={() => props.onToggle(row)}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent row click event from firing
+                onToggle(row);
+              }}
             >
               {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
@@ -47,8 +58,13 @@ const Row = (props) => {
           {row.createdAt.split('T')[0]}
         </TableCell>{" "}
         {row.status == 'COMPLETED' &&
-          <TableCell component="th" scope="row">
-            65/100
+          <TableCell component="th" scope="row" style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+            <ScoreChart data={[
+              ["Score", "Percentage"],
+              ["YourScore", score],
+              ["", (maxScore - score)]
+            ]} />
+            <span>65/100</span>
           </TableCell>
         }
         {row.status == 'COMPLETED' &&
@@ -76,16 +92,21 @@ const Row = (props) => {
 }
 
 const InterviewList = ({ filteredData }) => {
+  const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState(filteredData.data.data);
 
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
     const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
-    if (updatedRows[rowIndex].open === true) {
-      updatedRows[rowIndex].open = false;
+
+    if (selectedRow === rowIndex) {
+      // Deselect the row if it's already selected
+      setSelectedRow(null);
     } else {
-      updatedRows[rowIndex].open = true;
+      setSelectedRow(rowIndex);
     }
+
+    updatedRows[rowIndex].open = !updatedRows[rowIndex].open;
     setTableRows(updatedRows);
   };
 
@@ -115,9 +136,9 @@ const InterviewList = ({ filteredData }) => {
           <TableBody>
             {filteredData?.data?.data?.map((row, index) => (
               row.status === 'COMPLETED' ? (
-                <Row key={index} row={row} onToggle={handleToggle} />
+                <Row key={index} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
               ) : (
-                <Row key={index} row={row} />
+                <Row key={index} row={row} isSelected={selectedRow === index} />
               )
             ))}
           </TableBody>
@@ -155,5 +176,10 @@ const StyledInterviews = styled.div`
     font-size: 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
+  }
+
+  .selected {
+    background-color: #d9fbf9;
+    color: white;
   }
 `;

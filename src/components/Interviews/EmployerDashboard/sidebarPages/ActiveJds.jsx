@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import attachIcon from '../../../assets/icons/attach.png'
+import attachIcon from '../../../../assets/icons/attach.png'
 
 const jds = [
   {

@@ -14,11 +14,17 @@ import testIcon from '../../../assets/icons/test-management.png'
 import activeJdIcon from '../../../assets/icons/active-job-desc.png'
 import createTestIcon from '../../../assets/icons/create-test.png'
 
+import dashboardIcon from '../../../assets/icons/dashboard.png'
+import billingIcon from '../../../assets/icons/billing.png'
+import reportIcon from '../../../assets/icons/report.png'
+import createTicketIcon from '../../../assets/icons/create-ticket.png'
+import callSupportIcon from '../../../assets/icons/call-support.png'
+
 
 const Container = styled.div`
 
   width: 15rem;
-  height: calc(100% - 4rem);
+  height: calc(90% - 4rem);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -31,10 +37,36 @@ const Container = styled.div`
   box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
   position: fixed;
   left: 0;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: lightgrey;
+  }
+  
+
+  .menuTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color);
+    padding-left: 0.5rem;
+  }
 `;
 
 const MenuItem = styled.div`
   padding: 0.5rem;
+  padding-left: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -47,7 +79,7 @@ const MenuItem = styled.div`
   }
 
   .icon {
-    width: 1.6rem;
+    width: 1.1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -69,6 +101,7 @@ const MenuItem = styled.div`
 
 const MenuSubmenu = styled.div`
   padding: 0.5rem;
+  padding-left: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -88,7 +121,7 @@ const MenuSubmenu = styled.div`
   }
 
   .icon {
-    width: 1.6rem;
+    width: 1.1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -110,9 +143,9 @@ const MenuSubmenu = styled.div`
 
 
 const Submenu = styled.div`
-  padding: 0.5rem;
+  padding: 0.2rem;
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
   a{
     color: black;
@@ -136,21 +169,20 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
 
   return (
     <Container>
-      <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
-        <img src={profileIcon} className='icon' />
-        Profile
+      <span className='menuTitle'>Dashboard</span>
+      <MenuItem isSelected={currentItem === 'dashboard'} onClick={() => handleItemClick('dashboard')}>
+        <img src={dashboardIcon} className='icon' />
+        Dashboard
       </MenuItem>
+
+      <span className='menuTitle'>Applications</span>
       <MenuItem isSelected={currentItem === 'manage-jds'} onClick={() => handleItemClick('manage-jds')}>
         <img src={jdIcon} className='icon' />
         Manage JDs
-        <KeyboardArrowDownIcon className='arrowDown' />
-        <KeyboardArrowUpIcon className='arrowUp' />
       </MenuItem>
       <MenuItem isSelected={currentItem === 'candidate-register'} onClick={() => handleItemClick('candidate-register')}>
         <img src={candidatesIcon} className='icon' />
         Manage Candidates
-        <KeyboardArrowDownIcon className='arrowDown' />
-        <KeyboardArrowUpIcon className='arrowUp' />
       </MenuItem>
 
       <MenuSubmenu isSelected={currentItem === 'manage-test'} onClick={() => {
@@ -171,15 +203,39 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
         <Link to="/schedule">Schedule Interview</Link>
         <OpenInNewIcon className='arrowDown' />
       </MenuItem>
-      <MenuItem isSelected={currentItem === 'manage-subscriptions'} onClick={() => handleItemClick('manage-subscriptions')}>
+
+      <span className='menuTitle'>Profile</span>
+      <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
+        <img src={profileIcon} className='icon' />
+        Profile
+      </MenuItem>
+      <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
         <img src={subsIcon} className='icon' />
-        Manage Subscriptions
-        <KeyboardArrowDownIcon className='arrowDown' />
-        <KeyboardArrowUpIcon className='arrowUp' />
+        Subscriptions
+      </MenuItem>
+      <MenuItem isSelected={currentItem === 'billing'} onClick={() => handleItemClick('billing')}>
+        <img src={billingIcon} className='icon' />
+        Billing
       </MenuItem>
       <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
         <img src={inboxIcon} className='icon' />
         Inbox
+      </MenuItem>
+
+      <span className='menuTitle'>Reports</span>
+      <MenuItem isSelected={currentItem === 'report'} onClick={() => handleItemClick('report')}>
+        <img src={reportIcon} className='icon' />
+        Reports
+      </MenuItem>
+
+      <span className='menuTitle'>Support</span>
+      <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
+        <img src={createTicketIcon} className='icon' />
+        Create Ticket
+      </MenuItem>
+      <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>
+        <img src={callSupportIcon} className='icon' />
+        Call Support
       </MenuItem>
     </Container>
   );

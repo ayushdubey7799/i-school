@@ -34,7 +34,7 @@ const ProfileInterview = () => {
       } else if (
         resume.type === "application/msword" ||
         resume.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ) {
         handleDocxFile(resume, "resume");
       } else if (resume.type === "application/pdf") {
@@ -54,7 +54,7 @@ const ProfileInterview = () => {
       } else if (
         jd.type === "application/msword" ||
         jd.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ) {
         handleDocxFile(jd, "jd");
       } else if (jd.type === "application/pdf") {
@@ -166,24 +166,24 @@ const ProfileInterview = () => {
     reader.readAsArrayBuffer(file);
   };
 
-  const handlePdfFile =  async (file, type) => {
-    
+  const handlePdfFile = async (file, type) => {
+
     if (file) {
       const pdfData = await file.arrayBuffer();
-  
+
       // Initialize PDF.js
       const pdf = await pdfjs.getDocument({ data: pdfData }).promise;
       const textArray = [];
-  
+
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
         const page = await pdf.getPage(pageNumber);
         const textContent = await page.getTextContent();
-  
+
         // Extract text from the page
         const pageText = textContent.items.map((item) => item.str).join(' ');
         textArray.push(pageText);
       }
-  
+
       const fullText = textArray.join('\n');
       if (type === "jd") {
         setInterviewDetails({ ...interviewDetails, jobSummary: fullText });
@@ -212,7 +212,7 @@ const ProfileInterview = () => {
                 onChange={handleInputChange}
               />
             </div>
-           {/* <PdfTextExtractor/> */}
+            {/* <PdfTextExtractor/> */}
             <CustomInput
               accept={".doc, .docx, .txt, .pdf"}
               id="jdInput"
@@ -233,7 +233,7 @@ const ProfileInterview = () => {
                 onChange={handleInputChange}
               />
             </div>
-             
+
             <CustomInput
               accept={".doc, .docx, .txt, .pdf"}
               id="resumeInput"
@@ -258,7 +258,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 50rem;
   gap: 1.5rem;
   margin-top: 3rem;
   margin-bottom: 2rem;
@@ -301,5 +301,9 @@ const StyledForm = styled.form`
     display: flex;
     flex-direction: column;
     gap: 0rem;
+  }
+
+  @media (max-width: 500px) {
+    width: 40rem;
   }
 `;

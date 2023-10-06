@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import ProfileFilter from './ProfileFilter';
-import { technicalSkills } from '../../../utils/contantData';
-import { locations } from '../../../utils/contantData';
+import ProfileFilter from '../ProfileFilter';
+import { technicalSkills } from '../../../../utils/contantData';
+import { locations } from '../../../../utils/contantData';
 
 // Styled Components
 const SearchBarContainer = styled.div`
@@ -128,8 +128,10 @@ const JobSearchBar = () => {
 
   useEffect(() => {
     if (skill != '') {
-      var filteredData = technicalSkills.filter(s => s.toLocaleLowerCase().includes(skill.toLocaleLowerCase().trim()));
+      const inputAfterComma = skill.split(",").pop().trim();
+      var filteredData = technicalSkills.filter(s => s.toLocaleLowerCase().includes(inputAfterComma.toLocaleLowerCase()));
       setFilteredSkills(filteredData);
+      setSkillDropdownVisible(true);
     } else {
       var filteredData = '';
       setFilteredSkills(filteredData);
@@ -141,8 +143,10 @@ const JobSearchBar = () => {
 
   useEffect(() => {
     if (location != '') {
-      var filteredLocation = locations.filter(locate => locate.toLocaleLowerCase().includes(location.toLocaleLowerCase().trim()));
+      const inputAfterComma = location.split(",").pop().trim();
+      var filteredLocation = locations.filter(locate => locate.toLocaleLowerCase().includes(inputAfterComma.toLocaleLowerCase()));
       setFilteredLocations(filteredLocation);
+      setDropdownVisible(true);
     } else {
       var filteredLocation = '';
       setFilteredLocations(filteredLocation);
@@ -169,7 +173,9 @@ const JobSearchBar = () => {
   }, []);
 
   const handleLocationClick = (selectedLocation) => {
-    setLocation(selectedLocation);
+    setLocation((prevLocation) => (prevLocation ? prevLocation + selectedLocation + ", " : selectedLocation));
+
+    setFilteredLocations([]);
     setDropdownVisible(false);
   };
 
@@ -180,7 +186,9 @@ const JobSearchBar = () => {
   };
 
   const handleSkillClick = (selectedSkill) => {
-    setSkill(selectedSkill);
+    setSkill((prevSkill) => (prevSkill ? prevSkill + selectedSkill + ", " : selectedSkill));
+
+    setFilteredSkills([]);
     setSkillDropdownVisible(false);
   }
 

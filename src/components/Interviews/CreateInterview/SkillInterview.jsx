@@ -126,6 +126,7 @@ align-items: center;
 gap: 1.5rem;
 margin-top: 3rem;
 margin-bottom: 2rem;
+width: 50rem;
 
 
 div {
@@ -166,6 +167,12 @@ button{
     font-size: 1.4rem;
     font-weight: 500;
     cursor: pointer;
-}`
+}
+
+@media (max-width: 500px) {
+  width: 40rem;
+}
+
+`
 
 

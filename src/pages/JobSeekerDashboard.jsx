@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
-import Loader from "../components/commonComponents/Loader";
-import InterviewTabs from "../components/Interviews/InterviewTabs";
 import { useSelector } from "react-redux";
 import JobSeekerSidebar from "../components/Interviews/SeekerDashboard/jobSeekerSidebar";
 import Metrics from "../components/Interviews/SeekerDashboard/Metrics";
-import Profile from "../components/Interviews/SeekerDashboard/Profile";
-import JobSearchBar from "../components/Interviews/SeekerDashboard/JobSearchBar";
+import Profile from "../components/Interviews/SeekerDashboard/sidebarPages/Profile";
+import JobSearchBar from "../components/Interviews/SeekerDashboard/sidebarPages/JobSearchBar";
 import JobSeekerHeader from "../components/commonComponents/JobSeekerHeader";
+import JobApplication from "../components/Interviews/SeekerDashboard/sidebarPages/JobApplication";
+import CreateResume from "../components/Interviews/SeekerDashboard/sidebarPages/CreateResume";
+import EnhanceResume from "../components/Interviews/SeekerDashboard/sidebarPages/EnhanceResume";
+import Subscription from "../components/Interviews/SeekerDashboard/sidebarPages/Subscription";
+import Inbox from "../components/Interviews/SeekerDashboard/sidebarPages/Inbox";
+import Ticket from "../components/Interviews/SeekerDashboard/sidebarPages/Ticket";
+import CallSupport from "../components/Interviews/SeekerDashboard/sidebarPages/CallSupport";
 
 
 const Verification = () => <div>Verification Content</div>;
-const Inbox = () => <div style={{ padding: '2rem' }}>Inbox Content</div>;
 const PracticeInterview = () => <div>Practice Interview Content</div>;
 
 const JobSeekerDashboard = () => {
@@ -25,7 +29,7 @@ const JobSeekerDashboard = () => {
     if (!accessToken) navigate("/login");
   }, []);
 
-  const [currentItem, setCurrentItem] = useState('profile');
+  const [currentItem, setCurrentItem] = useState('dashboard');
 
   return (
     <MainBox>
@@ -34,10 +38,17 @@ const JobSeekerDashboard = () => {
         <JobSeekerSidebar currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <MainContent>
           <Metrics />
-          {currentItem === 'profile' && <Profile />}
           {currentItem === 'job-search' && <JobSearchBar />}
+          {currentItem === 'applied-jobs' && <JobApplication />}
+          {currentItem === 'create-resume' && <CreateResume />}
+          {currentItem === 'enhance-resume' && <EnhanceResume />}
+
+          {currentItem === 'profile' && <Profile />}
+          {currentItem === 'subscriptions' && <Subscription />}
           {currentItem === 'inbox' && <Inbox />}
-          {currentItem === 'practice interview' && <PracticeInterview />}
+
+          {currentItem === 'create-ticket' && <Ticket />}
+          {currentItem === 'call-support' && <CallSupport />}
         </MainContent>
       </StyledContent>
     </MainBox>
@@ -55,7 +66,10 @@ min-height: 100vh;
 
 const MainContent = styled.div`
   flex-grow: 1;
-  margin-left: 16rem;
+  margin-left: 17rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;
 
 const StyledContent = styled.div`
