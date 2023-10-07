@@ -66,6 +66,7 @@ const MainBox = styled.div`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
+background: linear-gradient(to top left, #dcfff4, #F5F2EF);
 `
 
 const MainContent = styled.div`
