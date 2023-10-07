@@ -4,6 +4,7 @@ import jobs from '../../../assets/icons/recruitment.png'
 import application from '../../../assets/icons/application.png'
 import interview from '../../../assets/icons/interview.png'
 import Schedule from '../../../assets/icons/schedule.png'
+import { useNavigate } from 'react-router';
 
 const Container = styled.div`
 
@@ -28,6 +29,10 @@ const Container = styled.div`
     height: 6rem;
     border-radius: 0.5rem;
     box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
+  }
+
+  .achievedNumberBox:hover {
+    cursor: pointer;
   }
   
   .achievedNumberDigit {
@@ -62,22 +67,24 @@ const Content = styled.div`
   text-align: center;
 `;
 
-const Metrics = () => {
+const Metrics = ({ setCurrentItem }) => {
+
+  
   return (
     <Container>
-      <div className='achievedNumberBox'>
+      <div className='achievedNumberBox' onClick={() => setCurrentItem('recommended-jobs')}>
         <span className='achievedNumberDigit'>15</span>
         <span className='achievedNumberText'>Recommended Jobs</span>
       </div>
-      <div className='achievedNumberBox'>
+      <div className='achievedNumberBox' onClick={() => setCurrentItem('applied-jobs')}>
         <span className='achievedNumberDigit'>30</span>
         <span className='achievedNumberText'>Applied Jobs</span>
       </div>
-      <div className='achievedNumberBox'>
+      <div className='achievedNumberBox' onClick={() => setCurrentItem('interviewDash')}>
         <span className='achievedNumberDigit'>12</span>
         <span className='achievedNumberText'>Interviews Completed</span>
       </div>
-      <div className='achievedNumberBox'>
+      <div className='achievedNumberBox' onClick={() => setCurrentItem('interviewDash')}>
         <span className='achievedNumberDigit'>5</span>
         <span className='achievedNumberText'>Interview Scheduled</span>
       </div>

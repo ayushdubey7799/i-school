@@ -14,6 +14,8 @@ import Subscription from "../components/Interviews/SeekerDashboard/sidebarPages/
 import Inbox from "../components/Interviews/SeekerDashboard/sidebarPages/Inbox";
 import Ticket from "../components/Interviews/SeekerDashboard/sidebarPages/Ticket";
 import CallSupport from "../components/Interviews/SeekerDashboard/sidebarPages/CallSupport";
+import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/RecommendedJobs";
+import InterviewTabs from "../components/Interviews/InterviewTabs";
 
 
 const Verification = () => <div>Verification Content</div>;
@@ -37,9 +39,11 @@ const JobSeekerDashboard = () => {
       <StyledContent>
         <JobSeekerSidebar currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <MainContent>
-          <Metrics />
+          <Metrics setCurrentItem={setCurrentItem} />
           {currentItem === 'job-search' && <JobSearchBar />}
+          {currentItem === 'interviewDash' && <InterviewTabs />}
           {currentItem === 'applied-jobs' && <JobApplication />}
+          {currentItem === 'recommended-jobs' && <RecommendedJobs />}
           {currentItem === 'create-resume' && <CreateResume />}
           {currentItem === 'enhance-resume' && <EnhanceResume />}
 
@@ -70,12 +74,14 @@ const MainContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: #dcfff4;
+  background: linear-gradient(to top left, #dcfff4, #F5F2EF);
 `;
 
 const StyledContent = styled.div`
   width: 100%;
   display: flex;
-  height: calc(100vh - 4rem);
+  height: calc(100% - 4rem);
   margin-top: 4rem;
   color: var(--color);
 `;

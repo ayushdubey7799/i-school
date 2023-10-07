@@ -57,11 +57,11 @@ const SkillInterview = () => {
       return;
     }
 
-    const ongoing = await createInterview(interviewDetails.skills.trim(), `Experience ${interviewDetails.experience.trim()}`,accessToken)
+    const ongoing = await createInterview(interviewDetails.skills.trim(), `Experience ${interviewDetails.experience.trim()}`, accessToken)
     console.log(ongoing);
     if (ongoing?.data?.id) {
       console.log("data");
-      const statusResponse = await updateStatus(ongoing.data.id, "started",accessToken);
+      const statusResponse = await updateStatus(ongoing.data.id, "started", accessToken);
       console.log(statusResponse);
       setIsLoading(false);
       if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);
@@ -154,17 +154,17 @@ input, select{
 input{
     width: 98.5%;
     font-size: 1.3rem;
-    border: 0.1rem solid var(--color);
+    border: 0.08rem solid var(--color);
 }
 
 
 button{
   background-color: var(--backgroundColor);
     color: var(--color);
-    padding: 1rem 2rem;
+    padding: 0.7rem 1rem;
     border: 0.1rem solid var(--lightOrange);
     border-radius: 0.4rem;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
 }

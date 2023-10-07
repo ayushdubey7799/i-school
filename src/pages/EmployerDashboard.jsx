@@ -60,7 +60,7 @@ const EmployerDashboard = () => {
           setOpen={setOpen}
         />
         <MainContent>
-          <EmployeMetrics />
+          <EmployeMetrics setCurrentItem={setCurrentItem} />
           {currentItem === "jd-register" && <JdRegistration />}
           {/* {currentItem === "manage-jds" && <ManageJds rows={rows}/>} */}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
@@ -100,13 +100,13 @@ const MainContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
+  background: linear-gradient(to top left, #dcfff4, #F5F2EF);
 `;
 
 const StyledContent = styled.div`
   width: 100%;
   display: flex;
-  height: calc(100vh - 4rem);
+  height: calc(100% - 4rem);
   margin-top: 4rem;
   background-color: var(--white);
   color: var(--color);

@@ -11,7 +11,7 @@ const SearchBarContainer = styled.div`
   width: 90%;
   margin: 1rem auto;
   height: 4rem;
-  background-color: #f2f2f2;
+  background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0.5rem;
 
@@ -23,10 +23,9 @@ const SearchBarContainer = styled.div`
   height: 100%;
   padding: 0.5rem;
   border: none;
-  background-color: #fff;
   border-radius: 5px;
   font-size: 1rem;
-  background-color: #f2f2f2;
+  background-color: var(--white);
   outline: none;
   }
 
@@ -68,7 +67,7 @@ const SearchBarContainer = styled.div`
   width: 90%;
   padding: 0.5rem;
   font-size: 1rem;
-  background-color: #f2f2f2;
+  background-color: var(--white);
   outline: none;
   }
 
@@ -101,10 +100,9 @@ const FilterDropdown = styled.select`
   height: 100%;
   padding: 0.5rem;
   border: none;
-  background-color: #fff;
   border-radius: 0.5rem;
   margin-right: 0.5rem;
-  background-color: #f2f2f2;
+  background-color: var(--white);
   outline: none;
   font-size: 0.9rem;
 
@@ -173,7 +171,20 @@ const JobSearchBar = () => {
   }, []);
 
   const handleLocationClick = (selectedLocation) => {
-    setLocation((prevLocation) => (prevLocation ? prevLocation + selectedLocation + ", " : selectedLocation));
+
+    if (location !== '') {
+      const remainLocation = location.split(",");
+
+      if (remainLocation.length > 1) {
+        const showLocations = location.split(",").slice(0, -1);
+        setLocation(showLocations);
+      } else {
+        setLocation('');
+      }
+    }
+
+
+    setLocation((prevLocation) => (prevLocation ? prevLocation + ", " + selectedLocation + ", " : selectedLocation + ", "));
 
     setFilteredLocations([]);
     setDropdownVisible(false);
@@ -186,7 +197,20 @@ const JobSearchBar = () => {
   };
 
   const handleSkillClick = (selectedSkill) => {
-    setSkill((prevSkill) => (prevSkill ? prevSkill + selectedSkill + ", " : selectedSkill));
+
+    if (skill !== '') {
+      const remainSkills = skill.split(",");
+
+      if (remainSkills.length > 1) {
+        const showSkills = skill.split(",").slice(0, -1);
+        setSkill(showSkills);
+      } else {
+        setSkill('');
+      }
+    }
+
+
+    setSkill((prevSkill) => (prevSkill ? prevSkill + ", " + selectedSkill + ", " : selectedSkill + ", "));
 
     setFilteredSkills([]);
     setSkillDropdownVisible(false);

@@ -288,11 +288,10 @@ const StyledForm = styled.form`
   button {
     background-color: var(--backgroundColor);
     color: var(--color);
-    padding: 1rem 2rem;
+    padding: 0.7rem 1rem;
     border: 0.1rem solid var(--lightOrange);
     border-radius: 0.4rem;
-    // width: 100%;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
   }
