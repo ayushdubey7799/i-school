@@ -30,6 +30,10 @@ gap: 2%;
   box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
 }
 
+.achievedNumberBox:hover {
+  cursor: pointer;
+}
+
 .achievedNumberDigit {
   font-size: 2.5rem;
   font-weight: 700;
@@ -63,10 +67,10 @@ const Content = styled.div`
   text-align: center;
 `;
 
-const EmployeMetrics = () => {
+const EmployeMetrics = ({ setCurrentItem }) => {
   return (
     <Container>
-      <div className='achievedNumberBox'>
+      <div className='achievedNumberBox' onClick={() => setCurrentItem('')}>
         <span className='achievedNumberDigit'>15</span>
         <span className='achievedNumberText'>Active Reqs</span>
       </div>
@@ -78,7 +82,7 @@ const EmployeMetrics = () => {
         <span className='achievedNumberDigit'>17</span>
         <span className='achievedNumberText'>Interviews</span>
       </div>
-      <div className='achievedNumberBox'>
+      <div className='achievedNumberBox' onClick={() => setCurrentItem('candidate-register')}>
         <span className='achievedNumberDigit'>12</span>
         <span className='achievedNumberText'>Registered Candidates</span>
       </div>

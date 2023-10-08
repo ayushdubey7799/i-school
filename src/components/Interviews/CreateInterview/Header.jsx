@@ -33,7 +33,7 @@ const Header = ({
       </div>
 
       <div id="right">
-        <Link to="/dashboard/interviews" className="link">
+        <Link to="/dashboard/jobseeker" className="link">
           <button className="demo">Back to Dashboard</button>
         </Link>
         <div className="profileIcon">

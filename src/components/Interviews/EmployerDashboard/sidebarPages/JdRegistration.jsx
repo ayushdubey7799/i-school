@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ModalHOC from '../SeekerDashboard/ModalHOC';
-import EmployerDetails from './EmployerDetails';
-import CreateQuestionForm from './CreateQuestionForm';
+import ModalHOC from '../../SeekerDashboard/ModalHOC';
+import EmployerDetails from '../EmployerDetails';
+import JdDetails from '../../../../pages/JdDetails';
+import JdForm from '../JdForm';
 
 const Container = styled.div`
   width:90%;
@@ -60,18 +61,18 @@ const SubmitButton = styled.button`
 `;
 
 
-const CreateQuestion = () => {
+const JdRegistration = () => {
   const [ openBasic, setOpenBasic] = useState(false);
 
   return (
     <Container>
-      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={CreateQuestionForm} />
+      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} />
       <Component>
-        <span>Create Question</span>
+        <span>Add new Job Description</span>
         <EditButton onClick={() => setOpenBasic(true)}>Create</EditButton>
       </Component>
     </Container>
   );
 };
 
-export default CreateQuestion;
+export default JdRegistration;

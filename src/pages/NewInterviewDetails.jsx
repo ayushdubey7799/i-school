@@ -25,8 +25,9 @@ export default function NewInterviewDetails() {
     return (
         <StyledCreateInterview>
             <Header />
-            <Box sx={{ width: "75%", position: "relative", top: "7rem", margin: "0 2rem", marginBottom: '7rem' }} className='box'>
+            <Box sx={{ width: "70%", position: "relative", top: "7rem", margin: "0 2rem", marginBottom: '7rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className='box'>
                 <Tabs
+                    style={{ width: '70%' }}
                     value={value}
                     onChange={handleChange}
                     TabIndicatorProps={{
@@ -42,16 +43,18 @@ export default function NewInterviewDetails() {
                         label="Profile Interview"
                         sx={{
                             color: "var(--lightOrange)",
-                            fontSize: "1.5rem;"
+                            fontSize: "1.1rem;"
                         }}
+                        classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
                     />
                     <Tab
                         value="skill-interview"
                         label="Skill Interview"
                         sx={{
                             color: "var(--lightOrange)",
-                            fontSize: "1.5rem;"
+                            fontSize: "1.1rem;"
                         }}
+                        classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
                     />
                 </Tabs>
                 {
@@ -85,6 +88,26 @@ const StyledCreateInterview = styled.div`
     @media(max-width: 680px){
       min-height: 52rem;
     }
+
+    // Custom styled for tabs
+
+.custom-tab {
+  color: white;
+  background-color: var(--lightOrange);
+  transition: background-color 0.3s;
+  text-decoration: none !important;
+}
+
+.custom-tab-selected {
+  background-color: var(--white);
+  color: var(--lightOrange) !important;
+  border: 0.1rem solid var(--lightOrange);
+  text-decoration: none !important;
+}
+
+.custom-tab-selected .MuiTab-label {
+  text-transform: none;
+}
 
    }
 `
