@@ -2,29 +2,30 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
 
-import Footer from "../components/commonComponents/Footer";
-import Loader from "../components/commonComponents/Loader";
-import InterviewTabs from "../components/Interviews/InterviewTabs";
 import { useSelector } from "react-redux";
-import JobSeekerSidebar from "../components/Interviews/SeekerDashboard/jobSeekerSidebar";
-import Profile from "../components/Interviews/SeekerDashboard/Profile";
-import JobSearchBar from "../components/Interviews/SeekerDashboard/JobSearchBar";
+import Profile from "../components/Interviews/SeekerDashboard/sidebarPages/Profile";
+import JobSearchBar from "../components/Interviews/SeekerDashboard/sidebarPages/JobSearchBar";
 import EmployeMetrics from "../components/Interviews/EmployerDashboard/EmployerMetrics";
 import EmployerSidebar from "../components/Interviews/EmployerDashboard/EmployerSidebar";
-import EmployeProfile from "../components/Interviews/EmployerDashboard/EmployerProfile";
-import JdRegistration from "../components/Interviews/EmployerDashboard/JdRegistration";
-import CreateQuestion from "../components/Interviews/EmployerDashboard/CreateQuestion";
+import EmployeProfile from "../components/Interviews/EmployerDashboard/sidebarPages/EmployerProfile";
+import JdRegistration from "../components/Interviews/EmployerDashboard/sidebarPages/JdRegistration";
+import CreateQuestion from "../components/Interviews/EmployerDashboard/sidebarPages/CreateQuestion";
 import ScheduleInterview from "../components/Interviews/EmployerDashboard/Schedule/ScheduleInterview";
-import ActiveJds from "../components/Interviews/EmployerDashboard/ActiveJds";
-import ManageTests from "../components/Interviews/EmployerDashboard/ManageTests";
+import ActiveJds from "../components/Interviews/EmployerDashboard/sidebarPages/ActiveJds";
+import ManageTests from "../components/Interviews/EmployerDashboard/sidebarPages/ManageTests";
 import ManageJds from "../components/Interviews/EmployerDashboard/Schedule/ManageJds";
 import EmployerHeader from "../components/commonComponents/EmployerHeader";
+import Subscription from "../components/Interviews/EmployerDashboard/sidebarPages/Subscription";
+import Report from "../components/Interviews/EmployerDashboard/sidebarPages/Report";
+import Ticket from "../components/Interviews/EmployerDashboard/sidebarPages/Ticket";
+import CallSupport from "../components/Interviews/EmployerDashboard/sidebarPages/CallSupport";
+import Inbox from "../components/Interviews/EmployerDashboard/sidebarPages/Inbox";
+import Billing from "../components/Interviews/EmployerDashboard/sidebarPages/Billing";
 
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
 const Verification = () => <div>Verification Content</div>;
-const Inbox = () => <div>Inbox Content</div>;
 const PracticeInterview = () => <div>Practice Interview Content</div>;
 
 const EmployerDashboard = () => {
@@ -34,7 +35,7 @@ const EmployerDashboard = () => {
 
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentItem, setCurrentItem] = useState("profile");
+  const [currentItem, setCurrentItem] = useState("dashboard");
 
   useEffect(() => {
     if (!accessToken) navigate("/login");
@@ -59,8 +60,7 @@ const EmployerDashboard = () => {
           setOpen={setOpen}
         />
         <MainContent>
-          <EmployeMetrics />
-          {currentItem === "profile" && <EmployeProfile />}
+          <EmployeMetrics setCurrentItem={setCurrentItem} />
           {currentItem === "jd-register" && <JdRegistration />}
           {/* {currentItem === "manage-jds" && <ManageJds rows={rows}/>} */}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
@@ -69,7 +69,15 @@ const EmployerDashboard = () => {
           {currentItem === "manage-tests" && <CreateQuestion />}
           {currentItem === "activeJds" && <ActiveJds />}
           {currentItem === "create-tests" && <ManageTests />}
+
+          {currentItem === "profile" && <EmployeProfile />}
+          {currentItem === "subscriptions" && <Subscription />}
+          {currentItem === "billing" && <Billing />}
           {currentItem === "inbox" && <Inbox />}
+          {currentItem === "report" && <Report />}
+          {currentItem === "create-ticket" && <Ticket />}
+          {currentItem === "call-support" && <CallSupport />}
+
         </MainContent>
       </StyledContent>
     </MainBox>
@@ -83,17 +91,23 @@ const MainBox = styled.div`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
+background: linear-gradient(to top left, #dcfff4, #F5F2EF);
 `
 
 const MainContent = styled.div`
   flex-grow: 1;
-  margin-left: 16rem;
+  margin-left: 17rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(to top left, #dcfff4, #F5F2EF);
 `;
 
 const StyledContent = styled.div`
   width: 100%;
   display: flex;
-  height: calc(100vh - 4rem);
+  height: calc(100% - 4rem);
   margin-top: 4rem;
   background-color: var(--white);
   color: var(--color);

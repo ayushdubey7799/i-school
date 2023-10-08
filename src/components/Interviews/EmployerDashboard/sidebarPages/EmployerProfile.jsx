@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ModalHOC from '../SeekerDashboard/ModalHOC';
-import EmployerDetails from './EmployerDetails';
-import editIcon from '../../../assets/icons/edit.png'
+import ModalHOC from '../../SeekerDashboard/ModalHOC';
+import EmployerDetails from '../EmployerDetails';
+import editIcon from '../../../../assets/icons/edit.png'
 
 const Container = styled.div`
   width:90%;
@@ -63,14 +63,14 @@ const SubmitButton = styled.button`
 
 
 const EmployeProfile = () => {
-  const [ openBasic, setOpenBasic] = useState(false);
+  const [openBasic, setOpenBasic] = useState(false);
 
   return (
     <Container>
       <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={EmployerDetails} />
       <Component>
         <span>Employer Details</span>
-        <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon}/></EditButton>
+        <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon} /></EditButton>
       </Component>
     </Container>
   );

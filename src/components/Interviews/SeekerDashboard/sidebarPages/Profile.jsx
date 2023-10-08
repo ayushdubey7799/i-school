@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BasicDetails from './BasicDetails';
-import ModalHOC from './ModalHOC';
-import KeySkills from './Keyskills';
-import Education from './Education';
-import Projects from './Projects';
-import ProfessionalInfo from './ProfessionalInfo';
-import editIcon from '../../../assets/icons/edit.png'
-import uploadIcon from '../../../assets/icons/upload.png'
-import browseIcon from '../../../assets/icons/browse.png'
+import BasicDetails from '../BasicDetails';
+import ModalHOC from '../ModalHOC';
+import KeySkills from '../Keyskills';
+import Education from '../Education';
+import Projects from '../Projects';
+import ProfessionalInfo from '../ProfessionalInfo';
+import editIcon from '../../../../assets/icons/edit.png'
+import uploadIcon from '../../../../assets/icons/upload.png'
+import browseIcon from '../../../../assets/icons/browse.png'
 
 const Container = styled.div`
   width:90%;
@@ -47,8 +47,9 @@ const EditButton = styled.button`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+  width: 100%;
 
   span {
     font-weight: 600;
@@ -153,12 +154,9 @@ const Profile = () => {
       </Component>
 
       <Component>
-
         <Form onSubmit={handleSubmit}>
           <span>Resume</span>
           <br />
-
-          <span>Upload Resume</span>
           <>
             <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
             <FileInput
@@ -170,6 +168,8 @@ const Profile = () => {
             />
           </>
           <SubmitButton type="submit"><img src={uploadIcon} /></SubmitButton>
+          <br/>
+          <span>Upload Resume</span>
         </Form>
       </Component>
 
