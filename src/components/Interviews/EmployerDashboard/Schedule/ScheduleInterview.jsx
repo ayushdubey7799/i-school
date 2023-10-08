@@ -8,7 +8,7 @@ const ScheduleInterview = () => {
   useEffect(() => {
      async function getData(){
       const resObj = await getJdsForMatching();
-      setRows(resObj);
+      if(resObj)setRows(resObj.data.data);
      }
      getData()
   },[])

@@ -12,7 +12,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Link } from "react-router-dom";
+import { getMatches } from "../../../../functions/api/employers/match/getResumes";
+import { useParams } from "react-router";
 
 function Row(props) {
   const { row } = props;
@@ -30,45 +31,45 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.jdId}
+          
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.reqNumber}
+         
         </TableCell>{" "}
+        {/* <TableCell component="th" scope="row">
+          {row["Date of creation"]}
+        </TableCell>{" "}
+        <TableCell component="th" scope="row">
+          {row["Test Id"]}
+        </TableCell>{" "} 
         <TableCell component="th" scope="row" align="center">
           {row["No of profiles available"]}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          <Link to={`/schedule/matches/${row.jdId}`}>Show Profiles</Link>
-        </TableCell>
+        </TableCell>*/}
+        <TableCell></TableCell>
+        <TableCell></TableCell>
+        <TableCell>{row.score}</TableCell>
+        <TableCell align="center">{row.resumeId}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={row.open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
-                <div style={{ fontSize: "0.7rem" }}>Title: {row.title}</div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  Description: {row.description}
-                </div>
-                <br />
+                {/* Have to change these according to api data */}
+                {/* <div style={{ fontSize: "0.7rem" }}>Title: {row.title}</div>
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>Description: {row.description}</div>
+                <br/>
                 <div style={{ fontSize: "0.7rem" }}>Skills: {row.skills}</div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  Experience: {row.experience}
-                </div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  Location: {row.location}
-                </div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  WorkType: {row.workType}
-                </div>
-                <br />
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>Experience: {row.experience}</div>
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>Location: {row.location}</div>
+                <br/>
+                <div style={{ fontSize: "0.7rem" }}>WorkType: {row.workType}</div>
+                <br/>
                 <div style={{ fontSize: "0.7rem" }}>CTC: {row.ctc}</div>
-                <br />
+                <br/> */}
               </Typography>
             </Box>
           </Collapse>
@@ -78,32 +79,39 @@ function Row(props) {
   );
 }
 
-export default function ManageJds({ rows }) {
+export default function MatchedResumes() {
+    const {jdId} = useParams();
   const [tableRows, setTableRows] = useState([]);
 
   useEffect(() => {
-    setTableRows(rows);
-  }, [rows]);
-
+    async function getData(){
+     const resObj = await getMatches(jdId);
+     if(resObj)setTableRows(resObj.data[0].records.data);
+    }
+    getData()
+ },[])
+console.log(tableRows)
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
-    const rowIndex = updatedRows.findIndex((r) => r.jdId === row.jdId);
+    const rowIndex = updatedRows.findIndex((r) => r.resumeId === row.resumeId);
     updatedRows[rowIndex].open = !updatedRows[rowIndex].open;
     setTableRows(updatedRows);
   };
   // console.log(rows.data.data.tableRows);
   return (
     <TableContainer component={Paper}>
-      <h3 style={{ paddingLeft: "3rem" }}>Active Job Descriptions</h3>
+        <h3 style={{paddingLeft: "3rem"}}>Matched Resumes for Jd Id: {jdId}</h3>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Jd_id</TableCell>
-            <TableCell>Req_id</TableCell>
-            {/* <TableCell>Date of Creation</TableCell>
-            <TableCell>Test_id</TableCell> */}
-            <TableCell align="center">No of Profiles available</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Match Percentage</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Contact</TableCell>
+            <TableCell>Score</TableCell>
+
+            <TableCell align="center">Resume ID</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

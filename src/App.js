@@ -44,6 +44,9 @@ import ScheduleInterview from "./components/Interviews/EmployerDashboard/Schedul
 
 import Career from "./pages/menuPages/Career"
 import Sales from "./pages/menuPages/Sales"
+import EmployerInterviewsStatus from "./components/Interviews/EmployerInterviewInfo/EmployerInterviewTabs"
+import MatchedResumes from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumes"
+import QuestionComponent from "./pages/ProctoredInterviewTesting"
 
 
 
@@ -61,13 +64,16 @@ const App = () => {
           <Route path="/reset" element={<Forgot />} />
           <Route path="/dashboard/interviews" element={<InterviewDashboard />} />
           <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
-
           <Route path="/dashboard/employer" element={<EmployerDashboard />} />
+          <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus/>}/>
           <Route path="/schedule" element={<ScheduleInterview />} />
+          <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
 
           <Route path="/create" element={<NewInterviewDetails />} />
           <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
           <Route path="/score/:interviewId" element={<Scorecard />} />
+          <Route path="/proctor-test" element={<QuestionComponent />} />
+
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/about" element={<About />} />
