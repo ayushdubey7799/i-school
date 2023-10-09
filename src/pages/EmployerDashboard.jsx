@@ -17,7 +17,6 @@ import ManageJds from "../components/Interviews/EmployerDashboard/Schedule/Manag
 import EmployerHeader from "../components/commonComponents/EmployerHeader";
 import Subscription from "../components/Interviews/EmployerDashboard/sidebarPages/Subscription";
 import Report from "../components/Interviews/EmployerDashboard/sidebarPages/Report";
-import Ticket from "../components/Interviews/EmployerDashboard/sidebarPages/Ticket";
 import CallSupport from "../components/Interviews/EmployerDashboard/sidebarPages/CallSupport";
 import Inbox from "../components/Interviews/EmployerDashboard/sidebarPages/Inbox";
 import Billing from "../components/Interviews/EmployerDashboard/sidebarPages/Billing";
@@ -75,7 +74,7 @@ const EmployerDashboard = () => {
           {currentItem === "billing" && <Billing />}
           {currentItem === "inbox" && <Inbox />}
           {currentItem === "report" && <Report />}
-          {currentItem === "create-ticket" && <Ticket />}
+          {/* {currentItem === "create-ticket" && <Ticket />} */}
           {currentItem === "call-support" && <CallSupport />}
 
         </MainContent>
@@ -91,7 +90,7 @@ const MainBox = styled.div`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
-background: linear-gradient(to top left, #dcfff4, #F5F2EF);
+background-color: #f8f6f4;
 `
 
 const MainContent = styled.div`
@@ -101,7 +100,7 @@ const MainContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(to top left, #dcfff4, #F5F2EF);
+  background-color: #f8f6f4;
 `;
 
 const StyledContent = styled.div`

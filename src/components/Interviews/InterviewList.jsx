@@ -102,11 +102,15 @@ const InterviewList = ({ filteredData }) => {
     if (selectedRow === rowIndex) {
       // Deselect the row if it's already selected
       setSelectedRow(null);
+      updatedRows[rowIndex].open = false;
     } else {
+      if (selectedRow !== null) {
+        updatedRows[selectedRow].open = false;
+      }
       setSelectedRow(rowIndex);
+      updatedRows[rowIndex].open = true;
     }
 
-    updatedRows[rowIndex].open = !updatedRows[rowIndex].open;
     setTableRows(updatedRows);
   };
 

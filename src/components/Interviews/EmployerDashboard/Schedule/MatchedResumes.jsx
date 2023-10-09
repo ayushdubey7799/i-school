@@ -14,27 +14,34 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { getMatches } from "../../../../functions/api/employers/match/getResumes";
 import { useParams } from "react-router";
+import LogoHeader from "../../../commonComponents/LogoHeader";
+import styled from "styled-components";
 
 function Row(props) {
-  const { row } = props;
-  
+  const { row, isSelected, onToggle } = props;
+
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow 
+      className={isSelected ? "selected" : ""}
+      sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => props.onToggle(row)}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent row click event from firing
+              onToggle(row);
+            }}
           >
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          
+
         </TableCell>
         <TableCell component="th" scope="row">
-         
+
         </TableCell>{" "}
         {/* <TableCell component="th" scope="row">
           {row["Date of creation"]}
@@ -80,46 +87,110 @@ function Row(props) {
 }
 
 export default function MatchedResumes() {
-    const {jdId} = useParams();
+  const { jdId } = useParams();
+  const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
 
   useEffect(() => {
-    async function getData(){
-     const resObj = await getMatches(jdId);
-     if(resObj)setTableRows(resObj.data[0].records.data);
+    async function getData() {
+      const resObj = await getMatches(jdId);
+      if (resObj) setTableRows(resObj.data[0].records.data);
     }
     getData()
- },[])
-console.log(tableRows)
+  }, [])
+  console.log(tableRows)
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
     const rowIndex = updatedRows.findIndex((r) => r.resumeId === row.resumeId);
-    updatedRows[rowIndex].open = !updatedRows[rowIndex].open;
+
+    if (selectedRow === rowIndex) {
+      // Deselect the row if it's already selected
+      setSelectedRow(null);
+      updatedRows[rowIndex].open = false;
+    } else {
+      if (selectedRow !== null) {
+        updatedRows[selectedRow].open = false;
+      }
+
+      setSelectedRow(rowIndex);
+      updatedRows[rowIndex].open = true;
+    }
+
     setTableRows(updatedRows);
   };
   // console.log(rows.data.data.tableRows);
   return (
-    <TableContainer component={Paper}>
-        <h3 style={{paddingLeft: "3rem"}}>Matched Resumes for Jd Id: {jdId}</h3>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell>Match Percentage</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Contact</TableCell>
-            <TableCell>Score</TableCell>
+    <StyledDiv>
+      <LogoHeader/>
 
-            <TableCell align="center">Resume ID</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableRows?.map((row) => (
-            <Row key={row.jd_id} row={row} onToggle={handleToggle} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      <Content>
+        <TableContainer component={Paper} className="tableBox">
+          <h3 style={{ paddingLeft: "3rem" }}>Matched Resumes for Jd Id: {jdId}</h3>
+          <Table aria-label="collapsible table">
+            <TableHead className="tableHead">
+              <TableRow>
+                <TableCell />
+                <TableCell>Name</TableCell>
+                <TableCell>Match Percentage</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Contact</TableCell>
+                <TableCell>Score</TableCell>
+
+                <TableCell align="center">Resume ID</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="tableBody">
+              {tableRows?.map((row, index) => (
+                <Row key={row.jd_id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Content>
+    </StyledDiv>
   );
 }
+
+
+const StyledDiv = styled.div`
+display: flex;
+flex-direction: column;
+
+
+`
+
+const Content = styled.div`
+margin: 6rem 0% 2rem 0%;
+width: 96%;
+padding: 0 2%;
+
+
+.tableBox {
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
+  border-radius: 0.5rem;
+}
+
+.MuiTableCell-root {
+  border: none;
+}
+
+.MuiTableRow-root {
+  border-bottom: none;
+}
+
+.selected {
+  background-color: #d9fbf9;
+  color: white;
+}
+
+.tableHead {
+  background-color: lightgrey;
+  width: 100%;
+
+}
+
+.tableBody {
+  width: 100%;
+}
+
+`

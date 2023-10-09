@@ -16,6 +16,8 @@ import enhanceResumeIcon from '../../../assets/icons/enhance-resume.png'
 import interviewDashboardIcon from '../../../assets/icons/interview-dashboard.png'
 import createTicketIcon from '../../../assets/icons/create-ticket.png'
 import callSupportIcon from '../../../assets/icons/call-support.png'
+import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
+import recommendedJobIcon from '../../../assets/icons/recommend-jobs.png'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -147,6 +149,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             <img src={dashboardIcon} className='icon' />
             Dashboard
           </MenuItem>
+          <MenuItem isSelected={currentItem === 'configure-dashboard'} onClick={() => handleItemClick('configure-dashboard')}>
+            <img src={configureDashboardIcon} className='icon' />
+            Configure Dashboard
+          </MenuItem>
         </AccordionDetails>
       </Accordion>
 
@@ -171,6 +177,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           <MenuItem isSelected={currentItem === 'applied-jobs'} onClick={() => handleItemClick('applied-jobs')}>
             <img src={appliedJobIcon} className='icon' />
             Applied Jobs
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'recommended-jobs'} onClick={() => handleItemClick('recommended-jobs')}>
+            <img src={recommendedJobIcon} className='icon' />
+            Recommended Jobs
           </MenuItem>
 
         </AccordionDetails>
@@ -270,7 +280,8 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
             <img src={createTicketIcon} className='icon' />
-            Create Ticket
+            <a href='/create-ticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
+            <OpenInNewIcon className='openNew' />
           </MenuItem>
           <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>
             <img src={callSupportIcon} className='icon' />

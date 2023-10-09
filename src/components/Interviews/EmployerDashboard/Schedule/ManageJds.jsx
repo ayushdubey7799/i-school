@@ -13,18 +13,24 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 function Row(props) {
-  const { row } = props;
-  
+  const { row, isSelected, onToggle } = props;
+
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow
+        className={isSelected ? "selected" : ""}
+        sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => props.onToggle(row)}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent row click event from firing
+              onToggle(row);
+            }}
           >
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -39,7 +45,7 @@ function Row(props) {
           {row["No of profiles available"]}
         </TableCell>
         <TableCell component="th" scope="row">
-          <Link to={`/schedule/matches/${row.jdId}`}>Show Profiles</Link>
+          <Link to={`/schedule/matches/${row.jdId}`} className="btn">Show Profiles</Link>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -47,27 +53,27 @@ function Row(props) {
           <Collapse in={row.open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
-                <div style={{ fontSize: "0.7rem" }}>Title: {row.title}</div>
+                <div style={{ fontSize: "0.7rem", }}><b>Title</b>: {row.title}</div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                  Description: {row.description}
+                <b>Description</b>: {row.description}
                 </div>
                 <br />
-                <div style={{ fontSize: "0.7rem" }}>Skills: {row.skills}</div>
+                <div style={{ fontSize: "0.7rem" }}><b>Skills</b>: {row.skills}</div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                  Experience: {row.experience}
-                </div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  Location: {row.location}
+                <b>Experience</b>: {row.experience}
                 </div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                  WorkType: {row.workType}
+                <b>Location</b>: {row.location}
                 </div>
                 <br />
-                <div style={{ fontSize: "0.7rem" }}>CTC: {row.ctc}</div>
+                <div style={{ fontSize: "0.7rem" }}>
+                <b>WorkType</b>: {row.workType}
+                </div>
+                <br />
+                <div style={{ fontSize: "0.7rem" }}><b>CTC</b>: {row.ctc}</div>
                 <br />
               </Typography>
             </Box>
@@ -79,6 +85,7 @@ function Row(props) {
 }
 
 export default function ManageJds({ rows }) {
+  const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
 
   useEffect(() => {
@@ -88,30 +95,95 @@ export default function ManageJds({ rows }) {
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
     const rowIndex = updatedRows.findIndex((r) => r.jdId === row.jdId);
-    updatedRows[rowIndex].open = !updatedRows[rowIndex].open;
+
+    if (selectedRow === rowIndex) {
+      // Deselect the row if it's already selected
+      setSelectedRow(null);
+      updatedRows[rowIndex].open = false;
+    } else {
+      if (selectedRow !== null) {
+        updatedRows[selectedRow].open = false;
+      }
+
+      setSelectedRow(rowIndex);
+      updatedRows[rowIndex].open = true;
+    }
+
     setTableRows(updatedRows);
   };
   // console.log(rows.data.data.tableRows);
   return (
-    <TableContainer component={Paper}>
+    <StyledBox>
+    <TableContainer component={Paper} className="tableBox">
       <h3 style={{ paddingLeft: "3rem" }}>Active Job Descriptions</h3>
       <Table aria-label="collapsible table">
-        <TableHead>
+        <TableHead className="tableHead">
           <TableRow>
             <TableCell />
             <TableCell>Jd_id</TableCell>
             <TableCell>Req_id</TableCell>
-            {/* <TableCell>Date of Creation</TableCell>
-            <TableCell>Test_id</TableCell> */}
-            <TableCell align="center">No of Profiles available</TableCell>
+            <TableCell>No of Profiles available</TableCell>
+            <TableCell>Show Profiles</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {tableRows?.map((row) => (
-            <Row key={row.jd_id} row={row} onToggle={handleToggle} />
+        <TableBody className="tableBody">
+          {tableRows?.map((row, index) => (
+            <Row key={row.jd_id} row={row} isSelected={selectedRow === index}  onToggle={handleToggle} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    </StyledBox>
   );
 }
+
+
+
+const StyledBox = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  width: 96%;
+  padding: 0 2%;
+
+  .tableBox {
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
+    border-radius: 0.5rem;
+  }
+
+  .MuiTableCell-root {
+    border: none;
+  }
+
+  .MuiTableRow-root {
+    border-bottom: none;
+  }
+
+  .btn {
+    background-color: var(--lightOrange);
+    padding: 0.4rem 0.7rem;
+    border: none;
+    color: var(--white);
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .selected {
+    background-color: #d9fbf9;
+    color: white;
+  }
+
+  .tableHead {
+    background-color: lightgrey;
+    width: 100%;
+
+  }
+
+  .tableBody {
+    width: 100%;
+  }
+
+  
+`;

@@ -19,6 +19,7 @@ import billingIcon from '../../../assets/icons/billing.png'
 import reportIcon from '../../../assets/icons/report.png'
 import createTicketIcon from '../../../assets/icons/create-ticket.png'
 import callSupportIcon from '../../../assets/icons/call-support.png'
+import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -209,6 +210,10 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
             <img src={dashboardIcon} className='icon' />
             Dashboard
           </MenuItem>
+          <MenuItem isSelected={currentItem === 'configure-dashboard'} onClick={() => handleItemClick('configure-dashboard')}>
+            <img src={configureDashboardIcon} className='icon' />
+            Configure Dashboard
+          </MenuItem>
         </AccordionDetails>
       </Accordion>
 
@@ -249,7 +254,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
           </MenuSubmenu>
           <MenuItem isSelected={currentItem === 'schedule-Interview'} onClick={() => handleItemClick('schedule')}>
             <img src={scheduleIcon} className='icon' />
-            <Link to="/schedule">Schedule Interview</Link>
+            <Link to="/schedule">Manage Interviews</Link>
             <OpenInNewIcon className='arrowDown' />
           </MenuItem>
         </AccordionDetails>
@@ -323,7 +328,8 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
             <img src={createTicketIcon} className='icon' />
-            Create Ticket
+            <a href='/create-ticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
+            <OpenInNewIcon className='openNew' />
           </MenuItem>
           <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>
             <img src={callSupportIcon} className='icon' />
