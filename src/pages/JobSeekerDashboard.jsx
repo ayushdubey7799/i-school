@@ -51,7 +51,7 @@ const JobSeekerDashboard = () => {
           {currentItem === 'subscriptions' && <Subscription />}
           {currentItem === 'inbox' && <Inbox />}
 
-          {currentItem === 'create-ticket' && <Ticket />}
+          {/* {currentItem === 'create-ticket' && <Ticket />} */}
           {currentItem === 'call-support' && <CallSupport />}
         </MainContent>
       </StyledContent>
@@ -66,7 +66,7 @@ const MainBox = styled.div`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
-background: linear-gradient(to top left, #dcfff4, #F5F2EF);
+background-color: #f8f6f4;
 `
 
 const MainContent = styled.div`
@@ -75,8 +75,7 @@ const MainContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: #dcfff4;
-  background: linear-gradient(to top left, #dcfff4, #F5F2EF);
+  background-color: #f8f6f4;
 `;
 
 const StyledContent = styled.div`

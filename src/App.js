@@ -47,6 +47,7 @@ import Sales from "./pages/menuPages/Sales"
 import EmployerInterviewsStatus from "./components/Interviews/EmployerInterviewInfo/EmployerInterviewTabs"
 import MatchedResumes from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumes"
 import QuestionComponent from "./pages/ProctoredInterviewTesting"
+import Ticket from "./components/Interviews/SeekerDashboard/sidebarPages/Ticket"
 
 
 
@@ -105,6 +106,8 @@ const App = () => {
           <Route path="/solution/enterprise" element={<Enterprises />} />
           <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
+
+          <Route path="/create-ticket" element={<Ticket/>}/>
 
         </Routes>
       </ScrollToTop>
