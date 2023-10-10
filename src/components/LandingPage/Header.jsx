@@ -103,17 +103,20 @@ const Header = () => {
         {accessToken ? (
           <Link to="/dashboard/jobseeker" className="link">
             {" "}
-            <span id="sign-in">Go to Dashboard</span>
+            <span id="sign-in" style={{ paddingRight: '0.5rem' }}>Go to Dashboard</span>
           </Link>
         ) : (
-          <Link to="/login" className="link">
-            <span id="sign-in">Login</span>
-          </Link>
+          <>
+            <Link to="/login" className="link">
+              <span id="sign-in">Login</span>
+            </Link>
+            <span>|</span>
+            <Link to="/signup" className="link">
+              <span id="free">Register</span>
+            </Link>
+          </>
         )}
-        <span>|</span>
-        <Link to="/signup" className="link">
-          <span id="free">Register</span>
-        </Link>
+
         <Link to="/demo" className="link">
           <span className="demo">Schedule Demo</span>
         </Link>
