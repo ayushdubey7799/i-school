@@ -47,6 +47,7 @@ import Sales from "./pages/menuPages/Sales"
 import EmployerInterviewsStatus from "./components/Interviews/EmployerInterviewInfo/EmployerInterviewTabs"
 import MatchedResumes from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumes"
 import QuestionComponent from "./pages/ProctoredInterviewTesting"
+import ReqAgencyDashboard from "./pages/ReqAgencyDashboard"
 
 
 
@@ -65,6 +66,7 @@ const App = () => {
           <Route path="/dashboard/interviews" element={<InterviewDashboard />} />
           <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
           <Route path="/dashboard/employer" element={<EmployerDashboard />} />
+          <Route path="/dashboard/req-agency" element={<ReqAgencyDashboard />} />
           <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus/>}/>
           <Route path="/schedule" element={<ScheduleInterview />} />
           <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />

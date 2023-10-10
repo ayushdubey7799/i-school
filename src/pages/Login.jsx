@@ -264,6 +264,17 @@ const Login = () => {
 
                 <div className="inputBox">
                   <input
+                    type="text"
+                    id="clientCode"
+                    value={clientCode}
+                    onChange={(e) => setClientCode(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="clientCode">Client Code</label>
+                </div>
+
+                <div className="inputBox">
+                  <input
                     type={passwordVisible ? "text" : "password"}
                     id="password"
                     value={password}
