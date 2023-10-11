@@ -281,6 +281,11 @@ const FilterContainer = styled.div`
   background-color: #f9f9f9;
   margin-right: 3rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  
 
 
   .expBox {
@@ -293,9 +298,13 @@ const FilterContainer = styled.div`
 const RadioFilter = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 0.6rem;
+  width: 100%;
+
   p{
-    font-weight: bold;
+    font-weight: 800;
+    text-align: flex-start;
+    width: 100%;
 }
 `;
 
@@ -303,6 +312,7 @@ const RadioLabel = styled.label`
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   font-size: 0.8rem;
 `;
 
@@ -324,7 +334,7 @@ display: flex;
 
 const FilterHeading = styled.h3`
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1rem; 
 `;
 
 function ProfileFilter() {

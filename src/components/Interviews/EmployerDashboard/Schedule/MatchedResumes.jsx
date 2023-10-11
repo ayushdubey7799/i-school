@@ -52,19 +52,20 @@ function Row(props) {
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align="center">
 
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align="center">
 
         </TableCell>{" "}
-        <TableCell></TableCell>
-        <TableCell></TableCell>
-        <TableCell>{row.score}</TableCell>
+        <TableCell align="center"></TableCell>
+        <TableCell align="center"></TableCell>
+        <TableCell align="center">{row.score}</TableCell>
         <TableCell align="center">  <input
           type="checkbox"
           checked={selected}
           onChange={() => handleSelectChange(row.resumeId)}
+          className="checkBox"
         /></TableCell>
       </TableRow>
       <TableRow>
@@ -150,13 +151,12 @@ export default function MatchedResumes() {
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell />
-                <TableCell>Name</TableCell>
-                <TableCell>Match Percentage</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Contact</TableCell>
-                <TableCell>Score</TableCell>
-
+                <TableCell align="center"/>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Match Percentage</TableCell>
+                <TableCell align="center">Email</TableCell>
+                <TableCell align="center">Contact</TableCell>
+                <TableCell align="center">Score</TableCell>
                 <TableCell align="center">Resume ID</TableCell>
               </TableRow>
             </TableHead>
@@ -167,7 +167,7 @@ export default function MatchedResumes() {
             </TableBody>
           </Table>
         </TableContainer>
-        <button onClick={() => setOpen(true)}>Schedule</button>
+        <button onClick={() => setOpen(true) } className='btn'>Schedule</button>
       </Content>
     </StyledDiv>
   );
@@ -185,6 +185,10 @@ const Content = styled.div`
 margin: 6rem 0% 2rem 0%;
 width: 96%;
 padding: 0 2%;
+display: flex;
+flex-direction: column;
+align-items: center;
+
 
 
 .tableBox {
@@ -215,4 +219,22 @@ padding: 0 2%;
   width: 100%;
 }
 
+
+.btn {
+  padding: 0.5rem 1rem;
+  margin-top: 3rem;
+  background-color: var(--lightOrange);
+  border: none;
+  color: var(--white);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  
+}
+
+
+.checkBox {
+  cursor: pointer;
+}
 `
