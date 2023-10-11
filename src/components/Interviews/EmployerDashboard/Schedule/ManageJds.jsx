@@ -35,16 +35,25 @@ function Row(props) {
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align="center">
           {row.jdId}
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align="center">
           {row.reqNumber}
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
           {row["No of profiles available"]}
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align="center">
+          ...
+        </TableCell>
+        <TableCell component="th" scope="row" align="center">
+          ...
+        </TableCell>
+        <TableCell component="th" scope="row" align="center">
+          ...
+        </TableCell>
+        <TableCell component="th" scope="row" align="center">
           <Link to={`/schedule/matches/${row.jdId}`} className="btn">Show Profiles</Link>
         </TableCell>
       </TableRow>
@@ -56,21 +65,21 @@ function Row(props) {
                 <div style={{ fontSize: "0.7rem", }}><b>Title</b>: {row.title}</div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                <b>Description</b>: {row.description}
+                  <b>Description</b>: {row.description}
                 </div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}><b>Skills</b>: {row.skills}</div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                <b>Experience</b>: {row.experience}
+                  <b>Experience</b>: {row.experience}
                 </div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                <b>Location</b>: {row.location}
+                  <b>Location</b>: {row.location}
                 </div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                <b>WorkType</b>: {row.workType}
+                  <b>WorkType</b>: {row.workType}
                 </div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}><b>CTC</b>: {row.ctc}</div>
@@ -114,25 +123,28 @@ export default function ManageJds({ rows }) {
   // console.log(rows.data.data.tableRows);
   return (
     <StyledBox>
-    <TableContainer component={Paper} className="tableBox">
-      <h3 style={{ paddingLeft: "3rem" }}>Active Job Descriptions</h3>
-      <Table aria-label="collapsible table">
-        <TableHead className="tableHead">
-          <TableRow>
-            <TableCell />
-            <TableCell>Jd_id</TableCell>
-            <TableCell>Req_id</TableCell>
-            <TableCell>No of Profiles available</TableCell>
-            <TableCell>Show Profiles</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody className="tableBody">
-          {tableRows?.map((row, index) => (
-            <Row key={row.jd_id} row={row} isSelected={selectedRow === index}  onToggle={handleToggle} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      <TableContainer component={Paper} className="tableBox">
+        <h3 style={{ paddingLeft: "3rem" }}>Active Job Descriptions</h3>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell />
+              <TableCell align="center">JD_ID</TableCell>
+              <TableCell align="center">Req_ID</TableCell>
+              <TableCell align="center">No of Profiles available</TableCell>
+              <TableCell align="center">Date of Creation</TableCell>
+              <TableCell align="center">Recruiter</TableCell>
+              <TableCell align="center">Hiring Manager</TableCell>
+              <TableCell align="center">Show Profiles</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {tableRows?.map((row, index) => (
+              <Row key={row.jd_id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </StyledBox>
   );
 }
