@@ -328,12 +328,12 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
             <img src={createTicketIcon} className='icon' />
-            <a href='/create-ticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
+            <a href='https://intelliview.zohodesk.com/portal/en/home' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
             <OpenInNewIcon className='openNew' />
           </MenuItem>
           <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>
             <img src={callSupportIcon} className='icon' />
-            Call Support
+            Contact Support
           </MenuItem>
         </AccordionDetails>
       </Accordion>
