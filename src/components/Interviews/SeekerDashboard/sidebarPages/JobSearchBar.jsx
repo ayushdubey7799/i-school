@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import ProfileFilter from '../ProfileFilter';
 import { technicalSkills } from '../../../../utils/contantData';
 import { locations } from '../../../../utils/contantData';
+import searchIcon from '../../../../assets/icons/searchIcon.png'
+
+
 
 // Styled Components
 const SearchBarContainer = styled.div`
@@ -13,7 +16,7 @@ const SearchBarContainer = styled.div`
   height: 4rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
-  padding: 0.5rem;
+  padding: 0.1rem 1rem;
 
   .locationBox {
     position: relative;
@@ -92,6 +95,24 @@ const SearchBarContainer = styled.div`
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
+  }
+
+  .btn {
+    background-color: var(--lightOrange);
+    padding: 0.5rem 1.1rem;
+    border-radius: 1.1rem;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .btn img {
+    width: 1rem;
   }
 `;
 
@@ -222,6 +243,11 @@ const JobSearchBar = () => {
     }
   };
 
+  const handleJobSearch = () => {
+    console.log("Job search");
+  }
+
+
   return (
     <JobSearchBox>
       <SearchBarContainer dropdownVisible={dropdownVisible} skillDropdownVisible={skillDropdownVisible}>
@@ -282,6 +308,8 @@ const JobSearchBar = () => {
             }
           </div>
         </div>
+
+        <button className='btn'  onClick={() => handleJobSearch()}><img src={searchIcon} />Search</button>
       </SearchBarContainer>
       <StyledJobSearch>
         <ProfileFilter />

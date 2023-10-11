@@ -12,7 +12,6 @@ import CreateResume from "../components/Interviews/SeekerDashboard/sidebarPages/
 import EnhanceResume from "../components/Interviews/SeekerDashboard/sidebarPages/EnhanceResume";
 import Subscription from "../components/Interviews/SeekerDashboard/sidebarPages/Subscription";
 import Inbox from "../components/Interviews/SeekerDashboard/sidebarPages/Inbox";
-import Ticket from "../components/Interviews/SeekerDashboard/sidebarPages/Ticket";
 import CallSupport from "../components/Interviews/SeekerDashboard/sidebarPages/CallSupport";
 import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/RecommendedJobs";
 import InterviewTabs from "../components/Interviews/InterviewTabs";
@@ -51,7 +50,6 @@ const JobSeekerDashboard = () => {
           {currentItem === 'subscriptions' && <Subscription />}
           {currentItem === 'inbox' && <Inbox />}
 
-          {/* {currentItem === 'create-ticket' && <Ticket />} */}
           {currentItem === 'call-support' && <CallSupport />}
         </MainContent>
       </StyledContent>

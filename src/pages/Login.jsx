@@ -28,6 +28,7 @@ const Login = () => {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [clientCode, setClientCode] = useState('');
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [value, setValue] = useState("job-seeker");
@@ -200,6 +201,17 @@ const Login = () => {
 
                 <div className="inputBox">
                   <input
+                    type="text"
+                    id="clientCode"
+                    value={clientCode}
+                    onChange={(e) => setClientCode(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="clientCode">Client Code</label>
+                </div>
+
+                <div className="inputBox">
+                  <input
                     type={passwordVisible ? "text" : "password"}
                     id="password"
                     value={password}
@@ -248,6 +260,17 @@ const Login = () => {
                     required
                   />
                   <label htmlFor="email">Email</label>
+                </div>
+
+                <div className="inputBox">
+                  <input
+                    type="text"
+                    id="clientCode"
+                    value={clientCode}
+                    onChange={(e) => setClientCode(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="clientCode">Client Code</label>
                 </div>
 
                 <div className="inputBox">

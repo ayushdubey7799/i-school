@@ -281,6 +281,13 @@ const FilterContainer = styled.div`
   background-color: #f9f9f9;
   margin-right: 3rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+
+  .expBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const RadioFilter = styled.div`
@@ -312,6 +319,7 @@ display: flex;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
+  
 `;
 
 const FilterHeading = styled.h3`
@@ -478,16 +486,25 @@ function ProfileFilter() {
           />
           Anytime
         </RadioLabel>
-        <p>Experience</p>
+        
 
       </RadioFilter>
 
+
+      <p><b>Experience</b></p>
       <RangeInput
         type="range"
         placeholder="Experience Range (0-30)"
+        min={0}
+        max={30}
+        step={1}
         value={experienceRange}
         onChange={handleExperienceRangeChange}
       />
+      <div className='expBox'>
+        <span>{experienceRange} years</span>
+      </div>
+      
     </FilterContainer>
   );
 }

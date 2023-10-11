@@ -1,45 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import profileIcon from '../../../assets/icons/profile.png'
-import jobSearchIcon from '../../../assets/icons/job-search.png'
-import practiceInterviewIcon from '../../../assets/icons/practice.png'
-import inboxIcon from '../../../assets/icons/inbox.png'
-import subsIcon from '../../../assets/icons/subscription.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import profileIcon from '../../../assets/icons/profile.png'
+import inboxIcon from '../../../assets/icons/inbox.png'
+import scheduleIcon from '../../../assets/icons/schedule.png'
+import subsIcon from '../../../assets/icons/subscription.png'
+import jdIcon from '../../../assets/icons/job-description.png'
+import candidatesIcon from '../../../assets/icons/manage-candidates.png'
+import testIcon from '../../../assets/icons/test-management.png'
+import activeJdIcon from '../../../assets/icons/active-job-desc.png'
+import createTestIcon from '../../../assets/icons/create-test.png'
+
 import dashboardIcon from '../../../assets/icons/dashboard.png'
-import appliedJobIcon from '../../../assets/icons/job-applied.png'
-import createResumeIcon from '../../../assets/icons/create-resume.png'
-import enhanceResumeIcon from '../../../assets/icons/enhance-resume.png'
-import interviewDashboardIcon from '../../../assets/icons/interview-dashboard.png'
+import billingIcon from '../../../assets/icons/billing.png'
+import reportIcon from '../../../assets/icons/report.png'
 import createTicketIcon from '../../../assets/icons/create-ticket.png'
 import callSupportIcon from '../../../assets/icons/call-support.png'
 import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
-import recommendedJobIcon from '../../../assets/icons/recommend-jobs.png'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+
 const Container = styled.div`
-  width: 17rem;
-  height: calc(90% - 4rem);
-  height: 100vh;
-  padding-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  font-size: 0.9rem;
-  font-weight: 500;
-  background-color: var(--white);
-  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
-  position: fixed;
-  left: 0;
-  overflow-y: scroll;
+
+width: 17rem;
+height: calc(90% - 4rem);
+height: 100vh;
+padding-top: 2rem;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: flex-start;
+font-size: 0.9rem;
+font-weight: 500;
+background-color: var(--white);
+box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
+position: fixed;
+left: 0;
+overflow-y: scroll;
 
   &::-webkit-scrollbar {
     width: 0.4rem;
@@ -56,9 +60,10 @@ const Container = styled.div`
   &:hover::-webkit-scrollbar-thumb {
     background-color: lightgrey;
   }
+  
 
   .menuTitle {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--color);
     padding-left: 0.5rem;
@@ -83,8 +88,8 @@ const MenuItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-
   color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
+
   a{
     color: var(--color);
     text-decoration: none;
@@ -109,16 +114,71 @@ const MenuItem = styled.div`
     height: 1rem;
     display: ${(props) => (props.isSelected ? 'block' : 'none')};
   }
+`;
 
-  .openNew {
+const MenuSubmenu = styled.div`
+  padding-bottom: 1rem;
+  padding-left: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: start;
+  gap: 0.5rem;
+  color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
+  flex-direction: column;
+  
+
+  .manageTest {
+    display: flex;
+    align-items: center; 
+    gap: 0.5rem;
+  }
+
+  a{
+    color: var(--color);
+    text-decoration: none;
+  }
+
+  .icon {
+    width: 1.1rem;
+    // padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .arrowDown {
     font-size: 1rem;
     width: 1rem;
     height: 1rem;
+    display: ${(props) => (props.isSelected ? 'none' : 'block')};
   }
 
+  .arrowUp {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    display: ${(props) => (props.isSelected ? 'block' : 'none')};
+  }
+`
+
+
+const Submenu = styled.div`
+  padding: 0.2rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
+  a{
+    color: black;
+    text-decoration: none;
+  }
+
+  .submenuItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 `;
 
-const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
+
+const ReqAgencySidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleItemClick = (item) => {
@@ -128,6 +188,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
 
   return (
     <Container>
@@ -166,23 +227,36 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel2' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel2' ? 'selected' : ''}`}>Jobs</span>
+          <span className={`menuTitle ${expanded === 'panel2' ? 'selected' : ''}`}>Applications</span>
         </AccordionSummary>
         <AccordionDetails>
-          <MenuItem isSelected={currentItem === 'job-search'} onClick={() => handleItemClick('job-search')}>
-            <img src={jobSearchIcon} className='icon' />
-            Job Search
+          <MenuItem isSelected={currentItem === 'manage-jds'} onClick={() => handleItemClick('manage-jds')}>
+            <img src={jdIcon} className='icon' />
+            Manage JDs
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'candidate-register'} onClick={() => handleItemClick('candidate-register')}>
+            <img src={candidatesIcon} className='icon' />
+            Manage Candidates
           </MenuItem>
 
-          <MenuItem isSelected={currentItem === 'applied-jobs'} onClick={() => handleItemClick('applied-jobs')}>
-            <img src={appliedJobIcon} className='icon' />
-            Applied Jobs
+          <MenuSubmenu isSelected={currentItem === 'manage-test'} onClick={() => {
+            setOpen(!open);
+            // handleItemClick('manage-test');
+          }}>
+            <div className='manageTest'>
+              <img src={testIcon} className='icon' />
+              Manage Tests
+            </div>
+            <Submenu style={{ display: `${open ? 'block' : 'none'}` }}>
+              <p onClick={() => handleItemClick('activeJds')} className='submenuItem'><img src={activeJdIcon} className='icon' /> Active JDs</p>
+              <p onClick={() => handleItemClick('create-tests')} className='submenuItem'><img src={createTestIcon} className='icon' /> Create Tests</p>
+            </Submenu>
+          </MenuSubmenu>
+          <MenuItem isSelected={currentItem === 'schedule-Interview'} onClick={() => handleItemClick('schedule')}>
+            <img src={scheduleIcon} className='icon' />
+            <Link to="/schedule">Manage Interviews</Link>
+            <OpenInNewIcon className='arrowDown' />
           </MenuItem>
-          <MenuItem isSelected={currentItem === 'recommended-jobs'} onClick={() => handleItemClick('recommended-jobs')}>
-            <img src={recommendedJobIcon} className='icon' />
-            Recommended Jobs
-          </MenuItem>
-
         </AccordionDetails>
       </Accordion>
 
@@ -196,16 +270,25 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel3' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Resume Services</span>
+
+          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Profile</span>
         </AccordionSummary>
         <AccordionDetails>
-          <MenuItem isSelected={currentItem === 'create-resume'} onClick={() => handleItemClick('create-resume')}>
-            <img src={createResumeIcon} className='icon' />
-            Create AI Resume
+          <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
+            <img src={profileIcon} className='icon' />
+            Profile
           </MenuItem>
-          <MenuItem isSelected={currentItem === 'enhance-resume'} onClick={() => handleItemClick('enhance-resume')}>
-            <img src={enhanceResumeIcon} className='icon' />
-            Enhance Resume
+          <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
+            <img src={subsIcon} className='icon' />
+            Subscriptions
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'billing'} onClick={() => handleItemClick('billing')}>
+            <img src={billingIcon} className='icon' />
+            Billing
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
+            <img src={inboxIcon} className='icon' />
+            Inbox
           </MenuItem>
         </AccordionDetails>
       </Accordion>
@@ -220,17 +303,12 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel4' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel4' ? 'selected' : ''}`}>Interview</span>
+          <span className={`menuTitle ${expanded === 'panel4' ? 'selected' : ''}`}>Reports</span>
         </AccordionSummary>
         <AccordionDetails>
-          <MenuItem isSelected={currentItem === 'interview-dashboard'} onClick={() => handleItemClick('interview-dashboard')}>
-            <img src={interviewDashboardIcon} className='icon' />
-            <Link to='/dashboard/interviews'>Interview Dashboard</Link>
-          </MenuItem>
-          <MenuItem isSelected={currentItem === 'practice-interview'} onClick={() => handleItemClick('practice-interview')}>
-            <img src={practiceInterviewIcon} className='icon' />
-            <a href='/create' target='_blank' rel='noopener noreferrer'>Practice Interview</a>
-            <OpenInNewIcon className='openNew' />
+          <MenuItem isSelected={currentItem === 'report'} onClick={() => handleItemClick('report')}>
+            <img src={reportIcon} className='icon' />
+            Reports
           </MenuItem>
         </AccordionDetails>
       </Accordion>
@@ -245,37 +323,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel5' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}>Profile</span>
-        </AccordionSummary>
-        <AccordionDetails>
-          <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
-            <img src={profileIcon} className='icon' />
-            Profile
-            {/* <KeyboardArrowDownIcon className='arrowDown' />
-        <KeyboardArrowUpIcon className='arrowUp' /> */}
-          </MenuItem>
-          <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
-            <img src={subsIcon} className='icon' />
-            Subscriptions
-          </MenuItem>
-          <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
-            <img src={inboxIcon} className='icon' />
-            Inbox
-          </MenuItem>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel6bh-content"
-          id="panel6bh-header"
-          classes={{
-            root: 'custom-accordion-summary-root',
-            expanded: expanded === 'panel6' ? 'expanded' : ''
-          }}
-        >
-          <span className={`menuTitle ${expanded === 'panel6' ? 'selected' : ''}`}>Support</span>
+          <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}>Support</span>
         </AccordionSummary>
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
@@ -289,9 +337,8 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           </MenuItem>
         </AccordionDetails>
       </Accordion>
-
-    </Container >
+    </Container>
   );
 };
 
-export default JobSeekerSidebar;
+export default React.memo(ReqAgencySidebar);

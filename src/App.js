@@ -47,7 +47,7 @@ import Sales from "./pages/menuPages/Sales"
 import EmployerInterviewsStatus from "./components/Interviews/EmployerInterviewInfo/EmployerInterviewTabs"
 import MatchedResumes from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumes"
 import QuestionComponent from "./pages/ProctoredInterviewTesting"
-import Ticket from "./components/Interviews/SeekerDashboard/sidebarPages/Ticket"
+import ReqAgencyDashboard from "./pages/ReqAgencyDashboard"
 
 
 
@@ -66,6 +66,7 @@ const App = () => {
           <Route path="/dashboard/interviews" element={<InterviewDashboard />} />
           <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
           <Route path="/dashboard/employer" element={<EmployerDashboard />} />
+          <Route path="/dashboard/req-agency" element={<ReqAgencyDashboard />} />
           <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus/>}/>
           <Route path="/schedule" element={<ScheduleInterview />} />
           <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
@@ -106,8 +107,6 @@ const App = () => {
           <Route path="/solution/enterprise" element={<Enterprises />} />
           <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
-
-          <Route path="/create-ticket" element={<Ticket/>}/>
 
         </Routes>
       </ScrollToTop>

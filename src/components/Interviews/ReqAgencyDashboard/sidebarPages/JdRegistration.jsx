@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ModalHOC from '../../SeekerDashboard/ModalHOC';
-import EmployerDetails from '../EmployerDetails';
+import EmployerDetails from '../ReqAgencyMetricsDetails';
 import JdDetails from '../../../../pages/JdDetails';
 import JdForm from '../JdForm';
 import { jds } from '../../../../utils/contantData';
