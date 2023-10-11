@@ -16,9 +16,24 @@ import { getMatches } from "../../../../functions/api/employers/match/getResumes
 import { useParams } from "react-router";
 import LogoHeader from "../../../commonComponents/LogoHeader";
 import styled from "styled-components";
+import ModalHOC from "../../SeekerDashboard/ModalHOC";
+import ScheduleModal from "./ScheduleModal";
 
 function Row(props) {
-  const { row, isSelected, onToggle } = props;
+  const { row, isSelected, onToggle,handleSelectArray } = props;
+  const [selected,setSelected] = useState(false);
+
+  const handleSelectChange = (id) => {
+    if(selected){
+      handleSelectArray(id,false)
+    }
+    else{
+      handleSelectArray(id,true)
+    }
+    setSelected((prev) => !prev)
+
+  }
+
 
   return (
     <React.Fragment>
@@ -43,19 +58,14 @@ function Row(props) {
         <TableCell component="th" scope="row">
 
         </TableCell>{" "}
-        {/* <TableCell component="th" scope="row">
-          {row["Date of creation"]}
-        </TableCell>{" "}
-        <TableCell component="th" scope="row">
-          {row["Test Id"]}
-        </TableCell>{" "} 
-        <TableCell component="th" scope="row" align="center">
-          {row["No of profiles available"]}
-        </TableCell>*/}
         <TableCell></TableCell>
         <TableCell></TableCell>
         <TableCell>{row.score}</TableCell>
-        <TableCell align="center">{row.resumeId}</TableCell>
+        <TableCell align="center">  <input
+          type="checkbox"
+          checked={selected}
+          onChange={() => handleSelectChange(row.resumeId)}
+        /></TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
@@ -90,6 +100,8 @@ export default function MatchedResumes() {
   const { jdId } = useParams();
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
+  const [selectedArray,setSelectedArray] = useState([]);
+  const [open,setOpen] = useState(false);
 
   useEffect(() => {
     async function getData() {
@@ -99,32 +111,41 @@ export default function MatchedResumes() {
     getData()
   }, [])
   console.log(tableRows)
+
+  const handleSelectArray = (id,action) => {
+    if(action){
+      setSelectedArray((prev) => [...prev,id]);
+    }
+    else{
+      setSelectedArray((prev) => [...prev].filter((item) => item != id))
+    }
+  }
+
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
     const rowIndex = updatedRows.findIndex((r) => r.resumeId === row.resumeId);
-
     if (selectedRow === rowIndex) {
-      // Deselect the row if it's already selected
       setSelectedRow(null);
       updatedRows[rowIndex].open = false;
     } else {
       if (selectedRow !== null) {
         updatedRows[selectedRow].open = false;
       }
-
       setSelectedRow(rowIndex);
       updatedRows[rowIndex].open = true;
     }
-
     setTableRows(updatedRows);
   };
-  // console.log(rows.data.data.tableRows);
+
+  console.log(selectedArray);
   return (
     <StyledDiv>
       <LogoHeader/>
 
       <Content>
         <TableContainer component={Paper} className="tableBox">
+        <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={ScheduleModal} array={selectedArray} />
+
           <h3 style={{ paddingLeft: "3rem" }}>Matched Resumes for Jd Id: {jdId}</h3>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
@@ -141,11 +162,12 @@ export default function MatchedResumes() {
             </TableHead>
             <TableBody className="tableBody">
               {tableRows?.map((row, index) => (
-                <Row key={row.jd_id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+                <Row key={row.resumeId} row={row} isSelected={selectedRow === index} onToggle={handleToggle} handleSelectArray={handleSelectArray}/>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+        <button onClick={() => setOpen(true)}>Schedule</button>
       </Content>
     </StyledDiv>
   );

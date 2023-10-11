@@ -25,7 +25,8 @@ const style = {
 export default function ModalHOC({
   openNewInterviewModal,
   setOpenNewInterviewModal,
-  Component
+  Component,
+  array = []
 }) {
   
   const handleOpen = () => {
@@ -44,7 +45,7 @@ export default function ModalHOC({
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style }}>
-         <Component />
+         <Component array={array}/>
         </Box>
       </Modal>
     )
