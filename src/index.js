@@ -13,11 +13,9 @@ import { PersistGate } from 'redux-persist/integration/react';
 const rootElement = document.getElementById('root');
 
 ReactDOM.createRoot(rootElement).render(
-
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
       <ToastContainer />
-
         <App />
       </PersistGate>
     </Provider>

@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 // Sample JSON data for questions
@@ -84,7 +85,29 @@ const QuestionComponent = () => {
   const [answers, setAnswers] = useState(Array(questionsData.length).fill(''));
   const [start,setStart] = useState(false);
 
- 
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault();
+        toast.warn('Developer tools are disabled during test.');
+      }
+      else if(e.key === 'Escape'){
+        e.preventDefault();
+        toast.warn('...')
+      }
+
+
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("fullscreenchange", (event) => {
+      if(!document.fullscreenElement)toast.warn("Test only on full screen")
+    });
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
   const handleNextClick = () => {
     if (currentQuestionIndex < questionsData.length - 1) {
@@ -104,10 +127,15 @@ const QuestionComponent = () => {
     setAnswers(updatedAnswers);
   };
 
+  const handlePrevent = (e) => {
+    e.preventDefault();
+    toast.warn("Copy Pasting not allowed in test");
+  }
+
   return (
     <>{
     start?
-    <Container>
+    <Container onCopy={handlePrevent} onPaste={handlePrevent} onCut={handlePrevent}>
     {currentQuestionIndex < questionsData.length ? (
       <>
         <QuestionText>{questionsData[currentQuestionIndex].question}</QuestionText>

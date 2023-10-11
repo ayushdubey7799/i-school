@@ -23,7 +23,6 @@ const EmployerHeader = () => {
     navigate("/");
   };
 
-  console.log(accessToken);
 
   return (
     <StyledDiv>
