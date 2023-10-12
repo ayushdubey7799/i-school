@@ -8,6 +8,7 @@ import productCard3 from '../../assets/homepage6.jpeg'
 import bg1 from '../../assets/bg1.jpg'
 import bg2 from '../../assets/bg5.jpg'
 import { useNavigate } from 'react-router'
+import VideoContent from './VideoContent'
 
 const DetailedContent = () => {
     const navigate = useNavigate();
@@ -44,6 +45,8 @@ const DetailedContent = () => {
                 </div>
             </div>
 
+            <VideoContent/>
+            
             <div className='visualDetail'>
                 <div className='visualDetailBox'>
                     <div className='visualDetailTextBox'>
