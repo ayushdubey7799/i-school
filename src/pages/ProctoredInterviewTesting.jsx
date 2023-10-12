@@ -181,58 +181,94 @@
 // }
 
 
-import React, { useState, useRef } from 'react';
-import { ReactMic } from 'react-mic';
+// import React, { useState } from 'react';
 
-function AudioRecorder() {
-  const [isRecording, setIsRecording] = useState(false);
-  const [audioData, setAudioData] = useState({
-    blobURL: null,
-    blob: null,
-    recordedAt: null,
-  });
-  const audioPlaybackRef = useRef(null);
+// function SpeechToText() {
+//   const [text, setText] = useState('');
+//   const [voices, setVoices] = useState([]);
+//   const [selectedVoice, setSelectedVoice] = useState(null);
+//   const synth = window.speechSynthesis;
 
-  const startRecording = () => {
-    setIsRecording(true);
-  };
+//   const fetchVoices = () => {
+//     const availableVoices = synth.getVoices();
+//     setVoices(availableVoices);
+//   };
 
-  const stopRecording = () => {
-    setIsRecording(false);
-  };
+//   const speak = () => {
+//     if (!selectedVoice) {
+//       alert('Please select a voice first.');
+//       return;
+//     }
 
-  const onData = (recordedData) => {
-    // This callback is called when audio data is available
-    console.log('Chunk of real-time data is: ', recordedData);
-  };
+//     const utterance = new SpeechSynthesisUtterance(text);
+//     utterance.voice = selectedVoice;
+//     synth.speak(utterance);
+//   };
 
-  const onStop = (recordedData) => {
-    // This callback is called when the recording stops
-    setAudioData(recordedData);
-    console.log('Recording stopped: ', recordedData);
+//   return (
+//     <div>
+//       <h1>Text to Speech Conversion</h1>
+//       <textarea
+//         value={text}
+//         onChange={(e) => setText(e.target.value)}
+//         placeholder="Enter text to speak"
+//       />
+//       <select
+//         onChange={(e) => setSelectedVoice(voices[e.target.value])}
+//         value={voices.indexOf(selectedVoice)}
+//       >
+//         {voices.map((voice, index) => (
+//           <option key={index} value={index}>
+//             {voice.name}
+//           </option>
+//         ))}
+//       </select>
+//       <button onClick={speak}>Speak</button>
+//       <button onClick={fetchVoices}>Fetch Voices</button>
+//     </div>
+//   );
+// }
+
+// export default SpeechToText;
+
+
+import React, { useState } from 'react';
+
+function SpeechToText() {
+  const [transcript, setTranscript] = useState('');
+  const [listening, setListening] = useState(false);
+
+  const startListening = () => {
+    const recognition = new window.webkitSpeechRecognition() || new window.SpeechRecognition();
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setListening(true);
+      setTranscript('');
+    };
+
+    recognition.onresult = (event) => {
+      const result = event.results[event.resultIndex];
+      const text = result[0].transcript;
+      setTranscript(text);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+
+    recognition.start();
   };
 
   return (
     <div>
-      <ReactMic
-        record={isRecording}
-        className="sound-wave"
-        onStop={onStop}
-        onData={onData}
-      />
-      <button onClick={startRecording} type="button">
-        Start Recording
+      <h1>Speech to Text Conversion</h1>
+      <button onClick={startListening} disabled={listening}>
+        Start Listening
       </button>
-      <button onClick={stopRecording} type="button">
-        Stop Recording
-      </button>
-      <audio
-        ref={audioPlaybackRef}
-        controls
-        src={audioData.blobURL}
-      />
+      <p>{transcript}</p>
     </div>
   );
 }
 
-export default AudioRecorder;
+export default SpeechToText;
