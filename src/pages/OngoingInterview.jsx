@@ -119,6 +119,7 @@ const OngoingInterview = () => {
         setData(fetchedData?.data[0]);
         setIsLoading(false);
         setStarted(true);
+        document.documentElement.requestFullscreen();
         startTimer();
     }
 

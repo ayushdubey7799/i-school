@@ -17,7 +17,7 @@ export const updateStatus = async (id, data, accessToken) => {
     op: "statusUpdate",
     // extra: "enforceSecLimit"
   };
-
+  console.log(requestData,config);
 
   try {
     const response = await axios.patch(`https://dev-api.intelliview.in/api/interviews/${id}`, requestData, config);

@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 
 const style = {
@@ -32,7 +33,12 @@ export default function ModalHOC({
   const handleOpen = () => {
     setOpenNewInterviewModal(true);
   };
-  const handleClose = () => {
+  const handleClose = (event,reason) => {
+    console.log(event,reason);
+    if(reason && reason == "backdropClick"){
+      toast.warn("WARNING")
+      return;
+    }
     setOpenNewInterviewModal(false);
   };
   
@@ -41,10 +47,11 @@ export default function ModalHOC({
         <Modal
         open={openNewInterviewModal}
         onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
+        closeAfterTransition
+        disableBackdropClick
       >
         <Box sx={{ ...style }}>
+          <button onClick={handleClose}>Close</button>
          <Component array={array}/>
         </Box>
       </Modal>
