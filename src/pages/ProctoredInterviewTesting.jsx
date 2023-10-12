@@ -181,7 +181,6 @@
 // }
 
 
-// import React, { useState } from 'react';
 
 // function SpeechToText() {
 //   const [text, setText] = useState('');
