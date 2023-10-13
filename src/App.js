@@ -48,6 +48,7 @@ import EmployerInterviewsStatus from "./components/Interviews/EmployerInterviewI
 import MatchedResumes from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumes"
 import QuestionComponent from "./pages/ProctoredInterviewTesting"
 import ReqAgencyDashboard from "./pages/ReqAgencyDashboard"
+import SpeechToText from "./pages/SpeechText"
 
 
 
@@ -75,6 +76,8 @@ const App = () => {
           <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
           <Route path="/score/:interviewId" element={<Scorecard />} />
           <Route path="/proctor-test" element={<QuestionComponent />} />
+          <Route path="/speech" element={<SpeechToText />} />
+
 
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/setting" element={<SettingPage />} />
