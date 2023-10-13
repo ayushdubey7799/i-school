@@ -13,7 +13,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "styled-components";
-import { billing } from "../../../../utils/contantData";
+import { data as billing } from "../../../../utils/contantData";
 
 
 function Row(props) {

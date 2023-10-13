@@ -20,6 +20,8 @@ import reportIcon from '../../../assets/icons/report.png'
 import createTicketIcon from '../../../assets/icons/create-ticket.png'
 import callSupportIcon from '../../../assets/icons/call-support.png'
 import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
+import addUser from '../../../assets/icons/addUser.png'
+import availableTestIcon from '../../../assets/icons/test.png'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -178,7 +180,7 @@ const Submenu = styled.div`
 `;
 
 
-const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
+const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen, open2, setOpen2 }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleItemClick = (item) => {
@@ -234,10 +236,20 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
             <img src={jdIcon} className='icon' />
             Manage JDs
           </MenuItem>
-          <MenuItem isSelected={currentItem === 'candidate-register'} onClick={() => handleItemClick('candidate-register')}>
-            <img src={candidatesIcon} className='icon' />
-            Manage Candidates
-          </MenuItem>
+
+          <MenuSubmenu isSelected={currentItem === 'candidate-reg'} onClick={() => {
+            setOpen2(!open2);
+            // handleItemClick('manage-test');
+          }}>
+            <div className='manageTest'>
+              <img src={candidatesIcon} className='icon' />
+              Manage Candidates
+            </div>
+            <Submenu style={{ display: `${open2 ? 'block' : 'none'}` }}>
+              <p onClick={() => handleItemClick('candidate-register')} className='submenuItem'><img src={addUser} className='icon' />Add Candidates</p>
+              <p onClick={() => handleItemClick('candidate-registered')} className='submenuItem'><img src={createTestIcon} className='icon' />Registered Candidates</p>
+            </Submenu>
+          </MenuSubmenu>
 
           <MenuSubmenu isSelected={currentItem === 'manage-test'} onClick={() => {
             setOpen(!open);
@@ -250,8 +262,10 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen }) => {
             <Submenu style={{ display: `${open ? 'block' : 'none'}` }}>
               <p onClick={() => handleItemClick('activeJds')} className='submenuItem'><img src={activeJdIcon} className='icon' /> Active JDs</p>
               <p onClick={() => handleItemClick('create-tests')} className='submenuItem'><img src={createTestIcon} className='icon' /> Create Tests</p>
+              <p onClick={() => handleItemClick('available-tests')} className='submenuItem'><img src={availableTestIcon} className='icon' /> Available Tests</p>
             </Submenu>
           </MenuSubmenu>
+
           <MenuItem isSelected={currentItem === 'schedule-Interview'} onClick={() => handleItemClick('schedule')}>
             <img src={scheduleIcon} className='icon' />
             <Link to="/schedule">Manage Interviews</Link>

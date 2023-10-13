@@ -169,7 +169,7 @@ export const jds = [
 ];
 
 
-export const billing = [
+export const data = [
     {
         id: 1,
     },

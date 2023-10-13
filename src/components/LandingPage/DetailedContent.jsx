@@ -45,8 +45,8 @@ const DetailedContent = () => {
                 </div>
             </div>
 
-            <VideoContent/>
-            
+            {/* <VideoContent/> */}
+
             <div className='visualDetail'>
                 <div className='visualDetailBox'>
                     <div className='visualDetailTextBox'>
