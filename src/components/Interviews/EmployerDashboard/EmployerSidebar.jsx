@@ -32,8 +32,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const Container = styled.div`
 
 width: 17rem;
-height: calc(90% - 4rem);
-height: 100vh;
+height: calc(90% - 2rem);
 padding-top: 2rem;
 display: flex;
 flex-direction: column;
@@ -59,9 +58,9 @@ overflow-y: scroll;
     background-color: transparent;
   }
 
-  &:hover::-webkit-scrollbar-thumb {
-    background-color: lightgrey;
-  }
+  // &:hover::-webkit-scrollbar-thumb {
+  //   background-color: lightgrey;
+  // }
   
 
   .menuTitle {
@@ -82,14 +81,33 @@ overflow-y: scroll;
   .custom-accordion-summary-root {
     border-bottom: none;
   }
+
+  .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .childMenuTitle {
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .childMenuTitle.selected {
+    color: var(--lightOrange);
+  }
 `;
 
 const MenuItem = styled.div`
   padding-bottom: 1rem;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.9rem;
   color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
 
   a{
@@ -103,92 +121,63 @@ const MenuItem = styled.div`
     padding-right: 0.5rem;
   }
 
-  .arrowDown {
-    font-size: 1rem;
-    width: 1rem;
-    height: 1rem;
-    display: ${(props) => (props.isSelected ? 'none' : 'block')};
-  }
-
-  .arrowUp {
-    font-size: 1rem;
-    width: 1rem;
-    height: 1rem;
-    display: ${(props) => (props.isSelected ? 'block' : 'none')};
-  }
-`;
-
-const MenuSubmenu = styled.div`
-  padding-bottom: 1rem;
-  padding-left: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: start;
-  gap: 0.5rem;
-  color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
-  flex-direction: column;
-  
-
-  .manageTest {
-    display: flex;
-    align-items: center; 
-    gap: 0.5rem;
-  }
-
-  a{
-    color: var(--color);
-    text-decoration: none;
-  }
-
-  .icon {
+  .arrowLink {
     width: 1.1rem;
-    // padding-left: 0.5rem;
-    padding-right: 0.5rem;
   }
 
-  .arrowDown {
-    font-size: 1rem;
-    width: 1rem;
-    height: 1rem;
-    display: ${(props) => (props.isSelected ? 'none' : 'block')};
-  }
-
-  .arrowUp {
-    font-size: 1rem;
-    width: 1rem;
-    height: 1rem;
-    display: ${(props) => (props.isSelected ? 'block' : 'none')};
-  }
-`
+`;
 
 
 const Submenu = styled.div`
   padding: 0.2rem;
   cursor: pointer;
-  font-size: 0.8rem;
-  color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
+  font-size: 0.85rem;
+  font-weight: 500;
+  
   a{
     color: black;
     text-decoration: none;
   }
 
   .submenuItem {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  
+  }
+
+  .icon {
+    width: 1.1rem;
+    padding-right: 0.5rem;
+  }
+
+  a{
+    color: var(--color);
+    text-decoration: none;
   }
 `;
 
+const SubPara = styled.p`
+color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
+display: flex;
+align-items: center;
+gap: 0.5rem;
 
-const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen, open2, setOpen2 }) => {
+`
+
+
+const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
   const [expanded, setExpanded] = useState(false);
+  const [nestedExpanded, setNestedExpanded] = useState('');
 
   const handleItemClick = (item) => {
     setCurrentItem(item);
   };
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+  const handleChange = (panel, isNested = false) => (event, isExpanded) => {
+    if (isNested) {
+      setNestedExpanded(isExpanded ? panel : '');
+    } else {
+      setExpanded(isExpanded ? panel : '');
+      setNestedExpanded('');
+    }
   };
 
 
@@ -232,44 +221,67 @@ const EmployerSidebar = ({ currentItem, setCurrentItem, open, setOpen, open2, se
           <span className={`menuTitle ${expanded === 'panel2' ? 'selected' : ''}`}>Applications</span>
         </AccordionSummary>
         <AccordionDetails>
-          <MenuItem isSelected={currentItem === 'manage-jds'} onClick={() => handleItemClick('manage-jds')}>
+          <MenuItem isSelected={currentItem === 'manage-jds'} onClick={() => {
+            setNestedExpanded('');
+            handleItemClick('manage-jds');
+          }}>
             <img src={jdIcon} className='icon' />
             Manage JDs
           </MenuItem>
 
-          <MenuSubmenu isSelected={currentItem === 'candidate-reg'} onClick={() => {
-            setOpen2(!open2);
-            // handleItemClick('manage-test');
-          }}>
-            <div className='manageTest'>
-              <img src={candidatesIcon} className='icon' />
-              Manage Candidates
-            </div>
-            <Submenu style={{ display: `${open2 ? 'block' : 'none'}` }}>
-              <p onClick={() => handleItemClick('candidate-register')} className='submenuItem'><img src={addUser} className='icon' />Add Candidates</p>
-              <p onClick={() => handleItemClick('candidate-registered')} className='submenuItem'><img src={createTestIcon} className='icon' />Registered Candidates</p>
-            </Submenu>
-          </MenuSubmenu>
+          <Accordion expanded={nestedExpanded === 'nestedPanel21'} onChange={handleChange('nestedPanel21', true)} style={{ width: '100%', boxShadow: 'none', margin: '-16px 0rem 0rem -16px' }} classes={{ root: 'custom-accordion-root' }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="nestedPanel21bh-content"
+              id="nestedPanel21bh-header"
+              classes={{
+                root: 'custom-accordion-summary-root',
+                expanded: expanded === 'nestedPanel21' ? 'expanded' : ''
+              }}
+            >
+              <span className={`childMenuTitle ${nestedExpanded === 'nestedPanel21' ? 'selected' : ''}`}>
+                <img src={candidatesIcon} className='icon' />
+                Manage Candidates
+              </span>
+            </AccordionSummary>
+            <AccordionDetails style={{ marginTop: '-22px' }}>
+              <Submenu>
+                <SubPara isSelected={currentItem === 'candidate-register'} onClick={() => handleItemClick('candidate-register')} className='submenuItem'><img src={addUser} className='icon' />Add Candidates</SubPara>
+                <SubPara isSelected={currentItem === 'candidate-registered'} onClick={() => handleItemClick('candidate-registered')} className='submenuItem'><img src={createTestIcon} className='icon' />Registered Candidates</SubPara>
+              </Submenu>
+            </AccordionDetails>
+          </Accordion>
 
-          <MenuSubmenu isSelected={currentItem === 'manage-test'} onClick={() => {
-            setOpen(!open);
-            // handleItemClick('manage-test');
-          }}>
-            <div className='manageTest'>
-              <img src={testIcon} className='icon' />
-              Manage Tests
-            </div>
-            <Submenu style={{ display: `${open ? 'block' : 'none'}` }}>
-              <p onClick={() => handleItemClick('activeJds')} className='submenuItem'><img src={activeJdIcon} className='icon' /> Active JDs</p>
-              <p onClick={() => handleItemClick('create-tests')} className='submenuItem'><img src={createTestIcon} className='icon' /> Create Tests</p>
-              <p onClick={() => handleItemClick('available-tests')} className='submenuItem'><img src={availableTestIcon} className='icon' /> Available Tests</p>
-            </Submenu>
-          </MenuSubmenu>
+
+          <Accordion expanded={nestedExpanded === 'nestedPanel22'} onChange={handleChange('nestedPanel22', true)} style={{ width: '100%', boxShadow: 'none', margin: '-16px 0rem 0rem -16px' }} classes={{ root: 'custom-accordion-root' }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="nestedPanel22bh-content"
+              id="nestedPanel22bh-header"
+              classes={{
+                root: 'custom-accordion-summary-root',
+                expanded: expanded === 'nestedPanel22' ? 'expanded' : ''
+              }}
+            >
+              <span className={`childMenuTitle ${nestedExpanded === 'nestedPanel22' ? 'selected' : ''}`}>
+                <img src={testIcon} className='icon' />
+                Manage Tests
+              </span>
+            </AccordionSummary>
+            <AccordionDetails style={{ marginTop: '-22px' }}>
+              <Submenu>
+                <SubPara isSelected={currentItem === 'activeJds'} onClick={() => handleItemClick('activeJds')} className='submenuItem'><img src={activeJdIcon} className='icon' /> Active JDs</SubPara>
+                <SubPara isSelected={currentItem === 'create-tests'} onClick={() => handleItemClick('create-tests')} className='submenuItem'><img src={createTestIcon} className='icon' /> Create Tests</SubPara>
+                <SubPara isSelected={currentItem === 'available-tests'} onClick={() => handleItemClick('available-tests')} className='submenuItem'><img src={availableTestIcon} className='icon' /> Available Tests</SubPara>
+              </Submenu>
+            </AccordionDetails>
+          </Accordion>
+
 
           <MenuItem isSelected={currentItem === 'schedule-Interview'} onClick={() => handleItemClick('schedule')}>
             <img src={scheduleIcon} className='icon' />
             <Link to="/schedule">Manage Interviews</Link>
-            <OpenInNewIcon className='arrowDown' />
+            <OpenInNewIcon className='arrowLink' />
           </MenuItem>
         </AccordionDetails>
       </Accordion>

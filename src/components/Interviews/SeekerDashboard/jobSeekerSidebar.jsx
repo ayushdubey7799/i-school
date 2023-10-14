@@ -53,9 +53,9 @@ const Container = styled.div`
     background-color: transparent;
   }
 
-  &:hover::-webkit-scrollbar-thumb {
-    background-color: lightgrey;
-  }
+  // &:hover::-webkit-scrollbar-thumb {
+  //   background-color: lightgrey;
+  // }
 
   .menuTitle {
     font-size: 1rem;
