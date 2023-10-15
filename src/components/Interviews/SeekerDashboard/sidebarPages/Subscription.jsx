@@ -167,14 +167,13 @@ margin: 2rem 0;
     text-wrap: break-word;
 }
 
-
 .title {
-    font-size: 3rem;
+    font-size: 2.2rem;
     font-weight: 700;
 }
 
 .subTitle {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 500;
     color: rgb(70, 78, 98);
 }

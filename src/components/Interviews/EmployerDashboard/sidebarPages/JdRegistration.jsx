@@ -21,6 +21,8 @@ import JdDetails from '../../../../pages/JdDetails';
 import JdForm from '../JdForm';
 import { jds } from '../../../../utils/contantData';
 import attachIcon from '../../../../assets/icons/attach.png'
+import editIcon from '../../../../assets/icons/edit.png'
+import deleteIcon from '../../../../assets/icons/delete.png'
 
 
 function Row(props) {
@@ -54,6 +56,12 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...
+        </TableCell>
+        <TableCell component="th" scope="row" align="center">
+          <div style={{display: 'flex', gap: '0.8rem', justifyContent: 'center'}}>
+          <img src={editIcon} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
+          <img src={deleteIcon} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
+          </div>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -124,6 +132,7 @@ const JdRegistration = () => {
                   <TableCell align='center'>Test_ID</TableCell>
                   <TableCell align='center'>Date of Creation</TableCell>
                   <TableCell align='center'>Created By</TableCell>
+                  <TableCell align='center'>Edit/Delete</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody className="tableBody">

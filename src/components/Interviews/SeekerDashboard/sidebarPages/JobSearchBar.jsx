@@ -278,9 +278,15 @@ const JobSearchBar = () => {
         </div>
         <FilterDropdown>
           <option value="">Select Experience</option>
-          <option value="0-1">0-1 Years</option>
-          <option value="1-3">1-3 Years</option>
-          <option value="3+">3+ Years</option>
+          <option value="">Fresher</option>
+          <option value="1">1 year</option>
+          <option value="1-3">1-3 years</option>
+          <option value="3-5">3-5 years</option>
+          <option value="6-8">6-8 years</option>
+          <option value="9-12">9-12 years</option>
+          <option value="13-17">13-17 years</option>
+          <option value="17-21">17-21 years</option>
+          <option value="21+">21+ years</option>
         </FilterDropdown>
 
         <div className='locationBox' ref={dropdownRef}>

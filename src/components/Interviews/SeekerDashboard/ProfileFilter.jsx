@@ -341,7 +341,6 @@ function ProfileFilter() {
   const [workMode, setWorkMode] = useState('');
   const [salaryRange, setSalaryRange] = useState('');
   const [freshness, setFreshness] = useState('');
-  const [experienceRange, setExperienceRange] = useState('');
 
   const handleWorkModeChange = (e) => {
     setWorkMode(e.target.value);
@@ -499,21 +498,6 @@ function ProfileFilter() {
         
 
       </RadioFilter>
-
-
-      <p><b>Experience</b></p>
-      <RangeInput
-        type="range"
-        placeholder="Experience Range (0-30)"
-        min={0}
-        max={30}
-        step={1}
-        value={experienceRange}
-        onChange={handleExperienceRangeChange}
-      />
-      <div className='expBox'>
-        <span>{experienceRange} years</span>
-      </div>
       
     </FilterContainer>
   );

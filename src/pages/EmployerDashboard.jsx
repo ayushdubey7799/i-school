@@ -3,8 +3,6 @@ import { styled } from "styled-components";
 import { useNavigate } from "react-router";
 
 import { useSelector } from "react-redux";
-import Profile from "../components/Interviews/SeekerDashboard/sidebarPages/Profile";
-import JobSearchBar from "../components/Interviews/SeekerDashboard/sidebarPages/JobSearchBar";
 import EmployeMetrics from "../components/Interviews/EmployerDashboard/EmployerMetrics";
 import EmployerSidebar from "../components/Interviews/EmployerDashboard/EmployerSidebar";
 import EmployeProfile from "../components/Interviews/EmployerDashboard/sidebarPages/EmployerProfile";
@@ -20,6 +18,9 @@ import Report from "../components/Interviews/EmployerDashboard/sidebarPages/Repo
 import CallSupport from "../components/Interviews/EmployerDashboard/sidebarPages/CallSupport";
 import Inbox from "../components/Interviews/EmployerDashboard/sidebarPages/Inbox";
 import Billing from "../components/Interviews/EmployerDashboard/sidebarPages/Billing";
+import RegisterCandidate from "../components/Interviews/EmployerDashboard/sidebarPages/RegisterCandidate";
+import RegisteredCandidates from "../components/Interviews/EmployerDashboard/sidebarPages/RegisteredCandidates";
+import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPages/AvailableTest";
 
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
@@ -31,6 +32,7 @@ const EmployerDashboard = () => {
   const navigate = useNavigate();
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
 
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,11 +41,23 @@ const EmployerDashboard = () => {
   useEffect(() => {
     if (!accessToken) navigate("/login");
     let initialOpen =
-      currentItem === "activeJds" || currentItem === "create-tests";
+      currentItem === "activeJds" || currentItem === "create-tests" || currentItem === "available-tests";
     if (initialOpen) {
       setOpen(true);
     } else {
       setOpen(false);
+    }
+  }, [currentItem]);
+  
+
+  useEffect(() => {
+    if (!accessToken) navigate("/login");
+    let initialOpen =
+      currentItem === "candidate-register" || currentItem === "candidate-registered";
+    if (initialOpen) {
+      setOpen2(true);
+    } else {
+      setOpen2(false);
     }
   }, [currentItem]);
 
@@ -56,7 +70,9 @@ const EmployerDashboard = () => {
           currentItem={currentItem}
           setCurrentItem={setCurrentItem}
           open={open}
+          open2={open2}
           setOpen={setOpen}
+          setOpen2={setOpen2}
         />
         <MainContent>
           <EmployeMetrics setCurrentItem={setCurrentItem} />
@@ -64,10 +80,12 @@ const EmployerDashboard = () => {
           {currentItem === "manage-jds" && <JdRegistration/>}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
 
-          {currentItem === "candidate-register" && <Profile />}
+          {currentItem === "candidate-register" && <RegisterCandidate />}
+          {currentItem === "candidate-registered" && <RegisteredCandidates />}
           {currentItem === "manage-tests" && <CreateQuestion />}
           {currentItem === "activeJds" && <ActiveJds />}
           {currentItem === "create-tests" && <ManageTests />}
+          {currentItem === "available-tests" && <AvailableTest />}
 
           {currentItem === "profile" && <EmployeProfile />}
           {currentItem === "subscriptions" && <Subscription />}
