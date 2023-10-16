@@ -207,3 +207,72 @@ export const data = [
         id: 12,
     },
 ];
+
+
+export const resumeData = {
+    personalInfo: {
+        name: "John Doe",
+        title: "Web Developer",
+        address: "123 Main St, City, State, ZIP",
+        email: "johndoe@email.com",
+        phone: "(123) 456-7890",
+        linkedin: "https://www.linkedin.com/in/johndoe",
+        github: "https://github.com/johndoe"
+    },
+    summary: "A passionate and detail-oriented web developer with 5 years of experience in building responsive and user-friendly websites. Proficient in HTML, CSS, and JavaScript.",
+    education: [
+        {
+            degree: "Bachelor of Science in Computer Science",
+            university: "University Name",
+            year: "08/2016 - 07/2020"
+        },
+        {
+            degree: "High School Diploma",
+            university: "High School Name",
+            year: "06/2014 - 08/2016"
+        }
+    ],
+    experience: [
+        {
+            title: "Frontend Developer",
+            company: "Tech Company",
+            location: "City, State",
+            date: "06/2020 - Present",
+            description: "Develop and maintain the user interface of the company's web applications. Collaborate with the design and backend teams to create seamless user experiences."
+        },
+        {
+            title: "Intern",
+            company: "Startup Inc.",
+            location: "City, State",
+            date: "05/2019 - 07/2019",
+            description: "Assisted in the development and testing of web applications. Gained experience with various web technologies and tools."
+        }
+    ],
+    skills: ["HTML", "CSS", "JavaScript", "React", "Responsive Design", "Version Control (Git)", "UI/UX Design"],
+    certifications: [
+        {
+            title: "Certified Web Developer",
+            organization: "Web Development Institute",
+            date: "2019"
+        },
+        {
+            title: "Frontend Fundamentals",
+            organization: "Tech Training Academy",
+            date: "2017"
+        }
+    ],
+    languages: ["English (Fluent)", "Spanish (Intermediate)"],
+    projects: [
+        {
+            title: "E-commerce Website",
+            description: "Designed and developed a responsive e-commerce website using HTML, CSS, and JavaScript. Implemented a secure payment gateway and product catalog.",
+            date: "2022 - 2023"
+        },
+        {
+            title: "Portfolio Website",
+            description: "Created a personal portfolio website to showcase my projects and skills. Developed interactive components using React.",
+            date: "2021 - 2022"
+        }
+    ]
+};
+

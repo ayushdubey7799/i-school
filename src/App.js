@@ -49,6 +49,8 @@ import MatchedResumes from "./components/Interviews/EmployerDashboard/Schedule/M
 import QuestionComponent from "./pages/ProctoredInterviewTesting"
 import ReqAgencyDashboard from "./pages/ReqAgencyDashboard"
 import SpeechToText from "./pages/SpeechText"
+import Resume1 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume1"
+import Resume2 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume2"
 
 
 
@@ -110,6 +112,11 @@ const App = () => {
           <Route path="/solution/enterprise" element={<Enterprises />} />
           <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
+
+
+          <Route path='/resume1' element={<Resume1/>} />
+          <Route path='/resume2' element={<Resume2/>} />
+          
 
         </Routes>
       </ScrollToTop>
