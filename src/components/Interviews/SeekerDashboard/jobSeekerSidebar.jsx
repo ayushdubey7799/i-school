@@ -36,13 +36,13 @@ const Container = styled.div`
   font-size: 0.9rem;
   font-weight: 500;
   background-color: var(--white);
-  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
+  // box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
   position: fixed;
   left: 0;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 0.4rem;
+    width: 0rem;
   }
 
   &::-webkit-scrollbar-track {
@@ -118,6 +118,18 @@ const MenuItem = styled.div`
 
 `;
 
+const Arrow = styled.div`
+    width: 0;
+    height: 0;
+    border-bottom: 1rem solid transparent;
+    border-top: 1rem solid transparent;
+    border-right: 1rem solid #F8F6F4;
+    transition: transform 0.2s;
+    position: absolute;
+    right: -4px;
+
+`;
+
 const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -143,6 +155,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           }}
         >
           <span className={`menuTitle ${expanded === 'panel1' ? 'selected' : ''}`}>Dashboard</span>
+          {expanded === 'panel1' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'dashboard'} onClick={() => handleItemClick('dashboard')}>
@@ -167,6 +180,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           }}
         >
           <span className={`menuTitle ${expanded === 'panel2' ? 'selected' : ''}`}>Jobs</span>
+          {expanded === 'panel2' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'job-search'} onClick={() => handleItemClick('job-search')}>
@@ -197,6 +211,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           }}
         >
           <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Resume Services</span>
+          {expanded === 'panel3' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'create-resume'} onClick={() => handleItemClick('create-resume')}>
@@ -221,6 +236,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           }}
         >
           <span className={`menuTitle ${expanded === 'panel4' ? 'selected' : ''}`}>Interview</span>
+          {expanded === 'panel4' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'interview-dashboard'} onClick={() => handleItemClick('interview-dashboard')}>
@@ -246,6 +262,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           }}
         >
           <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}>Profile</span>
+          {expanded === 'panel5' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
@@ -276,6 +293,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           }}
         >
           <span className={`menuTitle ${expanded === 'panel6' ? 'selected' : ''}`}>Support</span>
+          {expanded === 'panel6' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>

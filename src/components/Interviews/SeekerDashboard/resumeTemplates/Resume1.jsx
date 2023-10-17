@@ -54,7 +54,13 @@ const Resume1 = () => {
                                         </div>
                                         <span className="location">{exp.location}</span>
                                         <span className="date">{exp.date}</span>
-                                        <span className="desc">{exp.description}</span>
+                                        <ul>
+                                            {
+                                                exp.description.map((e, i) => (
+                                                    <li className="desc" key={i}>{e}</li>
+                                                ))
+                                            }
+                                        </ul>
                                     </div>
                                 ))
                             }
@@ -92,7 +98,13 @@ const Resume1 = () => {
                                     <div className="projectBox" key={index}>
                                         <span className="title">{project.title}</span>
                                         <span className="date">{project.date}</span>
-                                        <span className="desc">{project.description}</span>
+                                        <ul>
+                                            {
+                                                project.description.map((pro, i) => (
+                                                    <li className="desc" key={i}>{pro}</li>
+                                                ))
+                                            }
+                                        </ul>
                                     </div>
                                 ))
                             }
@@ -110,7 +122,7 @@ const Resume1 = () => {
                         <div className="skillBox">
                             {
                                 data.skills.map((skill, index) => (
-                                    <span className="skill" key={index}>{skill}</span>
+                                    <span className="skill" key={index}>{skill.name}</span>
                                 ))
                             }
                         </div>
@@ -124,7 +136,7 @@ const Resume1 = () => {
                         <div className="skillBox">
                             {
                                 data.languages.map((lang, index) => (
-                                    <span className="skill" key={index}>{lang}</span>
+                                    <span className="skill" key={index}>{lang.name}</span>
                                 ))
                             }
                         </div>
@@ -186,6 +198,12 @@ const Wrapper = styled.div`
     flex-direction: column;
     gap: 1.5rem;
 
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 `;
 
@@ -428,6 +446,7 @@ const Projects = styled.div`
     font-size: 0.8rem;
     font-weight: 500;
     color: blue;
+    margin-bottom: -0.5rem;
 }
 
 .desc {
@@ -435,6 +454,7 @@ const Projects = styled.div`
     line-height: 1.3rem;
     letter-spacing: 0.03rem;
 }
+
 
 
 `

@@ -8,7 +8,7 @@ import SkillProgressBar from "./commonComp/SkillProgress";
 import profileImg from '../../../../assets/resume/profileImg.png'
 
 
-const Resume5 = () => {
+const Resume7 = () => {
 
     const [data, setData] = useState(resumeData);
 
@@ -16,92 +16,38 @@ const Resume5 = () => {
         <Wrapper>
             <Header>
                 <img src={profileImg} />
-
-                <div className="headerMainBox">
+                <div className="mainHeaderBox">
                     <span className="name">{data.personalInfo.name}</span>
-                    <div className="headerBox">
-                        <span className="infoItem">
-                            <FontAwesomeIcon icon={faLocationArrow} className="icon" />
-                            {data.personalInfo.address}
-                        </span>
-                        <span className="infoItem">
-                            <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                            {data.personalInfo.email}
-                        </span>
-                        <span className="infoItem">
-                            <FontAwesomeIcon icon={faPhone} className="icon" />
-                            {data.personalInfo.phone}
-                        </span>
-                        <span className="infoItem">
-                            <a href={data.personalInfo.linkedin} target="_blank" rel="noopener noreferrer">
-                                <FontAwesomeIcon icon={faLinkedin} className="icon" />
-                                Linkedin
-                            </a>
-                        </span>
-                        <span className="infoItem">
-                            <a href={data.personalInfo.github} target="_blank" rel="noopener noreferrer">
-                                <FontAwesomeIcon icon={faGithub} className="icon" />
-                                Github
-                            </a>
-                        </span>
-                    </div>
+                    <span className="dest">{data.personalInfo.title}</span>
                 </div>
             </Header>
-
+            <div className="headerBox">
+                <span className="infoItem">
+                    <FontAwesomeIcon icon={faLocationArrow} className="icon" />
+                    {data.personalInfo.address}
+                </span>
+                <span className="infoItem">
+                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                    {data.personalInfo.email}
+                </span>
+                <span className="infoItem">
+                    <FontAwesomeIcon icon={faPhone} className="icon" />
+                    {data.personalInfo.phone}
+                </span>
+                <span className="infoItem">
+                    <a href={data.personalInfo.linkedin} target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faLinkedin} className="icon" />
+                        Linkedin
+                    </a>
+                </span>
+                <span className="infoItem">
+                    <a href={data.personalInfo.github} target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faGithub} className="icon" />
+                        Github
+                    </a>
+                </span>
+            </div>
             <Content>
-
-                <div className="column1">
-                    <Skills>
-                        <h2>
-                            Skills
-                        </h2>
-                        <div className="skillBox">
-                            {
-                                data.skills.map((skill, index) => (
-                                    <div className="skillMain" key={index}>
-                                        <span className="skill">{skill.name}</span>
-                                        <SkillProgressBar score={skill.score} />
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </Skills>
-
-                    <Language>
-                        <h2>
-                            Languages
-                        </h2>
-                        <div className="skillBox">
-                            {
-                                data.languages.map((lang, index) => (
-                                    <div className="skillMain" key={index}>
-                                        <span className="skill" key={index}>{lang.name}</span>
-                                        <SkillProgressBar score={lang.score} />
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </Language>
-
-                    <Certification>
-                        <h2>
-                            Certifications
-                        </h2>
-                        <div className="experienceMainBox">
-                            {
-                                data.certifications.map((cert, index) => (
-                                    <div className="certificateBox" key={index}>
-                                        <div className="educationBoxTop">
-                                            <span className="title">{cert.title}</span>
-                                            <span className="date">{cert.date}</span>
-                                        </div>
-                                        <span className="company">{cert.organization}</span>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </Certification>
-                </div>
 
                 <div className="column2">
                     <Summary>
@@ -181,13 +127,67 @@ const Resume5 = () => {
                             }
                         </div>
                     </Projects>
+
+                    <Certification>
+                        <h2>
+                            Certifications
+                        </h2>
+                        <div className="experienceMainBox">
+                            {
+                                data.certifications.map((cert, index) => (
+                                    <div className="certificateBox" key={index}>
+                                        <div className="educationBoxTop">
+                                            <span className="title">{cert.title}</span>
+                                            <span className="date">{cert.date}</span>
+                                        </div>
+                                        <span className="company">{cert.organization}</span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </Certification>
+                </div>
+
+
+                <div className="column1">
+                    <Skills>
+                        <h2>
+                            Skills
+                        </h2>
+                        <div className="skillBox">
+                            {
+                                data.skills.map((skill, index) => (
+                                    <div className="skillMain" key={index}>
+                                        <span className="skill">{skill.name}</span>
+                                        <SkillProgressBar score={skill.score} />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </Skills>
+
+                    <Language>
+                        <h2>
+                            Languages
+                        </h2>
+                        <div className="skillBox">
+                            {
+                                data.languages.map((lang, index) => (
+                                    <div className="skillMain" key={index}>
+                                        <span className="skill" key={index}>{lang.name}</span>
+                                        <SkillProgressBar score={lang.score} />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </Language>
                 </div>
             </Content>
         </Wrapper>
     );
 };
 
-export default Resume5;
+export default Resume7;
 
 
 
@@ -232,53 +232,18 @@ ul {
     color: grey;
     font-size: 0.8rem;
 }
-`;
 
-const Content = styled.div`
-display: flex;
-flex-direction: row;
-gap: 4rem;
-width: 100%;
-
-
-.column2 {
-    width: calc(70% - 2rem);
+.headerBox {
     display: flex;
-    flex-direction: column;
-    gap: 1.3rem;
-}
-
-.column1 {
-    width: calc(30% - 2rem);
-    display: flex;
-    flex-direction: column;
-    gap: 1.3rem;
-}
+    width: 100%;
+    flex-flow: row wrap;
+    justify-content: center;
+    column-gap: 0.9rem;
+    padding-right: 1rem;
+    row-gap: 0.5rem;
 
 
-
-`
-
-const Header = styled.div`
-
-display: flex;
-flex-direction: row;
-gap: 0.7rem;
-width: 100%;
-align-items: center;
-justify-content: end;
-background-color: #4AFBBA;
-
-
-img {
-    width: 20%;
-}
-
-.name {
-    font-size: 2.5rem;
-    font-weight: 600;
-    padding-bottom: 0.5rem;
-}
+    
 
 .infoItem {
     display: flex;
@@ -300,23 +265,74 @@ a {
     color: grey;
 }
 
-.headerBox {
-    display: flex;
-    width: 100%;
-    flex-flow: row wrap;
-    justify-content: start;
-    column-gap: 0.9rem;
-    padding-right: 1rem;
-    row-gap: 0.5rem;
 }
+`;
 
-.headerMainBox {
+const Content = styled.div`
+display: flex;
+flex-direction: row;
+gap: 4rem;
+width: 90%;
+margin: 0 5%;
+
+
+.column2 {
+    width: calc(70% - 2rem);
     display: flex;
     flex-direction: column;
-    align-items: start;
-    padding-left: 2rem;
-    gap: 0.5rem;
+    gap: 1rem;
 }
+
+.column1 {
+    width: calc(30% - 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+
+
+`
+
+const Header = styled.div`
+
+display: flex;
+flex-direction: row;
+gap: 0.7rem;
+width: 100%;
+align-items: center;
+justify-content: start;
+background-color: #4AFBBA;
+background-color: lightblue;
+padding-left: 5%;
+height: 140px;
+border-top-left-radius: 1rem;
+border-top-right-radius: 1rem;
+
+
+img {
+    width: 10%;
+    border-radius: 50%;
+    background-color: lightgrey;
+}
+
+.mainHeaderBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-left: 2rem;
+}
+
+.dest {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.name {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
 
 `
 
@@ -328,7 +344,6 @@ const Summary = styled.div`
     font-size: 1rem;
     line-height: 1.5rem;
     letter-spacing: 0.05rem;
-    padding-left: 2rem;
 }
 
 `
@@ -340,7 +355,6 @@ const Employment = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    padding-left: 2rem;
 
 
     .experienceBoxTop {
@@ -388,7 +402,6 @@ const Education = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding-left: 2rem;
 
 
     .educationBoxTop {
@@ -489,7 +502,6 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    padding-left: 0.5rem;
 
     .educationBoxTop {
         display: flex;
@@ -526,7 +538,6 @@ const Projects = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding-left: 2rem;
     
 }
 
