@@ -269,23 +269,21 @@
 
 // export default ProfileFilter;
 
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const FilterContainer = styled.div`
-  width: 15%;
+  width: 91%;
   border: 1px solid #ccc;
   border-radius: 0.8rem;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #f9f9f9;
-  margin-right: 3rem;
+  background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: start;
+  justify-content: space-between;
 
-  
 
 
   .expBox {
@@ -298,13 +296,23 @@ const FilterContainer = styled.div`
 const RadioFilter = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-bottom: 0.6rem;
   width: 100%;
 
   p{
     font-weight: 800;
-    text-align: flex-start;
+    text-align: center;
     width: 100%;
+}
+
+.labelBox {
+  display: flex;
+  flex-flow: row wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.3rem;
+  justify-content: center;
+
 }
 `;
 
@@ -332,10 +340,6 @@ display: flex;
   
 `;
 
-const FilterHeading = styled.h3`
-  font-size: 1.2rem;
-  margin-bottom: 1rem; 
-`;
 
 function ProfileFilter() {
   const [workMode, setWorkMode] = useState('');
@@ -354,151 +358,144 @@ function ProfileFilter() {
     setFreshness(e.target.value);
   };
 
-  // const handleExperienceRangeChange = (e) => {
-    // Ensure that the entered value is within the range of 0 to 30.
-    // const value = e.target.value;
-  //   if (/^\d*$/.test(value) && value >= 0 && value <= 30) {
-  //     setExperienceRange(value);
-  //   }
-  // };
 
   return (
     <FilterContainer>
-      <FilterHeading>Filters</FilterHeading>
       <RadioFilter>
         <p>Work Mode</p>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="workMode"
-            value="WFO"
-            checked={workMode === 'WFO'}
-            onChange={handleWorkModeChange}
-          />
-          WFO
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="workMode"
-            value="WFH"
-            checked={workMode === 'WFH'}
-            onChange={handleWorkModeChange}
-          />
-          WFH
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="workMode"
-            value="hybrid"
-            checked={workMode === 'hybrid'}
-            onChange={handleWorkModeChange}
-          />
-          Hybrid
-        </RadioLabel>
+        <div className='labelBox'>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="workMode"
+              value="WFO"
+              checked={workMode === 'WFO'}
+              onChange={handleWorkModeChange}
+            />
+            WFO
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="workMode"
+              value="WFH"
+              checked={workMode === 'WFH'}
+              onChange={handleWorkModeChange}
+            />
+            WFH
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="workMode"
+              value="hybrid"
+              checked={workMode === 'hybrid'}
+              onChange={handleWorkModeChange}
+            />
+            Hybrid
+          </RadioLabel>
+        </div>
       </RadioFilter>
       <RadioFilter>
-      <p>Salary</p>
-
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="salaryRange"
-            value="0-3 lakhs"
-            checked={salaryRange === '0-3 lakhs'}
-            onChange={handleSalaryRangeChange}
-          />
-          0-3 lakhs
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="salaryRange"
-            value="3-6 lakhs"
-            checked={salaryRange === '3-6 lakhs'}
-            onChange={handleSalaryRangeChange}
-          />
-          3-6 lakhs
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="salaryRange"
-            value="6-10 lakhs"
-            checked={salaryRange === '6-10 lakhs'}
-            onChange={handleSalaryRangeChange}
-          />
-          6-10 lakhs
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="salaryRange"
-            value="10+ lakhs"
-            checked={salaryRange === '10+ lakhs'}
-            onChange={handleSalaryRangeChange}
-          />
-          10+ lakhs
-        </RadioLabel>
+        <p>Salary</p>
+        <div className='labelBox'>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="salaryRange"
+              value="0-3 lakhs"
+              checked={salaryRange === '0-3 lakhs'}
+              onChange={handleSalaryRangeChange}
+            />
+            0-3 lakhs
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="salaryRange"
+              value="3-6 lakhs"
+              checked={salaryRange === '3-6 lakhs'}
+              onChange={handleSalaryRangeChange}
+            />
+            3-6 lakhs
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="salaryRange"
+              value="6-10 lakhs"
+              checked={salaryRange === '6-10 lakhs'}
+              onChange={handleSalaryRangeChange}
+            />
+            6-10 lakhs
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="salaryRange"
+              value="10+ lakhs"
+              checked={salaryRange === '10+ lakhs'}
+              onChange={handleSalaryRangeChange}
+            />
+            10+ lakhs
+          </RadioLabel>
+        </div>
       </RadioFilter>
       <RadioFilter>
-      <p>Freshness</p>
-
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="freshness"
-            value="last-1-day"
-            checked={freshness === 'last-1-day'}
-            onChange={handleFreshnessChange}
-          />
-          Last 1 day
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="freshness"
-            value="last-3-days"
-            checked={freshness === 'last-3-days'}
-            onChange={handleFreshnessChange}
-          />
-          Last 3 days
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="freshness"
-            value="last-7-days"
-            checked={freshness === 'last-7-days'}
-            onChange={handleFreshnessChange}
-          />
-          Last 7 days
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="freshness"
-            value="last-30-days"
-            checked={freshness === 'last-30-days'}
-            onChange={handleFreshnessChange}
-          />
-          Last 30 days
-        </RadioLabel>
-        <RadioLabel>
-          <RadioInput
-            type="radio"
-            name="freshness"
-            value="anytime"
-            checked={freshness === 'anytime'}
-            onChange={handleFreshnessChange}
-          />
-          Anytime
-        </RadioLabel>
-        
-
+        <p>Freshness</p>
+        <div className='labelBox'>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="freshness"
+              value="last-1-day"
+              checked={freshness === 'last-1-day'}
+              onChange={handleFreshnessChange}
+            />
+            Last 1 day
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="freshness"
+              value="last-3-days"
+              checked={freshness === 'last-3-days'}
+              onChange={handleFreshnessChange}
+            />
+            Last 3 days
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="freshness"
+              value="last-7-days"
+              checked={freshness === 'last-7-days'}
+              onChange={handleFreshnessChange}
+            />
+            Last 7 days
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="freshness"
+              value="last-30-days"
+              checked={freshness === 'last-30-days'}
+              onChange={handleFreshnessChange}
+            />
+            Last 30 days
+          </RadioLabel>
+          <RadioLabel>
+            <RadioInput
+              type="radio"
+              name="freshness"
+              value="anytime"
+              checked={freshness === 'anytime'}
+              onChange={handleFreshnessChange}
+            />
+            Anytime
+          </RadioLabel>
+        </div>
       </RadioFilter>
-      
     </FilterContainer>
   );
 }

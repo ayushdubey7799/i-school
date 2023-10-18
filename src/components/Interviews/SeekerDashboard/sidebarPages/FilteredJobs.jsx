@@ -37,12 +37,6 @@ function Row(props) {
                     {row.postedDate}
                 </TableCell>
                 <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.appliedDate}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.status}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
                     {row.matchPercentage}%
                 </TableCell>
                 <TableCell component="th" scope="row" align="center" className='rowText'>
@@ -52,7 +46,7 @@ function Row(props) {
                     </div>
                 </TableCell>
                 <TableCell component="th" scope="row" align="center" className='rowText'>
-                    <Link to={`/attend/${row.jobId}`} className="btn">Attend</Link>
+                    <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
                 </TableCell>
             </TableRow>
         </React.Fragment>
@@ -60,53 +54,39 @@ function Row(props) {
 }
 
 
-const JobApplication = () => {
-    const [appliedJobs, setAppliedJobs] = useState();
-
-    useEffect(() => {
-        const filteredJobs = jobListings.filter(job => job.applied === true);
-
-        if (filteredJobs) {
-            setAppliedJobs(filteredJobs);
-        }
-
-    }, [])
+const FilteredJobs = () => {
 
     return (
         <Container1>
-            {appliedJobs &&
-                <StyledBox>
-                    <TableContainer component={Paper} className="tableBox">
-                        <h3 style={{ paddingLeft: "3rem" }}>Applied Jobs</h3>
-                        <Table aria-label="collapsible table">
-                            <TableHead className="tableHead">
-                                <TableRow>
-                                    <TableCell align='center'>Logo</TableCell>
-                                    <TableCell align='center'>Job Title</TableCell>
-                                    <TableCell align='center'>Company</TableCell>
-                                    <TableCell align='center'>Location</TableCell>
-                                    <TableCell align='center'>Posted Date</TableCell>
-                                    <TableCell align='center'>Applied Date</TableCell>
-                                    <TableCell align='center'>Status</TableCell>
-                                    <TableCell align='center'>% Match with Profile</TableCell>
-                                    <TableCell align='center'>Save/Share</TableCell>
-                                    <TableCell align='center'>Interview Link</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody className="tableBody">
-                                {appliedJobs?.map((row) => (
-                                    <Row key={row.jobId} row={row} />
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </StyledBox>
-            }
+            <StyledBox>
+                <TableContainer component={Paper} className="tableBox">
+                    <h3 style={{ paddingLeft: "3rem" }}>Filtered Jobs</h3>
+                    <Table aria-label="collapsible table">
+                        <TableHead className="tableHead">
+                            <TableRow>
+                                <TableCell align='center'>Logo</TableCell>
+                                <TableCell align='center'>Job Title</TableCell>
+                                <TableCell align='center'>Company</TableCell>
+                                <TableCell align='center'>Location</TableCell>
+                                <TableCell align='center'>Posted Date</TableCell>
+                                <TableCell align='center'>% Match with Profile</TableCell>
+                                <TableCell align='center'>Save/Share</TableCell>
+                                <TableCell align='center'>Apply</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody className="tableBody">
+                            {jobListings?.map((row) => (
+                                <Row key={row.jobId} row={row} />
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </StyledBox>
         </Container1>
     );
 };
 
-export default JobApplication;
+export default FilteredJobs;
 
 
 const StyledBox = styled.div`
@@ -226,4 +206,3 @@ const SubmitButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
 `;
-
