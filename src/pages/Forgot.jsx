@@ -52,7 +52,7 @@ const Forgot = () => {
                             required
                         />
                         <button type="submit" className="btn">
-                            Reset
+                            Reset your Password
                         </button>
                     </form>
                     <p>
