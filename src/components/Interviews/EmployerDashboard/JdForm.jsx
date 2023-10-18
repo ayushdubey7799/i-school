@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { addJd } from '../../../functions/api/employers/addJd';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
  width: 100%;
@@ -67,7 +68,8 @@ function JdForm() {
     keywords: '',
     jdUpload: null,
   });
-
+  const accessToken = useSelector((state) => state.userData)
+ console.log(accessToken);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -86,7 +88,7 @@ function JdForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resObj = await addJd(formData);
+    const resObj = await addJd(formData,accessToken);
     console.log(resObj);
   };
 

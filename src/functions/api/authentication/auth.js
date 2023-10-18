@@ -1,20 +1,23 @@
 import axios from "axios"
 import { toast } from "react-toastify"
-const config = {
-  headers: {
-    'Content-Type': 'application/json'
-  }
-};
 
 
-export const auth = async (password, email) => {
+export const auth = async (password, email, clientcode = "Intelliview") => {
   const requestData = {
     password: password,
     username: email
   };
 
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-client-code': clientcode
+    }
+  };
+  console.log(requestData,config);
+
   try {
-    const response = await axios.post('https://dev-api.intelliview.in/api/auth/login', requestData);
+    const response = await axios.post('https://dev-api.intelliview.in/api/auth/login', requestData, config);
     console.log('Data:', response.data);
     return response.data;
   } catch (error) {

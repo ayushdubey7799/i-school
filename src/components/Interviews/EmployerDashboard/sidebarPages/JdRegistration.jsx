@@ -19,10 +19,10 @@ import Paper from "@mui/material/Paper";
 import EmployerDetails from '../EmployerDetails';
 import JdDetails from '../../../../pages/JdDetails';
 import JdForm from '../JdForm';
-import { jds } from '../../../../utils/contantData';
 import attachIcon from '../../../../assets/icons/attach.png'
 import editIcon from '../../../../assets/icons/edit.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
+import { getJds } from '../../../../functions/api/employers/getJds';
 
 
 function Row(props) {
@@ -46,7 +46,7 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row" align='center'>
-          {row.id}
+          {row.jdId}
         </TableCell>
         <TableCell component="th" scope="row" align='center'>
           ...
@@ -88,8 +88,13 @@ const JdRegistration = () => {
   const [tableRows, setTableRows] = useState([]);
 
   useEffect(() => {
-    setTableRows(jds);
-  }, [jds]);
+    async function getData(){
+      const res = await getJds();
+      setTableRows(res?.data?.data);
+    }
+
+    getData();
+  }, []);
 
 
 
@@ -136,7 +141,7 @@ const JdRegistration = () => {
                 </TableRow>
               </TableHead>
               <TableBody className="tableBody">
-                {jds?.map((row, index) => (
+                {tableRows?.map((row, index) => (
                   <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
                 ))}
               </TableBody>

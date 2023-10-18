@@ -27,6 +27,8 @@ const Signup = () => {
   const [gender, setGender] = useState('');
 
   const [company, setCompany] = useState('');
+  const [legalName, setLegalName] = useState('');
+
   const [coOrdinator, setCoOrdinator] = useState('');
   const [employees, setEmployees] = useState('');
   const [address, setAddress] = useState('');
@@ -59,7 +61,7 @@ const Signup = () => {
     setLocation('');
     setIndustry('');
     setPasswordVisible(false);
-
+    setLegalName('');
     console.log(newValue);
   };
 
@@ -96,6 +98,7 @@ const Signup = () => {
       "country": "India",
       "industry": industry,
       "onboardMethod": "SELF",
+      "legalName": legalName,
       "spocName": coOrdinator,
       "spocContact": contact,
       "spocEmail": email,
@@ -272,6 +275,17 @@ const Signup = () => {
                       required
                     />
                     <label htmlFor="co-Ordinator">Co-ordinator name</label>
+                  </div>
+
+                  <div className="inputBox">
+                    <input
+                      type="text"
+                      id="legal-name"
+                      value={legalName}
+                      onChange={(e) => setLegalName(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="legal-name">Legal Name</label>
                   </div>
 
                   <div className="inputBox">

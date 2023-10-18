@@ -7,28 +7,25 @@ import loginImg from "../assets/loginPageSecureImg.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton } from "@mui/material";
 import logo from "../assets/IntelliViewLogo.png";
-import { performLogin } from "../slices/authSlice"
+import { performLogin } from "../slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import registerIcon1 from '../assets/registerIcon1.jpg'
-import registerIcon2 from '../assets/registerIcon2.jpg'
-import registerIcon3 from '../assets/registerIcon3.jpg'
+import registerIcon1 from "../assets/registerIcon1.jpg";
+import registerIcon2 from "../assets/registerIcon2.jpg";
+import registerIcon3 from "../assets/registerIcon3.jpg";
 import ReCAPTCHA from "react-google-recaptcha";
-
-
-
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const userData = useSelector((state) => state.auth.userData);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [clientCode, setClientCode] = useState('');
+  const [clientCode, setClientCode] = useState("");
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [value, setValue] = useState("job-seeker");
@@ -41,18 +38,21 @@ const Login = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setEmail('');
-    setPassword('');
+    setEmail("");
+    setPassword("");
     setPasswordVisible(false);
     captchaRef.current.reset();
+  };
+
+  if (userData?.accessToken) {
+    userData.user?.clientCode == "intelliview"
+      ? navigate("/dashboard/jobseeker")
+      : navigate("/dashboard/employer");
   }
 
-
-
-
   // if(loggedIn)navigate("/interview");
-  console.log(accessToken);
-  if (accessToken) navigate("/dashboard/jobseeker")
+  // console.log(accessToken);
+  // if (accessToken) navigate("/dashboard/jobseeker")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,9 +62,12 @@ const Login = () => {
     captchaRef.current.reset();
 
     let val = validate(email, password);
+
     if (val) {
       {
-        await dispatch(performLogin({ password, email }));
+        console.log("IN LOGIN", clientCode);
+        dispatch(performLogin({ password, email, clientCode }));
+        setClientCode("");
       }
     }
     setEmail("");
@@ -88,10 +91,22 @@ const Login = () => {
         <ArrowBackIcon sx={{ fontSize: "30px" }} />
       </IconButton>
 
-
-      <Box sx={{ width: "70%", position: "relative", top: "6rem", margin: "0 1rem", marginBottom: '7rem' }} className='box'>
+      <Box
+        sx={{
+          width: "70%",
+          position: "relative",
+          top: "6rem",
+          margin: "0 1rem",
+          marginBottom: "7rem",
+        }}
+        className="box"
+      >
         <Tabs
-          style={{ width: '35rem', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
+          style={{
+            width: "35rem",
+            borderRadius: "3rem",
+            backgroundColor: "var(--lightOrange)",
+          }}
           value={value}
           onChange={handleChange}
           TabIndicatorProps={{
@@ -109,7 +124,7 @@ const Login = () => {
               color: "var(--lightOrange)",
               fontSize: "0.8rem",
             }}
-            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
+            classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
           />
           <Tab
             value="employer"
@@ -118,7 +133,7 @@ const Login = () => {
               color: "var(--lightOrange)",
               fontSize: "0.8rem",
             }}
-            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
+            classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
           />
           <Tab
             value="recruitment-agency"
@@ -127,15 +142,14 @@ const Login = () => {
               color: "var(--lightOrange)",
               fontSize: "0.8rem",
             }}
-            classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
+            classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
           />
         </Tabs>
-        {value == 'job-seeker' ?
+        {value == "job-seeker" ? (
           <div id="form">
             <p>Enter your details below to login</p>
 
             <form onSubmit={handleSubmit}>
-
               <div className="inputBox">
                 <input
                   type="email"
@@ -165,150 +179,166 @@ const Login = () => {
               </div>
 
               <div className="resetBox">
-                <span ><Link to="/reset" className="reset">Forgot Password</Link></span>
-                </div>
+                <span>
+                  <Link to="/reset" className="reset">
+                    Forgot Password
+                  </Link>
+                </span>
+              </div>
 
               <ReCAPTCHA
-                sitekey='6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM'
+                sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
                 ref={captchaRef}
                 size="normal"
               />
-
 
               <button type="submit" className="btn">
                 Login
               </button>
             </form>
             <p>
-              <Link to="/signup" className="link link1">Don't have an account ? Sign Up</Link>
+              <Link to="/signup" className="link link1">
+                Don't have an account ? Sign Up
+              </Link>
             </p>
-          </div> : value == 'employer' ?
-            <div id="form">
-              <p>Enter your details below to login</p>
+          </div>
+        ) : value == "employer" ? (
+          <div id="form">
+            <p>Enter your details below to login</p>
 
-              <form onSubmit={handleSubmit}>
-
-                <div className="inputBox">
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="email">Email</label>
-                </div>
-
-                <div className="inputBox">
-                  <input
-                    type="text"
-                    id="clientCode"
-                    value={clientCode}
-                    onChange={(e) => setClientCode(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="clientCode">Client Code</label>
-                </div>
-
-                <div className="inputBox">
-                  <input
-                    type={passwordVisible ? "text" : "password"}
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="password">Password</label>
-                  <FontAwesomeIcon
-                    icon={faEye}
-                    id="eye"
-                    onClick={togglePasswordVisibility}
-                    className={`eye-icon ${passwordVisible ? "visible" : ""}`}
-                  />
-                </div>
-
-                <div className="resetBox">
-                <span ><Link to="/reset" className="reset">Forgot Password</Link></span>
-                </div>
-
-                <ReCAPTCHA
-                  sitekey='6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM'
-                  ref={captchaRef}
-                  size="normal"
+            <form onSubmit={handleSubmit}>
+              <div className="inputBox">
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
+                <label htmlFor="email">Email</label>
+              </div>
 
-
-                <button type="submit" className="btn">
-                  Login
-                </button>
-              </form>
-              <p>
-              <Link to="/signup" className="link link1">Don't have an account ? Sign Up</Link>
-              </p>
-            </div>
-            : <div id="form">
-              <p>Enter your details below to login</p>
-
-              <form onSubmit={handleSubmit}>
-
-                <div className="inputBox">
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="email">Email</label>
-                </div>
-
-                <div className="inputBox">
-                  <input
-                    type="text"
-                    id="clientCode"
-                    value={clientCode}
-                    onChange={(e) => setClientCode(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="clientCode">Client Code</label>
-                </div>
-
-                <div className="inputBox">
-                  <input
-                    type={passwordVisible ? "text" : "password"}
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="password">Password</label>
-                  <FontAwesomeIcon
-                    icon={faEye}
-                    id="eye"
-                    onClick={togglePasswordVisibility}
-                    className={`eye-icon ${passwordVisible ? "visible" : ""}`}
-                  />
-                </div>
-
-                <div className="resetBox">
-                <span ><Link to="/reset" className="reset">Forgot Password</Link></span>
-                </div>
-
-                <ReCAPTCHA
-                  sitekey='6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM'
-                  ref={captchaRef}
-                  size="normal"
+              <div className="inputBox">
+                <input
+                  type="text"
+                  id="clientCode"
+                  value={clientCode}
+                  onChange={(e) => setClientCode(e.target.value)}
+                  required
                 />
+                <label htmlFor="clientCode">Client Code</label>
+              </div>
 
-                <button type="submit" className="btn">
-                  Login
-                </button>
-              </form>
-              <p>
-              <Link to="/signup" className="link link1">Don't have an account ? Sign Up</Link>
-              </p>
-            </div>
-        }
+              <div className="inputBox">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <label htmlFor="password">Password</label>
+                <FontAwesomeIcon
+                  icon={faEye}
+                  id="eye"
+                  onClick={togglePasswordVisibility}
+                  className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                />
+              </div>
+
+              <div className="resetBox">
+                <span>
+                  <Link to="/reset" className="reset">
+                    Forgot Password
+                  </Link>
+                </span>
+              </div>
+
+              <ReCAPTCHA
+                sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
+                ref={captchaRef}
+                size="normal"
+              />
+
+              <button type="submit" className="btn">
+                Login
+              </button>
+            </form>
+            <p>
+              <Link to="/signup" className="link link1">
+                Don't have an account ? Sign Up
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <div id="form">
+            <p>Enter your details below to login</p>
+
+            <form onSubmit={handleSubmit}>
+              <div className="inputBox">
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <label htmlFor="email">Email</label>
+              </div>
+
+              <div className="inputBox">
+                <input
+                  type="text"
+                  id="clientCode"
+                  value={clientCode}
+                  onChange={(e) => setClientCode(e.target.value)}
+                  required
+                />
+                <label htmlFor="clientCode">Client Code</label>
+              </div>
+
+              <div className="inputBox">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <label htmlFor="password">Password</label>
+                <FontAwesomeIcon
+                  icon={faEye}
+                  id="eye"
+                  onClick={togglePasswordVisibility}
+                  className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                />
+              </div>
+
+              <div className="resetBox">
+                <span>
+                  <Link to="/reset" className="reset">
+                    Forgot Password
+                  </Link>
+                </span>
+              </div>
+
+              <ReCAPTCHA
+                sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
+                ref={captchaRef}
+                size="normal"
+              />
+
+              <button type="submit" className="btn">
+                Login
+              </button>
+            </form>
+            <p>
+              <Link to="/signup" className="link link1">
+                Don't have an account ? Sign Up
+              </Link>
+            </p>
+          </div>
+        )}
       </Box>
     </StyledLogin>
   );
@@ -406,13 +436,11 @@ const StyledLogin = styled.div`
     color: var(--lightOrange);
   }
 
-
   label {
     color: var(--color);
     font-size: 0.8rem;
     font-weight: 600;
   }
-
 
   .btn {
     background-color: var(--lightOrange);
@@ -446,7 +474,7 @@ const StyledLogin = styled.div`
     cursor: pointer;
     color: lightgray;
   }
-  
+
   .eye-icon.visible {
     color: blue; /* Change to your desired color when password is visible */
   }
@@ -459,25 +487,24 @@ const StyledLogin = styled.div`
     }
   }
 
-
   // Custom styled for tabs
 
-.custom-tab {
-  color: white;
-  background-color: var(--lightOrange);
-  transition: background-color 0.3s;
-  text-decoration: none !important;
-}
+  .custom-tab {
+    color: white;
+    background-color: var(--lightOrange);
+    transition: background-color 0.3s;
+    text-decoration: none !important;
+  }
 
-.custom-tab-selected {
-  background-color: white;
-  color: var(--lightOrange) !important;
-  border: 0.1rem solid var(--lightOrange);
-  border-radius: 3rem;
-  text-decoration: none !important;
-}
+  .custom-tab-selected {
+    background-color: white;
+    color: var(--lightOrange) !important;
+    border: 0.1rem solid var(--lightOrange);
+    border-radius: 3rem;
+    text-decoration: none !important;
+  }
 
-.custom-tab-selected .MuiTab-label {
-  text-transform: none;
-}
+  .custom-tab-selected .MuiTab-label {
+    text-transform: none;
+  }
 `;

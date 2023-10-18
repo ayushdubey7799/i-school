@@ -3,8 +3,10 @@ import { auth } from "../functions/api/authentication/auth";
 
 
 
-export const performLogin = createAsyncThunk('auth/performLogin', async (arg) => {
-    const response = await auth(arg.password, arg.email);
+export const performLogin = createAsyncThunk('auth/performLogin', async ({password,email,clientCode}) => {
+    console.log("IN LOGIN",clientCode);
+
+    const response = await auth(password, email, clientCode);
     return response.data;
 })
 
