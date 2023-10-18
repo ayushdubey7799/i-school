@@ -15,6 +15,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import registerIcon1 from '../assets/registerIcon1.jpg'
 import registerIcon2 from '../assets/registerIcon2.jpg'
 import registerIcon3 from '../assets/registerIcon3.jpg'
+import { employerRegister } from "../functions/api/employers/authentication/employerRegister";
 
 
 const Signup = () => {
@@ -64,7 +65,7 @@ const Signup = () => {
 
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmitJobSeeker = async (e) => {
     e.preventDefault();
     if (!name.trim()) {
       toast.error("Fill all fields");
@@ -82,6 +83,34 @@ const Signup = () => {
       }
     }
   };
+
+
+  const handleSubmitEmployer = async (e) => {
+    e.preventDefault();
+   
+    const details = {
+      "address": address,
+      "city": location,
+      "companyName": company,
+      "companySize": employees,
+      "country": "India",
+      "industry": industry,
+      "onboardMethod": "SELF",
+      "spocName": coOrdinator,
+      "spocContact": contact,
+      "spocEmail": email,
+      "spocPassword": password,
+    }
+
+    const registerRes = await employerRegister(details);
+    if (registerRes) {
+      toast.success("Successfully signed up");
+      navigate("/dashboard/employer");
+    }
+    else {
+      toast.error("Error");
+    }
+    }
 
 
 
@@ -141,7 +170,7 @@ const Signup = () => {
           value == 'job-seeker' ?
             <div id="form">
               <p>Enter your details below to create your account.</p>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmitJobSeeker}>
 
                 <div className="inputBox">
                   <input
@@ -221,7 +250,7 @@ const Signup = () => {
             : value == 'employer' ?
               <div id="form">
                 <p>Enter your details below to create your account.</p>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmitEmployer}>
 
                   <div className="inputBox">
                     <input
@@ -364,7 +393,7 @@ const Signup = () => {
 
               : <div id="form">
                 <p>Enter your details below to create your account.</p>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmitEmployer}>
 
                   <div className="inputBox">
                     <input

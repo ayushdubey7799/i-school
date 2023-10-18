@@ -354,13 +354,13 @@ function ProfileFilter() {
     setFreshness(e.target.value);
   };
 
-  const handleExperienceRangeChange = (e) => {
+  // const handleExperienceRangeChange = (e) => {
     // Ensure that the entered value is within the range of 0 to 30.
-    const value = e.target.value;
-    if (/^\d*$/.test(value) && value >= 0 && value <= 30) {
-      setExperienceRange(value);
-    }
-  };
+    // const value = e.target.value;
+  //   if (/^\d*$/.test(value) && value >= 0 && value <= 30) {
+  //     setExperienceRange(value);
+  //   }
+  // };
 
   return (
     <FilterContainer>

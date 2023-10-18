@@ -6,9 +6,7 @@ const Activate = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const accessToken = searchParams.get('token');
-    if (!accessToken) {
-        return <div>Page Not Found</div>
-    }
+   
     useEffect(() => {
         async function act() {
             const res = await activate(accessToken);
@@ -19,7 +17,9 @@ const Activate = () => {
 
         act();
     })
-
+    if (!accessToken) {
+        return <div>Page Not Found</div>
+    }
 
 
     return (
