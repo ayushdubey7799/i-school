@@ -4,6 +4,7 @@ import ProfileFilter from '../ProfileFilter';
 import { technicalSkills } from '../../../../utils/contantData';
 import { locations } from '../../../../utils/contantData';
 import searchIcon from '../../../../assets/icons/searchIcon.png'
+import FilteredJobs from './FilteredJobs';
 
 
 
@@ -315,10 +316,11 @@ const JobSearchBar = () => {
           </div>
         </div>
 
-        <button className='btn'  onClick={() => handleJobSearch()}><img src={searchIcon} />Search</button>
+        <button className='btn' onClick={() => handleJobSearch()}><img src={searchIcon} />Search</button>
       </SearchBarContainer>
       <StyledJobSearch>
         <ProfileFilter />
+        <FilteredJobs />
       </StyledJobSearch>
     </JobSearchBox>
 
@@ -334,7 +336,8 @@ padding-bottom: 4rem;
 
 const StyledJobSearch = styled.div`
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    
+    
 `
-
-

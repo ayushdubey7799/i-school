@@ -123,7 +123,7 @@ const Arrow = styled.div`
     height: 0;
     border-bottom: 1rem solid transparent;
     border-top: 1rem solid transparent;
-    border-right: 1rem solid #F8F6F4;
+    border-right: 1rem solid #e3e3e3;
     transition: transform 0.2s;
     position: absolute;
     right: -4px;
