@@ -51,6 +51,11 @@ import ReqAgencyDashboard from "./pages/ReqAgencyDashboard"
 import SpeechToText from "./pages/SpeechText"
 import Resume1 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume1"
 import Resume2 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume2"
+import Resume3 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume3"
+import Resume4 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume4"
+import Resume5 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume5"
+import Resume6 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume6"
+import Resume7 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume7"
 
 
 
@@ -116,7 +121,11 @@ const App = () => {
 
           <Route path='/resume1' element={<Resume1/>} />
           <Route path='/resume2' element={<Resume2/>} />
-          
+          <Route path='/resume3' element={<Resume3/>} />
+          <Route path='/resume4' element={<Resume4/>} />
+          <Route path='/resume5' element={<Resume5/>} />
+          <Route path='/resume6' element={<Resume6/>} />
+          <Route path='/resume7' element={<Resume7/>} />
 
         </Routes>
       </ScrollToTop>
