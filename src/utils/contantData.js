@@ -100,10 +100,49 @@ export const technicalSkills = [
     "Human-Computer Interaction (HCI)",
 ];
 
-
-export const locations = ['Delhi', 'Mumbai', 'Bengaluru', 'Bengaluru/Bangalore', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad', 'Noida', 'Gurgaon', 'Gurugram', 'Jaipur', 'Lucknow', 'Kanpur',
-    'Nagpur', 'Indore', 'Patna', 'Chandigarh', 'Coimbatore', 'Vadodara', 'Ludhiana', 'Agra', 'Kochi', 'Surat', 'Visakhapatnam', 'Bhopal', 'Amritsar', 'Raipur', 'Ranchi', 'Varanasi', 'Jodhpur', 'Udaipur', 'Shimla', 'Manali', 'Mysuru/Mysore', 'Goa', 'Kochi',
-    'Thiruvananthapuram', 'Ooty'];
+export const locations = [
+    "Delhi",
+    "Mumbai",
+    "Bengaluru",
+    "Bengaluru/Bangalore",
+    "Bangalore",
+    "Chennai",
+    "Kolkata",
+    "Hyderabad",
+    "Pune",
+    "Ahmedabad",
+    "Noida",
+    "Gurgaon",
+    "Gurugram",
+    "Jaipur",
+    "Lucknow",
+    "Kanpur",
+    "Nagpur",
+    "Indore",
+    "Patna",
+    "Chandigarh",
+    "Coimbatore",
+    "Vadodara",
+    "Ludhiana",
+    "Agra",
+    "Kochi",
+    "Surat",
+    "Visakhapatnam",
+    "Bhopal",
+    "Amritsar",
+    "Raipur",
+    "Ranchi",
+    "Varanasi",
+    "Jodhpur",
+    "Udaipur",
+    "Shimla",
+    "Manali",
+    "Mysuru/Mysore",
+    "Goa",
+    "Kochi",
+    "Thiruvananthapuram",
+    "Ooty",
+];
 
 export const jds = [
     {
@@ -168,7 +207,6 @@ export const jds = [
     },
 ];
 
-
 export const data = [
     {
         id: 1,
@@ -208,7 +246,6 @@ export const data = [
     },
 ];
 
-
 export const resumeData = {
     personalInfo: {
         name: "John Doe",
@@ -217,20 +254,21 @@ export const resumeData = {
         email: "johndoe@email.com",
         phone: "(123) 456-7890",
         linkedin: "https://www.linkedin.com/in/johndoe",
-        github: "https://github.com/johndoe"
+        github: "https://github.com/johndoe",
     },
-    summary: "A passionate and detail-oriented web developer with 5 years of experience in building responsive and user-friendly websites. Proficient in HTML, CSS, and JavaScript.",
+    summary:
+        "A passionate and detail-oriented web developer with 5 years of experience in building responsive and user-friendly websites. Proficient in HTML, CSS, and JavaScript.",
     education: [
         {
             degree: "Bachelor of Science in Computer Science",
             university: "University Name",
-            year: "08/2016 - 07/2020"
+            year: "08/2016 - 07/2020",
         },
         {
             degree: "High School Diploma",
             university: "High School Name",
-            year: "06/2014 - 08/2016"
-        }
+            year: "06/2014 - 08/2016",
+        },
     ],
     experience: [
         {
@@ -238,41 +276,63 @@ export const resumeData = {
             company: "Tech Company",
             location: "City, State",
             date: "06/2020 - Present",
-            description: "Develop and maintain the user interface of the company's web applications. Collaborate with the design and backend teams to create seamless user experiences."
+            description: [
+                "Develop and maintain the user interface of the company's web applications.",
+                "Collaborate with the design and backend teams to create seamless user experiences.",
+            ],
         },
         {
             title: "Intern",
             company: "Startup Inc.",
             location: "City, State",
             date: "05/2019 - 07/2019",
-            description: "Assisted in the development and testing of web applications. Gained experience with various web technologies and tools."
-        }
+            description: [
+                "Assisted in the development and testing of web applications.",
+                "Gained experience with various web technologies and tools.",
+            ],
+        },
     ],
-    skills: ["HTML", "CSS", "JavaScript", "React", "Responsive Design", "Version Control (Git)", "UI/UX Design"],
+    skills: [
+        { name: "HTML", score: 4 },
+        { name: "CSS", score: 4 },
+        { name: "JavaScript", score: 4 },
+        { name: "React", score: 5 },
+        { name: "Responsive Design", score: 4 },
+        { name: "Version Control (Git)", score: 5 },
+        { name: "UI/UX Design", score: 3 },
+    ],
     certifications: [
         {
             title: "Certified Web Developer",
             organization: "Web Development Institute",
-            date: "2019"
+            date: "2019",
         },
         {
             title: "Frontend Fundamentals",
             organization: "Tech Training Academy",
-            date: "2017"
-        }
+            date: "2017",
+        },
     ],
-    languages: ["English (Fluent)", "Spanish (Intermediate)"],
+    languages: [
+        { name: "English", score: 4 },
+        { name: "Spanish", score: 3 },
+    ],
     projects: [
         {
             title: "E-commerce Website",
-            description: "Designed and developed a responsive e-commerce website using HTML, CSS, and JavaScript. Implemented a secure payment gateway and product catalog.",
-            date: "2022 - 2023"
+            description: [
+                "Designed and developed a responsive e-commerce website using HTML, CSS, and JavaScript.",
+                "Implemented a secure payment gateway and product catalog.",
+            ],
+            date: "2022 - 2023",
         },
         {
             title: "Portfolio Website",
-            description: "Created a personal portfolio website to showcase my projects and skills. Developed interactive components using React.",
-            date: "2021 - 2022"
-        }
-    ]
+            description: [
+                "Created a personal portfolio website to showcase my projects and skills.",
+                "Developed interactive components using React.",
+            ],
+            date: "2021 - 2022",
+        },
+    ],
 };
-

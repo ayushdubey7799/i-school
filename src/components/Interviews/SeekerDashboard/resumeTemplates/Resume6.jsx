@@ -8,102 +8,47 @@ import SkillProgressBar from "./commonComp/SkillProgress";
 import profileImg from '../../../../assets/resume/profileImg.png'
 
 
-const Resume5 = () => {
+const Resume6 = () => {
 
     const [data, setData] = useState(resumeData);
 
     return (
         <Wrapper>
-            <Header>
-                <img src={profileImg} />
-
-                <div className="headerMainBox">
-                    <span className="name">{data.personalInfo.name}</span>
-                    <div className="headerBox">
-                        <span className="infoItem">
-                            <FontAwesomeIcon icon={faLocationArrow} className="icon" />
-                            {data.personalInfo.address}
-                        </span>
-                        <span className="infoItem">
-                            <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                            {data.personalInfo.email}
-                        </span>
-                        <span className="infoItem">
-                            <FontAwesomeIcon icon={faPhone} className="icon" />
-                            {data.personalInfo.phone}
-                        </span>
-                        <span className="infoItem">
-                            <a href={data.personalInfo.linkedin} target="_blank" rel="noopener noreferrer">
-                                <FontAwesomeIcon icon={faLinkedin} className="icon" />
-                                Linkedin
-                            </a>
-                        </span>
-                        <span className="infoItem">
-                            <a href={data.personalInfo.github} target="_blank" rel="noopener noreferrer">
-                                <FontAwesomeIcon icon={faGithub} className="icon" />
-                                Github
-                            </a>
-                        </span>
-                    </div>
-                </div>
-            </Header>
-
             <Content>
-
-                <div className="column1">
-                    <Skills>
-                        <h2>
-                            Skills
-                        </h2>
-                        <div className="skillBox">
-                            {
-                                data.skills.map((skill, index) => (
-                                    <div className="skillMain" key={index}>
-                                        <span className="skill">{skill.name}</span>
-                                        <SkillProgressBar score={skill.score} />
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </Skills>
-
-                    <Language>
-                        <h2>
-                            Languages
-                        </h2>
-                        <div className="skillBox">
-                            {
-                                data.languages.map((lang, index) => (
-                                    <div className="skillMain" key={index}>
-                                        <span className="skill" key={index}>{lang.name}</span>
-                                        <SkillProgressBar score={lang.score} />
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </Language>
-
-                    <Certification>
-                        <h2>
-                            Certifications
-                        </h2>
-                        <div className="experienceMainBox">
-                            {
-                                data.certifications.map((cert, index) => (
-                                    <div className="certificateBox" key={index}>
-                                        <div className="educationBoxTop">
-                                            <span className="title">{cert.title}</span>
-                                            <span className="date">{cert.date}</span>
-                                        </div>
-                                        <span className="company">{cert.organization}</span>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </Certification>
-                </div>
-
                 <div className="column2">
+                    <Header>
+                        <img src={profileImg} />
+
+                        <div className="headerMainBox">
+                            <span className="name">{data.personalInfo.name}</span>
+                            <div className="headerBox">
+                                <span className="infoItem">
+                                    <FontAwesomeIcon icon={faLocationArrow} className="icon" />
+                                    {data.personalInfo.address}
+                                </span>
+                                <span className="infoItem">
+                                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                                    {data.personalInfo.email}
+                                </span>
+                                <span className="infoItem">
+                                    <FontAwesomeIcon icon={faPhone} className="icon" />
+                                    {data.personalInfo.phone}
+                                </span>
+                                <span className="infoItem">
+                                    <a href={data.personalInfo.linkedin} target="_blank" rel="noopener noreferrer">
+                                        <FontAwesomeIcon icon={faLinkedin} className="icon" />
+                                        Linkedin
+                                    </a>
+                                </span>
+                                <span className="infoItem">
+                                    <a href={data.personalInfo.github} target="_blank" rel="noopener noreferrer">
+                                        <FontAwesomeIcon icon={faGithub} className="icon" />
+                                        Github
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </Header>
                     <Summary>
                         <h2>
                             Professional Summary
@@ -182,12 +127,65 @@ const Resume5 = () => {
                         </div>
                     </Projects>
                 </div>
+
+                <div className="column1">
+                    <Skills>
+                        <h2>
+                            Skills
+                        </h2>
+                        <div className="skillBox">
+                            {
+                                data.skills.map((skill, index) => (
+                                    <div className="skillMain" key={index}>
+                                        <span className="skill">{skill.name}</span>
+                                        <SkillProgressBar score={skill.score} />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </Skills>
+
+                    <Language>
+                        <h2>
+                            Languages
+                        </h2>
+                        <div className="skillBox">
+                            {
+                                data.languages.map((lang, index) => (
+                                    <div className="skillMain" key={index}>
+                                        <span className="skill" key={index}>{lang.name}</span>
+                                        <SkillProgressBar score={lang.score} />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </Language>
+
+                    <Certification>
+                        <h2>
+                            Certifications
+                        </h2>
+                        <div className="experienceMainBox">
+                            {
+                                data.certifications.map((cert, index) => (
+                                    <div className="certificateBox" key={index}>
+                                        <div className="educationBoxTop">
+                                            <span className="title">{cert.title}</span>
+                                            <span className="date">{cert.date}</span>
+                                        </div>
+                                        <span className="company">{cert.organization}</span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </Certification>
+                </div>
             </Content>
         </Wrapper>
     );
 };
 
-export default Resume5;
+export default Resume6;
 
 
 
@@ -253,6 +251,11 @@ width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1.3rem;
+    padding-top: calc(140px + 1.3rem);
+    background-color: #062B4D;
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+    color: var(--white);
 }
 
 
@@ -266,16 +269,18 @@ flex-direction: row;
 gap: 0.7rem;
 width: 100%;
 align-items: center;
-justify-content: end;
-background-color: #4AFBBA;
+justify-content: start;
+height: 140px;
+
 
 
 img {
     width: 20%;
+    border-radius: 50%;
 }
 
 .name {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 600;
     padding-bottom: 0.5rem;
 }
@@ -328,7 +333,6 @@ const Summary = styled.div`
     font-size: 1rem;
     line-height: 1.5rem;
     letter-spacing: 0.05rem;
-    padding-left: 2rem;
 }
 
 `
@@ -340,7 +344,6 @@ const Employment = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    padding-left: 2rem;
 
 
     .experienceBoxTop {
@@ -388,7 +391,6 @@ const Education = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding-left: 2rem;
 
 
     .educationBoxTop {
@@ -526,7 +528,6 @@ const Projects = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding-left: 2rem;
     
 }
 

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow, faEnvelope, faPhone, faPencilSquare, faBriefcase, faAlignCenter, faLanguage, faCertificate, faProjectDiagram, faSchool } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 import { resumeData } from "../../../../utils/contantData";
-import { faGit } from "@fortawesome/free-brands-svg-icons";
 
 
 const Resume2 = () => {
@@ -68,7 +67,13 @@ const Resume2 = () => {
                                     </div>
                                     <span className="location">{exp.location}</span>
                                     <span className="date">{exp.date}</span>
-                                    <span className="desc">{exp.description}</span>
+                                    <ul>
+                                        {
+                                            exp.description.map((e, i) => (
+                                                <li className="desc" key={i}>{e}</li>
+                                            ))
+                                        }
+                                    </ul>
                                 </div>
                             ))
                         }
@@ -108,7 +113,13 @@ const Resume2 = () => {
                                         <span className="title">{project.title}</span>
                                         <span className="date">{project.date}</span>
                                     </div>
-                                    <span className="desc">{project.description}</span>
+                                    <ul>
+                                        {
+                                            project.description.map((pro, i) => (
+                                                <li className="desc" key={i}>{pro}</li>
+                                            ))
+                                        }
+                                    </ul>
                                 </div>
                             ))
                         }
@@ -123,7 +134,7 @@ const Resume2 = () => {
                     <div className="skillBox">
                         {
                             data.skills.map((skill, index) => (
-                                <span className="skill" key={index}>{skill}</span>
+                                <span className="skill" key={index}>{skill.name}</span>
                             ))
                         }
                     </div>
@@ -137,7 +148,7 @@ const Resume2 = () => {
                     <div className="skillBox">
                         {
                             data.languages.map((lang, index) => (
-                                <span className="skill" key={index}>{lang}</span>
+                                <span className="skill" key={index}>{lang.name}</span>
                             ))
                         }
                     </div>
@@ -200,6 +211,12 @@ const Wrapper = styled.div`
     flex-direction: column;
     gap: 1.2rem;
 
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 `;
 
@@ -446,6 +463,7 @@ const Projects = styled.div`
     flex-direction: column;
     gap: 1rem;
     padding-left: 2rem;
+    
 }
 
 .title {
@@ -469,6 +487,7 @@ const Projects = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
+    margin-bottom: -1rem;
 }
 
 `
