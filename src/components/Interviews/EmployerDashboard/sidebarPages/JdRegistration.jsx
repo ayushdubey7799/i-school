@@ -27,9 +27,21 @@ import { getJds } from '../../../../functions/api/employers/getJds';
 
 function Row(props) {
   const { row, isSelected, onToggle } = props;
+  const [jdData,setJdData] = useState(null);
+  const [editOpen,setEditOpen] = useState(false);
+
+  const handleEdit = (row) => {
+      setEditOpen(true);
+      setJdData(row);
+  }
+
+  const handleDelete = (jdId) => {
+
+  }
 
   return (
     <React.Fragment>
+      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData,"edit"]}/>
       <TableRow
         className={isSelected ? "selected" : ""}
         sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -59,19 +71,38 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{display: 'flex', gap: '0.8rem', justifyContent: 'center'}}>
-          <img src={editIcon} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
-          <img src={deleteIcon} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
+          <img src={editIcon} onClick={() => handleEdit(row)} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
+          <img src={deleteIcon} onClick={() => handleDelete(row.jdId)} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
           </div>
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={row.open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+          <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
+                <div style={{ fontSize: "0.7rem", }}><b>Title</b>: {row.title}</div>
+                <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                  <b>Description</b>: {row.jobDescription}
+                  <b>Description</b>: {row.description}
                 </div>
+                <br />
+                <div style={{ fontSize: "0.7rem" }}><b>Skills</b>: {row.skills}</div>
+                <br />
+                <div style={{ fontSize: "0.7rem" }}>
+                  <b>Experience</b>: {row.experience}
+                </div>
+                <br />
+                <div style={{ fontSize: "0.7rem" }}>
+                  <b>Location</b>: {row.location}
+                </div>
+                <br />
+                <div style={{ fontSize: "0.7rem" }}>
+                  <b>WorkType</b>: {row.workType}
+                </div>
+                <br />
+                <div style={{ fontSize: "0.7rem" }}><b>CTC</b>: {row.ctc}</div>
+                <br />
               </Typography>
             </Box>
           </Collapse>
@@ -120,7 +151,7 @@ const JdRegistration = () => {
 
   return (
     <Container1>
-      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} />
+      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null,"create"]}/>
       <Component>
         <span>Add new Job Description</span>
         <EditButton onClick={() => setOpenBasic(true)}>Create</EditButton>

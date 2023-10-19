@@ -42,7 +42,7 @@ function Row(props) {
           {row.reqNumber}
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
-          {row["No of profiles available"]}
+          {row.matchCount}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...

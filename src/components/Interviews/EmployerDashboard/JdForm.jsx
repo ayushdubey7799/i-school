@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { addJd } from '../../../functions/api/employers/addJd';
 import { useSelector } from 'react-redux';
+import { editJd } from '../../../functions/api/employers/editJd';
 
 const Container = styled.div`
  width: 100%;
@@ -52,13 +53,14 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-function JdForm() {
+function JdForm(propsArray) {
+  const [mode,setMode] = useState("create");
   const [formData, setFormData] = useState({
     jdId: '',
     reqNumber: '',
     title: '',
     description: '',
-    skill: '',
+    skills: '',
     bu: '',
     exp: '',
     location: '',
@@ -68,8 +70,17 @@ function JdForm() {
     keywords: '',
     jdUpload: null,
   });
-  const accessToken = useSelector((state) => state.userData)
- console.log(accessToken);
+  
+  useEffect(() => {
+    if(propsArray?.array[0]){
+      setFormData(propsArray.array[0]);
+    }
+    setMode(propsArray.array[1])
+    console.log("props",propsArray.array[1]);
+  },[])
+
+ const accessToken = useSelector((state) => state.userData)
+ console.log(formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -88,8 +99,14 @@ function JdForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resObj = await addJd(formData,accessToken);
-    console.log(resObj);
+    if(mode=="create"){
+      const resObj = await addJd(formData,accessToken);
+      console.log(resObj);
+    }
+    else{
+      const editRes = await editJd(formData,accessToken);
+      console.log(editRes);
+    }
   };
 
   return (
@@ -127,11 +144,11 @@ function JdForm() {
           onChange={handleChange}
         />
 
-        <Label>Skill</Label>
+        <Label>Skills</Label>
         <Input
           type="text"
-          name="skill"
-          value={formData.skill}
+          name="skills"
+          value={formData.skills}
           onChange={handleChange}
         />
 
@@ -204,7 +221,7 @@ function JdForm() {
           onChange={handleFileChange}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{mode=="create"?"Submit":"Edit Changes"}</Button>
       </Form>
     </Container>
   );
