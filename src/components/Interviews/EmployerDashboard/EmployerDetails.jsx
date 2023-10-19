@@ -50,7 +50,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-function EmployerDetails() {
+function EmployerDetails({ handleClose }) {
   const [formData, setFormData] = useState({
     company: "",
     coordinatorName: "",
@@ -74,6 +74,7 @@ function EmployerDetails() {
     e.preventDefault();
     // Handle form submission here, e.g., send data to the server
     console.log(formData);
+    handleClose();
   };
 
   return (

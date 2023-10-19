@@ -53,8 +53,8 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-function JdForm(propsArray) {
-  const [mode,setMode] = useState("create");
+function JdForm({ array, handleClose }) {
+  const [mode, setMode] = useState("create");
   const [formData, setFormData] = useState({
     jdId: '',
     reqNumber: '',
@@ -70,17 +70,17 @@ function JdForm(propsArray) {
     keywords: '',
     jdUpload: null,
   });
-  
-  useEffect(() => {
-    if(propsArray?.array[0]){
-      setFormData(propsArray.array[0]);
-    }
-    setMode(propsArray.array[1])
-    console.log("props",propsArray.array[1]);
-  },[])
 
- const accessToken = useSelector((state) => state.userData)
- console.log(formData);
+  useEffect(() => {
+    if (array[0]) {
+      setFormData(array[0]);
+    }
+    setMode(array[1])
+    console.log("props", array[1]);
+  }, [])
+
+  const accessToken = useSelector((state) => state.userData)
+  console.log(formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -99,14 +99,15 @@ function JdForm(propsArray) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(mode=="create"){
-      const resObj = await addJd(formData,accessToken);
+    if (mode == "create") {
+      const resObj = await addJd(formData, accessToken);
       console.log(resObj);
     }
-    else{
-      const editRes = await editJd(formData,accessToken);
+    else {
+      const editRes = await editJd(formData, accessToken);
       console.log(editRes);
     }
+    handleClose();
   };
 
   return (
@@ -221,7 +222,7 @@ function JdForm(propsArray) {
           onChange={handleFileChange}
         />
 
-        <Button type="submit">{mode=="create"?"Submit":"Edit Changes"}</Button>
+        <Button type="submit">{mode == "create" ? "Submit" : "Edit Changes"}</Button>
       </Form>
     </Container>
   );

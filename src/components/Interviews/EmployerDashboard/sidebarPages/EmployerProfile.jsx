@@ -22,7 +22,7 @@ const Component = styled.div`
   justify-content: space-between;
   border-radius: 0.7rem;
   font-size: 0.9rem;
-
+  background-color: var(--white);
 `;
 
 const EditButton = styled.button`

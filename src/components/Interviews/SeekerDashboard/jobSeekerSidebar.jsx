@@ -18,6 +18,7 @@ import createTicketIcon from '../../../assets/icons/create-ticket.png'
 import callSupportIcon from '../../../assets/icons/call-support.png'
 import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
 import recommendedJobIcon from '../../../assets/icons/recommend-jobs.png'
+import save from '../../../assets/icons/save.png'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -196,6 +197,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             <img src={recommendedJobIcon} className='icon' />
             Recommended Jobs
           </MenuItem>
+          <MenuItem isSelected={currentItem === 'saved-jobs'} onClick={() => handleItemClick('saved-jobs')}>
+            <img src={save} className='icon' />
+            Saved Jobs
+          </MenuItem>
 
         </AccordionDetails>
       </Accordion>
@@ -245,7 +250,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           </MenuItem>
           <MenuItem isSelected={currentItem === 'practice-interview'} onClick={() => handleItemClick('practice-interview')}>
             <img src={practiceInterviewIcon} className='icon' />
-            <a href='/create' target='_blank' rel='noopener noreferrer'>Practice Interview</a>
+            <a href='/create' target='_blank' rel='noopener noreferrer'>Mock Interview</a>
             <OpenInNewIcon className='openNew' />
           </MenuItem>
         </AccordionDetails>

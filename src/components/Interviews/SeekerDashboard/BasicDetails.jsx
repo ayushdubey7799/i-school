@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 
 
 
-export default function BasicDetails() {
+export default function BasicDetails({ handleClose }) {
   const [formData, setFormData] = useState({
     name: '',
     experience: 'freshers',
@@ -26,6 +26,7 @@ export default function BasicDetails() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    handleClose();
   };
 
 

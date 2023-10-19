@@ -7,45 +7,46 @@ const Subscription = () => {
     return (
         <MainBox>
             <div className='topBox'>
-            <span className='title'>Plans that fit your need</span>
-            <span className='subTitle'>Get started for free. No credit card needed.</span>
+                <span className='title'>Plans that fit your need</span>
+                <span className='subTitle'>Get started for free. No credit card needed.</span>
             </div>
 
             <div className='container'>
-                <div className='box1'>
+                <div className='box1 box'>
+                    <span className='boxTitle'>Start</span>
+                    <span className='boxPricing'>Free</span>
 
-                    
-                    <span className='boxTitle'>Basic Plan</span>
-                    <span className='boxSubTitle'>Free forever</span>
+                    <span className='boxSubTitle'>1 User</span>
+                    <span className='boxSubTitle'>1 Project</span>
 
-                    <span className='boxPricing'>$0</span>
-
-                    <button className='box1Btn'>Start for free</button>
-
-                    <div className='mainFeature'>
-                            <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Access to free-level interviews</span>
-                            <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI-assisted feedback</span>
-                            <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Access to Interview Practice</span>
-                            <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Access to Interview Practice</span>
-                            <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Access to Interview Practice</span>
-                    </div>
+                    <button className='btn'>Order Now</button>
                 </div>
-                <div className='box2'>
-                    <span className='boxTitle'>Premium Plan</span>
-                    <span className='boxSubTitle'>Unlock all features</span>
+                <div className='box2 box'>
+                    <span className='boxTitle'>Basic</span>
+                    <span className='boxPricing'>$19</span>
 
-                    <span className='boxPricing'>$60</span>
+                    <span className='boxSubTitle'>5 Users</span>
+                    <span className='boxSubTitle'>20 Projects</span>
 
-                    <button className='box2Btn'>Access Premium</button>
+                    <button className='btn'>Order Now</button>
+                </div>
+                <div className='box3 box'>
+                    <span className='boxTitle'>Medium</span>
+                    <span className='boxPricing'>$49</span>
 
-                    <div className='mainFeature'>
-                            <span className='featureText'> <img src={whiteDot} className='featureDot' /> Access to ALL interviews</span>
-                            <span className='featureText'> <img src={whiteDot} className='featureDot' /> AI-assisted feedback</span>
+                    <span className='boxSubTitle'>100 Users</span>
+                    <span className='boxSubTitle'>100 Projects</span>
 
-                            <span className='featureText'> <img src={whiteDot} className='featureDot' /> Access to Interview Practice</span>                            
-                            <span className='featureText'> <img src={whiteDot} className='featureDot' /> Create custom questions and interviews</span>
-                            <span className='featureText'> <img src={whiteDot} className='featureDot' /> Create custom questions and interviews</span>
-                    </div>
+                    <button className='btn'>Order Now</button>
+                </div>
+                <div className='box4 box'>
+                    <span className='boxTitle'>Expert</span>
+                    <span className='boxPricing'>$129</span>
+
+                    <span className='boxSubTitle'>Unlimited Users</span>
+                    <span className='boxSubTitle'>Unlimited Projects</span>
+
+                    <button className='btn'>Order Now</button>
                 </div>
             </div>
         </MainBox>
@@ -56,12 +57,12 @@ export default Subscription
 
 
 const MainBox = styled.div`
-width: 90%;
+width: 100%;
 display: flex;
 flex-direction: column;
 gap: 3rem;
 align-items: center;
-margin: 2rem 0;
+margin: 2rem 0 3rem 0;
 
 
 
@@ -77,33 +78,40 @@ margin: 2rem 0;
 .container {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 90%;
     justify-content: space-evenly;
 
 }
 
-.box1 {
+.box {
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 2rem;
-    border: 0.05rem solid lightgrey;
-    border-radius: 1rem;
     color: var(--color);
     background-color: var(--white);
     gap: 1rem;
     width: 35%;
 }
 
+.box1 {
+    background-color: #B4CCCF;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
 .box2 {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    border: 0.05rem solid lightgrey;
-    border-radius: 1rem;
-    color: var(--white);
-    background-color: #19D8CE;
-    gap: 1rem;
-    width: 35%;
+    background-color: lightgrey;
+}
+
+.box3 {
+    background-color: #cec;
+}
+
+.box4 {
+    background-color: var(--white);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
 
 .boxTitle {
@@ -122,50 +130,17 @@ margin: 2rem 0;
     font-weight: 700;
 }
 
-.box1Btn {
-    font-size: 1.2rem;
+.btn {
+    font-size: 1rem;
     font-weight: 600;
     background-color: var(--white);
     color: var(--lightOrange);
-    border: 0.1rem solid #19D8CE;
+    border: 0.05rem solid grey;
     border-radius: 0.5rem;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
 }
 
-.box2Btn {
-    font-size: 1.2rem;
-    font-weight: 600;
-    background-color: var(--white);
-    color: #19D8CE;
-    border: 0.1rem solid #19D8CE;
-    border-radius: 0.5rem;
-    padding: 1rem 2rem;
-    cursor: pointer;
-    
-}
-
-.mainFeature {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
-
-.featureDot {
-    width: 0.8rem;
-    height: 0.8rem;
-}
-
-.featureText {
-    font-size: 1.1rem;
-    font-weight: 600;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    text-wrap: break-word;
-}
 
 
 .title {
@@ -180,3 +155,5 @@ margin: 2rem 0;
 }
 
 `
+
+
