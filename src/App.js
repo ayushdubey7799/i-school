@@ -120,13 +120,13 @@ const App = () => {
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
 
           <Route path="/create-resume" element={<CreateResumePage />} />
-          <Route path='/resume1' element={<Resume1 />} />
-          <Route path='/resume2' element={<Resume2 />} />
-          <Route path='/resume3' element={<Resume3 />} />
-          <Route path='/resume4' element={<Resume4 />} />
-          <Route path='/resume5' element={<Resume5 />} />
-          <Route path='/resume6' element={<Resume6 />} />
-          <Route path='/resume7' element={<Resume7 />} />
+          <Route path='/create-resume/resume1' element={<Resume1 />} />
+          <Route path='/create-resume/resume2' element={<Resume2 />} />
+          <Route path='/create-resume/resume3' element={<Resume3 />} />
+          <Route path='/create-resume/resume4' element={<Resume4 />} />
+          <Route path='/create-resume/resume5' element={<Resume5 />} />
+          <Route path='/create-resume/resume6' element={<Resume6 />} />
+          <Route path='/create-resume/resume7' element={<Resume7 />} />
 
         </Routes>
       </ScrollToTop>

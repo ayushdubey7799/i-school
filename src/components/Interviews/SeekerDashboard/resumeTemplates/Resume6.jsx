@@ -198,6 +198,7 @@ const Wrapper = styled.div`
   max-width: 21cm;
   margin: 4rem auto;
   gap: 2rem;
+  padding: 0 0 0 2rem;
 
 
   .icon2 {
@@ -244,6 +245,7 @@ width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1.3rem;
+    padding-bottom: 2rem;
 }
 
 .column1 {
@@ -253,7 +255,7 @@ width: 100%;
     gap: 1.3rem;
     padding-top: calc(140px + 1.3rem);
     background-color: #062B4D;
-    padding-right: 1.5rem;
+    padding-right: 2.5rem;
     padding-left: 1rem;
     color: var(--white);
 }

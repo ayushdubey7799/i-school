@@ -220,7 +220,7 @@ align-items: center;
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 96%;
   margin: -1rem auto 3rem auto;
   height: 4rem;
   background-color: var(--white);

@@ -46,6 +46,11 @@ position: fixed;
 left: 0;
 overflow-y: scroll;
 
+  & {
+  scrollbar-width: none;
+  }
+
+
   &::-webkit-scrollbar {
     width: 0rem;
   }
@@ -171,7 +176,7 @@ const Arrow = styled.div`
     margin-left: auto;
     transition: transform 0.2s;
     position: absolute;
-    right: -4px;
+    right: 0px;
 
 `;
 

@@ -273,7 +273,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const FilterContainer = styled.div`
-  width: 91%;
+  width: 91.4%;
   border: 1px solid #ccc;
   border-radius: 0.8rem;
   padding: 0.5rem;
@@ -281,64 +281,29 @@ const FilterContainer = styled.div`
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
+`;
 
 
 
-  .expBox {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+const FilterDropdown = styled.select`
+  padding: 0.7rem 0.5rem;
+  margin-top: 0.7rem;
+  height: 2.5rem;
+  border: none;
+  background-color: var(--white);
+  border-radius: 0.3rem;
+  font-size: 0.9rem;
+  width: 30%;
+  height: 100%;
+  outline: none;
+
+  option {
+    font-size: 0.9rem;
+    font-weight: 400;
   }
-`;
-
-const RadioFilter = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 0.6rem;
-  width: 100%;
-
-  p{
-    font-weight: 800;
-    text-align: center;
-    width: 100%;
-}
-
-.labelBox {
-  display: flex;
-  flex-flow: row wrap;
-  row-gap: 0.5rem;
-  column-gap: 0.3rem;
-  justify-content: center;
-
-}
-`;
-
-const RadioLabel = styled.label`
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 0.8rem;
-`;
-
-const RadioInput = styled.input`
-  margin-right: 5px;
-`;
-
-const RangeInput = styled.input`
-display: flex;
-  width: 90%;
-  margin: 0 auto;
-  margin-bottom: 10px;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  
-`;
+`
 
 
 function ProfileFilter() {
@@ -361,141 +326,30 @@ function ProfileFilter() {
 
   return (
     <FilterContainer>
-      <RadioFilter>
-        <p>Work Mode</p>
-        <div className='labelBox'>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="workMode"
-              value="WFO"
-              checked={workMode === 'WFO'}
-              onChange={handleWorkModeChange}
-            />
-            WFO
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="workMode"
-              value="WFH"
-              checked={workMode === 'WFH'}
-              onChange={handleWorkModeChange}
-            />
-            WFH
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="workMode"
-              value="hybrid"
-              checked={workMode === 'hybrid'}
-              onChange={handleWorkModeChange}
-            />
-            Hybrid
-          </RadioLabel>
-        </div>
-      </RadioFilter>
-      <RadioFilter>
-        <p>Salary</p>
-        <div className='labelBox'>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="salaryRange"
-              value="0-3 lakhs"
-              checked={salaryRange === '0-3 lakhs'}
-              onChange={handleSalaryRangeChange}
-            />
-            0-3 lakhs
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="salaryRange"
-              value="3-6 lakhs"
-              checked={salaryRange === '3-6 lakhs'}
-              onChange={handleSalaryRangeChange}
-            />
-            3-6 lakhs
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="salaryRange"
-              value="6-10 lakhs"
-              checked={salaryRange === '6-10 lakhs'}
-              onChange={handleSalaryRangeChange}
-            />
-            6-10 lakhs
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="salaryRange"
-              value="10+ lakhs"
-              checked={salaryRange === '10+ lakhs'}
-              onChange={handleSalaryRangeChange}
-            />
-            10+ lakhs
-          </RadioLabel>
-        </div>
-      </RadioFilter>
-      <RadioFilter>
-        <p>Freshness</p>
-        <div className='labelBox'>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="freshness"
-              value="last-1-day"
-              checked={freshness === 'last-1-day'}
-              onChange={handleFreshnessChange}
-            />
-            Last 1 day
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="freshness"
-              value="last-3-days"
-              checked={freshness === 'last-3-days'}
-              onChange={handleFreshnessChange}
-            />
-            Last 3 days
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="freshness"
-              value="last-7-days"
-              checked={freshness === 'last-7-days'}
-              onChange={handleFreshnessChange}
-            />
-            Last 7 days
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="freshness"
-              value="last-30-days"
-              checked={freshness === 'last-30-days'}
-              onChange={handleFreshnessChange}
-            />
-            Last 30 days
-          </RadioLabel>
-          <RadioLabel>
-            <RadioInput
-              type="radio"
-              name="freshness"
-              value="anytime"
-              checked={freshness === 'anytime'}
-              onChange={handleFreshnessChange}
-            />
-            Anytime
-          </RadioLabel>
-        </div>
-      </RadioFilter>
+
+      <FilterDropdown value={workMode} onChange={handleWorkModeChange}>
+        <option value="" disabled selected>Select Work Mode</option>
+        <option value="wfo">WFO</option>
+        <option value="wfh">WFH</option>
+        <option value="hybrid">Hybrid</option>
+      </FilterDropdown>
+
+      <FilterDropdown value={salaryRange} onChange={handleSalaryRangeChange}>
+        <option value="" disabled selected>Select Salary</option>
+        <option value="0-3">0-3 lakhs</option>
+        <option value="3-6">3-6 lakhs</option>
+        <option value="6-10">6-10 lakhs</option>
+        <option value="10+">10+ lakhs</option>
+      </FilterDropdown>
+
+      <FilterDropdown value={freshness} onChange={handleFreshnessChange}>
+        <option value="" disabled selected>Select Freshness</option>
+        <option value="0-3">Last 1 day</option>
+        <option value="3-6">Last 3 days</option>
+        <option value="6-10">Last 7 days</option>
+        <option value="6-10">Last 30 days</option>
+        <option value="10+">Anytime</option>
+      </FilterDropdown>
     </FilterContainer>
   );
 }

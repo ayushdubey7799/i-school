@@ -274,7 +274,7 @@ flex-direction: row;
 gap: 4rem;
 width: 90%;
 margin: 0 5%;
-
+padding-bottom: 2rem;
 
 .column2 {
     width: calc(70% - 2rem);
@@ -299,12 +299,12 @@ const Header = styled.div`
 display: flex;
 flex-direction: row;
 gap: 0.7rem;
-width: 100%;
+width: 90%;
 align-items: center;
 justify-content: start;
 background-color: #4AFBBA;
 background-color: lightblue;
-padding-left: 5%;
+padding: 0 5%;
 height: 140px;
 border-top-left-radius: 1rem;
 border-top-right-radius: 1rem;

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import jobs from '../../../assets/icons/recruitment.png'
-import application from '../../../assets/icons/application.png'
-import interview from '../../../assets/icons/interview.png'
-import candidates from '../../../assets/icons/candidate.png'
+import metric1 from '../../../assets/icons/metric1.png'
+import metric2 from '../../../assets/icons/metric2.2.png'
+import metric3 from '../../../assets/icons/metric3.png'
+import metric4 from '../../../assets/icons/metric2.4.png'
+
 
 const Container = styled.div`
 
@@ -28,6 +29,18 @@ gap: 2%;
   height: 6rem;
   border-radius: 0.5rem;
   box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
+
+  .top {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    img {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
 }
 
 .achievedNumberBox:hover {
@@ -71,19 +84,31 @@ const EmployeMetrics = ({ setCurrentItem }) => {
   return (
     <Container>
       <div className='achievedNumberBox' onClick={() => setCurrentItem('')}>
-        <span className='achievedNumberDigit'>15</span>
+        <div className='top'>
+          <img src={metric1} />
+          <span className='achievedNumberDigit'>15</span>
+        </div>
         <span className='achievedNumberText'>Active Reqs</span>
       </div>
       <div className='achievedNumberBox'>
-        <span className='achievedNumberDigit'>30</span>
+        <div className='top'>
+          <img src={metric2} />
+          <span className='achievedNumberDigit'>30</span>
+        </div>
         <span className='achievedNumberText'>Applications</span>
       </div>
       <div className='achievedNumberBox'>
-        <span className='achievedNumberDigit'>17</span>
+        <div className='top'>
+          <img src={metric3} />
+          <span className='achievedNumberDigit'>17</span>
+        </div>
         <span className='achievedNumberText'>Interviews</span>
       </div>
       <div className='achievedNumberBox' onClick={() => setCurrentItem('candidate-register')}>
-        <span className='achievedNumberDigit'>12</span>
+        <div className='top'>
+          <img src={metric4} />
+          <span className='achievedNumberDigit'>12</span>
+        </div>
         <span className='achievedNumberText'>Registered Candidates</span>
       </div>
     </Container>

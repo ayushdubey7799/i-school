@@ -42,6 +42,10 @@ const Container = styled.div`
   left: 0;
   overflow-y: scroll;
 
+  & {
+    scrollbar-width: none;
+  }  
+
   &::-webkit-scrollbar {
     width: 0rem;
   }
@@ -127,7 +131,7 @@ const Arrow = styled.div`
     border-right: 1rem solid #e3e3e3;
     transition: transform 0.2s;
     position: absolute;
-    right: -4px;
+    right: 0px;
 
 `;
 
