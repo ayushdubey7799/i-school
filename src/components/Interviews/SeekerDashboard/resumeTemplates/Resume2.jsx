@@ -188,9 +188,11 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 100%;
+  height: 100%;
   max-width: 21cm;
   margin: 4rem auto;
   gap: 2rem;
+  padding: 2rem 2rem;
 
 
   .icon2 {

@@ -27,12 +27,12 @@ import { getJds } from '../../../../functions/api/employers/getJds';
 
 function Row(props) {
   const { row, isSelected, onToggle } = props;
-  const [jdData,setJdData] = useState(null);
-  const [editOpen,setEditOpen] = useState(false);
+  const [jdData, setJdData] = useState(null);
+  const [editOpen, setEditOpen] = useState(false);
 
   const handleEdit = (row) => {
-      setEditOpen(true);
-      setJdData(row);
+    setEditOpen(true);
+    setJdData(row);
   }
 
   const handleDelete = (jdId) => {
@@ -41,7 +41,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData,"edit"]}/>
+      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
       <TableRow
         className={isSelected ? "selected" : ""}
         sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -70,16 +70,16 @@ function Row(props) {
           ...
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          <div style={{display: 'flex', gap: '0.8rem', justifyContent: 'center'}}>
-          <img src={editIcon} onClick={() => handleEdit(row)} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
-          <img src={deleteIcon} onClick={() => handleDelete(row.jdId)} style={{width: '1.1rem', height: '1.1rem', cursor: 'pointer'}}/>
+          <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
+            <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
+            <img src={deleteIcon} onClick={() => handleDelete(row.jdId)} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
           </div>
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={row.open} timeout="auto" unmountOnExit>
-          <Box sx={{ margin: 1 }}>
+            <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
                 <div style={{ fontSize: "0.7rem", }}><b>Title</b>: {row.title}</div>
                 <br />
@@ -119,7 +119,7 @@ const JdRegistration = () => {
   const [tableRows, setTableRows] = useState([]);
 
   useEffect(() => {
-    async function getData(){
+    async function getData() {
       const res = await getJds();
       setTableRows(res?.data?.data);
     }
@@ -151,34 +151,34 @@ const JdRegistration = () => {
 
   return (
     <Container1>
-      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null,"create"]}/>
+      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null, "create"]} />
       <Component>
         <span>Add new Job Description</span>
         <EditButton onClick={() => setOpenBasic(true)}>Create</EditButton>
       </Component>
 
-        <StyledBox>
-          <TableContainer component={Paper} className="tableBox">
-            <h3 style={{ paddingLeft: "3rem" }}>Job Descriptions</h3>
-            <Table aria-label="collapsible table">
-              <TableHead className="tableHead">
-                <TableRow>
-                  <TableCell />
-                  <TableCell align='center'>JD_ID</TableCell>
-                  <TableCell align='center'>Test_ID</TableCell>
-                  <TableCell align='center'>Date of Creation</TableCell>
-                  <TableCell align='center'>Created By</TableCell>
-                  <TableCell align='center'>Edit/Delete</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className="tableBody">
-                {tableRows?.map((row, index) => (
-                  <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </StyledBox>
+      <StyledBox>
+        <TableContainer component={Paper} className="tableBox">
+          <h3 style={{ paddingLeft: "3rem" }}>Job Descriptions</h3>
+          <Table aria-label="collapsible table">
+            <TableHead className="tableHead">
+              <TableRow>
+                <TableCell />
+                <TableCell align='center'>JD_ID</TableCell>
+                <TableCell align='center'>Test_ID</TableCell>
+                <TableCell align='center'>Date of Creation</TableCell>
+                <TableCell align='center'>Created By</TableCell>
+                <TableCell align='center'>Edit/Delete</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="tableBody">
+              {tableRows?.map((row, index) => (
+                <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </StyledBox>
     </Container1>
   );
 };
@@ -238,7 +238,7 @@ const StyledBox = styled.div`
 
 
 const Container1 = styled.div`
-  width:90%;
+  width: 98%;
   margin: 1rem auto;
   display: flex;
   flex-direction: column;
@@ -248,9 +248,9 @@ const Container1 = styled.div`
 `;
 
 const Component = styled.div`
-  width: 100%; 
+  width: 93%; 
   border: 0.08rem solid #ccc;
-  padding: 1rem 1rem;;
+  padding: 0.7rem 1rem;;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -258,6 +258,10 @@ const Component = styled.div`
   font-size: 0.8rem;
   background-color: var(--white);
 
+  span {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 `;
 
 const EditButton = styled.button`

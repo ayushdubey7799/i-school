@@ -54,7 +54,7 @@ export default function ModalHOC({
     >
       <Box sx={{ ...style }}>
         <Btn onClick={handleClose}><img src={closeIcon}/></Btn>
-        <Component array={array} />
+        <Component array={array} handleClose={handleClose}/>
       </Box>
     </Modal>
   )

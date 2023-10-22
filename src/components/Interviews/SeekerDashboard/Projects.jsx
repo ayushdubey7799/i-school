@@ -51,7 +51,7 @@ const SubmitButton = styled.button`
   margin-bottom: 1rem;
 `;
 
-function Projects() {
+function Projects({handleClose}) {
   const [formData, setFormData] = useState({
     projectTitle: '',
     client: '',
@@ -73,6 +73,7 @@ function Projects() {
     e.preventDefault();
     // You can handle the submission of project data here.
     console.log('Project Form Data:', formData);
+    handleClose();
   };
 
   return (

@@ -200,6 +200,7 @@ const Wrapper = styled.div`
   max-width: 21cm;
   margin: 4rem auto;
   gap: 2rem;
+  padding: 2rem;
 
 
   .icon2 {

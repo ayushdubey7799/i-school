@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export default function ProfessionalInfo() {
+export default function ProfessionalInfo({handleClose}) {
   const [formData, setFormData] = useState({
     experience: "freshers",
     location: "",
@@ -28,6 +28,7 @@ export default function ProfessionalInfo() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    handleClose();
   };
 
   return (

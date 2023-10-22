@@ -15,95 +15,84 @@ import share from '../../../../assets/icons/share.png'
 
 
 function Row(props) {
-    const { row } = props;
+  const { row } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}>
-                <TableCell component="th" scope="row" align='center' className='logo'>
-                    <img src={row.companyLogo} />
-                </TableCell>
-                <TableCell component="th" scope="row" align='center' className='rowText'>
-                    {row.jobTitle}
-                </TableCell>{" "}
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.companyName}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.location}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.postedDate}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.appliedDate}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.status}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.matchPercentage}%
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-                        <img src={save} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-                        <img src={share} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-                    </div>
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    <Link to={`/attend/${row.jobId}`} className="btn">Attend</Link>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell component="th" scope="row" align='center' className='logo'>
+          <img src={row.companyLogo} />
+        </TableCell>
+        <TableCell component="th" scope="row" align='center' className='rowText'>
+          {row.jobTitle}
+        </TableCell>{" "}
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.companyName}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.location}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.appliedDate}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.status}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.matchPercentage}%
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          <Link to={`/attend/${row.jobId}`} className="btn">Attend</Link>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const JobApplication = () => {
-    const [appliedJobs, setAppliedJobs] = useState();
+  const [appliedJobs, setAppliedJobs] = useState();
 
-    useEffect(() => {
-        const filteredJobs = jobListings.filter(job => job.applied === true);
+  useEffect(() => {
+    const filteredJobs = jobListings.filter(job => job.applied === true);
 
-        if (filteredJobs) {
-            setAppliedJobs(filteredJobs);
-        }
+    if (filteredJobs) {
+      setAppliedJobs(filteredJobs);
+    }
 
-    }, [])
+  }, [])
 
-    return (
-        <Container1>
-            {appliedJobs &&
-                <StyledBox>
-                    <TableContainer component={Paper} className="tableBox">
-                        <h3 style={{ paddingLeft: "3rem" }}>Applied Jobs</h3>
-                        <Table aria-label="collapsible table">
-                            <TableHead className="tableHead">
-                                <TableRow>
-                                    <TableCell align='center'>Logo</TableCell>
-                                    <TableCell align='center'>Job Title</TableCell>
-                                    <TableCell align='center'>Company</TableCell>
-                                    <TableCell align='center'>Location</TableCell>
-                                    <TableCell align='center'>Posted Date</TableCell>
-                                    <TableCell align='center'>Applied Date</TableCell>
-                                    <TableCell align='center'>Status</TableCell>
-                                    <TableCell align='center'>% Match with Profile</TableCell>
-                                    <TableCell align='center'>Save/Share</TableCell>
-                                    <TableCell align='center'>Interview Link</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody className="tableBody">
-                                {appliedJobs?.map((row) => (
-                                    <Row key={row.jobId} row={row} />
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </StyledBox>
-            }
-        </Container1>
-    );
+  return (
+    <Container1>
+      {appliedJobs &&
+        <StyledBox>
+          <TableContainer component={Paper} className="tableBox">
+            <h3 style={{ paddingLeft: "3rem" }}>Applied Jobs</h3>
+            <Table aria-label="collapsible table">
+              <TableHead className="tableHead">
+                <TableRow>
+                  <TableCell align='center'></TableCell>
+                  <TableCell align='center'>Job Title</TableCell>
+                  <TableCell align='center'>Company</TableCell>
+                  <TableCell align='center'>Location</TableCell>
+                  <TableCell align='center'>Applied Date</TableCell>
+                  <TableCell align='center'>Status</TableCell>
+                  <TableCell align='center'>% Match with Profile</TableCell>
+                  <TableCell align='center'>Interview Link</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className="tableBody">
+                {appliedJobs?.map((row) => (
+                  <Row key={row.jobId} row={row} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </StyledBox>
+      }
+    </Container1>
+  );
 };
 
 export default JobApplication;

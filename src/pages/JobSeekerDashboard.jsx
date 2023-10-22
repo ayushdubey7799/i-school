@@ -15,6 +15,7 @@ import Inbox from "../components/Interviews/SeekerDashboard/sidebarPages/Inbox";
 import CallSupport from "../components/Interviews/SeekerDashboard/sidebarPages/CallSupport";
 import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/RecommendedJobs";
 import InterviewTabs from "../components/Interviews/InterviewTabs";
+import SavedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/SavedJobs";
 
 
 const Verification = () => <div>Verification Content</div>;
@@ -50,6 +51,7 @@ const JobSeekerDashboard = () => {
           {currentItem === 'interviewDash' && <InterviewTabs />}
           {currentItem === 'applied-jobs' && <JobApplication />}
           {currentItem === 'recommended-jobs' && <RecommendedJobs />}
+          {currentItem === 'saved-jobs' && <SavedJobs />}
           {currentItem === 'create-resume' && <CreateResume />}
           {currentItem === 'enhance-resume' && <EnhanceResume />}
 

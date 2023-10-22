@@ -60,7 +60,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-function Education() {
+function Education({handleClose}) {
   const [formData, setFormData] = useState({
     education: '',
     university: '',
@@ -82,6 +82,7 @@ function Education() {
     e.preventDefault();
     // You can handle the submission of education data here.
     console.log('Education Form Data:', formData);
+    handleClose();
   };
 
   return (

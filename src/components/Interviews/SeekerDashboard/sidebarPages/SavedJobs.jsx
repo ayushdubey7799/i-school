@@ -40,12 +40,6 @@ function Row(props) {
           {row.matchPercentage}%
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='rowText'>
-          <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-            <img src={save} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-            <img src={share} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-          </div>
-        </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
           <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
         </TableCell>
       </TableRow>
@@ -54,13 +48,13 @@ function Row(props) {
 }
 
 
-const FilteredJobs = () => {
+const SavedJobs = () => {
 
   return (
     <Container1>
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <h3 style={{ paddingLeft: "3rem" }}>Filtered Jobs</h3>
+          <h3 style={{ paddingLeft: "3rem" }}>Saved Jobs</h3>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
@@ -70,7 +64,6 @@ const FilteredJobs = () => {
                 <TableCell align='center'>Location</TableCell>
                 <TableCell align='center'>Posted Date</TableCell>
                 <TableCell align='center'>% Match with Profile</TableCell>
-                <TableCell align='center'>Save/Share</TableCell>
                 <TableCell align='center'>Apply</TableCell>
               </TableRow>
             </TableHead>
@@ -86,7 +79,7 @@ const FilteredJobs = () => {
   );
 };
 
-export default FilteredJobs;
+export default SavedJobs;
 
 
 const StyledBox = styled.div`
