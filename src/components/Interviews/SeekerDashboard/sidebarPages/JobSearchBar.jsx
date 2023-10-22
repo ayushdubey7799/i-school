@@ -146,6 +146,8 @@ const JobSearchBar = () => {
   const [skillDropdownVisible, setSkillDropdownVisible] = useState(false);
   const skillDropdownRef = useRef(null);
 
+  const [exp, setExp] = useState();
+
   useEffect(() => {
     if (skill != '') {
       const inputAfterComma = skill.split(",").pop().trim();
@@ -277,8 +279,8 @@ const JobSearchBar = () => {
             }
           </div>
         </div>
-        <FilterDropdown>
-          <option value="">Select Experience</option>
+        <FilterDropdown value={exp} onChange={(e) => setExp(e.target.value)}>
+          <option value="" disabled selected>Select Experience</option>
           <option value="">Fresher</option>
           <option value="1">1 year</option>
           <option value="1-3">1-3 years</option>
@@ -341,3 +343,4 @@ const StyledJobSearch = styled.div`
     
     
 `
+

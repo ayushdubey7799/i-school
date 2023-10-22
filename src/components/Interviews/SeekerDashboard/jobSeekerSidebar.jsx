@@ -18,6 +18,7 @@ import createTicketIcon from '../../../assets/icons/create-ticket.png'
 import callSupportIcon from '../../../assets/icons/call-support.png'
 import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
 import recommendedJobIcon from '../../../assets/icons/recommend-jobs.png'
+import save from '../../../assets/icons/save.png'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -40,6 +41,10 @@ const Container = styled.div`
   position: fixed;
   left: 0;
   overflow-y: scroll;
+
+  & {
+    scrollbar-width: none;
+  }  
 
   &::-webkit-scrollbar {
     width: 0rem;
@@ -126,7 +131,7 @@ const Arrow = styled.div`
     border-right: 1rem solid #e3e3e3;
     transition: transform 0.2s;
     position: absolute;
-    right: -4px;
+    right: 0px;
 
 `;
 
@@ -196,6 +201,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             <img src={recommendedJobIcon} className='icon' />
             Recommended Jobs
           </MenuItem>
+          <MenuItem isSelected={currentItem === 'saved-jobs'} onClick={() => handleItemClick('saved-jobs')}>
+            <img src={save} className='icon' />
+            Saved Jobs
+          </MenuItem>
 
         </AccordionDetails>
       </Accordion>
@@ -245,7 +254,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           </MenuItem>
           <MenuItem isSelected={currentItem === 'practice-interview'} onClick={() => handleItemClick('practice-interview')}>
             <img src={practiceInterviewIcon} className='icon' />
-            <a href='/create' target='_blank' rel='noopener noreferrer'>Practice Interview</a>
+            <a href='/create' target='_blank' rel='noopener noreferrer'>Mock Interview</a>
             <OpenInNewIcon className='openNew' />
           </MenuItem>
         </AccordionDetails>

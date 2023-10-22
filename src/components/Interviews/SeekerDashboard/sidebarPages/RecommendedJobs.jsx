@@ -15,75 +15,75 @@ import share from '../../../../assets/icons/share.png'
 
 
 function Row(props) {
-    const { row } = props;
+  const { row } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}>
-                <TableCell component="th" scope="row" align='center' className='logo'>
-                    <img src={row.companyLogo} />
-                </TableCell>
-                <TableCell component="th" scope="row" align='center' className='rowText'>
-                    {row.jobTitle}
-                </TableCell>{" "}
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.companyName}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.location}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.postedDate}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.matchPercentage}%
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-                        <img src={save} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-                        <img src={share} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-                    </div>
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell component="th" scope="row" align='center' className='logo'>
+          <img src={row.companyLogo} />
+        </TableCell>
+        <TableCell component="th" scope="row" align='center' className='rowText'>
+          {row.jobTitle}
+        </TableCell>{" "}
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.companyName}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.location}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.postedDate}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.matchPercentage}%
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
+            <img src={save} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
+            <img src={share} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
+          </div>
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const RecommendedJobs = () => {
 
-    return (
-        <Container1>
-            <StyledBox>
-                <TableContainer component={Paper} className="tableBox">
-                    <h3 style={{ paddingLeft: "3rem" }}>Recommended Jobs</h3>
-                    <Table aria-label="collapsible table">
-                        <TableHead className="tableHead">
-                            <TableRow>
-                                <TableCell align='center'>Logo</TableCell>
-                                <TableCell align='center'>Job Title</TableCell>
-                                <TableCell align='center'>Company</TableCell>
-                                <TableCell align='center'>Location</TableCell>
-                                <TableCell align='center'>Posted Date</TableCell>
-                                <TableCell align='center'>% Match with Profile</TableCell>
-                                <TableCell align='center'>Save/Share</TableCell>
-                                <TableCell align='center'>Apply</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody className="tableBody">
-                            {jobListings?.map((row) => (
-                                <Row key={row.jobId} row={row} />
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </StyledBox>
-        </Container1>
-    );
+  return (
+    <Container1>
+      <StyledBox>
+        <TableContainer component={Paper} className="tableBox">
+          <h3 style={{ paddingLeft: "3rem" }}>Recommended Jobs</h3>
+          <Table aria-label="collapsible table">
+            <TableHead className="tableHead">
+              <TableRow>
+                <TableCell align='center'></TableCell>
+                <TableCell align='center'>Job Title</TableCell>
+                <TableCell align='center'>Company</TableCell>
+                <TableCell align='center'>Location</TableCell>
+                <TableCell align='center'>Posted Date</TableCell>
+                <TableCell align='center'>% Match with Profile</TableCell>
+                <TableCell align='center'>Save/Share</TableCell>
+                <TableCell align='center'>Apply</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="tableBody">
+              {jobListings?.map((row) => (
+                <Row key={row.jobId} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </StyledBox>
+    </Container1>
+  );
 };
 
 export default RecommendedJobs;

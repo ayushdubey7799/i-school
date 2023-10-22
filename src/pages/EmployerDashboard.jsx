@@ -48,7 +48,7 @@ const EmployerDashboard = () => {
       setOpen(false);
     }
   }, [currentItem]);
-  
+
 
   useEffect(() => {
     if (!accessToken) navigate("/login");
@@ -77,7 +77,7 @@ const EmployerDashboard = () => {
         <MainContent>
           <EmployeMetrics setCurrentItem={setCurrentItem} />
           {currentItem === "jd-register" && <JdRegistration />}
-          {currentItem === "manage-jds" && <JdRegistration/>}
+          {currentItem === "manage-jds" && <JdRegistration />}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
 
           {currentItem === "candidate-register" && <RegisterCandidate />}
@@ -92,7 +92,7 @@ const EmployerDashboard = () => {
           {currentItem === "billing" && <Billing />}
           {currentItem === "inbox" && <Inbox />}
           {currentItem === "report" && <Report />}
-          
+
           {currentItem === "call-support" && <CallSupport />}
 
         </MainContent>

@@ -4,47 +4,48 @@ import uploadIcon from '../../../../assets/icons/upload.png'
 import browseIcon from '../../../../assets/icons/browse.png'
 
 const EnhanceResume = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedFileName, setSelectedFileName] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState('');
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
 
-        if (file) {
-            setSelectedFile(file);
-            setSelectedFileName(file.name);
-        }
-    };
+    if (file) {
+      setSelectedFile(file);
+      setSelectedFileName(file.name);
+    }
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // You can handle the file upload here, for example, by sending the file to a server.
-        if (selectedFile) {
-            console.log('Selected File:', selectedFile);
-            // You can add code to upload the file to a server or perform any other actions here.
-        } else {
-            console.log('No file selected.');
-        }
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can handle the file upload here, for example, by sending the file to a server.
+    if (selectedFile) {
+      console.log('Selected File:', selectedFile);
+      // You can add code to upload the file to a server or perform any other actions here.
+    } else {
+      console.log('No file selected.');
+    }
+  };
 
 
-    return (
-        <Component>
-            <Form onSubmit={handleSubmit}>
-                <>
-                    <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
-                    <FileInput
-                        id='input'
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        onChange={handleFileChange}
-                        style={{ display: 'none' }}
-                    />
-                </>
-                <SubmitButton type="submit">Enhance Resume</SubmitButton>
-            </Form>
-        </Component>
-    )
+  return (
+    <Component>
+      <Form onSubmit={handleSubmit}>
+        <>
+          <span className='title'>Upload your current Resume</span>
+          <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
+          <FileInput
+            id='input'
+            type="file"
+            accept=".pdf,.doc,.docx"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
+        </>
+        <SubmitButton type="submit">Enhance Resume</SubmitButton>
+      </Form>
+    </Component>
+  )
 }
 
 export default EnhanceResume
@@ -69,6 +70,10 @@ const Form = styled.form`
   span {
     font-weight: 600;
     margin-bottom: 8px;
+  }
+  .title {
+    font-weight: 600;
+    font-size: 1rem;
   }
 `;
 
