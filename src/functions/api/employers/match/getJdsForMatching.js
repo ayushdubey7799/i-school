@@ -6,14 +6,14 @@ export const getJdsForMatching = async (
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
-      'x-client-code': 'BRAJ01',
-      "Access-Control-Allow-Origin": '*'
+      "x-client-code": "BRAJ01",
+      "Access-Control-Allow-Origin": "*",
     },
   };
 
   try {
     const response = await axios.get(
-      `https://dev-api.intelliview.in/api/jds?page=1&size=10`,
+      `https://dev-api.intelliview.in/api/jds?page=1&size=20`,
       config
     );
     console.log("Data:", response.data);

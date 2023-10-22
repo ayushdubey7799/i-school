@@ -43,8 +43,10 @@ const Login = () => {
     setPasswordVisible(false);
     captchaRef.current.reset();
   };
+   const inviteToken = localStorage.getItem('inviteToken')
 
-  if (userData?.accessToken) {
+   if (userData?.accessToken) {
+
     userData.user?.clientCode == "intelliview"
       ? navigate("/dashboard/jobseeker")
       : navigate("/dashboard/employer");

@@ -28,6 +28,13 @@ const JobSeekerDashboard = () => {
 
   useEffect(() => {
     if (!accessToken) navigate("/login");
+
+    const inviteToken = localStorage.getItem('inviteToken');
+    if(inviteToken){
+      navigate(`/slot-selection/${inviteToken}`)
+    }
+    
+
   }, []);
 
   const [currentItem, setCurrentItem] = useState('dashboard');

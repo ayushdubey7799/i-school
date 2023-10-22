@@ -14,9 +14,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Match from "./Match";
 
 function Row(props) {
   const { row, isSelected, onToggle } = props;
+  
+  
 
   return (
     <React.Fragment>
@@ -42,7 +45,7 @@ function Row(props) {
           {row.reqNumber}
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
-          {row.matchCount}
+          <Match jdId={row.jdId} count={row.matchCount}/>
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...

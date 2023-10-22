@@ -16,7 +16,7 @@ import Loader from "../components/commonComponents/Loader";
 import Timer from "../components/Interviews/CurrentInterview/Timer";
 import logo from '../assets/IntelliViewLogo.png'
 
-const OngoingInterview = () => {
+const OngoingInterview = ({start,handleStart}) => {
     const accessToken = useSelector(state => state.auth.userData?.accessToken)
     const { interviewId } = useParams();
     const [data, setData] = useState(null);
@@ -26,7 +26,6 @@ const OngoingInterview = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [loaderMessage, setLoaderMessage] = useState("");
     const [input, setInput] = useState("");
-    const [started, setStarted] = useState(false);
     const navigate = useNavigate();
 
     ////////////////////////////////////////////////// TIMER CODE
@@ -118,7 +117,7 @@ const OngoingInterview = () => {
         console.log(fetchedData);
         setData(fetchedData?.data[0]);
         setIsLoading(false);
-        setStarted(true);
+        handleStart();
         document.documentElement.requestFullscreen();
         startTimer();
     }
@@ -138,7 +137,7 @@ const OngoingInterview = () => {
                         <Timer minutes={minutes} seconds={seconds} />
                     </div>
 
-                    {started ? (
+                    {start ? (
                         <>
                             <div>{data?.question}</div>
                             <textarea

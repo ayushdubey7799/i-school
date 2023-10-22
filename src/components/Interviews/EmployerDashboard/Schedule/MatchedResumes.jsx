@@ -58,7 +58,7 @@ function Row(props) {
         <TableCell component="th" scope="row" align="center">
 
         </TableCell>{" "}
-        <TableCell align="center"></TableCell>
+        <TableCell align="center">{row.email}</TableCell>
         <TableCell align="center"></TableCell>
         <TableCell align="center">{row.score}</TableCell>
         <TableCell align="center">  <input
@@ -101,13 +101,17 @@ export default function MatchedResumes() {
   const { jdId } = useParams();
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
+  const [idToSendInvite,setIdToSendInvite] = useState(null);
   const [selectedArray,setSelectedArray] = useState([]);
   const [open,setOpen] = useState(false);
 
   useEffect(() => {
     async function getData() {
       const resObj = await getMatches(jdId);
-      if (resObj) setTableRows(resObj.data[0].records.data);
+      if (resObj) {
+        setTableRows(resObj.data[0].records.data)
+        setIdToSendInvite(resObj.data[0].id);
+      };
     }
     getData()
   }, [])
@@ -145,7 +149,7 @@ export default function MatchedResumes() {
 
       <Content>
         <TableContainer component={Paper} className="tableBox">
-        <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={ScheduleModal} array={selectedArray} />
+        <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={ScheduleModal} array={[...selectedArray,idToSendInvite]} />
 
           <h3 style={{ paddingLeft: "3rem" }}>Matched Resumes for Jd Id: {jdId}</h3>
           <Table aria-label="collapsible table">
@@ -167,7 +171,7 @@ export default function MatchedResumes() {
             </TableBody>
           </Table>
         </TableContainer>
-        <button onClick={() => setOpen(true) } className='btn'>Schedule</button>
+        <button onClick={() => setOpen(true)} className='btn'>Schedule</button>
       </Content>
     </StyledDiv>
   );

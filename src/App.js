@@ -56,6 +56,9 @@ import Resume4 from "./components/Interviews/SeekerDashboard/resumeTemplates/Res
 import Resume5 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume5"
 import Resume6 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume6"
 import Resume7 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume7"
+import Proctored from "./pages/ProctoredInterviewTesting"
+import SlotSelection from "./components/Interviews/SeekerDashboard/SlotSelection"
+import InviteRedirect from "./components/Interviews/SeekerDashboard/InviteRedirect"
 
 
 
@@ -78,9 +81,10 @@ const App = () => {
           <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus/>}/>
           <Route path="/schedule" element={<ScheduleInterview />} />
           <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
-
+          <Route path="/interview-invite" element={<InviteRedirect/>}/>
+          <Route path="/slot-selection/:token" element={<SlotSelection/>}/>
           <Route path="/create" element={<NewInterviewDetails />} />
-          <Route path="/ongoing-interview/:interviewId" element={<OngoingInterview />} />
+          <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
           <Route path="/score/:interviewId" element={<Scorecard />} />
           <Route path="/proctor-test" element={<QuestionComponent />} />
           <Route path="/speech" element={<SpeechToText />} />

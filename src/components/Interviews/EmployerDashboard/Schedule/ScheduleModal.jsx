@@ -6,7 +6,8 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { getProductTypes } from '../../../../functions/api/employers/getProductTypes';
 import { getTestTypes } from '../../../../functions/api/employers/getTestTypes';
 import styled from 'styled-components';
-
+import axios from 'axios';
+import { sendInvite } from '../../../../functions/api/employers/match/sendInvite';
 
 export default function ScheduleModal({ array }) {
   const [value, setValue] = useState(dayjs('2022-04-17'));
@@ -14,7 +15,7 @@ export default function ScheduleModal({ array }) {
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState('');
   const [testType, setTestType] = useState('');
-
+  console.log(value);
   useEffect(() => {
     const getTypes = async () => {
       const response1 = await getProductTypes();
@@ -39,8 +40,40 @@ export default function ScheduleModal({ array }) {
     setTestType(e.target.value);
   };
 
+ const handleInvite = () => {
+  const makeApiCall = async () => {
 
-  console.log("Current", productTypes, testTypes);
+    const payload = {
+      "jdId": array[array.length-1],
+      "productType": "skill based",
+      "resumeIds": array.slice(0,-1),
+      "slotDate": "2023-10-24",
+      "testType": "AI",
+      "welcomeMessage": "string"
+    }
+
+
+    try {
+      const response = await sendInvite(payload)
+      console.log('API call successful:', response.data);
+    } catch (error) {
+      console.error('API call failed:', error);
+    }
+  };
+
+  makeApiCall();
+  
+  // const apiCallPromises = array.map(makeApiCall);
+  
+  // Promise.all(apiCallPromises)
+  //   .then(() => {
+  //     console.log('All API calls completed successfully');
+  //   })
+  //   .catch((error) => {
+  //     console.error('At least one API call failed:', error);
+  //   });
+ }
+console.log("ids",array)
 
   return (
     <Container>
@@ -70,7 +103,7 @@ export default function ScheduleModal({ array }) {
         </Select>
       </div>
       </div>
-      <button className='btn'>Send Invite</button>
+      <button className='btn' onClick={handleInvite}>Send Invite</button>
     </Container>
   );
 }

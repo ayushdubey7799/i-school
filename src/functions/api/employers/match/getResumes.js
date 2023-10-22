@@ -14,7 +14,7 @@ export const getMatches = async (
 
   try {
     const response = await axios.get(
-      `https://dev-api.intelliview.in/api/matches?jdIds=${jdIds}&page=1&size=10`,
+      `https://dev-api.intelliview.in/api/matches?jdIds=${jdIds}&page=1&size=20`,
       config
     );
     console.log("Data3:", response.data);
