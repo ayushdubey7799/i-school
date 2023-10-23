@@ -142,7 +142,7 @@ export default function ManageJds({ rows }) {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {tableRows?.map((row, index) => (
+            {tableRows?.filter(item => item.jdId).map((row, index) => (
               <Row key={row.jd_id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
             ))}
           </TableBody>

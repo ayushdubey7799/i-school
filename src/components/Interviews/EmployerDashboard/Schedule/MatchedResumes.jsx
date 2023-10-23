@@ -13,11 +13,13 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { getMatches } from "../../../../functions/api/employers/match/getResumes";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import LogoHeader from "../../../commonComponents/LogoHeader";
 import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import ScheduleModal from "./ScheduleModal";
+import { useSelector } from "react-redux";
+import {toast} from 'react-toastify'
 
 function Row(props) {
   const { row, isSelected, onToggle,handleSelectArray } = props;
@@ -104,10 +106,18 @@ export default function MatchedResumes() {
   const [idToSendInvite,setIdToSendInvite] = useState(null);
   const [selectedArray,setSelectedArray] = useState([]);
   const [open,setOpen] = useState(false);
+  const navigate = useNavigate();
+  const accessToken = useSelector(state => state.auth.userData.accessToken);
+  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
 
   useEffect(() => {
+
+    if(!accessToken || !clientCode){
+      toast.error("Login First");
+      navigate("/login");
+     }
     async function getData() {
-      const resObj = await getMatches(jdId);
+      const resObj = await getMatches(jdId, accessToken, clientCode);
       if (resObj) {
         setTableRows(resObj.data[0].records.data)
         setIdToSendInvite(resObj.data[0].id);

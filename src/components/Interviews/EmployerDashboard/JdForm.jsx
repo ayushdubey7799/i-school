@@ -70,7 +70,8 @@ function JdForm({ array, handleClose }) {
     keywords: '',
     jdUpload: null,
   });
-
+  const accessToken = useSelector(state => state.auth.userData.accessToken);
+  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
   useEffect(() => {
     if (array[0]) {
       setFormData(array[0]);
@@ -79,7 +80,6 @@ function JdForm({ array, handleClose }) {
     console.log("props", array[1]);
   }, [])
 
-  const accessToken = useSelector((state) => state.userData)
   console.log(formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -100,11 +100,11 @@ function JdForm({ array, handleClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (mode == "create") {
-      const resObj = await addJd(formData, accessToken);
+      const resObj = await addJd(formData, accessToken,clientCode);
       console.log(resObj);
     }
     else {
-      const editRes = await editJd(formData, accessToken);
+      const editRes = await editJd(formData, accessToken,clientCode);
       console.log(editRes);
     }
     handleClose();

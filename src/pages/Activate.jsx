@@ -14,6 +14,7 @@ const Activate = () => {
             if (res?.ok) {
                 navigate("/login");
             }
+            
         }
         act();
     })

@@ -23,6 +23,7 @@ import attachIcon from '../../../../assets/icons/attach.png'
 import editIcon from '../../../../assets/icons/edit.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
 import { getJds } from '../../../../functions/api/employers/getJds';
+import { useSelector } from 'react-redux';
 
 
 function Row(props) {
@@ -117,7 +118,7 @@ const JdRegistration = () => {
   const [openBasic, setOpenBasic] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
-
+  
   useEffect(() => {
     async function getData() {
       const res = await getJds();

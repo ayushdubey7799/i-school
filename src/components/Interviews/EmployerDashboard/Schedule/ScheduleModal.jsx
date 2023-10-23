@@ -8,22 +8,32 @@ import { getTestTypes } from '../../../../functions/api/employers/getTestTypes';
 import styled from 'styled-components';
 import axios from 'axios';
 import { sendInvite } from '../../../../functions/api/employers/match/sendInvite';
-
+import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import {toast} from 'react-toastify';
 export default function ScheduleModal({ array }) {
   const [value, setValue] = useState(dayjs('2022-04-17'));
   const [productTypes, setProductTypes] = useState([]);
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState('');
   const [testType, setTestType] = useState('');
+  const accessToken = useSelector(state => state.auth.userData.accessToken);
+  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
+ const navigate = useNavigate();
+
   console.log(value);
   useEffect(() => {
+    if(!accessToken || !clientCode){
+      toast.error("Login First");
+      navigate("/login");
+     }
     const getTypes = async () => {
-      const response1 = await getProductTypes();
+      const response1 = await getProductTypes(accessToken,clientCode);
       if (response1.code == 2000) {
         setProductTypes(response1.data.value.split(','));
       }
 
-      const response2 = await getTestTypes();
+      const response2 = await getTestTypes(accessToken,clientCode);
       if (response2.code == 2000) {
         setTestTypes(response2.data.value.split(','));
       }
@@ -54,7 +64,7 @@ export default function ScheduleModal({ array }) {
 
 
     try {
-      const response = await sendInvite(payload)
+      const response = await sendInvite(payload, accessToken,clientCode)
       console.log('API call successful:', response.data);
     } catch (error) {
       console.error('API call failed:', error);
