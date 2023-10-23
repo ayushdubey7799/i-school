@@ -21,6 +21,7 @@ import Billing from "../components/Interviews/EmployerDashboard/sidebarPages/Bil
 import RegisterCandidate from "../components/Interviews/EmployerDashboard/sidebarPages/RegisterCandidate";
 import RegisteredCandidates from "../components/Interviews/EmployerDashboard/sidebarPages/RegisteredCandidates";
 import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPages/AvailableTest";
+import ManageReqs from "../components/Interviews/EmployerDashboard/sidebarPages/ManageReqs";
 
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
@@ -75,7 +76,11 @@ const EmployerDashboard = () => {
           setOpen2={setOpen2}
         />
         <MainContent>
-          <EmployeMetrics setCurrentItem={setCurrentItem} />
+          {currentItem === 'dashboard' &&
+            <EmployeMetrics setCurrentItem={setCurrentItem} />
+          }
+          
+          {currentItem === "managereqs" && <ManageReqs/>}
           {currentItem === "jd-register" && <JdRegistration />}
           {currentItem === "manage-jds" && <JdRegistration />}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
@@ -114,6 +119,7 @@ background-color: #e3e3e3;
 const MainContent = styled.div`
   flex-grow: 1;
   margin-left: 17rem;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;

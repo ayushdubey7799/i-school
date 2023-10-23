@@ -104,12 +104,12 @@ const EmployeMetrics = ({ setCurrentItem }) => {
         </div>
         <span className='achievedNumberText'>Interviews</span>
       </div>
-      <div className='achievedNumberBox' onClick={() => setCurrentItem('candidate-register')}>
+      <div className='achievedNumberBox' onClick={() => setCurrentItem('candidate-registered')}>
         <div className='top'>
           <img src={metric4} />
           <span className='achievedNumberDigit'>12</span>
         </div>
-        <span className='achievedNumberText'>Registered Candidates</span>
+        <span className='achievedNumberText'>Candidates Pool</span>
       </div>
     </Container>
   );

@@ -58,6 +58,7 @@ function JdForm({ array, handleClose }) {
   const [formData, setFormData] = useState({
     jdId: '',
     reqNumber: '',
+    numberOfReqs: '',
     title: '',
     description: '',
     skills: '',
@@ -101,13 +102,14 @@ function JdForm({ array, handleClose }) {
     e.preventDefault();
     if (mode == "create") {
       const resObj = await addJd(formData, accessToken);
+      handleClose();
       console.log(resObj);
     }
     else {
       const editRes = await editJd(formData, accessToken);
+      handleClose();
       console.log(editRes);
     }
-    handleClose();
   };
 
   return (
@@ -127,6 +129,14 @@ function JdForm({ array, handleClose }) {
           type="text"
           name="reqNumber"
           value={formData.reqNumber}
+          onChange={handleChange}
+        />
+
+        <Label>Number of Reqs</Label>
+        <Input
+          type="text"
+          name="reqNumber"
+          value={formData.numberOfReqs}
           onChange={handleChange}
         />
 

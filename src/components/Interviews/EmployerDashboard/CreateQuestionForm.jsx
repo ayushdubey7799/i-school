@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
- width: 100%;
-margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
 `;
 
 const Form = styled.form`
@@ -43,22 +41,34 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  padding: 10px;
-  background-color: #007;
-  color: #fff;
+  padding: 0.6rem 1rem;
+  background-color: var(--lightOrange);
+  color: var(--white);
   border: none;
-  border-radius: 5px;
+  border-radius: 0.4rem;
   cursor: pointer;
+  font-weight: 600;
 `;
 
 const QuestionList = styled.ul`
   list-style: none;
-  padding: 0;
-  margin-top: 20px;
+  padding: 0rem;
+  margin-top: 1rem;
 `;
 
 const QuestionItem = styled.li`
-  margin-bottom: 10px;
+  margin-bottom: 0.6rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #eef;
+
+
+  .btnBox {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+  }
 `;
 
 function CreateQuestionForm() {
@@ -69,6 +79,8 @@ function CreateQuestionForm() {
     difficulty: '',
     choices: ['', '', '', ''],
     correctAnswer: '',
+    addType: '',
+    testId: '',
   });
 
   const [questions, setQuestions] = useState([]);
@@ -102,6 +114,8 @@ function CreateQuestionForm() {
       difficulty: '',
       choices: ['', '', '', ''],
       correctAnswer: '',
+      addType: '',
+      testId: '',
     });
   };
 
@@ -123,6 +137,8 @@ function CreateQuestionForm() {
       difficulty: '',
       choices: ['', '', '', ''],
       correctAnswer: '',
+      addType: '',
+      testId: '',
     });
     setEditingIndex(-1);
   };
@@ -156,7 +172,7 @@ function CreateQuestionForm() {
           onChange={handleChange}
         />
 
-        <Label>Description</Label>
+        <Label>Que Description</Label>
         <Textarea
           name="description"
           rows={5}
@@ -175,6 +191,22 @@ function CreateQuestionForm() {
           <option value="Medium">Medium</option>
           <option value="Hard">Hard</option>
         </Select>
+
+        <Label>Test Id</Label>
+        <Input
+          type="text"
+          name="testId"
+          value={formData.testId}
+          onChange={handleChange}
+        />
+
+        <Label>Add Type (Optional) </Label>
+        <Input
+          type="text"
+          name="addType"
+          value={formData.addType}
+          onChange={handleChange}
+        />
 
         {formData.type === 'Objective' && (
           <>
@@ -206,8 +238,9 @@ function CreateQuestionForm() {
       <QuestionList>
         {questions.map((question, index) => (
           <QuestionItem key={index}>
+            <p>Type: {question.type}</p>
             <p>Tag: {question.tag}</p>
-            <p>Description: {question.description}</p>
+            <p>Que Description: {question.description}</p>
             <p>Difficulty: {question.difficulty}</p>
             {question.type === 'Objective' && (
               <>
@@ -220,8 +253,12 @@ function CreateQuestionForm() {
                 <p>Correct Answer: {question.correctAnswer}</p>
               </>
             )}
-            <Button onClick={() => handleEditQuestion(index)}>Edit</Button>
-            <Button onClick={() => handleDeleteQuestion(index)}>Delete</Button>
+            <p>Test Id: {question.testId}</p>
+
+            <div className='btnBox'>
+              <Button onClick={() => handleEditQuestion(index)}>Edit</Button>
+              <Button onClick={() => handleDeleteQuestion(index)}>Delete</Button>
+            </div>
           </QuestionItem>
         ))}
       </QuestionList>

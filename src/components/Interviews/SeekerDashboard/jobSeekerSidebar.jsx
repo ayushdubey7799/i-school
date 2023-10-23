@@ -219,7 +219,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel3' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Resume Services</span>
+          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>CV Services</span>
           {expanded === 'panel3' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
