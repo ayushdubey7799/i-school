@@ -21,7 +21,6 @@ export default function ScheduleModal({ array }) {
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
  const navigate = useNavigate();
 
-  console.log(value);
   useEffect(() => {
     if(!accessToken || !clientCode){
       toast.error("Login First");
@@ -57,7 +56,7 @@ export default function ScheduleModal({ array }) {
       "jdId": array[array.length-1],
       "productType": "skill based",
       "resumeIds": array.slice(0,-1),
-      "slotDate": "2023-10-24",
+      "slotDate": value.format('YYYY-MM-DD'),
       "testType": "AI",
       "welcomeMessage": "string"
     }
@@ -72,25 +71,15 @@ export default function ScheduleModal({ array }) {
   };
 
   makeApiCall();
-  
-  // const apiCallPromises = array.map(makeApiCall);
-  
-  // Promise.all(apiCallPromises)
-  //   .then(() => {
-  //     console.log('All API calls completed successfully');
-  //   })
-  //   .catch((error) => {
-  //     console.error('At least one API call failed:', error);
-  //   });
  }
-console.log("ids",array)
+ console.log("Date->",value.format('YYYY-MM-DD'));
 
   return (
     <Container>
 
       <div className='mainBox'>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
+        <DateCalendar value={value} onChange={(newValue) => setValue(dayjs(newValue))} />
       </LocalizationProvider>
 
       <div className='selectBox'>
