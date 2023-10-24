@@ -32,11 +32,6 @@ const JobSeekerHeader = () => {
             </div>
 
             <div id="right">
-                <Link to="/demo" className="link">
-                    <span className="demo">Schedule Demo</span>
-                </Link>
-
-
                 <div className="profileIcon">
                     <IconButton>
                         <img src={profileIcon} className="profileImg" />
@@ -84,19 +79,6 @@ const StyledDiv = styled.div`
     gap: 0.5rem;
   }
 
-  .demo {
-    background: linear-gradient(to bottom, #2282A4, var(--lightOrange));
-    padding: 0.6rem 0.6rem;
-    color: var(--white);
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    border-radius: 0.5rem;
-  }
-
-  .demo:hover {
-    background: linear-gradient(to bottom, #8ACCDC, var(--lightOrange));
-  }
   
 
   .link {

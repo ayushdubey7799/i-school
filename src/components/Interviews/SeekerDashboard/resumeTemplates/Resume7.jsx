@@ -196,10 +196,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
-  max-width: 21cm;
-  margin: 4rem auto;
-  gap: 2rem;
+  width: calc(100% - 2rem);
+  margin: 0rem auto;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--white);
 
 
   .icon2 {
@@ -218,7 +219,7 @@ const Wrapper = styled.div`
   .experienceMainBox {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 0.5rem;
 
 }
 
@@ -280,14 +281,14 @@ padding-bottom: 2rem;
     width: calc(70% - 2rem);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .column1 {
     width: calc(30% - 2rem);
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 0.5rem;
 }
 
 
@@ -341,8 +342,8 @@ const Summary = styled.div`
 
 
 .text {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
     letter-spacing: 0.05rem;
 }
 
@@ -354,7 +355,7 @@ const Employment = styled.div`
 .experienceBox {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.2rem;
 
 
     .experienceBoxTop {
@@ -537,7 +538,7 @@ const Projects = styled.div`
 .projectBox {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
     
 }
 

@@ -19,18 +19,18 @@ import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import ScheduleModal from "./ScheduleModal";
 import { useSelector } from "react-redux";
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 function Row(props) {
-  const { row, isSelected, onToggle,handleSelectArray } = props;
-  const [selected,setSelected] = useState(false);
+  const { row, isSelected, onToggle, handleSelectArray } = props;
+  const [selected, setSelected] = useState(false);
 
   const handleSelectChange = (id) => {
-    if(selected){
-      handleSelectArray(id,false)
+    if (selected) {
+      handleSelectArray(id, false)
     }
-    else{
-      handleSelectArray(id,true)
+    else {
+      handleSelectArray(id, true)
     }
     setSelected((prev) => !prev)
 
@@ -39,9 +39,9 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow 
-      className={isSelected ? "selected" : ""}
-      sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow
+        className={isSelected ? "selected" : ""}
+        sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -103,19 +103,19 @@ export default function MatchedResumes() {
   const { jdId } = useParams();
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
-  const [idToSendInvite,setIdToSendInvite] = useState(null);
-  const [selectedArray,setSelectedArray] = useState([]);
-  const [open,setOpen] = useState(false);
+  const [idToSendInvite, setIdToSendInvite] = useState(null);
+  const [selectedArray, setSelectedArray] = useState([]);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
 
   useEffect(() => {
 
-    if(!accessToken || !clientCode){
+    if (!accessToken || !clientCode) {
       toast.error("Login First");
       navigate("/login");
-     }
+    }
     async function getData() {
       const resObj = await getMatches(jdId, accessToken, clientCode);
       if (resObj) {
@@ -127,11 +127,11 @@ export default function MatchedResumes() {
   }, [])
   console.log(tableRows)
 
-  const handleSelectArray = (id,action) => {
-    if(action){
-      setSelectedArray((prev) => [...prev,id]);
+  const handleSelectArray = (id, action) => {
+    if (action) {
+      setSelectedArray((prev) => [...prev, id]);
     }
-    else{
+    else {
       setSelectedArray((prev) => [...prev].filter((item) => item != id))
     }
   }
@@ -155,17 +155,17 @@ export default function MatchedResumes() {
   console.log(selectedArray);
   return (
     <StyledDiv>
-      <LogoHeader/>
+      <LogoHeader />
 
       <Content>
         <TableContainer component={Paper} className="tableBox">
-        <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={ScheduleModal} array={[...selectedArray,idToSendInvite]} />
+          <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={ScheduleModal} array={[...selectedArray, idToSendInvite]} />
 
           <h3 style={{ paddingLeft: "3rem" }}>Matched Resumes for Jd Id: {jdId}</h3>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align="center"/>
+                <TableCell align="center" />
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Match Percentage</TableCell>
                 <TableCell align="center">Email</TableCell>
@@ -176,7 +176,7 @@ export default function MatchedResumes() {
             </TableHead>
             <TableBody className="tableBody">
               {tableRows?.map((row, index) => (
-                <Row key={row.resumeId} row={row} isSelected={selectedRow === index} onToggle={handleToggle} handleSelectArray={handleSelectArray}/>
+                <Row key={row.resumeId} row={row} isSelected={selectedRow === index} onToggle={handleToggle} handleSelectArray={handleSelectArray} />
               ))}
             </TableBody>
           </Table>

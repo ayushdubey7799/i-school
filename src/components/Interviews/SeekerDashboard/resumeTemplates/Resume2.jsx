@@ -187,12 +187,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
-  height: 100%;
-  max-width: 21cm;
-  margin: 4rem auto;
-  gap: 2rem;
-  padding: 2rem 2rem;
+  width: calc(100% - 2rem);
+  margin: 0rem auto;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--white);
 
 
   .icon2 {
@@ -202,16 +201,16 @@ const Wrapper = styled.div`
   h2 {
     display: flex;
     flex-direction: row;
-    gap: 0.8rem;
+    gap: 0.7rem;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
   }
 
   .experienceMainBox {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 0.5rem;
 
 }
 
@@ -225,7 +224,7 @@ ul {
 const Content = styled.div`
 display: flex;
 flex-direction: column;
-gap: 1rem;
+gap: 0.6rem;
 width: 100%;
 
 
@@ -243,7 +242,7 @@ align-items: center;
 
 
 .name {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     font-weight: 600;
     padding-bottom: 0.5rem;
 }
@@ -285,8 +284,8 @@ const Summary = styled.div`
 
 
 .text {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
     letter-spacing: 0.05rem;
     padding-left: 2rem;
 }
@@ -300,7 +299,7 @@ const Employment = styled.div`
 .experienceBox {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.2rem;
     padding-left: 2rem;
 
 
@@ -387,8 +386,8 @@ const Skills = styled.div`
 .skillBox {
     display: flex;
     flex-flow: row wrap;
-    row-gap: 0.5rem;
-    column-gap: 0.5rem;
+    row-gap: 0.3rem;
+    column-gap: 0.3rem;
     padding-left: 1.5rem;
 }
 
@@ -406,8 +405,8 @@ const Language = styled.div`
 .skillBox {
     display: flex;
     flex-flow: row wrap;
-    row-gap: 0.5rem;
-    column-gap: 0.5rem;
+    row-gap: 0.3rem;
+    column-gap: 0.3rem;
     padding-left: 1.5rem;
 }
 
@@ -463,7 +462,7 @@ const Projects = styled.div`
 .projectBox {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
     padding-left: 2rem;
     
 }

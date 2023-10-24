@@ -49,16 +49,10 @@ import MatchedResumes from "./components/Interviews/EmployerDashboard/Schedule/M
 import QuestionComponent from "./pages/ProctoredInterviewTesting"
 import ReqAgencyDashboard from "./pages/ReqAgencyDashboard"
 import SpeechToText from "./pages/SpeechText"
-import Resume1 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume1"
-import Resume2 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume2"
-import Resume3 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume3"
-import Resume4 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume4"
-import Resume5 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume5"
-import Resume6 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume6"
-import Resume7 from "./components/Interviews/SeekerDashboard/resumeTemplates/Resume7"
 import Proctored from "./pages/ProctoredInterviewTesting"
 import SlotSelection from "./components/Interviews/SeekerDashboard/SlotSelection"
 import InviteRedirect from "./components/Interviews/SeekerDashboard/InviteRedirect"
+import SelectCVTempPage from "./pages/SelectCVTempPage"
 import CreateResumePage from "./pages/CreateResumePage"
 
 
@@ -123,14 +117,8 @@ const App = () => {
           <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
 
-          <Route path="/create-resume" element={<CreateResumePage />} />
-          <Route path='/create-resume/resume1' element={<Resume1 />} />
-          <Route path='/create-resume/resume2' element={<Resume2 />} />
-          <Route path='/create-resume/resume3' element={<Resume3 />} />
-          <Route path='/create-resume/resume4' element={<Resume4 />} />
-          <Route path='/create-resume/resume5' element={<Resume5 />} />
-          <Route path='/create-resume/resume6' element={<Resume6 />} />
-          <Route path='/create-resume/resume7' element={<Resume7 />} />
+          <Route path="/create-resume" element={<SelectCVTempPage />} />
+          <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
 
         </Routes>
       </ScrollToTop>

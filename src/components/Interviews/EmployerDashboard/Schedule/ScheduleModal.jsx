@@ -10,8 +10,11 @@ import axios from 'axios';
 import { sendInvite } from '../../../../functions/api/employers/match/sendInvite';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
-import {toast} from 'react-toastify';
-export default function ScheduleModal({ array }) {
+import { toast } from 'react-toastify';
+
+
+
+export default function ScheduleModal({ array, handleClose }) {
   const [value, setValue] = useState(dayjs('2022-04-17'));
   const [productTypes, setProductTypes] = useState([]);
   const [testTypes, setTestTypes] = useState([]);
@@ -19,20 +22,20 @@ export default function ScheduleModal({ array }) {
   const [testType, setTestType] = useState('');
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if(!accessToken || !clientCode){
+    if (!accessToken || !clientCode) {
       toast.error("Login First");
       navigate("/login");
-     }
+    }
     const getTypes = async () => {
-      const response1 = await getProductTypes(accessToken,clientCode);
+      const response1 = await getProductTypes(accessToken, clientCode);
       if (response1.code == 2000) {
         setProductTypes(response1.data.value.split(','));
       }
 
-      const response2 = await getTestTypes(accessToken,clientCode);
+      const response2 = await getTestTypes(accessToken, clientCode);
       if (response2.code == 2000) {
         setTestTypes(response2.data.value.split(','));
       }
@@ -49,58 +52,59 @@ export default function ScheduleModal({ array }) {
     setTestType(e.target.value);
   };
 
- const handleInvite = () => {
-  const makeApiCall = async () => {
+  const handleInvite = () => {
+    const makeApiCall = async () => {
 
-    const payload = {
-      "jdId": array[array.length-1],
-      "productType": "skill based",
-      "resumeIds": array.slice(0,-1),
-      "slotDate": value.format('YYYY-MM-DD'),
-      "testType": "AI",
-      "welcomeMessage": "string"
-    }
+      const payload = {
+        "jdId": array[array.length - 1],
+        "productType": "skill based",
+        "resumeIds": array.slice(0, -1),
+        "slotDate": value.format('YYYY-MM-DD'),
+        "testType": "AI",
+        "welcomeMessage": "string"
+      }
 
 
-    try {
-      const response = await sendInvite(payload, accessToken,clientCode)
-      console.log('API call successful:', response.data);
-    } catch (error) {
-      console.error('API call failed:', error);
-    }
-  };
+      try {
+        const response = await sendInvite(payload, accessToken, clientCode)
+        console.log('API call successful:', response.data);
+      } catch (error) {
+        console.error('API call failed:', error);
+      }
+    };
 
-  makeApiCall();
- }
- console.log("Date->",value.format('YYYY-MM-DD'));
+    makeApiCall();
+    handleClose();
+  }
+  console.log("Date->", value.format('YYYY-MM-DD'));
 
   return (
     <Container>
 
       <div className='mainBox'>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar value={value} onChange={(newValue) => setValue(dayjs(newValue))} />
-      </LocalizationProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DateCalendar value={value} onChange={(newValue) => setValue(dayjs(newValue))} />
+        </LocalizationProvider>
 
-      <div className='selectBox'>
-        <Select value={productType} onChange={handleProductTypeChange}>
-          <option value="">Select Product Type</option>
-          {productTypes.map((type, index) => (
-            <option key={index} value={type}>
-              {type}
-            </option>
-          ))}
-        </Select>
+        <div className='selectBox'>
+          <Select value={productType} onChange={handleProductTypeChange}>
+            <option value="">Select Product Type</option>
+            {productTypes.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </Select>
 
-        <Select value={testType} onChange={handleTestTypeChange}>
-          <option value="">Select Test Type</option>
-          {testTypes.map((type, index) => (
-            <option key={index} value={type}>
-              {type}
-            </option>
-          ))}
-        </Select>
-      </div>
+          <Select value={testType} onChange={handleTestTypeChange}>
+            <option value="">Select Test Type</option>
+            {testTypes.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </Select>
+        </div>
       </div>
       <button className='btn' onClick={handleInvite}>Send Invite</button>
     </Container>
