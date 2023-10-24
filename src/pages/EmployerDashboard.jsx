@@ -22,7 +22,6 @@ import RegisterCandidate from "../components/Interviews/EmployerDashboard/sideba
 import RegisteredCandidates from "../components/Interviews/EmployerDashboard/sidebarPages/RegisteredCandidates";
 import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPages/AvailableTest";
 import ManageReqs from "../components/Interviews/EmployerDashboard/sidebarPages/ManageReqs";
-
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 

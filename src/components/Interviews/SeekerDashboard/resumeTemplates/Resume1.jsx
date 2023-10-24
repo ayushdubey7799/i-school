@@ -174,12 +174,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
-  max-width: 21cm;
-  margin: 4rem auto;
-  padding: 1rem 1.5rem;
-  gap: 2rem;
-
+  width: calc(100% - 2rem);
+  margin: 0rem auto;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--white);
 
   .icon2 {
     color: grey;
@@ -188,16 +187,16 @@ const Wrapper = styled.div`
   h2 {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 0.7rem;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 600;
   }
 
   .experienceMainBox {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.5rem;
 
 }
 
@@ -219,14 +218,14 @@ width: 100%;
     width: calc(70% - 2rem);
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 0.5rem;
 }
 
 .column2 {
     width: calc(30% - 2rem);
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 0.3rem;
 }
 
 
@@ -266,8 +265,8 @@ const Summary = styled.div`
 
 
 .text {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
     letter-spacing: 0.05rem;
 }
 
@@ -280,7 +279,7 @@ const Employment = styled.div`
 .experienceBox {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.2rem;
 
 
     .experienceBoxTop {
@@ -365,8 +364,8 @@ const Skills = styled.div`
 .skillBox {
     display: flex;
     flex-flow: row wrap;
-    row-gap: 0.5rem;
-    column-gap: 0.5rem;
+    row-gap: 0.3rem;
+    column-gap: 0.3rem;
 }
 
 .skill {
@@ -385,8 +384,8 @@ const Language = styled.div`
 .skillBox {
     display: flex;
     flex-flow: row wrap;
-    row-gap: 0.5rem;
-    column-gap: 0.5rem;
+    row-gap: 0.3rem;
+    column-gap: 0.3rem;
 }
 
 .skill {

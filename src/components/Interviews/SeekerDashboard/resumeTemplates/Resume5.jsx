@@ -196,12 +196,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
-  max-width: 21cm;
-  margin: 4rem auto;
-  gap: 2rem;
-  padding: 2rem;
-
+  width: calc(100% - 2rem);
+  margin: 0rem auto;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--white);
 
   .icon2 {
     color: grey;

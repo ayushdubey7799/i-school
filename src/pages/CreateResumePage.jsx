@@ -1,82 +1,85 @@
 import React from 'react'
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components'
-import resume1 from '../assets/resume/resume1.png'
-import resume2 from '../assets/resume/resume2.png'
-import resume3 from '../assets/resume/resume3.png'
-import resume4 from '../assets/resume/resume4.png'
-import resume5 from '../assets/resume/resume5.png'
-import resume6 from '../assets/resume/resume6.png'
-import resume7 from '../assets/resume/resume7.png'
-import { useNavigate } from 'react-router'
-
-
-const resumes = [resume1, resume2, resume3, resume4, resume5, resume6, resume7];
-
+import Resume1 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume1'
+import Resume2 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume2'
+import Resume3 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume3'
+import Resume4 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume4'
+import Resume5 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume5'
+import Resume6 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume6'
+import Resume7 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume7'
+import CreateResumeLeftBox from '../components/Interviews/SeekerDashboard/resumeTemplates/CreateResumeLeftBox';
 
 const CreateResumePage = () => {
-  const navigate = useNavigate();
+    const { resumeId } = useParams();
 
+    console.log('ResumeId', resumeId);
 
-  return (
-    <Box>
-      {
-        resumes.map((resume, index) => (
-          <ChildBox onClick={() => navigate(`/create-resume/resume${index + 1}`)}>
-            <img src={resume} />
-            <button className='btn' onClick={() => navigate(`/create-resume/resume${index + 1}`)}>Use This Template</button>
-          </ChildBox>
-        ))
-      }
-    </Box>
-  )
+    return (
+        <Box>
+            <div className='box1'>
+                <CreateResumeLeftBox />
+            </div>
+            <div className='box2'>
+
+                <ResumeBox>
+                    {resumeId === '1' && <Resume1 />}
+                    {resumeId === '2' && <Resume2 />}
+                    {resumeId === '3' && <Resume3 />}
+                    {resumeId === '4' && <Resume4 />}
+                    {resumeId === '5' && <Resume5 />}
+                    {resumeId === '6' && <Resume6 />}
+                    {resumeId === '7' && <Resume7 />}
+                </ResumeBox>
+            </div>
+        </Box>
+    )
 }
 
 export default CreateResumePage
 
 const Box = styled.div`
-width: 90%;
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-margin: 2rem auto;
-gap: 1rem;
-justify-content: center;
+width: 100%;
+display: flex;
+
+
+
+
+.box1 {
+    width: 50%;
+}
+
+.box2 {
+    width: 50%;
+    height: 100vh;
+    background-color: lightgrey;
+    display: flex;
+    align-items: center;
+    left: 50%;
+    position: fixed;
+}
 
 `
 
-const ChildBox = styled.div`
-background-color: #EEF3F9;
-display: flex;
-justify-content: center;
-align-items: center;
-postion: relative;
-cursor: pointer;
+const ResumeBox = styled.div`
+margin: 1rem 5%;
+height: 95%;
+overflow-y: auto;
+border-radius: 0.5rem;
 
+& {
+    scrollbar-width: none;
+  }  
 
+  &::-webkit-scrollbar {
+    width: 0rem;
+  }
 
-img {
-  width: 90%;
-  height: 90%;
-}
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-.btn {
-  position: absolute;
-  display: none;
-  background-color: var(--lightOrange);
-  border: none;
-  padding: 1rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--white);
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-
-&:hover .btn {
-  display: block;
-}
-
-&:hover img {
-  box-shadow: 0 0 0.5rem 0.2rem rgba(0, 0, 0, 0.1);
-}
-
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
 `

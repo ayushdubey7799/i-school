@@ -201,11 +201,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
-  max-width: 21cm;
-  margin: 4rem auto;
-  gap: 2rem;
-  padding: 2rem;
+  width: calc(100% - 2rem);
+  margin: 0rem auto;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--white);
 
 
   .icon2 {
@@ -215,7 +215,7 @@ const Wrapper = styled.div`
   h2 {
     display: flex;
     flex-direction: row;
-    gap: 0.8rem;
+    gap: 07rem;
     align-items: center;
     font-size: 1.1rem;
     font-weight: 600;
@@ -224,7 +224,7 @@ const Wrapper = styled.div`
   .experienceMainBox {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 0.5rem;
 
 }
 
@@ -251,7 +251,7 @@ width: 100%;
     width: calc(70% - 2rem);
     display: flex;
     flex-direction: column;
-    gap: 1.3rem;
+    gap: 1rem;
 }
 
 .column1 {
