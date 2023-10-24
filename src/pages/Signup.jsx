@@ -107,8 +107,8 @@ const Signup = () => {
 
     const registerRes = await employerRegister(details);
     if (registerRes) {
-      toast.success("Successfully signed up");
-      navigate("/dashboard/employer");
+      toast.success("Onboard request sent");
+      // navigate("/dashboard/employer");
     }
     else {
       toast.error("Error");

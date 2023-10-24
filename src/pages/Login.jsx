@@ -46,7 +46,7 @@ const Login = () => {
    const inviteToken = localStorage.getItem('inviteToken')
 
    if (userData?.accessToken) {
-
+     
     userData.user?.clientCode == "intelliview"
       ? navigate("/dashboard/jobseeker")
       : navigate("/dashboard/employer");

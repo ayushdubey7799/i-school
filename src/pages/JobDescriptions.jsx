@@ -3,10 +3,13 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { getJds } from "../functions/api/employers/getJds";
 import Loader from "../components/commonComponents/Loader";
+import { useSelector } from "react-redux";
 
 const JobDescriptions = () => {
     const [JDsArray, setJDsArray] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const accessToken = useSelector(state => state);
+    console.log("token",accessToken)
 
     useEffect(() => {
         async function getData() {

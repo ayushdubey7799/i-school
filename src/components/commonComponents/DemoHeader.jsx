@@ -12,6 +12,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 const Header = () => {
   const navigate = useNavigate();
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
+ console.log("clcd",clientCode);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
@@ -101,9 +103,9 @@ const Header = () => {
       </div>
       <div id="right">
         {accessToken ? (
-          <Link to="/dashboard/jobseeker" className="link">
+          <Link to={clientCode == "intelliview"?"/dashboard/jobseeker":"/dashboard/employer"} className="link">
             {" "}
-            <span id="sign-in">Go to Dashboard</span>
+            <span id="sign-in">Go to Dashboard2</span>
           </Link>
         ) : (
           <Link to="/login" className="link">

@@ -8,22 +8,31 @@ import { getTestTypes } from '../../../../functions/api/employers/getTestTypes';
 import styled from 'styled-components';
 import axios from 'axios';
 import { sendInvite } from '../../../../functions/api/employers/match/sendInvite';
-
+import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import {toast} from 'react-toastify';
 export default function ScheduleModal({ array }) {
   const [value, setValue] = useState(dayjs('2022-04-17'));
   const [productTypes, setProductTypes] = useState([]);
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState('');
   const [testType, setTestType] = useState('');
-  console.log(value);
+  const accessToken = useSelector(state => state.auth.userData.accessToken);
+  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
+ const navigate = useNavigate();
+
   useEffect(() => {
+    if(!accessToken || !clientCode){
+      toast.error("Login First");
+      navigate("/login");
+     }
     const getTypes = async () => {
-      const response1 = await getProductTypes();
+      const response1 = await getProductTypes(accessToken,clientCode);
       if (response1.code == 2000) {
         setProductTypes(response1.data.value.split(','));
       }
 
-      const response2 = await getTestTypes();
+      const response2 = await getTestTypes(accessToken,clientCode);
       if (response2.code == 2000) {
         setTestTypes(response2.data.value.split(','));
       }
@@ -47,14 +56,14 @@ export default function ScheduleModal({ array }) {
       "jdId": array[array.length-1],
       "productType": "skill based",
       "resumeIds": array.slice(0,-1),
-      "slotDate": "2023-10-24",
+      "slotDate": value.format('YYYY-MM-DD'),
       "testType": "AI",
       "welcomeMessage": "string"
     }
 
 
     try {
-      const response = await sendInvite(payload)
+      const response = await sendInvite(payload, accessToken,clientCode)
       console.log('API call successful:', response.data);
     } catch (error) {
       console.error('API call failed:', error);
@@ -62,25 +71,15 @@ export default function ScheduleModal({ array }) {
   };
 
   makeApiCall();
-  
-  // const apiCallPromises = array.map(makeApiCall);
-  
-  // Promise.all(apiCallPromises)
-  //   .then(() => {
-  //     console.log('All API calls completed successfully');
-  //   })
-  //   .catch((error) => {
-  //     console.error('At least one API call failed:', error);
-  //   });
  }
-console.log("ids",array)
+ console.log("Date->",value.format('YYYY-MM-DD'));
 
   return (
     <Container>
 
       <div className='mainBox'>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
+        <DateCalendar value={value} onChange={(newValue) => setValue(dayjs(newValue))} />
       </LocalizationProvider>
 
       <div className='selectBox'>
