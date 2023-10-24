@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import ModalHOC from '../../SeekerDashboard/ModalHOC';
+import CreateQuestionForm from '../CreateQuestionForm';
 
 const initialData = {
   list1: [
@@ -55,41 +57,54 @@ const initialData = {
       answer: "A URL (Uniform Resource Locator) is a reference or address used to access resources on the internet. It specifies the protocol (e.g., HTTP or HTTPS), domain name, path, and sometimes query parameters to locate a specific resource."
     }
   ]
-  
-  
-  
-,
+
+
+
+  ,
   list2: [
-   
+
   ],
 };
 
 const Container = styled.div`
 width: 90%;
   display: flex;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding-bottom: 3rem;
+
+  .floatBtn {
+    background-color: var(--lightOrange);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    
+  }
 `;
 
 const QuestionContainer = styled.div`
   width: 50%;
   padding: 1rem;
-  border: 0.08rem solid #ddd;
   margin: 0.5rem;
   font-size: 0.7rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
+  background-color: var(--white);
 `;
 
 const TestContainer = styled.div`
   width: 50%;
-  padding: 16px;
-  border: 1px solid #ddd;
+  padding: 1rem;
   margin: 8px;
   font-size: 0.7rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   height: auto;
+  background-color: var(--white);
 `;
 
 const ListTitle = styled.h3`
@@ -120,31 +135,32 @@ const ListItem = styled.div`
 const ManageTests = () => {
   const [data, setData] = useState(initialData);
   const [createVisible, setCreateVisible] = useState(false);
+  const [openBasic, setOpenBasic] = useState(false);
 
   useEffect(() => {
-    if(data.list2.length>=3){setCreateVisible(true)}else{
-        setCreateVisible(false);
+    if (data.list2.length >= 3) { setCreateVisible(true) } else {
+      setCreateVisible(false);
     };
 
-  },[data])
+  }, [data])
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
-  
+
     const { source, destination, draggableId } = result;
-  
+
     if (source.droppableId === destination.droppableId) {
       // Reorder within the same list
       const list = data[source.droppableId];
       const updatedList = [...list];
       const [movedItem] = updatedList.splice(source.index, 1);
       updatedList.splice(destination.index, 0, movedItem);
-  
+
       const updatedData = {
         ...data,
         [source.droppableId]: updatedList,
       };
-  
+
       setData(updatedData);
     } else {
       // Move item between lists
@@ -154,18 +170,18 @@ const ManageTests = () => {
       const updatedDestinationList = [...destinationList];
       const [movedItem] = updatedSourceList.splice(source.index, 1);
       updatedDestinationList.splice(destination.index, 0, movedItem);
-  
+
       const updatedData = {
         ...data,
         [source.droppableId]: updatedSourceList,
         [destination.droppableId]: updatedDestinationList,
       };
-  
+
       setData(updatedData);
     }
   };
-  
-  
+
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container>
@@ -175,7 +191,8 @@ const ManageTests = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <ListTitle>List of existing questions <span>Add Question</span></ListTitle>
+              <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={CreateQuestionForm} />
+              <ListTitle>List of existing questions <button onClick={() => setOpenBasic(true)} className='floatBtn'>Add Question</button></ListTitle>
               {data.list1.map((item, index) => (
                 <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                   {(provided) => (
@@ -185,8 +202,8 @@ const ManageTests = () => {
                       {...provided.dragHandleProps}
                     >
                       Q. {item.question}
-                      <br/>
-                      <br/>
+                      <br />
+                      <br />
                       A. {item.answer}
                     </ListItem>
                   )}
@@ -202,8 +219,8 @@ const ManageTests = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <ListTitle>Drop Questions here to create a test              {createVisible && <span>Create Test</span>}
-</ListTitle>
+              <ListTitle>Drop Questions here to create a test {createVisible && <button className='floatBtn'>Create Test</button>}
+              </ListTitle>
 
               {data.list2.map((item, index) => (
                 <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
@@ -213,9 +230,9 @@ const ManageTests = () => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                       Q. {item.question}
-                      <br/>
-                      <br/>
+                      Q. {item.question}
+                      <br />
+                      <br />
                       A. {item.answer}
                     </ListItem>
                   )}

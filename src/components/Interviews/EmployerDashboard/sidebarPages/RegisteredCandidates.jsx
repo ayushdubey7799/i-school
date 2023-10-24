@@ -130,7 +130,7 @@ export default function RegisteredCandidates() {
                 <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
             </SearchBarContainer>
             <TableContainer component={Paper} className="tableBox">
-                <h3 style={{ paddingLeft: "3rem" }}>Registered Candidates</h3>
+                <h3 style={{ paddingLeft: "3rem" }}>Candidates Pool</h3>
                 <Table aria-label="collapsible table">
                     <TableHead className="tableHead">
                         <TableRow>

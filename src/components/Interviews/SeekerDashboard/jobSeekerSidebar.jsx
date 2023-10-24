@@ -219,7 +219,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel3' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Resume Services</span>
+          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>CV Services</span>
           {expanded === 'panel3' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails>
@@ -260,6 +260,32 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+      <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel6bh-content"
+          id="panel6bh-header"
+          classes={{
+            root: 'custom-accordion-summary-root',
+            expanded: expanded === 'panel6' ? 'expanded' : ''
+          }}
+        >
+          <span className={`menuTitle ${expanded === 'panel6' ? 'selected' : ''}`}>Support</span>
+          {expanded === 'panel6' && <Arrow></Arrow>}
+        </AccordionSummary>
+        <AccordionDetails>
+          <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
+            <img src={createTicketIcon} className='icon' />
+            <a href='https://intelliview.zohodesk.com/portal/en/home' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
+            <OpenInNewIcon className='openNew' />
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>
+            <img src={callSupportIcon} className='icon' />
+            Contact Support
+          </MenuItem>
+        </AccordionDetails>
+      </Accordion>
+
       <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -287,32 +313,6 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
             <img src={inboxIcon} className='icon' />
             Inbox
-          </MenuItem>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel6bh-content"
-          id="panel6bh-header"
-          classes={{
-            root: 'custom-accordion-summary-root',
-            expanded: expanded === 'panel6' ? 'expanded' : ''
-          }}
-        >
-          <span className={`menuTitle ${expanded === 'panel6' ? 'selected' : ''}`}>Support</span>
-          {expanded === 'panel6' && <Arrow></Arrow>}
-        </AccordionSummary>
-        <AccordionDetails>
-          <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
-            <img src={createTicketIcon} className='icon' />
-            <a href='https://intelliview.zohodesk.com/portal/en/home' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
-            <OpenInNewIcon className='openNew' />
-          </MenuItem>
-          <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>
-            <img src={callSupportIcon} className='icon' />
-            Contact Support
           </MenuItem>
         </AccordionDetails>
       </Accordion>

@@ -61,7 +61,7 @@ const SubmitButton = styled.button`
 
 
 const CreateQuestion = () => {
-  const [ openBasic, setOpenBasic] = useState(false);
+  const [openBasic, setOpenBasic] = useState(false);
 
   return (
     <Container>

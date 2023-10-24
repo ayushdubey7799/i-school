@@ -31,10 +31,10 @@ const JobSeekerDashboard = () => {
     if (!accessToken) navigate("/login");
 
     const inviteToken = localStorage.getItem('inviteToken');
-    if(inviteToken){
+    if (inviteToken) {
       navigate(`/slot-selection/${inviteToken}`)
     }
-    
+
 
   }, []);
 
@@ -46,7 +46,9 @@ const JobSeekerDashboard = () => {
       <StyledContent>
         <JobSeekerSidebar currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <MainContent>
-          <Metrics setCurrentItem={setCurrentItem} />
+          {currentItem === 'dashboard' &&
+            <Metrics setCurrentItem={setCurrentItem} />
+          }
           {currentItem === 'job-search' && <JobSearchBar />}
           {currentItem === 'interviewDash' && <InterviewTabs />}
           {currentItem === 'applied-jobs' && <JobApplication />}
@@ -79,6 +81,7 @@ background-color: #e3e3e3;
 const MainContent = styled.div`
   flex-grow: 1;
   margin-left: 17rem;
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
