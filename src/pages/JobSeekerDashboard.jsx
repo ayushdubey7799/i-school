@@ -16,6 +16,7 @@ import CallSupport from "../components/Interviews/SeekerDashboard/sidebarPages/C
 import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/RecommendedJobs";
 import InterviewTabs from "../components/Interviews/InterviewTabs";
 import SavedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/SavedJobs";
+import ProfileNew from "../components/Interviews/SeekerDashboard/sidebarPages/ProfileNew";
 
 
 const Verification = () => <div>Verification Content</div>;
@@ -57,7 +58,7 @@ const JobSeekerDashboard = () => {
           {currentItem === 'create-resume' && <CreateResume />}
           {currentItem === 'enhance-resume' && <EnhanceResume />}
 
-          {currentItem === 'profile' && <Profile />}
+          {currentItem === 'profile' && <ProfileNew />}
           {currentItem === 'subscriptions' && <Subscription />}
           {currentItem === 'inbox' && <Inbox />}
 

@@ -118,13 +118,12 @@ const JdRegistration = () => {
   const [openBasic, setOpenBasic] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
-  
+
   useEffect(() => {
     async function getData() {
       const res = await getJds();
       setTableRows(res?.data?.data);
     }
-
     getData();
   }, []);
 
