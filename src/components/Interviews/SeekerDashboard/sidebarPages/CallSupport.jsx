@@ -57,7 +57,7 @@ width: 100%;
     gap: 5rem;
     justify-content: center;
     background-color: var(--white);
-    padding: 2rem 5%;
+    padding: 5rem 15%;
     border-radius: 0.8rem;
     box-shadow: 0 0 0.4rem 0 rgba(0, 0, 0, 0.25);
 }

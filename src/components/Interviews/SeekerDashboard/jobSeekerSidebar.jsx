@@ -276,7 +276,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         <AccordionDetails>
           <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
             <img src={createTicketIcon} className='icon' />
-            <a href='https://intelliview.zohodesk.com/portal/en/home' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
+            <a href='https://intelliview.zohodesk.com/portal/en/newticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
             <OpenInNewIcon className='openNew' />
           </MenuItem>
           <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>

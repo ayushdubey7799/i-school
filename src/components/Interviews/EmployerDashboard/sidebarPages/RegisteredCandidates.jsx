@@ -20,31 +20,12 @@ import deleteIcon from '../../../../assets/icons/delete.png'
 import searchIcon from '../../../../assets/icons/searchIcon.png'
 
 function Row(props) {
-    const { row, isSelected, onToggle } = props;
+    const { row } = props;
 
     return (
         <React.Fragment>
             <TableRow
-                className={isSelected ? "selected" : ""}
                 sx={{ "& > *": { borderBottom: "unset" } }}>
-                <TableCell>
-                    <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={(e) => {
-                            e.stopPropagation(); // Prevent row click event from firing
-                            onToggle(row);
-                        }}
-                    >
-                        {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
-                <TableCell component="th" scope="row" align="center">
-                    {row.id}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center">
-                    ...
-                </TableCell>{" "}
                 <TableCell align="center">...</TableCell>
                 <TableCell align="center">...</TableCell>
                 <TableCell align="center">...</TableCell>
@@ -57,30 +38,8 @@ function Row(props) {
                     type="checkbox"
                     className="checkBox"
                 /></TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
-                    <Collapse in={row.open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 1 }}>
-                            <Typography variant="body1" gutterBottom>
-                                {/* Have to change these according to api data */}
-                                {/* <div style={{ fontSize: "0.7rem" }}>Title: {row.title}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Description: {row.description}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Skills: {row.skills}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Experience: {row.experience}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Location: {row.location}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>WorkType: {row.workType}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>CTC: {row.ctc}</div>
-                <br/> */}
-                            </Typography>
-                        </Box>
-                    </Collapse>
+                <TableCell align="center">
+                    <button className="resumeBtn">View Resume</button>
                 </TableCell>
             </TableRow>
         </React.Fragment>
@@ -134,9 +93,6 @@ export default function RegisteredCandidates() {
                 <Table aria-label="collapsible table">
                     <TableHead className="tableHead">
                         <TableRow>
-                            <TableCell align="center" />
-                            <TableCell align="center">Serial No.</TableCell>
-                            <TableCell align="center">JD ID</TableCell>
                             <TableCell align="center">Name</TableCell>
                             <TableCell align="center">Email</TableCell>
                             <TableCell align="center">Contact</TableCell>
@@ -144,6 +100,7 @@ export default function RegisteredCandidates() {
                             <TableCell align="center">Reg By</TableCell>
                             <TableCell align="center">Delete</TableCell>
                             <TableCell align="center">Select</TableCell>
+                            <TableCell align="center">Resume</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody className="tableBody">
@@ -214,6 +171,17 @@ align-items: center;
 .checkBox {
   cursor: pointer;
 }
+
+.resumeBtn {
+    background-color: var(--lightOrange);
+    padding: 0.4rem 0.7rem;
+    border: none;
+    color: var(--white);
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
 `
 
 

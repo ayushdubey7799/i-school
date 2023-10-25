@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BasicDetails from '../../SeekerDashboard/BasicDetails';
-import ModalHOC from '../../SeekerDashboard/ModalHOC';
-import KeySkills from '../../SeekerDashboard/Keyskills';
-import Education from '../../SeekerDashboard/Education';
-import Projects from '../../SeekerDashboard/Projects';
-import ProfessionalInfo from '../../SeekerDashboard/ProfessionalInfo';
-import editIcon from '../../../../assets/icons/edit.png'
 import uploadIcon from '../../../../assets/icons/upload.png'
 import browseIcon from '../../../../assets/icons/browse.png'
 
@@ -25,27 +18,28 @@ const Component = styled.div`
   border: 1px solid #ccc;
   padding: 1.5rem 1rem;;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   border-radius: 0.7rem;
   font-size: 0.9rem;
   background-color: var(--white);
-`;
 
-const EditButton = styled.button`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  text-decoration: underline;
-  width: 2rem;
-  margin-right: 0.6rem;
 
-  img {
-    width: 90%;
+  .registerBtn {
+    padding: 0.5rem 0.8rem;
+    background-color: var(--lightOrange);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    color: var(--white);
+    font-size: 1rem;
+    margin-top: 2rem;
   }
 `;
 
-const Form = styled.form`
+
+const Form = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,6 +50,59 @@ const Form = styled.form`
     font-weight: 600;
     margin-bottom: 8px;
   }
+
+  .inputBox {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  input {
+    width: 100%;
+    height: 2.5rem;
+    margin-top: 0.7rem;
+    padding-left: 0.5rem;
+    border-radius: 0.3rem;
+    border: 0.05rem solid lightgrey;
+    background-color: var(--white);
+    font-size: 1rem;
+  }
+
+  input:focus {
+    outline-color: var(--lightOrange);
+  }
+
+  
+  .label {
+    position: absolute;
+    top: -0.8rem;
+    left: 0rem;
+    transition: color 0.3s;
+  }
+
+  input:focus + .label {
+    color: var(--lightOrange);
+  }
+
+
+  .label {
+    color: var(--color);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .resumeBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
 `;
 
 const Label = styled.label`
@@ -77,107 +124,109 @@ const Label = styled.label`
 `;
 
 const FileInput = styled.input`
-  margin-bottom: 20px;
+  margin-bottom: 0rem;
 `;
 
-const SubmitButton = styled.button`
-  padding: 0.4rem 4rem;
-  background-color: var(--lightOrange);
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  
-
-  img {
-    width: 2rem;
-  }
-`;
 
 
 const RegisterCandidate = () => {
-    const [openBasic, setOpenBasic] = useState(false);
-    const [openSkills, setOpenSkills] = useState(false);
-    const [openEducation, setOpenEducation] = useState(false);
-    const [openProjects, setOpenProjects] = useState(false);
 
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedFileName, setSelectedFileName] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState('');
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contact, setContact] = useState('');
+  const [ref, setRef] = useState('');
 
-        if (file) {
-            setSelectedFile(file);
-            setSelectedFileName(file.name);
-        }
-    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // You can handle the file upload here, for example, by sending the file to a server.
-        if (selectedFile) {
-            console.log('Selected File:', selectedFile);
-            // You can add code to upload the file to a server or perform any other actions here.
-        } else {
-            console.log('No file selected.');
-        }
-    };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
 
-    const DecideComponent = () => {
-        return <div>working</div>
+    if (file) {
+      setSelectedFile(file);
+      setSelectedFileName(file.name);
     }
-    return (
-        <Container>
+  };
 
-            <h3>Register New Candidates</h3>
-            <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={BasicDetails} />
-            <Component>
-                <span>Basic Details</span>
-                <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon} /></EditButton>
-            </Component>
-            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} Component={ProfessionalInfo} />
-            <Component>
-                <span>Professional Information</span>
-                <EditButton onClick={() => setOpenSkills(true)}><img src={editIcon} /></EditButton>
-            </Component>
-            <Component>
-                <span>Verification</span>
-                <EditButton><img src={editIcon} /></EditButton>
-            </Component>
+  const handleRegister = () => {
 
-            <ModalHOC openNewInterviewModal={openEducation} setOpenNewInterviewModal={setOpenEducation} Component={Education} />
-            <Component>
-                <span>Education</span>
-                <EditButton onClick={() => setOpenEducation(true)}><img src={editIcon} /></EditButton>
-            </Component>
-            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} Component={Projects} />
-            <Component>
-                <span>Projects</span>
-                <EditButton onClick={() => setOpenProjects(true)}><img src={editIcon} /></EditButton>
-            </Component>
+  }
 
-            <Component>
-                <Form onSubmit={handleSubmit}>
-                    <span>Resume</span>
-                    <br />
-                    <>
-                        <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
-                        <FileInput
-                            id='input'
-                            type="file"
-                            accept=".pdf,.doc,.docx"
-                            onChange={handleFileChange}
-                            style={{ display: 'none' }}
-                        />
-                    </>
-                    <SubmitButton type="submit"><img src={uploadIcon} /></SubmitButton>
-                    <br />
-                    <span>Upload Resume</span>
-                </Form>
-            </Component>
+  const DecideComponent = () => {
+    return <div>working</div>
+  }
+  return (
+    <Container>
 
-        </Container>
-    );
+      <h3>Register New Candidate</h3>
+
+      <Component>
+        <Form>
+          <div className="inputBox">
+            <input
+              type="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <label htmlFor="name" className='label'>Name</label>
+          </div>
+
+          <div className="inputBox">
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label htmlFor="email" className='label'>Email</label>
+          </div>
+
+
+          <div className="inputBox">
+            <input
+              type="tel"
+              id="phone"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              required
+            />
+            <label htmlFor="phone" className='label'>Phone</label>
+          </div>
+
+
+          <div className="inputBox">
+            <input
+              type="text"
+              id="ref"
+              value={ref}
+              onChange={(e) => setRef(e.target.value)}
+              required
+            />
+            <label htmlFor="ref" className='label'>Referral</label>
+          </div>
+
+          <div className='resumeBox'>
+            <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
+            <FileInput
+              id='input'
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+            <span>Select Resume</span>
+          </div>
+        </Form>
+
+        <button onClick={handleRegister} className='registerBtn'>Register Candidate</button>
+      </Component>
+
+    </Container>
+  );
 };
 
 export default RegisterCandidate;
