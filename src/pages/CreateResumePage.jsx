@@ -9,6 +9,7 @@ import Resume5 from '../components/Interviews/SeekerDashboard/resumeTemplates/Re
 import Resume6 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume6'
 import Resume7 from '../components/Interviews/SeekerDashboard/resumeTemplates/Resume7'
 import CreateResumeLeftBox from '../components/Interviews/SeekerDashboard/resumeTemplates/CreateResumeLeftBox';
+import ResumeHeader from '../components/commonComponents/ResumeHeader';
 
 const CreateResumePage = () => {
     const { resumeId } = useParams();
@@ -17,20 +18,23 @@ const CreateResumePage = () => {
 
     return (
         <Box>
-            <div className='box1'>
-                <CreateResumeLeftBox />
-            </div>
-            <div className='box2'>
+            <ResumeHeader/>
+            <div className='childBox'>
+                <div className='box1'>
+                    <CreateResumeLeftBox />
+                </div>
+                <div className='box2'>
 
-                <ResumeBox>
-                    {resumeId === '1' && <Resume1 />}
-                    {resumeId === '2' && <Resume2 />}
-                    {resumeId === '3' && <Resume3 />}
-                    {resumeId === '4' && <Resume4 />}
-                    {resumeId === '5' && <Resume5 />}
-                    {resumeId === '6' && <Resume6 />}
-                    {resumeId === '7' && <Resume7 />}
-                </ResumeBox>
+                    <ResumeBox>
+                        {resumeId === '1' && <Resume1 />}
+                        {resumeId === '2' && <Resume2 />}
+                        {resumeId === '3' && <Resume3 />}
+                        {resumeId === '4' && <Resume4 />}
+                        {resumeId === '5' && <Resume5 />}
+                        {resumeId === '6' && <Resume6 />}
+                        {resumeId === '7' && <Resume7 />}
+                    </ResumeBox>
+                </div>
             </div>
         </Box>
     )
@@ -43,7 +47,11 @@ width: 100%;
 display: flex;
 
 
-
+.childBox {
+    margin-top: 4rem;
+    width: 100%;
+    display: flex;
+}
 
 .box1 {
     width: 50%;

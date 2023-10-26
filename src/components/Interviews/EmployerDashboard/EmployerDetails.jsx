@@ -2,22 +2,30 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 100%;
+  width: 90%;
+  height: 100%;
   margin: 0 auto;
   padding: 20px;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding-bottom: 1rem;
+  width: 100%;
+  height: 100%;
+  align-items: center;
 `;
 
 const Label = styled.label`
   margin-bottom: 8px;
   font-size: 0.8rem;
   font-weight: bold;
+  width: 100%;
 `;
 
 const Input = styled.input`
@@ -25,6 +33,7 @@ const Input = styled.input`
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 100%;
 `;
 
 const Select = styled.select`
@@ -32,6 +41,7 @@ const Select = styled.select`
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 102.8%;
 `;
 
 const Textarea = styled.textarea`
@@ -39,6 +49,7 @@ const Textarea = styled.textarea`
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 100%;
 `;
 
 const Button = styled.button`
@@ -59,6 +70,7 @@ function EmployerDetails({ handleClose }) {
     location: "",
     address: "",
     email: "",
+    contact: "",
     legalContact: "",
   });
 
@@ -79,7 +91,6 @@ function EmployerDetails({ handleClose }) {
 
   return (
     <Container>
-      <h3>Employer Profile</h3>
       <Form onSubmit={handleSubmit}>
         <Label>Company</Label>
         <Input
@@ -153,6 +164,7 @@ function EmployerDetails({ handleClose }) {
           name="address"
           value={formData.address}
           onChange={handleChange}
+          rows={3}
         />
 
         <Label>Email</Label>
@@ -163,9 +175,16 @@ function EmployerDetails({ handleClose }) {
           onChange={handleChange}
         />
 
+        <Label>Contact</Label>
+        <Input
+          type="tel"
+          name="contact"
+          value={formData.contact}
+          onChange={handleChange}
+        />
         <Label>Legal Contact</Label>
         <Input
-          type="text"
+          type="tel"
           name="legalContact"
           value={formData.legalContact}
           onChange={handleChange}
@@ -178,3 +197,5 @@ function EmployerDetails({ handleClose }) {
 }
 
 export default EmployerDetails;
+
+

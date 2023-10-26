@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import ModalHOC from '../../SeekerDashboard/ModalHOC';
 import CreateQuestionForm from '../CreateQuestionForm';
 
+import searchIcon from '../../../../assets/icons/searchIcon.png'
+
 const initialData = {
   list1: [
     {
@@ -137,6 +139,9 @@ const ManageTests = () => {
   const [createVisible, setCreateVisible] = useState(false);
   const [openBasic, setOpenBasic] = useState(false);
 
+  const [searchParams, setSearchParams] = useState('');
+
+
   useEffect(() => {
     if (data.list2.length >= 3) { setCreateVisible(true) } else {
       setCreateVisible(false);
@@ -181,6 +186,14 @@ const ManageTests = () => {
     }
   };
 
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
+
+  const handleSearch = () => {
+    
+  }
+
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -191,6 +204,22 @@ const ManageTests = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
+              <SearchBarContainer>
+                <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+                  <option value="" disabled selected>Select filter Param</option>
+                  <option value="Type">Question Type</option>
+                  <option value="TestID">Test Id</option>
+                  <option value="Category">Category</option>
+                </select>
+                <div className='skillBox'>
+                  <input
+                    className='skillInput'
+                    type="text"
+                    placeholder="Enter keywords..."
+                  />
+                </div>
+                <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
+              </SearchBarContainer>
               <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={CreateQuestionForm} />
               <ListTitle>List of existing questions <button onClick={() => setOpenBasic(true)} className='floatBtn'>Add Question</button></ListTitle>
               {data.list1.map((item, index) => (
@@ -250,3 +279,71 @@ const ManageTests = () => {
 export default ManageTests;
 
 
+
+const SearchBarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 96%;
+  margin: 0rem auto 0rem auto;
+  height: 3.5rem;
+  background-color: var(--white);
+  border-radius: 0.5rem;;
+  padding: 0rem 1rem;
+  gap: 1rem;
+
+
+  .skillBox {
+    position: relative;
+    width: 100%;
+  }
+
+
+
+  .skillInput {
+  flex-grow: 1;
+  border: none;
+  height: 100%;
+  width: 100%;
+  padding: 0.1rem;
+  font-size: 0.9rem;
+  background-color: var(--white);
+  outline: none;
+  }
+
+
+
+  .btn {
+    background-color: var(--lightOrange);
+    padding: 0.3rem 0.7rem;
+    border-radius: 1.1rem;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 0rem;
+  }
+
+  .btn img {
+    width: 1rem;
+  }
+
+  .selectInput {
+    padding: 0.2rem 0.2rem;
+    border: none;
+    background-color: var(--white);
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 90%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
+
+`

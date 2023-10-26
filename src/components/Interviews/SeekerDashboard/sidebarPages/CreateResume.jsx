@@ -39,12 +39,12 @@ border-radius: 1rem;
     gap: 1.5rem;
 
     .title {
-        font-size: 2.5rem;
-        font-weight: 700;
+        font-size: 2rem;
+        font-weight: 600;
     }
 
     .subTitle {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 500;
         line-height: 1.4rem;
     }
@@ -52,8 +52,8 @@ border-radius: 1rem;
     .btn {
         background-color: var(--lightOrange);
         border: 0.1rem solid var(--lightOrange);
-        padding: 0.7rem 1.2rem;
-        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
         font-weight: 600;
         color: var(--white);
         border-radius: 0.5rem;

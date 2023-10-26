@@ -8,6 +8,7 @@ import resume5 from '../assets/resume/resume5.png'
 import resume6 from '../assets/resume/resume6.png'
 import resume7 from '../assets/resume/resume7.png'
 import { useNavigate } from 'react-router'
+import ResumeHeader from '../components/commonComponents/ResumeHeader'
 
 
 const resumes = [resume1, resume2, resume3, resume4, resume5, resume6, resume7];
@@ -19,14 +20,18 @@ const CreateResumePage = () => {
 
   return (
     <Box>
-      {
-        resumes.map((resume, index) => (
-          <ChildBox onClick={() => navigate(`/create-resume/${index + 1}`)}>
-            <img src={resume} />
-            <button className='btn' onClick={() => navigate(`/create-resume/${index + 1}`)}>Use This Template</button>
-          </ChildBox>
-        ))
-      }
+      <ResumeHeader />
+
+      <div className='childBox'>
+        {
+          resumes.map((resume, index) => (
+            <ChildBox onClick={() => navigate(`/create-resume/${index + 1}`)}>
+              <img src={resume} />
+              <button className='btn' onClick={() => navigate(`/create-resume/${index + 1}`)}>Use This Template</button>
+            </ChildBox>
+          ))
+        }
+      </div>
     </Box>
   )
 }
@@ -34,12 +39,23 @@ const CreateResumePage = () => {
 export default CreateResumePage
 
 const Box = styled.div`
-width: 90%;
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-margin: 2rem auto;
-gap: 1rem;
-justify-content: center;
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 2rem;
+
+
+
+
+.childBox {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 6rem auto 2rem auto;
+  gap: 1rem;
+  justify-content: center;
+
+}
 
 `
 
@@ -50,6 +66,7 @@ justify-content: center;
 align-items: center;
 postion: relative;
 cursor: pointer;
+border-radius: 0.5rem;
 
 
 

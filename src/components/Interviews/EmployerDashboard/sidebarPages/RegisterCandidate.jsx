@@ -206,7 +206,7 @@ const RegisterCandidate = () => {
               onChange={(e) => setRef(e.target.value)}
               required
             />
-            <label htmlFor="ref" className='label'>Referral</label>
+            <label htmlFor="ref" className='label'>Referral/Source</label>
           </div>
 
           <div className='resumeBox'>

@@ -22,6 +22,7 @@ import JdForm from '../JdForm';
 import attachIcon from '../../../../assets/icons/attach.png'
 import editIcon from '../../../../assets/icons/edit.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
+import searchIcon from '../../../../assets/icons/searchIcon.png'
 import { getJds } from '../../../../functions/api/employers/getJds';
 import { useSelector } from 'react-redux';
 
@@ -72,8 +73,8 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-            <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-            <img src={deleteIcon} onClick={() => handleDelete(row.jdId)} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
+            <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
       </TableRow>
@@ -119,6 +120,8 @@ const JdRegistration = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
 
+  const [searchParams, setSearchParams] = useState('');
+
   useEffect(() => {
     async function getData() {
       const res = await getJds();
@@ -127,6 +130,13 @@ const JdRegistration = () => {
     getData();
   }, []);
 
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
+
+  const handleSearch = () => {
+
+  }
 
 
   const handleToggle = (row) => {
@@ -157,6 +167,23 @@ const JdRegistration = () => {
         <EditButton onClick={() => setOpenBasic(true)}>Create</EditButton>
       </Component>
 
+      <SearchBarContainer>
+        <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+          <option value="" disabled selected>Select filter Param</option>
+          <option value="JD_ID">JD ID</option>
+          <option value="Test_ID">Test ID</option>
+          <option value="Created By">Created By</option>
+        </select>
+        <div className='skillBox'>
+          <input
+            className='skillInput'
+            type="text"
+            placeholder="Enter keywords..."
+          />
+        </div>
+        <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
+      </SearchBarContainer>
+
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
           <h3 style={{ paddingLeft: "3rem" }}>Job Descriptions</h3>
@@ -164,8 +191,8 @@ const JdRegistration = () => {
             <TableHead className="tableHead">
               <TableRow>
                 <TableCell />
-                <TableCell align='center'>JD_ID</TableCell>
-                <TableCell align='center'>Test_ID</TableCell>
+                <TableCell align='center'>JD ID</TableCell>
+                <TableCell align='center'>Test ID</TableCell>
                 <TableCell align='center'>Date of Creation</TableCell>
                 <TableCell align='center'>Created By</TableCell>
                 <TableCell align='center'>Edit/Delete</TableCell>
@@ -188,7 +215,7 @@ export default JdRegistration;
 
 const StyledBox = styled.div`
   display: flex;
-  margin-top: 2rem;
+  margin-top: -1rem;
   margin-bottom: 2.5rem;
   width: 96%;
   padding: 0 2%;
@@ -239,7 +266,7 @@ const StyledBox = styled.div`
 
 const Container1 = styled.div`
   width: 98%;
-  margin: 1rem auto;
+  margin: 0rem auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -301,3 +328,71 @@ const SubmitButton = styled.button`
 `;
 
 
+
+const SearchBarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 93%;
+  margin: 1rem auto 3rem auto;
+  height: 3.5rem;
+  background-color: var(--white);
+  border-radius: 0.5rem;;
+  padding: 0rem 1rem;
+  gap: 1rem;
+
+
+  .skillBox {
+    position: relative;
+    width: 100%;
+  }
+
+
+
+  .skillInput {
+  flex-grow: 1;
+  border: none;
+  height: 100%;
+  width: 90%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--white);
+  outline: none;
+  }
+
+
+
+  .btn {
+    background-color: var(--lightOrange);
+    padding: 0.5rem 1.1rem;
+    border-radius: 1.1rem;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 0rem;
+  }
+
+  .btn img {
+    width: 1rem;
+  }
+
+  .selectInput {
+    padding: 0.5rem 0.5rem;
+    border: none;
+    background-color: var(--white);
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 30%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
+
+`

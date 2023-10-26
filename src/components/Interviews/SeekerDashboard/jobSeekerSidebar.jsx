@@ -64,7 +64,7 @@ const Container = styled.div`
 
   .menuTitle {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color);
     padding-left: 0.5rem;
   }
@@ -84,6 +84,7 @@ const Container = styled.div`
 
 const MenuItem = styled.div`
   padding-bottom: 1rem;
+  font-size: 0.85rem;
   cursor: pointer;
   display: flex;
   align-items: center;
