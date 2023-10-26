@@ -76,10 +76,9 @@ function CreateQuestionForm() {
     type: '',
     tag: '',
     description: '',
-    difficulty: '',
     choices: ['', '', '', ''],
     correctAnswer: '',
-    addType: '',
+    category: '',
     testId: '',
   });
 
@@ -111,10 +110,9 @@ function CreateQuestionForm() {
       type: '',
       tag: '',
       description: '',
-      difficulty: '',
       choices: ['', '', '', ''],
       correctAnswer: '',
-      addType: '',
+      category: '',
       testId: '',
     });
   };
@@ -134,10 +132,9 @@ function CreateQuestionForm() {
       type: '',
       tag: '',
       description: '',
-      difficulty: '',
       choices: ['', '', '', ''],
       correctAnswer: '',
-      addType: '',
+      category: '',
       testId: '',
     });
     setEditingIndex(-1);
@@ -180,18 +177,6 @@ function CreateQuestionForm() {
           onChange={handleChange}
         />
 
-        <Label>Difficulty Level</Label>
-        <Select
-          name="difficulty"
-          value={formData.difficulty}
-          onChange={handleChange}
-        >
-          <option value="">Select Difficulty</option>
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
-        </Select>
-
         <Label>Test Id</Label>
         <Input
           type="text"
@@ -200,7 +185,7 @@ function CreateQuestionForm() {
           onChange={handleChange}
         />
 
-        <Label>Add Type (Optional) </Label>
+        <Label>Category (Optional) </Label>
         <Input
           type="text"
           name="addType"

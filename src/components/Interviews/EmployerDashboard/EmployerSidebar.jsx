@@ -69,8 +69,8 @@ overflow-y: scroll;
   
 
   .menuTitle {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 600;
     color: var(--color);
     padding-left: 0.5rem;
   }

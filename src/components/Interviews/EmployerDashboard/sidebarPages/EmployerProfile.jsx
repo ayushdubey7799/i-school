@@ -5,11 +5,12 @@ import EmployerDetails from '../EmployerDetails';
 import editIcon from '../../../../assets/icons/edit.png'
 
 const Container = styled.div`
-  width:90%;
+  width: 85%;
   margin: 1rem auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
 `;
 
@@ -20,6 +21,7 @@ const Component = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
   border-radius: 0.7rem;
   font-size: 0.9rem;
   background-color: var(--white);
@@ -29,12 +31,20 @@ const EditButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  text-decoration: underline;
-  width: 2rem;
   margin-right: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--lightOrange);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--white);
+  
 
   img {
-    width: 90%;
+    display: none;
   }
 `;
 
@@ -67,10 +77,10 @@ const EmployeProfile = () => {
 
   return (
     <Container>
-      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={EmployerDetails} />
+      {/* <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={EmployerDetails} /> */}
       <Component>
-        <span>Employer Details</span>
-        <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon} /></EditButton>
+        {/* <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon} /> Edit Profile</EditButton> */}
+        <EmployerDetails/>
       </Component>
     </Container>
   );

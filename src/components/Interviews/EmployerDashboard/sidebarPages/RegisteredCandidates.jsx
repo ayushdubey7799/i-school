@@ -20,98 +20,113 @@ import deleteIcon from '../../../../assets/icons/delete.png'
 import searchIcon from '../../../../assets/icons/searchIcon.png'
 
 function Row(props) {
-    const { row } = props;
+  const { row } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">
-                    <img src={deleteIcon} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-                </TableCell>
-                <TableCell align="center">  <input
-                    type="checkbox"
-                    className="checkBox"
-                /></TableCell>
-                <TableCell align="center">
-                    <button className="resumeBtn">View Resume</button>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">
+          <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+        </TableCell>
+        <TableCell align="center">  <input
+          type="checkbox"
+          className="checkBox"
+        /></TableCell>
+        <TableCell align="center">
+          <button className="resumeBtn">View Resume</button>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
+
 export default function RegisteredCandidates() {
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [tableRows, setTableRows] = useState([]);
-    const [open, setOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [tableRows, setTableRows] = useState([]);
+  const [open, setOpen] = useState(false);
 
-    useEffect(() => {
-        setTableRows(candidates);
-    }, [candidates]);
+  const [searchParams, setSearchParams] = useState('');
 
-    const handleToggle = (row) => {
-        const updatedRows = [...tableRows];
-        const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
-        if (selectedRow === rowIndex) {
-            setSelectedRow(null);
-            updatedRows[rowIndex].open = false;
-        } else {
-            if (selectedRow !== null) {
-                updatedRows[selectedRow].open = false;
-            }
-            setSelectedRow(rowIndex);
-            updatedRows[rowIndex].open = true;
-        }
-        setTableRows(updatedRows);
-    };
+  useEffect(() => {
+    setTableRows(candidates);
+  }, [candidates]);
 
-    const handleSearch = () => {
-        console.log("Search");
+  const handleToggle = (row) => {
+    const updatedRows = [...tableRows];
+    const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
+    if (selectedRow === rowIndex) {
+      setSelectedRow(null);
+      updatedRows[rowIndex].open = false;
+    } else {
+      if (selectedRow !== null) {
+        updatedRows[selectedRow].open = false;
+      }
+      setSelectedRow(rowIndex);
+      updatedRows[rowIndex].open = true;
     }
+    setTableRows(updatedRows);
+  };
 
-    return (
-        <Content>
-            <SearchBarContainer>
-                <div className='skillBox'>
-                    <input
-                        className='skillInput'
-                        type="text"
-                        placeholder="Enter keywords..."
-                    />
-                </div>
-                <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
-            </SearchBarContainer>
-            <TableContainer component={Paper} className="tableBox">
-                <h3 style={{ paddingLeft: "3rem" }}>Candidates Pool</h3>
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center">Name</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">Contact</TableCell>
-                            <TableCell align="center">Date of Reg</TableCell>
-                            <TableCell align="center">Reg By</TableCell>
-                            <TableCell align="center">Delete</TableCell>
-                            <TableCell align="center">Select</TableCell>
-                            <TableCell align="center">Resume</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {candidates?.map((row, index) => (
-                            <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Content>
-    );
+  const handleSearch = () => {
+    console.log("Search");
+  }
+
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
+
+
+  return (
+    <Content>
+      <SearchBarContainer>
+        <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+          <option value="" disabled selected>Select filter Param</option>
+          <option value="Name">Name</option>
+          <option value="Email">Email</option>
+          <option value="Contact">Contact</option>
+          <option value="RegBy">Reg By</option>
+        </select>
+        <div className='skillBox'>
+          <input
+            className='skillInput'
+            type="text"
+            placeholder="Enter keywords..."
+          />
+        </div>
+        <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
+      </SearchBarContainer>
+      <TableContainer component={Paper} className="tableBox">
+        <h3 style={{ paddingLeft: "3rem" }}>Candidates Pool</h3>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Contact</TableCell>
+              <TableCell align="center">Date of Reg</TableCell>
+              <TableCell align="center">Reg By</TableCell>
+              <TableCell align="center">Delete</TableCell>
+              <TableCell align="center">Select</TableCell>
+              <TableCell align="center">Resume</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {candidates?.map((row, index) => (
+              <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Content>
+  );
 }
 
 
@@ -185,15 +200,17 @@ align-items: center;
 `
 
 
+
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
   width: 96%;
   margin: -1rem auto 3rem auto;
-  height: 4rem;
+  height: 3.5rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
-  padding: 0.1rem 1rem;
+  padding: 0rem 1rem;
+  gap: 1rem;
 
 
   .skillBox {
@@ -235,5 +252,19 @@ const SearchBarContainer = styled.div`
     width: 1rem;
   }
 
+  .selectInput {
+    padding: 0.5rem 0.5rem;
+    border: none;
+    background-color: var(--white);
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 30%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
 
 `

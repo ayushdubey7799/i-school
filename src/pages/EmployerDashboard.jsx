@@ -22,6 +22,7 @@ import RegisterCandidate from "../components/Interviews/EmployerDashboard/sideba
 import RegisteredCandidates from "../components/Interviews/EmployerDashboard/sidebarPages/RegisteredCandidates";
 import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPages/AvailableTest";
 import ManageReqs from "../components/Interviews/EmployerDashboard/sidebarPages/ManageReqs";
+import ConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureDash";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -39,7 +40,7 @@ const EmployerDashboard = () => {
   const [currentItem, setCurrentItem] = useState("dashboard");
 
   useEffect(() => {
-    if (!accessToken) navigate("/login");
+    // if (!accessToken) navigate("/login");
     let initialOpen =
       currentItem === "activeJds" || currentItem === "create-tests" || currentItem === "available-tests";
     if (initialOpen) {
@@ -51,7 +52,7 @@ const EmployerDashboard = () => {
 
 
   useEffect(() => {
-    if (!accessToken) navigate("/login");
+    // if (!accessToken) navigate("/login");
     let initialOpen =
       currentItem === "candidate-register" || currentItem === "candidate-registered";
     if (initialOpen) {
@@ -78,8 +79,9 @@ const EmployerDashboard = () => {
           {currentItem === 'dashboard' &&
             <EmployeMetrics setCurrentItem={setCurrentItem} />
           }
-          
-          {currentItem === "managereqs" && <ManageReqs/>}
+
+          {currentItem === "configure-dashboard" && <ConfigureDash />}
+          {currentItem === "managereqs" && <ManageReqs />}
           {currentItem === "jd-register" && <JdRegistration />}
           {currentItem === "manage-jds" && <JdRegistration />}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}

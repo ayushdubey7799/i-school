@@ -17,6 +17,7 @@ import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPag
 import InterviewTabs from "../components/Interviews/InterviewTabs";
 import SavedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/SavedJobs";
 import ProfileNew from "../components/Interviews/SeekerDashboard/sidebarPages/ProfileNew";
+import ConfigureDash from "../components/Interviews/SeekerDashboard/sidebarPages/ConfigureDash";
 
 
 const Verification = () => <div>Verification Content</div>;
@@ -29,7 +30,7 @@ const JobSeekerDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!accessToken) navigate("/login");
+    // if (!accessToken) navigate("/login");
 
     const inviteToken = localStorage.getItem('inviteToken');
     if (inviteToken) {
@@ -50,6 +51,8 @@ const JobSeekerDashboard = () => {
           {currentItem === 'dashboard' &&
             <Metrics setCurrentItem={setCurrentItem} />
           }
+
+          {currentItem === "configure-dashboard" && <ConfigureDash />}
           {currentItem === 'job-search' && <JobSearchBar />}
           {currentItem === 'interviewDash' && <InterviewTabs />}
           {currentItem === 'applied-jobs' && <JobApplication />}

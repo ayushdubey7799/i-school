@@ -13,7 +13,7 @@ const Header = () => {
   const navigate = useNavigate();
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
- console.log("clcd",clientCode);
+  console.log("clcd",clientCode);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);

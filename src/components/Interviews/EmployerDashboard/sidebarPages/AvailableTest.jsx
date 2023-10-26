@@ -16,6 +16,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "styled-components";
 import { data as tests } from "../../../../utils/contantData";
 
+import searchIcon from '../../../../assets/icons/searchIcon.png'
+
 function Row(props) {
     const { row, isSelected, onToggle } = props;
 
@@ -80,6 +82,8 @@ export default function AvailableTest() {
     const [tableRows, setTableRows] = useState([]);
     const [open, setOpen] = useState(false);
 
+    const [searchParams, setSearchParams] = useState('');
+
     useEffect(() => {
         setTableRows(tests);
     }, [tests]);
@@ -100,8 +104,32 @@ export default function AvailableTest() {
         setTableRows(updatedRows);
     };
 
+    const handleSearchParams = (e) => {
+        setSearchParams(e.target.value);
+    }
+
+    const handleSearch = () => {
+
+    }
+
     return (
         <Content>
+            <SearchBarContainer>
+                <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+                    <option value="" disabled selected>Select filter Param</option>
+                    <option value="JD_ID">JD ID</option>
+                    <option value="TestType">Test Type</option>
+                    <option value="Created By">Created By</option>
+                </select>
+                <div className='skillBox'>
+                    <input
+                        className='skillInput'
+                        type="text"
+                        placeholder="Enter keywords..."
+                    />
+                </div>
+                <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
+            </SearchBarContainer>
             <TableContainer component={Paper} className="tableBox">
                 <h3 style={{ paddingLeft: "3rem" }}>Available Tests</h3>
                 <Table aria-label="collapsible table">
@@ -127,7 +155,7 @@ export default function AvailableTest() {
 
 
 const Content = styled.div`
-margin: 3rem 0% 2rem 0%;
+margin: 1rem 0% 2rem 0%;
 width: 94%;
 padding: 0 2.5%;
 display: flex;
@@ -184,3 +212,71 @@ align-items: center;
 }
 `
 
+
+const SearchBarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 96%;
+  margin: 1rem auto 3rem auto;
+  height: 3.5rem;
+  background-color: var(--white);
+  border-radius: 0.5rem;;
+  padding: 0rem 1rem;
+  gap: 1rem;
+
+
+  .skillBox {
+    position: relative;
+    width: 100%;
+  }
+
+
+
+  .skillInput {
+  flex-grow: 1;
+  border: none;
+  height: 100%;
+  width: 90%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--white);
+  outline: none;
+  }
+
+
+
+  .btn {
+    background-color: var(--lightOrange);
+    padding: 0.5rem 1.1rem;
+    border-radius: 1.1rem;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 0rem;
+  }
+
+  .btn img {
+    width: 1rem;
+  }
+
+  .selectInput {
+    padding: 0.5rem 0.5rem;
+    border: none;
+    background-color: var(--white);
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 30%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
+
+`
