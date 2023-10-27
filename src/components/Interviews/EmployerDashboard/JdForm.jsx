@@ -5,10 +5,16 @@ import { useSelector } from 'react-redux';
 import { editJd } from '../../../functions/api/employers/editJd';
 
 const Container = styled.div`
- width: 100%;
-margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
   padding: 20px;
   border-radius: 5px;
+
+  .check {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+  }
 `;
 
 const Form = styled.form`
@@ -55,6 +61,7 @@ const Button = styled.button`
 
 function JdForm({ array, handleClose }) {
   const [mode, setMode] = useState("create");
+  const [autoReq, setAutoReq] = useState(false);
   const [formData, setFormData] = useState({
     jdId: '',
     reqNumber: '',
@@ -70,6 +77,7 @@ function JdForm({ array, handleClose }) {
     ctc: '',
     keywords: '',
     jdUpload: null,
+    visibility: '',
   });
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
@@ -101,12 +109,12 @@ function JdForm({ array, handleClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (mode == "create") {
-      const resObj = await addJd(formData, accessToken,clientCode);
+      const resObj = await addJd(formData, accessToken, clientCode);
       handleClose();
       console.log(resObj);
     }
     else {
-      const editRes = await editJd(formData, accessToken,clientCode);
+      const editRes = await editJd(formData, accessToken, clientCode);
       handleClose();
       console.log(editRes);
     }
@@ -130,7 +138,17 @@ function JdForm({ array, handleClose }) {
           name="reqNumber"
           value={formData.reqNumber}
           onChange={handleChange}
+          disabled={autoReq}
         />
+
+        <Label>Auto Generate Req Number</Label>
+        <div className='check'>
+          <Input
+            type='checkbox'
+            onClick={() => setAutoReq(!autoReq)}
+          />
+        </div>
+
 
         <Label>Number of Reqs</Label>
         <Input
@@ -231,6 +249,17 @@ function JdForm({ array, handleClose }) {
           accept=".pdf,.doc,.docx"
           onChange={handleFileChange}
         />
+
+        <Label>Visibility</Label>
+        <Select
+          name="visibility"
+          value={formData.visibility}
+          onChange={handleChange}
+        >
+          <option value="">Select Visibility</option>
+          <option value="Public">Public</option>
+          <option value="Private">Private</option>
+        </Select>
 
         <Button type="submit">{mode == "create" ? "Submit" : "Edit Changes"}</Button>
       </Form>

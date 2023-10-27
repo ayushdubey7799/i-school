@@ -62,9 +62,6 @@ function Row(props) {
         <TableCell component="th" scope="row" align='center'>
           {row.jdId}
         </TableCell>
-        <TableCell component="th" scope="row" align='center'>
-          ...
-        </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
           ...
         </TableCell>
@@ -163,8 +160,8 @@ const JdRegistration = () => {
     <Container1>
       <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null, "create"]} />
       <Component>
-        <span>Add new Job Description</span>
-        <EditButton onClick={() => setOpenBasic(true)}>Create</EditButton>
+        <EditButton>Clone Existing JD</EditButton>
+        <EditButton onClick={() => setOpenBasic(true)}>Create JD</EditButton>
       </Component>
 
       <SearchBarContainer>
@@ -192,10 +189,9 @@ const JdRegistration = () => {
               <TableRow>
                 <TableCell />
                 <TableCell align='center'>JD ID</TableCell>
-                <TableCell align='center'>Test ID</TableCell>
                 <TableCell align='center'>Date of Creation</TableCell>
                 <TableCell align='center'>Created By</TableCell>
-                <TableCell align='center'>Edit/Delete</TableCell>
+                <TableCell align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -275,20 +271,11 @@ const Container1 = styled.div`
 `;
 
 const Component = styled.div`
-  width: 93%; 
-  border: 0.08rem solid #ccc;
-  padding: 0.7rem 1rem;;
+  width: 96%; 
+  padding: 0.5rem 0rem;;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 0.7rem;
-  font-size: 0.8rem;
-  background-color: var(--white);
-
-  span {
-    font-size: 1rem;
-    font-weight: 500;
-  }
+  justify-content: flex-end;
 `;
 
 const EditButton = styled.button`

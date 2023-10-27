@@ -22,11 +22,14 @@ import callSupportIcon from '../../../assets/icons/call-support.png'
 import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
 import addUser from '../../../assets/icons/addUser.png'
 import availableTestIcon from '../../../assets/icons/test.png'
+import manageUsersIcon from '../../../assets/icons/manageUsers.png'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+
 
 
 const Container = styled.div`
@@ -256,20 +259,6 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }} isSelected={currentItem === 'managereqs'} onClick={() => handleItemClick('managereqs')}>
-        <AccordionSummary
-          aria-controls="panel6bh-content"
-          id="panel6bh-header"
-          classes={{
-            root: 'custom-accordion-summary-root',
-            expanded: expanded === 'panel6' ? 'expanded' : ''
-          }}
-        >
-          <span className={`menuTitle ${expanded === 'panel6' ? 'selected' : ''}`}>Manage Reqs</span>
-          {expanded === 'panel6' && <Arrow></Arrow>}
-        </AccordionSummary>
-      </Accordion>
-
       <Accordion expanded={expanded === 'panel7'} onChange={handleChange('panel7')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }} >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -425,6 +414,10 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
             <img src={profileIcon} className='icon' />
             Profile
           </MenuItem>
+          <MenuItem isSelected={currentItem === 'manage-users'} onClick={() => handleItemClick('manage-users')}>
+            <img src={manageUsersIcon} className='icon' />
+            Manage Users
+          </MenuItem>
           <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
             <img src={subsIcon} className='icon' />
             Subscriptions
@@ -435,7 +428,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
           </MenuItem>
           <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
             <img src={inboxIcon} className='icon' />
-            Inbox
+            Notifications
           </MenuItem>
         </AccordionDetails>
       </Accordion>

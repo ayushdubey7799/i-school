@@ -88,7 +88,7 @@ const EmployeMetrics = ({ setCurrentItem }) => {
           <img src={metric1} />
           <span className='achievedNumberDigit'>15</span>
         </div>
-        <span className='achievedNumberText'>Active Reqs</span>
+        <span className='achievedNumberText'>Active JDs</span>
       </div>
       <div className='achievedNumberBox'>
         <div className='top'>

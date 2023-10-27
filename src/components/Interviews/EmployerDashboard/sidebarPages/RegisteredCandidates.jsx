@@ -18,6 +18,7 @@ import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import { data as candidates } from "../../../../utils/contantData";
 import deleteIcon from '../../../../assets/icons/delete.png'
 import searchIcon from '../../../../assets/icons/searchIcon.png'
+import visibleIcon from '../../../../assets/icons/visible.png'
 
 function Row(props) {
   const { row } = props;
@@ -32,15 +33,18 @@ function Row(props) {
         <TableCell align="center">...</TableCell>
         <TableCell align="center">...</TableCell>
         <TableCell align="center">
-          <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+          <input
+            type="checkbox"
+            className="checkBox"
+          />
         </TableCell>
-        <TableCell align="center">  <input
-          type="checkbox"
-          className="checkBox"
-        /></TableCell>
         <TableCell align="center">
-          <button className="resumeBtn">View Resume</button>
+          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
+            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+          </div>
         </TableCell>
+
       </TableRow>
     </React.Fragment>
   );
@@ -112,10 +116,9 @@ export default function RegisteredCandidates() {
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">Contact</TableCell>
               <TableCell align="center">Date of Reg</TableCell>
-              <TableCell align="center">Reg By</TableCell>
-              <TableCell align="center">Delete</TableCell>
+              <TableCell align="center">Source</TableCell>
               <TableCell align="center">Select</TableCell>
-              <TableCell align="center">Resume</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
