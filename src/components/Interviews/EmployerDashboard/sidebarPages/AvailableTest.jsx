@@ -17,27 +17,17 @@ import styled from "styled-components";
 import { data as tests } from "../../../../utils/contantData";
 
 import searchIcon from '../../../../assets/icons/searchIcon.png'
+import deleteIcon from '../../../../assets/icons/delete.png'
+import editIcon from '../../../../assets/icons/edit.png'
+import visibleIcon from '../../../../assets/icons/visible.png'
 
 function Row(props) {
-    const { row, isSelected, onToggle } = props;
+    const { row } = props;
 
     return (
         <React.Fragment>
             <TableRow
-                className={isSelected ? "selected" : ""}
                 sx={{ "& > *": { borderBottom: "unset" } }}>
-                <TableCell>
-                    <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={(e) => {
-                            e.stopPropagation(); // Prevent row click event from firing
-                            onToggle(row);
-                        }}
-                    >
-                        {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
                 <TableCell component="th" scope="row" align="center">
                     {row.id}
                 </TableCell>
@@ -46,30 +36,12 @@ function Row(props) {
                 </TableCell>{" "}
                 <TableCell align="center">...</TableCell>
                 <TableCell align="center">...</TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
-                    <Collapse in={row.open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 1 }}>
-                            <Typography variant="body1" gutterBottom>
-                                {/* Have to change these according to api data */}
-                                {/* <div style={{ fontSize: "0.7rem" }}>Title: {row.title}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Description: {row.description}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Skills: {row.skills}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Experience: {row.experience}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Location: {row.location}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>WorkType: {row.workType}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>CTC: {row.ctc}</div>
-                <br/> */}
-                            </Typography>
-                        </Box>
-                    </Collapse>
+                <TableCell align="center">
+                    <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+                        <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+                        <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+                    </div>
                 </TableCell>
             </TableRow>
         </React.Fragment>
@@ -78,31 +50,9 @@ function Row(props) {
 
 
 export default function AvailableTest() {
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [tableRows, setTableRows] = useState([]);
-    const [open, setOpen] = useState(false);
 
     const [searchParams, setSearchParams] = useState('');
 
-    useEffect(() => {
-        setTableRows(tests);
-    }, [tests]);
-
-    const handleToggle = (row) => {
-        const updatedRows = [...tableRows];
-        const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
-        if (selectedRow === rowIndex) {
-            setSelectedRow(null);
-            updatedRows[rowIndex].open = false;
-        } else {
-            if (selectedRow !== null) {
-                updatedRows[selectedRow].open = false;
-            }
-            setSelectedRow(rowIndex);
-            updatedRows[rowIndex].open = true;
-        }
-        setTableRows(updatedRows);
-    };
 
     const handleSearchParams = (e) => {
         setSearchParams(e.target.value);
@@ -135,16 +85,16 @@ export default function AvailableTest() {
                 <Table aria-label="collapsible table">
                     <TableHead className="tableHead">
                         <TableRow>
-                            <TableCell align="center" />
                             <TableCell align="center">JD ID</TableCell>
                             <TableCell align="center">Date of Creation</TableCell>
                             <TableCell align="center">Created By</TableCell>
                             <TableCell align="center">Test Type</TableCell>
+                            <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody className="tableBody">
                         {tests?.map((row, index) => (
-                            <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+                            <Row key={row.id} row={row} />
                         ))}
                     </TableBody>
                 </Table>

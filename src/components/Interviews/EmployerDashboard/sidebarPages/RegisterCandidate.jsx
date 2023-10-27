@@ -165,17 +165,6 @@ const RegisterCandidate = () => {
         <Form>
           <div className="inputBox">
             <input
-              type="name"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <label htmlFor="name" className='label'>Name</label>
-          </div>
-
-          <div className="inputBox">
-            <input
               type="email"
               id="email"
               value={email}
@@ -185,6 +174,17 @@ const RegisterCandidate = () => {
             <label htmlFor="email" className='label'>Email</label>
           </div>
 
+
+          <div className="inputBox">
+            <input
+              type="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <label htmlFor="name" className='label'>FullName</label>
+          </div>
 
           <div className="inputBox">
             <input

@@ -21,8 +21,8 @@ import Billing from "../components/Interviews/EmployerDashboard/sidebarPages/Bil
 import RegisterCandidate from "../components/Interviews/EmployerDashboard/sidebarPages/RegisterCandidate";
 import RegisteredCandidates from "../components/Interviews/EmployerDashboard/sidebarPages/RegisteredCandidates";
 import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPages/AvailableTest";
-import ManageReqs from "../components/Interviews/EmployerDashboard/sidebarPages/ManageReqs";
 import ConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureDash";
+import ManageUsers from "../components/Interviews/EmployerDashboard/sidebarPages/ManageUsers";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -81,7 +81,6 @@ const EmployerDashboard = () => {
           }
 
           {currentItem === "configure-dashboard" && <ConfigureDash />}
-          {currentItem === "managereqs" && <ManageReqs />}
           {currentItem === "jd-register" && <JdRegistration />}
           {currentItem === "manage-jds" && <JdRegistration />}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
@@ -94,6 +93,7 @@ const EmployerDashboard = () => {
           {currentItem === "available-tests" && <AvailableTest />}
 
           {currentItem === "profile" && <EmployeProfile />}
+          {currentItem === "manage-users" && <ManageUsers />}
           {currentItem === "subscriptions" && <Subscription />}
           {currentItem === "billing" && <Billing />}
           {currentItem === "inbox" && <Inbox />}

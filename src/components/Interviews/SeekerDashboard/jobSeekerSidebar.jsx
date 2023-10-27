@@ -313,7 +313,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           </MenuItem>
           <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
             <img src={inboxIcon} className='icon' />
-            Inbox
+            Notifications
           </MenuItem>
         </AccordionDetails>
       </Accordion>
