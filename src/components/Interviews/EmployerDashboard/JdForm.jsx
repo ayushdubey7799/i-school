@@ -130,6 +130,7 @@ function JdForm({ array, handleClose }) {
           name="jdId"
           value={formData.jdId}
           onChange={handleChange}
+          disabled={mode=="edit"}
         />
 
         <Label>Req Number (From Employer System)</Label>
@@ -138,7 +139,7 @@ function JdForm({ array, handleClose }) {
           name="reqNumber"
           value={formData.reqNumber}
           onChange={handleChange}
-          disabled={autoReq}
+          disabled={autoReq || mode=="edit"}
         />
 
         <Label>Auto Generate Req Number</Label>
