@@ -72,8 +72,8 @@ overflow-y: scroll;
   
 
   .menuTitle {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 400;
     color: var(--color);
     padding-left: 0.5rem;
   }
@@ -114,12 +114,12 @@ overflow-y: scroll;
 
 const MenuItem = styled.div`
   padding-bottom: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'var(--color)')};
 
   a{
@@ -128,7 +128,7 @@ const MenuItem = styled.div`
   }
 
   .icon {
-    width: 1.1rem;
+    width: 1.4rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -165,11 +165,13 @@ const Submenu = styled.div`
   }
 
   .submenuItem {
-  
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color);
   }
 
   .icon {
-    width: 1.1rem;
+    width: 1.4rem;
     padding-right: 0.5rem;
   }
 
@@ -188,6 +190,8 @@ const Submenu = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 400;
   }
 `;
 

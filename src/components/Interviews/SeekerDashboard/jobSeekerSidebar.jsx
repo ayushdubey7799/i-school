@@ -63,8 +63,8 @@ const Container = styled.div`
   // }
 
   .menuTitle {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 400;
     color: var(--color);
     padding-left: 0.5rem;
   }
@@ -84,7 +84,8 @@ const Container = styled.div`
 
 const MenuItem = styled.div`
   padding-bottom: 1rem;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 400;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -97,7 +98,7 @@ const MenuItem = styled.div`
   }
 
   .icon {
-    width: 1.1rem;
+    width: 1.4rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
