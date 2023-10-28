@@ -10,17 +10,18 @@ import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 
 import { jobListings } from '../../../../utils/contantData';
-import save from '../../../../assets/icons/save.png'
+import save from '../../../../assets/icons/save2.png'
 import share from '../../../../assets/icons/share.png'
 
 
+
 function Row(props) {
-  const { row } = props;
+  const { row, index } = props;
 
   return (
     <React.Fragment>
       <TableRow
-        sx={{ "& > *": { borderBottom: "unset" } }}>
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo'>
           <img src={row.companyLogo} />
         </TableCell>
@@ -60,7 +61,7 @@ const FilteredJobs = () => {
     <Container1>
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <h3 style={{ paddingLeft: "3rem" }}>Filtered Jobs</h3>
+          <span className='title'>Filtered Jobs</span>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
@@ -75,8 +76,8 @@ const FilteredJobs = () => {
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {jobListings?.map((row) => (
-                <Row key={row.jobId} row={row} />
+              {jobListings?.map((row, index) => (
+                <Row key={row.jobId} row={row} index={index} />
               ))}
             </TableBody>
           </Table>
@@ -96,9 +97,21 @@ const StyledBox = styled.div`
   width: 100%;
   padding: 0;
 
+  .colored {
+    background-color: #ececec;
+  }
+
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
     border-radius: 0.5rem;
+
+    .title {
+      padding-left: 1.2rem;
+      line-height: 4rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      
+    }
   }
 
   .MuiTableCell-root {
@@ -121,7 +134,7 @@ const StyledBox = styled.div`
   }
 
   .tableHead {
-    background-color: lightgrey;
+    background-color: #d1fff0;
     width: 100%;
   }
 
@@ -156,53 +169,4 @@ const Container1 = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-`;
-
-const Component = styled.div`
-  width: 100%; 
-  border: 0.08rem solid #ccc;
-  padding: 1rem 1rem;;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0.7rem;
-  font-size: 0.8rem;
-  background-color: var(--white);
-
-`;
-
-const EditButton = styled.button`
-  background-color: var(--lightOrange);
-  border: 0.1rem solid var(--lightOrange);
-  cursor: pointer;
-  color: var(--white);
-  text-decoration: none;
-  font-size: 1rem;
-  margin-right: 0.6rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.5rem;
-
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Label = styled.label`
-  font-weight: bold;
-  margin-bottom: 8px;
-`;
-
-const FileInput = styled.input`
-  margin-bottom: 20px;
-`;
-
-const SubmitButton = styled.button`
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 `;

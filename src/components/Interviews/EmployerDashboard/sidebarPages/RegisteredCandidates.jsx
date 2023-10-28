@@ -17,16 +17,16 @@ import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import { data as candidates } from "../../../../utils/contantData";
 import deleteIcon from '../../../../assets/icons/delete.png'
-import searchIcon from '../../../../assets/icons/searchIcon.png'
+import searchBlack from '../../../../assets/icons/searchBlack.png'
 import visibleIcon from '../../../../assets/icons/visible.png'
 
 function Row(props) {
-  const { row } = props;
+  const { row, index } = props;
 
   return (
     <React.Fragment>
       <TableRow
-        sx={{ "& > *": { borderBottom: "unset" } }}>
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell align="center">...</TableCell>
         <TableCell align="center">...</TableCell>
         <TableCell align="center">...</TableCell>
@@ -53,31 +53,13 @@ function Row(props) {
 
 
 export default function RegisteredCandidates() {
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [tableRows, setTableRows] = useState([]);
-  const [open, setOpen] = useState(false);
 
   const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
 
-  useEffect(() => {
-    setTableRows(candidates);
-  }, [candidates]);
-
-  const handleToggle = (row) => {
-    const updatedRows = [...tableRows];
-    const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
-    if (selectedRow === rowIndex) {
-      setSelectedRow(null);
-      updatedRows[rowIndex].open = false;
-    } else {
-      if (selectedRow !== null) {
-        updatedRows[selectedRow].open = false;
-      }
-      setSelectedRow(rowIndex);
-      updatedRows[rowIndex].open = true;
-    }
-    setTableRows(updatedRows);
-  };
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
 
   const handleSearch = () => {
     console.log("Search");
@@ -90,25 +72,35 @@ export default function RegisteredCandidates() {
 
   return (
     <Content>
-      <SearchBarContainer>
-        <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-          <option value="" disabled selected>Select filter Param</option>
-          <option value="Name">Name</option>
-          <option value="Email">Email</option>
-          <option value="Contact">Contact</option>
-          <option value="RegBy">Reg By</option>
-        </select>
-        <div className='skillBox'>
-          <input
-            className='skillInput'
-            type="text"
-            placeholder="Enter keywords..."
-          />
-        </div>
-        <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
-      </SearchBarContainer>
       <TableContainer component={Paper} className="tableBox">
-        <h3 style={{ paddingLeft: "3rem" }}>Candidates Pool</h3>
+        <span className="title">Candidates Pool</span>
+        <SearchBarContainer>
+          <div className='skillBox'>
+            <img src={searchBlack} />
+            <input
+              className='skillInput'
+              type="text"
+              placeholder="Search"
+            />
+          </div>
+
+          <div className='selectBox'>
+            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+              <option value="" disabled selected>Filtr by</option>
+              <option value="Name">Name</option>
+              <option value="Email">Email</option>
+              <option value="Contact">Contact</option>
+              <option value="RegBy">Reg By</option>
+            </select>
+            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+              <option value="" disabled selected>Sort by</option>
+              <option value="Name">Name</option>
+              <option value="Email">Email</option>
+              <option value="Contact">Contact</option>
+              <option value="RegBy">Reg By</option>
+            </select>
+          </div>
+        </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
@@ -123,7 +115,7 @@ export default function RegisteredCandidates() {
           </TableHead>
           <TableBody className="tableBody">
             {candidates?.map((row, index) => (
-              <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+              <Row key={row.id} row={row} index={index} />
             ))}
           </TableBody>
         </Table>
@@ -134,7 +126,7 @@ export default function RegisteredCandidates() {
 
 
 const Content = styled.div`
-margin: 3rem 0% 2rem 0%;
+margin: 1rem 0% 2rem 0%;
 width: 94%;
 padding: 0 2.5%;
 display: flex;
@@ -142,10 +134,21 @@ flex-direction: column;
 align-items: center;
 
 
+.colored {
+  background-color: #ececec;
+}
 
 .tableBox {
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
   border-radius: 0.5rem;
+  padding-top: 1rem;
+
+
+  .title {
+    padding-left: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
 }
 
 .MuiTableCell-root {
@@ -162,9 +165,8 @@ align-items: center;
 }
 
 .tableHead {
-  background-color: lightgrey;
+  background-color: #d1fff0;
   width: 100%;
-
 }
 
 .tableBody {
@@ -203,13 +205,13 @@ align-items: center;
 `
 
 
-
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 96%;
-  margin: -1rem auto 3rem auto;
-  height: 3.5rem;
+  margin: 1rem auto 0.5rem auto;
+  height: 3rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
@@ -218,7 +220,16 @@ const SearchBarContainer = styled.div`
 
   .skillBox {
     position: relative;
-    width: 100%;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.5rem;
+
+    img {
+      width: 1.2rem;
+    }
   }
 
 
@@ -226,42 +237,28 @@ const SearchBarContainer = styled.div`
   .skillInput {
   flex-grow: 1;
   border: none;
-  height: 100%;
-  width: 90%;
+  height: 1rem;
+  width: 50%;
   padding: 0.5rem;
   font-size: 1rem;
-  background-color: var(--white);
+  background-color: transparent;
   outline: none;
   }
 
 
-
-  .btn {
-    background-color: var(--lightOrange);
-    padding: 0.5rem 1.1rem;
-    border-radius: 1.1rem;
-    color: var(--white);
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
+  .selectBox {
+    width: 30%;
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    cursor: pointer;
-    margin-top: 0rem;
-  }
-
-  .btn img {
-    width: 1rem;
+    gap: 1rem;
   }
 
   .selectInput {
-    padding: 0.5rem 0.5rem;
+    padding: 0.7rem 0.5rem;
     border: none;
-    background-color: var(--white);
+    background-color: #ececec;
     border-radius: 0.3rem;
     font-size: 0.8rem;
-    width: 30%;
+    width: 50%;
     outline: none;
 
     option {

@@ -12,15 +12,16 @@ import Paper from "@mui/material/Paper";
 import { jobListings } from '../../../../utils/contantData';
 import save from '../../../../assets/icons/save.png'
 import share from '../../../../assets/icons/share.png'
+import searchBlack from '../../../../assets/icons/searchBlack.png'
 
 
 function Row(props) {
-  const { row } = props;
+  const { row, index } = props;
 
   return (
     <React.Fragment>
       <TableRow
-        sx={{ "& > *": { borderBottom: "unset" } }}>
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo'>
           <img src={row.companyLogo} />
         </TableCell>
@@ -49,12 +50,48 @@ function Row(props) {
 
 
 const SavedJobs = () => {
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
+
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
+
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
+
 
   return (
     <Container1>
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <h3 style={{ paddingLeft: "3rem" }}>Saved Jobs</h3>
+          <span className='title'>Saved Jobs</span>
+          <SearchBarContainer>
+            <div className='skillBox'>
+              <img src={searchBlack} />
+              <input
+                className='skillInput'
+                type="text"
+                placeholder="Search"
+              />
+            </div>
+
+            <div className='selectBox'>
+              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+                <option value="" disabled selected>Filtr by</option>
+                <option value="JobTitle">Job Title</option>
+                <option value="Company">Company</option>
+                <option value="Location">Location</option>
+              </select>
+              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+                <option value="" disabled selected>Sort by</option>
+                <option value="JobTitle">Job Title</option>
+                <option value="Company">Company</option>
+                <option value="Location">Location</option>
+              </select>
+            </div>
+          </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
@@ -68,8 +105,8 @@ const SavedJobs = () => {
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {jobListings?.map((row) => (
-                <Row key={row.jobId} row={row} />
+              {jobListings?.map((row, index) => (
+                <Row key={row.jobId} row={row} index={index} />
               ))}
             </TableBody>
           </Table>
@@ -89,9 +126,21 @@ const StyledBox = styled.div`
   width: 100%;
   padding: 0;
 
+  .colored {
+    background-color: #ececec;
+  }
+
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
     border-radius: 0.5rem;
+    padding-top: 1rem;
+
+
+    .title {
+      padding-left: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
   }
 
   .MuiTableCell-root {
@@ -114,7 +163,7 @@ const StyledBox = styled.div`
   }
 
   .tableHead {
-    background-color: lightgrey;
+    background-color: #d1fff0;
     width: 100%;
   }
 
@@ -151,51 +200,66 @@ const Container1 = styled.div`
   gap: 1rem;
 `;
 
-const Component = styled.div`
-  width: 100%; 
-  border: 0.08rem solid #ccc;
-  padding: 1rem 1rem;;
+const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 0.7rem;
-  font-size: 0.8rem;
+  width: 96%;
+  margin: 1rem auto 0.5rem auto;
+  height: 3rem;
   background-color: var(--white);
+  border-radius: 0.5rem;;
+  padding: 0rem 1rem;
+  gap: 1rem;
 
-`;
 
-const EditButton = styled.button`
-  background-color: var(--lightOrange);
-  border: 0.1rem solid var(--lightOrange);
-  cursor: pointer;
-  color: var(--white);
-  text-decoration: none;
-  font-size: 1rem;
-  margin-right: 0.6rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.5rem;
+  .skillBox {
+    position: relative;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.5rem;
 
-`;
+    img {
+      width: 1.2rem;
+    }
+  }
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
 
-const Label = styled.label`
-  font-weight: bold;
-  margin-bottom: 8px;
-`;
 
-const FileInput = styled.input`
-  margin-bottom: 20px;
-`;
-
-const SubmitButton = styled.button`
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+  .skillInput {
+  flex-grow: 1;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
+  height: 1rem;
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+  outline: none;
+  }
+
+
+  .selectBox {
+    width: 30%;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .selectInput {
+    padding: 0.7rem 0.5rem;
+    border: none;
+    background-color: #ececec;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 50%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
+
+`

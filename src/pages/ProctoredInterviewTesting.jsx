@@ -5,7 +5,7 @@ import ModalHOC from '../components/Interviews/SeekerDashboard/ModalHOC';
 import { useNavigate } from 'react-router';
 import OngoingInterview from './OngoingInterview';
 
-  
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,8 +15,8 @@ const Container = styled.div`
 
 
 const Proctored = () => {
-  const [start,setStart] = useState(false);
-  const [open,setOpen] = useState(false);
+  const [start, setStart] = useState(false);
+  const [open, setOpen] = useState(false);
   const idRef = useRef(null);
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const Proctored = () => {
     window.addEventListener("fullscreenchange", handleFullScreenChange);
 
     return () => {
-      if(idRef)clearTimeout(idRef);
+      if (idRef) clearTimeout(idRef);
       window.removeEventListener('keydown', handleKeyPress);
       window.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener('keydown', handleKeyPress);
@@ -35,23 +35,23 @@ const Proctored = () => {
     };
   }, []);
 
-  const handleVisibilityChange =  (event) => {
-    console.log("Cleared",idRef?.current)
+  const handleVisibilityChange = (event) => {
+    console.log("Cleared", idRef?.current)
 
     if (document.visibilityState === "visible") {
       console.log("start")
-      if(idRef.current){
+      if (idRef.current) {
         console.log("Clearing")
         clearTimeout(idRef.current)
       };
       console.log("End")
     }
-    
+
     if (document.visibilityState === "hidden") {
-      idRef.current =  setTimeout(() => {
-         navigate('/dashboard/interviews')
-      },3000)
-     
+      idRef.current = setTimeout(() => {
+        navigate('/dashboard/interviews')
+      }, 3000)
+
     }
   };
 
@@ -62,34 +62,34 @@ const Proctored = () => {
       toast.warn('Developer tools are disabled during test.');
     }
   };
- console.log("USEeffect ran")
- 
+  console.log("USEeffect ran")
+
   const handleFullScreenChange = (event) => {
-    if(!document.fullscreenElement){
+    if (!document.fullscreenElement) {
       setOpen(true);
     }
   };
 
 
   const handleStart = () => {
-   setStart(true);
-   document.documentElement.requestFullscreen();
+    setStart(true);
+    document.documentElement.requestFullscreen();
 
   };
 
-  
+
 
   const handlePrevent = (e) => {
     e.preventDefault();
     toast.warn("Copy Pasting not allowed in test");
   }
-console.log(idRef);
+  console.log(idRef);
   return (
     <Container onCopy={handlePrevent} onPaste={handlePrevent} onCut={handlePrevent}>
-      <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={Warning} array={[setOpen]}/>
-       <OngoingInterview start={start} handleStart={handleStart}/>
-  </Container>
- 
+      <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={Warning} array={[setOpen]} />
+      <OngoingInterview start={start} handleStart={handleStart} />
+    </Container>
+
   );
 };
 
@@ -97,7 +97,7 @@ export default (Proctored);
 
 
 
-const Warning = ({array}) => {
+const Warning = ({ array }) => {
   const navigate = useNavigate();
   const setOpen = array[0];
   return <div>
@@ -108,7 +108,8 @@ const Warning = ({array}) => {
     }}>Back to Interview</button>
     <button onClick={() => {
       navigate("/dashboard/interviews")
-      toast.success("Interview submitted")}}>Submit Interview</button>
+      toast.success("Interview submitted")
+    }}>Submit Interview</button>
   </div>
 }
 

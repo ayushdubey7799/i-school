@@ -16,7 +16,7 @@ import Loader from "../components/commonComponents/Loader";
 import Timer from "../components/Interviews/CurrentInterview/Timer";
 import logo from '../assets/IntelliViewLogo.png'
 
-const OngoingInterview = ({start,handleStart}) => {
+const OngoingInterview = ({ start, handleStart }) => {
     const accessToken = useSelector(state => state.auth.userData?.accessToken)
     const { interviewId } = useParams();
     const [data, setData] = useState(null);
@@ -85,7 +85,7 @@ const OngoingInterview = ({start,handleStart}) => {
         setLoaderMessage("Submitting Answer... please wait")
         setIsLoading(true);
         setId(id + 1);
-        const res = await submitAnswer(input, id, lastQuestion, interviewId,accessToken);
+        const res = await submitAnswer(input, id, lastQuestion, interviewId, accessToken);
         console.log(res);
         setInput("");
         setIsLoading(false);
@@ -94,7 +94,7 @@ const OngoingInterview = ({start,handleStart}) => {
     const handleSubmitInterview = async () => {
         setLoaderMessage("Evaluating the Score... please wait")
         setIsLoading(true);
-        const submitRes = await updateStatus(interviewId, "completed",accessToken);
+        const submitRes = await updateStatus(interviewId, "completed", accessToken);
         console.log(submitRes);
         if (submitRes) setScoreModal(true);
         setIsLoading(false);
@@ -113,13 +113,21 @@ const OngoingInterview = ({start,handleStart}) => {
     async function getData() {
         setLoaderMessage("Getting new Question... please wait")
         setIsLoading(true);
-        const fetchedData = await getQuestion(interviewId,accessToken);
+        const fetchedData = await getQuestion(interviewId, accessToken);
         console.log(fetchedData);
         setData(fetchedData?.data[0]);
         setIsLoading(false);
         handleStart();
         document.documentElement.requestFullscreen();
         startTimer();
+    }
+
+    const handleStartRec = () => {
+
+    }
+
+    const handleStopRec = () => {
+
     }
 
 
@@ -159,22 +167,30 @@ const OngoingInterview = ({start,handleStart}) => {
                                 </button>
                             ) : (
                                 <>
-                                    <button
-                                        onClick={() => {
-                                            handleSubmitAnswer(data.id, data.lastQuestion);
-                                            getData();
-                                        }}
-                                    >
-                                        Next Question
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            handleSubmitAnswer(data.id, data.lastQuestion);
-                                            handleSubmitInterview();
-                                        }}
-                                    >
-                                        Finish Interview
-                                    </button>
+                                    <div className="btnBox1">
+                                        <div className="childBtnBox">
+                                            <button onClick={handleStartRec} className="smallBtn">Start Rec</button>
+                                            <button onClick={handleStopRec} className="smallBtn">Stop Rec</button>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                handleSubmitAnswer(data.id, data.lastQuestion);
+                                                getData();
+                                            }}
+                                        >
+                                            Next Question
+                                        </button>
+                                    </div>
+                                    <div className="btnBox2">
+                                        <button
+                                            onClick={() => {
+                                                handleSubmitAnswer(data.id, data.lastQuestion);
+                                                handleSubmitInterview();
+                                            }}
+                                        >
+                                            Finish Interview
+                                        </button>
+                                    </div>
                                 </>
                             )}
                             <InterviewSubmittedModal
@@ -203,14 +219,16 @@ const StyledInterview = styled.div`
   gap: 2rem;
 
   .timer{
-    width: 100%;
+    width: 3rem;
     // height: 3rem;
-    background-color: var(--lightOrange);
-    color: var(--backgroundColor);
+    background-color: var(--white);
+    color: var(--color);
+    border: 0.1rem solid var(--lightOrange);
     border-radius: 0.5rem;
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
-    border: none;
+    display: flex;
+    justify-content: center;
   }
 
   .head{
@@ -218,10 +236,41 @@ const StyledInterview = styled.div`
     justify-content: space-between;
     padding: 0.5rem;
     width: 100%;
+    align-items: center;
   }
 
+  .btnBox1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+
+    .childBtnBox {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+    }
+  }
+
+  .btnBox2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
   button {
     width: 20%;
+    height: 3rem;
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+  }
+
+  .smallBtn {
+    width: 15%;
     height: 3rem;
     background-color: var(--lightOrange);
     color: var(--backgroundColor);

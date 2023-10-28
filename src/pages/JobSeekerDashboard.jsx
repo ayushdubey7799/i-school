@@ -79,7 +79,7 @@ const MainBox = styled.div`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
-background-color: #e3e3e3;
+background-color: #f4f4f4;
 `
 
 const MainContent = styled.div`
@@ -89,7 +89,7 @@ const MainContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: #e3e3e3;
+  background-color: #f4f4f4;
 `;
 
 const StyledContent = styled.div`
