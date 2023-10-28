@@ -16,91 +16,105 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "styled-components";
 import { data as tests } from "../../../../utils/contantData";
 
-import searchIcon from '../../../../assets/icons/searchIcon.png'
+import searchBlack from '../../../../assets/icons/searchBlack.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
 import editIcon from '../../../../assets/icons/edit.png'
 import visibleIcon from '../../../../assets/icons/visible.png'
 
 function Row(props) {
-    const { row } = props;
+  const { row, index } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}>
-                <TableCell component="th" scope="row" align="center">
-                    {row.id}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center">
-                    ...
-                </TableCell>{" "}
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">
-                    <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-                        <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-                        <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-                        <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
-                    </div>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell component="th" scope="row" align="center">
+          {row.id}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center">
+          ...
+        </TableCell>{" "}
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">
+          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
+            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+          </div>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 export default function AvailableTest() {
 
-    const [searchParams, setSearchParams] = useState('');
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
+
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
 
 
-    const handleSearchParams = (e) => {
-        setSearchParams(e.target.value);
-    }
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
 
-    const handleSearch = () => {
+  const handleSearch = () => {
 
-    }
+  }
 
-    return (
-        <Content>
-            <SearchBarContainer>
-                <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                    <option value="" disabled selected>Select filter Param</option>
-                    <option value="JD_ID">JD ID</option>
-                    <option value="TestType">Test Type</option>
-                    <option value="Created By">Created By</option>
-                </select>
-                <div className='skillBox'>
-                    <input
-                        className='skillInput'
-                        type="text"
-                        placeholder="Enter keywords..."
-                    />
-                </div>
-                <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
-            </SearchBarContainer>
-            <TableContainer component={Paper} className="tableBox">
-                <h3 style={{ paddingLeft: "3rem" }}>Available Tests</h3>
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center">JD ID</TableCell>
-                            <TableCell align="center">Date of Creation</TableCell>
-                            <TableCell align="center">Created By</TableCell>
-                            <TableCell align="center">Test Type</TableCell>
-                            <TableCell align="center">Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {tests?.map((row, index) => (
-                            <Row key={row.id} row={row} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Content>
-    );
+  return (
+    <Content>
+      <TableContainer component={Paper} className="tableBox">
+        <span className="title">Available Tests</span>
+        <SearchBarContainer>
+          <div className='skillBox'>
+            <img src={searchBlack} />
+            <input
+              className='skillInput'
+              type="text"
+              placeholder="Search"
+            />
+          </div>
+
+          <div className='selectBox'>
+            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+              <option value="" disabled selected>Filtr by</option>
+              <option value="JD_ID">JD ID</option>
+              <option value="TestType">Test Type</option>
+              <option value="Created By">Created By</option>
+            </select>
+            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+              <option value="" disabled selected>Sort by</option>
+              <option value="JD_ID">JD ID</option>
+              <option value="TestType">Test Type</option>
+              <option value="Created By">Created By</option>
+            </select>
+          </div>
+        </SearchBarContainer>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center">JD ID</TableCell>
+              <TableCell align="center">Date of Creation</TableCell>
+              <TableCell align="center">Created By</TableCell>
+              <TableCell align="center">Test Type</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {tests?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Content>
+  );
 }
 
 
@@ -112,11 +126,21 @@ display: flex;
 flex-direction: column;
 align-items: center;
 
-
+.colored {
+  background-color: #ececec;
+}
 
 .tableBox {
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
   border-radius: 0.5rem;
+  padding-top: 1rem;
+
+
+  .title {
+    padding-left: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
 }
 
 .MuiTableCell-root {
@@ -133,9 +157,8 @@ align-items: center;
 }
 
 .tableHead {
-  background-color: lightgrey;
+  background-color: #d1fff0;
   width: 100%;
-
 }
 
 .tableBody {
@@ -162,13 +185,13 @@ align-items: center;
 }
 `
 
-
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 3rem auto;
-  height: 3.5rem;
+  margin: 1rem auto 0.5rem auto;
+  height: 3rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
@@ -177,7 +200,16 @@ const SearchBarContainer = styled.div`
 
   .skillBox {
     position: relative;
-    width: 100%;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.5rem;
+
+    img {
+      width: 1.2rem;
+    }
   }
 
 
@@ -185,42 +217,28 @@ const SearchBarContainer = styled.div`
   .skillInput {
   flex-grow: 1;
   border: none;
-  height: 100%;
-  width: 90%;
+  height: 1rem;
+  width: 50%;
   padding: 0.5rem;
   font-size: 1rem;
-  background-color: var(--white);
+  background-color: transparent;
   outline: none;
   }
 
 
-
-  .btn {
-    background-color: var(--lightOrange);
-    padding: 0.5rem 1.1rem;
-    border-radius: 1.1rem;
-    color: var(--white);
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
+  .selectBox {
+    width: 30%;
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    cursor: pointer;
-    margin-top: 0rem;
-  }
-
-  .btn img {
-    width: 1rem;
+    gap: 1rem;
   }
 
   .selectInput {
-    padding: 0.5rem 0.5rem;
+    padding: 0.7rem 0.5rem;
     border: none;
-    background-color: var(--white);
+    background-color: #ececec;
     border-radius: 0.3rem;
     font-size: 0.8rem;
-    width: 30%;
+    width: 50%;
     outline: none;
 
     option {

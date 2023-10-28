@@ -22,12 +22,13 @@ import JdForm from '../JdForm';
 import attachIcon from '../../../../assets/icons/attach.png'
 import editIcon from '../../../../assets/icons/edit.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
+import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { getJds } from '../../../../functions/api/employers/getJds';
 import { useSelector } from 'react-redux';
 
 
 function Row(props) {
-  const { row, isSelected, onToggle } = props;
+  const { row, isSelected, onToggle, index } = props;
   const [jdData, setJdData] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
 
@@ -44,8 +45,7 @@ function Row(props) {
     <React.Fragment>
       <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
       <TableRow
-        className={isSelected ? "selected" : ""}
-        sx={{ "& > *": { borderBottom: "unset" } }}>
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -61,9 +61,6 @@ function Row(props) {
         <TableCell component="th" scope="row" align='center'>
           {row.jdId}
         </TableCell>
-        <TableCell component="th" scope="row" align='center'>
-          ...
-        </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
           ...
         </TableCell>
@@ -72,8 +69,8 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-            <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-            <img src={deleteIcon} onClick={() => handleDelete(row.jdId)} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
+            <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
       </TableRow>
@@ -119,6 +116,10 @@ const JdRegistration = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
 
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
+
+
   useEffect(() => {
     async function getData() {
       const res = await getJds();
@@ -127,6 +128,17 @@ const JdRegistration = () => {
     getData();
   }, []);
 
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
+
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
+
+  const handleSearch = () => {
+
+  }
 
 
   const handleToggle = (row) => {
@@ -152,28 +164,56 @@ const JdRegistration = () => {
   return (
     <Container1>
       <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null, "create"]} />
-      <Component>
-        <span>Add new Job Description</span>
-        <EditButton onClick={() => setOpenBasic(true)}>Create</EditButton>
-      </Component>
 
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <h3 style={{ paddingLeft: "3rem" }}>Job Descriptions</h3>
+          <Component>
+            <span className='title'>Job Descriptions</span>
+
+            <div className='btnBox'>
+            <EditButton>Clone Existing JD</EditButton>
+            <EditButton onClick={() => setOpenBasic(true)}>Create JD</EditButton>
+            </div>
+          </Component>
+
+          <SearchBarContainer>
+            <div className='skillBox'>
+              <img src={searchBlack} />
+              <input
+                className='skillInput'
+                type="text"
+                placeholder="Search"
+              />
+            </div>
+
+            <div className='selectBox'>
+              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+                <option value="" disabled selected>Filtr by</option>
+                <option value="JD_ID">JD ID</option>
+                <option value="Test_ID">Test ID</option>
+                <option value="Created By">Created By</option>
+              </select>
+              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+                <option value="" disabled selected>Sort by</option>
+                <option value="JD_ID">JD ID</option>
+                <option value="Test_ID">Test ID</option>
+                <option value="Created By">Created By</option>
+              </select>
+            </div>
+          </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
                 <TableCell />
-                <TableCell align='center'>JD_ID</TableCell>
-                <TableCell align='center'>Test_ID</TableCell>
+                <TableCell align='center'>JD ID</TableCell>
                 <TableCell align='center'>Date of Creation</TableCell>
                 <TableCell align='center'>Created By</TableCell>
-                <TableCell align='center'>Edit/Delete</TableCell>
+                <TableCell align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
               {tableRows?.map((row, index) => (
-                <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+                <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} index={index} />
               ))}
             </TableBody>
           </Table>
@@ -188,14 +228,26 @@ export default JdRegistration;
 
 const StyledBox = styled.div`
   display: flex;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 2.5rem;
   width: 96%;
   padding: 0 2%;
 
+  .colored {
+    background-color: #ececec;
+  }
+
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
     border-radius: 0.5rem;
+    padding-top: 1rem;
+
+
+    .title {
+      padding-left: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
   }
 
   .MuiTableCell-root {
@@ -223,9 +275,8 @@ const StyledBox = styled.div`
   }
 
   .tableHead {
-    background-color: lightgrey;
+    background-color: #d1fff0;
     width: 100%;
-
   }
 
   .tableBody {
@@ -239,7 +290,7 @@ const StyledBox = styled.div`
 
 const Container1 = styled.div`
   width: 98%;
-  margin: 1rem auto;
+  margin: 0rem auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -248,20 +299,11 @@ const Container1 = styled.div`
 `;
 
 const Component = styled.div`
-  width: 93%; 
-  border: 0.08rem solid #ccc;
-  padding: 0.7rem 1rem;;
+  width: 99%; 
+  padding: 0.5rem 0rem;;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 0.7rem;
-  font-size: 0.8rem;
-  background-color: var(--white);
-
-  span {
-    font-size: 1rem;
-    font-weight: 500;
-  }
 `;
 
 const EditButton = styled.button`
@@ -277,27 +319,68 @@ const EditButton = styled.button`
 
 `;
 
-const Form = styled.form`
+
+
+const SearchBarContainer = styled.div`
   display: flex;
-  flex-direction: column;
-`;
+  align-items: center;
+  justify-content: space-between;
+  width: 96%;
+  margin: 1rem auto 0.5rem auto;
+  height: 3rem;
+  background-color: var(--white);
+  border-radius: 0.5rem;;
+  padding: 0rem 1rem;
+  gap: 1rem;
 
-const Label = styled.label`
-  font-weight: bold;
-  margin-bottom: 8px;
-`;
 
-const FileInput = styled.input`
-  margin-bottom: 20px;
-`;
+  .skillBox {
+    position: relative;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.5rem;
 
-const SubmitButton = styled.button`
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+    img {
+      width: 1.2rem;
+    }
+  }
+
+
+
+  .skillInput {
+  flex-grow: 1;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
+  height: 1rem;
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+  outline: none;
+  }
 
 
+  .selectBox {
+    width: 30%;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .selectInput {
+    padding: 0.7rem 0.5rem;
+    border: none;
+    background-color: #ececec;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 50%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
+
+`

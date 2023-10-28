@@ -91,8 +91,8 @@ overflow-y: scroll;
   }
 
   .icon {
-    width: 1.1rem;
-    height: 1.1rem;
+    width: 1.4rem;
+    // height: 1.4rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -204,7 +204,7 @@ const Arrow = styled.div`
     height: 0;
     border-bottom: 1rem solid transparent;
     border-top: 1rem solid transparent;
-    border-right: 1rem solid #e3e3e3;
+    border-right: 1rem solid #f4f4f4;
     margin-left: auto;
     transition: transform 0.2s;
     position: absolute;
