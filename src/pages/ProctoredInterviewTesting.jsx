@@ -72,8 +72,9 @@ const Proctored = () => {
 
 
   const handleStart = () => {
-    setStart(true);
     document.documentElement.requestFullscreen();
+
+    setStart(true);
 
   };
 

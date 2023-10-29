@@ -111,6 +111,8 @@ const OngoingInterview = ({ start, handleStart }) => {
     };
 
     async function getData() {
+        document.documentElement.requestFullscreen();
+
         setLoaderMessage("Getting new Question... please wait")
         setIsLoading(true);
         const fetchedData = await getQuestion(interviewId, accessToken);
@@ -118,7 +120,6 @@ const OngoingInterview = ({ start, handleStart }) => {
         setData(fetchedData?.data[0]);
         setIsLoading(false);
         handleStart();
-        document.documentElement.requestFullscreen();
         startTimer();
     }
 

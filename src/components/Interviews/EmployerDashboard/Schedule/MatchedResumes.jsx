@@ -150,7 +150,7 @@ export default function MatchedResumes() {
   };
 
   const handleSchedule = () => {
-    if (selectedArray.length > 0) {
+    if (selectedArray?.length > 0) {
       localStorage.setItem(
         "schedule",
         JSON.stringify([...selectedArray, idToSendInvite])
