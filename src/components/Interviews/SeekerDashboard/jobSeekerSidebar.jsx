@@ -28,7 +28,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const Container = styled.div`
   width: 17rem;
   height: calc(90% - 4rem);
-  height: 100vh;
+  height: 85vh;
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
@@ -262,6 +262,36 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel5bh-content"
+          id="panel5bh-header"
+          classes={{
+            root: 'custom-accordion-summary-root',
+            expanded: expanded === 'panel5' ? 'expanded' : ''
+          }}
+        >
+          <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}>Profile</span>
+          {expanded === 'panel5' && <Arrow></Arrow>}
+        </AccordionSummary>
+        <AccordionDetails>
+          <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
+            <img src={profileIcon} className='icon' />
+            Profile
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
+            <img src={subsIcon} className='icon' />
+            Subscriptions
+          </MenuItem>
+          {/* <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
+            <img src={inboxIcon} className='icon' />
+            Notifications
+          </MenuItem> */}
+        </AccordionDetails>
+      </Accordion>
+
+
       <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -288,35 +318,18 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
+      <Accordion expanded={expanded === 'panel7'} onChange={handleChange('panel7')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }} onClick={() => handleItemClick('inbox')} isSelected={currentItem === 'inbox'}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel5bh-content"
-          id="panel5bh-header"
+          aria-controls="panel7bh-content"
+          id="panel7bh-header"
           classes={{
             root: 'custom-accordion-summary-root',
-            expanded: expanded === 'panel5' ? 'expanded' : ''
+            expanded: expanded === 'panel7' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}>Profile</span>
-          {expanded === 'panel5' && <Arrow></Arrow>}
+          <span className={`menuTitle ${expanded === 'panel7' ? 'selected' : ''}`}>Notifications</span>
+          {expanded === 'panel7' && <Arrow></Arrow>}
         </AccordionSummary>
-        <AccordionDetails>
-          <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
-            <img src={profileIcon} className='icon' />
-            Profile
-            {/* <KeyboardArrowDownIcon className='arrowDown' />
-        <KeyboardArrowUpIcon className='arrowUp' /> */}
-          </MenuItem>
-          <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
-            <img src={subsIcon} className='icon' />
-            Subscriptions
-          </MenuItem>
-          <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
-            <img src={inboxIcon} className='icon' />
-            Notifications
-          </MenuItem>
-        </AccordionDetails>
       </Accordion>
 
     </Container >

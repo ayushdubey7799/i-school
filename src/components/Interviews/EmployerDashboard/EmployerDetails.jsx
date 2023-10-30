@@ -19,12 +19,13 @@ const Form = styled.form`
   width: 100%;
   height: 100%;
   align-items: center;
+  font-size: 0.8rem;
 `;
 
 const Label = styled.label`
   margin-bottom: 8px;
   font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 400;
   width: 100%;
 `;
 
@@ -34,6 +35,10 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
+  background-color: #F6F6FB;
+  outline-color: #ccc;
+  box-sizing: border-box;
+  font-size: 0.8rem;
 `;
 
 const Select = styled.select`
@@ -41,7 +46,11 @@ const Select = styled.select`
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 102.8%;
+  width: 100%;
+  background-color: #F6F6FB;
+  outline-color: #ccc;
+  box-sizing: border-box;
+  font-size: 0.8rem;
 `;
 
 const Textarea = styled.textarea`
@@ -50,6 +59,10 @@ const Textarea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
+  background-color: #F6F6FB;
+  outline-color: #ccc;
+  box-sizing: border-box;
+  font-size: 0.8rem;
 `;
 
 const Button = styled.button`

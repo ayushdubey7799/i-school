@@ -61,24 +61,14 @@ const Container = styled.div`
     text-align: center;
   } 
 
+  .hrLine {
+    width: 75%;
+    border-top: 0.1rem solid grey;
+    margin: -0.7rem 0 -0.9rem 0;
+  }
+
 `;
 
-const Square = styled.div`
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.5rem;
-  align-items: center;
-  width: 20%;
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.5);
-`;
-
-const Content = styled.div`
-  text-align: center;
-`;
 
 const Metrics = ({ setCurrentItem }) => {
 
@@ -90,6 +80,7 @@ const Metrics = ({ setCurrentItem }) => {
           <img src={metric1} />
           <span className='achievedNumberDigit'>15</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Recommended Jobs</span>
       </div>
       <div className='achievedNumberBox' onClick={() => setCurrentItem('applied-jobs')}>
@@ -97,6 +88,7 @@ const Metrics = ({ setCurrentItem }) => {
           <img src={metric2} />
           <span className='achievedNumberDigit'>30</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Applied Jobs</span>
       </div>
       <div className='achievedNumberBox' onClick={() => setCurrentItem('interviewDash')}>
@@ -104,6 +96,7 @@ const Metrics = ({ setCurrentItem }) => {
           <img src={metric3} />
           <span className='achievedNumberDigit'>12</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Interviews Completed</span>
       </div>
       <div className='achievedNumberBox' onClick={() => setCurrentItem('interviewDash')}>
@@ -111,6 +104,7 @@ const Metrics = ({ setCurrentItem }) => {
           <img src={metric4} />
           <span className='achievedNumberDigit'>5</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Interview Scheduled</span>
       </div>
     </Container>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import metric1 from '../../../assets/icons/metric1.png'
 import metric2 from '../../../assets/icons/metric2.2.png'
-import metric3 from '../../../assets/icons/metric3.png'
+import metric3 from '../../../assets/icons/metric2.3.png'
 import metric4 from '../../../assets/icons/metric2.4.png'
 
 
@@ -60,25 +60,14 @@ gap: 2%;
     text-align: center;
 }
 
+.hrLine {
+  width: 75%;
+  border-top: 0.1rem solid grey;
+  margin: -0.7rem 0 -0.9rem 0;
+}
 
 `;
 
-const Square = styled.div`
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.5rem;
-  align-items: center;
-  width: 20%;
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.5)
-`;
-
-const Content = styled.div`
-  text-align: center;
-`;
 
 const EmployeMetrics = ({ setCurrentItem }) => {
   return (
@@ -88,6 +77,7 @@ const EmployeMetrics = ({ setCurrentItem }) => {
           <img src={metric1} />
           <span className='achievedNumberDigit'>15</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Active JDs</span>
       </div>
       <div className='achievedNumberBox'>
@@ -95,6 +85,7 @@ const EmployeMetrics = ({ setCurrentItem }) => {
           <img src={metric2} />
           <span className='achievedNumberDigit'>30</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Applications</span>
       </div>
       <div className='achievedNumberBox'>
@@ -102,6 +93,7 @@ const EmployeMetrics = ({ setCurrentItem }) => {
           <img src={metric3} />
           <span className='achievedNumberDigit'>17</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Interviews</span>
       </div>
       <div className='achievedNumberBox' onClick={() => setCurrentItem('candidate-registered')}>
@@ -109,6 +101,7 @@ const EmployeMetrics = ({ setCurrentItem }) => {
           <img src={metric4} />
           <span className='achievedNumberDigit'>12</span>
         </div>
+        <span className='hrLine'></span>
         <span className='achievedNumberText'>Candidates Pool</span>
       </div>
     </Container>

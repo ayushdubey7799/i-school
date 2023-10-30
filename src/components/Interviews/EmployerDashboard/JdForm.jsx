@@ -33,6 +33,8 @@ const Input = styled.input`
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
+  background-color: #F6F6FB;
+  outline-color: #ccc;
   border-radius: 5px;
 `;
 
@@ -41,6 +43,8 @@ const Textarea = styled.textarea`
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #F6F6FB;
+  outline-color: #ccc;
 `;
 
 const Select = styled.select`
@@ -48,6 +52,8 @@ const Select = styled.select`
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #F6F6FB;
+  outline-color: #ccc;
 `;
 
 const Button = styled.button`
@@ -76,6 +82,9 @@ function JdForm({ array, handleClose }) {
     workerType: '',
     ctc: '',
     keywords: '',
+    noticePeriod: '',
+    companyType: '',
+    candidateAvl: '',
     jdUpload: null,
     visibility: '',
   });
@@ -130,7 +139,7 @@ function JdForm({ array, handleClose }) {
           name="jdId"
           value={formData.jdId}
           onChange={handleChange}
-          disabled={mode=="edit"}
+          disabled={mode == "edit"}
         />
 
         <Label>Req Number (From Employer System)</Label>
@@ -139,7 +148,7 @@ function JdForm({ array, handleClose }) {
           name="reqNumber"
           value={formData.reqNumber}
           onChange={handleChange}
-          disabled={autoReq || mode=="edit"}
+          disabled={autoReq || mode == "edit"}
         />
 
         <Label>Auto Generate Req Number</Label>
@@ -242,6 +251,50 @@ function JdForm({ array, handleClose }) {
           value={formData.keywords}
           onChange={handleChange}
         />
+
+        <Label>Notice Period</Label>
+        <Select
+          name="noticePeriod"
+          value={formData.noticePeriod}
+          onChange={handleChange}
+        >
+          <option value="" disabled selected>Select Notice Period</option>
+          <option value="Immediate">Immediate</option>
+          <option value="1week">1 Week</option>
+          <option value="2weeks">2 Weeks</option>
+          <option value="1month">1 Month</option>
+          <option value="2months">2 Months</option>
+          <option value="3months">3 Months</option>
+          <option value="6months">6 Months</option>
+        </Select>
+
+        <Label>Company Type</Label>
+        <Select
+          name="companyType"
+          value={formData.companyType}
+          onChange={handleChange}
+        >
+          <option value="" disabled selected>Select Company Type</option>
+          <option value="startup">Start up</option>
+          <option value="itService">IT Service</option>
+          <option value="productBased">Product Based</option>
+        </Select>
+
+        <Label>Candidate Availability</Label>
+        <Select
+          name="candidateAvl"
+          value={formData.candidateAvl}
+          onChange={handleChange}
+        >
+          <option value="" disabled selected>Select Candidate Availability</option>
+          <option value="Immediate">Immediate</option>
+          <option value="1week">1 Week</option>
+          <option value="2weeks">2 Weeks</option>
+          <option value="1month">1 Month</option>
+          <option value="2months">2 Months</option>
+          <option value="3months">3 Months</option>
+        </Select>
+
 
         <Label>JD Upload</Label>
         <Input

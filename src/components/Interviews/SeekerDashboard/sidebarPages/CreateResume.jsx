@@ -39,13 +39,13 @@ border-radius: 1rem;
     gap: 1.5rem;
 
     .title {
-        font-size: 2rem;
-        font-weight: 600;
+        font-size: 1.5rem;
+        font-weight: 500;
     }
 
     .subTitle {
         font-size: 0.9rem;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 1.4rem;
     }
 
@@ -53,7 +53,7 @@ border-radius: 1rem;
         background-color: var(--lightOrange);
         border: 0.1rem solid var(--lightOrange);
         padding: 0.5rem 1rem;
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 600;
         color: var(--white);
         border-radius: 0.5rem;
