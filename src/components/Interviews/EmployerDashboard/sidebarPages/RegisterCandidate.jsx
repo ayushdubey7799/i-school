@@ -66,7 +66,7 @@ const Form = styled.div`
     padding-left: 0.5rem;
     border-radius: 0.3rem;
     border: 0.05rem solid lightgrey;
-    background-color: var(--white);
+    background-color: #F6F6FB;
     font-size: 1rem;
   }
 

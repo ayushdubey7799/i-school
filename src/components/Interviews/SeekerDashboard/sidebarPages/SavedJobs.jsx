@@ -83,12 +83,18 @@ const SavedJobs = () => {
                 <option value="JobTitle">Job Title</option>
                 <option value="Company">Company</option>
                 <option value="Location">Location</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CompanyType">Company Type</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
               </select>
               <select value={sortParams} onChange={handleSortParams} className='selectInput'>
                 <option value="" disabled selected>Sort by</option>
                 <option value="JobTitle">Job Title</option>
                 <option value="Company">Company</option>
                 <option value="Location">Location</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CompanyType">Company Type</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
               </select>
             </div>
           </SearchBarContainer>

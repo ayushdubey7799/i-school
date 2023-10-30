@@ -96,6 +96,8 @@ const ActiveJds = () => {
                 <option value="Req_ID">Req ID</option>
                 <option value="Recruiter">Recruiter</option>
                 <option value="HiringManager">Hiring Manager</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
               </select>
               <select value={sortParams} onChange={handleSortParams} className='selectInput'>
                 <option value="" disabled selected>Sort by</option>
@@ -103,6 +105,8 @@ const ActiveJds = () => {
                 <option value="Req_ID">Req ID</option>
                 <option value="Recruiter">Recruiter</option>
                 <option value="HiringManager">Hiring Manager</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
               </select>
             </div>
           </SearchBarContainer>
