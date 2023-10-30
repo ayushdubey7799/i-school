@@ -218,7 +218,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
   return (
     <Container>
 
-      <CatTitle className='categoryTitle'>Dashboard</CatTitle>
+      <CatTitle className='categoryTitle'>Home</CatTitle>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
