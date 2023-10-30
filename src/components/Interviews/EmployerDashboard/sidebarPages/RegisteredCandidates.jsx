@@ -91,6 +91,7 @@ export default function RegisteredCandidates() {
               <option value="Email">Email</option>
               <option value="Contact">Contact</option>
               <option value="RegBy">Reg By</option>
+              <option value="CandidateAvl">Candidate  Availability</option>
             </select>
             <select value={sortParams} onChange={handleSortParams} className='selectInput'>
               <option value="" disabled selected>Sort by</option>
@@ -98,6 +99,7 @@ export default function RegisteredCandidates() {
               <option value="Email">Email</option>
               <option value="Contact">Contact</option>
               <option value="RegBy">Reg By</option>
+              <option value="CandidateAvl">Candidate  Availability</option>
             </select>
           </div>
         </SearchBarContainer>
@@ -268,3 +270,5 @@ const SearchBarContainer = styled.div`
   }
 
 `
+
+

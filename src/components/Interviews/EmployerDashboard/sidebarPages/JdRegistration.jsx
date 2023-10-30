@@ -124,7 +124,7 @@ const JdRegistration = () => {
 
   useEffect(() => {
     async function getData() {
-      const res = await getJds(accessToken,clientCode);
+      const res = await getJds(accessToken, clientCode);
       setTableRows(res?.data?.data);
     }
     getData();
@@ -173,8 +173,8 @@ const JdRegistration = () => {
             <span className='title'>Job Descriptions</span>
 
             <div className='btnBox'>
-            <EditButton>Clone Existing JD</EditButton>
-            <EditButton onClick={() => setOpenBasic(true)}>Create JD</EditButton>
+              <EditButton>Clone Existing JD</EditButton>
+              <EditButton onClick={() => setOpenBasic(true)}>Create JD</EditButton>
             </div>
           </Component>
 
@@ -194,12 +194,16 @@ const JdRegistration = () => {
                 <option value="JD_ID">JD ID</option>
                 <option value="Test_ID">Test ID</option>
                 <option value="Created By">Created By</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
               </select>
               <select value={sortParams} onChange={handleSortParams} className='selectInput'>
                 <option value="" disabled selected>Sort by</option>
                 <option value="JD_ID">JD ID</option>
                 <option value="Test_ID">Test ID</option>
                 <option value="Created By">Created By</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
               </select>
             </div>
           </SearchBarContainer>
