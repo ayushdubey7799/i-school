@@ -13,8 +13,39 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import moment from "moment-timezone";
 
+const timezonesName = {
+  'GMT': 'Greenwich Mean Time',
+  'CET': 'Central European Time',
+  'EET': 'Eastern European Time',
+  'MSK': 'Moscow Standard Time',
+  'PKT': 'Pakistan Standard Time',
+  'IST': 'Indian Standard Time',
+  'ICT': 'Indochina Time',
+  'SGT': 'Singapore Time',
+  'JST': 'Japan Standard Time',
+  'AEST': 'Australian Eastern Standard Time',
+  'VLAT': 'Vladivostok Time',
+  'NZST': 'New Zealand Standard Time',
+  'NUT': 'Niue Time',
+  'SST': 'Samoa Standard Time',
+  'ChST': 'Chamorro Standard Time',
+  'HST': 'Hawaii Standard Time',
+  'AKST': 'Alaska Standard Time',
+  'PST': 'Pacific Standard Time',
+  'MST': 'Mountain Standard Time',
+  'CST': 'Central Standard Time',
+  'EST': 'Eastern Standard Time',
+  'AST': 'Atlantic Standard Time',
+  'NST': 'Newfoundland Standard Time',
+  'WGT': 'West Greenland Time'
+};
+
+
 export default function Invite() {
-  const [value, setValue] = useState(dayjs("2022-04-17"));
+  const [value, setValue] = useState(dayjs(new Date()));
+  const [selectedHour, setSelectedHour] = useState("00");
+  const [selectedMinute, setSelectedMinute] = useState("00");
+  const [selectedTimezone, setSelectedTimezone] = useState("GMT");
   const [productTypes, setProductTypes] = useState([]);
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState("");
@@ -24,6 +55,12 @@ export default function Invite() {
     (state) => state.auth.userData.user.clientCode
   );
   const navigate = useNavigate();
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   let array = localStorage.getItem("schedule");
   if (array) {
     array = JSON.parse(array);
@@ -57,16 +94,28 @@ export default function Invite() {
   };
 
   const handleInvite = () => {
+  
+   
     const makeApiCall = async () => {
+      const dateTime = moment(value.format("YYYY-MM-DD")+"T"+selectedHour + ":" + selectedMinute + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm:ss');
+      const date = dateTime.slice(0,10);
+      const time = dateTime.slice(11);
+      if(!productType || !testType || !value.format("YYYY-MM-DD")){
+        toast.error("Fill all fields");
+        return;
+      }      
       const payload = {
         jdId: array[array.length - 1],
-        productType: "skill based",
+        productType: productType,
         resumeIds: array.slice(0, -1),
-        slotDate: value.format("YYYY-MM-DD"),
-        testType: "AI",
+        testType: testType,
+        slotDate: date,
+        timeZone: "UTC",
+        slotTime: time,
         welcomeMessage: "string",
       };
-
+      if(isChecked)delete payload.slotTime;
+   console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
         console.log("API call successful:", response.data);
@@ -78,8 +127,12 @@ export default function Invite() {
 
     makeApiCall();
   };
-  console.log("Date->", value.format("YYYY-MM-DD"));
-
+  // console.log(moment.tz.zone(selectedTimezone)?.name,"Date->", moment.tz(value.format("YYYY-MM-DD")+"T"+selectedHour + ":" + selectedMinute + ":" + "00.000",moment.tz.zone(selectedTimezone)?.name).utc().format());
+  // console.log(
+  //   selectedHour + ":" + selectedMinute + ":" + "00.000" + selectedTimezone
+  // );
+  
+  
   return (
     <Container>
       <div className="mainBox">
@@ -89,7 +142,14 @@ export default function Invite() {
             onChange={(newValue) => setValue(dayjs(newValue))}
           />
         </LocalizationProvider>
-        <ResponsiveTimePickers />
+        <ResponsiveTimePickers
+          selectedHour={selectedHour}
+          setSelectedHour={setSelectedHour}
+          selectedMinute={selectedMinute}
+          setSelectedMinute={setSelectedMinute}
+          selectedTimezone={selectedTimezone}
+          setSelectedTimezone={setSelectedTimezone}
+        />
 
         <div className="selectBox">
           <Select value={productType} onChange={handleProductTypeChange}>
@@ -111,6 +171,14 @@ export default function Invite() {
           </Select>
         </div>
       </div>
+      <label>
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        Give slot selection option to candidate (Interview Date will be fixed)
+      </label>
       <button className="btn" onClick={handleInvite}>
         Send Invite
       </button>
@@ -170,11 +238,7 @@ const TimeInput = styled.select`
   font-size: 16px;
 `;
 
-function ResponsiveTimePickers() {
-  const [selectedHour, setSelectedHour] = useState("00");
-  const [selectedMinute, setSelectedMinute] = useState("00");
-  const [selectedAmPm, setSelectedAmPm] = useState("AM");
-  const [selectedTimezone, setSelectedTimezone] = useState("GMT");
+function ResponsiveTimePickers({selectedHour,setSelectedHour,selectedMinute,setSelectedMinute,selectedTimezone,setSelectedTimezone}) {
   const timezones = [
     "GMT",
     "CET",
@@ -238,7 +302,6 @@ function ResponsiveTimePickers() {
         <option value="21">21</option>
         <option value="22">22</option>
         <option value="23">23</option>
-        <option value="24">24</option>
 
         {/* Add more hour options here */}
       </TimeInput>
@@ -263,7 +326,7 @@ function ResponsiveTimePickers() {
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </TimeInput> */}
-      <TimeInput
+      {/* <TimeInput
         value={selectedTimezone}
         onChange={(e) => setSelectedTimezone(e.target.value)}
       >
@@ -272,7 +335,9 @@ function ResponsiveTimePickers() {
             {tz}
           </option>
         ))}
-      </TimeInput>
+      </TimeInput> */}
     </TimeSelector>
   );
 }
+
+
