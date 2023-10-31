@@ -201,12 +201,12 @@ const StyledBox = styled.div`
   }
 
   .logo {
-    width: 4rem;
-    height: 4rem;
+    width: 2rem;
+    height: 2rem;
 
     img {
-        width: 80%;
-        height: 80%;
+        width: 100%;
+        height: 100%;
         border-radius: 10%;
     }
   }

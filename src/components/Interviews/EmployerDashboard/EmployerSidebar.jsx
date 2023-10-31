@@ -26,6 +26,14 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import titleIcon1 from '../../../assets/icons/titleIcon1.png'
+import titleIcon2 from '../../../assets/icons/titleIcon2.png'
+import titleIcon3 from '../../../assets/icons/titleIcon3.png'
+import titleIcon4 from '../../../assets/icons/titleIcon4.png'
+import titleIcon5 from '../../../assets/icons/titleIcon5.png'
+
+
+
 const Container = styled.div`
 width: 17rem;
 height: calc(90% - 2rem);
@@ -75,9 +83,11 @@ overflow-y: scroll;
 
   .hrLine {
     width: 90%;
-    border-top: 0.1rem solid lightgrey;
+    border-top: 0.1rem groove lightgrey;
+    border-radius: 0.2rem;
     margin: 1rem 0 0rem 0;
     align-self: center;
+    box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.25);
   }
 
   .details {
@@ -85,8 +95,7 @@ overflow-y: scroll;
   }
 
   .icon {
-    width: 1.4rem;
-    // height: 1.4rem;
+    width: 1.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -117,7 +126,7 @@ const MenuItem = styled.div`
     text-decoration: none;
   }
   .icon {
-    width: 1.4rem;
+    width: 1.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -152,7 +161,7 @@ const Submenu = styled.div`
   }
   
   .icon {
-    width: 1.4rem;
+    width: 1.2rem;
     padding-right: 0.5rem;
   }
   a{
@@ -193,9 +202,17 @@ const Arrow = styled.div`
 
 const CatTitle = styled.span`
 font-size: 0.9rem;
-font-weight: 500;
+font-weight: 600;
 margin-left: 1rem;
 margin-top: 1rem;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+
+
+img {
+  width: 1.3rem;
+}
 
 `
 
@@ -218,7 +235,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
   return (
     <Container>
 
-      <CatTitle className='categoryTitle'>Home</CatTitle>
+      <CatTitle className='categoryTitle'><img src={titleIcon1} /> Home</CatTitle>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -245,7 +262,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
       </Accordion>
 
       <span className='hrLine'></span>
-      <CatTitle className='categoryTitle'>Sourcing</CatTitle>
+      <CatTitle className='categoryTitle'><img src={titleIcon2} /> Sourcing</CatTitle>
       <Accordion expanded={expanded === 'panel7'} onChange={handleChange('panel7')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }} >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -288,7 +305,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
       </Accordion>
 
       <span className='hrLine'></span>
-      <CatTitle className='categoryTitle'>Interview & ATS</CatTitle>
+      <CatTitle className='categoryTitle'><img src={titleIcon3} /> Interview & ATS</CatTitle>
       <Accordion expanded={expanded === 'panel9'} onChange={handleChange('panel9')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -334,7 +351,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
       </Accordion>
 
       <span className='hrLine'></span>
-      <CatTitle className='categoryTitle'>Analytics</CatTitle>
+      <CatTitle className='categoryTitle'><img src={titleIcon4} /> Analytics</CatTitle>
       <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -358,7 +375,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
 
 
       <span className='hrLine'></span>
-      <CatTitle className='categoryTitle'>Admin</CatTitle>
+      <CatTitle className='categoryTitle'><img src={titleIcon5} /> Admin</CatTitle>
       <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

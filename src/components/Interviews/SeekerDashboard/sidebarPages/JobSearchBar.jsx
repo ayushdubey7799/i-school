@@ -8,16 +8,15 @@ import FilteredJobs from './FilteredJobs';
 
 
 
-// Styled Components
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
   width: 90%;
   margin: 1rem auto;
-  height: 4rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
-  padding: 0.1rem 1rem;
+  padding: 0.7rem 1rem;
+  border: 0.08rem solid lightgrey;
 
   .locationBox {
     position: relative;

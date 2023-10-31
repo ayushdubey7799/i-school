@@ -98,7 +98,7 @@ const MenuItem = styled.div`
   }
 
   .icon {
-    width: 1.4rem;
+    width: 1.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }

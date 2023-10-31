@@ -61,10 +61,14 @@ gap: 2%;
 }
 
 .hrLine {
-  width: 75%;
-  border-top: 0.1rem solid grey;
-  margin: -0.7rem 0 -0.9rem 0;
+  width: 100%;
+  border-top: 0.1rem groove lightgrey;
+  margin: -0.2rem 0 -0.9rem 0;
+  box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.25);
 }
+
+
+
 
 `;
 

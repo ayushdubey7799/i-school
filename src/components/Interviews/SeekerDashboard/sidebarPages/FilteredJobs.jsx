@@ -15,13 +15,14 @@ import share from '../../../../assets/icons/share.png'
 
 
 
+
 function Row(props) {
   const { row, index } = props;
 
   return (
     <React.Fragment>
       <TableRow
-        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`tableRow ${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo'>
           <img src={row.companyLogo} />
         </TableCell>
@@ -146,13 +147,14 @@ const StyledBox = styled.div`
     font-size: 0.75rem;
   }
 
+
   .logo {
-    width: 4rem;
-    height: 4rem;
+    width: 2rem;
+    height: 2rem;
 
     img {
-        width: 80%;
-        height: 80%;
+        width: 100%;
+        height: 100%;
         border-radius: 10%;
     }
   }
