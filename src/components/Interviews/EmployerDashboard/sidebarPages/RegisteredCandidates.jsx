@@ -75,7 +75,6 @@ export default function RegisteredCandidates({ setCurrentItem }) {
       <TableContainer component={Paper} className="tableBox">
         <div className="titleBox">
           <span className="title">Candidates Pool</span>
-          <Button onClick={() => setCurrentItem('interview-dashboard')}>Go to Interview Dashboard</Button>
         </div>
 
         <SearchBarContainer>

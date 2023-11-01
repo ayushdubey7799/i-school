@@ -5,15 +5,35 @@ import metric2 from '../../../assets/icons/metric2.2.png'
 import metric3 from '../../../assets/icons/metric2.3.png'
 import metric4 from '../../../assets/icons/metric2.4.png'
 
+const Button = styled.button`
+  background-color: var(--lightOrange);
+  border: 0.1rem solid var(--lightOrange);
+  cursor: pointer;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
 
+`;
+
+
+const MainContainer = styled.div`
+width: 90%;
+padding: 1.5rem 5% 2.4rem 5%;
+display: flex;
+flex-direction: column;
+align-items: end;
+
+`
 const Container = styled.div`
 
 display: flex;
 flex-direction: row;
-width: 90%;
+width: 100%;
 justify-content: space-between;
 align-items: center;
-padding: 4rem 5% 2rem 5%;
+padding: 2rem 0% 1rem 0%;
 gap: 2%;
 
 
@@ -75,6 +95,8 @@ gap: 2%;
 
 const EmployeMetrics = ({ setCurrentItem }) => {
   return (
+    <MainContainer>
+      <Button onClick={() => setCurrentItem('interview-dashboard')}>Go to Interview Dashboard</Button>
     <Container>
       <div className='achievedNumberBox' onClick={() => setCurrentItem('')}>
         <div className='top'>
@@ -109,6 +131,7 @@ const EmployeMetrics = ({ setCurrentItem }) => {
         <span className='achievedNumberText'>Candidates Pool</span>
       </div>
     </Container>
+    </MainContainer>
   );
 };
 
