@@ -43,6 +43,8 @@ const EmployerHeader = () => {
         </div>
 
         <div class="dropdown" id="dropdown">
+          <span onClick={() => navigate('/feedback')}>Feedback</span>
+          <span onClick={() => navigate('/support')}>Help</span>
           <span onClick={() => navigate('/reset')}>Reset Password</span>
           <span onClick={handleLogout}>Logout</span>
         </div>

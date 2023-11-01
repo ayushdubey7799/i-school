@@ -55,6 +55,7 @@ import InviteRedirect from "./components/Interviews/SeekerDashboard/InviteRedire
 import SelectCVTempPage from "./pages/SelectCVTempPage"
 import CreateResumePage from "./pages/CreateResumePage"
 import Invite from "./components/Interviews/EmployerDashboard/Schedule/Invite"
+import InviteSuccess from "./components/Interviews/EmployerDashboard/Schedule/InviteSuccess"
 
 
 
@@ -78,6 +79,7 @@ const App = () => {
           <Route path="/schedule" element={<ScheduleInterview />} />
           <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
           <Route path="/schedule/invite" element={<Invite />} />
+          <Route path="/schedule/invite/success" element={<InviteSuccess />} />
 
           <Route path="/interview-invite" element={<InviteRedirect/>}/>
           <Route path="/slot-selection/:token" element={<SlotSelection/>}/>

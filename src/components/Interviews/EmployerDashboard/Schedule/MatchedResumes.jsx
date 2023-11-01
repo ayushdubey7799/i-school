@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { getMatches } from "../../../../functions/api/employers/match/getResumes";
 import { useNavigate, useParams } from "react-router";
 import LogoHeader from "../../../commonComponents/LogoHeader";
@@ -20,9 +14,11 @@ import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import ScheduleModal from "./ScheduleModal";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import eyeIcon from '../../../../assets/icons/visible.png'
+
 
 function Row(props) {
-  const { row, isSelected, onToggle, handleSelectArray } = props;
+  const { row, handleSelectArray } = props;
   const [selected, setSelected] = useState(false);
 
   const handleSelectChange = (id) => {
@@ -37,59 +33,21 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow
-        className={isSelected ? "selected" : ""}
         sx={{ "& > *": { borderBottom: "unset" } }}
       >
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent row click event from firing
-              onToggle(row);
-            }}
-          >
-            {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
         <TableCell component="th" scope="row" align="center"></TableCell>
-        <TableCell component="th" scope="row" align="center"></TableCell>{" "}
+        <TableCell component="th" scope="row" align="center"></TableCell>
         <TableCell align="center">{row.email}</TableCell>
         <TableCell align="center"></TableCell>
         <TableCell align="center">{row.score}</TableCell>
-        <TableCell align="center">
-          {" "}
+        <TableCell align="center" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem'}}>
           <input
             type="checkbox"
             checked={selected}
             onChange={() => handleSelectChange(row.resumeId)}
             className="checkBox"
           />
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
-          <Collapse in={row.open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="body1" gutterBottom>
-                {/* Have to change these according to api data */}
-                {/* <div style={{ fontSize: "0.7rem" }}>Title: {row.title}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Description: {row.description}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Skills: {row.skills}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Experience: {row.experience}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>Location: {row.location}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>WorkType: {row.workType}</div>
-                <br/>
-                <div style={{ fontSize: "0.7rem" }}>CTC: {row.ctc}</div>
-                <br/> */}
-              </Typography>
-            </Box>
-          </Collapse>
+          <img src={eyeIcon}/>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -98,7 +56,6 @@ function Row(props) {
 
 export default function MatchedResumes() {
   const { jdId } = useParams();
-  const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const [idToSendInvite, setIdToSendInvite] = useState(null);
   const [selectedArray, setSelectedArray] = useState([]);
@@ -133,22 +90,6 @@ export default function MatchedResumes() {
     }
   };
 
-  const handleToggle = (row) => {
-    const updatedRows = [...tableRows];
-    const rowIndex = updatedRows.findIndex((r) => r.resumeId === row.resumeId);
-    if (selectedRow === rowIndex) {
-      setSelectedRow(null);
-      updatedRows[rowIndex].open = false;
-    } else {
-      if (selectedRow !== null) {
-        updatedRows[selectedRow].open = false;
-      }
-      setSelectedRow(rowIndex);
-      updatedRows[rowIndex].open = true;
-    }
-    setTableRows(updatedRows);
-  };
-
   const handleSchedule = () => {
     if (selectedArray?.length > 0) {
       localStorage.setItem(
@@ -157,7 +98,7 @@ export default function MatchedResumes() {
       );
       navigate("/schedule/invite");
     }
-    else{
+    else {
       toast.error("Select Resume First");
     }
   };
@@ -182,13 +123,12 @@ export default function MatchedResumes() {
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align="center" />
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Match Percentage</TableCell>
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Contact</TableCell>
                 <TableCell align="center">Score</TableCell>
-                <TableCell align="center">Resume ID</TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -196,8 +136,6 @@ export default function MatchedResumes() {
                 <Row
                   key={row.resumeId}
                   row={row}
-                  isSelected={selectedRow === index}
-                  onToggle={handleToggle}
                   handleSelectArray={handleSelectArray}
                 />
               ))}
@@ -265,6 +203,13 @@ const Content = styled.div`
   }
 
   .checkBox {
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  img {
+    width: 1.2rem;
     cursor: pointer;
   }
 `;

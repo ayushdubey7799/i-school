@@ -122,6 +122,7 @@ function ManageUserForm({ array, handleClose }) {
                 >
                     <option value="">Select Role</option>
                     <option value="Admin">Admin</option>
+                    <option value="Agency">Agency</option>
                     <option value="Recruiter">Recruiter</option>
                     <option value="Operator">Operator (Read Only)</option>
                 </Select>

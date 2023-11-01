@@ -24,6 +24,13 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import titleIcon1 from '../../../assets/icons/titleIcon1.png'
+import titleIcon2 from '../../../assets/icons/titleIcon2.2.png'
+import titleIcon3 from '../../../assets/icons/titleIcon2.3.png'
+import titleIcon4 from '../../../assets/icons/titleIcon2.4.png'
+import titleIcon5 from '../../../assets/icons/titleIcon2.5.png'
+import titleIcon6 from '../../../assets/icons/titleIcon2.6.png'
+import titleIcon7 from '../../../assets/icons/titleIcon2.7.png'
 
 const Container = styled.div`
   width: 17rem;
@@ -67,6 +74,15 @@ const Container = styled.div`
     font-weight: 400;
     color: var(--color);
     padding-left: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+
+    img {
+      width: 1.3rem;
+    }
   }
 
   .menuTitle.selected {
@@ -79,11 +95,27 @@ const Container = styled.div`
   
   .custom-accordion-summary-root {
     border-bottom: none;
+    margin-top: -8px;
+  }
+
+  .details {
+    margin-bottom: -22px;
+    margin-top: -10px;
+  }
+
+  .hrLine {
+    width: 90%;
+    border-top: 0.1rem groove lightgrey;
+    border-radius: 0.2rem;
+    margin: 0.4rem 0 0.4rem 0;
+    align-self: center;
+    box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.25);
   }
 `;
 
 const MenuItem = styled.div`
   padding-bottom: 1rem;
+  margin-left: 1rem;
   font-size: 0.8rem;
   font-weight: 400;
   cursor: pointer;
@@ -161,10 +193,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel1' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel1' ? 'selected' : ''}`}>Dashboard</span>
+          <span className={`menuTitle ${expanded === 'panel1' ? 'selected' : ''}`}><img src={titleIcon1} /> Home</span>
           {expanded === 'panel1' && <Arrow></Arrow>}
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className='details'>
           <MenuItem isSelected={currentItem === 'dashboard'} onClick={() => handleItemClick('dashboard')}>
             <img src={dashboardIcon} className='icon' />
             Dashboard
@@ -176,6 +208,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+      <span className='hrLine'></span>
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -186,10 +219,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel2' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel2' ? 'selected' : ''}`}>Jobs</span>
+          <span className={`menuTitle ${expanded === 'panel2' ? 'selected' : ''}`}><img src={titleIcon2} /> Jobs</span>
           {expanded === 'panel2' && <Arrow></Arrow>}
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className='details'>
           <MenuItem isSelected={currentItem === 'job-search'} onClick={() => handleItemClick('job-search')}>
             <img src={jobSearchIcon} className='icon' />
             Job Search
@@ -211,6 +244,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+      <span className='hrLine'></span>
       <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -221,10 +255,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel3' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>CV Services</span>
+          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}><img src={titleIcon3} /> CV Services</span>
           {expanded === 'panel3' && <Arrow></Arrow>}
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className='details'>
           <MenuItem isSelected={currentItem === 'create-resume'} onClick={() => handleItemClick('create-resume')}>
             <img src={createResumeIcon} className='icon' />
             Create AI Resume
@@ -236,6 +270,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+      <span className='hrLine'></span>
       <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -246,10 +281,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel4' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel4' ? 'selected' : ''}`}>Interview</span>
+          <span className={`menuTitle ${expanded === 'panel4' ? 'selected' : ''}`}><img src={titleIcon4} /> Interview</span>
           {expanded === 'panel4' && <Arrow></Arrow>}
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className='details'>
           <MenuItem isSelected={currentItem === 'interview-dashboard'} onClick={() => handleItemClick('interview-dashboard')}>
             <img src={interviewDashboardIcon} className='icon' />
             <Link to='/dashboard/interviews'>Interview Dashboard</Link>
@@ -262,6 +297,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+      <span className='hrLine'></span>
       <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -272,10 +308,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel5' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}>Profile</span>
+          <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}><img src={titleIcon5} /> Profile</span>
           {expanded === 'panel5' && <Arrow></Arrow>}
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className='details'>
           <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
             <img src={profileIcon} className='icon' />
             Profile
@@ -292,6 +328,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
       </Accordion>
 
 
+      <span className='hrLine'></span>
       <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -302,10 +339,10 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel6' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel6' ? 'selected' : ''}`}>Support</span>
+          <span className={`menuTitle ${expanded === 'panel6' ? 'selected' : ''}`}><img src={titleIcon6} /> Support</span>
           {expanded === 'panel6' && <Arrow></Arrow>}
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className='details'>
           <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
             <img src={createTicketIcon} className='icon' />
             <a href='https://intelliview.zohodesk.com/portal/en/newticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
@@ -318,6 +355,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+      <span className='hrLine'></span>
       <Accordion expanded={expanded === 'panel7'} onChange={handleChange('panel7')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }} onClick={() => handleItemClick('inbox')} isSelected={currentItem === 'inbox'}>
         <AccordionSummary
           aria-controls="panel7bh-content"
@@ -327,7 +365,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel7' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel7' ? 'selected' : ''}`}>Notifications</span>
+          <span className={`menuTitle ${expanded === 'panel7' ? 'selected' : ''}`}><img src={titleIcon7} /> Notifications</span>
           {expanded === 'panel7' && <Arrow></Arrow>}
         </AccordionSummary>
       </Accordion>

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import moment from "moment-timezone";
+import LogoHeader from "../../../commonComponents/LogoHeader";
 
 const timezonesName = {
   'GMT': 'Greenwich Mean Time',
@@ -49,6 +50,7 @@ export default function Invite() {
   const [productTypes, setProductTypes] = useState([]);
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState("");
+  const [interviewType, setInterviewType] = useState('');
   const [testType, setTestType] = useState("");
   const accessToken = useSelector((state) => state.auth.userData.accessToken);
   const clientCode = useSelector(
@@ -85,25 +87,29 @@ export default function Invite() {
     setTestTypes(["MCQs", "Subjective", "Coding"]);
   }, []);
 
-  const handleProductTypeChange = (e) => {
-    setProductType(e.target.value);
+  const handleProductTypeChange = (inp) => {
+    setProductType(inp);
   };
 
-  const handleTestTypeChange = (e) => {
-    setTestType(e.target.value);
+  const handleTestTypeChange = (inp) => {
+    setTestType(inp);
   };
+
+  const handleInterviewTypeChange = (inp) => {
+    setInterviewType(inp);
+  }
 
   const handleInvite = () => {
-  
-   
+
+
     const makeApiCall = async () => {
-      const dateTime = moment(value.format("YYYY-MM-DD")+"T"+selectedHour + ":" + selectedMinute + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm:ss');
-      const date = dateTime.slice(0,10);
+      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedHour + ":" + selectedMinute + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm:ss');
+      const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
-      if(!productType || !testType || !value.format("YYYY-MM-DD")){
+      if (!productType || !testType || !value.format("YYYY-MM-DD")) {
         toast.error("Fill all fields");
         return;
-      }      
+      }
       const payload = {
         jdId: array[array.length - 1],
         productType: productType,
@@ -114,8 +120,8 @@ export default function Invite() {
         slotTime: time,
         welcomeMessage: "string",
       };
-      if(isChecked)delete payload.slotTime;
-   console.log(payload);
+      if (isChecked) delete payload.slotTime;
+      console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
         console.log("API call successful:", response.data);
@@ -131,73 +137,171 @@ export default function Invite() {
   // console.log(
   //   selectedHour + ":" + selectedMinute + ":" + "00.000" + selectedTimezone
   // );
-  
-  
+
+
   return (
-    <Container>
-      <div className="mainBox">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateCalendar
-            value={value}
-            onChange={(newValue) => setValue(dayjs(newValue))}
-          />
-        </LocalizationProvider>
-        <ResponsiveTimePickers
-          selectedHour={selectedHour}
-          setSelectedHour={setSelectedHour}
-          selectedMinute={selectedMinute}
-          setSelectedMinute={setSelectedMinute}
-          selectedTimezone={selectedTimezone}
-          setSelectedTimezone={setSelectedTimezone}
-        />
+    <MainContainer>
+      <LogoHeader />
+      <Container>
+        <div className="mainBox">
+          <div className="box1">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateCalendar
+                value={value}
+                onChange={(newValue) => setValue(dayjs(newValue))}
+              />
+            </LocalizationProvider>
 
-        <div className="selectBox">
-          <Select value={productType} onChange={handleProductTypeChange}>
-            <option value="">Select Product Type</option>
-            {productTypes.map((type, index) => (
-              <option key={index} value={type}>
-                {type}
-              </option>
-            ))}
-          </Select>
+            <div className="slotBox">
+              <span>Select Time Slot (IST)</span>
+              <ResponsiveTimePickers
+                selectedHour={selectedHour}
+                setSelectedHour={setSelectedHour}
+                selectedMinute={selectedMinute}
+                setSelectedMinute={setSelectedMinute}
+                selectedTimezone={selectedTimezone}
+                setSelectedTimezone={setSelectedTimezone}
+              />
+            </div>
+          </div>
 
-          <Select value={testType} onChange={handleTestTypeChange}>
-            <option value="">Select Test Type</option>
-            {testTypes.map((type, index) => (
-              <option key={index} value={type}>
-                {type}
-              </option>
-            ))}
-          </Select>
+
+          <div className="box2">
+            <div className="inputBox">
+              <span className="title">Interview Type</span>
+              <div className="childInputBox">
+                <label>
+                  <input
+                    type="checkbox"
+                    value="AI"
+                    checked={interviewType === 'AI'}
+                    onChange={() => handleInterviewTypeChange('AI')}
+                  /> AI
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Employer"
+                    checked={interviewType === 'Employer'}
+                    onChange={() => handleInterviewTypeChange('Employer')}
+                  /> Employer
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="AI + Employer"
+                    checked={interviewType === 'AI + Employer'}
+                    onChange={() => handleInterviewTypeChange('AI + Employer')}
+                  /> AI + Employer
+                </label>
+              </div>
+            </div>
+            <div className="inputBox">
+              <span className="title">Product Type</span>
+              <div className="childInputBox">
+                <label>
+                  <input
+                    type="checkbox"
+                    value="JD"
+                    checked={productType === 'JD'}
+                    onChange={() => handleProductTypeChange('JD')}
+                  /> JD
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Resume"
+                    checked={productType === 'Resume'}
+                    onChange={() => handleProductTypeChange('Resume')}
+                  /> Resume
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="JD + Resume"
+                    checked={productType === 'JD + Resume'}
+                    onChange={() => handleProductTypeChange('JD + Resume')}
+                  /> JD + Resume
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Skill"
+                    checked={productType === 'Skill'}
+                    onChange={() => handleProductTypeChange('Skill')}
+                  /> Skill
+                </label>
+              </div>
+            </div>
+            <div className="inputBox">
+              <span className="title">Test Type</span>
+              <div className="childInputBox">
+                <label>
+                  <input
+                    type="checkbox"
+                    value="MCQs"
+                    checked={testType === 'MCQs'}
+                    onChange={() => handleTestTypeChange('MCQs')}
+                  /> MCQs
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Subjective"
+                    checked={testType === 'Subjective'}
+                    onChange={() => handleTestTypeChange('Subjective')}
+                  /> Subjective
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Coding"
+                    checked={testType === 'Coding'}
+                    onChange={() => handleTestTypeChange('Coding')}
+                  /> Coding
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="General"
+                    checked={testType === 'General'}
+                    onChange={() => handleTestTypeChange('General')}
+                  /> General (Includes all types of Que)
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <label>
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        />
-        Give slot selection option to candidate (Interview Date will be fixed)
-      </label>
-      <button className="btn" onClick={handleInvite}>
-        Send Invite
-      </button>
-    </Container>
+        <div className="box3">
+          <label className="smallTextBox">
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+            />
+            <span className="smallText">Give slot selection option to candidate (Interview Date will be fixed)</span>
+          </label>
+          <button className="btn" onClick={handleInvite}>
+            Send Invite
+          </button>
+        </div>
+      </Container>
+    </MainContainer>
   );
 }
 
-const Select = styled.select`
-  padding: 0.6rem;
-  margin: 0.6rem;
-  border: 0.08rem solid #ccc;
-  border-radius: 0.3rem;
-  width: 100%;
-`;
+
+const MainContainer = styled.div`
+
+
+
+`
+
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem 6rem;
+  padding: 6rem 3rem 2rem 3rem;
   align-items: center;
   height: 100vh;
 
@@ -213,17 +317,84 @@ const Container = styled.div`
     cursor: pointer;
   }
 
+  .smallTextBox {
+    display: flex;
+    align-items: center;
+  }
+  .smallText {
+    font-size: 0.75rem;
+  }
+
   .mainBox {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
-    gap: 2rem;
     width: 100%;
+
+
+    .box1 {
+      display: flex;
+      width: 50%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+
+      .slotBox {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: -1.5rem;
+
+        span {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .box2 {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      gap: 2rem;
+      padding: 2rem 0;
+
+      .inputBox {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .childInputBox {
+        display: flex;
+        gap: 0.5rem;
+        flex-flow: row wrap;
+
+        label {
+          font-size: 0.9rem;
+        }
+      }
+
+      .title {
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+    }
+
   }
 
-  .selectBox {
-    width: 50%;
+
+  .box3 {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
   }
 `;
 
@@ -238,7 +409,7 @@ const TimeInput = styled.select`
   font-size: 16px;
 `;
 
-function ResponsiveTimePickers({selectedHour,setSelectedHour,selectedMinute,setSelectedMinute,selectedTimezone,setSelectedTimezone}) {
+function ResponsiveTimePickers({ selectedHour, setSelectedHour, selectedMinute, setSelectedMinute, selectedTimezone, setSelectedTimezone }) {
   const timezones = [
     "GMT",
     "CET",

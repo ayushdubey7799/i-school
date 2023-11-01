@@ -16,6 +16,7 @@ import createTestIcon from '../../../assets/icons/create-test.png'
 import dashboardIcon from '../../../assets/icons/dashboard.png'
 import billingIcon from '../../../assets/icons/billing.png'
 import reportIcon from '../../../assets/icons/report.png'
+import configureReportIcon from '../../../assets/icons/configure-reports.png'
 import createTicketIcon from '../../../assets/icons/create-ticket.png'
 import callSupportIcon from '../../../assets/icons/call-support.png'
 import configureDashboardIcon from '../../../assets/icons/configure-dashboard.png'
@@ -31,6 +32,7 @@ import titleIcon2 from '../../../assets/icons/titleIcon2.png'
 import titleIcon3 from '../../../assets/icons/titleIcon3.png'
 import titleIcon4 from '../../../assets/icons/titleIcon4.png'
 import titleIcon5 from '../../../assets/icons/titleIcon5.png'
+import titleIcon6 from '../../../assets/icons/titleIcon6.png'
 
 
 
@@ -68,6 +70,8 @@ overflow-y: scroll;
     font-weight: 400;
     color: var(--color);
     padding-left: 0.5rem;
+    text-decoration: none;
+
   }
   .menuTitle.selected {
     color: var(--lightOrange);
@@ -235,7 +239,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
   return (
     <Container>
 
-      <CatTitle className='categoryTitle'><img src={titleIcon1} /> Home</CatTitle>
+      <CatTitle className='categoryTitle' onClick={() => handleItemClick('dashboard')} style={{ cursor: 'pointer' }}><img src={titleIcon1} /> Home</CatTitle>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -370,6 +374,10 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
             <img src={reportIcon} className='icon' />
             Reports
           </MenuItem>
+          <MenuItem isSelected={currentItem === 'configure-report'} onClick={() => handleItemClick('configure-report')}>
+            <img src={configureReportIcon} className='icon' />
+            Configure Reports
+          </MenuItem>
         </AccordionDetails>
       </Accordion>
 
@@ -413,9 +421,11 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionDetails>
       </Accordion>
 
+
+      <span className='hrLine'></span>
+      <CatTitle className='categoryTitle'><img src={titleIcon6} /> Support</CatTitle>
       <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel5bh-content"
           id="panel5bh-header"
           classes={{
@@ -423,23 +433,25 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel5' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`}>Support</span>
-          {expanded === 'panel5' && <Arrow></Arrow>}
+          <a className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`} href='https://intelliview.zohodesk.com/portal/en/newticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
+          {/* <img src={createTicketIcon} className='icon' /> */}
         </AccordionSummary>
-        <AccordionDetails className='details'>
-          <MenuItem isSelected={currentItem === 'create-ticket'} onClick={() => handleItemClick('create-ticket')}>
-            <img src={createTicketIcon} className='icon' />
-            <a href='https://intelliview.zohodesk.com/portal/en/newticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
-            <OpenInNewIcon className='openNew' />
-          </MenuItem>
-          <MenuItem isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')}>
-            <img src={callSupportIcon} className='icon' />
-            Contact Support
-          </MenuItem>
-        </AccordionDetails>
+      </Accordion>
+
+      <Accordion expanded={expanded === 'panel5.2'} onChange={handleChange('panel5.2')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
+        <AccordionSummary
+          aria-controls="panel5.2bh-content"
+          id="panel5.2bh-header"
+          classes={{
+            root: 'custom-accordion-summary-root',
+            expanded: expanded === 'panel5.2' ? 'expanded' : ''
+          }}
+        >
+          <span className={`menuTitle ${expanded === 'panel5.2' ? 'selected' : ''}`} isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')} style={{marginTop: '-1rem'}}>Contact Support</span>
+          {/* <img src={callSupportIcon} className='icon' /> */}
+        </AccordionSummary>
       </Accordion>
     </Container>
   );
 };
 export default React.memo(EmployerSidebar);
-

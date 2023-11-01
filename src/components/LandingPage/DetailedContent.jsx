@@ -153,7 +153,7 @@ margin-top: 5rem;
 }
 
 .topTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 600;
 }
 
@@ -188,13 +188,13 @@ margin-top: 5rem;
 }
 
 .topBoxChildTitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     text-align: center;
 }
 
 .topBoxChildText {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.5rem;
     text-align: center;
@@ -240,7 +240,7 @@ margin-top: 5rem;
 }
 
 .visualDetailTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 600;
     text-align: center;
 }
@@ -290,7 +290,6 @@ margin-top: 5rem;
     padding: 6rem 7.5%;
     width: 85%;
     gap: 2rem;
-
     background-image: url(${bg1});
     background-size: cover;
     background-repeat: no-repeat; 
@@ -298,7 +297,7 @@ margin-top: 5rem;
 
 
 .contactSectionTitle {
-    font-size: 2.5rem;
+    font-size: 1.7rem;
     font-weight: 800;
     color: var(--white);
     text-align: center;
@@ -344,7 +343,7 @@ margin-top: 5rem;
 }
 
 .achievedNumberText {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--color);
     text-align: center;
@@ -362,13 +361,13 @@ margin-top: 5rem;
 }
 
 .productTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
     text-align: center;
 }
 
 .productText {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.5rem;
     width: 60%;
     text-align: center;
@@ -439,14 +438,14 @@ margin-top: 5rem;
 
 
 .contactSectionBottomTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
     color: var(--white);
     text-align: center;
 }
 
 .contactSectionBottomText {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 400;
     color: var(--white);
     text-align: center;
