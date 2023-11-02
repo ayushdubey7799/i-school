@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { addJd } from '../../../functions/api/employers/addJd';
 import { useSelector } from 'react-redux';
 import { editJd } from '../../../functions/api/employers/editJd';
+import { TextField } from '@mui/material';
 
 const Container = styled.div`
   width: 100%;
@@ -36,6 +37,7 @@ const Input = styled.input`
   background-color: #F6F6FB;
   outline-color: #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
 `;
 
 const Textarea = styled.textarea`
@@ -45,6 +47,7 @@ const Textarea = styled.textarea`
   border-radius: 5px;
   background-color: #F6F6FB;
   outline-color: #ccc;
+  box-sizing: border-box;
 `;
 
 const Select = styled.select`
@@ -54,16 +57,19 @@ const Select = styled.select`
   border-radius: 5px;
   background-color: #F6F6FB;
   outline-color: #ccc;
+  box-sizing: border-box;
 `;
 
 const Button = styled.button`
-  padding: 10px;
-  background-color: #007;
+  padding: 0.5rem 1rem;
+  background-color: var(--lightOrange);
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.3rem;
   cursor: pointer;
+  align-self: center;
 `;
+
 
 function JdForm({ array, handleClose }) {
   const [mode, setMode] = useState("create");
@@ -141,6 +147,7 @@ function JdForm({ array, handleClose }) {
           onChange={handleChange}
           disabled={mode == "edit"}
         />
+
 
         <Label>Req Number (From Employer System)</Label>
         <Input

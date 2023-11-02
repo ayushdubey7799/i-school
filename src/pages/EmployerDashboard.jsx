@@ -23,6 +23,7 @@ import RegisteredCandidates from "../components/Interviews/EmployerDashboard/sid
 import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPages/AvailableTest";
 import ConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureDash";
 import ManageUsers from "../components/Interviews/EmployerDashboard/sidebarPages/ManageUsers";
+import ConfigureReports from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureReports";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -86,7 +87,7 @@ const EmployerDashboard = () => {
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
 
           {currentItem === "candidate-register" && <RegisterCandidate />}
-          {currentItem === "candidate-registered" && <RegisteredCandidates />}
+          {currentItem === "candidate-registered" && <RegisteredCandidates setCurrentItem={setCurrentItem} />}
           {currentItem === "manage-tests" && <CreateQuestion />}
           {currentItem === "activeJds" && <ActiveJds />}
           {currentItem === "create-tests" && <ManageTests />}
@@ -98,6 +99,7 @@ const EmployerDashboard = () => {
           {currentItem === "billing" && <Billing />}
           {currentItem === "inbox" && <Inbox />}
           {currentItem === "report" && <Report />}
+          {currentItem === "configure-report" && <ConfigureReports />}
 
           {currentItem === "call-support" && <CallSupport />}
 

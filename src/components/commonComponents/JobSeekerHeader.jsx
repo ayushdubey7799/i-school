@@ -39,6 +39,8 @@ const JobSeekerHeader = () => {
                 </div>
 
                 <div class="dropdown" id="dropdown">
+                    <span onClick={() => navigate('/feedback')}>Feedback</span>
+                    <span onClick={() => navigate('/support')}>Help</span>
                     <span onClick={() => navigate('/reset')}>Reset Password</span>
                     <span onClick={handleLogout}>Logout</span>
                 </div>
@@ -96,7 +98,7 @@ const StyledDiv = styled.div`
   }
 
   .profileImg {
-    width: 1.8rem;
+    width: 1.5rem;
   }
 
   .dropdown {

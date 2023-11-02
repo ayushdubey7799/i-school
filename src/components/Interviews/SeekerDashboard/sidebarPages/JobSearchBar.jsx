@@ -8,16 +8,16 @@ import FilteredJobs from './FilteredJobs';
 
 
 
-// Styled Components
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 90%;
   margin: 1rem auto;
-  height: 4rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
-  padding: 0.1rem 1rem;
+  padding: 0.7rem 1rem;
+  border: 0.08rem solid lightgrey;
 
   .locationBox {
     position: relative;
@@ -59,7 +59,7 @@ const SearchBarContainer = styled.div`
 
   .skillBox {
     position: relative;
-    width: 100%;
+    width: 40%;
   }
 
 
@@ -253,75 +253,77 @@ const JobSearchBar = () => {
 
   return (
     <JobSearchBox>
-      <SearchBarContainer dropdownVisible={dropdownVisible} skillDropdownVisible={skillDropdownVisible}>
-        <div className='skillBox' ref={skillDropdownRef}>
-          <input
-            className='skillInput'
-            type="text"
-            placeholder="Enter your skills..."
-            value={skill}
-            onChange={(e) => {
-              setSkill(e.target.value);
-              setSkillDropdownVisible(true);
-            }}
-          />
-          <div class="skillDropdown" id="skillDropdown" ref={skillDropdownRef}>
-            {(filteredSkills.length > 0 && skillDropdownVisible) &&
-              <div className='skillDropdownContent'>
-                {
-                  filteredSkills.length > 8 ? filteredSkills.slice(0, 8).map((skill) => (
-                    <span className='skill' key={skill} onClick={() => handleSkillClick(skill)}>{skill}</span>
-                  )) : filteredSkills.map((skill) => (
-                    <span className='skill' key={skill} onClick={() => handleSkillClick(skill)}>{skill}</span>
-                  ))
-                }
-              </div>
-            }
+      <div className='mainBox'>
+        <SearchBarContainer dropdownVisible={dropdownVisible} skillDropdownVisible={skillDropdownVisible}>
+          <div className='skillBox' ref={skillDropdownRef}>
+            <input
+              className='skillInput'
+              type="text"
+              placeholder="Enter your skills, role and title."
+              value={skill}
+              onChange={(e) => {
+                setSkill(e.target.value);
+                setSkillDropdownVisible(true);
+              }}
+            />
+            <div class="skillDropdown" id="skillDropdown" ref={skillDropdownRef}>
+              {(filteredSkills.length > 0 && skillDropdownVisible) &&
+                <div className='skillDropdownContent'>
+                  {
+                    filteredSkills.length > 8 ? filteredSkills.slice(0, 8).map((skill) => (
+                      <span className='skill' key={skill} onClick={() => handleSkillClick(skill)}>{skill}</span>
+                    )) : filteredSkills.map((skill) => (
+                      <span className='skill' key={skill} onClick={() => handleSkillClick(skill)}>{skill}</span>
+                    ))
+                  }
+                </div>
+              }
+            </div>
           </div>
-        </div>
-        <FilterDropdown value={exp} onChange={(e) => setExp(e.target.value)}>
-          <option value="" disabled selected>Select Experience</option>
-          <option value="">Fresher</option>
-          <option value="1">1 year</option>
-          <option value="1-3">1-3 years</option>
-          <option value="3-5">3-5 years</option>
-          <option value="6-8">6-8 years</option>
-          <option value="9-12">9-12 years</option>
-          <option value="13-17">13-17 years</option>
-          <option value="17-21">17-21 years</option>
-          <option value="21+">21+ years</option>
-        </FilterDropdown>
+          <FilterDropdown value={exp} onChange={(e) => setExp(e.target.value)}>
+            <option value="" disabled selected>Select Experience</option>
+            <option value="">Fresher</option>
+            <option value="1">1 year</option>
+            <option value="1-3">1-3 years</option>
+            <option value="3-5">3-5 years</option>
+            <option value="6-8">6-8 years</option>
+            <option value="9-12">9-12 years</option>
+            <option value="13-17">13-17 years</option>
+            <option value="17-21">17-21 years</option>
+            <option value="21+">21+ years</option>
+          </FilterDropdown>
 
-        <div className='locationBox' ref={dropdownRef}>
-          <input
-            className='locationInput'
-            type="text"
-            placeholder="Location"
-            value={location}
-            onChange={(e) => {
-              setLocation(e.target.value);
-              setDropdownVisible(true);
-            }}
-          />
-          <div class="dropdown" id="dropdown" ref={dropdownRef}>
-            {(filteredLocations.length > 0 && dropdownVisible) &&
-              <div className='dropdownContent'>
-                {
-                  filteredLocations.length > 8 ? filteredLocations.slice(0, 8).map((location) => (
-                    <span className='location' key={location} onClick={() => handleLocationClick(location)}>{location}</span>
-                  )) : filteredLocations.map((location) => (
-                    <span className='location' key={location} onClick={() => handleLocationClick(location)}>{location}</span>
-                  ))
-                }
-              </div>
-            }
+          <div className='locationBox' ref={dropdownRef}>
+            <input
+              className='locationInput'
+              type="text"
+              placeholder="Location"
+              value={location}
+              onChange={(e) => {
+                setLocation(e.target.value);
+                setDropdownVisible(true);
+              }}
+            />
+            <div class="dropdown" id="dropdown" ref={dropdownRef}>
+              {(filteredLocations.length > 0 && dropdownVisible) &&
+                <div className='dropdownContent'>
+                  {
+                    filteredLocations.length > 8 ? filteredLocations.slice(0, 8).map((location) => (
+                      <span className='location' key={location} onClick={() => handleLocationClick(location)}>{location}</span>
+                    )) : filteredLocations.map((location) => (
+                      <span className='location' key={location} onClick={() => handleLocationClick(location)}>{location}</span>
+                    ))
+                  }
+                </div>
+              }
+            </div>
           </div>
-        </div>
 
-        <button className='btn' onClick={() => handleJobSearch()}><img src={searchIcon} />Search</button>
-      </SearchBarContainer>
-      <StyledJobSearch>
+          <button className='btn' onClick={() => handleJobSearch()}><img src={searchIcon} />Search</button>
+        </SearchBarContainer>
         <ProfileFilter />
+      </div>
+      <StyledJobSearch>
         <FilteredJobs />
       </StyledJobSearch>
     </JobSearchBox>
@@ -334,6 +336,18 @@ export default JobSearchBar;
 
 const JobSearchBox = styled.div`
 padding-bottom: 4rem;
+display: flex;
+flex-direction: column;
+width: 100%;
+
+
+.mainBox {
+  display: grid;
+  width: 100%;
+  align-items: center;
+  grid-template-columns: 9fr 1fr;
+}
+
 `
 
 const StyledJobSearch = styled.div`

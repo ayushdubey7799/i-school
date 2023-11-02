@@ -43,6 +43,8 @@ const EmployerHeader = () => {
         </div>
 
         <div class="dropdown" id="dropdown">
+          <span onClick={() => navigate('/feedback')}>Feedback</span>
+          <span onClick={() => navigate('/support')}>Help</span>
           <span onClick={() => navigate('/reset')}>Reset Password</span>
           <span onClick={handleLogout}>Logout</span>
         </div>
@@ -85,10 +87,10 @@ const StyledDiv = styled.div`
 
   .demo {
     background: linear-gradient(to bottom, #2282A4, var(--lightOrange));
-    padding: 0.6rem 0.6rem;
+    padding: 0.4rem 0.5rem;
     color: var(--white);
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     cursor: pointer;
     border-radius: 0.5rem;
   }
@@ -113,7 +115,7 @@ const StyledDiv = styled.div`
   }
 
   .profileImg {
-    width: 1.8rem;
+    width: 1.5rem;
   }
 
   .dropdown {

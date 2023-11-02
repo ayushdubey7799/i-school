@@ -83,7 +83,7 @@ export default function AvailableTest() {
 
           <div className='selectBox'>
             <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filtr by</option>
+              <option value="" disabled selected>Filter by</option>
               <option value="JD_ID">JD ID</option>
               <option value="TestType">Test Type</option>
               <option value="Created By">Created By</option>

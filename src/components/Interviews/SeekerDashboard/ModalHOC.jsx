@@ -1,29 +1,10 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import closeIcon from '../../../assets/icons/closeIcon.png'
 
-
-const style = {
-  display: "flex",
-  margin: "0 auto",
-  width: "40%",
-  height: "65vh",
-  bgcolor: "background.paper",
-  border: "0.08rem solid #000",
-  boxShadow: 24,
-  pt: 3,
-  px: 6,
-  pb: 6,
-  mb: 2,
-  borderRadius: 2,
-  marginTop: "6rem",
-  overflowY: "auto",
-  position: 'relative'
-};
 
 export default function ModalHOC({
   openNewInterviewModal,
@@ -52,10 +33,10 @@ export default function ModalHOC({
       closeAfterTransition
       disableBackdropClick
     >
-      <Box sx={{ ...style }}>
+      <MainBox>
         <Btn onClick={handleClose}><img src={closeIcon}/></Btn>
         <Component array={array} handleClose={handleClose}/>
-      </Box>
+      </MainBox>
     </Modal>
   )
 
@@ -67,14 +48,53 @@ export default function ModalHOC({
 
 const Btn = styled.button`
 position: absolute;
-right: 0.5rem;
-top: 0.5rem;
+right: 0.8rem;
+top: 0.8rem;
 background-color: transparent;
 border: none;
 cursor: pointer;
 
+
 img {
   width: 2rem;
 }
+
+`
+
+
+const MainBox = styled.div`
+
+display: flex;
+  margin: 0 auto;
+  width: 40%;
+  height: 60vh;
+  background-color: var(--white);
+  border: 0.08rem solid #000;
+  padding-top: 2rem;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  padding-bottom: 6rem;
+  margin-bottom: 0.2rem;
+  border-radius: 0.3rem;
+  margin-top: 5rem;
+  overflow-y: auto;
+  position: relative;
+
+
+  & {
+    scrollbar-width: none;
+  }  
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: lightgrey;
+  }
 
 `
