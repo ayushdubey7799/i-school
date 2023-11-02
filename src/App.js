@@ -132,5 +132,7 @@ const App = () => {
 }
 
 // git@bitbucket.org:crystalsky/intelliview-web.git
-
+// "eslintConfig": {
+//   "extends": "react-app"
+// }
 export default App
