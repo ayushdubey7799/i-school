@@ -55,10 +55,10 @@ export default function Invite() {
     (state) => state.auth.userData.user.clientCode
   );
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState(false);
+  const [isTime, setIsTime] = useState(false);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    setIsTime(!isTime);
   };
 
   let array = localStorage.getItem("schedule");
@@ -114,7 +114,7 @@ export default function Invite() {
         slotTime: time,
         welcomeMessage: "string",
       };
-      if(isChecked)delete payload.slotTime;
+      if(isTime)delete payload.slotTime;
    console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
@@ -174,7 +174,7 @@ export default function Invite() {
       <label>
         <input
           type="checkbox"
-          checked={isChecked}
+          Time={isTime}
           onChange={handleCheckboxChange}
         />
         Give slot selection option to candidate (Interview Date will be fixed)
