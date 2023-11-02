@@ -394,7 +394,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel3' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Profile</span>
+          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Manage Profile</span>
           {expanded === 'panel3' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails className='details'>
@@ -438,7 +438,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
         </AccordionSummary>
       </Accordion>
 
-      <Accordion expanded={expanded === 'panel5.2'} onChange={handleChange('panel5.2')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
+      <Accordion expanded={expanded === 'panel5.2'} onChange={handleChange('panel5.2')} style={{ width: '100%', boxShadow: 'none', marginTop: '0.5rem', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           aria-controls="panel5.2bh-content"
           id="panel5.2bh-header"
@@ -447,7 +447,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel5.2' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel5.2' ? 'selected' : ''}`} isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')} style={{marginTop: '-1rem'}}>Contact Support</span>
+          <span className={`menuTitle ${expanded === 'panel5.2' ? 'selected' : ''}`} isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')} style={{ marginTop: '-1rem' }}>Contact Support</span>
           {/* <img src={callSupportIcon} className='icon' /> */}
         </AccordionSummary>
       </Accordion>

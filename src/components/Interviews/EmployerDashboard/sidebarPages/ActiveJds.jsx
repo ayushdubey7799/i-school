@@ -144,7 +144,7 @@ const ActiveJds = () => {
 
             <div className='selectBox'>
               <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filtr by</option>
+                <option value="" disabled selected>Filter by</option>
                 <option value="JD_ID">JD ID</option>
                 <option value="Req_ID">Req ID</option>
                 <option value="Recruiter">Recruiter</option>

@@ -146,10 +146,12 @@ export default function Invite() {
         <div className="mainBox">
           <div className="box1">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateCalendar
-                value={value}
-                onChange={(newValue) => setValue(dayjs(newValue))}
-              />
+              <div className="calendarBox">
+                <DateCalendar
+                  value={value}
+                  onChange={(newValue) => setValue(dayjs(newValue))}
+                />
+              </div>
             </LocalizationProvider>
 
             <div className="slotBox">
@@ -168,77 +170,81 @@ export default function Invite() {
 
           <div className="box2">
             <div className="inputBox">
-              <span className="title">Interview Type</span>
-              <div className="childInputBox">
-                <label>
-                  <input
-                    type="checkbox"
-                    value="AI"
-                    checked={interviewType === 'AI'}
-                    onChange={() => handleInterviewTypeChange('AI')}
-                  /> AI
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Employer"
-                    checked={interviewType === 'Employer'}
-                    onChange={() => handleInterviewTypeChange('Employer')}
-                  /> Employer
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="AI + Employer"
-                    checked={interviewType === 'AI + Employer'}
-                    onChange={() => handleInterviewTypeChange('AI + Employer')}
-                  /> AI + Employer
-                </label>
-              </div>
-            </div>
-            <div className="inputBox">
               <span className="title">Product Type</span>
               <div className="childInputBox">
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
+                    value="AI"
+                    checked={productType === 'AI'}
+                    onChange={() => handleProductTypeChange('AI')}
+                  /> AI
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="Employer"
+                    checked={productType === 'Employer'}
+                    onChange={() => handleProductTypeChange('Employer')}
+                  /> Employer
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="AI + Employer"
+                    checked={productType === 'AI + Employer'}
+                    onChange={() => handleProductTypeChange('AI + Employer')}
+                  /> AI + Employer
+                </label>
+              </div>
+            </div>
+
+
+            <div className="inputBox">
+              <span className="title">Interview Type</span>
+              <div className="childInputBox">
+                <label>
+                  <input
+                    type="radio"
                     value="JD"
-                    checked={productType === 'JD'}
-                    onChange={() => handleProductTypeChange('JD')}
+                    checked={interviewType === 'JD'}
+                    onChange={() => handleInterviewTypeChange('JD')}
                   /> JD
                 </label>
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="Resume"
-                    checked={productType === 'Resume'}
-                    onChange={() => handleProductTypeChange('Resume')}
+                    checked={interviewType === 'Resume'}
+                    onChange={() => handleInterviewTypeChange('Resume')}
                   /> Resume
                 </label>
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="JD + Resume"
-                    checked={productType === 'JD + Resume'}
-                    onChange={() => handleProductTypeChange('JD + Resume')}
+                    checked={interviewType === 'JD + Resume'}
+                    onChange={() => handleInterviewTypeChange('JD + Resume')}
                   /> JD + Resume
                 </label>
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="Skill"
-                    checked={productType === 'Skill'}
-                    onChange={() => handleProductTypeChange('Skill')}
+                    checked={interviewType === 'Skill'}
+                    onChange={() => handleInterviewTypeChange('Skill')}
                   /> Skill
                 </label>
               </div>
             </div>
+
+
             <div className="inputBox">
               <span className="title">Test Type</span>
               <div className="childInputBox">
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="MCQs"
                     checked={testType === 'MCQs'}
                     onChange={() => handleTestTypeChange('MCQs')}
@@ -246,7 +252,7 @@ export default function Invite() {
                 </label>
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="Subjective"
                     checked={testType === 'Subjective'}
                     onChange={() => handleTestTypeChange('Subjective')}
@@ -254,7 +260,7 @@ export default function Invite() {
                 </label>
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="Coding"
                     checked={testType === 'Coding'}
                     onChange={() => handleTestTypeChange('Coding')}
@@ -262,7 +268,7 @@ export default function Invite() {
                 </label>
                 <label>
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="General"
                     checked={testType === 'General'}
                     onChange={() => handleTestTypeChange('General')}
@@ -303,7 +309,8 @@ const Container = styled.div`
   flex-direction: column;
   padding: 6rem 3rem 2rem 3rem;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 6rem);
+  justify-content: center;
 
   .btn {
     padding: 0.5rem 1rem;
@@ -320,7 +327,11 @@ const Container = styled.div`
   .smallTextBox {
     display: flex;
     align-items: center;
+    width: 100%;
+    justify-content: start;
+    padding-left: 2rem;
   }
+  
   .smallText {
     font-size: 0.75rem;
   }
@@ -336,10 +347,16 @@ const Container = styled.div`
     .box1 {
       display: flex;
       width: 50%;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
+      gap: 1rem;
 
+      .calendarBox {
+        border: 0.08rem solid lightgrey;
+        border-radius: 0.5rem;
+
+      }
 
       .slotBox {
         display: flex;
@@ -356,17 +373,24 @@ const Container = styled.div`
 
     .box2 {
       width: 50%;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: start;
+      justify-content: center;
       align-items: start;
       gap: 2rem;
-      padding: 2rem 0;
+      padding: 0rem 1rem;
 
       .inputBox {
+        width: 90%;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        border: 0.08rem solid grey;
+        padding: 1.5rem 1rem;
+        border-radius: 0.5rem;
+        position: relative;
+        box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
       }
 
       .childInputBox {
@@ -376,15 +400,28 @@ const Container = styled.div`
 
         label {
           font-size: 0.9rem;
+          display: flex;
+          align-items: center;
+          gap: 0.2rem;
         }
       }
 
       .title {
         font-size: 1.1rem;
         font-weight: 500;
+        position: absolute;
+        top: -0.8rem;
+        background-color: var(--white);
+        padding: 0 0.3rem;
       }
     }
 
+    input {
+      width: 0.8rem;
+      height: 0.8rem;
+    }
+    
+    
   }
 
 
@@ -395,6 +432,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    width: 100%;
   }
 `;
 

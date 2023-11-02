@@ -24,8 +24,6 @@ function Row(props) {
                 <TableCell component="th" scope="row" align="center">...</TableCell>
                 <TableCell component="th" scope="row" align="center">...</TableCell>
                 <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
                 <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
                     <img src={eyeIcon} />
                 </TableCell>
@@ -53,10 +51,8 @@ const InviteSuccess = () => {
                         <TableHead className="tableHead">
                             <TableRow>
                                 <TableCell align="center">Name</TableCell>
-                                <TableCell align="center">Match Percentage</TableCell>
                                 <TableCell align="center">Email</TableCell>
                                 <TableCell align="center">Contact</TableCell>
-                                <TableCell align="center">Score</TableCell>
                                 <TableCell align="center">Details</TableCell>
                             </TableRow>
                         </TableHead>
@@ -155,7 +151,8 @@ padding: 5rem 2% 2rem 2%;
     margin: 1rem 0 1.5rem 0;
     width: 98%;
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
+    gap: 27%;
 }
 
 

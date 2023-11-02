@@ -86,7 +86,7 @@ const RecommendedJobs = () => {
 
             <div className='selectBox'>
               <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filtr by</option>
+                <option value="" disabled selected>Filter by</option>
                 <option value="JobTitle">Job Title</option>
                 <option value="Company">Company</option>
                 <option value="Location">Location</option>

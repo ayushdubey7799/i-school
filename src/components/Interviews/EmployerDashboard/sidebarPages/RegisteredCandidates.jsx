@@ -89,7 +89,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
 
           <div className='selectBox'>
             <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filtr by</option>
+              <option value="" disabled selected>Filter by</option>
               <option value="Name">Name</option>
               <option value="Email">Email</option>
               <option value="Contact">Contact</option>

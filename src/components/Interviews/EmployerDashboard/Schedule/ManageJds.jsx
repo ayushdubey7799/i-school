@@ -57,7 +57,7 @@ function Row(props) {
           ...
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          <Link to={`/schedule/matches/${row.jdId}`} className="btn">Show Profiles</Link>
+          <Link to={`/schedule/matches/${row.jdId}`} className="btn">View Profile</Link>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -138,7 +138,7 @@ export default function ManageJds({ rows }) {
               <TableCell align="center">Date of Creation</TableCell>
               <TableCell align="center">Recruiter</TableCell>
               <TableCell align="center">Hiring Manager</TableCell>
-              <TableCell align="center">Show Profiles</TableCell>
+              <TableCell align="center">View Profiles</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">

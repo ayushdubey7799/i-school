@@ -93,7 +93,7 @@ export default FilteredJobs;
 
 const StyledBox = styled.div`
   display: flex;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   margin-bottom: 2.5rem;
   width: 100%;
   padding: 0;

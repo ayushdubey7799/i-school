@@ -105,9 +105,9 @@ const Container = styled.div`
 
   .hrLine {
     width: 90%;
-    border-top: 0.1rem groove lightgrey;
+    border-top: 0.06rem solid lightgrey;
     border-radius: 0.2rem;
-    margin: 0.4rem 0 0.4rem 0;
+    margin: 0.8rem 0 0.8rem 0;
     align-self: center;
     box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.25);
   }
@@ -265,7 +265,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           </MenuItem>
           <MenuItem isSelected={currentItem === 'enhance-resume'} onClick={() => handleItemClick('enhance-resume')}>
             <img src={enhanceResumeIcon} className='icon' />
-            Enhance Resume
+            Create Cover Letter
           </MenuItem>
         </AccordionDetails>
       </Accordion>

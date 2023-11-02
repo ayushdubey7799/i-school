@@ -98,7 +98,7 @@ const StyledDiv = styled.div`
   }
 
   .profileImg {
-    width: 1.8rem;
+    width: 1.5rem;
   }
 
   .dropdown {
