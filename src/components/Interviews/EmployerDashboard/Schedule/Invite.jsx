@@ -282,7 +282,7 @@ export default function Invite() {
           <label className="smallTextBox">
             <input
               type="checkbox"
-              checked={isChecked}
+              checked={isTime}
               onChange={handleCheckboxChange}
             />
             <span className="smallText">Give slot selection option to candidate (Interview Date will be fixed)</span>
