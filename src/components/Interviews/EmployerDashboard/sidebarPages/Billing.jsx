@@ -72,7 +72,7 @@ export default function Billing() {
 
           <div className='selectBox'>
             <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filtr by</option>
+              <option value="" disabled selected>Filter by</option>
               <option value="SerialNo">Serial No.</option>
               <option value="InvoiceNo">Invoice No.</option>
               <option value="Email">Email</option>

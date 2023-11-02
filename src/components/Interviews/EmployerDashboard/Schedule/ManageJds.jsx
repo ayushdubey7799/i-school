@@ -18,8 +18,8 @@ import Match from "./Match";
 
 function Row(props) {
   const { row, isSelected, onToggle } = props;
-  
-  
+
+
 
   return (
     <React.Fragment>
@@ -44,8 +44,8 @@ function Row(props) {
         <TableCell component="th" scope="row" align="center">
           {row.reqNumber}
         </TableCell>{" "}
-        <TableCell component="th" scope="row" align="center">
-          <Match jdId={row.jdId} count={row.matchCount}/>
+        <TableCell component="th" scope="row" align="center" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Match jdId={row.jdId} count={row.matchCount} />
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...
@@ -57,7 +57,7 @@ function Row(props) {
           ...
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          <Link to={`/schedule/matches/${row.jdId}`} className="btn">Show Profiles</Link>
+          <Link to={`/schedule/matches/${row.jdId}`} className="btn">View Profile</Link>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -138,7 +138,7 @@ export default function ManageJds({ rows }) {
               <TableCell align="center">Date of Creation</TableCell>
               <TableCell align="center">Recruiter</TableCell>
               <TableCell align="center">Hiring Manager</TableCell>
-              <TableCell align="center">Show Profiles</TableCell>
+              <TableCell align="center">View Profiles</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
@@ -176,10 +176,12 @@ const StyledBox = styled.div`
 
   .btn {
     background-color: var(--lightOrange);
-    padding: 0.4rem 0.7rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.3rem 0.2rem;
     border: none;
     color: var(--white);
-    font-size: 1rem;
+    font-size: 0.9rem;
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;

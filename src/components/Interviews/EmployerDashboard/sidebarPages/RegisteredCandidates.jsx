@@ -52,7 +52,7 @@ function Row(props) {
 
 
 
-export default function RegisteredCandidates() {
+export default function RegisteredCandidates({ setCurrentItem }) {
 
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
@@ -73,7 +73,10 @@ export default function RegisteredCandidates() {
   return (
     <Content>
       <TableContainer component={Paper} className="tableBox">
-        <span className="title">Candidates Pool</span>
+        <div className="titleBox">
+          <span className="title">Candidates Pool</span>
+        </div>
+
         <SearchBarContainer>
           <div className='skillBox'>
             <img src={searchBlack} />
@@ -86,7 +89,7 @@ export default function RegisteredCandidates() {
 
           <div className='selectBox'>
             <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filtr by</option>
+              <option value="" disabled selected>Filter by</option>
               <option value="Name">Name</option>
               <option value="Email">Email</option>
               <option value="Contact">Contact</option>
@@ -151,6 +154,16 @@ align-items: center;
     font-size: 1.2rem;
     font-weight: 700;
   }
+
+  .titleBox {
+  width: 99%; 
+  padding: 0.5rem 0rem;;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  }
+
+
 }
 
 .MuiTableCell-root {
@@ -270,5 +283,21 @@ const SearchBarContainer = styled.div`
   }
 
 `
+
+
+
+
+const Button = styled.button`
+  background-color: var(--lightOrange);
+  border: 0.1rem solid var(--lightOrange);
+  cursor: pointer;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-right: 0.6rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+
+`;
 
 

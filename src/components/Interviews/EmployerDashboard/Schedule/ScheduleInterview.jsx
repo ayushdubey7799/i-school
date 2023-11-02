@@ -5,22 +5,22 @@ import styled from 'styled-components'
 import LogoHeader from '../../../commonComponents/LogoHeader'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 const ScheduleInterview = () => {
   const [rows, setRows] = useState([])
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
 
-  console.log("token--->",accessToken,"clientcode --> ",clientCode)
+  console.log("token--->", accessToken, "clientcode --> ", clientCode)
   useEffect(() => {
 
-    if(!accessToken || !clientCode){
+    if (!accessToken || !clientCode) {
       toast.error("Login First");
       navigate("/login");
-     }
+    }
     async function getData() {
-      const resObj = await getJdsForMatching(accessToken,clientCode);
+      const resObj = await getJdsForMatching(accessToken, clientCode);
       if (resObj) setRows(resObj.data.data);
     }
     getData()
