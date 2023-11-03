@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import moment from "moment-timezone";
 import LogoHeader from "../../../commonComponents/LogoHeader";
+import TimeSlotPicker from "./TimeSlotPicker";
 
 const timezonesName = {
   'GMT': 'Greenwich Mean Time',
@@ -44,9 +45,7 @@ const timezonesName = {
 
 export default function Invite() {
   const [value, setValue] = useState(dayjs(new Date()));
-  const [selectedHour, setSelectedHour] = useState("00");
-  const [selectedMinute, setSelectedMinute] = useState("00");
-  const [selectedTimezone, setSelectedTimezone] = useState("GMT");
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('00:00');
   const [productTypes, setProductTypes] = useState([]);
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState("");
@@ -103,7 +102,7 @@ export default function Invite() {
 
 
     const makeApiCall = async () => {
-      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedHour + ":" + selectedMinute + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm:ss');
+      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm:ss');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
       if (!productType || !testType || !value.format("YYYY-MM-DD")) {
@@ -120,8 +119,8 @@ export default function Invite() {
         slotTime: time,
         welcomeMessage: "string",
       };
-      if(isTime)delete payload.slotTime;
-   console.log(payload);
+      if (isTime) delete payload.slotTime;
+      console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
         console.log("API call successful:", response.data);
@@ -150,19 +149,16 @@ export default function Invite() {
                 <DateCalendar
                   value={value}
                   onChange={(newValue) => setValue(dayjs(newValue))}
+                  views={['day']}
                 />
               </div>
             </LocalizationProvider>
 
             <div className="slotBox">
-              <span>Select Time Slot (IST)</span>
-              <ResponsiveTimePickers
-                selectedHour={selectedHour}
-                setSelectedHour={setSelectedHour}
-                selectedMinute={selectedMinute}
-                setSelectedMinute={setSelectedMinute}
-                selectedTimezone={selectedTimezone}
-                setSelectedTimezone={setSelectedTimezone}
+              <span className="span">Select time-slot (IST)</span>
+              <TimeSlotPicker
+                selectedTimeSlot={selectedTimeSlot}
+                setSelectedTimeSlot={setSelectedTimeSlot}
               />
             </div>
           </div>
@@ -178,7 +174,8 @@ export default function Invite() {
                     value="AI"
                     checked={productType === 'AI'}
                     onChange={() => handleProductTypeChange('AI')}
-                  /> AI
+                  />
+                  <span>AI</span>
                 </label>
                 <label>
                   <input
@@ -186,7 +183,8 @@ export default function Invite() {
                     value="Employer"
                     checked={productType === 'Employer'}
                     onChange={() => handleProductTypeChange('Employer')}
-                  /> Employer
+                  />
+                  <span>Employer</span>
                 </label>
                 <label>
                   <input
@@ -194,7 +192,8 @@ export default function Invite() {
                     value="AI + Employer"
                     checked={productType === 'AI + Employer'}
                     onChange={() => handleProductTypeChange('AI + Employer')}
-                  /> AI + Employer
+                  />
+                  <span>AI + Employer</span>
                 </label>
               </div>
             </div>
@@ -209,7 +208,8 @@ export default function Invite() {
                     value="JD"
                     checked={interviewType === 'JD'}
                     onChange={() => handleInterviewTypeChange('JD')}
-                  /> JD
+                  />
+                  <span>JD</span>
                 </label>
                 <label>
                   <input
@@ -217,7 +217,8 @@ export default function Invite() {
                     value="Resume"
                     checked={interviewType === 'Resume'}
                     onChange={() => handleInterviewTypeChange('Resume')}
-                  /> Resume
+                  />
+                  <span>Resume</span>
                 </label>
                 <label>
                   <input
@@ -225,7 +226,8 @@ export default function Invite() {
                     value="JD + Resume"
                     checked={interviewType === 'JD + Resume'}
                     onChange={() => handleInterviewTypeChange('JD + Resume')}
-                  /> JD + Resume
+                  />
+                  <span>JD + Resume</span>
                 </label>
                 <label>
                   <input
@@ -233,7 +235,8 @@ export default function Invite() {
                     value="Skill"
                     checked={interviewType === 'Skill'}
                     onChange={() => handleInterviewTypeChange('Skill')}
-                  /> Skill
+                  />
+                  <span>Skill</span>
                 </label>
               </div>
             </div>
@@ -248,7 +251,8 @@ export default function Invite() {
                     value="MCQs"
                     checked={testType === 'MCQs'}
                     onChange={() => handleTestTypeChange('MCQs')}
-                  /> MCQs
+                  />
+                  <span>MCQs</span>
                 </label>
                 <label>
                   <input
@@ -256,7 +260,8 @@ export default function Invite() {
                     value="Subjective"
                     checked={testType === 'Subjective'}
                     onChange={() => handleTestTypeChange('Subjective')}
-                  /> Subjective
+                  />
+                  <span>Subjective</span>
                 </label>
                 <label>
                   <input
@@ -264,7 +269,8 @@ export default function Invite() {
                     value="Coding"
                     checked={testType === 'Coding'}
                     onChange={() => handleTestTypeChange('Coding')}
-                  /> Coding
+                  />
+                  <span>Coding</span>
                 </label>
                 <label>
                   <input
@@ -272,7 +278,8 @@ export default function Invite() {
                     value="General"
                     checked={testType === 'General'}
                     onChange={() => handleTestTypeChange('General')}
-                  /> General (Includes all types of Que)
+                  />
+                  <span>General (Includes all types of Que)</span>
                 </label>
               </div>
             </div>
@@ -309,7 +316,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 6rem 3rem 2rem 3rem;
   align-items: center;
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 8rem);
   justify-content: center;
 
   .btn {
@@ -350,7 +357,7 @@ const Container = styled.div`
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
+      gap: 2rem;
 
       .calendarBox {
         border: 0.08rem solid lightgrey;
@@ -365,8 +372,9 @@ const Container = styled.div`
         align-items: center;
         margin-top: -1.5rem;
 
-        span {
+        .span {
           font-size: 0.9rem;
+          margin-bottom: 1rem;
         }
       }
     }
@@ -398,12 +406,6 @@ const Container = styled.div`
         gap: 0.5rem;
         flex-flow: row wrap;
 
-        label {
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          gap: 0.2rem;
-        }
       }
 
       .title {
@@ -416,10 +418,7 @@ const Container = styled.div`
       }
     }
 
-    input {
-      width: 0.8rem;
-      height: 0.8rem;
-    }
+
     
     
   }
@@ -434,119 +433,52 @@ const Container = styled.div`
     gap: 1rem;
     width: 100%;
   }
-`;
 
-const TimeSelector = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
-const TimeInput = styled.select`
-  margin: 10px;
-  padding: 5px;
-  font-size: 16px;
-`;
 
-function ResponsiveTimePickers({ selectedHour, setSelectedHour, selectedMinute, setSelectedMinute, selectedTimezone, setSelectedTimezone }) {
-  const timezones = [
-    "GMT",
-    "CET",
-    "EET",
-    "MSK",
-    "PKT",
-    "IST",
-    "ICT",
-    "SGT",
-    "JST",
-    "AEST",
-    "VLAT",
-    "NZST",
-    "NUT",
-    "SST",
-    "ChST",
-    "HST",
-    "AKST",
-    "PST",
-    "MST",
-    "CST",
-    "EST",
-    "AST",
-    "NST",
-    "WGT",
-  ];
 
-  return (
-    // <LocalizationProvider dateAdapter={AdapterDayjs}>
+  
+label {
+	display: flex;
+	cursor: pointer;
+	font-weight: 500;
+	position: relative;
+	margin-bottom: 0rem;
 
-    //     <DemoItem label="Select slot">
-    //       <StaticTimePicker defaultValue={dayjs('2022-04-17T15:30')} />
-    //     </DemoItem>
-    // </LocalizationProvider>
-    <TimeSelector>
-      <TimeInput
-        value={selectedHour}
-        onChange={(e) => setSelectedHour(e.target.value)}
-      >
-        <option value="00">00</option>
-        <option value="01">01</option>
-        <option value="02">02</option>
-        <option value="03">03</option>
-        <option value="04">04</option>
-        <option value="05">05</option>
-        <option value="06">06</option>
-        <option value="07">07</option>
-        <option value="08">08</option>
-        <option value="09">09</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-
-        {/* Add more hour options here */}
-      </TimeInput>
-      :
-      <TimeInput
-        value={selectedMinute}
-        onChange={(e) => setSelectedMinute(e.target.value)}
-      >
-        <option value="00">00</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="40">40</option>
-        <option value="50">50</option>
-
-        {/* Add more minute options here */}
-      </TimeInput>
-      {/* <TimeInput
-        value={selectedAmPm}
-        onChange={(e) => setSelectedAmPm(e.target.value)}
-      >
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-      </TimeInput> */}
-      {/* <TimeInput
-        value={selectedTimezone}
-        onChange={(e) => setSelectedTimezone(e.target.value)}
-      >
-        {timezones.map((tz) => (
-          <option key={tz} value={tz}>
-            {tz}
-          </option>
-        ))}
-      </TimeInput> */}
-    </TimeSelector>
-  );
+	input {
+		position: absolute;
+		left: -9999px;
+		&:checked + span {
+			background-color: #f0f0f6;
+			&:before {
+				box-shadow: inset 0 0 0 0.3rem var(--lightOrange);
+			}
+		}
+	}
+	span {
+		display: flex;
+		align-items: center;
+    font-size: 0.9rem;
+		padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+		border-radius: 99rem; // or something higher...
+		transition: 0.25s ease;
+		&:hover {
+			background-color: mix(#fff, var(--lightOrange), 84%);
+		}
+		&:before {
+			display: flex;
+			flex-shrink: 0;
+			content: "";
+			background-color: #fff;
+			width: 1rem;
+			height: 1rem;
+			border-radius: 50%;
+			margin-right: 0.375em;
+			transition: 0.25s ease;
+			box-shadow: inset 0 0 0 0.125em var(--lightOrange);
+		}
+	}
 }
+`;
 
 
