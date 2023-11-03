@@ -25,9 +25,9 @@ const Form = styled.form`
 `;
 
 const Label = styled.label`
-font-size: 0.8rem;
+  font-size: 0.8rem;
   margin-bottom: 8px;
-  font-weight: bold;
+  font-weight: 400;
 `;
 
 const Input = styled.input`
@@ -38,6 +38,7 @@ const Input = styled.input`
   outline-color: #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+  position: relative;
 `;
 
 const Textarea = styled.textarea`

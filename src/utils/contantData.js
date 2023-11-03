@@ -1,3 +1,7 @@
+import profileImg from '../assets/resume/profileImg.png'
+
+
+
 export const technicalSkills = [
     "JavaScript",
     "Python",
@@ -580,3 +584,115 @@ export const jobListings = [
         applied: true,
     },
 ];
+
+
+
+
+export const profileData = {
+    personalInfo: {
+        name: "John Doe",
+        img: profileImg,
+        title: "Web Developer",
+        address: "123 Main St, City, State, ZIP",
+        email: "johndoe@email.com",
+        phone: "(123) 456-7890",
+        linkedin: "https://www.linkedin.com/in/johndoe",
+        github: "https://github.com/johndoe",
+    },
+    summary:
+        "A passionate and detail-oriented web developer with 5 years of experience in building responsive and user-friendly websites. Proficient in HTML, CSS, and JavaScript.",
+    education: [
+        {
+            degree: "Bachelor of Science in Computer Science",
+            university: "University Name",
+            course: "React Development",
+            courseType: 'Part Time',
+            year: "08/2016 - 07/2020",
+        },
+        {
+            degree: "High School Diploma",
+            university: "High School Name",
+            course: "React Development",
+            courseType: 'Full Time',
+            year: "06/2014 - 08/2016",
+        },
+    ],
+    experience: [
+        {
+            title: "Frontend Developer",
+            company: "Tech Company",
+            location: "City, State",
+            date: "06/2020 - Present",
+            employmentType: "Full-time",
+            skillsUsed: ['react', 'redux', 'java-script', 'html', 'css', 'firebase'],
+            description: [
+                "Develop and maintain the user interface of the company's web applications.",
+                "Collaborate with the design and backend teams to create seamless user experiences.",
+            ],
+        },
+        {
+            title: "Intern",
+            company: "Startup Inc.",
+            location: "City, State",
+            date: "05/2019 - 07/2019",
+            employmentType: "Internship",
+            skillsUsed: ['react', 'redux', 'java-script', 'html', 'css', 'firebase'],
+            description: [
+                "Assisted in the development and testing of web applications.",
+                "Gained experience with various web technologies and tools.",
+            ],
+        },
+    ],
+    skills: [
+        { name: "HTML", score: 4 },
+        { name: "CSS", score: 4 },
+        { name: "JavaScript", score: 4 },
+        { name: "React", score: 5 },
+        { name: "Responsive Design", score: 4 },
+        { name: "Version Control (Git)", score: 5 },
+        { name: "UI/UX Design", score: 3 },
+    ],
+    certifications: [
+        {
+            title: "Certified Web Developer",
+            organization: "Web Development Institute",
+            date: "06-2019",
+            expirationDate: "09-2023",
+            credentialId: "Id49585h94857hrj",
+            credentialUrl: "ssoc.in/johndoe/Id49585h94857hrj",
+        },
+        {
+            title: "Frontend Fundamentals",
+            organization: "Tech Training Academy",
+            date: "06-2019",
+            expirationDate: "09-2023",
+            credentialId: "Id49585h94857hrj",
+            credentialUrl: "ssoc.in/johndoe/Id49585h94857hrj",
+        },
+    ],
+    languages: [
+        { name: "English", score: 4 },
+        { name: "Spanish", score: 3 },
+    ],
+    projects: [
+        {
+            title: "E-commerce Website",
+            description: [
+                "Designed and developed a responsive e-commerce website using HTML, CSS, and JavaScript.",
+                "Implemented a secure payment gateway and product catalog.",
+            ],
+            date: "2022 - 2023",
+            status: "In progress",
+        },
+        {
+            title: "Portfolio Website",
+            description: [
+                "Created a personal portfolio website to showcase my projects and skills.",
+                "Developed interactive components using React.",
+            ],
+            date: "2021 - 2022",
+            status: "Completed",
+        },
+    ],
+};
+

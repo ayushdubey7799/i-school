@@ -91,7 +91,7 @@ const Option = ({ match, handleTrigger }) => {
           {match.matchedCount} <img src={refresh} />
         </Button>
       )}
-      {match.status === "RUNNING" && <Button><span style={{fontSize: '0.8rem'}}>Matching in Progress.</span><span class="loader"></span></Button>}
+      {match.status === "RUNNING" && <Button><span style={{fontSize: '0.8rem'}}>Refreshing Profiles...</span><span class="loader"></span></Button>}
     </div>
   );
 };
@@ -107,14 +107,15 @@ font-size: 1rem;
 
 
 img {
-  width: 1.2rem;
+  width: 1.3rem;
   cursor: pointer;
+  align-self: center;
 }
 
 .loader {
   width: 1.3rem;
   height: 1.3rem;
-  border: 2px solid #000;
+  border: 1.5px solid #33A5FF;
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
