@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import uploadIcon from '../../../../assets/icons/upload.png'
 import browseIcon from '../../../../assets/icons/browse.png'
+import { TextField } from '@mui/material';
 
 const Container = styled.div`
   width:90%;
@@ -42,55 +43,20 @@ const Component = styled.div`
 const Form = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 60%;
+  gap: 1rem;
 
   span {
     font-weight: 600;
     margin-bottom: 8px;
   }
 
-  .inputBox {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-top: 2rem;
-  }
-
-  input {
-    width: 100%;
-    height: 2.5rem;
-    margin-top: 0.7rem;
-    padding-left: 0.5rem;
-    border-radius: 0.3rem;
-    border: 0.05rem solid lightgrey;
+  #outlined-basic {
+    padding-top: 0.9rem;
+    padding-bottom: 0.8rem;
+    font-size: 0.9rem;
     background-color: #F6F6FB;
-    font-size: 1rem;
-  }
-
-  input:focus {
-    outline-color: var(--lightOrange);
-  }
-
-  
-  .label {
-    position: absolute;
-    top: -0.8rem;
-    left: 0rem;
-    transition: color 0.3s;
-  }
-
-  input:focus + .label {
-    color: var(--lightOrange);
-  }
-
-
-  .label {
-    color: var(--color);
-    font-size: 0.8rem;
-    font-weight: 600;
   }
 
   .resumeBox {
@@ -100,9 +66,8 @@ const Form = styled.div`
     justify-content: center;
     width: 100%;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 0rem;
   }
-
 `;
 
 const Label = styled.label`
@@ -163,51 +128,29 @@ const RegisterCandidate = () => {
 
       <Component>
         <Form>
-          <div className="inputBox">
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label htmlFor="email" className='label'>Email</label>
-          </div>
+          <TextField id="outlined-basic" label="Email" variant="outlined"
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required />
 
+          <TextField id="outlined-basic" label="FullName" variant="outlined"
+            type='text'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required />
 
-          <div className="inputBox">
-            <input
-              type="name"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <label htmlFor="name" className='label'>FullName</label>
-          </div>
+          <TextField id="outlined-basic" label="Phone" variant="outlined"
+            type='tel'
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+          />
 
-          <div className="inputBox">
-            <input
-              type="tel"
-              id="phone"
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
-              required
-            />
-            <label htmlFor="phone" className='label'>Phone</label>
-          </div>
-
-
-          <div className="inputBox">
-            <input
-              type="text"
-              id="ref"
-              value={ref}
-              onChange={(e) => setRef(e.target.value)}
-              required
-            />
-            <label htmlFor="ref" className='label'>Referral/Source</label>
-          </div>
+          <TextField id="outlined-basic" label="Referral/Source" variant="outlined"
+            type='text'
+            value={ref}
+            onChange={(e) => setRef(e.target.value)}
+          />
 
           <div className='resumeBox'>
             <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
