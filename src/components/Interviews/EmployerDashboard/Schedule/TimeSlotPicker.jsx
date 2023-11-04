@@ -520,6 +520,10 @@ const TimeSelector = styled.div`
     width: 0.2rem;
 }
 
+& {
+    scrollbar-width: none;
+  } 
+
 
 
   

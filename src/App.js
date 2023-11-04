@@ -78,11 +78,11 @@ const App = () => {
           <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus />} />
           <Route path="/schedule" element={<ScheduleInterview />} />
           <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
-          <Route path="/schedule/invite" element={<Invite />} />
+          <Route path="/schedule/invite/:jdId" element={<Invite />} />
           <Route path="/schedule/invite/success" element={<InviteSuccess />} />
 
-          <Route path="/interview-invite" element={<InviteRedirect/>}/>
-          <Route path="/slot-selection/:token" element={<SlotSelection/>}/>
+          <Route path="/interview-invite" element={<InviteRedirect />} />
+          <Route path="/slot-selection/:token" element={<SlotSelection />} />
           <Route path="/create" element={<NewInterviewDetails />} />
           <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
           <Route path="/score/:interviewId" element={<Scorecard />} />

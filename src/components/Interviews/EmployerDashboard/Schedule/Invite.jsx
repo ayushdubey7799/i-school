@@ -8,9 +8,11 @@ import { getTestTypes } from "../../../../functions/api/employers/getTestTypes";
 import styled from "styled-components";
 import axios from "axios";
 import { sendInvite } from "../../../../functions/api/employers/match/sendInvite";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { IconButton } from "@mui/material";
 import moment from "moment-timezone";
 import LogoHeader from "../../../commonComponents/LogoHeader";
 import TimeSlotPicker from "./TimeSlotPicker";
@@ -44,6 +46,7 @@ const timezonesName = {
 
 
 export default function Invite() {
+  const { jdId } = useParams();
   const [value, setValue] = useState(dayjs(new Date()));
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('00:00');
   const [productTypes, setProductTypes] = useState([]);
@@ -142,6 +145,9 @@ export default function Invite() {
     <MainContainer>
       <LogoHeader />
       <Container>
+        <IconButton onClick={() => navigate(`/schedule/matches/${jdId}`)} className="prev">
+          <ArrowBackIcon sx={{ fontSize: "30px" }} />
+        </IconButton>
         <div className="mainBox">
           <div className="box1">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -200,7 +206,7 @@ export default function Invite() {
 
 
             <div className="inputBox">
-              <span className="title">Interview Type</span>
+              <span className="title">Interview Based on</span>
               <div className="childInputBox">
                 <label>
                   <input
@@ -292,7 +298,7 @@ export default function Invite() {
               checked={isTime}
               onChange={handleCheckboxChange}
             />
-            <span className="smallText">Give slot selection option to candidate (Interview Date will be fixed)</span>
+            <span className="smallText">Alow slot selection to candidate (Interview Date will be fixed)</span>
           </label>
           <button className="btn" onClick={handleInvite}>
             Send Invite
@@ -318,6 +324,19 @@ const Container = styled.div`
   align-items: center;
   height: calc(100vh - 8rem);
   justify-content: center;
+
+  .prev {
+    background-color: var(--lightOrange);
+    padding: 0.1rem;
+    position: absolute;
+    top: 5rem;
+    left: 1.5rem;
+    color: var(--white);
+  }
+
+  .prev:hover {
+    color: var(--color);
+  }
 
   .btn {
     padding: 0.5rem 1rem;
@@ -395,7 +414,7 @@ const Container = styled.div`
         flex-direction: column;
         gap: 0.5rem;
         border: 0.08rem solid grey;
-        padding: 1.5rem 1rem;
+        padding: 1rem 1rem;
         border-radius: 0.5rem;
         position: relative;
         box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.2);

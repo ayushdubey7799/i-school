@@ -37,6 +37,13 @@ const Component = styled.div`
     font-size: 1rem;
     margin-top: 2rem;
   }
+
+  .title {
+    margin-bottom: 4rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+
+  }
 `;
 
 
@@ -124,9 +131,8 @@ const RegisterCandidate = () => {
   return (
     <Container>
 
-      <h3>Register New Candidate</h3>
-
       <Component>
+        <span className='title'>Register New Candidate</span>
         <Form>
           <TextField id="outlined-basic" label="Email" variant="outlined"
             type='email'

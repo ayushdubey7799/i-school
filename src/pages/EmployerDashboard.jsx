@@ -66,7 +66,7 @@ const EmployerDashboard = () => {
   console.log("ITEM-->", currentItem);
   return (
     <MainBox>
-      <EmployerHeader />
+      <EmployerHeader setCurrentItem={setCurrentItem}/>
       <StyledContent>
         <EmployerSidebar
           currentItem={currentItem}
