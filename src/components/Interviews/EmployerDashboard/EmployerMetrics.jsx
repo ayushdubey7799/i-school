@@ -1,32 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import metric1 from '../../../assets/icons/metric1.png'
 import metric2 from '../../../assets/icons/metric2.2.png'
 import metric3 from '../../../assets/icons/metric2.3.png'
 import metric4 from '../../../assets/icons/metric2.4.png'
+import RegisteredCandidates from './sidebarPages/RegisteredCandidates';
+import InterviewDashboard from './sidebarPages/InterviewDashboard';
+import ActiveJds from './sidebarPages/ActiveJds';
 
-const Button = styled.button`
-  background-color: var(--lightOrange);
-  border: 0.1rem solid var(--lightOrange);
-  cursor: pointer;
-  color: var(--white);
-  text-decoration: none;
-  font-size: 0.9rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.5rem;
+const MainContainer = styled.div`
+display: flex;
+flex-direction: column;
+gap: 0rem;
+width: 90%;
+padding: 0 5%;
 
-`;
+
+
+`
 
 const Container = styled.div`
 
 display: flex;
 flex-direction: row;
-width: 90%;
+width: 100%;
 justify-content: space-between;
 align-items: center;
-padding: 2rem 5% 1rem 5%;
+padding: 1rem 0% 2rem 0%;
 gap: 2%;
 
+.selected {
+  background-color: #d9fbf9 !important;
+}
 
 .achievedNumberBox {
   display: flex;
@@ -84,43 +89,50 @@ gap: 2%;
 `;
 
 
-const EmployeMetrics = ({ setCurrentItem }) => {
-  return (
+const EmployeMetrics = () => {
+  const [currMetric, setCurrMetric] = useState('interviews');
 
-    <Container>
-      <div className='achievedNumberBox' onClick={() => setCurrentItem('')}>
-        <div className='top'>
-          <img src={metric1} />
-          <span className='achievedNumberDigit'>15</span>
+
+  return (
+    <MainContainer>
+      <Container>
+        <div className={`achievedNumberBox ${currMetric === 'activeJDs' ? 'selected' : ''}`} onClick={() => setCurrMetric('activeJDs')} >
+          <div className='top'>
+            <img src={metric1} />
+            <span className='achievedNumberDigit'>15</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Active JDs</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Active JDs</span>
-      </div>
-      <div className='achievedNumberBox'>
-        <div className='top'>
-          <img src={metric2} />
-          <span className='achievedNumberDigit'>30</span>
+        <div className={`achievedNumberBox ${currMetric === 'applications' ? 'selected' : ''}`} onClick={() => setCurrMetric('applications')}>
+          <div className='top'>
+            <img src={metric2} />
+            <span className='achievedNumberDigit'>30</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Applications</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Applications</span>
-      </div>
-      <div className='achievedNumberBox'>
-        <div className='top'>
-          <img src={metric3} />
-          <span className='achievedNumberDigit'>17</span>
+        <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
+          <div className='top'>
+            <img src={metric3} />
+            <span className='achievedNumberDigit'>17</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Interviews</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Interviews</span>
-      </div>
-      <div className='achievedNumberBox' onClick={() => setCurrentItem('candidate-registered')}>
-        <div className='top'>
-          <img src={metric4} />
-          <span className='achievedNumberDigit'>12</span>
+        <div className={`achievedNumberBox ${currMetric === 'candidatesPool' ? 'selected' : ''}`} onClick={() => setCurrMetric('candidatesPool')}>
+          <div className='top'>
+            <img src={metric4} />
+            <span className='achievedNumberDigit'>12</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Candidates Pool</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Candidates Pool</span>
-      </div>
-    </Container>
+      </Container>
+      {currMetric === 'interviews' && <InterviewDashboard />}
+      {currMetric === 'activeJDs' && <ActiveJds />}
+      {currMetric === 'candidatesPool' && <RegisteredCandidates />}
+    </MainContainer>
   );
 };
 
