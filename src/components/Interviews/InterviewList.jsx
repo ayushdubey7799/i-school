@@ -58,7 +58,7 @@ const Row = (props) => {
           {row.createdAt.split('T')[0]}
         </TableCell>{" "}
         {row.status == 'COMPLETED' &&
-          <TableCell component="th" scope="row" style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+          <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <ScoreChart data={[
               ["Score", "Percentage"],
               ["YourScore", score],
@@ -79,8 +79,10 @@ const Row = (props) => {
             <Collapse in={row.open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="body1" gutterBottom style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', }}>
-                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Job Summary:- </span> {row.jobSummary.length > 250 ? row.jobSummary.slice(0, 250) + "..." : row.jobSummary}</div>
-                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Resume Text:- </span> {row.resumeText.length > 250 ? row.resumeText.slice(0, 250) + "..." : row.resumeText}</div>
+                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Job Summary:- </span> {row.jobSummary}</div>
+                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Resume Text:- </span> {row.resumeText}</div>
+                  {/* <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Job Summary:- </span> {row.jobSummary.length > 250 ? row.jobSummary.slice(0, 250) + "..." : row.jobSummary}</div>
+                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Resume Text:- </span> {row.resumeText.length > 250 ? row.resumeText.slice(0, 250) + "..." : row.resumeText}</div> */}
                 </Typography>
               </Box>
             </Collapse>
