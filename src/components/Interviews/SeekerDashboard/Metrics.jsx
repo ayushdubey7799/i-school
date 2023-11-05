@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import metric1 from '../../../assets/icons/metric1.png'
 import metric2 from '../../../assets/icons/metric2.png'
 import metric3 from '../../../assets/icons/metric3.png'
 import metric4 from '../../../assets/icons/metric4.png'
 import { useNavigate } from 'react-router';
+import RecommendedJobs from './sidebarPages/RecommendedJobs';
+import JobApplication from './sidebarPages/JobApplication';
+import InterviewTabs from '../InterviewTabs';
+
+const MainContainer = styled.div`
+display: flex;
+flex-direction: column;
+gap: 0rem;
+width: 90%;
+padding: 0 5%;
+
+
+
+`
 
 const Container = styled.div`
 
-  display: flex;
-  flex-direction: row;
-  width: 90%;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4rem 5% 2rem 5%;
-  gap: 2%;
+display: flex;
+flex-direction: row;
+width: 100%;
+justify-content: space-between;
+align-items: center;
+padding: 0rem 0% 0rem 0%;
+gap: 2%;
 
+
+.selected {
+  background-color: #d9fbf9 !important;
+}
 
   .achievedNumberBox {
     display: flex;
@@ -71,44 +89,51 @@ const Container = styled.div`
 `;
 
 
-const Metrics = ({ setCurrentItem }) => {
-
+const Metrics = () => {
+  const [currMetric, setCurrMetric] = useState('interviewScheduled');
 
   return (
-    <Container>
-      <div className='achievedNumberBox' onClick={() => setCurrentItem('recommended-jobs')}>
-        <div className='top'>
-          <img src={metric1} />
-          <span className='achievedNumberDigit'>15</span>
+    <MainContainer>
+      <Container>
+        <div className={`achievedNumberBox ${currMetric === 'recommendedJobs' ? 'selected' : ''}`} onClick={() => setCurrMetric('recommendedJobs')}>
+          <div className='top'>
+            <img src={metric1} />
+            <span className='achievedNumberDigit'>15</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Recommended Jobs</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Recommended Jobs</span>
-      </div>
-      <div className='achievedNumberBox' onClick={() => setCurrentItem('applied-jobs')}>
-        <div className='top'>
-          <img src={metric2} />
-          <span className='achievedNumberDigit'>30</span>
+        <div className={`achievedNumberBox ${currMetric === 'appliedJobs' ? 'selected' : ''}`} onClick={() => setCurrMetric('appliedJobs')}>
+          <div className='top'>
+            <img src={metric2} />
+            <span className='achievedNumberDigit'>30</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Applied Jobs</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Applied Jobs</span>
-      </div>
-      <div className='achievedNumberBox' onClick={() => setCurrentItem('interviewDash')}>
-        <div className='top'>
-          <img src={metric3} />
-          <span className='achievedNumberDigit'>12</span>
+        <div className={`achievedNumberBox ${currMetric === 'interviewCompleted' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewCompleted')}>
+          <div className='top'>
+            <img src={metric3} />
+            <span className='achievedNumberDigit'>12</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Interviews Completed</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Interviews Completed</span>
-      </div>
-      <div className='achievedNumberBox' onClick={() => setCurrentItem('interviewDash')}>
-        <div className='top'>
-          <img src={metric4} />
-          <span className='achievedNumberDigit'>5</span>
+        <div className={`achievedNumberBox ${currMetric === 'interviewScheduled' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewScheduled')}>
+          <div className='top'>
+            <img src={metric4} />
+            <span className='achievedNumberDigit'>5</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Interview Scheduled</span>
         </div>
-        <span className='hrLine'></span>
-        <span className='achievedNumberText'>Interview Scheduled</span>
-      </div>
-    </Container>
+      </Container>
+
+      {currMetric === 'recommendedJobs' && <RecommendedJobs />}
+      {currMetric === 'appliedJobs' && <JobApplication />}
+      {currMetric === 'interviewCompleted' && <InterviewTabs />}
+      {currMetric === 'interviewScheduled' && <InterviewTabs />}
+    </MainContainer>
   );
 };
 

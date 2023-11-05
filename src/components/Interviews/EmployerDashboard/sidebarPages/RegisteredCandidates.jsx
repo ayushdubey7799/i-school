@@ -19,6 +19,7 @@ import { data as candidates } from "../../../../utils/contantData";
 import deleteIcon from '../../../../assets/icons/delete.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import visibleIcon from '../../../../assets/icons/visible.png'
+import shareIcon from '../../../../assets/icons/share.png'
 
 function Row(props) {
   const { row, index } = props;
@@ -41,6 +42,7 @@ function Row(props) {
         <TableCell align="center">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={shareIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
             <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>

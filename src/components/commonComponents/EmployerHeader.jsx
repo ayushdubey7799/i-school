@@ -6,12 +6,13 @@ import { IconButton } from "@mui/material";
 import logo from "../../assets/IntelliViewLogo.png";
 import { useSelector } from "react-redux";
 import profileIcon from '../../assets/profileIcon.png'
+import demoIcon from '../../assets/icons/demoIcon.png'
 
 import { persistor } from "../../store";
 import { logout } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
 
-const EmployerHeader = () => {
+const EmployerHeader = ({ setCurrentItem }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
@@ -31,8 +32,12 @@ const EmployerHeader = () => {
       </div>
 
       <div id="right">
+        <span onClick={() => setCurrentItem('interview-dashboard')} className="demo">Go to Interview Dashboard</span>
+
         <Link to="/demo" className="link">
-          <span className="demo">Schedule Demo</span>
+          <span className="demoIcon"><img src={demoIcon} />
+            <span className="altText">request demo</span>
+          </span>
         </Link>
 
 
@@ -82,7 +87,7 @@ const StyledDiv = styled.div`
   #right {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .demo {
@@ -95,7 +100,32 @@ const StyledDiv = styled.div`
     border-radius: 0.5rem;
   }
 
-  .demo:hover {
+  .demoIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+
+    img {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+
+    .altText {
+      color: var(--color);
+      font-size: 0.6rem;
+      position: absolute;
+      top: 3rem;
+      display: none;
+    }
+  }
+
+  .demoIcon:hover .altText {
+    display: block;
+  }
+
+  .demo:hover + {
     background: linear-gradient(to bottom, #8ACCDC, var(--lightOrange));
   }
   

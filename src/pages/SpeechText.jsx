@@ -34,7 +34,7 @@ const SpeechToText = () => {
   const sendAudioToBackend = () => {
     if (audioData) {
       const formData = new FormData();
-      formData.append("audio", audioData, "recorded_audio.wav"); 
+      formData.append("audio", audioData, "recorded_audio.wav");
 
       fetch("https://your-backend-api-endpoint", {
         method: "POST",
@@ -49,7 +49,7 @@ const SpeechToText = () => {
         });
     }
   };
- 
+
   return (
     <div>
     <ReactMediaRecorder

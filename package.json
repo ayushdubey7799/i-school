@@ -22,6 +22,7 @@
     "mammoth": "^1.6.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
+    "mui-file-input": "^3.0.2",
     "mui-tel-input": "^4.0.0",
     "pdfjs-dist": "^3.10.111",
     "react": "^18.2.0",
@@ -61,6 +62,9 @@
       "last 1 safari version"
     ]
   }
+<<<<<<< HEAD
   
  
+=======
+>>>>>>> 2d9d9714add20d621f865cc3fbcea12733b71497
 }

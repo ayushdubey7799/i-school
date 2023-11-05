@@ -18,10 +18,10 @@ export default function ModalHOC({
   };
   const handleClose = (event, reason) => {
     console.log(event, reason);
-    if (reason && reason == "backdropClick") {
-      toast.warn("WARNING")
-      return;
-    }
+    // if (reason && reason == "backdropClick") {
+    //   toast.warn("WARNING")
+    //   return;
+    // }
     setOpenNewInterviewModal(false);
   };
 
@@ -34,8 +34,8 @@ export default function ModalHOC({
       disableBackdropClick
     >
       <MainBox>
-        <Btn onClick={handleClose}><img src={closeIcon}/></Btn>
-        <Component array={array} handleClose={handleClose}/>
+        <Btn onClick={handleClose}><img src={closeIcon} /></Btn>
+        <Component array={array} handleClose={handleClose} />
       </MainBox>
     </Modal>
   )
@@ -69,7 +69,6 @@ display: flex;
   width: 40%;
   height: 60vh;
   background-color: var(--white);
-  border: 0.08rem solid #000;
   padding-top: 2rem;
   padding-left: 6rem;
   padding-right: 6rem;
@@ -80,21 +79,23 @@ display: flex;
   overflow-y: auto;
   position: relative;
 
-
-  & {
-    scrollbar-width: none;
-  }  
-
   &::-webkit-scrollbar {
-    width: 1rem;
-  }
+    width: 0.4rem;
+}
 
   &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+    background: lightgrey;
+    border-radius: 0.4rem;
+}
 
   &::-webkit-scrollbar-thumb {
-    background-color: lightgrey;
-  }
+    background: grey;
+    width: 0.4rem;
+    border-radius: 0.4rem;
+}
+
+& {
+  scrollbar-width: none;
+} 
 
 `
