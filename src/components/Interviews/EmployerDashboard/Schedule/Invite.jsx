@@ -105,16 +105,10 @@ export default function Invite() {
 
 
     const makeApiCall = async () => {
-<<<<<<< HEAD
-      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedHour + ":" + selectedMinute + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
-=======
-      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm:ss');
->>>>>>> 2d9d9714add20d621f865cc3fbcea12733b71497
+      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
-      const timeToSend = {
-        
-      }
+      console.log(selectedTimeSlot);
       if (!productType || !testType || !value.format("YYYY-MM-DD")) {
         toast.error("Fill all fields");
         return;
@@ -135,7 +129,9 @@ export default function Invite() {
         const response = await sendInvite(payload, accessToken, clientCode);
         console.log("API call successful:", response.data);
         toast.success("Invites sent successfully");
+        navigate("/schedule/invite/success");
       } catch (error) {
+        toast.error("error-> ",error?.message);
         console.error("API call failed:", error);
       }
     };
@@ -168,7 +164,7 @@ export default function Invite() {
             </LocalizationProvider>
 
             <div className="slotBox">
-              <span className="span">Select time-slot (IST)</span>
+              <span className="span">Select time-slot</span>
               <TimeSlotPicker
                 selectedTimeSlot={selectedTimeSlot}
                 setSelectedTimeSlot={setSelectedTimeSlot}
