@@ -14,199 +14,261 @@ import { getScore } from "../functions/api/interview/getScore";
 import InterviewSubmittedModal from "../components/Modals/InterviewSubmittedModal";
 import Loader from "../components/commonComponents/Loader";
 import Timer from "../components/Interviews/CurrentInterview/Timer";
-import logo from '../assets/IntelliViewLogo.png'
+import logo from "../assets/IntelliViewLogo.png";
+import { submitAnswerWithFile } from "../functions/api/interview/submitAnswerWithFile";
+import { ReactMediaRecorder } from "react-media-recorder";
 
 const OngoingInterview = ({ start, handleStart }) => {
-    const accessToken = useSelector(state => state.auth.userData?.accessToken)
-    const { interviewId } = useParams();
-    const [data, setData] = useState(null);
-    const [id, setId] = useState(1);
-    const [openDrawer, setOpenDrawer] = useState(false);
-    const [scoreModal, setScoreModal] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [loaderMessage, setLoaderMessage] = useState("");
-    const [input, setInput] = useState("");
-    const navigate = useNavigate();
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const { interviewId } = useParams();
+  const [data, setData] = useState(null);
+  const [id, setId] = useState(1);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [scoreModal, setScoreModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loaderMessage, setLoaderMessage] = useState("");
+  const [input, setInput] = useState("");
+  const [audioData, setAudioData] = useState(null);
+  const navigate = useNavigate();
 
-    ////////////////////////////////////////////////// TIMER CODE
-    const initialMinutes = 60;
-    const [minutes, setMinutes] = useState(initialMinutes);
-    const [seconds, setSeconds] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
+  ////////////////////////////////////////////////// TIMER CODE
+  const initialMinutes = 60;
+  const [minutes, setMinutes] = useState(initialMinutes);
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
 
-    useEffect(() => {
-        let timer;
+  useEffect(() => {
+    let timer;
 
-        if (isRunning) {
-            timer = setInterval(() => {
-                if (minutes === 0 && seconds === 0) {
-                    setIsRunning(false);
-                    clearInterval(timer);
-                } else {
-                    if (seconds === 0) {
-                        setMinutes(minutes - 1);
-                        setSeconds(59);
-                    } else {
-                        setSeconds(seconds - 1);
-                    }
-                }
-            }, 1000);
+    if (isRunning) {
+      timer = setInterval(() => {
+        if (minutes === 0 && seconds === 0) {
+          setIsRunning(false);
+          clearInterval(timer);
         } else {
-            clearInterval(timer);
+          if (seconds === 0) {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          } else {
+            setSeconds(seconds - 1);
+          }
         }
-
-        return () => clearInterval(timer);
-    }, [isRunning, minutes, seconds]);
-
-    const startTimer = () => {
-        setIsRunning(true);
-    };
-
-    const stopTimer = () => {
-        setIsRunning(false);
-    };
-
-    const resetTimer = () => {
-        setIsRunning(false);
-        setMinutes(initialMinutes);
-        setSeconds(0);
-    };
-    /////////////////////////////////////////////// TIMER CODE ENDS
-    useEffect(() => {
-        if (!accessToken) navigate("/login");
-    }, [])
-
-
-    const handleChange = (e) => {
-        setInput(e.target.value);
-    };
-
-    const handleSubmitAnswer = async (id, lastQuestion) => {
-        setLoaderMessage("Submitting Answer... please wait")
-        setIsLoading(true);
-        setId(id + 1);
-        const res = await submitAnswer(input, id, lastQuestion, interviewId, accessToken);
-        console.log(res);
-        setInput("");
-        setIsLoading(false);
-    };
-
-    const handleSubmitInterview = async () => {
-        setLoaderMessage("Evaluating the Score... please wait")
-        setIsLoading(true);
-        const submitRes = await updateStatus(interviewId, "completed", accessToken);
-        console.log(submitRes);
-        if (submitRes) setScoreModal(true);
-        setIsLoading(false);
-        localStorage.setItem("time", JSON.stringify({ minutes, seconds }));
-        stopTimer();
-    };
-
-    const handlePaste = (e) => {
-        e.preventDefault();
-    };
-
-    const handleCutCopy = (e) => {
-        e.preventDefault();
-    };
-
-    async function getData() {
-        document.documentElement.requestFullscreen();
-
-        setLoaderMessage("Getting new Question... please wait")
-        setIsLoading(true);
-        const fetchedData = await getQuestion(interviewId, accessToken);
-        console.log(fetchedData);
-        setData(fetchedData?.data[0]);
-        setIsLoading(false);
-        handleStart();
-        startTimer();
+      }, 1000);
+    } else {
+      clearInterval(timer);
     }
 
-    const handleStartRec = () => {
+    return () => clearInterval(timer);
+  }, [isRunning, minutes, seconds]);
 
+  const startTimer = () => {
+    setIsRunning(true);
+  };
+
+  const stopTimer = () => {
+    setIsRunning(false);
+  };
+
+  const resetTimer = () => {
+    setIsRunning(false);
+    setMinutes(initialMinutes);
+    setSeconds(0);
+  };
+  /////////////////////////////////////////////// TIMER CODE ENDS
+  useEffect(() => {
+    if (!accessToken) navigate("/login");
+  }, []);
+
+  const handleStop = (blobUrl, blob) => {
+    setAudioData(blob);
+    console.log(blob);
+  };
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmitAnswer = async (id, lastQuestion) => {
+    setLoaderMessage("Submitting Answer... please wait");
+    setIsLoading(true);
+    setId(id + 1);
+    if (audioData) {
+        console.log("Working");
+      const formData = new FormData();
+      formData.append("file", audioData, "recorded_audio.wav");
+      formData.append("dto", JSON.stringify({id,lastQuestion}));
+      const res = await submitAnswerWithFile(
+        formData,
+        id,
+        lastQuestion,
+        interviewId,
+        accessToken
+      );
+      if(res)setAudioData(null);
+      console.log("File uploaded --> ", res);
+    } else {
+      const res = await submitAnswer(
+        input,
+        id,
+        lastQuestion,
+        interviewId,
+        accessToken
+      );
+      console.log(res);
+      setInput("");
     }
+    setIsLoading(false);
+  };
 
-    const handleStopRec = () => {
+  const handleSubmitInterview = async () => {
+    setLoaderMessage("Evaluating the Score... please wait");
+    setIsLoading(true);
+    const submitRes = await updateStatus(interviewId, "completed", accessToken);
+    console.log(submitRes);
+    if (submitRes) setScoreModal(true);
+    setIsLoading(false);
+    localStorage.setItem("time", JSON.stringify({ minutes, seconds }));
+    stopTimer();
+  };
 
-    }
+  const handlePaste = (e) => {
+    e.preventDefault();
+  };
 
+  const handleCutCopy = (e) => {
+    e.preventDefault();
+  };
 
-    return (
-        <>
-            <div style={{ height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem' }}>
-                <img src={logo} style={{ height: '100%' }} />
-            </div>
-            {isLoading ? (
-                <Loader message={loaderMessage} />
-            ) : (
-                <StyledInterview>
-                    <div className="head">
-                        <h3>Interview Id : {interviewId}</h3>
-                        <Timer minutes={minutes} seconds={seconds} />
+  async function getData(flag) {
+    if(flag)document.documentElement.requestFullscreen();
+
+    setLoaderMessage("Getting new Question... please wait");
+    setIsLoading(true);
+    const fetchedData = await getQuestion(interviewId, accessToken);
+    console.log(fetchedData);
+    setData(fetchedData?.data[0]);
+    setIsLoading(false);
+    handleStart();
+    startTimer();
+  }
+
+  
+
+  return (
+    <>
+      <div
+        style={{
+          height: "3.5rem",
+          position: "absolute",
+          top: "1rem",
+          left: "3rem",
+        }}
+      >
+        <img src={logo} style={{ height: "100%" }} />
+      </div>
+      {isLoading ? (
+        <Loader message={loaderMessage} />
+      ) : (
+        <StyledInterview>
+          <div className="head">
+            <h3>Interview Id : {interviewId}</h3>
+            <Timer minutes={minutes} seconds={seconds} />
+          </div>
+
+          {start ? (
+            <>
+              <div>{data?.question}</div>
+              <textarea
+                onPaste={handlePaste}
+                onCut={handleCutCopy}
+                onCopy={handleCutCopy}
+                rows={10}
+                value={input}
+                onChange={(e) => handleChange(e)}
+              />
+              {data?.lastQuestion ? (
+                <button
+                  onClick={() => {
+                    handleSubmitAnswer(data.id, data.lastQuestion);
+                    handleSubmitInterview();
+                  }}
+                >
+                  Submit Interview
+                </button>
+              ) : (
+                <>
+                  <div className="btnBox1">
+                    <div className="childBtnBox">
+                     
+                      <ReactMediaRecorder
+                        audio
+                        onStop={handleStop}
+                        render={({
+                          status,
+                          startRecording,
+                          stopRecording,
+                          mediaBlobUrl,
+                        }) => {
+                          return (
+                            <div>
+                              <p>{status}</p>
+                              <button
+                                onClick={startRecording}
+                                className="smallBtn"
+                              >
+                                Start Recording
+                              </button>
+                              <button
+                                onClick={stopRecording}
+                                className="smallBtn"
+                              >
+                                Stop Recording
+                              </button>
+                              <audio
+                                src={mediaBlobUrl}
+                                controls
+                                autoPlay
+                                loop
+                              />
+                            </div>
+                          );
+                        }}
+                      />
                     </div>
-
-                    {start ? (
-                        <>
-                            <div>{data?.question}</div>
-                            <textarea
-                                onPaste={handlePaste}
-                                onCut={handleCutCopy}
-                                onCopy={handleCutCopy}
-                                rows={10}
-                                value={input}
-                                onChange={(e) => handleChange(e)}
-                            />
-                            {data?.lastQuestion ? (
-                                <button
-                                    onClick={() => {
-                                        handleSubmitAnswer(data.id, data.lastQuestion);
-                                        handleSubmitInterview();
-                                    }}
-                                >
-                                    Submit Interview
-                                </button>
-                            ) : (
-                                <>
-                                    <div className="btnBox1">
-                                        <div className="childBtnBox">
-                                            <button onClick={handleStartRec} className="smallBtn">Start Rec</button>
-                                            <button onClick={handleStopRec} className="smallBtn">Stop Rec</button>
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                handleSubmitAnswer(data.id, data.lastQuestion);
-                                                getData();
-                                            }}
-                                        >
-                                            Next Question
-                                        </button>
-                                    </div>
-                                    <div className="btnBox2">
-                                        <button
-                                            onClick={() => {
-                                                handleSubmitAnswer(data.id, data.lastQuestion);
-                                                handleSubmitInterview();
-                                            }}
-                                        >
-                                            Finish Interview
-                                        </button>
-                                    </div>
-                                </>
-                            )}
-                            <InterviewSubmittedModal
-                                scoreModal={scoreModal}
-                                setScoreModal={setScoreModal}
-                                interviewId={interviewId}
-                            />
-                        </>
-                    ) : (
-                        <button onClick={getData}>Start Interview</button>
-                    )}
-                </StyledInterview>
-            )}
-        </>
-    );
+                    <button
+                      onClick={() => {
+                        handleSubmitAnswer(data.id, data.lastQuestion);
+                        getData(false);
+                      }}
+                    >
+                      Next Question
+                    </button>
+                  </div>
+                  <div className="btnBox2">
+                    <button
+                      onClick={() => {
+                        handleSubmitAnswer(data.id, data.lastQuestion);
+                        handleSubmitInterview();
+                      }}
+                    >
+                      Finish Interview
+                    </button>
+                  </div>
+                </>
+              )}
+              <InterviewSubmittedModal
+                scoreModal={scoreModal}
+                setScoreModal={setScoreModal}
+                interviewId={interviewId}
+              />
+            </>
+          ) : (
+            <button onClick={() => getData(true)}>Start Interview</button>
+          )}
+        </StyledInterview>
+      )}
+    </>
+  );
 };
 
 export default OngoingInterview;
@@ -219,7 +281,7 @@ const StyledInterview = styled.div`
   margin-top: 8rem;
   gap: 2rem;
 
-  .timer{
+  .timer {
     width: 3rem;
     // height: 3rem;
     background-color: var(--white);
@@ -232,7 +294,7 @@ const StyledInterview = styled.div`
     justify-content: center;
   }
 
-  .head{
+  .head {
     display: flex;
     justify-content: space-between;
     padding: 0.5rem;
@@ -245,11 +307,10 @@ const StyledInterview = styled.div`
     display: flex;
     justify-content: space-between;
 
-
     .childBtnBox {
-        width: 100%;
-        display: flex;
-        gap: 1rem;
+      width: 100%;
+      display: flex;
+      gap: 1rem;
     }
   }
 
@@ -258,7 +319,7 @@ const StyledInterview = styled.div`
     display: flex;
     justify-content: center;
   }
-  
+
   button {
     width: 20%;
     height: 3rem;
@@ -296,6 +357,4 @@ const StyledInterview = styled.div`
     padding: 1rem;
     font-size: 1rem;
   }
-
 `;
-

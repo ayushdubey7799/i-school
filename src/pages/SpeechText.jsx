@@ -26,6 +26,11 @@ import { useState } from "react";
 const SpeechToText = () => {
   const [audioData, setAudioData] = useState(null);
 
+  const handleStop = (blobUrl, blob) => {
+    setAudioData(blob);
+    console.log(blob);
+  };
+
   const sendAudioToBackend = () => {
     if (audioData) {
       const formData = new FormData();
@@ -49,6 +54,7 @@ const SpeechToText = () => {
     <div>
     <ReactMediaRecorder
       audio
+      onStop={handleStop}
       render={({ status, startRecording, stopRecording, mediaBlobUrl }) => {
         return (<div>
           <p>{status}</p>

@@ -103,21 +103,24 @@ export default function Invite() {
 
 
     const makeApiCall = async () => {
-      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedHour + ":" + selectedMinute + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm:ss');
+      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedHour + ":" + selectedMinute + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
+      const timeToSend = {
+        
+      }
       if (!productType || !testType || !value.format("YYYY-MM-DD")) {
         toast.error("Fill all fields");
         return;
       }
       const payload = {
-        jdId: array[array.length - 1],
+        jdId: "DE2023-001",
         productType: productType,
         resumeIds: array.slice(0, -1),
         testType: testType,
         slotDate: date,
-        timeZone: "UTC",
         slotTime: time,
+        timeZone: "UTC",
         welcomeMessage: "string",
       };
       if(isTime)delete payload.slotTime;
