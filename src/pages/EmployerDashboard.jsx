@@ -24,6 +24,7 @@ import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPag
 import ConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureDash";
 import ManageUsers from "../components/Interviews/EmployerDashboard/sidebarPages/ManageUsers";
 import ConfigureReports from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureReports";
+import InterviewDashboard from "../components/Interviews/EmployerDashboard/sidebarPages/InterviewDashboard";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -66,7 +67,7 @@ const EmployerDashboard = () => {
   console.log("ITEM-->", currentItem);
   return (
     <MainBox>
-      <EmployerHeader />
+      <EmployerHeader setCurrentItem={setCurrentItem} />
       <StyledContent>
         <EmployerSidebar
           currentItem={currentItem}
@@ -92,6 +93,7 @@ const EmployerDashboard = () => {
           {currentItem === "activeJds" && <ActiveJds />}
           {currentItem === "create-tests" && <ManageTests />}
           {currentItem === "available-tests" && <AvailableTest />}
+          {currentItem === "interview-dashboard" && <InterviewDashboard />}
 
           {currentItem === "profile" && <EmployeProfile />}
           {currentItem === "manage-users" && <ManageUsers />}

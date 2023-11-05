@@ -96,7 +96,7 @@ export default function MatchedResumes() {
         "schedule",
         JSON.stringify([...selectedArray, idToSendInvite])
       );
-      navigate("/schedule/invite");
+      navigate(`/schedule/invite/${jdId}`);
     }
     else {
       toast.error("Select Resume First");

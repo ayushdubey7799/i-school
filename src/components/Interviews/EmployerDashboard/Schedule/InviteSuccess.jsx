@@ -14,61 +14,61 @@ import { useNavigate } from 'react-router';
 
 
 function Row(props) {
-    const { row } = props;
+  const { row } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}
-            >
-                <TableCell component="th" scope="row" align="center">...</TableCell>
-                <TableCell component="th" scope="row" align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
-                    <img src={eyeIcon} />
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }}
+      >
+        <TableCell component="th" scope="row" align="center">...</TableCell>
+        <TableCell component="th" scope="row" align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
+          <img src={eyeIcon} />
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const InviteSuccess = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
-        <MainContainer>
-            <LogoHeader />
+  return (
+    <MainContainer>
+      <LogoHeader />
 
-            <Container>
-                <span className='mainTitle'>
-                    <span>Invitation Sent Successfully</span>
-                    <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
-                </span>
+      <Container>
+        <span className='mainTitle'>
+          <span>Invitation Sent Successfully</span>
+          <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
+        </span>
 
-                <TableContainer component={Paper} className="tableBox">
-                    <Table aria-label="collapsible table">
-                        <TableHead className="tableHead">
-                            <TableRow>
-                                <TableCell align="center">Name</TableCell>
-                                <TableCell align="center">Email</TableCell>
-                                <TableCell align="center">Contact</TableCell>
-                                <TableCell align="center">Details</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody className="tableBody">
-                            {sentInvites?.map((row, index) => (
-                                <Row
-                                    key={row.resumeId}
-                                    row={row}
-                                />
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Container>
-        </MainContainer>
-    )
+        <TableContainer component={Paper} className="tableBox">
+          <Table aria-label="collapsible table">
+            <TableHead className="tableHead">
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Email</TableCell>
+                <TableCell align="center">Contact</TableCell>
+                <TableCell align="center">Details</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="tableBody">
+              {sentInvites?.map((row, index) => (
+                <Row
+                  key={row.resumeId}
+                  row={row}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+    </MainContainer>
+  )
 }
 
 export default InviteSuccess
@@ -151,7 +151,7 @@ padding: 5rem 2% 2rem 2%;
     margin: 1rem 0 1.5rem 0;
     width: 98%;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     gap: 27%;
 }
 

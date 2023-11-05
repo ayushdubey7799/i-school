@@ -105,17 +105,20 @@ const Header = () => {
         {accessToken ? (
           <Link to={clientCode == "intelliview"?"/dashboard/jobseeker":"/dashboard/employer"} className="link">
             {" "}
-            <span id="sign-in">Go to Dashboard2</span>
+            <span id="sign-in">Go to Dashboard</span>
           </Link>
         ) : (
+          <>
           <Link to="/login" className="link">
             <span id="sign-in">Login</span>
           </Link>
+          <span>|</span>
+          <Link to="/signup" className="link">
+            <span id="free">Register</span>
+          </Link>
+          </>
         )}
-        <span>|</span>
-        <Link to="/signup" className="link">
-          <span id="free">Register</span>
-        </Link>
+        
       </div>
       <div id="drawer">
         <IconButton onClick={() => setOpenDrawer(true)}>

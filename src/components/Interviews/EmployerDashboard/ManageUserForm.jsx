@@ -1,45 +1,34 @@
+import { TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
   border-radius: 5px;
+
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding-bottom: 1rem;
-`;
+  gap: 1rem;
 
-const Label = styled.label`
-font-size: 0.8rem;
-  margin-bottom: 8px;
-  font-weight: bold;
-`;
 
-const Input = styled.input`
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  background-color: #F6F6FB;
-  outline-color: #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
+  #outlined-basic {
+    padding-top: 0.9rem;
+    padding-bottom: 0.8rem;
+    font-size: 0.9rem;
+  }
 `;
 
 
-const Select = styled.select`
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #F6F6FB;
-  outline-color: #ccc;
-  box-sizing: border-box;
-`;
 
 const Button = styled.button`
   padding: 0.5rem 1rem;
@@ -87,45 +76,50 @@ function ManageUserForm({ array, handleClose }) {
         <Container>
             <h3>User Registration</h3>
             <Form onSubmit={handleSubmit}>
-                <Label>Name</Label>
-                <Input
+
+                <TextField id="outlined-basic" label="Name" variant="outlined"
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    sx={{ backgroundColor: '#F6F6FB' }}
                 />
 
-                <Label>Email</Label>
-                <Input
+                <TextField id="outlined-basic" label="Email" variant="outlined"
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     disabled={mode == "edit"}
+                    sx={{ backgroundColor: '#F6F6FB' }}
                 />
 
-
-                <Label>Contact</Label>
-                <Input
+                <TextField id="outlined-basic" label="Contact" variant="outlined"
                     type="tel"
                     name="contact"
                     value={formData.contact}
                     onChange={handleChange}
+                    disabled={mode == "edit"}
+                    sx={{ backgroundColor: '#F6F6FB' }}
                 />
 
 
-                <Label>Role</Label>
-                <Select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                >
-                    <option value="">Select Role</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Agency">Agency</option>
-                    <option value="Recruiter">Recruiter</option>
-                    <option value="Operator">Operator (Read Only)</option>
-                </Select>
+                <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Role"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                    >
+                        <MenuItem value="Admin">Admin</MenuItem>
+                        <MenuItem value="Agency">Agency</MenuItem>
+                        <MenuItem value="Recruiter">Recruiter</MenuItem>
+                        <MenuItem value="Operator">Operator (Read Only)</MenuItem>
+                    </Select>
+                </FormControl>
 
                 <Button type="submit">{mode == "create" ? "Add User" : "Edit User"}</Button>
             </Form>

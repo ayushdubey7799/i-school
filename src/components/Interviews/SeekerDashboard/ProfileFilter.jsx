@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import filterIcon from '../../../assets/icons/filterIcon.png'
+import closeIcon from '../../../assets/icons/closeIcon.png'
 
 const FilterContainer = styled.div`
   width: 91.4%;
@@ -46,12 +47,18 @@ const FilterContainer = styled.div`
     gap: 0.8rem;
     
 
-    button {
+    .button {
       font-size: 0.8rem;
       background-color: var(--white);
       border: 0.08rem solid var(--color);
       padding: 0.2rem 0.3rem;
       border-radius: 0.2rem;
+      cursor: pointer;
+    }
+
+    .image {
+      width: 1.4rem;
+      height: 1.4rem;
       cursor: pointer;
     }
 
@@ -151,9 +158,9 @@ function ProfileFilter() {
       {isOpen && (
         <div className="dropdown" style={{ top: position.top, left: position.left }}>
           <div className="buttons">
-            <button onClick={resetFilters}>Reset Filters</button>
-            <button onClick={closeDropdown}>Close</button>
-            <button onClick={applyFilters}>Apply Filters</button>
+            <button onClick={resetFilters} className='button'>Reset Filters</button>
+            <button onClick={applyFilters} className='button'>Apply Filters</button>
+            <img src={closeIcon} className='image' onClick={closeDropdown} />
           </div>
 
           <div className="content">
