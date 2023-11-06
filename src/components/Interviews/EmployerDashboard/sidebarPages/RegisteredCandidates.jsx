@@ -1,18 +1,12 @@
 
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import { data as candidates } from "../../../../utils/contantData";
@@ -286,20 +280,5 @@ const SearchBarContainer = styled.div`
 
 `
 
-
-
-
-const Button = styled.button`
-  background-color: var(--lightOrange);
-  border: 0.1rem solid var(--lightOrange);
-  cursor: pointer;
-  color: var(--white);
-  text-decoration: none;
-  font-size: 0.9rem;
-  margin-right: 0.6rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.5rem;
-
-`;
 
 

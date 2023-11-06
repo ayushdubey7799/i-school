@@ -95,6 +95,22 @@ const Metrics = () => {
   return (
     <MainContainer>
       <Container>
+        <div className={`achievedNumberBox ${currMetric === 'interviewScheduled' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewScheduled')}>
+          <div className='top'>
+            <img src={metric4} />
+            <span className='achievedNumberDigit'>5</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Interview Scheduled</span>
+        </div>
+        <div className={`achievedNumberBox ${currMetric === 'interviewCompleted' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewCompleted')}>
+          <div className='top'>
+            <img src={metric3} />
+            <span className='achievedNumberDigit'>12</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Interviews Completed</span>
+        </div>
         <div className={`achievedNumberBox ${currMetric === 'recommendedJobs' ? 'selected' : ''}`} onClick={() => setCurrMetric('recommendedJobs')}>
           <div className='top'>
             <img src={metric1} />
@@ -110,22 +126,6 @@ const Metrics = () => {
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Applied Jobs</span>
-        </div>
-        <div className={`achievedNumberBox ${currMetric === 'interviewCompleted' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewCompleted')}>
-          <div className='top'>
-            <img src={metric3} />
-            <span className='achievedNumberDigit'>12</span>
-          </div>
-          <span className='hrLine'></span>
-          <span className='achievedNumberText'>Interviews Completed</span>
-        </div>
-        <div className={`achievedNumberBox ${currMetric === 'interviewScheduled' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewScheduled')}>
-          <div className='top'>
-            <img src={metric4} />
-            <span className='achievedNumberDigit'>5</span>
-          </div>
-          <span className='hrLine'></span>
-          <span className='achievedNumberText'>Interview Scheduled</span>
         </div>
       </Container>
 

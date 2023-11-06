@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import metric1 from '../../../assets/icons/metric1.png'
 import metric2 from '../../../assets/icons/metric2.2.png'
 import metric3 from '../../../assets/icons/metric2.3.png'
 import metric4 from '../../../assets/icons/metric2.4.png'
 import RegisteredCandidates from './sidebarPages/RegisteredCandidates';
-import InterviewDashboard from './sidebarPages/InterviewDashboard';
 import ActiveJds from './sidebarPages/ActiveJds';
+import EmpScheduledInterviews from './sidebarPages/EmpScheduledInterviews';
+import EmpScheduledCandidateList from './sidebarPages/EmpScheduledCandidateList';
 
 const MainContainer = styled.div`
 display: flex;
@@ -89,13 +90,24 @@ gap: 2%;
 `;
 
 
-const EmployeMetrics = () => {
+const EmployeMetrics = ({ page, setPage }) => {
   const [currMetric, setCurrMetric] = useState('interviews');
 
+  useEffect(() => {
+    setPage(1);
+  }, []);
 
   return (
     <MainContainer>
       <Container>
+        <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
+          <div className='top'>
+            <img src={metric3} />
+            <span className='achievedNumberDigit'>17</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>Interviews</span>
+        </div>
         <div className={`achievedNumberBox ${currMetric === 'activeJDs' ? 'selected' : ''}`} onClick={() => setCurrMetric('activeJDs')} >
           <div className='top'>
             <img src={metric1} />
@@ -112,14 +124,6 @@ const EmployeMetrics = () => {
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Applications</span>
         </div>
-        <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
-          <div className='top'>
-            <img src={metric3} />
-            <span className='achievedNumberDigit'>17</span>
-          </div>
-          <span className='hrLine'></span>
-          <span className='achievedNumberText'>Interviews</span>
-        </div>
         <div className={`achievedNumberBox ${currMetric === 'candidatesPool' ? 'selected' : ''}`} onClick={() => setCurrMetric('candidatesPool')}>
           <div className='top'>
             <img src={metric4} />
@@ -129,7 +133,7 @@ const EmployeMetrics = () => {
           <span className='achievedNumberText'>Candidates Pool</span>
         </div>
       </Container>
-      {currMetric === 'interviews' && <InterviewDashboard />}
+      {currMetric === 'interviews' && <>{page === 1 && <EmpScheduledInterviews page={page} setPage={setPage} />}  {page === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}</>}
       {currMetric === 'activeJDs' && <ActiveJds />}
       {currMetric === 'candidatesPool' && <RegisteredCandidates />}
     </MainContainer>

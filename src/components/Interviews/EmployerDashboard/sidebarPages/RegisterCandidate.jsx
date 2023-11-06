@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import uploadIcon from '../../../../assets/icons/upload.png'
 import browseIcon from '../../../../assets/icons/browse.png'
 import { TextField } from '@mui/material';
 

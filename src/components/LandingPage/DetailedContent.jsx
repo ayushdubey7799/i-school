@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import homepage1 from '../../assets/homepage1.jpeg'
+import homepage1 from '../../assets/homepage1.png'
 import homepage3 from '../../assets/homepage3.png'
 import productCard1 from '../../assets/homepage2.jpg'
 import productCard2 from '../../assets/homepage4.jpeg'
@@ -277,7 +277,7 @@ margin-top: 5rem;
 
 
 .visualDetailImgBox > img {
-    width: 80%;
+    width: 55%;
 }
 
 
