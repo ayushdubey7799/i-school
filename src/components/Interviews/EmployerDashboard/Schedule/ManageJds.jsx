@@ -15,17 +15,16 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Match from "./Match";
+import searchBlack from '../../../../assets/icons/searchBlack.png'
 
 function Row(props) {
-  const { row, isSelected, onToggle } = props;
-
-
+  const { row, isSelected, onToggle, index } = props;
 
   return (
     <React.Fragment>
       <TableRow
-        className={isSelected ? "selected" : ""}
-        sx={{ "& > *": { borderBottom: "unset" } }}>
+        sx={{ "& > *": { borderBottom: "unset" } }}
+        className={`${index % 2 == 1 ? 'colored' : ''} ${isSelected ? "selected" : ''}`}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -101,7 +100,22 @@ export default function ManageJds({ rows }) {
   const [tableRows, setTableRows] = useState([]);
 
   const navigate = useNavigate();
-  
+
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
+
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
+
+  const handleSearch = () => {
+    console.log("Search");
+  }
+
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
+
   useEffect(() => {
     setTableRows(rows);
   }, [rows]);
@@ -133,6 +147,34 @@ export default function ManageJds({ rows }) {
           <span>Active Job Descriptions</span>
           <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
         </span>
+        <SearchBarContainer>
+          <div className='skillBox'>
+            <img src={searchBlack} />
+            <input
+              className='skillInput'
+              type="text"
+              placeholder="Search"
+            />
+          </div>
+
+          <div className='selectBox'>
+            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+              <option value="" disabled selected>Filter by</option>
+              <option value="JDID">JD ID</option>
+              <option value="ReqID">Req ID</option>
+              <option value="Recruiter">Recruiter</option>
+              <option value="HiringManager">Hiring Manager</option>
+            </select>
+            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+              <option value="" disabled selected>Sort by</option>
+              <option value="JDID">JD ID</option>
+              <option value="ReqID">Req ID</option>
+              <option value="DateOfCreation">Date of Creation</option>
+              <option value="Recruiter">Recruiter</option>
+              <option value="HiringManager">Hiring Manager</option>
+            </select>
+          </div>
+        </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
@@ -148,7 +190,7 @@ export default function ManageJds({ rows }) {
           </TableHead>
           <TableBody className="tableBody">
             {tableRows?.filter(item => item.jdId).map((row, index) => (
-              <Row key={row.jd_id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
+              <Row key={row.jd_id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} index={index} />
             ))}
           </TableBody>
         </Table>
@@ -165,6 +207,10 @@ const StyledBox = styled.div`
   margin-bottom: 2.5rem;
   width: 96%;
   padding: 0 2%;
+
+  .colored {
+    background-color: #ececec;
+  }
 
 
   .mainTitle {
@@ -210,9 +256,8 @@ const StyledBox = styled.div`
   }
 
   .tableHead {
-    background-color: lightgrey;
+    background-color: #d1fff0;
     width: 100%;
-
   }
 
   .tableBody {
@@ -231,4 +276,69 @@ const Button = styled.button`
   border-radius: 0.3rem;
   cursor: pointer;
   align-self: center;
-`;
+`
+
+
+const SearchBarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 96%;
+  margin: 1rem auto 0.5rem auto;
+  height: 3rem;
+  background-color: var(--white);
+  border-radius: 0.5rem;;
+  padding: 0rem 1rem;
+  gap: 1rem;
+
+
+  .skillBox {
+    position: relative;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.5rem;
+
+    img {
+      width: 1.2rem;
+    }
+  }
+
+
+
+  .skillInput {
+  flex-grow: 1;
+  border: none;
+  height: 1rem;
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+  outline: none;
+  }
+
+
+  .selectBox {
+    width: 30%;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .selectInput {
+    padding: 0.7rem 0.5rem;
+    border: none;
+    background-color: #ececec;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 50%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
+
+`
