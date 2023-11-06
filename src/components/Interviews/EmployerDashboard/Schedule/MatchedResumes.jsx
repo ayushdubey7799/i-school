@@ -9,6 +9,8 @@ import Paper from "@mui/material/Paper";
 import { getMatches } from "../../../../functions/api/employers/match/getResumes";
 import { useNavigate, useParams } from "react-router";
 import LogoHeader from "../../../commonComponents/LogoHeader";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { IconButton } from "@mui/material";
 import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import ScheduleModal from "./ScheduleModal";
@@ -40,14 +42,16 @@ function Row(props) {
         <TableCell align="center">{row.email}</TableCell>
         <TableCell align="center"></TableCell>
         <TableCell align="center">{row.score}</TableCell>
-        <TableCell align="center" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem'}}>
+        <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
           <input
             type="checkbox"
             checked={selected}
             onChange={() => handleSelectChange(row.resumeId)}
             className="checkBox"
           />
-          <img src={eyeIcon}/>
+        </TableCell>
+        <TableCell align="center">
+          <img src={eyeIcon} />
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -109,6 +113,9 @@ export default function MatchedResumes() {
       <LogoHeader />
 
       <Content>
+      <IconButton onClick={() => navigate('/schedule')} className="prev">
+          <ArrowBackIcon sx={{ fontSize: "30px" }} />
+        </IconButton>
         <TableContainer component={Paper} className="tableBox">
           <ModalHOC
             openNewInterviewModal={open}
@@ -117,9 +124,9 @@ export default function MatchedResumes() {
             array={[...selectedArray, idToSendInvite]}
           />
 
-          <h3 style={{ paddingLeft: "3rem" }}>
+          <span style={{ fontSize: '1.1rem', fontWeight: '600', padding: '1rem 0rem 1rem 3rem', display: 'block' }}>
             Matched Resumes for Jd Id: {jdId}
-          </h3>
+          </span>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
@@ -128,7 +135,8 @@ export default function MatchedResumes() {
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Contact</TableCell>
                 <TableCell align="center">Score</TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell align="center">Select Candidates</TableCell>
+                <TableCell align="center">Details</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -143,7 +151,7 @@ export default function MatchedResumes() {
           </Table>
         </TableContainer>
         <button onClick={() => handleSchedule()} className="btn">
-          Schedule
+          Next
         </button>
       </Content>
     </StyledDiv>
@@ -156,12 +164,25 @@ const StyledDiv = styled.div`
 `;
 
 const Content = styled.div`
-  margin: 6rem 0% 2rem 0%;
-  width: 96%;
-  padding: 0 2%;
+  margin: 8rem 0% 2rem 0%;
+  width: 90%;
+  padding: 0 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .prev {
+    background-color: var(--lightOrange);
+    padding: 0.1rem;
+    position: absolute;
+    top: 4.8rem;
+    left: 1.5rem;
+    color: var(--white);
+  }
+
+  .prev:hover {
+    color: var(--color);
+  }
 
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);

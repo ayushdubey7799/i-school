@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Match from "./Match";
 
@@ -100,6 +100,8 @@ export default function ManageJds({ rows }) {
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
     setTableRows(rows);
   }, [rows]);
@@ -127,7 +129,10 @@ export default function ManageJds({ rows }) {
   return (
     <StyledBox>
       <TableContainer component={Paper} className="tableBox">
-        <h3 style={{ paddingLeft: "3rem" }}>Active Job Descriptions</h3>
+        <span className='mainTitle'>
+          <span>Active Job Descriptions</span>
+          <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
+        </span>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
@@ -160,6 +165,18 @@ const StyledBox = styled.div`
   margin-bottom: 2.5rem;
   width: 96%;
   padding: 0 2%;
+
+
+  .mainTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1rem 0 1rem 3rem;
+    width: calc(98% - 3rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
@@ -203,4 +220,15 @@ const StyledBox = styled.div`
   }
 
   
+`;
+
+
+const Button = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: var(--lightOrange);
+  color: #fff;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  align-self: center;
 `;

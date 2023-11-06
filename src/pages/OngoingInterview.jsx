@@ -17,6 +17,8 @@ import Timer from "../components/Interviews/CurrentInterview/Timer";
 import logo from "../assets/IntelliViewLogo.png";
 import { submitAnswerWithFile } from "../functions/api/interview/submitAnswerWithFile";
 import { ReactMediaRecorder } from "react-media-recorder";
+import startRecBtn from '../assets/icons/startRecBtn.png'
+import stopRecBtn from '../assets/icons/stopRecBtn.png'
 
 const OngoingInterview = ({ start, handleStart }) => {
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -93,10 +95,10 @@ const OngoingInterview = ({ start, handleStart }) => {
     setIsLoading(true);
     setId(id + 1);
     if (audioData) {
-        console.log("Working");
+      console.log("Working");
       const formData = new FormData();
       formData.append("file", audioData, "recorded_audio.wav");
-      formData.append("dto", JSON.stringify({id,lastQuestion}));
+      formData.append("dto", JSON.stringify({ id, lastQuestion }));
       const res = await submitAnswerWithFile(
         formData,
         id,
@@ -104,7 +106,7 @@ const OngoingInterview = ({ start, handleStart }) => {
         interviewId,
         accessToken
       );
-      if(res)setAudioData(null);
+      if (res) setAudioData(null);
       console.log("File uploaded --> ", res);
     } else {
       const res = await submitAnswer(
@@ -140,7 +142,7 @@ const OngoingInterview = ({ start, handleStart }) => {
   };
 
   async function getData(flag) {
-    if(flag)document.documentElement.requestFullscreen();
+    if (flag) document.documentElement.requestFullscreen();
 
     setLoaderMessage("Getting new Question... please wait");
     setIsLoading(true);
@@ -152,7 +154,7 @@ const OngoingInterview = ({ start, handleStart }) => {
     startTimer();
   }
 
-  
+
 
   return (
     <>
@@ -198,43 +200,15 @@ const OngoingInterview = ({ start, handleStart }) => {
               ) : (
                 <>
                   <div className="btnBox1">
-                    <div className="childBtnBox">
-                     
-                      <ReactMediaRecorder
-                        audio
-                        onStop={handleStop}
-                        render={({
-                          status,
-                          startRecording,
-                          stopRecording,
-                          mediaBlobUrl,
-                        }) => {
-                          return (
-                            <div>
-                              <p>{status}</p>
-                              <button
-                                onClick={startRecording}
-                                className="smallBtn"
-                              >
-                                Start Recording
-                              </button>
-                              <button
-                                onClick={stopRecording}
-                                className="smallBtn"
-                              >
-                                Stop Recording
-                              </button>
-                              <audio
-                                src={mediaBlobUrl}
-                                controls
-                                autoPlay
-                                loop
-                              />
-                            </div>
-                          );
-                        }}
-                      />
-                    </div>
+                    <button
+                      onClick={() => {
+                        handleSubmitAnswer(data.id, data.lastQuestion);
+                        handleSubmitInterview();
+                      }}
+                    >
+                      Finish Interview
+                    </button>
+
                     <button
                       onClick={() => {
                         handleSubmitAnswer(data.id, data.lastQuestion);
@@ -245,14 +219,40 @@ const OngoingInterview = ({ start, handleStart }) => {
                     </button>
                   </div>
                   <div className="btnBox2">
-                    <button
-                      onClick={() => {
-                        handleSubmitAnswer(data.id, data.lastQuestion);
-                        handleSubmitInterview();
+                    <ReactMediaRecorder
+                      audio
+                      onStop={handleStop}
+                      render={({
+                        status,
+                        startRecording,
+                        stopRecording,
+                        mediaBlobUrl,
+                      }) => {
+                        return (
+                          <AudioBox>
+                            <div className="btnImgBox">
+                              <img
+                                onClick={startRecording}
+                                className="btnImg"
+                                src={startRecBtn}
+                              />
+                              <img
+                                onClick={stopRecording}
+                                className="btnImg"
+                                src={stopRecBtn}
+                              />
+                            </div>
+                            <audio
+                              src={mediaBlobUrl}
+                              controls
+                              autoPlay
+                              loop
+                            />
+                            <span>{status}</span>
+                          </AudioBox>
+                        );
                       }}
-                    >
-                      Finish Interview
-                    </button>
+                    />
                   </div>
                 </>
               )}
@@ -306,12 +306,7 @@ const StyledInterview = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
-
-    .childBtnBox {
-      width: 100%;
-      display: flex;
-      gap: 1rem;
-    }
+    align-items: center;
   }
 
   .btnBox2 {
@@ -331,14 +326,8 @@ const StyledInterview = styled.div`
     cursor: pointer;
   }
 
-  .smallBtn {
-    width: 15%;
-    height: 3rem;
-    background-color: var(--lightOrange);
-    color: var(--backgroundColor);
-    border-radius: 0.5rem;
-    font-size: 1.1rem;
-    border: none;
+  .btnImg {
+    width: 2.5rem;
     cursor: pointer;
   }
 
@@ -358,3 +347,19 @@ const StyledInterview = styled.div`
     font-size: 1rem;
   }
 `;
+
+
+const AudioBox = styled.div`
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 1rem;
+
+
+.btnImgBox {
+  display: flex;
+  gap: 2rem;
+}
+`
+

@@ -41,6 +41,8 @@ const EmployerDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentItem, setCurrentItem] = useState("dashboard");
 
+  const [empScheduledPage, setEmpScheduledPage] = useState(1);
+
   useEffect(() => {
     // if (!accessToken) navigate("/login");
     let initialOpen =
@@ -79,7 +81,7 @@ const EmployerDashboard = () => {
         />
         <MainContent>
           {currentItem === 'dashboard' &&
-            <EmployeMetrics setCurrentItem={setCurrentItem} />
+            <EmployeMetrics setCurrentItem={setCurrentItem} page={empScheduledPage} setPage={setEmpScheduledPage} />
           }
 
           {currentItem === "configure-dashboard" && <ConfigureDash />}
@@ -93,7 +95,7 @@ const EmployerDashboard = () => {
           {currentItem === "activeJds" && <ActiveJds />}
           {currentItem === "create-tests" && <ManageTests />}
           {currentItem === "available-tests" && <AvailableTest />}
-          {currentItem === "interview-dashboard" && <InterviewDashboard />}
+          {currentItem === "interview-dashboard" && <InterviewDashboard page={empScheduledPage} setPage={setEmpScheduledPage} />}
 
           {currentItem === "profile" && <EmployeProfile />}
           {currentItem === "manage-users" && <ManageUsers />}
