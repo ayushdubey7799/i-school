@@ -6,6 +6,12 @@ import { useNavigate } from 'react-router';
 import Loader from "../../commonComponents/Loader";
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { TextField } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 
 const SkillInterview = () => {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
@@ -75,37 +81,49 @@ const SkillInterview = () => {
         <Loader message={loaderMessage} />
       ) : (
         <StyledSkillForm>
-          <div>
-            <label htmlFor="skill">Skills:</label>
-            <br />
-            <input type="text" id="skill" name="skill" onChange={handleInputChange} required />
-          </div>
 
-          <div>
-            <label htmlFor="experience">Experience (in years):</label>
-            <br />
-            <input type="text" id="experience" name="experience" onChange={handleInputChange} required />
-          </div>
+          <TextField id="outlined-basic" label="Skills" variant="outlined" name="skill"
+            type='text'
+            value={interviewDetails.skills}
+            onChange={handleInputChange} />
 
-          <div>
-            <label htmlFor="difficulty">Difficulty Level:</label>
-            <br />
-            <select id="difficulty" name="difficulty" onChange={handleInputChange}>
-              <option value="easy">Easy</option>
-              <option value="moderate">Moderate</option>
-              <option value="difficult">Difficult</option>
-            </select>
-          </div>
+          <TextField id="outlined-basic" label="Experience (in years)" variant="outlined" name="experience"
+            type='text'
+            value={interviewDetails.experience}
+            onChange={handleInputChange} />
 
-          <div>
-            <label htmlFor="interviewType">Type of Interview:</label>
-            <br />
-            <select id="interviewType" name="interviewType" onChange={handleInputChange}>
-              <option value="mcq">MCQ</option>
-              <option value="questionnaire">Questionnaire</option>
-              <option value="descriptive">Descriptive</option>
-            </select>
-          </div>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Difficulty Level</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={interviewDetails.difficulty}
+              label="Difficulty Level"
+              onChange={handleInputChange}
+              name="difficulty"
+            >
+              <MenuItem value="easy">Easy</MenuItem>
+              <MenuItem value="moderate">Moderate</MenuItem>
+              <MenuItem value="difficult">Difficult</MenuItem>
+            </Select>
+          </FormControl>
+
+
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Type of Interview</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={interviewDetails.interviewType}
+              label="Type of Interview"
+              onChange={handleInputChange}
+              name="interviewType"
+            >
+              <MenuItem value="mcq">MCQ</MenuItem>
+              <MenuItem value="coding">Coding</MenuItem>
+              <MenuItem value="general">General Subjective</MenuItem>
+            </Select>
+          </FormControl>
 
           <button onClick={handleCreateInterview}>Start Interview</button>
         </StyledSkillForm>
@@ -134,27 +152,15 @@ div {
 }
 
 label{
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
-input, select{
-  width: 30%;
-  margin-top: 0.5rem;
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.5rem;
-  font-size: 1rem;
-  height: 2.2rem;
-  padding: 0.5rem 0.5rem;
-  option{
-    height: 100rem;
-  }
-}
+
 
 input{
-    width: 98.5%;
-    font-size: 1.3rem;
-    border: 0.08rem solid var(--color);
+    width: 100%;
+    font-size: 1rem;
 }
 
 

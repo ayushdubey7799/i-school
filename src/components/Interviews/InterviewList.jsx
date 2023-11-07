@@ -17,10 +17,11 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Loader from "../commonComponents/Loader";
 import { useNavigate } from "react-router";
 import ScoreChart from "../commonComponents/ScoreChart";
+import searchBlack from '../../assets/icons/searchBlack.png'
 
 
 const Row = (props) => {
-  const { row, isSelected, onToggle } = props;
+  const { row, index } = props;
 
   const navigate = useNavigate();
 
@@ -30,35 +31,20 @@ const Row = (props) => {
   return (
     <React.Fragment>
       <TableRow
-        className={isSelected ? "selected" : ""}
+        className={`${index % 2 == 1 ? 'colored' : ''}`}
         sx={{ "& > *": { borderBottom: "unset" } }}
-        onClick={() => onToggle(row)}
       >
-        <TableCell>
-          {row.status == 'COMPLETED' &&
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent row click event from firing
-                onToggle(row);
-              }}
-            >
-              {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          }
-        </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align='center'>
           1
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align='center'>
           {row.id.slice(0, 8)}
         </TableCell>{" "}
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align='center'>
           {row.createdAt.split('T')[0]}
         </TableCell>{" "}
         {row.status == 'COMPLETED' &&
-          <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', alignItems: 'center' }} align="center">
             <ScoreChart data={[
               ["Score", "Percentage"],
               ["YourScore", score],
@@ -73,52 +59,21 @@ const Row = (props) => {
           </TableCell>
         }
       </TableRow>
-      {row.status === 'COMPLETED' &&
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
-            <Collapse in={row.open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography variant="body1" gutterBottom style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', }}>
-                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Job Summary:- </span> {row.jobSummary}</div>
-                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Resume Text:- </span> {row.resumeText}</div>
-                  {/* <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Job Summary:- </span> {row.jobSummary.length > 250 ? row.jobSummary.slice(0, 250) + "..." : row.jobSummary}</div>
-                  <div style={{ fontSize: "0.8rem" }}><span style={{ fontSize: "0.8rem", fontWeight: '600' }}>Resume Text:- </span> {row.resumeText.length > 250 ? row.resumeText.slice(0, 250) + "..." : row.resumeText}</div> */}
-                </Typography>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      }
     </React.Fragment>
   );
 }
 
 const InterviewList = ({ filteredData }) => {
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [tableRows, setTableRows] = useState(filteredData.data.data);
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
 
-  const handleToggle = (row) => {
-    const updatedRows = [...tableRows];
-    const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
 
-    if (selectedRow === rowIndex) {
-      // Deselect the row if it's already selected
-      setSelectedRow(null);
-      updatedRows[rowIndex].open = false;
-    } else {
-      if (selectedRow !== null) {
-        updatedRows[selectedRow].open = false;
-      }
-      setSelectedRow(rowIndex);
-      updatedRows[rowIndex].open = true;
-    }
-
-    setTableRows(updatedRows);
-  };
-
-
-
-  console.log(filteredData);
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
 
   if (!filteredData?.data?.data?.length) {
     console.log("working");
@@ -128,24 +83,53 @@ const InterviewList = ({ filteredData }) => {
   return (
     <StyledInterviews>
       <TableContainer component={Paper} className="tableBox">
+        <span className='title'>Completed Interviews</span>
+        <SearchBarContainer>
+          <div className='skillBox'>
+            <img src={searchBlack} />
+            <input
+              className='skillInput'
+              type="text"
+              placeholder="Search"
+            />
+          </div>
+
+          <div className='selectBox'>
+            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+              <option value="" disabled selected>Filter by</option>
+              <option value="JobTitle">Job Title</option>
+              <option value="Company">Company</option>
+              <option value="Location">Location</option>
+              <option value="Status">Status</option>
+              <option value="NoticePeriod">Notice Period</option>
+              <option value="CompanyType">Company Type</option>
+              <option value="CandidateAvl">Candidate  Availability</option>
+            </select>
+            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+              <option value="" disabled selected>Sort by</option>
+              <option value="JobTitle">Job Title</option>
+              <option value="Company">Company</option>
+              <option value="Location">Location</option>
+              <option value="Status">Status</option>
+              <option value="NoticePeriod">Notice Period</option>
+              <option value="CompanyType">Company Type</option>
+              <option value="CandidateAvl">Candidate  Availability</option>
+            </select>
+          </div>
+        </SearchBarContainer>
         <Table aria-label="collapsible table">
-          <TableHead>
+          <TableHead className="tableHead">
             <TableRow>
-              <TableCell />
-              <TableCell>Jd_id</TableCell>
-              <TableCell>Test_id</TableCell>
-              <TableCell>Date of Creation</TableCell>
-              <TableCell>Score</TableCell>
+              <TableCell align='center'>Jd_id</TableCell>
+              <TableCell align='center'>Test_id</TableCell>
+              <TableCell align='center'>Date of Interview</TableCell>
+              <TableCell align='center'>Score</TableCell>
               <TableCell align="center">Details</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className="tableBody">
             {filteredData?.data?.data?.map((row, index) => (
-              row.status === 'COMPLETED' ? (
-                <Row key={index} row={row} isSelected={selectedRow === index} onToggle={handleToggle} />
-              ) : (
-                <Row key={index} row={row} isSelected={selectedRow === index} />
-              )
+              <Row key={index} row={row} index={index} />
             ))}
           </TableBody>
         </Table>
@@ -158,10 +142,25 @@ export default InterviewList;
 
 const StyledInterviews = styled.div`
   display: flex;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  width: 95%;
+  margin: 2.5rem auto;
+
+  .colored {
+    background-color: #ececec;
+  }
 
   .tableBox {
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
+    border-radius: 0.5rem;
+    padding-top: 1rem;
+
+
+    .title {
+      padding-left: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }.tableBox {
     box-shadow: 0 0 0.7rem 0 rgba(0, 0, 0, 0.25);
     border-radius: 1rem;
   }
@@ -184,8 +183,83 @@ const StyledInterviews = styled.div`
     cursor: pointer;
   }
 
+  .tableHead {
+    background-color: #d1fff0;
+    width: 100%;
+  }
+
+  .tableBody {
+    width: 100%;
+  }
+
   .selected {
     background-color: #d9fbf9;
     color: white;
   }
 `;
+
+
+
+const SearchBarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 96%;
+  margin: 1rem auto 0.5rem auto;
+  height: 3rem;
+  background-color: var(--white);
+  border-radius: 0.5rem;;
+  padding: 0rem 1rem;
+  gap: 1rem;
+
+
+  .skillBox {
+    position: relative;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    background-color: #ececec;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.5rem;
+
+    img {
+      width: 1.2rem;
+    }
+  }
+
+
+
+  .skillInput {
+  flex-grow: 1;
+  border: none;
+  height: 1rem;
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+  outline: none;
+  }
+
+
+  .selectBox {
+    width: 30%;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .selectInput {
+    padding: 0.7rem 0.5rem;
+    border: none;
+    background-color: #ececec;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    width: 50%;
+    outline: none;
+
+    option {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  }
+
+`

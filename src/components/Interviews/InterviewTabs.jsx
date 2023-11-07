@@ -10,10 +10,12 @@ import '../../App.css';
 import { getInterviewByStatus } from "../../functions/api/getInterviewByStatus";
 import styled from "styled-components";
 import Loader from "../commonComponents/Loader";
+import ScheduledInterviewList from "./ScheduledInterviewList";
 
 export default function InterviewTabs() {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [value, setValue] = useState("COMPLETED");
+  const [staticValue, setStaticValue] = useState('COMPLETED');
   const [filteredData, setFilteredData] = useState({});
 
 
@@ -27,7 +29,7 @@ export default function InterviewTabs() {
 
   useEffect(() => {
     async function getData(value) {
-      const response = await getInterviewByStatus(value, accessToken);
+      const response = await getInterviewByStatus(staticValue, accessToken);
       if (response) {
         setFilteredData(response);
       }
@@ -41,8 +43,12 @@ export default function InterviewTabs() {
     <>
       {filteredData.status !== 'SUCCESS' ? <Loader /> :
         <StyledBox>
-          <h1>My Interviews</h1>
           <Tabs
+            style={{
+              width: '25%',
+              borderRadius: '3rem',
+              backgroundColor: 'var(--lightOrange)'
+            }}
             value={value}
             onChange={handleChange}
             TabIndicatorProps={{
@@ -50,6 +56,7 @@ export default function InterviewTabs() {
                 backgroundColor: "var(--lightOrange)",
               },
             }}
+            variant="fullWidth"
             aria-label="wrapped label tabs example"
           >
             <Tab
@@ -71,7 +78,8 @@ export default function InterviewTabs() {
               classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
             />
           </Tabs>
-          <InterviewList filteredData={filteredData} />
+          {value === 'COMPLETED' && <InterviewList filteredData={filteredData} />}
+          {value === 'NOT_STARTED' && <ScheduledInterviewList />}
         </StyledBox>
       }
     </>
@@ -91,19 +99,20 @@ const StyledBox = styled.div`
 
     // Custom styled for tabs
 
-.custom-tab {
-  color: white;
-  background-color: var(--lightOrange);
-  transition: background-color 0.3s;
-  text-decoration: none !important;
-}
+    .custom-tab {
+      color: white;
+      background-color: var(--lightOrange);
+      transition: background-color 0.3s;
+      text-decoration: none !important;
+    }
 
 .custom-tab-selected {
-  background-color: var(--white);
-  color: var(--lightOrange) !important;
-  border: 0.1rem solid var(--lightOrange);
-  text-decoration: none !important;
-}
+    background-color: white;
+    color: var(--lightOrange) !important;
+    border: 0.1rem solid var(--lightOrange);
+    border-radius: 3rem;
+    text-decoration: none !important;
+  }
 
 .custom-tab-selected .MuiTab-label {
   text-transform: none;

@@ -205,54 +205,57 @@ const OngoingInterview = ({ start, handleStart }) => {
                         handleSubmitAnswer(data.id, data.lastQuestion);
                         handleSubmitInterview();
                       }}
+                      className="btn"
                     >
                       Finish Interview
                     </button>
+
+                    <div className="btnBox2">
+                      <ReactMediaRecorder
+                        audio
+                        onStop={handleStop}
+                        render={({
+                          status,
+                          startRecording,
+                          stopRecording,
+                          mediaBlobUrl,
+                        }) => {
+                          return (
+                            <AudioBox>
+                              <div className="btnImgBox">
+                                <img
+                                  onClick={startRecording}
+                                  className="btnImg"
+                                  src={startRecBtn}
+                                />
+                                <img
+                                  onClick={stopRecording}
+                                  className="btnImg"
+                                  src={stopRecBtn}
+                                />
+                              </div>
+                              <audio
+                                src={mediaBlobUrl}
+                                controls
+                                autoPlay
+                                loop
+                              />
+                              <span>{status}</span>
+                            </AudioBox>
+                          );
+                        }}
+                      />
+                    </div>
 
                     <button
                       onClick={() => {
                         handleSubmitAnswer(data.id, data.lastQuestion);
                         getData(false);
                       }}
+                      className="btn"
                     >
                       Next Question
                     </button>
-                  </div>
-                  <div className="btnBox2">
-                    <ReactMediaRecorder
-                      audio
-                      onStop={handleStop}
-                      render={({
-                        status,
-                        startRecording,
-                        stopRecording,
-                        mediaBlobUrl,
-                      }) => {
-                        return (
-                          <AudioBox>
-                            <div className="btnImgBox">
-                              <img
-                                onClick={startRecording}
-                                className="btnImg"
-                                src={startRecBtn}
-                              />
-                              <img
-                                onClick={stopRecording}
-                                className="btnImg"
-                                src={stopRecBtn}
-                              />
-                            </div>
-                            <audio
-                              src={mediaBlobUrl}
-                              controls
-                              autoPlay
-                              loop
-                            />
-                            <span>{status}</span>
-                          </AudioBox>
-                        );
-                      }}
-                    />
                   </div>
                 </>
               )}
@@ -307,12 +310,14 @@ const StyledInterview = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1.5rem;
   }
 
   .btnBox2 {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
   }
 
   button {
@@ -326,8 +331,18 @@ const StyledInterview = styled.div`
     cursor: pointer;
   }
 
+  .btn {
+    height: 3rem;
+    background-color: var(--lightOrange);
+    color: var(--backgroundColor);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+  }
+
   .btnImg {
-    width: 2.5rem;
+    width: 2rem;
     cursor: pointer;
   }
 

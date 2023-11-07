@@ -14,12 +14,13 @@ import { useNavigate } from 'react-router';
 
 
 function Row(props) {
-  const { row } = props;
+  const { row, index } = props;
 
   return (
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
+        className={`${index % 2 == 1 ? 'colored' : ''}`}
       >
         <TableCell component="th" scope="row" align="center">...</TableCell>
         <TableCell component="th" scope="row" align="center">...</TableCell>
@@ -61,6 +62,7 @@ const InviteSuccess = () => {
                 <Row
                   key={row.resumeId}
                   row={row}
+                  index={index}
                 />
               ))}
             </TableBody>
@@ -94,6 +96,10 @@ padding: 5rem 2% 2rem 2%;
   flex-direction: column;
   align-items: center;
 
+  .colored {
+    background-color: #ececec;
+  }
+
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
@@ -113,7 +119,7 @@ padding: 5rem 2% 2rem 2%;
   }
 
   .tableHead {
-    background-color: lightgrey;
+    background-color: #d1fff0;
     width: 100%;
   }
 
@@ -167,3 +173,5 @@ const Button = styled.button`
   cursor: pointer;
   align-self: center;
 `;
+
+

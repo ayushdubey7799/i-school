@@ -201,8 +201,8 @@ const ProfileInterview = () => {
       ) : (
         <StyledForm>
           <div className="inputCont">
-            <div>
-              <label for="jobDescription">Job Description:</label>
+            <div className="box1">
+              <label for="jobDescription" className="label">Job Description</label>
               <br />
               <textarea
                 rows={7}
@@ -222,8 +222,8 @@ const ProfileInterview = () => {
           </div>
 
           <div className="inputCont">
-            <div>
-              <label for="resumeText">Resume:</label>
+            <div className="box2">
+              <label for="resumeText" className="label">Resume</label>
               <br />
               <textarea
                 rows={7}
@@ -267,9 +267,18 @@ const StyledForm = styled.form`
     width: 100%;
   }
 
-  label {
+  .inputCont {
+    position: relative;
+  }
+
+  .label {
     font-size: 1.2rem;
     font-weight: 600;
+    position: absolute;
+    top: 0.8rem;
+    left: 1rem;
+    background-color: var(--white);
+    padding: 0 0.5rem;
   }
 
   textarea {
@@ -279,6 +288,7 @@ const StyledForm = styled.form`
     border-radius: 0.5rem;
     padding: 0.5rem 0.5rem;
     font-size: 1rem;
+    outline-color: var(--lightOrange);
   }
 
   option {

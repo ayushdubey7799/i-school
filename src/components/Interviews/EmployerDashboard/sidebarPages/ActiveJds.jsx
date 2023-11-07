@@ -169,7 +169,7 @@ const ActiveJds = () => {
               <TableRow>
                 <TableCell align='center'>JD ID</TableCell>
                 <TableCell align='center'>Test ID</TableCell>
-                <TableCell align='center'>Date of Creation</TableCell>
+                <TableCell align='center'>Active Since</TableCell>
                 <TableCell align='center'>Recruiter</TableCell>
                 <TableCell align='center'>Hiring Manager</TableCell>
                 <TableCell align='center'>Comments</TableCell>

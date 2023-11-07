@@ -16,6 +16,9 @@ import { IconButton } from "@mui/material";
 import moment from "moment-timezone";
 import LogoHeader from "../../../commonComponents/LogoHeader";
 import TimeSlotPicker from "./TimeSlotPicker";
+import InviteSteps from "./InviteSteps";
+import InviteReviewList from "./InviteReviewList";
+
 
 const timezonesName = {
   'GMT': 'Greenwich Mean Time',
@@ -60,6 +63,8 @@ export default function Invite() {
   );
   const navigate = useNavigate();
   const [isTime, setIsTime] = useState(false);
+
+  const [step, setStep] = useState(1);
 
   const handleCheckboxChange = () => {
     setIsTime(!isTime);
@@ -131,7 +136,7 @@ export default function Invite() {
         toast.success("Invites sent successfully");
         navigate("/schedule/invite/success");
       } catch (error) {
-        toast.error("error-> ",error?.message);
+        toast.error("error-> ", error?.message);
         console.error("API call failed:", error);
       }
     };
@@ -143,170 +148,195 @@ export default function Invite() {
   //   selectedHour + ":" + selectedMinute + ":" + "00.000" + selectedTimezone
   // );
 
+  const handlePrev = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  }
+
+  const handleNext = () => {
+    if (step < 3) {
+      setStep(step + 1);
+    }
+  }
 
   return (
     <MainContainer>
       <LogoHeader />
       <Container>
+        <InviteSteps step={step} setStep={setStep} />
         <IconButton onClick={() => navigate(`/schedule/matches/${jdId}`)} className="prev">
           <ArrowBackIcon sx={{ fontSize: "30px" }} />
         </IconButton>
         <div className="mainBox">
-          <div className="box1">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <div className="calendarBox">
-                <DateCalendar
-                  value={value}
-                  onChange={(newValue) => setValue(dayjs(newValue))}
-                  views={['day']}
+          {step === 1 &&
+            <div className="step1Box">
+              <div className="step1ChildBox">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <div className="calendarBox">
+                    <DateCalendar
+                      value={value}
+                      onChange={(newValue) => setValue(dayjs(newValue))}
+                      views={['day']}
+                    />
+                  </div>
+                </LocalizationProvider>
+
+                <div className="slotBox">
+                  <span className="span">Select time-slot</span>
+                  <TimeSlotPicker
+                    selectedTimeSlot={selectedTimeSlot}
+                    setSelectedTimeSlot={setSelectedTimeSlot}
+                  />
+                </div>
+              </div>
+              <label className="smallTextBox">
+                <input
+                  type="checkbox"
+                  checked={isTime}
+                  onChange={handleCheckboxChange}
                 />
-              </div>
-            </LocalizationProvider>
-
-            <div className="slotBox">
-              <span className="span">Select time-slot</span>
-              <TimeSlotPicker
-                selectedTimeSlot={selectedTimeSlot}
-                setSelectedTimeSlot={setSelectedTimeSlot}
-              />
+                <span className="smallText">Alow slot selection to candidate (Interview Date will be fixed)</span>
+              </label>
             </div>
-          </div>
+          }
 
-
-          <div className="box2">
-            <div className="inputBox">
-              <span className="title">Product Type</span>
-              <div className="childInputBox">
-                <label>
-                  <input
-                    type="radio"
-                    value="AI"
-                    checked={productType === 'AI'}
-                    onChange={() => handleProductTypeChange('AI')}
-                  />
-                  <span>AI</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Employer"
-                    checked={productType === 'Employer'}
-                    onChange={() => handleProductTypeChange('Employer')}
-                  />
-                  <span>Employer</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="AI + Employer"
-                    checked={productType === 'AI + Employer'}
-                    onChange={() => handleProductTypeChange('AI + Employer')}
-                  />
-                  <span>AI + Employer</span>
-                </label>
+          {step === 2 &&
+            <div className="step2Box">
+              <div className="inputBox">
+                <span className="title">Product Type</span>
+                <div className="childInputBox">
+                  <label>
+                    <input
+                      type="radio"
+                      value="AI"
+                      checked={productType === 'AI'}
+                      onChange={() => handleProductTypeChange('AI')}
+                    />
+                    <span>AI</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Employer"
+                      checked={productType === 'Employer'}
+                      onChange={() => handleProductTypeChange('Employer')}
+                    />
+                    <span>Employer</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="AI + Employer"
+                      checked={productType === 'AI + Employer'}
+                      onChange={() => handleProductTypeChange('AI + Employer')}
+                    />
+                    <span>AI + Employer</span>
+                  </label>
+                </div>
               </div>
-            </div>
 
 
-            <div className="inputBox">
-              <span className="title">Interview Based on</span>
-              <div className="childInputBox">
-                <label>
-                  <input
-                    type="radio"
-                    value="JD"
-                    checked={interviewType === 'JD'}
-                    onChange={() => handleInterviewTypeChange('JD')}
-                  />
-                  <span>JD</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Resume"
-                    checked={interviewType === 'Resume'}
-                    onChange={() => handleInterviewTypeChange('Resume')}
-                  />
-                  <span>Resume</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="JD + Resume"
-                    checked={interviewType === 'JD + Resume'}
-                    onChange={() => handleInterviewTypeChange('JD + Resume')}
-                  />
-                  <span>JD + Resume</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Skill"
-                    checked={interviewType === 'Skill'}
-                    onChange={() => handleInterviewTypeChange('Skill')}
-                  />
-                  <span>Skill</span>
-                </label>
+              <div className="inputBox">
+                <span className="title">Interview Based on</span>
+                <div className="childInputBox">
+                  <label>
+                    <input
+                      type="radio"
+                      value="JD"
+                      checked={interviewType === 'JD'}
+                      onChange={() => handleInterviewTypeChange('JD')}
+                    />
+                    <span>JD</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Resume"
+                      checked={interviewType === 'Resume'}
+                      onChange={() => handleInterviewTypeChange('Resume')}
+                    />
+                    <span>Resume</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="JD + Resume"
+                      checked={interviewType === 'JD + Resume'}
+                      onChange={() => handleInterviewTypeChange('JD + Resume')}
+                    />
+                    <span>JD + Resume</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Skill"
+                      checked={interviewType === 'Skill'}
+                      onChange={() => handleInterviewTypeChange('Skill')}
+                    />
+                    <span>Skill</span>
+                  </label>
+                </div>
               </div>
-            </div>
 
 
-            <div className="inputBox">
-              <span className="title">Test Type</span>
-              <div className="childInputBox">
-                <label>
-                  <input
-                    type="radio"
-                    value="MCQs"
-                    checked={testType === 'MCQs'}
-                    onChange={() => handleTestTypeChange('MCQs')}
-                  />
-                  <span>MCQs</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Subjective"
-                    checked={testType === 'Subjective'}
-                    onChange={() => handleTestTypeChange('Subjective')}
-                  />
-                  <span>Subjective</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Coding"
-                    checked={testType === 'Coding'}
-                    onChange={() => handleTestTypeChange('Coding')}
-                  />
-                  <span>Coding</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="General"
-                    checked={testType === 'General'}
-                    onChange={() => handleTestTypeChange('General')}
-                  />
-                  <span>General (Includes all types of Que)</span>
-                </label>
+              <div className="inputBox">
+                <span className="title">Test Type</span>
+                <div className="childInputBox">
+                  <label>
+                    <input
+                      type="radio"
+                      value="MCQs"
+                      checked={testType === 'MCQs'}
+                      onChange={() => handleTestTypeChange('MCQs')}
+                    />
+                    <span>MCQs</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Subjective"
+                      checked={testType === 'Subjective'}
+                      onChange={() => handleTestTypeChange('Subjective')}
+                    />
+                    <span>Subjective</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Coding"
+                      checked={testType === 'Coding'}
+                      onChange={() => handleTestTypeChange('Coding')}
+                    />
+                    <span>Coding</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="General"
+                      checked={testType === 'General'}
+                      onChange={() => handleTestTypeChange('General')}
+                    />
+                    <span>General (Includes all types of Que)</span>
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
+          }
+
+          {
+            step === 3 &&
+            <div className="step3Box">
+              <InviteReviewList />
+            </div>
+          }
         </div>
-        <div className="box3">
-          <label className="smallTextBox">
-            <input
-              type="checkbox"
-              checked={isTime}
-              onChange={handleCheckboxChange}
-            />
-            <span className="smallText">Alow slot selection to candidate (Interview Date will be fixed)</span>
-          </label>
-          <button className="btn" onClick={handleInvite}>
-            Send Invite
-          </button>
-        </div>
+
+        <ButtonBox>
+          {step <= 3 && <Button onClick={() => handlePrev()}>Prev</Button>}
+          {step <= 2 && <Button onClick={() => handleNext()}>Next</Button>}
+          {step === 3 && <Button onClick={handleInvite}>Send Invite</Button>}
+        </ButtonBox>
       </Container>
     </MainContainer>
   );
@@ -325,13 +355,14 @@ const Container = styled.div`
   flex-direction: column;
   padding: 6rem 3rem 2rem 3rem;
   align-items: center;
-  height: calc(100vh - 8rem);
+  width: calc(100% - 6rem);
+  // height: calc(100vh - 8rem);
   justify-content: center;
 
   .prev {
     background-color: var(--lightOrange);
     padding: 0.1rem;
-    position: absolute;
+    position: fixed;
     top: 5rem;
     left: 1.5rem;
     color: var(--white);
@@ -369,47 +400,63 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     align-items: start;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 
 
-    .box1 {
+    .step1Box {
       display: flex;
-      width: 50%;
-      flex-direction: row;
+      width: 100%;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 2rem;
+      margin-top: 3rem;
+
+      .step1ChildBox {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: space-between;
+      }
 
       .calendarBox {
         border: 0.08rem solid lightgrey;
         border-radius: 0.5rem;
-
+        width: 50%;
       }
 
       .slotBox {
         display: flex;
+        width: 50%;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-top: -1.5rem;
+        border: 0.08rem solid lightgrey;
+        border-radius: 0.5rem;
 
         .span {
           font-size: 0.9rem;
           margin-bottom: 1rem;
+          font-weight: 600;
         }
       }
     }
 
-    .box2 {
+    .step2Box {
       width: 50%;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       align-items: start;
       gap: 2rem;
       padding: 0rem 1rem;
+      margin-top: 4rem;
+      margin-bottom: 1rem;
 
       .inputBox {
         width: 90%;
@@ -441,24 +488,13 @@ const Container = styled.div`
     }
 
 
-    
+    .step3Box {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
     
   }
-
-
-  .box3 {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
-  }
-
-
-
-
   
 label {
 	display: flex;
@@ -504,3 +540,24 @@ label {
 `;
 
 
+
+const ButtonBox = styled.div`
+display: flex;
+margin: 2rem 0;
+gap: 2rem;
+
+
+`
+
+
+const Button = styled.button`
+background-color: var(--lightOrange);
+color: var(--white);
+border: none;
+padding: 0.4rem 0.9rem;
+font-size: 1rem;
+font-weight: 600;
+border-radius: 0.5rem;
+cursor: pointer;
+
+`
