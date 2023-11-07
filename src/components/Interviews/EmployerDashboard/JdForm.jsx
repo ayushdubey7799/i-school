@@ -10,6 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { toast } from 'react-toastify';
 
 const Container = styled.div`
   width: 100%;
@@ -156,11 +157,13 @@ function JdForm({ array, handleClose }) {
     e.preventDefault();
     if (mode == "create") {
       const resObj = await addJd(formData, accessToken, clientCode);
+      if(resObj)toast.success("JD successfully created");
       handleClose();
       console.log(resObj);
     }
     else {
       const editRes = await editJd(formData, accessToken, clientCode);
+      if(editRes)toast.success("JD successfully Edited");
       handleClose();
       console.log(editRes);
     }
@@ -178,7 +181,7 @@ function JdForm({ array, handleClose }) {
           type='text'
           value={autoReq?"":formData.reqNumber}
           onChange={handleChange}
-          disabled={autoReq || mode == "edit"}
+          disabled={autoReq}
           sx={{ backgroundColor: '#F6F6FB' }} />
 
 
@@ -191,7 +194,7 @@ function JdForm({ array, handleClose }) {
           name="reqNumber"
           value={formData.reqNumber}
           onChange={handleChange}
-          disabled={autoReq || mode == "edit"}
+          disabled={autoReq}
           sx={{ backgroundColor: '#F6F6FB' }} />
 
         <TextField id="outlined-basic" label="Title" variant="outlined"

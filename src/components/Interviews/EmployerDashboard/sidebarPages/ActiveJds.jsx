@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useSelector } from 'react-redux';
 
 import { jds } from '../../../../utils/contantData';
 import editIcon from '../../../../assets/icons/edit.png'
@@ -17,6 +18,7 @@ import threeDot from '../../../../assets/icons/threeDot.png'
 import shareIcon from '../../../../assets/icons/share.png'
 import shareWithEmp from '../../../../assets/icons/shareWithEmp.png'
 import eyeIcon from '../../../../assets/icons/visible.png'
+import { getJdsForMatching } from '../../../../functions/api/employers/match/getJdsForMatching';
 
 
 function Row(props) {
@@ -66,13 +68,13 @@ function Row(props) {
           ...
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
-          ...
+        {row.createdAt}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          ...
+        {row.hiringManager}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...
@@ -108,10 +110,15 @@ const ActiveJds = () => {
   const [tableRows, setTableRows] = useState([]);
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
-
+  const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
+  const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   useEffect(() => {
-    setTableRows(jds);
-  }, [jds]);
+    async function getData() {
+      const res = await getJdsForMatching(accessToken, clientCode);
+      setTableRows(res?.data?.data);
+    }
+    getData();
+  }, []);
 
   const handleSearchParams = (e) => {
     setSearchParams(e.target.value);
@@ -125,7 +132,7 @@ const ActiveJds = () => {
 
   }
 
-
+  
   return (
     <Container1>
 
@@ -177,7 +184,7 @@ const ActiveJds = () => {
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {jds?.map((row, index) => (
+              {tableRows?.map((row, index) => (
                 <Row key={row.id} row={row} index={index} />
               ))}
             </TableBody>

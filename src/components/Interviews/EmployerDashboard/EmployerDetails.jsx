@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -75,6 +76,7 @@ const Button = styled.button`
 `;
 
 function EmployerDetails({ handleClose }) {
+  const user = useSelector(state => state.auth.userData.user);
   const [formData, setFormData] = useState({
     company: "",
     coordinatorName: "",
@@ -86,7 +88,6 @@ function EmployerDetails({ handleClose }) {
     contact: "",
     legalContact: "",
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -94,7 +95,7 @@ function EmployerDetails({ handleClose }) {
       [name]: value,
     });
   };
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here, e.g., send data to the server
@@ -104,6 +105,31 @@ function EmployerDetails({ handleClose }) {
 
   return (
     <Container>
+      <div>
+      <h2>User Information</h2>
+      <ul>
+        <li>First Name: {user.firstName}</li>
+        <li>Last Name: {user.lastName}</li>
+        <li>Username: {user.username}</li>
+        <li>Email: {user.email}</li>
+        <li>Phone Number: {user.primaryContact}</li>
+        <li>Address: {user.address}</li>
+        <li>City: {user.city}</li>
+        <li>State: {user.state}</li>
+        <li>Client Code: {user.clientCode}</li>
+        <li>Created At: {user.createdAt}</li>
+        <li>Updated At: {user.updatedAt}</li>
+        <li>Created By: {user.createdBy}</li>
+        <li>Last Modified By: {user.lastModifiedBy}</li>
+        <li>ID: {user.id}</li>
+        <li>Activation Required: {user.activationRequired ? 'Yes' : 'No'}</li>
+        <li>Active: {user.active ? 'Yes' : 'No'}</li>
+        <li>Enforce Password Change: {user.enforcePwdChange ? 'Yes' : 'No'}</li>
+        <li>Profile ID: {user.profileId}</li>
+        <li>User State: {user.userState}</li>
+        <li>User Type: {user.userType}</li>
+      </ul>
+    </div>
       <Form onSubmit={handleSubmit}>
         <Label>Company</Label>
         <Input

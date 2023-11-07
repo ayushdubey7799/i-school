@@ -103,7 +103,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
           <div className='top'>
             <img src={metric3} />
-            <span className='achievedNumberDigit'>17</span>
+            <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Interviews</span>
@@ -111,7 +111,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'activeJDs' ? 'selected' : ''}`} onClick={() => setCurrMetric('activeJDs')} >
           <div className='top'>
             <img src={metric1} />
-            <span className='achievedNumberDigit'>15</span>
+            <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Active JDs</span>
@@ -119,7 +119,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'applications' ? 'selected' : ''}`} onClick={() => setCurrMetric('applications')}>
           <div className='top'>
             <img src={metric2} />
-            <span className='achievedNumberDigit'>30</span>
+            <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Applications</span>
@@ -127,7 +127,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'candidatesPool' ? 'selected' : ''}`} onClick={() => setCurrMetric('candidatesPool')}>
           <div className='top'>
             <img src={metric4} />
-            <span className='achievedNumberDigit'>12</span>
+            <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Candidates Pool</span>

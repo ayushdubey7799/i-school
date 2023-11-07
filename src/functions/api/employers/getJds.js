@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const getJds = async (
   accessToken,
-  clientCode
+  clientCode,
+  active=false
 ) => {
   const config = {
     headers: {

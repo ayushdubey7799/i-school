@@ -25,20 +25,32 @@ import deleteIcon from '../../../../assets/icons/delete.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { getJds } from '../../../../functions/api/employers/getJds';
 import { useSelector } from 'react-redux';
+import { deleteJd } from '../../../../functions/api/employers/deleteJd';
+import { toast } from 'react-toastify';
 
 
 function Row(props) {
   const { row, isSelected, onToggle, index } = props;
   const [jdData, setJdData] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
-
+  const accessToken = useSelector(state => state.auth.userData.accessToken);
+  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
   const handleEdit = (row) => {
     setEditOpen(true);
     setJdData(row);
   }
 
-  const handleDelete = (jdId) => {
-
+  const handleDelete =  async (id) => {
+    if (window.confirm("Are you sure you want to delete this jd!")) {
+      const res = await deleteJd(id,accessToken,clientCode);
+      if(res){
+        toast.success("Successfully Deleted");
+      }  
+      else{
+        toast.error("Error Occured")
+      }  
+    }
+   
   }
 
   return (
@@ -70,7 +82,7 @@ function Row(props) {
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
             <img src={editIcon} onClick= {() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} onClick= {() => handleDelete(row.id)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
       </TableRow>
