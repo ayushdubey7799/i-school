@@ -62,14 +62,14 @@ function Row(props) {
           {row.jdId}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          ...
+          {row.createdAt}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          ...
+        {row.createdBy}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-            <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={editIcon} onClick= {() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
             <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
@@ -88,7 +88,7 @@ function Row(props) {
                 <div style={{ fontSize: "0.7rem" }}><b>Skills</b>: {row.skills}</div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>
-                  <b>Experience</b>: {row.experience}
+                  <b>Experience</b>: {row.exp}
                 </div>
                 <br />
                 <div style={{ fontSize: "0.7rem" }}>

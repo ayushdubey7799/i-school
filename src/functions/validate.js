@@ -13,10 +13,10 @@ const validate = (email, password) => {
         return false;
     }
 
-    if (password.length < 4) {
-        toast.error("Password should be of atleast 8 characters");
-        return false;
-    }
+    // if (password.length < 4) {
+    //     toast.error("Password should be of atleast 8 characters");
+    //     return false;
+    // }
 
     return true;
 }

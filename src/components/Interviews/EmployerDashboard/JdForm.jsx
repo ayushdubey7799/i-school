@@ -82,7 +82,7 @@ function JdForm({ array, handleClose }) {
   const [formData, setFormData] = useState({
     jdId: '',
     reqNumber: '',
-    numberOfReqs: '',
+    numOfReqs: 0,
     title: '',
     description: '',
     skills: '',
@@ -90,7 +90,7 @@ function JdForm({ array, handleClose }) {
     exp: '',
     location: '',
     certification: '',
-    workerType: '',
+    workType: '',
     ctc: '',
     keywords: '',
     noticePeriod: '',
@@ -98,12 +98,38 @@ function JdForm({ array, handleClose }) {
     candidateAvl: '',
     jdUpload: null,
     visibility: '',
+    autoReqNumbers: true
   });
 
-  console.log(formData.workerType);
+
+
+  // {
+    // {
+    //   "autoReqNumbers": true,
+    //   "bu": "engineering",
+    //   "certification": "cert-uit",
+    //   "ctc": "10LPA",
+    //   "department": "Software",
+    //   "description": "Seeking a Software Engineer 2 with strong coding skills and 2+ years of experience to develop and maintain software applications, collaborate with cross-functional teams, and contribute to the design and implementation of scalable solutions",
+    //   "exp": "3",
+    //   "hiringManager": "testing",
+    //   "jdId": "xyz-uit5.1",
+    //   "jobSummary": "Seeking a Software Engineer 2 with strong coding skills and 2+ years of experience to develop and maintain software applications, collaborate with cross-functional teams, and contribute to the design and implementation of scalable solutions",
+    //   "keywords": "Software Development Coding Programming Java Python C++",
+    //   "location": "Delhi",
+    //   "numOfReqs": 0,
+    //   "skills": "Programming Agile Problem-solving Algorithms Communication",
+    //   "title": "SDE 2",
+    //   "visibility": "PUBLIC",
+    //   "workType": "Contract"
+    // }
+  // }
+ 
+
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
   useEffect(() => {
+    console.log(array[0])
     if (array[0]) {
       setFormData(array[0]);
     }
@@ -111,7 +137,6 @@ function JdForm({ array, handleClose }) {
     console.log("props", array[1]);
   }, [])
 
-  console.log(formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -142,6 +167,7 @@ function JdForm({ array, handleClose }) {
     }
   };
 
+
   return (
     <Container>
       <h3>JD Registration</h3>
@@ -151,7 +177,7 @@ function JdForm({ array, handleClose }) {
 
         <TextField id="outlined-basic" label="Req Number (From Employer System)" variant="outlined" name="reqNumber"
           type='text'
-          value={formData.reqNumber}
+          value={autoReq?"":formData.reqNumber}
           onChange={handleChange}
           disabled={autoReq || mode == "edit"}
           sx={{ backgroundColor: '#F6F6FB' }} />
@@ -164,8 +190,9 @@ function JdForm({ array, handleClose }) {
         <TextField id="outlined-basic" label="Number of Reqs" variant="outlined"
           type="text"
           name="reqNumber"
-          value={formData.numberOfReqs}
+          value={formData.reqNumber}
           onChange={handleChange}
+          disabled={autoReq || mode == "edit"}
           sx={{ backgroundColor: '#F6F6FB' }} />
 
         <TextField id="outlined-basic" label="Title" variant="outlined"
@@ -224,10 +251,10 @@ function JdForm({ array, handleClose }) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={formData.workerType}
+            value={formData.workType}
             label="Worker Type"
             onChange={handleChange}
-            name="workerType"
+            name="workType"
           >
             <MenuItem value='Full-time'>Full-time</MenuItem>
             <MenuItem value='Part-time'>Part-time</MenuItem>
@@ -327,8 +354,8 @@ function JdForm({ array, handleClose }) {
             value={formData.visibility}
             onChange={handleChange}
           >
-            <MenuItem value="Public">Public</MenuItem>
-            <MenuItem value="Private">Private</MenuItem>
+            <MenuItem value="PUBLIC">Public</MenuItem>
+            <MenuItem value="PRIVATE">Private</MenuItem>
           </Select>
         </FormControl>
 

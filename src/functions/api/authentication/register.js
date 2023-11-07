@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const register = async (email,firstName,password,clientcode="BRAJ01") => {
+export const register = async (email,firstName,password,clientcode="intelliview") => {
   const requestData = {
     email,
     firstName,
@@ -10,7 +10,7 @@ export const register = async (email,firstName,password,clientcode="BRAJ01") => 
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      'x-client-code': clientcode
+      'x-client-code': 'intelliview'
     }
   };
 

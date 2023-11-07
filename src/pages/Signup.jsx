@@ -78,7 +78,7 @@ const Signup = () => {
       const registerRes = await register(email, name, password);
       if (registerRes) {
         toast.success("Successfully signed up");
-        navigate("/dashboard/jobseeker");
+        navigate("/login");
       }
       else {
         toast.error("Email already exists");
@@ -105,10 +105,12 @@ const Signup = () => {
       "spocPassword": password,
     }
 
+
+    
     const registerRes = await employerRegister(details);
     if (registerRes) {
       toast.success("Onboard request sent");
-      // navigate("/dashboard/employer");
+      navigate("/login");
     }
     else {
       toast.error("Error");
