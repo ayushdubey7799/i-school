@@ -19,15 +19,12 @@ export default function NewInterviewDetails() {
     };
 
 
-
-
-
     return (
         <StyledCreateInterview>
             <Header />
-            <Box sx={{ width: "70%", position: "relative", top: "7rem", margin: "0 2rem", marginBottom: '7rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className='box'>
+            <Box sx={{ width: "65%", position: "relative", top: "7rem", margin: "0 2rem", marginBottom: '7rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className='box'>
                 <Tabs
-                    style={{ width: '70%' }}
+                    style={{ width: '100%', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
                     value={value}
                     onChange={handleChange}
                     TabIndicatorProps={{
@@ -43,7 +40,7 @@ export default function NewInterviewDetails() {
                         label="Profile Interview"
                         sx={{
                             color: "var(--lightOrange)",
-                            fontSize: "1.1rem;"
+                            fontSize: "1rem;"
                         }}
                         classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
                     />
@@ -52,7 +49,7 @@ export default function NewInterviewDetails() {
                         label="Skill Interview"
                         sx={{
                             color: "var(--lightOrange)",
-                            fontSize: "1.1rem;"
+                            fontSize: "1rem;"
                         }}
                         classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
                     />
@@ -102,6 +99,7 @@ const StyledCreateInterview = styled.div`
   background-color: var(--white);
   color: var(--lightOrange) !important;
   border: 0.1rem solid var(--lightOrange);
+  border-radius: 3rem;
   text-decoration: none !important;
 }
 

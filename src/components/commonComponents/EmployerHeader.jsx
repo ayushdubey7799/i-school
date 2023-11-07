@@ -48,10 +48,10 @@ const EmployerHeader = ({ setCurrentItem }) => {
         </div>
 
         <div class="dropdown" id="dropdown">
-          <span onClick={() => navigate('/feedback')}>Feedback</span>
-          <span onClick={() => navigate('/support')}>Help</span>
-          <span onClick={() => navigate('/reset')}>Reset Password</span>
-          <span onClick={handleLogout}>Logout</span>
+          <span onClick={() => navigate('/feedback')} className="span">Feedback</span>
+          <span onClick={() => navigate('/support')} className="span">Help</span>
+          <span onClick={() => navigate('/reset')} className="span">Reset Password</span>
+          <span onClick={handleLogout} className="span">Logout</span>
         </div>
       </div>
     </StyledDiv>
@@ -161,15 +161,16 @@ const StyledDiv = styled.div`
     border-radius: 0.5rem;
 }
 
-.dropdown span {
+.dropdown .span {
     display: block;
     padding: 8px 10px;
     text-decoration: none;
     color: #333;
     transition: background-color 0.3s ease;
+    border-bottom: 0.1rem groove lightgrey;
 }
 
-.dropdown span:hover {
+.dropdown .span:hover {
     background-color: #f5f5f5;
     border-radius: 5px;
     cursor: pointer;

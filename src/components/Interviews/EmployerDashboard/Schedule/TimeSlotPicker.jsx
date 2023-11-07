@@ -501,8 +501,9 @@ export default TimeSlotPicker;
 
 const TimeSelector = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
   align-items: center;
+  justify-content: space-around;
   overflow-y: scroll;
   max-height: 50vh;
   gap: 0.4rem;
@@ -534,6 +535,7 @@ label {
 	position: relative;
 	margin-bottom: 0rem;
     padding: 0 1rem;
+    width: 15%;
 
 	input {
 		position: absolute;
