@@ -5,18 +5,47 @@ import { seekerMetricOptions } from '../../../../utils/contantData';
 
 const ConfigureDash = () => {
 
-    const [selected, setSelected] = useState(1);
+    const [selected, setSelected] = useState(seekerMetricOptions[0].text);
+    const [selectedInput, setSelectedInput] = useState();
+    const [selectedMetric1, setSelectedMetric1] = useState();
+    const [selectedMetric2, setSelectedMetric2] = useState();
+    const [selectedMetric3, setSelectedMetric3] = useState();
+    const [selectedMetric4, setSelectedMetric4] = useState();
+
+    // const availableMetrics = seekerMetricOptions.filter((metric) => selectedMetric1.text != metric.text || selectedMetric2.text != metric.text || selectedMetric3.text != metric.text || selectedMetric4.text != metric.text);
+
 
     const handleOptionClick = (option) => {
         setSelected(option);
     }
+
+    const handleInputChange = (inp) => {
+        setSelectedInput(inp.text);
+
+        if (selected === seekerMetricOptions[0].text) {
+            setSelectedMetric1(inp);
+        } else if (selected === seekerMetricOptions[1].text) {
+            setSelectedMetric2(inp);
+        } else if (selected === seekerMetricOptions[2].text) {
+            setSelectedMetric3(inp);
+        } else if (selected === seekerMetricOptions[3].text) {
+            setSelectedMetric4(inp);
+        }
+    }
+
+
+    const handleSave = () => {
+
+    }
+
+
 
     return (
         <MainBox>
             <div className='optionBox'>
                 {
                     seekerMetricOptions.map((option, i) => (
-                        <div className={`option ${selected == i + 1 ? 'selected' : ''}`} onClick={() => handleOptionClick(i + 1)}>Metric {i + 1}</div>
+                        <div className={`option ${selected == option.text ? 'selected' : ''}`} onClick={() => handleOptionClick(option.text)}>Metric {i + 1}</div>
                     ))
                 }
             </div>
@@ -27,13 +56,15 @@ const ConfigureDash = () => {
                         <label>
                             <input
                                 type="radio"
+                                checked={selectedInput == option.text}
+                                onClick={() => handleInputChange(option)}
                             />
                             <span>{option.title}</span>
                         </label>
                     ))
                 }
             </div>
-            <Button>Save Changes</Button>
+            <Button onClick={handleSave}>Save Changes</Button>
         </MainBox>
     )
 }
