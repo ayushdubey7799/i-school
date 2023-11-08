@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import metric1 from '../../../assets/icons/metric1.png'
 import metric2 from '../../../assets/icons/metric2.png'
@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router';
 import RecommendedJobs from './sidebarPages/RecommendedJobs';
 import JobApplication from './sidebarPages/JobApplication';
 import InterviewTabs from '../InterviewTabs';
-
+import { getStatusWiseCount } from '../../../functions/api/interview/getStatusWiseCount';
+import { useSelector } from 'react-redux';
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -91,6 +92,18 @@ gap: 2%;
 
 const Metrics = () => {
   const [currMetric, setCurrMetric] = useState('interviewScheduled');
+  const [metrics,setMetrics] = useState([]);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+
+  useEffect(() => {
+    const getCount = async () => {
+      const res = await getStatusWiseCount(accessToken);
+      setMetrics(res.data);
+      console.log(res.data);
+    }
+    getCount();
+  },[currMetric])
+
 
   return (
     <MainContainer>
@@ -98,7 +111,7 @@ const Metrics = () => {
         <div className={`achievedNumberBox ${currMetric === 'interviewScheduled' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewScheduled')}>
           <div className='top'>
             <img src={metric1} />
-            <span className='achievedNumberDigit'>0</span>
+            <span className='achievedNumberDigit'>{metrics.length?metrics[2].count:0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Interview Scheduled</span>
@@ -106,7 +119,7 @@ const Metrics = () => {
         <div className={`achievedNumberBox ${currMetric === 'interviewCompleted' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewCompleted')}>
           <div className='top'>
             <img src={metric2} />
-            <span className='achievedNumberDigit'>0</span>
+            <span className='achievedNumberDigit'>{metrics.length?metrics[0].count:0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Interviews Completed</span>

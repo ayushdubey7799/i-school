@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { auth } from "../functions/api/authentication/auth";
 import validate from "../functions/validate";
@@ -31,6 +31,14 @@ const Login = () => {
   const [value, setValue] = useState("job-seeker");
 
   const captchaRef = useRef(null);
+
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token');
+  const key = searchParams.get('key');
+  if(token){
+    localStorage.setItem('token',token);
+    localStorage.setItem('key',key);
+  }
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);

@@ -8,7 +8,9 @@ import RegisteredCandidates from './sidebarPages/RegisteredCandidates';
 import ActiveJds from './sidebarPages/ActiveJds';
 import EmpScheduledInterviews from './sidebarPages/EmpScheduledInterviews';
 import EmpScheduledCandidateList from './sidebarPages/EmpScheduledCandidateList';
-
+import { useSelector } from 'react-redux';
+import { getStatusWiseCount } from '../../../functions/api/interview/getStatusWiseCount';
+import { getJdsForMatching } from '../../../functions/api/employers/match/getJdsForMatching';
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -92,6 +94,25 @@ gap: 2%;
 
 const EmployeMetrics = ({ page, setPage }) => {
   const [currMetric, setCurrMetric] = useState('interviews');
+  const [metrics,setMetrics] = useState([]);
+  const [count,setCount] = useState(0);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const clientCode = useSelector(state => state.auth.userData?.clientCode)
+  useEffect(() => {
+    const getCount = async () => {
+      const res = await getStatusWiseCount(accessToken);
+      setMetrics(res.data);
+      console.log(res.data);
+    }
+    getCount();
+
+    async function getData() {
+      const res = await getJdsForMatching(accessToken, clientCode);
+      if(res?.data?.data?.length)setCount(res?.data?.data.length);
+      console.log(res);
+    }
+    getData();
+  },[currMetric])
 
   useEffect(() => {
     setPage(1);
@@ -103,7 +124,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
           <div className='top'>
             <img src={metric1} />
-            <span className='achievedNumberDigit'>0</span>
+            <span className='achievedNumberDigit'>{metrics.length?metrics[2].count:0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Interviews</span>
@@ -111,7 +132,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'activeJDs' ? 'selected' : ''}`} onClick={() => setCurrMetric('activeJDs')} >
           <div className='top'>
             <img src={metric2} />
-            <span className='achievedNumberDigit'>0</span>
+            <span className='achievedNumberDigit'>{count}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Active JDs</span>

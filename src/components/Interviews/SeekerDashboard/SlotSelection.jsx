@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import styled from 'styled-components';
-import { schedule } from '../../../functions/api/employers/match/schedule';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import styled from "styled-components";
+import { schedule } from "../../../functions/api/employers/match/schedule";
+import { scheduleByCandidate } from "../../../functions/api/employers/schedule/scheduleByCandidate";
+import { getInviteDetails } from "../../../functions/api/employers/schedule/getInviteDetails";
 
 const PageContainer = styled.div`
   display: flex;
@@ -32,29 +34,34 @@ const ScheduleButton = styled.button`
 `;
 
 const SlotSelection = () => {
-  const [selectedHour, setSelectedHour] = useState('00');
-  const [selectedMinute, setSelectedMinute] = useState('00');
-  const [selectedAmPm, setSelectedAmPm] = useState('AM');
-  const accessToken = useSelector(state => state.auth.userData?.accessToken);
-  const navigate  = useNavigate();
-  const {token} = useParams();
-  
+  const [selectedHour, setSelectedHour] = useState("00");
+  const [selectedMinute, setSelectedMinute] = useState("00");
+  const [selectedAmPm, setSelectedAmPm] = useState("AM");
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const navigate = useNavigate();
+  const { token } = useParams();
+
+ 
   const handleScheduleInterview = () => {
+    const scheduleTest = async () => {
+      console.log(token);
+      const res = await scheduleByCandidate(
+        {
+          slot: "2023-10-25T05:26:51",
+          token: token,
+        },
+        accessToken
+      );
 
-     const scheduleTest = async () => {
-        console.log(token);
-        const res = await schedule({
-            "slot": "2023-10-25T05:26:51",
-            "token": token
-          },accessToken)
-
-
-            localStorage.removeItem("inviteToken");
-             toast.success(`Scheduled interview for ${selectedHour}:${selectedMinute} ${selectedAmPm}`);
-             navigate('/dashboard/jobseeker')
-     }
+      if (res) {
+        localStorage.removeItem("token");
+        toast.success(
+          `Scheduled interview for ${selectedHour}:${selectedMinute} ${selectedAmPm}`
+        );
+        navigate("/dashboard/jobseeker");
+      }
+    };
     scheduleTest();
-   
   };
 
   return (
@@ -77,7 +84,6 @@ const SlotSelection = () => {
           <option value="10">10</option>
           <option value="11">11</option>
           <option value="12">12</option>
-
 
           {/* Add more hour options here */}
         </TimeInput>
