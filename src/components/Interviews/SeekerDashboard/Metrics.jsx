@@ -8,8 +8,17 @@ import { useNavigate } from 'react-router';
 import RecommendedJobs from './sidebarPages/RecommendedJobs';
 import JobApplication from './sidebarPages/JobApplication';
 import InterviewTabs from '../InterviewTabs';
+<<<<<<< HEAD
 import { getStatusWiseCount } from '../../../functions/api/interview/getStatusWiseCount';
 import { useSelector } from 'react-redux';
+=======
+
+import { seekerMetric1 } from '../../../utils/contantData';
+import { seekerMetric2 } from '../../../utils/contantData';
+import { seekerMetric3 } from '../../../utils/contantData';
+import { seekerMetric4 } from '../../../utils/contantData';
+
+>>>>>>> 07d9340aacf652c3ca92ceff05152eebcffb46ab
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -108,37 +117,37 @@ const Metrics = () => {
   return (
     <MainContainer>
       <Container>
-        <div className={`achievedNumberBox ${currMetric === 'interviewScheduled' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewScheduled')}>
+        <div className={`achievedNumberBox ${currMetric === seekerMetric1.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric1.text)}>
           <div className='top'>
             <img src={metric1} />
             <span className='achievedNumberDigit'>{metrics.length?metrics[2].count:0}</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Interview Scheduled</span>
+          <span className='achievedNumberText'>{seekerMetric1.title}</span>
         </div>
-        <div className={`achievedNumberBox ${currMetric === 'interviewCompleted' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewCompleted')}>
+        <div className={`achievedNumberBox ${currMetric === seekerMetric2.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric2.text)}>
           <div className='top'>
             <img src={metric2} />
             <span className='achievedNumberDigit'>{metrics.length?metrics[0].count:0}</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Interviews Completed</span>
+          <span className='achievedNumberText'>{seekerMetric2.title}</span>
         </div>
-        <div className={`achievedNumberBox ${currMetric === 'recommendedJobs' ? 'selected' : ''}`} onClick={() => setCurrMetric('recommendedJobs')}>
+        <div className={`achievedNumberBox ${currMetric === seekerMetric3.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric3.text)}>
           <div className='top'>
-            <img src={metric3} />
+            <img src={seekerMetric3.img} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Recommended Jobs</span>
+          <span className='achievedNumberText'>{seekerMetric3.title}</span>
         </div>
-        <div className={`achievedNumberBox ${currMetric === 'appliedJobs' ? 'selected' : ''}`} onClick={() => setCurrMetric('appliedJobs')}>
+        <div className={`achievedNumberBox ${currMetric === seekerMetric4.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric4.text)}>
           <div className='top'>
-            <img src={metric4} />
+            <img src={seekerMetric4.img} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Applied Jobs</span>
+          <span className='achievedNumberText'>{seekerMetric4.title}</span>
         </div>
       </Container>
 

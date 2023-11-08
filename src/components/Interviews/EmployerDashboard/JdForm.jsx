@@ -195,7 +195,7 @@ function JdForm({ array, handleClose }) {
       <h3>JD Registration</h3>
       <Form onSubmit={handleSubmit}>
 
-        <TextField id="outlined-basic" label="JD ID (ABC_XX__)" variant="outlined" type='text' name="jdId" value={formData.jdId} onChange={handleChange} disabled={mode == "edit"} sx={{ backgroundColor: '#F6F6FB' }} />
+        <TextField id="outlined-basic" label="JD ID (ABC_XX__)" variant="outlined" type='text' name="jdId" value={formData.jdId} onChange={handleChange} disabled={mode == "edit"} sx={{ backgroundColor: '#F6F6FB' }} required />
 
         <TextField id="outlined-basic" label="Req Number (From Employer System)" variant="outlined" name="reqNumber"
           type='text'
@@ -214,7 +214,8 @@ function JdForm({ array, handleClose }) {
           name="reqNumber"
           value={formData.reqNumber}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          required />
 
         <TextField id="outlined-basic" label="Title" variant="outlined"
           type="text"
@@ -227,7 +228,8 @@ function JdForm({ array, handleClose }) {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+        />
 
 
 
@@ -236,7 +238,8 @@ function JdForm({ array, handleClose }) {
           name="skills"
           value={formData.skills}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          required />
 
 
         <TextField id="outlined-basic" label="BU" variant="outlined"
@@ -251,7 +254,8 @@ function JdForm({ array, handleClose }) {
           name="exp"
           value={formData.exp}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          required />
 
         <TextField id="outlined-basic" label="Location" variant="outlined"
           type="text"
@@ -378,7 +382,7 @@ function JdForm({ array, handleClose }) {
           </Select>
         </FormControl>
 
-        <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+        <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth required>
           <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
           <Select
             labelId="demo-simple-select-label"

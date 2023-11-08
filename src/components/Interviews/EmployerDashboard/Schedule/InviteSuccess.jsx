@@ -152,7 +152,7 @@ padding: 5rem 2% 2rem 2%;
 
 
 .mainTitle {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     margin: 1rem 0 1.5rem 0;
     width: 98%;
@@ -172,6 +172,8 @@ const Button = styled.button`
   border-radius: 0.3rem;
   cursor: pointer;
   align-self: center;
+  font-size: 0.9rem;
+  font-weight: 500;
 `;
 
 

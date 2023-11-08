@@ -276,6 +276,8 @@ const Button = styled.button`
   border-radius: 0.3rem;
   cursor: pointer;
   align-self: center;
+  font-size: 0.9rem;
+  font-weight: 500;
 `
 
 
