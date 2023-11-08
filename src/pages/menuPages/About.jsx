@@ -150,12 +150,11 @@ gap: 2rem;
     width: 55%;
     display: flex;
     justify-content: center;
-    align-items: start;
-
+    align-items: center;
 }
 
 .rightBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 
