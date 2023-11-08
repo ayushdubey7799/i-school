@@ -41,17 +41,17 @@ function Row(props) {
     setJdData(row);
   }
 
-  const handleDelete =  async (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this jd!")) {
-      const res = await deleteJd(id,accessToken,clientCode);
-      if(res){
+      const res = await deleteJd(id, accessToken, clientCode);
+      if (res) {
         toast.success("Successfully Deleted");
-      }  
-      else{
+      }
+      else {
         toast.error("Error Occured")
-      }  
+      }
     }
-   
+
   }
 
   return (
@@ -78,12 +78,12 @@ function Row(props) {
           {row.createdAt}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-        {row.createdBy}
+          {row.createdBy}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-            <img src={editIcon} onClick= {() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} onClick= {() => handleDelete(row.id)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} onClick={() => handleDelete(row.id)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
       </TableRow>
@@ -180,7 +180,7 @@ const JdRegistration = () => {
   return (
     <Container1>
       <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null, "create"]} />
-      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} Component={CloneJDForm}/>
+      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} Component={CloneJDForm} />
 
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
