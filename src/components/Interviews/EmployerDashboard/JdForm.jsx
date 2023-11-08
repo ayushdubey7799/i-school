@@ -12,6 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { toast } from 'react-toastify';
 
+
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -27,6 +28,21 @@ const Container = styled.div`
   .fileInputBox {
     position: relative;
     width: 100%;
+
+    textarea {
+      width: 100%;
+      border: 1px solid #ccc;
+  background-color: #F6F6FB;
+  outline-color: #ccc;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+
+    }
+
+    textarea:focus {
+      outline-color: #1976D2;
+    }
   }
 `;
 
@@ -93,9 +109,12 @@ function JdForm({ array, handleClose }) {
     workType: '',
     ctc: '',
     keywords: '',
+    jd: '',
     noticePeriod: '',
     companyType: '',
     candidateAvl: '',
+    hiringManager: '',
+    recruiter: '',
     jdUpload: null,
     visibility: '',
     autoReqNumbers: true
@@ -104,27 +123,27 @@ function JdForm({ array, handleClose }) {
 
 
   // {
-    // {
-    //   "autoReqNumbers": true,
-    //   "bu": "engineering",
-    //   "certification": "cert-uit",
-    //   "ctc": "10LPA",
-    //   "department": "Software",
-    //   "description": "Seeking a Software Engineer 2 with strong coding skills and 2+ years of experience to develop and maintain software applications, collaborate with cross-functional teams, and contribute to the design and implementation of scalable solutions",
-    //   "exp": "3",
-    //   "hiringManager": "testing",
-    //   "jdId": "xyz-uit5.1",
-    //   "jobSummary": "Seeking a Software Engineer 2 with strong coding skills and 2+ years of experience to develop and maintain software applications, collaborate with cross-functional teams, and contribute to the design and implementation of scalable solutions",
-    //   "keywords": "Software Development Coding Programming Java Python C++",
-    //   "location": "Delhi",
-    //   "numOfReqs": 0,
-    //   "skills": "Programming Agile Problem-solving Algorithms Communication",
-    //   "title": "SDE 2",
-    //   "visibility": "PUBLIC",
-    //   "workType": "Contract"
-    // }
+  // {
+  //   "autoReqNumbers": true,
+  //   "bu": "engineering",
+  //   "certification": "cert-uit",
+  //   "ctc": "10LPA",
+  //   "department": "Software",
+  //   "description": "Seeking a Software Engineer 2 with strong coding skills and 2+ years of experience to develop and maintain software applications, collaborate with cross-functional teams, and contribute to the design and implementation of scalable solutions",
+  //   "exp": "3",
+  //   "hiringManager": "testing",
+  //   "jdId": "xyz-uit5.1",
+  //   "jobSummary": "Seeking a Software Engineer 2 with strong coding skills and 2+ years of experience to develop and maintain software applications, collaborate with cross-functional teams, and contribute to the design and implementation of scalable solutions",
+  //   "keywords": "Software Development Coding Programming Java Python C++",
+  //   "location": "Delhi",
+  //   "numOfReqs": 0,
+  //   "skills": "Programming Agile Problem-solving Algorithms Communication",
+  //   "title": "SDE 2",
+  //   "visibility": "PUBLIC",
+  //   "workType": "Contract"
   // }
- 
+  // }
+
 
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
@@ -157,13 +176,13 @@ function JdForm({ array, handleClose }) {
     e.preventDefault();
     if (mode == "create") {
       const resObj = await addJd(formData, accessToken, clientCode);
-      if(resObj)toast.success("JD successfully created");
+      if (resObj) toast.success("JD successfully created");
       handleClose();
       console.log(resObj);
     }
     else {
       const editRes = await editJd(formData, accessToken, clientCode);
-      if(editRes)toast.success("JD successfully Edited");
+      if (editRes) toast.success("JD successfully Edited");
       handleClose();
       console.log(editRes);
     }
@@ -179,7 +198,7 @@ function JdForm({ array, handleClose }) {
 
         <TextField id="outlined-basic" label="Req Number (From Employer System)" variant="outlined" name="reqNumber"
           type='text'
-          value={autoReq?"":formData.reqNumber}
+          value={autoReq ? "" : formData.reqNumber}
           onChange={handleChange}
           disabled={autoReq}
           sx={{ backgroundColor: '#F6F6FB' }} />
@@ -247,6 +266,42 @@ function JdForm({ array, handleClose }) {
           onChange={handleChange}
           sx={{ backgroundColor: '#F6F6FB' }} />
 
+        <TextField id="outlined-basic" label="CTC" variant="outlined"
+          type="text"
+          name="ctc"
+          value={formData.ctc}
+          onChange={handleChange}
+          sx={{ backgroundColor: '#F6F6FB' }} />
+
+
+
+        <TextField id="outlined-basic" label="Keywords" variant="outlined"
+          type="text"
+          name="keywords"
+          value={formData.keywords}
+          onChange={handleChange}
+          sx={{ backgroundColor: '#F6F6FB' }} />
+
+        <TextField id="outlined-basic" label="Hiring Manager" variant="outlined"
+          type="text"
+          name="hiringManager"
+          value={formData.hiringManager}
+          onChange={handleChange}
+          sx={{ backgroundColor: '#F6F6FB' }} />
+
+        <TextField id="outlined-basic" label="Recruiter" variant="outlined"
+          type="text"
+          name="recruiter"
+          value={formData.recruiter}
+          onChange={handleChange}
+          sx={{ backgroundColor: '#F6F6FB' }} />
+
+
+        <div className='fileInputBox'>
+          <Label>Job Description</Label>
+          <textarea name='jd' onChange={handleChange} rows={5}></textarea>
+        </div>
+
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
           <InputLabel id="demo-simple-select-label">Worker Type</InputLabel>
           <Select
@@ -262,20 +317,6 @@ function JdForm({ array, handleClose }) {
             <MenuItem value='Contract'>Contract</MenuItem>
           </Select>
         </FormControl>
-
-        <TextField id="outlined-basic" label="CTC" variant="outlined"
-          type="text"
-          name="ctc"
-          value={formData.ctc}
-          onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
-
-        <TextField id="outlined-basic" label="Keywords" variant="outlined"
-          type="text"
-          name="keywords"
-          value={formData.keywords}
-          onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
 
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
@@ -309,9 +350,10 @@ function JdForm({ array, handleClose }) {
             value={formData.companyType}
             onChange={handleChange}
           >
-            <MenuItem value="startup">Start up</MenuItem>
-            <MenuItem value="itService">IT Service</MenuItem>
-            <MenuItem value="productBased">Product Based</MenuItem>
+            <MenuItem value="service">Service</MenuItem>
+            <MenuItem value="product">Product</MenuItem>
+            <MenuItem value="serviceStartup">Service Start up</MenuItem>
+            <MenuItem value="productStartup">Product Start up</MenuItem>
           </Select>
         </FormControl>
 
@@ -334,16 +376,6 @@ function JdForm({ array, handleClose }) {
             <MenuItem value="3months">3 Months</MenuItem>
           </Select>
         </FormControl>
-
-        <div className='fileInputBox'>
-          <Label>JD Upload</Label>
-          <Input
-            type="file"
-            name="jdUpload"
-            accept=".pdf,.doc,.docx"
-            onChange={handleFileChange}
-          />
-        </div>
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
           <InputLabel id="demo-simple-select-label">Visibility</InputLabel>

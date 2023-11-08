@@ -44,6 +44,7 @@ const ProfileNew = () => {
                             <div className='card'>
                                 <span className='skill'>{skill.name}</span>
                                 <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span>
+                                <button className='btn'>Take Assessment</button>
                             </div>
                         ))
                     }
@@ -294,7 +295,7 @@ align-items: center;
         flex-direction: column;
         justify-content: center;
         align-items: start;
-        gap: 0.5rem;
+        gap: 1rem;
         padding: 0.8rem 1.5rem;
         border-radius: 0.5rem;
 
@@ -307,6 +308,17 @@ align-items: center;
             font-size: 0.75rem;
             font-weight: 500;
             color: grey;
+        }
+
+        .btn {
+            background-color: transparent;
+            border: 0.08rem solid var(--color);
+            color: var(--color);
+            font-size: 0.8rem;
+            font-weight: 400 !important;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
         }
     }
 }

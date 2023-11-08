@@ -12,7 +12,7 @@ import jdIcon from '../../../assets/icons/job-description.png'
 import candidatesIcon from '../../../assets/icons/manage-candidates.png'
 import testIcon from '../../../assets/icons/test-management.png'
 import activeJdIcon from '../../../assets/icons/active-job-desc.png'
-import createTestIcon from '../../../assets/icons/create-test.png'
+import createTestIcon from '../../../assets/icons/candidatePool.png'
 import dashboardIcon from '../../../assets/icons/dashboard.png'
 import billingIcon from '../../../assets/icons/billing.png'
 import reportIcon from '../../../assets/icons/report.png'
@@ -33,7 +33,7 @@ import titleIcon3 from '../../../assets/icons/titleIcon3.png'
 import titleIcon4 from '../../../assets/icons/titleIcon4.png'
 import titleIcon5 from '../../../assets/icons/titleIcon5.png'
 import titleIcon6 from '../../../assets/icons/titleIcon6.png'
-
+import uploadProfileIcon from '../../../assets/icons/uploadProfileIcon.png'
 
 
 const Container = styled.div`
@@ -304,6 +304,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
           <Submenu>
             <SubPara isSelected={currentItem === 'candidate-register'} onClick={() => handleItemClick('candidate-register')} className='submenuItem'><img src={addUser} className='icon' />Add Candidates</SubPara>
             <SubPara isSelected={currentItem === 'candidate-registered'} onClick={() => handleItemClick('candidate-registered')} className='submenuItem'><img src={createTestIcon} className='icon' />Candidates Pool</SubPara>
+            <SubPara isSelected={currentItem === 'upload-profiles'} onClick={() => handleItemClick('upload-profiles')} className='submenuItem'><img src={uploadProfileIcon} className='icon' />Upload Profiles</SubPara>
           </Submenu>
         </AccordionDetails>
       </Accordion>

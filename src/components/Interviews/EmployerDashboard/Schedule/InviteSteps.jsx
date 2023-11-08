@@ -6,7 +6,7 @@ const InviteSteps = ({ step, setStep }) => {
     return (
         <Box>
             <div className='topBox'>
-                <div className={`checkBox ${step >= 1 ? "active" : ""}`}>1</div>
+                <div className={`checkBox checkBox1 ${step >= 1 ? "active" : ""}`}>1</div>
                 <span>Select Date and Time</span>
             </div>
             <div className='topBox'>
@@ -31,18 +31,18 @@ margin: 0 5%;
 display: flex;
 justify-content: space-evenly;
 position: fixed;
-top: 5rem;
+top: 4.5rem;
 background-color: var(--white);
 border-radius: 1rem;
 z-index: 100;
-padding: 0.5rem 0;
+padding: 0.2rem 0;
 
 
 .checkBox {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     width: 1.7rem;
     height: 1.7rem;
@@ -50,6 +50,7 @@ padding: 0.5rem 0;
     border: 0.05rem solid white;
     border-radius: 50%;
 }
+
 
 .topBox > span {
     font-size: 0.9rem;
@@ -65,7 +66,8 @@ padding: 0.5rem 0;
 .topBox {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.2rem;
 }
 
 

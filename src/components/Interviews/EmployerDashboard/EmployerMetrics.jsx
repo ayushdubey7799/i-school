@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import metric1 from '../../../assets/icons/metric1.png'
+import metric1 from '../../../assets/icons/metric2.1.png'
 import metric2 from '../../../assets/icons/metric2.2.png'
 import metric3 from '../../../assets/icons/metric2.3.png'
 import metric4 from '../../../assets/icons/metric2.4.png'
@@ -102,7 +102,7 @@ const EmployeMetrics = ({ page, setPage }) => {
       <Container>
         <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
           <div className='top'>
-            <img src={metric3} />
+            <img src={metric1} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
@@ -110,7 +110,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         </div>
         <div className={`achievedNumberBox ${currMetric === 'activeJDs' ? 'selected' : ''}`} onClick={() => setCurrMetric('activeJDs')} >
           <div className='top'>
-            <img src={metric1} />
+            <img src={metric2} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
@@ -118,7 +118,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         </div>
         <div className={`achievedNumberBox ${currMetric === 'applications' ? 'selected' : ''}`} onClick={() => setCurrMetric('applications')}>
           <div className='top'>
-            <img src={metric2} />
+            <img src={metric3} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>

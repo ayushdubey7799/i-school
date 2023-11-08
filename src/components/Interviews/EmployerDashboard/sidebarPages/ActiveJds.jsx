@@ -202,9 +202,8 @@ const StyledBox = styled.div`
   display: flex;
   margin-top: 0rem;
   margin-bottom: 2.5rem;
-  width: 104%;
-  padding: 0 2%;
-
+  width: 100%;
+  padding: 0 0;
 
   .colored {
     background-color: #ececec;
@@ -262,7 +261,7 @@ const StyledBox = styled.div`
 
 
 const Container1 = styled.div`
-  width:90%;
+  width:94%;
   margin: 1rem auto;
   display: flex;
   flex-direction: column;

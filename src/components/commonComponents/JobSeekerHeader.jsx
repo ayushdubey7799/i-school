@@ -120,6 +120,7 @@ const StyledDiv = styled.div`
     text-decoration: none;
     color: #333;
     transition: background-color 0.3s ease;
+    border-bottom: 0.1rem groove lightgrey;
 }
 
 .dropdown span:hover {

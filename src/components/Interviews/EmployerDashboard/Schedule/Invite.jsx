@@ -178,6 +178,11 @@ export default function Invite() {
                       value={value}
                       onChange={(newValue) => setValue(dayjs(newValue))}
                       views={['day']}
+                      sx={{
+                        // width: "100%",
+                        height: '100%',
+                        display: 'flex',
+                      }}
                     />
                   </div>
                 </LocalizationProvider>
@@ -353,7 +358,7 @@ const MainContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 6rem 3rem 2rem 3rem;
+  padding: 6.5rem 3rem 2rem 3rem;
   align-items: center;
   width: calc(100% - 6rem);
   // height: calc(100vh - 8rem);
@@ -419,23 +424,26 @@ const Container = styled.div`
         width: 100%;
         flex-direction: row;
         gap: 1rem;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
       }
 
       .calendarBox {
         border: 0.08rem solid lightgrey;
         border-radius: 0.5rem;
-        width: 50%;
+        width: 40%;
+        height: 350px;
       }
 
       .slotBox {
         display: flex;
-        width: 50%;
+        width: 40%;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border: 0.08rem solid lightgrey;
         border-radius: 0.5rem;
+        height: 350px;
 
         .span {
           font-size: 0.9rem;
@@ -446,13 +454,12 @@ const Container = styled.div`
     }
 
     .step2Box {
-      width: 50%;
+      width: 80%;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      align-items: start;
       gap: 2rem;
       padding: 0rem 1rem;
       margin-top: 4rem;
