@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import browseIcon from '../../../../assets/icons/browse.png'
+import browseIcon from '../../../../assets/icons/uploadBrowseIcon.png'
+
+
 
 const UploadCandidateProfile = () => {
     const [selectedFile, setSelectedFile] = useState(null);

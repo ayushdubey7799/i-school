@@ -97,7 +97,7 @@ const Metrics = () => {
       <Container>
         <div className={`achievedNumberBox ${currMetric === 'interviewScheduled' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewScheduled')}>
           <div className='top'>
-            <img src={metric4} />
+            <img src={metric1} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
@@ -105,7 +105,7 @@ const Metrics = () => {
         </div>
         <div className={`achievedNumberBox ${currMetric === 'interviewCompleted' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviewCompleted')}>
           <div className='top'>
-            <img src={metric3} />
+            <img src={metric2} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
@@ -113,7 +113,7 @@ const Metrics = () => {
         </div>
         <div className={`achievedNumberBox ${currMetric === 'recommendedJobs' ? 'selected' : ''}`} onClick={() => setCurrMetric('recommendedJobs')}>
           <div className='top'>
-            <img src={metric1} />
+            <img src={metric3} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
@@ -121,7 +121,7 @@ const Metrics = () => {
         </div>
         <div className={`achievedNumberBox ${currMetric === 'appliedJobs' ? 'selected' : ''}`} onClick={() => setCurrMetric('appliedJobs')}>
           <div className='top'>
-            <img src={metric2} />
+            <img src={metric4} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>

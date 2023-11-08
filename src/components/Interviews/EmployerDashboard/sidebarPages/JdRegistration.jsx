@@ -27,6 +27,7 @@ import { getJds } from '../../../../functions/api/employers/getJds';
 import { useSelector } from 'react-redux';
 import { deleteJd } from '../../../../functions/api/employers/deleteJd';
 import { toast } from 'react-toastify';
+import CloneJDForm from './CloneJDForm';
 
 
 function Row(props) {
@@ -125,6 +126,7 @@ function Row(props) {
 
 const JdRegistration = () => {
   const [openBasic, setOpenBasic] = useState(false);
+  const [openBasic2, setOpenBasic2] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
@@ -178,6 +180,7 @@ const JdRegistration = () => {
   return (
     <Container1>
       <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null, "create"]} />
+      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} Component={CloneJDForm}/>
 
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
@@ -185,7 +188,7 @@ const JdRegistration = () => {
             <span className='title'>Job Descriptions</span>
 
             <div className='btnBox'>
-              <EditButton>Clone Existing JD</EditButton>
+              <EditButton onClick={() => setOpenBasic2(true)}>Clone Existing JD</EditButton>
               <EditButton onClick={() => setOpenBasic(true)}>Create JD</EditButton>
             </div>
           </Component>
