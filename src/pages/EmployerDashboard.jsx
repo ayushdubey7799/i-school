@@ -25,6 +25,7 @@ import ConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPag
 import ManageUsers from "../components/Interviews/EmployerDashboard/sidebarPages/ManageUsers";
 import ConfigureReports from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureReports";
 import InterviewDashboard from "../components/Interviews/EmployerDashboard/sidebarPages/InterviewDashboard";
+import UploadCandidateProfile from "../components/Interviews/EmployerDashboard/sidebarPages/UploadCandidateProfile";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -91,6 +92,7 @@ const EmployerDashboard = () => {
 
           {currentItem === "candidate-register" && <RegisterCandidate />}
           {currentItem === "candidate-registered" && <RegisteredCandidates setCurrentItem={setCurrentItem} />}
+          {currentItem === "upload-profiles" && <UploadCandidateProfile />}
           {currentItem === "manage-tests" && <CreateQuestion />}
           {currentItem === "activeJds" && <ActiveJds />}
           {currentItem === "create-tests" && <ManageTests />}
