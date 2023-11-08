@@ -194,7 +194,6 @@ function JdForm({ array, handleClose }) {
           name="reqNumber"
           value={formData.reqNumber}
           onChange={handleChange}
-          disabled={autoReq}
           sx={{ backgroundColor: '#F6F6FB' }} />
 
         <TextField id="outlined-basic" label="Title" variant="outlined"

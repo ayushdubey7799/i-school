@@ -96,7 +96,7 @@ export default function MatchedResumes() {
       const resObj = await getMatches(jdId, accessToken, clientCode);
       if (resObj) {
         setTableRows(resObj.data[0].records.data);
-        setIdToSendInvite(resObj.data[0].id);
+        setIdToSendInvite(resObj.data[0].jdId);
       }
     }
     getData();

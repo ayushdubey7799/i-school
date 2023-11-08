@@ -48,12 +48,10 @@ const SlotSelection = () => {
             "token": token
           },accessToken)
 
-        //   if(res){
 
             localStorage.removeItem("inviteToken");
              toast.success(`Scheduled interview for ${selectedHour}:${selectedMinute} ${selectedAmPm}`);
              navigate('/dashboard/jobseeker')
-        //  s }
      }
     scheduleTest();
    

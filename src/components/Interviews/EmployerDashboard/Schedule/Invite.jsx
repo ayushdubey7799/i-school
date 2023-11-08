@@ -119,7 +119,7 @@ export default function Invite() {
         return;
       }
       const payload = {
-        jdId: "DE2023-001",
+        jdId: array[array.length-1],
         productType: productType,
         resumeIds: array.slice(0, -1),
         testType: testType,
