@@ -8,17 +8,14 @@ import { useNavigate } from 'react-router';
 import RecommendedJobs from './sidebarPages/RecommendedJobs';
 import JobApplication from './sidebarPages/JobApplication';
 import InterviewTabs from '../InterviewTabs';
-<<<<<<< HEAD
 import { getStatusWiseCount } from '../../../functions/api/interview/getStatusWiseCount';
 import { useSelector } from 'react-redux';
-=======
 
 import { seekerMetric1 } from '../../../utils/contantData';
 import { seekerMetric2 } from '../../../utils/contantData';
 import { seekerMetric3 } from '../../../utils/contantData';
 import { seekerMetric4 } from '../../../utils/contantData';
 
->>>>>>> 07d9340aacf652c3ca92ceff05152eebcffb46ab
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
