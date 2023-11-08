@@ -37,6 +37,8 @@ const Container = styled.div`
   border-radius: 0.5rem;
   box-sizing: border-box;
   padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 400;
 
     }
 
@@ -53,9 +55,13 @@ const Form = styled.form`
   gap: 1rem;
 
   #outlined-basic {
-    padding-top: 0.9rem;
-    padding-bottom: 0.8rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    background-color: #F6F6FB;
+  }
+
+  #demo-simple-select-label {
+    font-size: 0.8rem;
+    font-weight: 400;
   }
 `;
 
@@ -195,18 +201,47 @@ function JdForm({ array, handleClose }) {
       <h3>JD Registration</h3>
       <Form onSubmit={handleSubmit}>
 
-        <TextField id="outlined-basic" label="JD ID (ABC_XX__)" variant="outlined" type='text' name="jdId" value={formData.jdId} onChange={handleChange} disabled={mode == "edit"} sx={{ backgroundColor: '#F6F6FB' }} required />
+        <TextField id="outlined-basic" label="JD ID (ABC_XX__)" variant="outlined" type='text' name="jdId" value={formData.jdId} onChange={handleChange} disabled={mode == "edit"} sx={{ backgroundColor: '#F6F6FB' }} size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} required />
 
         <TextField id="outlined-basic" label="Req Number (From Employer System)" variant="outlined" name="reqNumber"
           type='text'
           value={autoReq ? "" : formData.reqNumber}
           onChange={handleChange}
           disabled={autoReq}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
 
         <FormControlLabel control={<Checkbox type='checkbox'
-          onClick={() => setAutoReq(!autoReq)} />} label="Auto Generate Req Number" sx={{ width: '100%' }} />
+          onClick={() => setAutoReq(!autoReq)} />} label="Auto Generate Req Number" sx={{ width: '100%', fontSize: '0.8rem', fontWeight: '400' }} />
 
 
         <TextField id="outlined-basic" label="Number of Reqs" variant="outlined"
@@ -215,6 +250,21 @@ function JdForm({ array, handleClose }) {
           value={formData.reqNumber}
           onChange={handleChange}
           sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
           required />
 
         <TextField id="outlined-basic" label="Title" variant="outlined"
@@ -222,13 +272,43 @@ function JdForm({ array, handleClose }) {
           name="title"
           value={formData.title}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
         <TextField id="outlined-basic" label="Description" variant="outlined"
           name="description"
           value={formData.description}
           onChange={handleChange}
           sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
         />
 
 
@@ -239,6 +319,21 @@ function JdForm({ array, handleClose }) {
           value={formData.skills}
           onChange={handleChange}
           sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
           required />
 
 
@@ -247,7 +342,22 @@ function JdForm({ array, handleClose }) {
           name="bu"
           value={formData.bu}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
         <TextField id="outlined-basic" label="Exp" variant="outlined"
           type="text"
@@ -255,6 +365,21 @@ function JdForm({ array, handleClose }) {
           value={formData.exp}
           onChange={handleChange}
           sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
           required />
 
         <TextField id="outlined-basic" label="Location" variant="outlined"
@@ -262,21 +387,66 @@ function JdForm({ array, handleClose }) {
           name="location"
           value={formData.location}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
         <TextField id="outlined-basic" label="Certification" variant="outlined"
           type="text"
           name="certification"
           value={formData.certification}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
         <TextField id="outlined-basic" label="CTC" variant="outlined"
           type="text"
           name="ctc"
           value={formData.ctc}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
 
 
@@ -285,26 +455,71 @@ function JdForm({ array, handleClose }) {
           name="keywords"
           value={formData.keywords}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
         <TextField id="outlined-basic" label="Hiring Manager" variant="outlined"
           type="text"
           name="hiringManager"
           value={formData.hiringManager}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
         <TextField id="outlined-basic" label="Recruiter" variant="outlined"
           type="text"
           name="recruiter"
           value={formData.recruiter}
           onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }} />
+          sx={{ backgroundColor: '#F6F6FB' }}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }} />
 
 
         <div className='fileInputBox'>
           <Label>Job Description</Label>
-          <textarea name='jd' value={formData.jdSummary} onChange={handleChange} rows={5}></textarea>
+          <textarea name='jdSummary' value={formData.jdSummary} onChange={handleChange} rows={5}></textarea>
         </div>
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
@@ -316,6 +531,24 @@ function JdForm({ array, handleClose }) {
             label="Worker Type"
             onChange={handleChange}
             name="workType"
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            sx={{
+              padding: '0rem 0 0.5rem 0',
+            }}
           >
             <MenuItem value='Full-time'>Full-time</MenuItem>
             <MenuItem value='Part-time'>Part-time</MenuItem>
@@ -333,6 +566,24 @@ function JdForm({ array, handleClose }) {
             name="noticePeriod"
             value={formData.noticePeriod}
             onChange={handleChange}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            sx={{
+              padding: '0rem 0 0.5rem 0',
+            }}
           >
             <MenuItem value='Immediate'>Immediate</MenuItem>
             <MenuItem value='1week'>1 Week</MenuItem>
@@ -354,6 +605,24 @@ function JdForm({ array, handleClose }) {
             name="companyType"
             value={formData.companyType}
             onChange={handleChange}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            sx={{
+              padding: '0rem 0 0.5rem 0',
+            }}
           >
             <MenuItem value="service">Service</MenuItem>
             <MenuItem value="product">Product</MenuItem>
@@ -372,6 +641,24 @@ function JdForm({ array, handleClose }) {
             name="candidateAvl"
             value={formData.candidateAvl}
             onChange={handleChange}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            sx={{
+              padding: '0rem 0 0.5rem 0',
+            }}
           >
             <MenuItem value="Immediate">Immediate</MenuItem>
             <MenuItem value="1week">1 Week</MenuItem>
@@ -391,6 +678,24 @@ function JdForm({ array, handleClose }) {
             name="visibility"
             value={formData.visibility}
             onChange={handleChange}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            sx={{
+              padding: '0rem 0 0.5rem 0',
+            }}
           >
             <MenuItem value="PUBLIC">Public</MenuItem>
             <MenuItem value="PRIVATE">Private</MenuItem>

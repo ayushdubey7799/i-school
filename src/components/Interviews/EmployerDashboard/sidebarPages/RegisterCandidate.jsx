@@ -59,12 +59,10 @@ const Form = styled.div`
   }
 
   #outlined-basic {
-    padding-top: 0.9rem;
-    padding-bottom: 0.8rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0;
     background-color: #F6F6FB;
   }
-
+  
   .resumeBox {
     display: flex;
     flex-direction: column;
@@ -137,24 +135,84 @@ const RegisterCandidate = () => {
             type='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required />
+            required
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }} />
 
           <TextField id="outlined-basic" label="FullName" variant="outlined"
             type='text'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required />
+            required
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }} />
 
           <TextField id="outlined-basic" label="Phone" variant="outlined"
             type='tel'
             value={contact}
             onChange={(e) => setContact(e.target.value)}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
           />
 
           <TextField id="outlined-basic" label="Referral/Source" variant="outlined"
             type='text'
             value={ref}
             onChange={(e) => setRef(e.target.value)}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
           />
 
           <div className='resumeBox'>
