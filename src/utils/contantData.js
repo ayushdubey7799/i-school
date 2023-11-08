@@ -1,5 +1,22 @@
 import profileImg from '../assets/resume/profileImg.png'
 
+import metric1 from '../assets/icons/metric1.png'
+import metric2 from '../assets/icons/metric2.png'
+import metric3 from '../assets/icons/metric3.png'
+import metric4 from '../assets/icons/metric4.png'
+import metric5 from '../assets/icons/metric5.png'
+import metric6 from '../assets/icons/metric6.png'
+import metric7 from '../assets/icons/metric7.png'
+import metric8 from '../assets/icons/metric8.png'
+
+import EmpMetric1 from '../assets/icons/metric2.1.png'
+import EmpMetric2 from '../assets/icons/metric2.2.png'
+import EmpMetric3 from '../assets/icons/metric2.3.png'
+import EmpMetric4 from '../assets/icons/metric2.4.png'
+import EmpMetric5 from '../assets/icons/metric2.5.png'
+import EmpMetric6 from '../assets/icons/metric2.6.png'
+import EmpMetric7 from '../assets/icons/metric2.7.png'
+import EmpMetric8 from '../assets/icons/metric2.8.png'
 
 
 export const technicalSkills = [
@@ -695,4 +712,46 @@ export const profileData = {
         },
     ],
 };
+
+
+export const seekerMetric1 = {
+    title: 'Interview Scheduled',
+    text: 'interviewScheduled',
+    img: metric1
+}
+
+export const seekerMetric2 = {
+    title: 'Interviews Completed',
+    text: 'interviewCompleted',
+    img: metric2
+}
+
+export const seekerMetric3 = {
+    title: 'Recommended Jobs',
+    text: 'recommendedJobs',
+    img: metric3
+}
+
+export const seekerMetric4 = {
+    title: 'Applied Jobs',
+    text: 'appliedJobs',
+    img: metric4
+}
+
+export const seekerMetricOptions = [{
+    title: 'Interviews Upcoming (next 7 days)',
+    img: metric5
+},
+{
+    title: 'Interviews in Progress',
+    img: metric6
+},
+{
+    title: 'Profile Views',
+    img: metric7
+},
+{
+    title: 'My Profile',
+    img: metric8
+}]
 

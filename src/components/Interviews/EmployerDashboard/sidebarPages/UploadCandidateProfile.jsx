@@ -30,13 +30,13 @@ const UploadCandidateProfile = () => {
                 <FileInput
                     id='input'
                     type="file"
-                    accept=".pdf,.doc,.docx"
+                    accept=".zip,.rar,.7z"
                     onChange={handleFileChange}
                     style={{ display: 'none' }}
                 />
-                <span>Select Profile</span>
+                <span>Select Folder or Zip File</span>
             </div>
-            <button onClick={handleProfileUpload} className='registerBtn'>Upload Profile</button>
+            <button onClick={handleProfileUpload} className='registerBtn'>Upload</button>
         </Box>
     )
 }
