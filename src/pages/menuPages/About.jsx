@@ -4,7 +4,7 @@ import Header from '../../components/LandingPage/Header';
 import Footer from '../../components/commonComponents/Footer';
 import bg1 from '../../assets/BackGround/bg1.jpg'
 import img1 from '../../assets/VectorImg/about.png'
-import img2 from '../../assets/VectorImg/intelliView.jpg'
+import img2 from '../../assets/VectorImg/about2.png'
 import { useNavigate } from 'react-router';
 
 const About = () => {
@@ -150,12 +150,11 @@ gap: 2rem;
     width: 55%;
     display: flex;
     justify-content: center;
-    align-items: start;
-
+    align-items: center;
 }
 
 .rightBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 

@@ -22,9 +22,12 @@ const Form = styled.form`
 
 
   #outlined-basic {
-    padding-top: 0.9rem;
-    padding-bottom: 0.8rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0.5rem;
+    background-color: #F6F6FB;
+  }
+
+  #demo-simple-select-label {
+    font-size: 0.8rem;
   }
 `;
 
@@ -83,6 +86,21 @@ function ManageUserForm({ array, handleClose }) {
                     value={formData.name}
                     onChange={handleChange}
                     sx={{ backgroundColor: '#F6F6FB' }}
+                    size='small'
+                    inputProps={{
+                        sx: {
+                            color: '#626264',
+                            fontSize: '0.8rem',
+                            fontWeight: '400'
+                        },
+                    }}
+                    InputLabelProps={{
+                        sx: {
+                            color: '#626264',
+                            fontSize: '0.8rem',
+                            fontWeight: '400'
+                        },
+                    }}
                 />
 
                 <TextField id="outlined-basic" label="Email" variant="outlined"
@@ -92,6 +110,21 @@ function ManageUserForm({ array, handleClose }) {
                     onChange={handleChange}
                     disabled={mode == "edit"}
                     sx={{ backgroundColor: '#F6F6FB' }}
+                    size='small'
+                    inputProps={{
+                        sx: {
+                            color: '#626264',
+                            fontSize: '0.8rem',
+                            fontWeight: '400'
+                        },
+                    }}
+                    InputLabelProps={{
+                        sx: {
+                            color: '#626264',
+                            fontSize: '0.8rem',
+                            fontWeight: '400'
+                        },
+                    }}
                 />
 
                 <TextField id="outlined-basic" label="Contact" variant="outlined"
@@ -101,10 +134,25 @@ function ManageUserForm({ array, handleClose }) {
                     onChange={handleChange}
                     disabled={mode == "edit"}
                     sx={{ backgroundColor: '#F6F6FB' }}
+                    size='small'
+                    inputProps={{
+                        sx: {
+                            color: '#626264',
+                            fontSize: '0.8rem',
+                            fontWeight: '400'
+                        },
+                    }}
+                    InputLabelProps={{
+                        sx: {
+                            color: '#626264',
+                            fontSize: '0.8rem',
+                            fontWeight: '400'
+                        },
+                    }}
                 />
 
 
-                <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+                <FormControl sx={{ backgroundColor: '#F6F6FB', padding: '0' }} fullWidth>
                     <InputLabel id="demo-simple-select-label">Role</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -113,6 +161,24 @@ function ManageUserForm({ array, handleClose }) {
                         name="role"
                         value={formData.role}
                         onChange={handleChange}
+                        size='small'
+                        inputProps={{
+                            sx: {
+                                color: '#626264',
+                                fontSize: '0.8rem',
+                                fontWeight: '400'
+                            },
+                        }}
+                        InputLabelProps={{
+                            sx: {
+                                color: '#626264',
+                                fontSize: '0.8rem',
+                                fontWeight: '400'
+                            },
+                        }}
+                        sx={{
+                            padding: '0rem 0 0.3rem 0',
+                        }}
                     >
                         <MenuItem value="Admin">Admin</MenuItem>
                         <MenuItem value="Agency">Agency</MenuItem>

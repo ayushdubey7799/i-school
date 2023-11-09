@@ -740,18 +740,22 @@ export const seekerMetric4 = {
 
 export const seekerMetricOptions = [{
     title: 'Interviews Upcoming (next 7 days)',
+    text: 'interviewsUpcoming',
     img: metric5
 },
 {
     title: 'Interviews in Progress',
+    text: 'interviewsInProgress',
     img: metric6
 },
 {
     title: 'Profile Views',
+    text: 'profileViews',
     img: metric7
 },
 {
     title: 'My Profile',
+    text: 'myProfile',
     img: metric8
 }]
 
