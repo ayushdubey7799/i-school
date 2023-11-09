@@ -6,7 +6,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import { addProfileWithFile } from '../../../../functions/api/resume/addProfileWithFile';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 const Container = styled.div`
   width:90%;
   margin: 1rem auto;
@@ -107,12 +109,17 @@ const RegisterCandidate = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState('');
 
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
   const [email, setEmail] = useState('');
   const [contact, setContact] = useState('');
   const [ref, setRef] = useState('');
   const [refText, setRefText] = useState('');
+ const [source,setSource] = useState('');
 
+ const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -123,8 +130,28 @@ const RegisterCandidate = () => {
     }
   };
 
-  const handleRegister = () => {
-
+  const handleRegister = async () => {
+  const formData = new FormData();
+  formData.append("file",selectedFile);
+  formData.append("payload",JSON.stringify({
+    email,
+    firstName,
+    lastName,
+    contact,
+    source
+  }))
+  const res = await addProfileWithFile(formData,accessToken,clientCode);
+  console.log(res);
+ if(res){
+  toast.success("Profile successfully added");
+  setEmail("");
+  setContact("");
+  setFirstName("");
+  setLastName("");
+  setSource("");
+  setSelectedFile(null);
+ }
+  
   }
 
   const DecideComponent = () => {
@@ -157,10 +184,31 @@ const RegisterCandidate = () => {
               },
             }} />
 
-          <TextField id="outlined-basic" label="FullName" variant="outlined"
+          <TextField id="outlined-basic" label="First Name" variant="outlined"
             type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }} />
+
+<TextField id="outlined-basic" label="Last Name" variant="outlined"
+            type='text'
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
             size='small'
             inputProps={{
@@ -205,9 +253,9 @@ const RegisterCandidate = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={ref}
+              value={source}
               label="Select Referral/Source"
-              onChange={(e) => setRef(e.target.value)}
+              onChange={(e) => setSource(e.target.value)}
               size='small'
               inputProps={{
                 sx: {
@@ -262,7 +310,7 @@ const RegisterCandidate = () => {
             <FileInput
               id='input'
               type="file"
-              accept=".pdf,.doc,.docx"
+              accept="*"
               onChange={handleFileChange}
               style={{ display: 'none' }}
             />

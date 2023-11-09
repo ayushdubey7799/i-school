@@ -18,7 +18,7 @@ const config = {
         console.log("Status", response.status)
         return response.data;
       } catch (error) {
-        toast.error(error.notify?.message);
+        toast.error(error.message);
         console.error('Error:', error);
       }
 }

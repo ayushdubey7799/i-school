@@ -9,24 +9,24 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
-import { data as candidates } from "../../../../utils/contantData";
 import deleteIcon from '../../../../assets/icons/delete.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import visibleIcon from '../../../../assets/icons/visible.png'
 import shareIcon from '../../../../assets/icons/share.png'
-
+import { getProfiles } from "../../../../functions/api/resume/getProfiles";
+import { useSelector } from "react-redux";
 function Row(props) {
   const { row, index } = props;
-
+ console.log(row)
   return (
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
+        <TableCell align="center">{row.firstName?row.firstName:"..."}</TableCell>
+        <TableCell align="center">{row.email?row.email:"..."}</TableCell>
+        <TableCell align="center">{row.contact?row.contact:"..."}</TableCell>
+        <TableCell align="center">{row.createdAt?row.createdAt:"..."}</TableCell>
+        <TableCell align="center">{row.source?row.source:"..."}</TableCell>
         <TableCell align="center">
           <input
             type="checkbox"
@@ -52,6 +52,19 @@ export default function RegisteredCandidates({ setCurrentItem }) {
 
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
+  const [candidates,setCandidates] = useState([]);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
+  useEffect(() => {
+   const getCandidates = async () => {
+    const res = await getProfiles(accessToken,clientCode);
+    if(res){
+      setCandidates(res?.data?.data);
+    }
+   }
+
+   getCandidates();
+  },[]);
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);

@@ -96,6 +96,8 @@ const EmployeMetrics = ({ page, setPage }) => {
   const [currMetric, setCurrMetric] = useState('interviews');
   const [metrics,setMetrics] = useState([]);
   const [count,setCount] = useState(0);
+  const [completed,setCompleted] = useState(0);
+  const [scheduled,setScheduled] = useState(0);
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.clientCode)
   useEffect(() => {
@@ -114,6 +116,15 @@ const EmployeMetrics = ({ page, setPage }) => {
     getData();
   },[currMetric])
 
+
+  useEffect(() => {
+    if(metrics.length){
+     setCompleted(metrics.find((item) =>item.status == "COMPLETED" )?.count);
+     setScheduled(metrics.find((item) =>item.status == "SCHEDULED")?.count)
+    }
+   },[metrics])
+ 
+
   useEffect(() => {
     setPage(1);
   }, []);
@@ -124,7 +135,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
           <div className='top'>
             <img src={metric1} />
-            <span className='achievedNumberDigit'>{metrics.length?metrics[2].count:0}</span>
+            <span className='achievedNumberDigit'>{scheduled?scheduled:0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Interviews</span>

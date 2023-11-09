@@ -10,7 +10,6 @@ const config = {
     'X-Client-Code': "inteliiview",
   }
 };
-  console.log("sendinvite",requestData)
     try {
         const response = await axios.get(`https://dev-api.intelliview.in/api/interviews/invites/${token}`,config);
         console.log('Data:', response.data);

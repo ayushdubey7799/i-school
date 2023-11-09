@@ -123,6 +123,7 @@ export default function Invite() {
         productType: productType,
         resumeIds: array.slice(0, -1),
         testType: testType,
+        interviewType: interviewType,
         slotDate: date,
         slotTime: time,
         timeZone: "UTC",
@@ -130,15 +131,15 @@ export default function Invite() {
       };
       if (isTime) delete payload.slotTime;
       console.log(payload);
-      // try {
-      //   const response = await sendInvite(payload, accessToken, clientCode);
-      //   console.log("API call successful:", response.data);
-      //   toast.success("Invites sent successfully");
-      //   navigate("/schedule/invite/success");
-      // } catch (error) {
-      //   toast.error("error-> ", error?.message);
-      //   console.error("API call failed:", error);
-      // }
+      try {
+        const response = await sendInvite(payload, accessToken, clientCode);
+        console.log("API call successful:", response.data);
+        toast.success("Invites sent successfully");
+        navigate("/schedule/invite/success");
+      } catch (error) {
+        toast.error("error-> ", error?.message);
+        console.error("API call failed:", error);
+      }
     };
 
     makeApiCall();
@@ -189,10 +190,11 @@ export default function Invite() {
 
                 <div className="slotBox">
                   <span className="span">Select time-slot</span>
-                  <TimeSlotPicker
+                 {!isTime && <TimeSlotPicker
                     selectedTimeSlot={selectedTimeSlot}
                     setSelectedTimeSlot={setSelectedTimeSlot}
                   />
+                 }
                 </div>
               </div>
               <label className="smallTextBox">
