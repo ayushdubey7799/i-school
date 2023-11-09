@@ -114,11 +114,10 @@ const RegisterCandidate = () => {
 
   const [email, setEmail] = useState('');
   const [contact, setContact] = useState('');
-  const [ref, setRef] = useState('');
   const [refText, setRefText] = useState('');
- const [source,setSource] = useState('');
+  const [source, setSource] = useState('');
 
- const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
 
   const handleFileChange = (e) => {
@@ -131,27 +130,27 @@ const RegisterCandidate = () => {
   };
 
   const handleRegister = async () => {
-  const formData = new FormData();
-  formData.append("file",selectedFile);
-  formData.append("payload",JSON.stringify({
-    email,
-    firstName,
-    lastName,
-    contact,
-    source
-  }))
-  const res = await addProfileWithFile(formData,accessToken,clientCode);
-  console.log(res);
- if(res){
-  toast.success("Profile successfully added");
-  setEmail("");
-  setContact("");
-  setFirstName("");
-  setLastName("");
-  setSource("");
-  setSelectedFile(null);
- }
-  
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("payload", JSON.stringify({
+      email,
+      firstName,
+      lastName,
+      contact,
+      source
+    }))
+    const res = await addProfileWithFile(formData, accessToken, clientCode);
+    console.log(res);
+    if (res) {
+      toast.success("Profile successfully added");
+      setEmail("");
+      setContact("");
+      setFirstName("");
+      setLastName("");
+      setSource("");
+      setSelectedFile(null);
+    }
+
   }
 
   const DecideComponent = () => {
@@ -205,7 +204,7 @@ const RegisterCandidate = () => {
               },
             }} />
 
-<TextField id="outlined-basic" label="Last Name" variant="outlined"
+          <TextField id="outlined-basic" label="Last Name" variant="outlined"
             type='text'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -284,7 +283,7 @@ const RegisterCandidate = () => {
             </Select>
           </FormControl>
 
-          {ref && <TextField id="outlined-basic" label="Referral/Source text" variant="outlined"
+          {source && <TextField id="outlined-basic" label="Referral/Source text" variant="outlined"
             type='text'
             value={refText}
             onChange={(e) => setRefText(e.target.value)}
