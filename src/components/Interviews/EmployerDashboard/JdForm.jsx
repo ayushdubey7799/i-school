@@ -121,7 +121,7 @@ function JdForm({ array, handleClose }) {
     candidateAvl: '',
     hiringManager: '',
     recruiter: '',
-    jdSummary: '',
+    jobSummary: '',
     jdUpload: null,
     visibility: '',
     autoReqNumbers: true
@@ -519,7 +519,7 @@ function JdForm({ array, handleClose }) {
 
         <div className='fileInputBox'>
           <Label>Job Description</Label>
-          <textarea name='jdSummary' value={formData.jdSummary} onChange={handleChange} rows={5}></textarea>
+          <textarea name='jobSummary' value={formData.jobSummary} onChange={handleChange} rows={5}></textarea>
         </div>
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>

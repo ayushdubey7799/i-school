@@ -62,7 +62,7 @@ function Row(props) {
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center'>
-          {row.id}
+          {row.jdId}
         </TableCell>
         <TableCell component="th" scope="row" align='center'>
           ...
@@ -71,7 +71,8 @@ function Row(props) {
         {row.createdAt}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          ...
+        {row.recruiter}
+
         </TableCell>
         <TableCell component="th" scope="row" align="center">
         {row.hiringManager}
