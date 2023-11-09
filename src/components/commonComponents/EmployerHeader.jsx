@@ -16,6 +16,7 @@ const EmployerHeader = ({ setCurrentItem }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const user = useSelector(state => state.auth.userData.user);
 
 
   const handleLogout = () => {
@@ -48,6 +49,7 @@ const EmployerHeader = ({ setCurrentItem }) => {
         </div>
 
         <div class="dropdown" id="dropdown">
+          <span className="titleText span" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user.firstName}</b></span>
           <span onClick={() => navigate('/feedback')} className="span">Feedback</span>
           <span onClick={() => navigate('/support')} className="span">Help</span>
           <span onClick={() => navigate('/reset')} className="span">Reset Password</span>
@@ -159,6 +161,11 @@ const StyledDiv = styled.div`
     font-weight: 400;
     font-size: 0.8rem;
     border-radius: 0.5rem;
+
+    .titleText {
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
 }
 
 .dropdown .span {
