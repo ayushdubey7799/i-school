@@ -102,9 +102,9 @@ gap: 2%;
 
 const Metrics = () => {
   const [currMetric, setCurrMetric] = useState('interviewScheduled');
-  const [metrics,setMetrics] = useState([]);
-  const [scheduled,setScheduled] = useState(0);
-  const [completed,setCompleted] = useState(0);
+  const [metrics, setMetrics] = useState([]);
+  const [scheduled, setScheduled] = useState(0);
+  const [completed, setCompleted] = useState(0);
 
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [filteredData, setFilteredData] = useState({});
@@ -117,23 +117,33 @@ const Metrics = () => {
       console.log(res.data);
     }
     getCount();
-  },[currMetric])
+  }, [currMetric])
 
   useEffect(() => {
-   if(metrics.length){
-    setCompleted(metrics.find((item) =>item.status == "COMPLETED" )?.count);
-    setScheduled(metrics.find((item) =>item.status == "SCHEDULED")?.count)
-   }
-  },[metrics])
+    if (metrics.length) {
+      setCompleted(metrics.find((item) => item.status == "COMPLETED")?.count);
+      setScheduled(metrics.find((item) => item.status == "SCHEDULED")?.count)
+    }
+  }, [metrics])
 
-console.log("------->",scheduled,completed)
+  useEffect(() => {
+    async function getData(value) {
+      const response = await getInterviewByStatus(value, accessToken);
+      if (response) {
+        setFilteredData(response);
+      }
+    }
+    getData(value);
+  }, [value]);
+
+  console.log("------->", scheduled, completed)
   return (
     <MainContainer>
       <Container>
         <div className={`achievedNumberBox ${currMetric === seekerMetric1.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric1.text)}>
           <div className='top'>
             <img src={metric1} />
-            <span className='achievedNumberDigit'>{scheduled?scheduled:0}</span>
+            <span className='achievedNumberDigit'>{scheduled ? scheduled : 0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>{seekerMetric1.title}</span>
@@ -141,7 +151,7 @@ console.log("------->",scheduled,completed)
         <div className={`achievedNumberBox ${currMetric === seekerMetric2.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric2.text)}>
           <div className='top'>
             <img src={metric2} />
-            <span className='achievedNumberDigit'>{completed?completed:0}</span>
+            <span className='achievedNumberDigit'>{completed ? completed : 0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>{seekerMetric2.title}</span>
