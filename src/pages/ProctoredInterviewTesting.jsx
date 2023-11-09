@@ -50,7 +50,7 @@ const Proctored = () => {
     if (document.visibilityState === "hidden") {
       idRef.current = setTimeout(() => {
         navigate('/dashboard/interviews')
-      }, 3000000)
+      }, 3000)
 
     }
   };

@@ -6,17 +6,33 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-
+import { useSelector } from 'react-redux';
 import { jobListings } from '../../utils/contantData';
 import save from '../../assets/icons/save.png'
 import share from '../../assets/icons/share.png'
 import searchBlack from '../../assets/icons/searchBlack.png'
+import { getInterviewByStatus } from '../../functions/api/getInterviewByStatus';
+import { updateStatus } from '../../functions/api/interview/updateStatus';
+import Loader from '../commonComponents/Loader';
 
 
 function Row(props) {
-    const { row, index } = props;
+  
+    const { row, index,setIsLoading,setLoaderMessage } = props;
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+    const navigate = useNavigate();
+    
+    const startInterview = async () => {
+      setLoaderMessage("Creating Interview...  Please Wait");
+      setIsLoading(true);
+      const res = await updateStatus(row.id, "started", accessToken);
+      setIsLoading(false);
+      if(res){
+        navigate(`/ongoing-interview/${row.id}`);
+      }
+    }
 
     return (
         <React.Fragment>
@@ -26,7 +42,7 @@ function Row(props) {
                     <img src={row.companyLogo} />
                 </TableCell>
                 <TableCell component="th" scope="row" align='center' className='rowText'>
-                    {row.jobTitle}
+                    {row.title}
                 </TableCell>{" "}
                 <TableCell component="th" scope="row" align="center" className='rowText'>
                     {row.companyName}
@@ -44,7 +60,7 @@ function Row(props) {
                     {row.matchPercentage}%
                 </TableCell>
                 <TableCell component="th" scope="row" align="center" className='rowText'>
-                    <Link to={`/attend/${row.jobId}`} className="btn">Attend</Link>
+                    <button onClick={startInterview} className="btn">Attend</button>
                 </TableCell>
             </TableRow>
         </React.Fragment>
@@ -56,6 +72,10 @@ const ScheduledInterviewList = () => {
     const [appliedJobs, setAppliedJobs] = useState();
     const [searchParams, setSearchParams] = useState('');
     const [sortParams, setSortParams] = useState('');
+    const [filteredJobs,setFilteredJobs] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+  const [loaderMessage, setLoaderMessage] = useState("");
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
     const handleSearchParams = (e) => {
         setSearchParams(e.target.value);
@@ -67,6 +87,16 @@ const ScheduledInterviewList = () => {
 
 
     useEffect(() => {
+     
+      const getScheduledData = async () => {
+        const res = await getInterviewByStatus("SCHEDULED",accessToken);
+        if(res){
+          setFilteredJobs(res?.data?.data);
+          // setFilteredJobs(res)
+        }
+      }
+
+      getScheduledData();
         const filteredJobs = jobListings.filter(job => job.applied === true);
 
         if (filteredJobs) {
@@ -75,11 +105,13 @@ const ScheduledInterviewList = () => {
 
     }, [])
 
+    
+
     return (
         <Container1>
-            {appliedJobs &&
                 <StyledBox>
-                    <TableContainer component={Paper} className="tableBox">
+                  {isLoading&&<Loader message={loaderMessage}/>}
+                   {!isLoading && <TableContainer component={Paper} className="tableBox">
                         <span className='title'>Scheduled Interviews</span>
                         <SearchBarContainer>
                             <div className='skillBox'>
@@ -128,14 +160,14 @@ const ScheduledInterviewList = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody className="tableBody">
-                                {appliedJobs?.map((row, index) => (
-                                    <Row key={row.jobId} row={row} index={index} />
+                                {filteredJobs?.map((row, index) => (
+                                    <Row key={row.jobId} row={row} index={index} isLoading={isLoading} setIsLoading={setIsLoading} loaderMessage={loaderMessage} setLoaderMessage={setLoaderMessage}/>
                                 ))}
                             </TableBody>
                         </Table>
-                    </TableContainer>
+                    </TableContainer>}
                 </StyledBox>
-            }
+    
         </Container1>
     );
 };

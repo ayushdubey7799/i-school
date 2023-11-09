@@ -24,6 +24,7 @@ export const updateStatus = async (id, data, accessToken) => {
     console.log('Data:', response.data);
     return response.data;
   } catch (error) {
+    toast.error(error.message);
     console.error('Error:', error);
   }
 }

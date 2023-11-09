@@ -121,7 +121,7 @@ function JdForm({ array, handleClose }) {
     candidateAvl: '',
     hiringManager: '',
     recruiter: '',
-    jobSummary: '',
+    // jobSummary: '',
     jdUpload: null,
     visibility: '',
     autoReqNumbers: true
@@ -200,7 +200,6 @@ function JdForm({ array, handleClose }) {
     <Container>
       <h3>JD Registration</h3>
       <Form onSubmit={handleSubmit}>
-
         <TextField id="outlined-basic" label="JD ID (ABC_XX__)" variant="outlined" type='text' name="jdId" value={formData.jdId} onChange={handleChange} disabled={mode == "edit"} sx={{ backgroundColor: '#F6F6FB' }} size='small'
           inputProps={{
             sx: {
@@ -289,7 +288,7 @@ function JdForm({ array, handleClose }) {
             },
           }} />
 
-        <TextField id="outlined-basic" label="Description" variant="outlined"
+        {/* <TextField id="outlined-basic" label="Description" variant="outlined"
           name="description"
           value={formData.description}
           onChange={handleChange}
@@ -309,7 +308,12 @@ function JdForm({ array, handleClose }) {
               fontWeight: '400'
             },
           }}
-        />
+        /> */}
+
+<div className='fileInputBox'>
+          <Label>Job Description</Label>
+          <textarea name='description' value={formData.description} onChange={handleChange} rows={5}></textarea>
+        </div>
 
 
 
@@ -517,10 +521,10 @@ function JdForm({ array, handleClose }) {
           }} />
 
 
-        <div className='fileInputBox'>
+        {/* <div className='fileInputBox'>
           <Label>Job Description</Label>
           <textarea name='jobSummary' value={formData.jobSummary} onChange={handleChange} rows={5}></textarea>
-        </div>
+        </div> */}
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
           <InputLabel id="demo-simple-select-label">Worker Type</InputLabel>
