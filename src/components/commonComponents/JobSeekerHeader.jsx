@@ -12,41 +12,43 @@ import { logout } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
 
 const JobSeekerHeader = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const user = useSelector(state => state.auth.userData.user);
 
 
-    const handleLogout = () => {
-        persistor.purge();
-        dispatch(logout())
-        navigate("/");
-    };
+  const handleLogout = () => {
+    persistor.purge();
+    dispatch(logout())
+    navigate("/");
+  };
 
-    console.log(accessToken);
+  console.log(accessToken);
 
-    return (
-        <StyledDiv>
-            <div id="left">
-                <img src={logo} onClick={() => navigate("/")} />
-            </div>
+  return (
+    <StyledDiv>
+      <div id="left">
+        <img src={logo} onClick={() => navigate("/")} />
+      </div>
 
-            <div id="right">
-                <div className="profileIcon">
-                    <IconButton>
-                        <img src={profileIcon} className="profileImg" />
-                    </IconButton>
-                </div>
+      <div id="right">
+        <div className="profileIcon">
+          <IconButton>
+            <img src={profileIcon} className="profileImg" />
+          </IconButton>
+        </div>
 
-                <div class="dropdown" id="dropdown">
-                    <span onClick={() => navigate('/feedback')}>Feedback</span>
-                    <span onClick={() => navigate('/support')}>Help</span>
-                    <span onClick={() => navigate('/reset')}>Reset Password</span>
-                    <span onClick={handleLogout}>Logout</span>
-                </div>
-            </div>
-        </StyledDiv>
-    );
+        <div class="dropdown" id="dropdown">
+          <span className="titleText" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user.firstName}</b></span>
+          <span onClick={() => navigate('/feedback')}>Feedback</span>
+          <span onClick={() => navigate('/support')}>Help</span>
+          <span onClick={() => navigate('/reset')}>Reset Password</span>
+          <span onClick={handleLogout}>Logout</span>
+        </div>
+      </div>
+    </StyledDiv>
+  );
 };
 
 export default JobSeekerHeader;
@@ -112,6 +114,11 @@ const StyledDiv = styled.div`
     font-weight: 400;
     font-size: 0.8rem;
     border-radius: 0.5rem;
+
+    .titleText {
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
 }
 
 .dropdown span {
