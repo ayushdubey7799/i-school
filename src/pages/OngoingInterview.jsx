@@ -205,9 +205,9 @@ const OngoingInterview = ({ start, handleStart }) => {
                 <>
                   <div className="btnBox1">
                     <button
-                      onClick={() => {
-                        handleSubmitAnswer(data.id, data.lastQuestion);
-                        handleSubmitInterview();
+                      onClick={async () => {
+                        await handleSubmitAnswer(data.id, data.lastQuestion);
+                        await handleSubmitInterview();
                       }}
                       className="btn"
                     >
@@ -244,10 +244,11 @@ const OngoingInterview = ({ start, handleStart }) => {
                                 autoPlay
                                 loop
                               />
-                              <span>
-                                {status === 'idle' && <img src={idle} className="statusIcon"/>}
-                                {status === 'recording' && <img src={recording} className="statusIcon"/>}
-                                {status === 'stopped' && <img src={stopped} className="statusIcon"/>}
+                              <span id="status1">
+                                {status === 'idle' && <img id="idle" src={idle} className="statusIcon"/>}
+                                {status === 'recording' && <img id="rec" src={recording} className="statusIcon"/>}
+                                {status === 'stopped' && <img id="stop" src={stopped} className="statusIcon"/>}
+                                <span id="status2">{status}</span>
                               </span>
                             </AudioBox>
                           );
@@ -387,6 +388,17 @@ margin-top: 1rem;
 .btnImgBox {
   display: flex;
   gap: 2rem;
+}
+
+#status2{
+  font-size:0.6rem;
+  display: none;
+}
+
+#status1:hover{
+  #status2{
+    display:block;
+  }
 }
 `
 

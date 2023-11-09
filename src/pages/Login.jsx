@@ -35,7 +35,7 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const key = searchParams.get('key');
-  if(token){
+  if(key == "invite"){
     localStorage.setItem('token',token);
     localStorage.setItem('key',key);
   }

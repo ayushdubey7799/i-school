@@ -11,6 +11,7 @@ import EmpScheduledCandidateList from './sidebarPages/EmpScheduledCandidateList'
 import { useSelector } from 'react-redux';
 import { getStatusWiseCount } from '../../../functions/api/interview/getStatusWiseCount';
 import { getJdsForMatching } from '../../../functions/api/employers/match/getJdsForMatching';
+import { getProfiles } from '../../../functions/api/resume/getProfiles';
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -98,6 +99,8 @@ const EmployeMetrics = ({ page, setPage }) => {
   const [count,setCount] = useState(0);
   const [completed,setCompleted] = useState(0);
   const [scheduled,setScheduled] = useState(0);
+  const [poolCount,setPoolCount] = useState(0);
+
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.clientCode)
   useEffect(() => {
@@ -114,7 +117,18 @@ const EmployeMetrics = ({ page, setPage }) => {
       console.log(res);
     }
     getData();
+
+      const getCandidates = async () => {
+       const res = await getProfiles(accessToken,clientCode);
+       if(res){
+         setPoolCount(res?.data?.data?.length);
+       }
+      }
+   
+      getCandidates();
+   
   },[currMetric])
+
 
 
   useEffect(() => {
@@ -159,7 +173,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'candidatesPool' ? 'selected' : ''}`} onClick={() => setCurrMetric('candidatesPool')}>
           <div className='top'>
             <img src={metric4} />
-            <span className='achievedNumberDigit'>0</span>
+            <span className='achievedNumberDigit'>{poolCount?poolCount:0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Candidates Pool</span>

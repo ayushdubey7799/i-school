@@ -53,9 +53,6 @@ export default function InterviewSubmittedModal({ scoreModal, setScoreModal, int
               <button onClick={(e) => handleGetScore(e)}>
                 Get Score
               </button>
-              <button onClick={(e) => navigate("/interview")}>
-                Give Another Interview
-              </button>
             </div>
           </StyledForm>
         </Box>

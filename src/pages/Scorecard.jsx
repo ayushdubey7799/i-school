@@ -23,6 +23,8 @@ const Scorecard = () => {
     const [time, setTime] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
+        if(document.fullscreenElement)document.exitFullscreen();
+
         if (!accessToken) navigate("/login");
         async function fetchScore(id, accessToken) {
             setIsLoading(true);

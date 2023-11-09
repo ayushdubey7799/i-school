@@ -32,17 +32,14 @@ const EnhanceResume = () => {
     <Component>
       <Form onSubmit={handleSubmit}>
         <>
-          <span className='title'>Upload your current Resume</span>
-          <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
-          <FileInput
+          <textarea
             id='input'
-            type="file"
-            accept=".pdf,.doc,.docx"
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
+            rows={6}
+            
+            style={{marginBottom: "2rem", width: '30rem',height: "2rem" }}
           />
         </>
-        <SubmitButton type="submit">Enhance Resume</SubmitButton>
+        <SubmitButton type="submit">Create Cover Letter</SubmitButton>
       </Form>
     </Component>
   )

@@ -50,7 +50,7 @@ const Proctored = () => {
     if (document.visibilityState === "hidden") {
       idRef.current = setTimeout(() => {
         navigate('/dashboard/interviews')
-      }, 3000)
+      }, 3000000)
 
     }
   };
@@ -107,10 +107,10 @@ const Warning = ({ array }) => {
       document.documentElement.requestFullscreen();
       setOpen(false)
     }}>Back to Interview</button>
-    <button onClick={() => {
+    {/* <button onClick={() => {
       navigate("/dashboard/interviews")
       toast.success("Interview submitted")
-    }}>Submit Interview</button>
+    }}>Submit Interview</button> */}
   </div>
 }
 
