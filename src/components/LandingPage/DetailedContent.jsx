@@ -153,7 +153,7 @@ margin-top: 5rem;
 }
 
 .topTitle {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
 }
 
@@ -240,7 +240,7 @@ margin-top: 5rem;
 }
 
 .visualDetailTitle {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
 }
@@ -297,7 +297,7 @@ margin-top: 5rem;
 
 
 .contactSectionTitle {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--white);
     text-align: center;
@@ -361,7 +361,7 @@ margin-top: 5rem;
 }
 
 .productTitle {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     text-align: center;
 }
@@ -438,7 +438,7 @@ margin-top: 5rem;
 
 
 .contactSectionBottomTitle {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--white);
     text-align: center;
