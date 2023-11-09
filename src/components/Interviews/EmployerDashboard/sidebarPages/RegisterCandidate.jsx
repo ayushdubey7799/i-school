@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import browseIcon from '../../../../assets/icons/browse.png'
 import { TextField } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Container = styled.div`
   width:90%;
@@ -59,7 +63,7 @@ const Form = styled.div`
   }
 
   #outlined-basic {
-    padding: 0.5rem 0;
+    padding: 0.5rem 0.5rem;
     background-color: #F6F6FB;
   }
   
@@ -107,6 +111,7 @@ const RegisterCandidate = () => {
   const [email, setEmail] = useState('');
   const [contact, setContact] = useState('');
   const [ref, setRef] = useState('');
+  const [refText, setRefText] = useState('');
 
 
   const handleFileChange = (e) => {
@@ -192,12 +197,49 @@ const RegisterCandidate = () => {
                 fontWeight: '400'
               },
             }}
+            required
           />
 
-          <TextField id="outlined-basic" label="Referral/Source" variant="outlined"
+          <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+            <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Select Referral/Source</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={ref}
+              label="Select Referral/Source"
+              onChange={(e) => setRef(e.target.value)}
+              size='small'
+              inputProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              sx={{
+                padding: '0rem 0 0.5rem 0',
+              }}
+            >
+              <MenuItem value='EmployeeReferral'>Employee Referral</MenuItem>
+              <MenuItem value='Agency'>Agency</MenuItem>
+              <MenuItem value='InternalSourcing'>Internal Sourcing</MenuItem>
+              <MenuItem value='SocialMedia'>Social Media</MenuItem>
+              <MenuItem value='CompanyPortal'>Company Portal</MenuItem>
+              <MenuItem value='Other'>Others</MenuItem>
+            </Select>
+          </FormControl>
+
+          {ref && <TextField id="outlined-basic" label="Referral/Source text" variant="outlined"
             type='text'
-            value={ref}
-            onChange={(e) => setRef(e.target.value)}
+            value={refText}
+            onChange={(e) => setRefText(e.target.value)}
             size='small'
             inputProps={{
               sx: {
@@ -213,7 +255,7 @@ const RegisterCandidate = () => {
                 fontWeight: '400'
               },
             }}
-          />
+          />}
 
           <div className='resumeBox'>
             <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>

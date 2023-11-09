@@ -55,7 +55,7 @@ const Form = styled.form`
   gap: 1rem;
 
   #outlined-basic {
-    padding: 0.5rem 0;
+    padding: 0.5rem 0.5rem;
     background-color: #F6F6FB;
   }
 
