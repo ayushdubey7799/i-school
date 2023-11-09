@@ -19,6 +19,9 @@ import { submitAnswerWithFile } from "../functions/api/interview/submitAnswerWit
 import { ReactMediaRecorder } from "react-media-recorder";
 import startRecBtn from '../assets/icons/startRecBtn.png'
 import stopRecBtn from '../assets/icons/stopRecBtn.png'
+import idle from '../assets/icons/recStatusIdle.png'
+import recording from '../assets/icons/recStatusRecording.png'
+import stopped from '../assets/icons/recStatusStopped.png'
 
 const OngoingInterview = ({ start, handleStart }) => {
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -150,6 +153,7 @@ const OngoingInterview = ({ start, handleStart }) => {
     console.log(fetchedData);
     setData(fetchedData?.data[0]);
     setIsLoading(false);
+    setInput('');
     handleStart();
     startTimer();
   }
@@ -240,7 +244,11 @@ const OngoingInterview = ({ start, handleStart }) => {
                                 autoPlay
                                 loop
                               />
-                              <span>{status}</span>
+                              <span>
+                                {status === 'idle' && <img src={idle} className="statusIcon"/>}
+                                {status === 'recording' && <img src={recording} className="statusIcon"/>}
+                                {status === 'stopped' && <img src={stopped} className="statusIcon"/>}
+                              </span>
                             </AudioBox>
                           );
                         }}
@@ -283,6 +291,10 @@ const StyledInterview = styled.div`
   margin: 3rem auto;
   margin-top: 8rem;
   gap: 2rem;
+
+  .statusIcon {
+    width: 1.5rem;
+  }
 
   .timer {
     width: 3rem;

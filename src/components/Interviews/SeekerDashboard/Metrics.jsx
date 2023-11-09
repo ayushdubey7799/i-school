@@ -16,6 +16,10 @@ import { seekerMetric2 } from '../../../utils/contantData';
 import { seekerMetric3 } from '../../../utils/contantData';
 import { seekerMetric4 } from '../../../utils/contantData';
 
+import { getInterviewByStatus } from '../../../functions/api/getInterviewByStatus';
+import InterviewList from '../InterviewList';
+import ScheduledInterviewList from '../ScheduledInterviewList';
+
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -100,6 +104,8 @@ const Metrics = () => {
   const [currMetric, setCurrMetric] = useState('interviewScheduled');
   const [metrics,setMetrics] = useState([]);
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const [filteredData, setFilteredData] = useState({});
+  const [value, setValue] = useState("COMPLETED");
 
   useEffect(() => {
     const getCount = async () => {
@@ -109,6 +115,16 @@ const Metrics = () => {
     }
     getCount();
   },[currMetric])
+
+  useEffect(() => {
+    async function getData(value) {
+      const response = await getInterviewByStatus(value, accessToken);
+      if (response) {
+        setFilteredData(response);
+      }
+    }
+    getData(value);
+  }, [value]);
 
 
   return (
@@ -150,8 +166,8 @@ const Metrics = () => {
 
       {currMetric === 'recommendedJobs' && <RecommendedJobs />}
       {currMetric === 'appliedJobs' && <JobApplication />}
-      {currMetric === 'interviewCompleted' && <InterviewTabs />}
-      {currMetric === 'interviewScheduled' && <InterviewTabs />}
+      {currMetric === 'interviewCompleted' && <InterviewList filteredData={filteredData} />}
+      {currMetric === 'interviewScheduled' && <ScheduledInterviewList />}
     </MainContainer>
   );
 };
