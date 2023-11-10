@@ -20,9 +20,35 @@ import searchBlack from '../../../../assets/icons/searchBlack.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
 import editIcon from '../../../../assets/icons/edit.png'
 import visibleIcon from '../../../../assets/icons/visible.png'
+import CommonDrawer from "../../../commonComponents/CommonDrawer";
+import Billing from "./Billing";
+import CommonDialog from "../../../commonComponents/CommonDialog";
 
 function Row(props) {
   const { row, index } = props;
+
+  // State, function to Open and close Dialog Box
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  // State, function to open and close Drawer
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
 
   return (
     <React.Fragment>
@@ -38,9 +64,11 @@ function Row(props) {
         <TableCell align="center">...</TableCell>
         <TableCell align="center">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
+            <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen}/>
+            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
             <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleClickOpen}/>
           </div>
         </TableCell>
       </TableRow>

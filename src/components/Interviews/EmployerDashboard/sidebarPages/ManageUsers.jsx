@@ -15,114 +15,128 @@ import unVisible from "../../../../assets/icons/unVisible.png";
 import editIcon from "../../../../assets/icons/edit.png";
 import deleteIcon from "../../../../assets/icons/delete.png";
 import threeDot from "../../../../assets/icons/threeDot.png";
+import CommonDialog from "../../../commonComponents/CommonDialog";
 
 function Row(props) {
-    const { row, index } = props;
+  const { row, index } = props;
 
-    const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
-    const openDropdown = (index) => {
-        setOpenDropdownIndex(index);
-    };
+  // State, function to Open and close Dialog Box
+  const [open, setOpen] = React.useState(false);
 
-    const closeAllDropdowns = () => {
-        setOpenDropdownIndex(-1);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const handleEdit = () => {
-        console.log("Edit");
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleDelete = () => {
-        console.log("Delete");
-    };
 
-    const handleDeactivate = () => {
-        console.log("Deactivate");
-    }
+  const openDropdown = (index) => {
+    setOpenDropdownIndex(index);
+  };
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}
-                className={`${index % 2 == 1 ? "colored" : ""}`}
+  const closeAllDropdowns = () => {
+    setOpenDropdownIndex(-1);
+  };
+
+  const handleEdit = () => {
+    console.log("Edit");
+  };
+
+  const handleDelete = () => {
+    console.log("Delete");
+  };
+
+  const handleDeactivate = () => {
+    console.log("Deactivate");
+  }
+
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }}
+        className={`${index % 2 == 1 ? "colored" : ""}`}
+      >
+        <TableCell component="th" scope="row" align="center">
+          ...
+        </TableCell>{" "}
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">
+          <BoxRow>
+            <img
+              src={threeDot}
+              style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
+              className={`three-dots ${openDropdownIndex === index ? "active" : ""
+                }`}
+              onClick={() => {
+                if (openDropdownIndex === index) {
+                  closeAllDropdowns();
+                } else {
+                  openDropdown(index);
+                }
+              }}
+            />
+            <div
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
+                }`}
             >
-                <TableCell component="th" scope="row" align="center">
-                    ...
-                </TableCell>{" "}
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">
-                    <BoxRow>
-                        <img
-                            src={threeDot}
-                            style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
-                            className={`three-dots ${openDropdownIndex === index ? "active" : ""
-                                }`}
-                            onClick={() => {
-                                if (openDropdownIndex === index) {
-                                    closeAllDropdowns();
-                                } else {
-                                    openDropdown(index);
-                                }
-                            }}
-                        />
-                        <div
-                            className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
-                                }`}
-                        >
-                            <span onClick={handleEdit}>
-                                Edit <img src={editIcon} className="threeDotIcon" />
-                            </span>
-                            <span onClick={handleDelete}>
-                                Delete <img src={deleteIcon} className="threeDotIcon" />
-                            </span>
-                            <span onClick={handleDeactivate}>
-                                Deactivate <img src={unVisible} className="threeDotIcon" />
-                            </span>
-                        </div>
-                    </BoxRow>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+              <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen} />
+              <span onClick={handleEdit}>
+                Edit <img src={editIcon} className="threeDotIcon" />
+              </span>
+              <span onClick={handleClickOpen}>
+                Delete <img src={deleteIcon} className="threeDotIcon" />
+              </span>
+              <span onClick={handleDeactivate}>
+                Deactivate <img src={unVisible} className="threeDotIcon" />
+              </span>
+            </div>
+          </BoxRow>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 export default function ManageUsers() {
-    const [openBasic, setOpenBasic] = useState(false);
+  const [openBasic, setOpenBasic] = useState(false);
 
-    return (
-        <StyledDiv>
-            <TableContainer component={Paper} className="tableBox">
-            <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={manageUserForm} array={[null, "create"]} />
-                <Component>
-                    <span className="title">Manage Users</span>
+  return (
+    <StyledDiv>
+      <TableContainer component={Paper} className="tableBox">
+        <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={manageUserForm} array={[null, "create"]} />
+        <Component>
+          <span className="title">Manage Users</span>
 
-                    <div className='btnBox'>
-                        <EditButton onClick={() => setOpenBasic(true)}>Add User</EditButton>
-                    </div>
-                </Component>
+          <div className='btnBox'>
+            <EditButton onClick={() => setOpenBasic(true)}>Add User</EditButton>
+          </div>
+        </Component>
 
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center">Name</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">Contact</TableCell>
-                            <TableCell align="center">Role</TableCell>
-                            <TableCell align="center">Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {users?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </StyledDiv>
-    );
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Contact</TableCell>
+              <TableCell align="center">Role</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {users?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </StyledDiv>
+  );
 }
 
 const StyledDiv = styled.div`

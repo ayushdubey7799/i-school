@@ -56,6 +56,7 @@ import SelectCVTempPage from "./pages/SelectCVTempPage"
 import CreateResumePage from "./pages/CreateResumePage"
 import Invite from "./components/Interviews/EmployerDashboard/Schedule/Invite"
 import InviteSuccess from "./components/Interviews/EmployerDashboard/Schedule/InviteSuccess"
+import CommonDialog from "./components/commonComponents/CommonDialog"
 
 
 
@@ -124,6 +125,8 @@ const App = () => {
 
           <Route path="/create-resume" element={<SelectCVTempPage />} />
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
+
+          <Route path="/trial" element={<CommonDialog/>}/>
 
         </Routes>
       </ScrollToTop>
