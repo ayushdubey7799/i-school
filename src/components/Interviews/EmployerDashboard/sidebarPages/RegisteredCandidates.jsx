@@ -17,6 +17,8 @@ import { getProfiles } from "../../../../functions/api/resume/getProfiles";
 import { useSelector } from "react-redux";
 import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import CommonDialog from "../../../commonComponents/CommonDialog";
+import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
+import { toast } from "react-toastify";
 function Row(props) {
   const { row, index } = props;
 
@@ -30,7 +32,14 @@ function Row(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
+  // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
+  const handleDelete = () => {
+    console.log('deleted');
+    handleClose();
+    toast.success('Deleted Successfully');
+  }
+
   // State, function to open and close Drawer
   const [state, setState] = React.useState({
     right: false,
@@ -61,11 +70,11 @@ function Row(props) {
         </TableCell>
         <TableCell align="center">
           <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-          <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen}/>
+          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='Candidate Data' handleClose={handleClose} handleDelete={handleDelete} />} />
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
             <img src={shareIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleClickOpen}/>
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleClickOpen} />
           </div>
         </TableCell>
 
@@ -309,9 +318,10 @@ const SearchBarContainer = styled.div`
     border: none;
     background-color: #ececec;
     border-radius: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 50%;
     outline: none;
+    color: #757B80;
 
     option {
     font-size: 0.8rem;

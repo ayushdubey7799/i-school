@@ -23,9 +23,15 @@ import visibleIcon from '../../../../assets/icons/visible.png'
 import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import Billing from "./Billing";
 import CommonDialog from "../../../commonComponents/CommonDialog";
+import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 
 function Row(props) {
   const { row, index } = props;
+
+  const handleDelete = () => {
+    console.log('deleted');
+    handleClose();
+  }
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -37,7 +43,7 @@ function Row(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   // State, function to open and close Drawer
   const [state, setState] = React.useState({
     right: false,
@@ -65,10 +71,10 @@ function Row(props) {
         <TableCell align="center">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-            <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen}/>
+            <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} />} />
             <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
             <img src={editIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleClickOpen}/>
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleClickOpen} />
           </div>
         </TableCell>
       </TableRow>
@@ -265,10 +271,11 @@ const SearchBarContainer = styled.div`
     border: none;
     background-color: #ececec;
     border-radius: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 50%;
     outline: none;
-
+    color: #757B80;
+    
     option {
     font-size: 0.8rem;
     font-weight: 400;

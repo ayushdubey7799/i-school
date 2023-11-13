@@ -12,41 +12,41 @@ const Subscription = () => {
             </div>
 
             <div className='container'>
-                <div className='box1 box'>
-                    <span className='boxTitle'>Start</span>
-                    <span className='boxPricing'>Free</span>
+                <div className='box'>
+                    <span className='boxTitle'>Free</span>
+                    <span className='boxSubTitle'>$0</span>
 
-                    <span className='boxSubTitle'>1 User</span>
-                    <span className='boxSubTitle'>1 Project</span>
+                    <button className='btn'>Contact Us</button>
 
-                    <button className='btn'>Order Now</button>
+                    <div className='mainFeature'>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 3 Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                    </div>
                 </div>
-                <div className='box2 box'>
-                    <span className='boxTitle'>Basic</span>
-                    <span className='boxPricing'>$19</span>
+                <div className='box'>
+                    <span className='boxTitle'>Starter</span>
+                    <span className='boxSubTitle'>Ask for Pricing</span>
 
-                    <span className='boxSubTitle'>5 Users</span>
-                    <span className='boxSubTitle'>20 Projects</span>
+                    <button className='btn'>Contact Us</button>
 
-                    <button className='btn'>Order Now</button>
+                    <div className='mainFeature'>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 10 Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                    </div>
                 </div>
-                <div className='box3 box'>
-                    <span className='boxTitle'>Medium</span>
-                    <span className='boxPricing'>$49</span>
+                <div className='box'>
+                    <span className='boxTitle'>Growth</span>
+                    <span className='boxSubTitle'>Ask for Pricing</span>
 
-                    <span className='boxSubTitle'>100 Users</span>
-                    <span className='boxSubTitle'>100 Projects</span>
+                    <button className='btn'>Contact Us</button>
 
-                    <button className='btn'>Order Now</button>
-                </div>
-                <div className='box4 box'>
-                    <span className='boxTitle'>Expert</span>
-                    <span className='boxPricing'>$129</span>
-
-                    <span className='boxSubTitle'>Unlimited Users</span>
-                    <span className='boxSubTitle'>Unlimited Projects</span>
-
-                    <button className='btn'>Order Now</button>
+                    <div className='mainFeature'>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 50 Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                    </div>
                 </div>
             </div>
         </MainBox>
@@ -57,12 +57,12 @@ export default Subscription
 
 
 const MainBox = styled.div`
-width: 100%;
+width: 90%;
 display: flex;
 flex-direction: column;
 gap: 3rem;
 align-items: center;
-margin: 2rem 0 3rem 0;
+margin: 2rem 0;
 
 
 
@@ -78,69 +78,69 @@ margin: 2rem 0 3rem 0;
 .container {
     display: flex;
     flex-direction: row;
-    width: 90%;
+    width: 100%;
     justify-content: space-evenly;
-
+    gap: 1rem;
 }
 
 .box {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 2rem;
+    padding: 2rem 1rem;
+    border: 0.05rem solid lightgrey;
+    border-radius: 1rem;
     color: var(--color);
     background-color: var(--white);
-    gap: 1rem;
+    gap: 0.5rem;
     width: 35%;
-}
-
-.box1 {
-    background-color: #B4CCCF;
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-}
-
-.box2 {
-    background-color: lightgrey;
-}
-
-.box3 {
-    background-color: #cec;
-}
-
-.box4 {
-    background-color: var(--white);
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    align-items: center;
 }
 
 .boxTitle {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 700;
 }
 
 .boxSubTitle {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
-    // color: rgb(91, 101, 128);
 }
 
-.boxPricing {
-    font-size: 3rem;
-    font-weight: 700;
-}
 
 .btn {
     font-size: 1rem;
     font-weight: 600;
-    background-color: var(--white);
-    color: var(--lightOrange);
-    border: 0.05rem solid grey;
+    background-color: var(--lightOrange);
+    color: var(--white);
+    border: 0.1rem solid #19D8CE;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
+    margin-top: 1rem;
 }
 
+
+.mainFeature {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem 0;
+}
+
+
+.featureDot {
+    width: 0.6rem;
+    height: 0.6rem;
+}
+
+.featureText {
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    text-wrap: break-word;
+}
 
 
 .title {
@@ -155,5 +155,3 @@ margin: 2rem 0 3rem 0;
 }
 
 `
-
-
