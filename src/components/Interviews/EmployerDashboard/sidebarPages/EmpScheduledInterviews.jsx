@@ -168,9 +168,10 @@ const SearchBarContainer = styled.div`
     border: none;
     background-color: #ececec;
     border-radius: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 50%;
     outline: none;
+    color: #757B80;
 
     option {
     font-size: 0.8rem;
