@@ -88,9 +88,11 @@ const Input = styled.input`
 
 
 const Button = styled.button`
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 1.5rem;
   background-color: var(--lightOrange);
   color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
   border: none;
   border-radius: 0.3rem;
   cursor: pointer;

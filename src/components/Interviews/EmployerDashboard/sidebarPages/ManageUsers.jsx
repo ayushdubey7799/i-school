@@ -16,6 +16,7 @@ import editIcon from "../../../../assets/icons/edit.png";
 import deleteIcon from "../../../../assets/icons/delete.png";
 import threeDot from "../../../../assets/icons/threeDot.png";
 import CommonDialog from "../../../commonComponents/CommonDialog";
+import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 
 function Row(props) {
   const { row, index } = props;
@@ -48,6 +49,7 @@ function Row(props) {
 
   const handleDelete = () => {
     console.log("Delete");
+    handleClose();
   };
 
   const handleDeactivate = () => {
@@ -85,7 +87,7 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
                 }`}
             >
-              <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen} />
+              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='user' handleDelete={handleDelete} />} />
               <span onClick={handleEdit}>
                 Edit <img src={editIcon} className="threeDotIcon" />
               </span>

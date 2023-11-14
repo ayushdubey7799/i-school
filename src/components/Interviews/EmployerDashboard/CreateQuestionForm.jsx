@@ -1,44 +1,63 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { TextField } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 1rem;
+
+
+  #outlined-basic {
+    padding: 0.5rem 0.5rem;
+    background-color: #F6F6FB;
+  }
+
+  .textAreaBox {
+    width: 100%;
+    position: relative;
+    margin-top: 0.5rem;
+
+    label {
+      font-size: 0.7rem;
+  font-weight: 600;
+  position: absolute;
+  top: -0.5rem;
+  left: 0.5rem;
+  padding: 0 0.5rem;
+  background-color: var(--white);
+    }
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding-bottom: 1rem;
+  gap: 0.7rem;
 `;
 
 const Label = styled.label`
 font-size: 0.8rem;
   margin-bottom: 8px;
-  font-weight: bold;
-`;
-
-const Input = styled.input`
-  padding: 1rem;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  font-weight: 600;
 `;
 
 const Textarea = styled.textarea`
   padding: 10px;
+  width: 100%;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
+  outline-color: #1976d2;
+    background-color: #F6F6FB;
 `;
 
-const Select = styled.select`
-  padding: 1rem;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
 
 const Button = styled.button`
   padding: 0.6rem 1rem;
@@ -150,67 +169,156 @@ function CreateQuestionForm() {
     <Container>
       <h3>Create Question Form</h3>
       <Form onSubmit={editingIndex === -1 ? handleAddQuestion : handleUpdateQuestion}>
-        <Label>Type</Label>
-        <Select
-          name="type"
-          value={formData.type}
-          onChange={handleChange}
-        >
-          <option value="">Select Type</option>
-          <option value="Subjective">Subjective</option>
-          <option value="Objective">Objective</option>
-        </Select>
 
-        <Label>Tag</Label>
-        <Input
-          type="text"
+        <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Question Type</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Question Type"
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            sx={{
+              padding: '0rem 0 0.5rem 0',
+            }}
+          >
+            <MenuItem value="Subjective">Subjective</MenuItem>
+            <MenuItem value="Objective">Objective</MenuItem>
+            <MenuItem value="Coding">Coding</MenuItem>
+          </Select>
+        </FormControl>
+
+        <TextField id="outlined-basic" label="Tag" variant="outlined"
+          type='text'
           name="tag"
           value={formData.tag}
           onChange={handleChange}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
         />
 
-        <Label>Que Description</Label>
-        <Textarea
-          name="description"
-          rows={5}
-          value={formData.description}
-          onChange={handleChange}
-        />
+        <div className='textAreaBox'>
+          <label>Que Description</label>
+          <Textarea
+            name="description"
+            rows={5}
+            value={formData.description}
+            onChange={handleChange}
+          />
+        </div>
 
-        <Label>Test Id</Label>
-        <Input
-          type="text"
-          name="testId"
-          value={formData.testId}
-          onChange={handleChange}
-        />
-
-        <Label>Category (Optional) </Label>
-        <Input
-          type="text"
-          name="addType"
-          value={formData.addType}
-          onChange={handleChange}
-        />
+        <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category (Optional)</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Category (Optional)"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            size='small'
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            sx={{
+              padding: '0rem 0 0.5rem 0',
+            }}
+          >
+            <MenuItem value="Technical">Technical</MenuItem>
+            <MenuItem value="Non-technical">Non-technical</MenuItem>
+            <MenuItem value="Aptitude">Aptitude</MenuItem>
+            <MenuItem value="Cultural">Cultural</MenuItem>
+          </Select>
+        </FormControl>
 
         {formData.type === 'Objective' && (
           <>
             <Label>Choices</Label>
             {formData.choices.map((choice, index) => (
               <div key={index}>
-                <Input
-                  type="text"
+                <TextField id="outlined-basic" label={index + 1} variant="outlined"
+                  type='text'
                   value={choice}
                   onChange={(e) => handleChoiceChange(e, index)}
+                  size='small'
+                  inputProps={{
+                    sx: {
+                      color: '#626264',
+                      fontSize: '0.8rem',
+                      fontWeight: '400'
+                    },
+                  }}
+                  InputLabelProps={{
+                    sx: {
+                      color: '#626264',
+                      fontSize: '0.8rem',
+                      fontWeight: '400'
+                    },
+                  }}
                 />
               </div>
             ))}
-            <Label>Correct Answer</Label>
-            <Input
-              type="text"
+
+            <TextField id="outlined-basic" label="Correct Answer" variant="outlined"
+              type='text'
               name="correctAnswer"
               value={formData.correctAnswer}
               onChange={handleChange}
+              size='small'
+              inputProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
             />
           </>
         )}
@@ -238,7 +346,6 @@ function CreateQuestionForm() {
                 <p>Correct Answer: {question.correctAnswer}</p>
               </>
             )}
-            <p>Test Id: {question.testId}</p>
 
             <div className='btnBox'>
               <Button onClick={() => handleEditQuestion(index)}>Edit</Button>

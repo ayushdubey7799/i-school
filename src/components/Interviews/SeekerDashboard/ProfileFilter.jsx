@@ -97,6 +97,7 @@ function ProfileFilter() {
   const [noticePeriod, setNoticePeriod] = useState('');
   const [companyType, setCompanyType] = useState('');
   const [candidateAvl, setCandidateAvl] = useState('');
+  const [profileMatch, setProfileMatch] = useState('');
 
   const handleWorkModeChange = (inp) => {
     setWorkMode(inp);
@@ -122,6 +123,10 @@ function ProfileFilter() {
     setCandidateAvl(inp);
   }
 
+  const handleProfileMatchChange = (inp) => {
+    setProfileMatch(inp);
+  }
+
 
   const toggleDropdown = () => {
     if (buttonRef.current) {
@@ -143,6 +148,7 @@ function ProfileFilter() {
     setNoticePeriod('');
     setCompanyType('');
     setCandidateAvl('');
+    setProfileMatch('');
   };
 
   const applyFilters = () => {
@@ -397,6 +403,47 @@ function ProfileFilter() {
               </div>
             </InputBox>
 
+            <InputBox>
+              <span className="title">Profile Match %</span>
+              <div className="childInputBox">
+                <label>
+                  <input
+                    type="checkbox"
+                    value="40-60"
+                    onChange={() => handleProfileMatchChange('40-60')}
+                  /> 40-60 %
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="60-75"
+                    onChange={() => handleProfileMatchChange('60-75')}
+                  /> 60-75 %
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="75-85"
+                    onChange={() => handleProfileMatchChange('75-85')}
+                  /> 75-85 %
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="85-95"
+                    onChange={() => handleProfileMatchChange('85-95')}
+                  /> 85-95 %
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="95-100"
+                    onChange={() => handleProfileMatchChange('95-100')}
+                  /> 95-100 %
+                </label>
+              </div>
+            </InputBox>
+
           </div>
         </div>
       )}
@@ -425,6 +472,11 @@ gap: 0.5rem;
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    cursor: pointer;
+  }
+
+  input {
+    cursor: pointer;
   }
 }
 

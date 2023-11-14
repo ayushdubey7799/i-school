@@ -18,9 +18,15 @@ import threeDot from '../../../../assets/icons/threeDot.png'
 import shareIcon from '../../../../assets/icons/share.png'
 import shareWithEmp from '../../../../assets/icons/shareWithEmp.png'
 import eyeIcon from '../../../../assets/icons/visible.png'
+import exportIcon from '../../../../assets/icons/export.png'
 import { getJdsForMatching } from '../../../../functions/api/employers/match/getJdsForMatching';
 import CommonDrawer from '../../../commonComponents/CommonDrawer';
 import CommonDialog from '../../../commonComponents/CommonDialog';
+import JdDetails from '../../../../pages/JdDetails';
+import ExportDialogContent from '../../../commonComponents/ExportDialogContent';
+import { toast } from 'react-toastify';
+import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
+import AgencyShareDialogContent from '../../../commonComponents/AgencyShareDialogContent';
 
 
 function Row(props) {
@@ -38,7 +44,19 @@ function Row(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
+  // State, function to Open and close Dialog Box
+  const [openShareAgency, setOpenShareAgency] = React.useState(false);
+
+  const handleClickOpenShareAgency = () => {
+    setOpenShareAgency(true);
+  };
+
+  const handleCloseShareAgency = () => {
+    setOpenShareAgency(false);
+  };
+
+
   // State, function to open and close Drawer
   const [state, setState] = React.useState({
     right: false,
@@ -65,13 +83,15 @@ function Row(props) {
     console.log('Edit')
   }
 
+  const handleDelete = () => {
+    console.log('deleted');
+    handleClose();
+  }
+
   const handleShareSocial = () => {
     console.log('Share Social')
   }
 
-  const handleShareAgency = () => {
-    console.log('Share Agency')
-  }
 
 
   return (
@@ -111,12 +131,13 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`}
             >
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-              <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen}/>
+              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} />} />
+              <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
               <span onClick={handleEdit}>Edit <img src={editIcon} className='threeDotIcon' /></span>
               <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
               <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
               <span onClick={handleShareSocial}>Share on Social <img src={shareIcon} className='threeDotIcon' /></span>
-              <span onClick={handleShareAgency}>Share with Agency <img src={shareWithEmp} className='threeDotIcon' /></span>
+              <span onClick={handleClickOpenShareAgency}>Share with Agency <img src={shareWithEmp} className='threeDotIcon' /></span>
             </div>
           </BoxRow>
         </TableCell>
@@ -140,6 +161,24 @@ const ActiveJds = () => {
     getData();
   }, []);
 
+  // State, function to Open and close Export Dialog Box
+  const [openExport, setOpenExport] = React.useState(false);
+
+  const handleExportClickOpen = () => {
+    setOpenExport(true);
+  };
+
+  const handleExportClose = () => {
+    setOpenExport(false);
+  };
+
+  // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
+  const handleExport = () => {
+    console.log('Exported');
+    handleExportClose();
+    toast.success('Exported Successfully');
+  }
+
   const handleSearchParams = (e) => {
     setSearchParams(e.target.value);
   }
@@ -158,7 +197,11 @@ const ActiveJds = () => {
 
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <span className='title'>Active JDs</span>
+          <CommonDialog open={openExport} handleClose={handleExportClose} component={<ExportDialogContent handleClose={handleExportClose} handleExport={handleExport} />} />
+          <span className='titleBox'>
+            <span className='title'>Active JDs</span>
+            <span className='btn' onClick={handleExportClickOpen}><img src={exportIcon} className='icon' />Export</span>
+          </span>
           <SearchBarContainer>
             <div className='skillBox'>
               <img src={searchBlack} />
@@ -229,17 +272,39 @@ const StyledBox = styled.div`
     background-color: #ececec;
   }
 
+  
+
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
     border-radius: 0.5rem;
     padding-top: 1rem;
 
 
-    .title {
-      padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+    .titleBox {
+      display: flex;
+      padding: 0 1rem;
+      justify-content: space-between;
+      
+
+      .title {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .btn {
+        font-size: 0.9rem;
+        font-weight: 600;
+        background-color: var(--lightOrange);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .icon {
+        width: 1rem;
+      }
     }
+    
   }
 
   .MuiTableCell-root {
@@ -344,9 +409,10 @@ const SearchBarContainer = styled.div`
     border: none;
     background-color: #ececec;
     border-radius: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 50%;
     outline: none;
+    color: #757B80;
 
     option {
     font-size: 0.8rem;
@@ -402,3 +468,4 @@ const BoxRow = styled.div`
   border-radius: 0.2rem;
 }
 `
+

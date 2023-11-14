@@ -55,15 +55,16 @@ function EmployerDetails({ handleClose }) {
   const user = useSelector(state => state.auth.userData.user);
   const [formData, setFormData] = useState({
     company: "",
-    coordinatorName: user.firstName,
+    coordinatorName: user.firstName.toUpperCase(),
     industry: "",
     employees: "",
-    location: user.city,
-    address: user.address,
+    location: user.city.toUpperCase(),
+    address: user.address.toUpperCase(),
     email: user.email,
-    contact: user.primaryContact,
+    contact: user.primaryContact.toUpperCase(),
     legalContact: "",
   });
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({

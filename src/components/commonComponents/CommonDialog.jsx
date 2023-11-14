@@ -1,9 +1,8 @@
 import React from 'react'
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 
 
-const CommonDialog = ({ handleClickOpen, handleClose, open, Component }) => {
+const CommonDialog = ({ handleClose, open, component }) => {
 
     return (
         <React.Fragment>
@@ -13,8 +12,7 @@ const CommonDialog = ({ handleClickOpen, handleClose, open, Component }) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                {Component && <Component />}
-                <p style={{ padding: '2rem' }}></p>
+                {component && component}
             </Dialog>
         </React.Fragment>
     );

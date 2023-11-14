@@ -28,6 +28,8 @@ import { useSelector } from 'react-redux';
 import { deleteJd } from '../../../../functions/api/employers/deleteJd';
 import { toast } from 'react-toastify';
 import CloneJDForm from './CloneJDForm';
+import CommonDialog from '../../../commonComponents/CommonDialog';
+import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 
 
 function Row(props) {
@@ -42,17 +44,26 @@ function Row(props) {
   }
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this jd!")) {
-      const res = await deleteJd(id, accessToken, clientCode);
-      if (res) {
-        toast.success("Successfully Deleted");
-      }
-      else {
-        toast.error("Error Occured")
-      }
+    const res = await deleteJd(id, accessToken, clientCode);
+    if (res) {
+      toast.success("Successfully Deleted");
     }
-
+    else {
+      toast.error("Error Occured")
+    }
+    handleClose();
   }
+
+  // State, function to Open and close Dialog Box
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -82,8 +93,9 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
+          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='Candidate Data' handleClose={handleClose} handleDelete={handleDelete} deleteId={row.id} />} />
             <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} onClick={() => handleDelete(row.id)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} onClick={() => handleClickOpen()} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
       </TableRow>
@@ -394,9 +406,10 @@ const SearchBarContainer = styled.div`
     border: none;
     background-color: #ececec;
     border-radius: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 50%;
     outline: none;
+    color: #757B80;
 
     option {
     font-size: 0.8rem;
