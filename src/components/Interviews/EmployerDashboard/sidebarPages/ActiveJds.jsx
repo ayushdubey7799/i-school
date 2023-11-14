@@ -19,6 +19,8 @@ import shareIcon from '../../../../assets/icons/share.png'
 import shareWithEmp from '../../../../assets/icons/shareWithEmp.png'
 import eyeIcon from '../../../../assets/icons/visible.png'
 import { getJdsForMatching } from '../../../../functions/api/employers/match/getJdsForMatching';
+import CommonDrawer from '../../../commonComponents/CommonDrawer';
+import CommonDialog from '../../../commonComponents/CommonDialog';
 
 
 function Row(props) {
@@ -26,11 +28,34 @@ function Row(props) {
 
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
+  // State, function to Open and close Dialog Box
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  // State, function to open and close Drawer
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
+
   const openDropdown = (index) => {
     setOpenDropdownIndex(index);
   };
 
-  
+
   const closeAllDropdowns = () => {
     setOpenDropdownIndex(-1);
   };
@@ -40,14 +65,6 @@ function Row(props) {
     console.log('Edit')
   }
 
-  const handleDelete = () => {
-    console.log('Delete')
-  }
-
-  const handleViewDetail = () => {
-    console.log('View Detail')
-  }
-
   const handleShareSocial = () => {
     console.log('Share Social')
   }
@@ -55,7 +72,7 @@ function Row(props) {
   const handleShareAgency = () => {
     console.log('Share Agency')
   }
-  
+
 
   return (
     <React.Fragment>
@@ -68,14 +85,14 @@ function Row(props) {
           ...
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
-        {row.createdAt}
+          {row.createdAt}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-        {row.recruiter}
+          {row.recruiter}
 
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-        {row.hiringManager}
+          {row.hiringManager}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...
@@ -93,9 +110,11 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`}
             >
+              <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
+              <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen}/>
               <span onClick={handleEdit}>Edit <img src={editIcon} className='threeDotIcon' /></span>
-              <span onClick={handleDelete}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
-              <span onClick={handleViewDetail}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
+              <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
+              <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
               <span onClick={handleShareSocial}>Share on Social <img src={shareIcon} className='threeDotIcon' /></span>
               <span onClick={handleShareAgency}>Share with Agency <img src={shareWithEmp} className='threeDotIcon' /></span>
             </div>
@@ -133,7 +152,7 @@ const ActiveJds = () => {
 
   }
 
-  
+
   return (
     <Container1>
 

@@ -12,12 +12,25 @@ import Paper from "@mui/material/Paper";
 import { jobListings } from '../../../../utils/contantData';
 import save from '../../../../assets/icons/save2.png'
 import share from '../../../../assets/icons/share.png'
+import view from '../../../../assets/icons/visible.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
+import CommonDrawer from '../../../commonComponents/CommonDrawer';
 
 
 
 function Row(props) {
   const { row, index } = props;
+
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
 
   return (
     <React.Fragment>
@@ -42,9 +55,11 @@ function Row(props) {
           {row.matchPercentage}%
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='rowText'>
-          <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-            <img src={save} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
-            <img src={share} style={{ width: '1.1rem', height: '1.1rem', cursor: 'pointer' }} />
+          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
+            <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
+            <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
+            <img src={save} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={share} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='rowText'>

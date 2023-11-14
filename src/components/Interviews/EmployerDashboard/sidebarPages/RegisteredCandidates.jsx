@@ -15,18 +15,44 @@ import visibleIcon from '../../../../assets/icons/visible.png'
 import shareIcon from '../../../../assets/icons/share.png'
 import { getProfiles } from "../../../../functions/api/resume/getProfiles";
 import { useSelector } from "react-redux";
+import CommonDrawer from "../../../commonComponents/CommonDrawer";
+import CommonDialog from "../../../commonComponents/CommonDialog";
 function Row(props) {
   const { row, index } = props;
- console.log(row)
+
+  // State, function to Open and close Dialog Box
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  // State, function to open and close Drawer
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
+
+  console.log(row)
   return (
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">{row.firstName?row.firstName:"..."}</TableCell>
-        <TableCell align="center">{row.email?row.email:"..."}</TableCell>
-        <TableCell align="center">{row.contact?row.contact:"..."}</TableCell>
-        <TableCell align="center">{row.createdAt?row.createdAt:"..."}</TableCell>
-        <TableCell align="center">{row.source?row.source:"..."}</TableCell>
+        <TableCell align="center">{row.firstName ? row.firstName : "..."}</TableCell>
+        <TableCell align="center">{row.email ? row.email : "..."}</TableCell>
+        <TableCell align="center">{row.contact ? row.contact : "..."}</TableCell>
+        <TableCell align="center">{row.createdAt ? row.createdAt : "..."}</TableCell>
+        <TableCell align="center">{row.source ? row.source : "..."}</TableCell>
         <TableCell align="center">
           <input
             type="checkbox"
@@ -34,10 +60,12 @@ function Row(props) {
           />
         </TableCell>
         <TableCell align="center">
+          <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
+          <CommonDialog open={open} handleClose={handleClose} handleClickOpen={handleClickOpen}/>
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
             <img src={shareIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={deleteIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleClickOpen}/>
           </div>
         </TableCell>
 
@@ -52,19 +80,19 @@ export default function RegisteredCandidates({ setCurrentItem }) {
 
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
-  const [candidates,setCandidates] = useState([]);
+  const [candidates, setCandidates] = useState([]);
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
   useEffect(() => {
-   const getCandidates = async () => {
-    const res = await getProfiles(accessToken,clientCode);
-    if(res){
-      setCandidates(res?.data?.data);
+    const getCandidates = async () => {
+      const res = await getProfiles(accessToken, clientCode);
+      if (res) {
+        setCandidates(res?.data?.data);
+      }
     }
-   }
 
-   getCandidates();
-  },[]);
+    getCandidates();
+  }, []);
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);
