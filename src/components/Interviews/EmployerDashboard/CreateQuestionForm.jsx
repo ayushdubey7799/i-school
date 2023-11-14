@@ -23,7 +23,7 @@ const Container = styled.div`
     margin-top: 0.5rem;
 
     label {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
   font-weight: 600;
   position: absolute;
   top: -0.5rem;
@@ -242,8 +242,8 @@ function CreateQuestionForm() {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="Category (Optional)"
-            name="addType"
-            value={formData.addType}
+            name="category"
+            value={formData.category}
             onChange={handleChange}
             size='small'
             inputProps={{
@@ -264,9 +264,10 @@ function CreateQuestionForm() {
               padding: '0rem 0 0.5rem 0',
             }}
           >
-            <MenuItem value="Subjective">Subjective</MenuItem>
-            <MenuItem value="Objective">Objective</MenuItem>
-            <MenuItem value="Coding">Coding</MenuItem>
+            <MenuItem value="Technical">Technical</MenuItem>
+            <MenuItem value="Non-technical">Non-technical</MenuItem>
+            <MenuItem value="Aptitude">Aptitude</MenuItem>
+            <MenuItem value="Cultural">Cultural</MenuItem>
           </Select>
         </FormControl>
 

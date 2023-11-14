@@ -5,11 +5,25 @@ import linkedin from '../../../../assets/icons/linkedinBlack.png'
 import github from '../../../../assets/icons/githubBlack.png'
 import callIcon from '../../../../assets/icons/Profile/call.png'
 import emailIcon from '../../../../assets/icons/Profile/email.png'
+import addIcon from '../../../../assets/icons/addIcon.png'
 
 
 const ProfileNew = () => {
 
     // const [profileData, setProfileData] = useState();
+
+    const [resumeArr, setResumeArr] = useState([]);
+
+    const [resumeFile, setResumeFile] = useState([]);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            setResumeFile([...resumeFile, file]);
+            setResumeArr([...resumeArr, file.name]);
+        }
+    };
 
     return (
         <Box>
@@ -130,9 +144,42 @@ const ProfileNew = () => {
                                 <span className='subTitle'>{cert.organization}</span>
                                 <span className='text'>Issued {cert.date} to {cert.expirationDate}</span>
 
-                                <button>View Certificate</button>
+                                <button>Verify Certificate</button>
                             </div>
                         ))
+                    }
+                </div>
+            </div>
+
+            <div className='resumeBox'>
+                <span className='mainTitle'>
+                    Resume
+                </span>
+                <span className='title'>Add upto 3 Resumes</span>
+
+                <div className='resumeChildBox'>
+                    {
+                        resumeArr.map((resume) => (
+                            <div className='resumeCard'>
+                                <span className='resumeText'>{resume.slice(0, 12)}</span>
+                                <span className='resumeBtn'>Make Default</span>
+                            </div>
+                        ))
+                    }
+
+                    {
+                        resumeArr.length < 3 &&
+
+                        <div className='addResumeBox'>
+                            <Label htmlFor='input'><img src={addIcon} /></Label>
+                            <input
+                                id='input'
+                                type="file"
+                                onChange={handleFileChange}
+                                accept='.pdf, .doc'
+                                style={{ display: 'none' }}
+                            />
+                        </div>
                     }
                 </div>
             </div>
@@ -609,6 +656,87 @@ align-items: center;
     }
 }
 
+.resumeBox {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: start;
+    border: 0.07rem solid lightgrey;
+    padding: 1rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #FEFFFE;
+
+    .mainTitle {
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .title {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-top: -0.5rem;
+    }
+
+    .resumeChildBox {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+
+        .resumeCard {
+            border: 0.1rem solid lightgrey;
+            border-radius: 0.3rem;
+            height: 8rem;
+            width: 6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            box-sizing: border-box;
+            cursor: pointer;
+
+
+            .resumeText {
+                font-size: 0.75rem;
+                font-weight: 500;
+            }
+
+            .resumeBtn {
+                background-color: var(--white);
+                color: var(--color);
+                border: 0.08rem solid var(--color);
+                font-size: 0.7rem;
+                font-weight: 600;
+                padding: 0.2rem 0.3rem;
+                border-radius: 0.5rem;
+                margin: 0 0.3rem;
+                box-sizing: border-box;
+                display: none;
+            }
+        }
+
+        .resumeCard:hover {
+
+            .resumeBtn {
+                display: block;
+            }
+        }
+
+        .addBtn {
+            width: 2rem;
+            cursor: pointer;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+
 
 .hrLine {
     width:100%;
@@ -618,4 +746,24 @@ align-items: center;
     box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.25);
   }
 
+
 `
+
+const Label = styled.label`
+  font-weight: 600;
+  margin: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+
+  img {
+    width: 2rem;
+  }
+  
+  span {
+    color: var(--color);
+    
+  }
+`;

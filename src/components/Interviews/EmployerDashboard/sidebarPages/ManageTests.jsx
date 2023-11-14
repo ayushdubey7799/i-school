@@ -139,7 +139,8 @@ const ManageTests = () => {
   const [createVisible, setCreateVisible] = useState(false);
   const [openBasic, setOpenBasic] = useState(false);
 
-  const [searchParams, setSearchParams] = useState('');
+  const [category, setCategory] = useState('');
+  const [queType, setQueType] = useState('');
 
 
   useEffect(() => {
@@ -186,12 +187,16 @@ const ManageTests = () => {
     }
   };
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  }
+
+  const handleQueTypeChange = (e) => {
+    setQueType(e.target.value);
   }
 
   const handleSearch = () => {
-    
+
   }
 
 
@@ -205,11 +210,18 @@ const ManageTests = () => {
               {...provided.droppableProps}
             >
               <SearchBarContainer>
-                <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                  <option value="" disabled selected>Select filter Param</option>
-                  <option value="Type">Question Type</option>
-                  <option value="TestID">Test Id</option>
-                  <option value="Category">Category</option>
+                <select value={category} onChange={handleCategoryChange} className='selectInput'>
+                  <option value="" disabled selected>Category</option>
+                  <option value="Technical">Technical</option>
+                  <option value="Non-technical">Non-technical</option>
+                  <option value="Aptitude">Aptitude</option>
+                  <option value="Cultural">Cultural</option>
+                </select>
+                <select value={queType} onChange={handleQueTypeChange} className='selectInput'>
+                  <option value="" disabled selected>Que Type</option>
+                  <option value="Subjective">Subjective</option>
+                  <option value="Objective">Objective</option>
+                  <option value="Coding">Coding</option>
                 </select>
                 <div className='skillBox'>
                   <input
@@ -283,13 +295,14 @@ export default ManageTests;
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 96%;
-  margin: 0rem auto 0rem auto;
+  width: 100%;
+  margin: 0rem auto;
   height: 3.5rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
-  padding: 0rem 1rem;
-  gap: 1rem;
+  padding: 0rem 0.2rem;
+  box-sizing: border-box;
+  gap: 0.5rem;
 
 
   .skillBox {
@@ -305,11 +318,10 @@ const SearchBarContainer = styled.div`
   height: 100%;
   width: 100%;
   padding: 0.1rem;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   background-color: var(--white);
   outline: none;
   }
-
 
 
   .btn {
@@ -336,12 +348,12 @@ const SearchBarContainer = styled.div`
     border: none;
     background-color: var(--white);
     border-radius: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     width: 90%;
     outline: none;
 
     option {
-    font-size: 0.8rem;
+      font-size: 0.75rem;
     font-weight: 400;
   }
   }

@@ -26,6 +26,7 @@ import JdDetails from '../../../../pages/JdDetails';
 import ExportDialogContent from '../../../commonComponents/ExportDialogContent';
 import { toast } from 'react-toastify';
 import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
+import AgencyShareDialogContent from '../../../commonComponents/AgencyShareDialogContent';
 
 
 function Row(props) {
@@ -42,6 +43,17 @@ function Row(props) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  // State, function to Open and close Dialog Box
+  const [openShareAgency, setOpenShareAgency] = React.useState(false);
+
+  const handleClickOpenShareAgency = () => {
+    setOpenShareAgency(true);
+  };
+
+  const handleCloseShareAgency = () => {
+    setOpenShareAgency(false);
   };
 
 
@@ -80,9 +92,6 @@ function Row(props) {
     console.log('Share Social')
   }
 
-  const handleShareAgency = () => {
-    console.log('Share Agency')
-  }
 
 
   return (
@@ -122,12 +131,13 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`}
             >
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete}/>} />
+              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} />} />
+              <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
               <span onClick={handleEdit}>Edit <img src={editIcon} className='threeDotIcon' /></span>
               <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
               <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
               <span onClick={handleShareSocial}>Share on Social <img src={shareIcon} className='threeDotIcon' /></span>
-              <span onClick={handleShareAgency}>Share with Agency <img src={shareWithEmp} className='threeDotIcon' /></span>
+              <span onClick={handleClickOpenShareAgency}>Share with Agency <img src={shareWithEmp} className='threeDotIcon' /></span>
             </div>
           </BoxRow>
         </TableCell>

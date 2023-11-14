@@ -64,6 +64,7 @@ function EmployerDetails({ handleClose }) {
     contact: user.primaryContact.toUpperCase(),
     legalContact: "",
   });
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({

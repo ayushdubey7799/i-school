@@ -77,7 +77,7 @@ const FilteredJobs = () => {
     <Container1>
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <span className='title'>Filtered Jobs</span>
+          <span className='title'>Jobs</span>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
