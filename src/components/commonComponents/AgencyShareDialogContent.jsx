@@ -49,14 +49,11 @@ display: flex;
 flex-direction: column;
 align-items: center;
 gap: 2rem;
-width: 100%;
+width: 30rem;
 margin-top: 2rem;
 padding: 2rem 5rem;
 box-sizing: border-box;
 
-input {
-    width: 100%;
-}
 
 .title {
     align-self: start;
