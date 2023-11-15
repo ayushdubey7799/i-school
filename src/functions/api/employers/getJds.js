@@ -14,7 +14,7 @@ export const getJds = async (
   };
   try {
     const response =
-      await axios.get(`https://dev-api.intelliview.in/api/jds?page=1&size=10
+      await axios.get(`https://dev-api.intelliview.in/api/jds?page=1&size=100
         `,config);
 
     console.log("Data:", response.data);
