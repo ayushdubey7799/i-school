@@ -50,6 +50,8 @@ function ManageUserForm({ array, handleClose }) {
         email: '',
         contact: '',
         role: '',
+        agencyName: '',
+        agencyContact: '',
     });
 
 
@@ -186,6 +188,56 @@ function ManageUserForm({ array, handleClose }) {
                         <MenuItem value="Operator">Operator (Read Only)</MenuItem>
                     </Select>
                 </FormControl>
+
+                {
+                    formData.role === 'Agency' &&
+                    <>
+                        <TextField id="outlined-basic" label="Agency Name" variant="outlined"
+                            type="tel"
+                            name="agencyName"
+                            value={formData.agencyName}
+                            onChange={handleChange}
+                            sx={{ backgroundColor: '#F6F6FB' }}
+                            size='small'
+                            inputProps={{
+                                sx: {
+                                    color: '#626264',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '400'
+                                },
+                            }}
+                            InputLabelProps={{
+                                sx: {
+                                    color: '#626264',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '400'
+                                },
+                            }}
+                        />
+                        <TextField id="outlined-basic" label="Agency Contact" variant="outlined"
+                            type="tel"
+                            name="agencyContact"
+                            value={formData.agencyContact}
+                            onChange={handleChange}
+                            sx={{ backgroundColor: '#F6F6FB' }}
+                            size='small'
+                            inputProps={{
+                                sx: {
+                                    color: '#626264',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '400'
+                                },
+                            }}
+                            InputLabelProps={{
+                                sx: {
+                                    color: '#626264',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '400'
+                                },
+                            }}
+                        />
+                    </>
+                }
 
                 <Button type="submit">{mode == "create" ? "Add User" : "Edit User"}</Button>
             </Form>

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import ModalHOC from '../../SeekerDashboard/ModalHOC';
 import CreateQuestionForm from '../CreateQuestionForm';
-
+import filterIcon from '../../../../assets/icons/filterIcon.png'
 import searchIcon from '../../../../assets/icons/searchIcon.png'
+import closeIcon from '../../../../assets/icons/closeIcon.png'
+
 
 const initialData = {
   list1: [
@@ -110,9 +112,11 @@ const TestContainer = styled.div`
 `;
 
 const ListTitle = styled.h3`
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   span{
-    margin-left: 1rem;
     font-size: 0.7rem;
     color: blue;
     text-decoration: underline;
@@ -141,6 +145,10 @@ const ManageTests = () => {
 
   const [category, setCategory] = useState('');
   const [queType, setQueType] = useState('');
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef(null);
 
 
   useEffect(() => {
@@ -187,18 +195,38 @@ const ManageTests = () => {
     }
   };
 
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
+  const handleCategoryChange = (inp) => {
+    setCategory(inp);
   }
 
-  const handleQueTypeChange = (e) => {
-    setQueType(e.target.value);
+  const handleQueTypeChange = (inp) => {
+    setQueType(inp);
   }
 
   const handleSearch = () => {
 
   }
 
+  const toggleDropdown = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setPosition({ top: rect.bottom });
+    }
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
+  const resetFilters = () => {
+    setCategory('');
+    setQueType('');
+  };
+
+  const applyFilters = () => {
+
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -210,19 +238,6 @@ const ManageTests = () => {
               {...provided.droppableProps}
             >
               <SearchBarContainer>
-                <select value={category} onChange={handleCategoryChange} className='selectInput'>
-                  <option value="" disabled selected>Category</option>
-                  <option value="Technical">Technical</option>
-                  <option value="Non-technical">Non-technical</option>
-                  <option value="Aptitude">Aptitude</option>
-                  <option value="Cultural">Cultural</option>
-                </select>
-                <select value={queType} onChange={handleQueTypeChange} className='selectInput'>
-                  <option value="" disabled selected>Que Type</option>
-                  <option value="Subjective">Subjective</option>
-                  <option value="Objective">Objective</option>
-                  <option value="Coding">Coding</option>
-                </select>
                 <div className='skillBox'>
                   <input
                     className='skillInput'
@@ -231,9 +246,85 @@ const ManageTests = () => {
                   />
                 </div>
                 <button className='btn' onClick={() => handleSearch()}><img src={searchIcon} />Search</button>
+
+                <button onClick={toggleDropdown} ref={buttonRef} className='mainBtn'><img src={filterIcon} /></button>
+
+                {isOpen && (
+                  <div className="dropdown" style={{ top: position.top, left: position.left }}>
+                    <div className="buttons">
+                      <button onClick={resetFilters} className='button'>Reset Filters</button>
+                      <button onClick={applyFilters} className='button'>Apply Filters</button>
+                      <img src={closeIcon} className='image' onClick={closeDropdown} />
+                    </div>
+
+
+                    <div className="content">
+                      <InputBox>
+                        <span className="title">Category</span>
+                        <div className="childInputBox">
+                          <label>
+                            <input
+                              type="checkbox"
+                              value="Technical"
+                              onChange={() => handleCategoryChange('Technical')}
+                            /> Technical
+                          </label>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value="Non-technical"
+                              onChange={() => handleCategoryChange('Non-technical')}
+                            /> Non-technical
+                          </label>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value="Aptitude"
+                              onChange={() => handleCategoryChange('Aptitude')}
+                            /> Aptitude
+                          </label>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value="Cultural"
+                              onChange={() => handleCategoryChange('Cultural')}
+                            /> Cultural
+                          </label>
+                        </div>
+                      </InputBox>
+
+                      <InputBox>
+                        <span className="title">Que Type</span>
+                        <div className="childInputBox">
+                          <label>
+                            <input
+                              type="checkbox"
+                              value="Subjective"
+                              onChange={() => handleQueTypeChange('Subjective')}
+                            /> Subjective
+                          </label>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value="Objective"
+                              onChange={() => handleQueTypeChange('Objective')}
+                            /> Objective
+                          </label>
+                          <label>
+                            <input
+                              type="checkbox"
+                              value="Coding"
+                              onChange={() => handleQueTypeChange('Coding')}
+                            /> Coding
+                          </label>
+                        </div>
+                      </InputBox>
+                    </div>
+                  </div>
+                )}
               </SearchBarContainer>
               <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={CreateQuestionForm} />
-              <ListTitle>List of existing questions <button onClick={() => setOpenBasic(true)} className='floatBtn'>Add Question</button></ListTitle>
+              <ListTitle>Available Questions <button onClick={() => setOpenBasic(true)} className='floatBtn'>Add Question</button></ListTitle>
               {data.list1.map((item, index) => (
                 <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                   {(provided) => (
@@ -303,11 +394,11 @@ const SearchBarContainer = styled.div`
   padding: 0rem 0.2rem;
   box-sizing: border-box;
   gap: 0.5rem;
+  justify-content: space-between;
 
 
   .skillBox {
-    position: relative;
-    width: 100%;
+
   }
 
 
@@ -349,7 +440,7 @@ const SearchBarContainer = styled.div`
     background-color: var(--white);
     border-radius: 0.3rem;
     font-size: 0.75rem;
-    width: 90%;
+    width: 70%;
     outline: none;
 
     option {
@@ -357,5 +448,102 @@ const SearchBarContainer = styled.div`
     font-weight: 400;
   }
   }
+
+
+  .dropdown {
+    position: absolute;
+    top: 0;
+    left: 20rem;
+    width: calc(50% - 14rem);
+    // height: 50%;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .content {
+    height: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+    position: relative;  
+    gap: 0.8rem;
+    
+
+    .button {
+      font-size: 0.8rem;
+      background-color: var(--white);
+      border: 0.08rem solid var(--color);
+      padding: 0.2rem 0.3rem;
+      border-radius: 0.2rem;
+      cursor: pointer;
+    }
+
+    .image {
+      width: 1.4rem;
+      height: 1.4rem;
+      cursor: pointer;
+    }
+
+  }
+
+
+  .mainBtn {
+    align-self: start;
+    background-color: var(--white);
+    border: 0.08rem solid lightgrey;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    height: 3rem;
+    width: 3rem;
+
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+`
+const InputBox = styled.div`
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+
+
+
+.childInputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+  }
+
+  input {
+    cursor: pointer;
+  }
+}
+
+.title {
+  font-size: 0.95rem;
+  font-weight: 500;
+
+}
+
+
 
 `

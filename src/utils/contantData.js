@@ -19,6 +19,7 @@ import EmpMetric7 from '../assets/icons/metric2.7.png'
 import EmpMetric8 from '../assets/icons/metric2.8.png'
 
 
+
 export const technicalSkills = [
     "JavaScript",
     "Python",
@@ -757,5 +758,52 @@ export const seekerMetricOptions = [{
     title: 'My Profile',
     text: 'myProfile',
     img: metric8
+}]
+
+
+export const EmpMetrics1 = {
+    title: 'Interviews',
+    text: 'interviews',
+    img: EmpMetric1
+}
+
+export const EmpMetrics2 = {
+    title: 'Active JDs',
+    text: 'activeJDs',
+    img: EmpMetric2
+}
+
+export const EmpMetrics3 = {
+    title: 'Applications',
+    text: 'applications',
+    img: EmpMetric3
+}
+
+export const EmpMetrics4 = {
+    title: 'Candidates Pool',
+    text: 'candidatesPool',
+    img: EmpMetric4
+}
+
+
+export const EmpMetricOptions = [{
+    title: 'Invite Sent (Last 30 Days)',
+    text: 'inviteSent',
+    img: EmpMetric5
+},
+{
+    title: 'Reviewed Profiles (Last 30 Days)',
+    text: 'reviewedProfile',
+    img: EmpMetric6
+},
+{
+    title: 'JD Views (Last 30 Days)',
+    text: 'jdViews',
+    img: EmpMetric7
+},
+{
+    title: 'Offers (Last 30 Days)',
+    text: 'offers',
+    img: EmpMetric8
 }]
 

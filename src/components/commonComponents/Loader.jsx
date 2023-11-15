@@ -15,6 +15,7 @@ const style = {
     justifyContent: 'center',
     alignItems: 'center',
     left: 0,
+    top: 0,
 }
 
 function Loader({ message }) {

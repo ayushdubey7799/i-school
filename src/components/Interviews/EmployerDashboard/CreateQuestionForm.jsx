@@ -237,11 +237,11 @@ function CreateQuestionForm() {
         </div>
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
-          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category (Optional)</InputLabel>
+          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="Category (Optional)"
+            label="Category"
             name="category"
             value={formData.category}
             onChange={handleChange}

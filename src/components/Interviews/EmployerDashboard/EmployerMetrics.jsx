@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import metric1 from '../../../assets/icons/metric2.1.png'
-import metric2 from '../../../assets/icons/metric2.2.png'
-import metric3 from '../../../assets/icons/metric2.3.png'
-import metric4 from '../../../assets/icons/metric2.4.png'
 import RegisteredCandidates from './sidebarPages/RegisteredCandidates';
 import ActiveJds from './sidebarPages/ActiveJds';
 import EmpScheduledInterviews from './sidebarPages/EmpScheduledInterviews';
@@ -12,6 +8,12 @@ import { useSelector } from 'react-redux';
 import { getStatusWiseCount } from '../../../functions/api/interview/getStatusWiseCount';
 import { getJdsForMatching } from '../../../functions/api/employers/match/getJdsForMatching';
 import { getProfiles } from '../../../functions/api/resume/getProfiles';
+
+import { EmpMetrics1 } from '../../../utils/contantData';
+import { EmpMetrics2 } from '../../../utils/contantData';
+import { EmpMetrics3 } from '../../../utils/contantData';
+import { EmpMetrics4 } from '../../../utils/contantData';
+
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -95,11 +97,11 @@ gap: 2%;
 
 const EmployeMetrics = ({ page, setPage }) => {
   const [currMetric, setCurrMetric] = useState('interviews');
-  const [metrics,setMetrics] = useState([]);
-  const [count,setCount] = useState(0);
-  const [completed,setCompleted] = useState(0);
-  const [scheduled,setScheduled] = useState(0);
-  const [poolCount,setPoolCount] = useState(0);
+  const [metrics, setMetrics] = useState([]);
+  const [count, setCount] = useState(0);
+  const [completed, setCompleted] = useState(0);
+  const [scheduled, setScheduled] = useState(0);
+  const [poolCount, setPoolCount] = useState(0);
 
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.clientCode)
@@ -113,31 +115,31 @@ const EmployeMetrics = ({ page, setPage }) => {
 
     async function getData() {
       const res = await getJdsForMatching(accessToken, clientCode);
-      if(res?.data?.data?.length)setCount(res?.data?.data.length);
+      if (res?.data?.data?.length) setCount(res?.data?.data.length);
       console.log(res);
     }
     getData();
 
-      const getCandidates = async () => {
-       const res = await getProfiles(accessToken,clientCode);
-       if(res){
-         setPoolCount(res?.data?.data?.length);
-       }
+    const getCandidates = async () => {
+      const res = await getProfiles(accessToken, clientCode);
+      if (res) {
+        setPoolCount(res?.data?.data?.length);
       }
-   
-      getCandidates();
-   
-  },[currMetric])
+    }
+
+    getCandidates();
+
+  }, [currMetric])
 
 
 
   useEffect(() => {
-    if(metrics.length){
-     setCompleted(metrics.find((item) =>item.status == "COMPLETED" )?.count);
-     setScheduled(metrics.find((item) =>item.status == "SCHEDULED")?.count)
+    if (metrics.length) {
+      setCompleted(metrics.find((item) => item.status == "COMPLETED")?.count);
+      setScheduled(metrics.find((item) => item.status == "SCHEDULED")?.count)
     }
-   },[metrics])
- 
+  }, [metrics])
+
 
   useEffect(() => {
     setPage(1);
@@ -146,37 +148,37 @@ const EmployeMetrics = ({ page, setPage }) => {
   return (
     <MainContainer>
       <Container>
-        <div className={`achievedNumberBox ${currMetric === 'interviews' ? 'selected' : ''}`} onClick={() => setCurrMetric('interviews')}>
+        <div className={`achievedNumberBox ${currMetric === EmpMetrics1.text ? 'selected' : ''}`} onClick={() => setCurrMetric(EmpMetrics1.text)}>
           <div className='top'>
-            <img src={metric1} />
-            <span className='achievedNumberDigit'>{scheduled?scheduled:0}</span>
+            <img src={EmpMetrics1.img} />
+            <span className='achievedNumberDigit'>{scheduled ? scheduled : 0}</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Interviews</span>
+          <span className='achievedNumberText'>{EmpMetrics1.title}</span>
         </div>
-        <div className={`achievedNumberBox ${currMetric === 'activeJDs' ? 'selected' : ''}`} onClick={() => setCurrMetric('activeJDs')} >
+        <div className={`achievedNumberBox ${currMetric === EmpMetrics2.text ? 'selected' : ''}`} onClick={() => setCurrMetric(EmpMetrics2.text)} >
           <div className='top'>
-            <img src={metric2} />
+            <img src={EmpMetrics2.img} />
             <span className='achievedNumberDigit'>{count}</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Active JDs</span>
+          <span className='achievedNumberText'>{EmpMetrics2.title}</span>
         </div>
-        <div className={`achievedNumberBox ${currMetric === 'applications' ? 'selected' : ''}`} onClick={() => setCurrMetric('applications')}>
+        <div className={`achievedNumberBox ${currMetric === EmpMetrics3.text ? 'selected' : ''}`} onClick={() => setCurrMetric(EmpMetrics3.text)}>
           <div className='top'>
-            <img src={metric3} />
+            <img src={EmpMetrics3.img} />
             <span className='achievedNumberDigit'>0</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Applications</span>
+          <span className='achievedNumberText'>{EmpMetrics3.title}</span>
         </div>
-        <div className={`achievedNumberBox ${currMetric === 'candidatesPool' ? 'selected' : ''}`} onClick={() => setCurrMetric('candidatesPool')}>
+        <div className={`achievedNumberBox ${currMetric === EmpMetrics4.text ? 'selected' : ''}`} onClick={() => setCurrMetric(EmpMetrics4.text)}>
           <div className='top'>
-            <img src={metric4} />
-            <span className='achievedNumberDigit'>{poolCount?poolCount:0}</span>
+            <img src={EmpMetrics4.img} />
+            <span className='achievedNumberDigit'>{poolCount ? poolCount : 0}</span>
           </div>
           <span className='hrLine'></span>
-          <span className='achievedNumberText'>Candidates Pool</span>
+          <span className='achievedNumberText'>{EmpMetrics4.title}</span>
         </div>
       </Container>
       {currMetric === 'interviews' && <>{page === 1 && <EmpScheduledInterviews page={page} setPage={setPage} />}  {page === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}</>}
