@@ -21,13 +21,14 @@ import Billing from "../components/Interviews/EmployerDashboard/sidebarPages/Bil
 import RegisterCandidate from "../components/Interviews/EmployerDashboard/sidebarPages/RegisterCandidate";
 import RegisteredCandidates from "../components/Interviews/EmployerDashboard/sidebarPages/RegisteredCandidates";
 import AvailableTest from "../components/Interviews/EmployerDashboard/sidebarPages/AvailableTest";
-import ConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureDash";
 import ManageUsers from "../components/Interviews/EmployerDashboard/sidebarPages/ManageUsers";
 import ConfigureReports from "../components/Interviews/EmployerDashboard/sidebarPages/ConfigureReports";
 import InterviewDashboard from "../components/Interviews/EmployerDashboard/sidebarPages/InterviewDashboard";
 import UploadCandidateProfile from "../components/Interviews/EmployerDashboard/sidebarPages/UploadCandidateProfile";
+import EmpConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/EmpConfigureDash";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
+
 
 const Verification = () => <div>Verification Content</div>;
 const PracticeInterview = () => <div>Practice Interview Content</div>;
@@ -85,7 +86,7 @@ const EmployerDashboard = () => {
             <EmployeMetrics setCurrentItem={setCurrentItem} page={empScheduledPage} setPage={setEmpScheduledPage} />
           }
 
-          {currentItem === "configure-dashboard" && <ConfigureDash />}
+          {currentItem === "configure-dashboard" && <EmpConfigureDash />}
           {currentItem === "jd-register" && <JdRegistration />}
           {currentItem === "manage-jds" && <JdRegistration />}
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}

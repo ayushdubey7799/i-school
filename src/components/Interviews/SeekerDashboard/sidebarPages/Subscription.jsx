@@ -13,39 +13,56 @@ const Subscription = () => {
 
             <div className='container'>
                 <div className='box'>
-                    <span className='boxTitle'>Free</span>
-                    <span className='boxSubTitle'>$0</span>
-
-                    <button className='btn'>Contact Us</button>
-
-                    <div className='mainFeature'>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 3 Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
-                    </div>
-                </div>
-                <div className='box'>
                     <span className='boxTitle'>Starter</span>
-                    <span className='boxSubTitle'>Ask for Pricing</span>
+                    <span className='boxSubTitle'>Free</span>
 
-                    <button className='btn'>Contact Us</button>
+                    <button className='btn'>Start for Free</button>
 
                     <div className='mainFeature'>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 10 Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 10 Interviews Per Month</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> One Profile</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> One Resume</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Job Search & View</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 10 Jobs Apply</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Email Support (NBD)</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Basic Dashboard</span>
                     </div>
                 </div>
                 <div className='box'>
-                    <span className='boxTitle'>Growth</span>
-                    <span className='boxSubTitle'>Ask for Pricing</span>
+                    <span className='boxTitle'>Professional</span>
+                    <span className='boxSubTitle'>99 INR / Month</span>
 
                     <button className='btn'>Contact Us</button>
 
                     <div className='mainFeature'>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 50 Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 50 Interviews Per month</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Detailed Profile</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 3 Resumes</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI CV Make</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Cover Letter Maker</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Job Search and View</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 50 job apply</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Business Hours Email & Phone Support</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Dashboard</span>
+                    </div>
+                </div>
+                <div className='box'>
+                    <span className='boxTitle'>Expert</span>
+                    <span className='boxSubTitle'>199 INR / Month</span>
+
+                    <button className='btn'>Contact Us</button>
+
+                    <div className='mainFeature'>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 200 Interviews Per month</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI powered Profile</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 6 Resumes</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI CV Maker</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI Cover letter maker</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Job Search and View</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 200 job apply</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 24x7 Email & Phone Support</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Dashboard</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Reports</span>
                     </div>
                 </div>
             </div>
@@ -93,17 +110,19 @@ margin: 2rem auto;
     background-color: var(--white);
     gap: 0.5rem;
     width: 35%;
-    align-items: center;
+    align-items: start;
 }
 
 .boxTitle {
     font-size: 1.1rem;
     font-weight: 700;
+    align-self: center;
 }
 
 .boxSubTitle {
     font-size: 1rem;
     font-weight: 500;
+    align-self: center;
 }
 
 
@@ -116,26 +135,27 @@ margin: 2rem auto;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    align-self: center;
 }
 
 
 .mainFeature {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
     padding: 1.5rem 0;
 }
 
 
 .featureDot {
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.5rem;
+    height: 0.5rem;
 }
 
 .featureText {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 400;
     display: flex;
     gap: 0.5rem;
     align-items: center;

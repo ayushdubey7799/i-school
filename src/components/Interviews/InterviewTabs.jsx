@@ -32,6 +32,7 @@ export default function InterviewTabs() {
       const response = await getInterviewByStatus(staticValue, accessToken);
       if (response) {
         setFilteredData(response);
+        console.log('data score', response);
       }
     }
     getData(value);
