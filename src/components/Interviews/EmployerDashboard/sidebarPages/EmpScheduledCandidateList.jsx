@@ -13,100 +13,114 @@ import deleteIcon from '../../../../assets/icons/delete.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import visibleIcon from '../../../../assets/icons/visible.png'
 import shareIcon from '../../../../assets/icons/share.png'
+import CommonDrawer from "../../../commonComponents/CommonDrawer";
+import SeekerInterviewDetails from "../../SeekerDashboard/sidebarPages/SeekerInterviewDetails";
 
 function Row(props) {
-    const { row, index } = props;
+  const { row, index } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell component="th" scope="row" align="center">
-                    <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-                        <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-                    </div>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
+
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell component="th" scope="row" align="center">
+          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
+            <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails />} />
+            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
+          </div>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const EmpScheduledCandidateList = ({ setPage }) => {
-    const [searchParams, setSearchParams] = useState('');
-    const [sortParams, setSortParams] = useState('');
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
 
-    const handleSortParams = (e) => {
-        setSortParams(e.target.value);
-    }
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
 
-    const handleSearch = () => {
-        console.log("Search");
-    }
+  const handleSearch = () => {
+    console.log("Search");
+  }
 
-    const handleSearchParams = (e) => {
-        setSearchParams(e.target.value);
-    }
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
 
 
-    return (
-        <Content>
-            <TableContainer component={Paper} className="tableBox">
-                <div className="titleBox">
-                    <span className="title">Candidate Lists for JD ID:- ...</span>
-                    <button className="btn1" onClick={() => setPage(1)}>Back to Scheduled Interviews</button>
-                </div>
+  return (
+    <Content>
+      <TableContainer component={Paper} className="tableBox">
+        <div className="titleBox">
+          <span className="title">Candidate Lists for JD ID:- ...</span>
+          <button className="btn1" onClick={() => setPage(1)}>Back to Scheduled Interviews</button>
+        </div>
 
-                <SearchBarContainer>
-                    <div className='skillBox'>
-                        <img src={searchBlack} />
-                        <input
-                            className='skillInput'
-                            type="text"
-                            placeholder="Search"
-                        />
-                    </div>
+        <SearchBarContainer>
+          <div className='skillBox'>
+            <img src={searchBlack} />
+            <input
+              className='skillInput'
+              type="text"
+              placeholder="Search"
+            />
+          </div>
 
-                    <div className='selectBox'>
-                        <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                            <option value="" disabled selected>Filter by</option>
-                            <option value="CandidateName">Candidate Name</option>
-                            <option value="Email">Email</option>
-                            <option value="Contact">Contact</option>
-                            <option value="Status">Status</option>
-                        </select>
-                        <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                            <option value="" disabled selected>Sort by</option>
-                            <option value="CandidateName">Candidate Name</option>
-                            <option value="Email">Email</option>
-                            <option value="Contact">Contact</option>
-                            <option value="Status">Status</option>
-                        </select>
-                    </div>
-                </SearchBarContainer>
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center">Candidate Name</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">Contact</TableCell>
-                            <TableCell align="center">Status</TableCell>
-                            <TableCell align="center">Details</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {candidateLists?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Content>
-    )
+          <div className='selectBox'>
+            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+              <option value="" disabled selected>Filter by</option>
+              <option value="CandidateName">Candidate Name</option>
+              <option value="Email">Email</option>
+              <option value="Contact">Contact</option>
+              <option value="Status">Status</option>
+            </select>
+            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+              <option value="" disabled selected>Sort by</option>
+              <option value="CandidateName">Candidate Name</option>
+              <option value="Email">Email</option>
+              <option value="Contact">Contact</option>
+              <option value="Status">Status</option>
+            </select>
+          </div>
+        </SearchBarContainer>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center">Candidate Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Contact</TableCell>
+              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">Details</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {candidateLists?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Content>
+  )
 }
 
 export default EmpScheduledCandidateList

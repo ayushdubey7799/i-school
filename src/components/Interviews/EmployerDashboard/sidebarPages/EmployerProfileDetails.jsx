@@ -54,7 +54,7 @@ const EmployerProfileDetails = () => {
                 <div className='contactBox'>
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>Contact:</span> {companyProfile.contact}</span>
-                        <span className='text'><span className='boldText'>Legal Contact:</span> {companyProfile.legalContact}</span>
+                        <span className='text'><span className='boldText'>Contact Name:</span> {companyProfile.coordinatorName}</span>
                     </div>
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>Email:</span> {companyProfile.email}</span>
@@ -83,6 +83,10 @@ const EmployerProfileDetails = () => {
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>Employees:</span> {companyProfile.employees}</span>
                         <span className='text'><span className='boldText'>Client Code:</span> {companyProfile.clientCode}</span>
+                    </div>
+                    <div className='childBox'>
+                        <span className='text'><span className='boldText'>Account Manager:</span> John Doe</span>
+                        <span className='text'><span className='boldText'>Account Manager Contact:</span> 8000020000</span>
                     </div>
                 </div>
 

@@ -6,7 +6,8 @@ import github from '../../../../assets/icons/githubBlack.png'
 import callIcon from '../../../../assets/icons/Profile/call.png'
 import emailIcon from '../../../../assets/icons/Profile/email.png'
 import addIcon from '../../../../assets/icons/addIcon.png'
-
+import editIcon from '../../../../assets/icons/editBlack.png'
+import shareIcon from '../../../../assets/icons/share.png'
 
 const ProfileNew = () => {
 
@@ -42,7 +43,10 @@ const ProfileNew = () => {
                         </div>
                     </div>
                 </div>
-                <button className='editBtn'>Edit Profile</button>
+                <div className='editBox'>
+                    <span className='editBtn'><img src={shareIcon} /></span>
+                    <span className='editBtn'><img src={editIcon} /></span>
+                </div>
             </div>
 
 
@@ -280,15 +284,19 @@ align-items: center;
     
 }
 
+.editBox {
+    display: flex;
+    gap: 1rem;
+    margin-right: 2rem;
+}
+
 .editBtn {
-    background-color: var(--lightOrange);
-    font-size: 0.95rem;
-    color: var(--white);
-    font-weight: 600;
-    padding: 0.5rem 0.8rem;
-    border: none;
-    border-radius: 0.5rem;
     cursor: pointer;
+    width: 1rem;
+
+    img {
+        width: 100%;
+    }
 }
 
 

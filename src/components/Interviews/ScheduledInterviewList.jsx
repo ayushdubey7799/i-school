@@ -16,160 +16,181 @@ import searchBlack from '../../assets/icons/searchBlack.png'
 import { getInterviewByStatus } from '../../functions/api/getInterviewByStatus';
 import { updateStatus } from '../../functions/api/interview/updateStatus';
 import Loader from '../commonComponents/Loader';
+import view from '../../assets/icons/visible.png'
+import CommonDrawer from '../commonComponents/CommonDrawer';
+import SeekerInterviewDetails from './SeekerDashboard/sidebarPages/SeekerInterviewDetails';
 
 
 function Row(props) {
-  
-    const { row, index,setIsLoading,setLoaderMessage } = props;
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
-    const navigate = useNavigate();
-    
-    const startInterview = async () => {
-      setLoaderMessage("Creating Interview...  Please Wait");
-      setIsLoading(true);
-      const res = await updateStatus(row.id, "started", accessToken);
-      setIsLoading(false);
-      if(res){
-        navigate(`/ongoing-interview/${row.id}`);
-      }
-    }
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell component="th" scope="row" align='center' className='logo'>
-                    <img src={row.companyLogo} />
-                </TableCell>
-                <TableCell component="th" scope="row" align='center' className='rowText'>
-                    {row.title}
-                </TableCell>{" "}
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.companyName}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.appliedDate}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.appliedDate}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.status}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    {row.matchPercentage}%
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
-                    <button onClick={startInterview} className="btn">Attend</button>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  const { row, index, setIsLoading, setLoaderMessage } = props;
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const navigate = useNavigate();
+
+  const startInterview = async () => {
+    setLoaderMessage("Creating Interview...  Please Wait");
+    setIsLoading(true);
+    const res = await updateStatus(row.id, "started", accessToken);
+    setIsLoading(false);
+    if (res) {
+      navigate(`/ongoing-interview/${row.id}`);
+    }
+  }
+
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
+
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell component="th" scope="row" align='center' className='logo'>
+          <img src={row.companyLogo} />
+        </TableCell>
+        <TableCell component="th" scope="row" align='center' className='rowText'>
+          {row.title}
+        </TableCell>{" "}
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.companyName}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.appliedDate}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.appliedDate}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.status}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          {row.matchPercentage}%
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          <button onClick={startInterview} className="btn">Attend</button>
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='rowText'>
+          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
+            <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails />} />
+            <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
+          </div>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const ScheduledInterviewList = () => {
-    const [appliedJobs, setAppliedJobs] = useState();
-    const [searchParams, setSearchParams] = useState('');
-    const [sortParams, setSortParams] = useState('');
-    const [filteredJobs,setFilteredJobs] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+  const [appliedJobs, setAppliedJobs] = useState();
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
-    const handleSearchParams = (e) => {
-        setSearchParams(e.target.value);
-    }
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
 
-    const handleSortParams = (e) => {
-        setSortParams(e.target.value);
-    }
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
 
 
-    useEffect(() => {
-     
-      const getScheduledData = async () => {
-        const res = await getInterviewByStatus("SCHEDULED",accessToken);
-        if(res){
-          setFilteredJobs(res?.data?.data);
-          // setFilteredJobs(res)
-        }
+  useEffect(() => {
+
+    const getScheduledData = async () => {
+      const res = await getInterviewByStatus("SCHEDULED", accessToken);
+      if (res) {
+        setFilteredJobs(res?.data?.data);
+        // setFilteredJobs(res)
       }
+    }
 
-      getScheduledData();
-        const filteredJobs = jobListings.filter(job => job.applied === true);
+    getScheduledData();
+    const filteredJobs = jobListings.filter(job => job.applied === true);
 
-        if (filteredJobs) {
-            setAppliedJobs(filteredJobs);
-        }
+    if (filteredJobs) {
+      setAppliedJobs(filteredJobs);
+    }
 
-    }, [])
+  }, [])
 
-    
 
-    return (
-        <Container1>
-                <StyledBox>
-                  {isLoading&&<Loader message={loaderMessage}/>}
-                   {!isLoading && <TableContainer component={Paper} className="tableBox">
-                        <span className='title'>Scheduled Interviews</span>
-                        <SearchBarContainer>
-                            <div className='skillBox'>
-                                <img src={searchBlack} />
-                                <input
-                                    className='skillInput'
-                                    type="text"
-                                    placeholder="Search"
-                                />
-                            </div>
 
-                            <div className='selectBox'>
-                                <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                                    <option value="" disabled selected>Filter by</option>
-                                    <option value="JobTitle">Job Title</option>
-                                    <option value="Company">Company</option>
-                                    <option value="Location">Location</option>
-                                    <option value="Status">Status</option>
-                                    <option value="NoticePeriod">Notice Period</option>
-                                    <option value="CompanyType">Company Type</option>
-                                    <option value="CandidateAvl">Candidate  Availability</option>
-                                </select>
-                                <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                                    <option value="" disabled selected>Sort by</option>
-                                    <option value="JobTitle">Job Title</option>
-                                    <option value="Company">Company</option>
-                                    <option value="Location">Location</option>
-                                    <option value="Status">Status</option>
-                                    <option value="NoticePeriod">Notice Period</option>
-                                    <option value="CompanyType">Company Type</option>
-                                    <option value="CandidateAvl">Candidate  Availability</option>
-                                </select>
-                            </div>
-                        </SearchBarContainer>
-                        <Table aria-label="collapsible table">
-                            <TableHead className="tableHead">
-                                <TableRow>
-                                    <TableCell align='center'></TableCell>
-                                    <TableCell align='center'>Job Title</TableCell>
-                                    <TableCell align='center'>Company</TableCell>
-                                    <TableCell align='center'>Applied Date</TableCell>
-                                    <TableCell align='center'>Scheduled Date/Time</TableCell>
-                                    <TableCell align='center'>Status</TableCell>
-                                    <TableCell align='center'>% Match with Profile</TableCell>
-                                    <TableCell align='center'>Interview Link</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody className="tableBody">
-                                {filteredJobs?.map((row, index) => (
-                                    <Row key={row.jobId} row={row} index={index} isLoading={isLoading} setIsLoading={setIsLoading} loaderMessage={loaderMessage} setLoaderMessage={setLoaderMessage}/>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>}
-                </StyledBox>
-    
-        </Container1>
-    );
+  return (
+    <Container1>
+      <StyledBox>
+        {isLoading && <Loader message={loaderMessage} />}
+        {!isLoading && <TableContainer component={Paper} className="tableBox">
+          <span className='title'>Scheduled Interviews</span>
+          <SearchBarContainer>
+            <div className='skillBox'>
+              <img src={searchBlack} />
+              <input
+                className='skillInput'
+                type="text"
+                placeholder="Search"
+              />
+            </div>
+
+            <div className='selectBox'>
+              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+                <option value="" disabled selected>Filter by</option>
+                <option value="JobTitle">Job Title</option>
+                <option value="Company">Company</option>
+                <option value="Location">Location</option>
+                <option value="Status">Status</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CompanyType">Company Type</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
+              </select>
+              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+                <option value="" disabled selected>Sort by</option>
+                <option value="JobTitle">Job Title</option>
+                <option value="Company">Company</option>
+                <option value="Location">Location</option>
+                <option value="Status">Status</option>
+                <option value="NoticePeriod">Notice Period</option>
+                <option value="CompanyType">Company Type</option>
+                <option value="CandidateAvl">Candidate  Availability</option>
+              </select>
+            </div>
+          </SearchBarContainer>
+          <Table aria-label="collapsible table">
+            <TableHead className="tableHead">
+              <TableRow>
+                <TableCell align='center'></TableCell>
+                <TableCell align='center'>Job Title</TableCell>
+                <TableCell align='center'>Company</TableCell>
+                <TableCell align='center'>Applied Date</TableCell>
+                <TableCell align='center'>Scheduled Date/Time</TableCell>
+                <TableCell align='center'>Status</TableCell>
+                <TableCell align='center'>% Match with Profile</TableCell>
+                <TableCell align='center'>Interview Link</TableCell>
+                <TableCell align='center'>Details</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="tableBody">
+              {filteredJobs?.map((row, index) => (
+                <Row key={row.jobId} row={row} index={index} isLoading={isLoading} setIsLoading={setIsLoading} loaderMessage={loaderMessage} setLoaderMessage={setLoaderMessage} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>}
+      </StyledBox>
+
+    </Container1>
+  );
 };
 
 export default ScheduledInterviewList;
@@ -310,9 +331,10 @@ const SearchBarContainer = styled.div`
     border: none;
     background-color: #ececec;
     border-radius: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 50%;
     outline: none;
+    color: #757B80;
 
     option {
     font-size: 0.8rem;
