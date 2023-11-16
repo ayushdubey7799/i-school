@@ -51,7 +51,7 @@ function CreateInterview() {
     }, []); //
 
     useEffect(() => {
-      if(interviewData.status == "STARTED" && interviewData.id == interviewId){
+      if(interviewData?.status == "STARTED" && interviewData?.id == interviewId){
          navigate(`/ongoing-interview/${interviewId}`)
       }
     },[interviewData])
