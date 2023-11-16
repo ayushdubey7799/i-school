@@ -8,20 +8,18 @@ import resume5 from '../assets/resume/resume5.png'
 import resume6 from '../assets/resume/resume6.png'
 import resume7 from '../assets/resume/resume7.png'
 import { useNavigate } from 'react-router'
-import ResumeHeader from '../components/commonComponents/ResumeHeader'
 
 
 const resumes = [resume1, resume2, resume3, resume4, resume5, resume6, resume7];
 
 
-const CreateResumePage = () => {
+const SelectCVTempPage = () => {
   const navigate = useNavigate();
 
 
   return (
     <Box>
-      <ResumeHeader />
-
+      <span className='title'>Choose Resume Template</span>
       <div className='childBox'>
         {
           resumes.map((resume, index) => (
@@ -36,22 +34,30 @@ const CreateResumePage = () => {
   )
 }
 
-export default CreateResumePage
+export default SelectCVTempPage
 
 const Box = styled.div`
 width: 100%;
+height: 70vh;
+width: 100%;
 display: flex;
 flex-direction: column;
-gap: 2rem;
+align-items: center;
+gap: 1rem;
 
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
 
 
 
 .childBox {
-  width: 90%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  margin: 6rem auto 2rem auto;
+  margin: 1rem auto 2rem auto;
   gap: 1rem;
   justify-content: center;
 

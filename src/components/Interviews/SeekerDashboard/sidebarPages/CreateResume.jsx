@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import styled from 'styled-components'
+import SelectCVTempPage from '../../../../pages/SelectCVTempPage';
+import CommonModal from '../../../commonComponents/CommonModal';
 
 const CreateResume = () => {
-    const navigate = useNavigate();
+    const [openModal, setOpenModal] = useState(false);
 
     return (
         <Box>
             <div className='box1'>
-                <div className='btnBox'><button className='btn' onClick={() => navigate('/create-resume')}>Create My Resume</button></div>
+                <CommonModal open={openModal} setOpen={setOpenModal} component={<SelectCVTempPage />} />
+                <div className='btnBox'><button className='btn' onClick={() => setOpenModal(true)}>Create My Resume</button></div>
                 <span className='titleCenter'>Build an AI-Powered Resume to Power Up Your Job Search</span>
                 <span className='subTitle'>Your resume is often the first impression you make on a potential employer, so it's important to make it count. An AI-powered resume can help you stand out from the competition by highlighting your most relevant skills and experience, and tailoring it to each specific job you apply for.</span>
             </div>
