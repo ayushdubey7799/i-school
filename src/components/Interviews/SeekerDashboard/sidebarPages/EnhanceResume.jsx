@@ -4,41 +4,63 @@ import uploadIcon from '../../../../assets/icons/upload.png'
 import browseIcon from '../../../../assets/icons/browse.png'
 
 const EnhanceResume = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedFileName, setSelectedFileName] = useState('');
+  const [selectedResumeFile, setSelectedResumeFile] = useState(null);
+  const [selectedResumeFileName, setSelectedResumeFileName] = useState('');
 
-  const handleFileChange = (e) => {
+  const [selectedJDFile, setSelectedJDFile] = useState(null);
+  const [selectedJDFileName, setSelectedJDFileName] = useState('');
+
+  const handleResumeFileChange = (e) => {
     const file = e.target.files[0];
 
     if (file) {
-      setSelectedFile(file);
-      setSelectedFileName(file.name);
+      setSelectedResumeFile(file);
+      setSelectedResumeFileName(file.name);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can handle the file upload here, for example, by sending the file to a server.
-    if (selectedFile) {
-      console.log('Selected File:', selectedFile);
-      // You can add code to upload the file to a server or perform any other actions here.
-    } else {
-      console.log('No file selected.');
+  const handleJDFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      setSelectedJDFile(file);
+      setSelectedJDFileName(file.name);
     }
+  };
+
+  const handleSubmit = () => {
+
   };
 
 
   return (
     <Component>
       <Form onSubmit={handleSubmit}>
-        <>
-          <textarea
-            id='input'
-            rows={6}
-            
-            style={{marginBottom: "2rem", width: '30rem',height: "2rem" }}
-          />
-        </>
+        <div className='mainBox'>
+          <div className='resumeBox'>
+            <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedResumeFileName}</span></Label>
+            <FileInput
+              id='input'
+              type="file"
+              accept=".doc, .pdf"
+              onChange={handleResumeFileChange}
+              style={{ display: 'none' }}
+            />
+            <span>Select Resume</span>
+          </div>
+
+          <div className='resumeBox'>
+            <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedJDFileName}</span></Label>
+            <FileInput
+              id='input'
+              type="file"
+              accept=".doc, .pdf"
+              onChange={handleJDFileChange}
+              style={{ display: 'none' }}
+            />
+            <span>Select JD</span>
+          </div>
+        </div>
         <SubmitButton type="submit">Create Cover Letter</SubmitButton>
       </Form>
     </Component>
@@ -66,13 +88,26 @@ const Form = styled.form`
   width: 100%;
   margin: 2rem auto;
 
+  .mainBox {
+    display: flex;
+    gap: 2rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .resumeBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   span {
     font-weight: 600;
-    margin-bottom: 8px;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
   }
   .title {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -85,7 +120,7 @@ const Label = styled.label`
 
 
   img {
-    width: 2.5rem;
+    width: 2.3rem;
   }
   
   span {
