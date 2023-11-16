@@ -35,7 +35,9 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const key = searchParams.get('key');
-  if(key == "invite"){
+  if(key == "invite" || key == "interview"){
+    console.log(token,key);
+
     localStorage.setItem('token',token);
     localStorage.setItem('key',key);
   }

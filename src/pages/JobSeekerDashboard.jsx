@@ -32,9 +32,10 @@ const JobSeekerDashboard = () => {
   useEffect(() => {
     // if (!accessToken) navigate("/login");
 
-    const inviteToken = localStorage.getItem('token');
-    if (inviteToken) {
-      navigate(`/slot-selection/${inviteToken}`)
+    const key = localStorage.getItem('key');
+    const token = localStorage.getItem('token');
+    if (key == "invite") {
+      navigate(`/slot-selection/${token}`)
     }
 
 

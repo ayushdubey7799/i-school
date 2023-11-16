@@ -3,7 +3,6 @@ import axios from "axios";
 
 
 export const getQuestion = async (id,accessToken) => {
-  const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {
   headers: {

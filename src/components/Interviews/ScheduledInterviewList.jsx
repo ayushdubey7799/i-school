@@ -28,13 +28,13 @@ function Row(props) {
   const navigate = useNavigate();
 
   const startInterview = async () => {
-    setLoaderMessage("Creating Interview...  Please Wait");
-    setIsLoading(true);
-    const res = await updateStatus(row.id, "started", accessToken);
-    setIsLoading(false);
-    if (res) {
-      navigate(`/ongoing-interview/${row.id}`);
-    }
+    // setLoaderMessage("Creating Interview...  Please Wait");
+    // setIsLoading(true);
+    // const res = await updateStatus(row.id, "started", accessToken);
+    // setIsLoading(false);
+    // if (res) {
+      navigate(`/create-interview/${row.id}`);
+    // }
   }
 
   const [state, setState] = React.useState({
@@ -65,7 +65,7 @@ function Row(props) {
           {row.appliedDate}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='rowText'>
-          {row.appliedDate}
+          {row.scheduledAt}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='rowText'>
           {row.status}

@@ -1,12 +1,15 @@
 import axios from "axios"
 
-export const register = async (email,firstName,password,clientcode="intelliview") => {
+export const register = async (email,firstName,password) => {
+  let token = localStorage.getItem("token");
+  
   const requestData = {
     email,
     firstName,
-    password
+    password,
+    token: token ?? "noToken"
   };
-
+  console.log(requestData);
   const config = {
     headers: {
       'Content-Type': 'application/json',

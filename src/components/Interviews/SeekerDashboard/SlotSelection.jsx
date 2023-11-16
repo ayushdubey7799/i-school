@@ -76,6 +76,7 @@ const SlotSelection = () => {
 
       if (res) {
         localStorage.removeItem("token");
+        localStorage.removeItem("key");
         toast.success(
           `Scheduled interview on ${inviteDetails.slotDate} at ${selectedTimeSlot}`
         );

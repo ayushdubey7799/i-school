@@ -32,7 +32,7 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.question}
         </TableCell>
-        <TableCell align="right">{row.score}</TableCell>
+        <TableCell align="right">{row.skipped?"0":(row.processingState == "NEW" || row.processingState == "PROCESSING"?"Evaluating...":row.score)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
