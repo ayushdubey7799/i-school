@@ -93,6 +93,7 @@ const QuestionItem = styled.li`
 function CreateQuestionForm() {
   const [formData, setFormData] = useState({
     type: '',
+    role: '',
     tag: '',
     description: '',
     choices: ['', '', '', ''],
@@ -127,6 +128,7 @@ function CreateQuestionForm() {
     setQuestions([...questions, newQuestion]);
     setFormData({
       type: '',
+      role: '',
       tag: '',
       description: '',
       choices: ['', '', '', ''],
@@ -149,6 +151,7 @@ function CreateQuestionForm() {
     setQuestions(updatedQuestions);
     setFormData({
       type: '',
+      role: '',
       tag: '',
       description: '',
       choices: ['', '', '', ''],
@@ -203,6 +206,28 @@ function CreateQuestionForm() {
             <MenuItem value="Coding">Coding</MenuItem>
           </Select>
         </FormControl>
+
+        <TextField id="outlined-basic" label="Role (SDE, HR, Manager...)" variant="outlined"
+          type='text'
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          size='small'
+          inputProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              color: '#626264',
+              fontSize: '0.8rem',
+              fontWeight: '400'
+            },
+          }}
+        />
 
         <TextField id="outlined-basic" label="Tag" variant="outlined"
           type='text'

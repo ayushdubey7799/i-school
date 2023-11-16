@@ -13,39 +13,74 @@ const Subscription = () => {
 
             <div className='container'>
                 <div className='box'>
-                    <span className='boxTitle'>Free</span>
-                    <span className='boxSubTitle'>$0</span>
+                    <span className='boxTitle'>Start Up</span>
+                    <span className='boxSubTitle'>Free (60 days) 4999 Post that</span>
 
-                    <button className='btn'>Contact Us</button>
+                    <button className='btn'>Start for Free</button>
 
                     <div className='mainFeature'>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 3 Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Dashboard</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 2 Job Post</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 25 Applications Per JD</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 2 JD</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 100 Resume Upload</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 2 JD / 100 Resume Matching</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Interview Dashboard</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 40 AI JD Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Email Support NBD</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Basic ATS</span>
                     </div>
                 </div>
                 <div className='box'>
-                    <span className='boxTitle'>Starter</span>
-                    <span className='boxSubTitle'>Ask for Pricing</span>
+                    <span className='boxTitle'>Growing</span>
+                    <span className='boxSubTitle'>9999 INR / Month</span>
 
-                    <button className='btn'>Contact Us</button>
+                    <button className='btn'>Buy Now</button>
 
                     <div className='mainFeature'>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 10 Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Dashboard</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 15 Job Post</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 100 Applications Per JD</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 8 JD</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 400 Resume Upload</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 400 Resume Bulk Upload</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 8 JD / 400 Resume Matching</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 200 AI, AI+Employer, Employer Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 50 Coding Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Email & Phone Support (9 AM-6PM)</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Interview Dashboard</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Basic Reporting</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 5 Custom Tests</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> ATS</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Share on Social</span>
                     </div>
                 </div>
                 <div className='box'>
-                    <span className='boxTitle'>Growth</span>
-                    <span className='boxSubTitle'>Ask for Pricing</span>
+                    <span className='boxTitle'>Enterprise</span>
+                    <span className='boxSubTitle'>14999 INR / Month</span>
 
-                    <button className='btn'>Contact Us</button>
+                    <button className='btn'>Buy Now</button>
 
                     <div className='mainFeature'>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 50 Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Audio Interviews</span>
-                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> All Interview Platforms</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Dashboard</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 80 Job Post</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 100 Applications Per JD</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 32 JD</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 1600 Resume Upload</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 4000 Resume Bulk Upload</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 8 JD / 4000 Resume Matching</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 800 AI, AI+Employer, Employer Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 200 Coding Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 24x7 Email & Phone Support </span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Interview Dashboard</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Advance Reporting</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 20 Custom Tests</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 200 MCQ Interviews</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Sourcing API integration</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Offer Processing</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Full ATS</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Share on Social</span>
+                        <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Share with Agency</span>
                     </div>
                 </div>
             </div>
@@ -62,7 +97,7 @@ display: flex;
 flex-direction: column;
 gap: 3rem;
 align-items: center;
-margin: 2rem 0;
+margin: 1rem 0;
 
 
 
@@ -93,17 +128,19 @@ margin: 2rem 0;
     background-color: var(--white);
     gap: 0.5rem;
     width: 35%;
-    align-items: center;
+    align-items: start;
 }
 
 .boxTitle {
     font-size: 1.1rem;
     font-weight: 700;
+    align-self: center;
 }
 
 .boxSubTitle {
     font-size: 1rem;
     font-weight: 500;
+    align-self: center;
 }
 
 
@@ -117,25 +154,26 @@ margin: 2rem 0;
     padding: 0.5rem 1rem;
     cursor: pointer;
     margin-top: 1rem;
+    align-self: center;
 }
 
 
 .mainFeature {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem 0;
+    gap: 0.75rem;
+    padding: 1rem 0;
 }
 
 
 .featureDot {
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.5rem;
+    height: 0.5rem;
 }
 
 .featureText {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 400;
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -144,12 +182,12 @@ margin: 2rem 0;
 
 
 .title {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
 }
 
 .subTitle {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 500;
     color: rgb(70, 78, 98);
 }

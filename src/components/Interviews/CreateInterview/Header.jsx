@@ -7,6 +7,7 @@ import profileIcon from '../../../assets/profileIcon.png'
 import { useDispatch } from "react-redux";
 import { logout } from "../../../slices/authSlice";
 import { persistor } from "../../../store";
+import { useSelector } from "react-redux";
 
 const Header = ({
   openNewInterviewModal,
@@ -16,6 +17,7 @@ const Header = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.userData.user);
 
 
   const handleLogout = () => {
@@ -43,9 +45,11 @@ const Header = ({
         </div>
 
         <div class="dropdown" id="dropdown">
+          <span className="titleText" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user.firstName}</b></span>
+          <span onClick={() => navigate('/feedback')}>Feedback</span>
+          <span onClick={() => navigate('/support')}>Help</span>
           <span onClick={() => navigate('/reset')}>Reset Password</span>
           <span onClick={handleLogout}>Logout</span>
-          <span onClick={() => navigate('/support')}>Support</span>
         </div>
       </div>
     </StyledDiv>
@@ -107,14 +111,20 @@ const StyledDiv = styled.div`
     font-weight: 400;
     font-size: 0.8rem;
     border-radius: 0.5rem;
+
+    .titleText {
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
 }
 
 .dropdown span {
-    display: block;
-    padding: 8px 10px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s ease;
+  display: block;
+  padding: 8px 10px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+  border-bottom: 0.1rem groove lightgrey;
 }
 
 .dropdown span:hover {

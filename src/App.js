@@ -124,12 +124,7 @@ const App = () => {
           <Route path="/solution/enterprise" element={<Enterprises />} />
           <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
-
-          <Route path="/create-resume" element={<SelectCVTempPage />} />
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
-
-          <Route path="/trial" element={<CommonDialog/>}/>
-
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

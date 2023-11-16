@@ -32,7 +32,7 @@ const Subscription = () => {
                     <span className='boxTitle'>Professional</span>
                     <span className='boxSubTitle'>99 INR / Month</span>
 
-                    <button className='btn'>Contact Us</button>
+                    <button className='btn'>Buy Now</button>
 
                     <div className='mainFeature'>
                         <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 50 Interviews Per month</span>
@@ -50,7 +50,7 @@ const Subscription = () => {
                     <span className='boxTitle'>Expert</span>
                     <span className='boxSubTitle'>199 INR / Month</span>
 
-                    <button className='btn'>Contact Us</button>
+                    <button className='btn'>Buy Now</button>
 
                     <div className='mainFeature'>
                         <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 200 Interviews Per month</span>
@@ -79,7 +79,7 @@ display: flex;
 flex-direction: column;
 gap: 3rem;
 align-items: center;
-margin: 2rem auto;
+margin: 1rem auto;
 
 
 
@@ -144,7 +144,7 @@ margin: 2rem auto;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
 }
 
 
@@ -164,12 +164,12 @@ margin: 2rem auto;
 
 
 .title {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
 }
 
 .subTitle {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 500;
     color: rgb(70, 78, 98);
 }

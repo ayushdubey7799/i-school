@@ -15,6 +15,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const user = useSelector(state => state.auth.userData.user);
 
 
   const handleLogout = () => {
@@ -47,6 +48,9 @@ const Header = () => {
         </div>
 
         <div class="dropdown" id="dropdown">
+          <span className="titleText" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user.firstName}</b></span>
+          <span onClick={() => navigate('/feedback')}>Feedback</span>
+          <span onClick={() => navigate('/support')}>Help</span>
           <span onClick={() => navigate('/reset')}>Reset Password</span>
           <span onClick={handleLogout}>Logout</span>
         </div>
@@ -131,14 +135,20 @@ const StyledDiv = styled.div`
     font-weight: 400;
     font-size: 0.8rem;
     border-radius: 0.5rem;
+
+    .titleText {
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
 }
 
 .dropdown span {
-    display: block;
-    padding: 8px 10px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s ease;
+  display: block;
+  padding: 8px 10px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+  border-bottom: 0.1rem groove lightgrey;
 }
 
 .dropdown span:hover {

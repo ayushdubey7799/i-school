@@ -1,18 +1,12 @@
 
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import styled from "styled-components";
 import { data as tests } from "../../../../utils/contantData";
 
@@ -61,7 +55,7 @@ function Row(props) {
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align="center">
-          {row.id}
+          ...
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           ...
@@ -118,13 +112,13 @@ export default function AvailableTest() {
           <div className='selectBox'>
             <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
               <option value="" disabled selected>Filter by</option>
-              <option value="JD_ID">JD ID</option>
+              <option value="Role">Role</option>
               <option value="TestType">Test Type</option>
               <option value="Created By">Created By</option>
             </select>
             <select value={sortParams} onChange={handleSortParams} className='selectInput'>
               <option value="" disabled selected>Sort by</option>
-              <option value="JD_ID">JD ID</option>
+              <option value="Role">Role</option>
               <option value="TestType">Test Type</option>
               <option value="Created By">Created By</option>
             </select>
@@ -133,7 +127,7 @@ export default function AvailableTest() {
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">JD ID</TableCell>
+              <TableCell align="center">Role</TableCell>
               <TableCell align="center">Date of Creation</TableCell>
               <TableCell align="center">Created By</TableCell>
               <TableCell align="center">Test Type</TableCell>
