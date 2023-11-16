@@ -21,29 +21,6 @@ const CreateResume = () => {
                 <span className='subTitle'>To build an AI-powered resume, simply enter your skills and experience into our platform. Our AI will then analyze your data and generate a resume that is tailored to your specific needs. The resume will be formatted professionally and will include all of the relevant information that employers are looking for.</span>
             </div>
 
-            <div className='box2'>
-                <span className='titleCenter'>Benefits of using an AI-powered resume</span>
-                <span className='subTitle'>There are many benefits to using an AI-powered resume, including:</span>
-                <span className='subTitle'><b>Save time:</b> Our AI can generate a resume in minutes, saving you hours of time and effort.</span>
-                <span className='subTitle'><b>Improve your chances of getting an interview:</b> An AI-powered resume is more likely to be noticed by employers, and it will help you stand out from the competition.</span>
-                <span className='subTitle'><b>Get a tailored resume for each job you apply for:</b> Our AI can tailor your resume to each specific job you apply for, ensuring that you are highlighting your most relevant skills and experience.</span>
-                <span className='subTitle'><b>Get feedback from our experts:</b> Our team of experts can review your resume and provide you with feedback, helping you to further improve your chances of getting an interview.</span>
-            </div>
-
-            <div className='box2'>
-                <span className='titleCenter'>How to get started</span>
-                <span className='subTitle'>To get started, simply visit our website and create an account. Once you have created an account, you can begin building your resume.</span>
-            </div>
-
-            <div className='box2'>
-                <span className='titleCenter'>Here are a few tips for building an effective AI-powered resume:</span>
-                <span className='subTitle'>Be as specific as possible when entering your skills and experience. The more detail you provide, the better our AI will be able to generate a tailored resume for you.</span>
-                <span className='subTitle'>Use keywords that are relevant to the jobs you are applying for. This will help your resume to be noticed by employers who are using applicant tracking systems.</span>
-                <span className='subTitle'>Proofread your resume carefully before submitting it to any employers.</span>
-
-                <span className='title'>Start building your AI-powered resume today and give yourself an edge in the job market!</span>
-            </div>
-
         </Box>
     )
 }
@@ -108,7 +85,7 @@ gap: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     gap: 0.5rem;
 
     .title {
@@ -123,7 +100,7 @@ gap: 2rem;
         font-weight: 500;
         width: 100%;
         display: flex;
-        justify-content: start;
+        justify-content: center;
     }
 
     .subTitle {
