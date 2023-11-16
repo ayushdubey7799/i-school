@@ -77,16 +77,16 @@ width: 90%;
   padding-bottom: 3rem;
 
   .floatBtn {
-    background-color: var(--lightOrange);
-    color: var(--white);
-    border: none;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 0.5rem;
+    color: var(--lightOrange);
+    font-size: 0.75rem;
+    font-weight: 600;
     cursor: pointer;
     margin-left: 1rem;
-    
+    text-decoration: none;
+  }
+
+  .floatBtn:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -324,7 +324,7 @@ const ManageTests = () => {
                 )}
               </SearchBarContainer>
               <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={CreateQuestionForm} />
-              <ListTitle>Available Questions <button onClick={() => setOpenBasic(true)} className='floatBtn'>Add Question</button></ListTitle>
+              <ListTitle>Available Questions <span onClick={() => setOpenBasic(true)} className='floatBtn'>Add Question</span></ListTitle>
               {data.list1.map((item, index) => (
                 <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                   {(provided) => (
@@ -500,15 +500,17 @@ const SearchBarContainer = styled.div`
     align-self: start;
     background-color: var(--white);
     border: 0.08rem solid lightgrey;
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.4rem 0.4rem;
     border-radius: 0.3rem;
     cursor: pointer;
-    height: 3rem;
-    width: 3rem;
+    height: 2.2rem;
+    width: 2.2rem;
+    display: flex;
+    align-items: center;
+    align-self: center;
 
     img {
-      width: 2rem;
-      height: 2rem;
+      width: 100%;
     }
   }
 

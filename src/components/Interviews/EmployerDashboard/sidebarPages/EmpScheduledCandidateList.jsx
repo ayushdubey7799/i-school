@@ -38,6 +38,8 @@ function Row(props) {
         <TableCell align="center">...</TableCell>
         <TableCell align="center">...</TableCell>
         <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails />} />
@@ -108,6 +110,8 @@ const EmpScheduledCandidateList = ({ setPage }) => {
               <TableCell align="center">Candidate Name</TableCell>
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">Contact</TableCell>
+              <TableCell align="center">Recruiter</TableCell>
+              <TableCell align="center">Hiring Manager</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Details</TableCell>
             </TableRow>
