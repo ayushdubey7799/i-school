@@ -50,9 +50,6 @@ const SlotSelection = () => {
     const getDetails = async () => {
       const res = await getInviteDetails(token, accessToken);
       setInviteDetails(res?.data);
-      // if(!res){
-      //   navigate("/dashboard/inter");
-      // }
     };
 
     getDetails();

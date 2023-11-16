@@ -22,14 +22,14 @@ const Proctored = () => {
 
 
   useEffect(() => {
-    window.addEventListener("visibilitychange", handleVisibilityChange);
+    // window.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener('keydown', handleKeyPress);
     window.addEventListener("fullscreenchange", handleFullScreenChange);
 
     return () => {
       if (idRef) clearTimeout(idRef);
       window.removeEventListener('keydown', handleKeyPress);
-      window.removeEventListener("visibilitychange", handleVisibilityChange);
+      // window.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener('keydown', handleKeyPress);
       window.removeEventListener("fullscreenchange", handleFullScreenChange);
     };
@@ -86,7 +86,9 @@ const Proctored = () => {
   }
   console.log(idRef);
   return (
-    <Container onCopy={handlePrevent} onPaste={handlePrevent} onCut={handlePrevent}>
+    // <Container onCopy={handlePrevent} onPaste={handlePrevent} onCut={handlePrevent}>
+          <Container>
+
       <ModalHOC openNewInterviewModal={open} setOpenNewInterviewModal={setOpen} Component={Warning} array={[setOpen]} />
       <OngoingInterview start={start} handleStart={handleStart} />
     </Container>

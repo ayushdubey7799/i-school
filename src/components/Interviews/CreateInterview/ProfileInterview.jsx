@@ -116,16 +116,7 @@ const ProfileInterview = () => {
 
     console.log(ongoing);
     if (ongoing?.data?.id) {
-      console.log("data");
-      const statusResponse = await updateStatus(
-        ongoing.data.id,
-        "started",
-        accessToken
-      );
-      console.log(statusResponse);
-      setIsLoading(false);
-      if (statusResponse?.status == "SUCCESS")
-        navigate(`/ongoing-interview/${ongoing.data.id}`);
+     navigate(`/create-interview/${ongoing.data.id}`)
     }
   };
 

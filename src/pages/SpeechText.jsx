@@ -60,7 +60,7 @@ const SpeechToText = () => {
           <p>{status}</p>
           <button onClick={startRecording}>Start Recording</button>
           <button onClick={stopRecording}>Stop Recording</button>
-          <audio src={mediaBlobUrl} controls autoPlay loop />
+          <audio src={mediaBlobUrl} controls />
         </div>
       )}}
     />

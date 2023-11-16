@@ -57,6 +57,7 @@ import CreateResumePage from "./pages/CreateResumePage"
 import Invite from "./components/Interviews/EmployerDashboard/Schedule/Invite"
 import InviteSuccess from "./components/Interviews/EmployerDashboard/Schedule/InviteSuccess"
 import CommonDialog from "./components/commonComponents/CommonDialog"
+import CreateInterview from "./pages/CreateInterview"
 
 
 
@@ -85,6 +86,7 @@ const App = () => {
           <Route path="/interview-invite" element={<InviteRedirect />} />
           <Route path="/slot-selection/:token" element={<SlotSelection />} />
           <Route path="/create" element={<NewInterviewDetails />} />
+          <Route path="/create-interview/:interviewId" element={<CreateInterview />} />
           <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
           <Route path="/score/:interviewId" element={<Scorecard />} />
           <Route path="/proctor-test" element={<QuestionComponent />} />

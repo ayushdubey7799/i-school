@@ -65,13 +65,17 @@ const SkillInterview = () => {
 
     const ongoing = await createInterview(interviewDetails.skills.trim(), `Experience ${interviewDetails.experience.trim()}`, accessToken)
     console.log(ongoing);
+
     if (ongoing?.data?.id) {
-      console.log("data");
-      const statusResponse = await updateStatus(ongoing.data.id, "started", accessToken);
-      console.log(statusResponse);
-      setIsLoading(false);
-      if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);
+     navigate(`/create-interview/${ongoing.data.id}`)
     }
+    // if (ongoing?.data?.id) {
+    //   console.log("data");
+    //   const statusResponse = await updateStatus(ongoing.data.id, "started", accessToken);
+    //   console.log(statusResponse);
+    //   setIsLoading(false);
+    //   if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);
+    // }
   }
 
 

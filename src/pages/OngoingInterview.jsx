@@ -185,9 +185,9 @@ const OngoingInterview = ({ start, handleStart }) => {
             <>
               <div>{data?.question}</div>
               <textarea
-                onPaste={handlePaste}
-                onCut={handleCutCopy}
-                onCopy={handleCutCopy}
+                // onPaste={handlePaste}
+                // onCut={handleCutCopy}
+                // onCopy={handleCutCopy}
                 rows={10}
                 value={input}
                 onChange={(e) => handleChange(e)}
@@ -241,8 +241,6 @@ const OngoingInterview = ({ start, handleStart }) => {
                               <audio
                                 src={mediaBlobUrl}
                                 controls
-                                autoPlay
-                                loop
                               />
                               <span id="status1">
                                 {status === 'idle' && <img id="idle" src={idle} className="statusIcon"/>}
