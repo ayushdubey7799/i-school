@@ -37,7 +37,7 @@ const EmployerHeader = ({ setCurrentItem }) => {
 
         <Link to="/demo" className="link">
           <span className="demoIcon"><img src={demoIcon} />
-            <span className="altText">request demo</span>
+            <span className="altText">Schedule Demo</span>
           </span>
         </Link>
 

@@ -14,6 +14,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import imgDummy from '../../../../assets/resume/imgDummy.png'
 
@@ -247,10 +249,9 @@ const CreateResumeLeftBox = () => {
                 <span className="title">Professional Summary</span>
                 <span className="text">Write 2-4 short & energetic sentences to interest the reader! Mention your role, experience & most importantly - your biggest achievements, best qualities and skills.</span>
 
-                <textarea
-                    className="textArea"
-                    rows='10'
-                />
+                <div className="textEditorBox">
+                    <ReactQuill theme="snow" className="textEditor" />
+                </div>
 
                 <span className="text">Recruiter tip: write 50-200 characters to increase interview chances 176 / 200</span>
             </div>
@@ -355,10 +356,10 @@ const CreateResumeLeftBox = () => {
                                         <label className="textAreaLabel">
                                             Description
                                         </label>
-                                        <textarea
-                                            className="textArea"
-                                            rows='10'
-                                        />
+                                        <div className="textEditorBox">
+                                            <ReactQuill theme="snow" className="textEditor" />
+                                        </div>
+
 
                                         <span className="text">Recruiter tip: write 200+ characters to increase interview chances.</span>
                                     </div>
@@ -471,10 +472,9 @@ const CreateResumeLeftBox = () => {
                                         <label className="textAreaLabel">
                                             Description
                                         </label>
-                                        <textarea
-                                            className="textArea"
-                                            rows='10'
-                                        />
+                                        <div className="textEditorBox">
+                                            <ReactQuill theme="snow" className="textEditor" />
+                                        </div>
                                     </div>
                                 </div>
                             </AccordionDetails>
@@ -783,10 +783,9 @@ const CreateResumeLeftBox = () => {
                                         <label className="textAreaLabel">
                                             Description
                                         </label>
-                                        <textarea
-                                            className="textArea"
-                                            rows='10'
-                                        />
+                                        <div className="textEditorBox">
+                                            <ReactQuill theme="snow" className="textEditor" />
+                                        </div>
                                     </div>
                                 </div>
                             </AccordionDetails>
@@ -839,32 +838,13 @@ const Box = styled.div`
   }
 
   .textAreaBox {
-    position: relative;
-
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
     .textAreaLabel {
-        position: absolute;
-        left: 1rem;
-        top: 2px;
         font-size: 0.8rem;
-        background-color: var(--white);
-        padding: 0 0.4rem;
     }
-}
-
-  .textArea {
-    width: 100%;
-    margin-top: 0.7rem;
-    border-radius: 0.3rem;
-    border: 0.02rem solid lightgrey;
-    background-color: #fbfbfd;
-    font-size: 1rem;
-    padding: 0.5rem;
-    box-sizing: border-box;
-}
-
-.textArea:focus {
-    outline-color: #1976d2;
 }
 
 .mainBox {
@@ -918,6 +898,10 @@ const Box = styled.div`
 .addSkillBtn:hover {
     font-weight: 600;
     text-decoration: underline;
+}
+
+.textEditor {
+    background-color: #fbfbfd;
 }
 
 #demo-simple-select-label {
