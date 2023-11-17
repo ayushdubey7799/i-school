@@ -65,17 +65,14 @@ const Login = () => {
     const key = localStorage.getItem("key");
 
     console.log(token,key,accessToken,clientCodeStore)
+    if(accessToken && key=="interview")navigate('/dashboard/jobseeker');
 
     if (token && accessToken && clientCodeStore && key=="invite") {
       (async function () {
         const res = await getInviteDetails(token, accessToken);
         if (res) {
-          if(key=="interview"){
-            navigate("/dashboard/jobseeker")
-          }
-          else{
-            navigate(`/slot-selection/${token}`)
-          }
+              navigate(`/slot-selection/${token}`)
+          
         } else {
           const userConfirmed = confirm("You are already logged in with different email id, do you want to logout first?");
           if (userConfirmed) {

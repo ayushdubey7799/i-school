@@ -59,6 +59,7 @@ import InviteSuccess from "./components/Interviews/EmployerDashboard/Schedule/In
 import CommonDialog from "./components/commonComponents/CommonDialog"
 import CreateInterview from "./pages/CreateInterview"
 import PricingPlan from "./pages/menuPages/PricingPlan"
+import AccessDenied from "./pages/AccessDenied"
 
 
 
@@ -127,6 +128,8 @@ const App = () => {
           <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
+
+          <Route path='access-denied' element={<AccessDenied/>}/>
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

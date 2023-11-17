@@ -37,6 +37,8 @@ const PracticeInterview = () => <div>Practice Interview Content</div>;
 const EmployerDashboard = () => {
   const navigate = useNavigate();
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
 
@@ -48,6 +50,11 @@ const EmployerDashboard = () => {
 
   useEffect(() => {
     // if (!accessToken) navigate("/login");
+    if(!accessToken)navigate('/login');
+    if(clientCode == 'intelliview')navigate('/access-denied');
+
+
+
     let initialOpen =
       currentItem === "activeJds" || currentItem === "create-tests" || currentItem === "available-tests";
     if (initialOpen) {

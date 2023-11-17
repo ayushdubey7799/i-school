@@ -22,7 +22,7 @@ export const register = async (email,firstName,password) => {
     try {
         const response = await axios.post('https://dev-api.intelliview.in/api/signup',requestData,config);
         console.log('Data:', response.data);
-        if(key == 'interview'){
+        if(key == 'interview' && token){
           localStorage.removeItem("token");
           localStorage.removeItem("key");
         }

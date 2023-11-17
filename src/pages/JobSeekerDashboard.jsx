@@ -25,21 +25,17 @@ const PracticeInterview = () => <div>Practice Interview Content</div>;
 
 const JobSeekerDashboard = () => {
   const navigate = useNavigate();
-  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   // if (!accessToken) navigate("/login");
-
-  //   const key = localStorage.getItem('key');
-  //   const token = localStorage.getItem('token');
-  //   if (key == "invite") {
-  //     navigate(`/slot-selection/${token}`)
-  //   }
-
-
-  // }, []);
+  useEffect(() => {
+    console.log(accessToken,clientCode);
+    if(!accessToken)navigate('/login');
+    if(clientCode.toLowerCase() != 'intelliview')navigate('/access-denied');
+  }, []);
 
   const [currentItem, setCurrentItem] = useState('dashboard');
 
