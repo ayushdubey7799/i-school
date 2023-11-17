@@ -1,42 +1,56 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import browseIcon from '../../../../assets/icons/uploadBrowseIcon.png'
-
+import { bulkUpload } from '../../../../functions/api/resume/bulkUpload';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 
 const UploadCandidateProfile = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedFileName, setSelectedFileName] = useState('');
+  const [files, setFiles] = useState([]);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+  const handleFileChange = (event) => {
+    const selectedFiles = event.target.files;
+    setFiles((prevFiles) => [...prevFiles, ...Array.from(selectedFiles)]);
+  };
 
-        if (file) {
-            setSelectedFile(file);
-            setSelectedFileName(file.name);
-        }
-    };
+  const handleFileUpload = async () => {
+    const formData = new FormData();
+    files.forEach((file, index) => {
+      formData.append(`files`, file);
+      // console.log(file.name);
+    });
 
-    const handleProfileUpload = () => {
+    // console.log(formData.getAll("files"))
 
-    }
-
+    const res = await bulkUpload(formData,accessToken,clientCode)
+   if(res){
+    toast.success("Profiles uploaded successfully");
+   }
+  }
+  
 
     return (
         <Box>
             <span className='title'>Upload Profiles</span>
             <div className='resumeBox'>
-                <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
-                <FileInput
+                <Label htmlFor='input'><img src={browseIcon} /> 
+                <span>{files.map((item) => <p>{item.name}</p>)}</span>
+                </Label>
+                <input
                     id='input'
                     type="file"
-                    accept=".zip,.rar,.7z"
+                    // accept=".zip,.rar,.7z"
+                    accept='*'
                     onChange={handleFileChange}
                     style={{ display: 'none' }}
+                    multiple
                 />
                 <span>Select Folder or Zip File</span>
             </div>
-            <button onClick={handleProfileUpload} className='registerBtn'>Upload</button>
+            <button onClick={handleFileUpload} className='registerBtn'>Upload</button>
         </Box>
     )
 }

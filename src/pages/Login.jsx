@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { auth } from "../functions/api/authentication/auth";
@@ -7,7 +7,7 @@ import loginImg from "../assets/loginPageSecureImg.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton } from "@mui/material";
 import logo from "../assets/IntelliViewLogo.png";
-import { performLogin } from "../slices/authSlice";
+import { logout, performLogin } from "../slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -18,11 +18,18 @@ import registerIcon1 from "../assets/registerIcon1.jpg";
 import registerIcon2 from "../assets/registerIcon2.jpg";
 import registerIcon3 from "../assets/registerIcon3.jpg";
 import ReCAPTCHA from "react-google-recaptcha";
+import { getInviteDetails } from "../functions/api/employers/schedule/getInviteDetails";
+import { persistor } from "../store";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.userData);
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const clientCodeStore = useSelector(
+    (state) => state.auth.userData?.user?.clientCode
+  );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [clientCode, setClientCode] = useState("");
@@ -33,13 +40,13 @@ const Login = () => {
   const captchaRef = useRef(null);
 
   const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
-  const key = searchParams.get('key');
-  if(key == "invite" || key == "interview"){
-    console.log(token,key);
+  const token = searchParams.get("token");
+  const key = searchParams.get("key");
+  if (key == "invite" || key == "interview") {
+    console.log(token, key);
 
-    localStorage.setItem('token',token);
-    localStorage.setItem('key',key);
+    localStorage.setItem("token", token);
+    localStorage.setItem("key", key);
   }
 
   const togglePasswordVisibility = () => {
@@ -54,15 +61,29 @@ const Login = () => {
     captchaRef.current.reset();
   };
 
-  if (userData?.accessToken) {
-    userData.user?.clientCode == "intelliview"
-      ? navigate("/dashboard/jobseeker")
-      : navigate("/dashboard/employer");
-  }
+  useEffect(() => {
+    if (token && accessToken && clientCode=="intelliview") {
+      (async function () {
+        const res = await getInviteDetails(token, accessToken);
+        if (res) {
+          navigate(`/slot-selection/${token}`)
+        } else {
+          const userConfirmed = confirm("You are already logged in with different email id, do you want to logout first?");
 
-  // if(loggedIn)navigate("/interview");
-  // console.log(accessToken);
-  // if (accessToken) navigate("/dashboard/jobseeker")
+          if (userConfirmed) {
+            persistor.purge();
+            dispatch(logout());
+          } else {
+            navigate("/dashboard/jobseeker");
+          }
+        }
+      })();
+    }else if (accessToken) {
+      clientCodeStore == "intelliview"
+        ? navigate("/dashboard/jobseeker")
+        : navigate("/dashboard/employer");
+    }
+  }, [accessToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

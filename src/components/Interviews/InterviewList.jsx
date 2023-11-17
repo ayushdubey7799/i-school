@@ -47,10 +47,10 @@ const Row = (props) => {
           <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', alignItems: 'center' }} align="center">
             <ScoreChart data={[
               ["Score", "Percentage"],
-              ["YourScore", score],
-              ["", (maxScore - score)]
+              ["YourScore", row.score],
+              ["", (row.maxScore - row.score)]
             ]} />
-            <span>65/100</span>
+            <span>{row.score}/{row.maxScore}</span>
           </TableCell>
         }
         {row.status == 'COMPLETED' &&

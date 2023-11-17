@@ -29,17 +29,17 @@ const JobSeekerDashboard = () => {
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // if (!accessToken) navigate("/login");
+  // useEffect(() => {
+  //   // if (!accessToken) navigate("/login");
 
-    const key = localStorage.getItem('key');
-    const token = localStorage.getItem('token');
-    if (key == "invite") {
-      navigate(`/slot-selection/${token}`)
-    }
+  //   const key = localStorage.getItem('key');
+  //   const token = localStorage.getItem('token');
+  //   if (key == "invite") {
+  //     navigate(`/slot-selection/${token}`)
+  //   }
 
 
-  }, []);
+  // }, []);
 
   const [currentItem, setCurrentItem] = useState('dashboard');
 

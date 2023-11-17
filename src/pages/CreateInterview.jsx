@@ -22,7 +22,7 @@ const style = {
 }
 
 function CreateInterview() {
-    const stringsArray = ['Analyzing JD and Resume', 'Creating Questions', 'Creating Interview', 'Verifying Interview'];
+    const stringsArray = ['Analyzing JD and Resume', 'Creating Questions', 'Creating Interview', 'Preparing Interview'];
     const [currentString, setCurrentString] = useState('Analyzing JD and Resume');
     const { interviewId } = useParams();
     const accessToken = useSelector(state => state.auth.userData?.accessToken);
