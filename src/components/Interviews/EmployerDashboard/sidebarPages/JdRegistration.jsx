@@ -93,7 +93,7 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='Candidate Data' handleClose={handleClose} handleDelete={handleDelete} deleteId={row.id} />} />
+          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='JD' handleClose={handleClose} handleDelete={handleDelete} deleteId={row.id} />} />
             <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
             <img src={deleteIcon} onClick={() => handleClickOpen()} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>

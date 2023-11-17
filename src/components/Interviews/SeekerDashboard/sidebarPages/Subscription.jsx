@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import whiteDot from '../../../../assets/icons/whiteDot.png'
 import ColoredDot from '../../../../assets/icons/coloredDot.png'
 
 const Subscription = () => {
