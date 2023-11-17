@@ -26,6 +26,7 @@ import ConfigureReports from "../components/Interviews/EmployerDashboard/sidebar
 import InterviewDashboard from "../components/Interviews/EmployerDashboard/sidebarPages/InterviewDashboard";
 import UploadCandidateProfile from "../components/Interviews/EmployerDashboard/sidebarPages/UploadCandidateProfile";
 import EmpConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/EmpConfigureDash";
+import InterviewFlow from "../components/Interviews/EmployerDashboard/sidebarPages/InterviewFlow";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -99,6 +100,7 @@ const EmployerDashboard = () => {
           {currentItem === "create-tests" && <ManageTests />}
           {currentItem === "available-tests" && <AvailableTest />}
           {currentItem === "interview-dashboard" && <InterviewDashboard page={empScheduledPage} setPage={setEmpScheduledPage} />}
+          {currentItem === "interview-flow" && <InterviewFlow />}
 
           {currentItem === "profile" && <EmployeProfile />}
           {currentItem === "manage-users" && <ManageUsers />}

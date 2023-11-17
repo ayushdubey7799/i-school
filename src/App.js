@@ -58,6 +58,7 @@ import Invite from "./components/Interviews/EmployerDashboard/Schedule/Invite"
 import InviteSuccess from "./components/Interviews/EmployerDashboard/Schedule/InviteSuccess"
 import CommonDialog from "./components/commonComponents/CommonDialog"
 import CreateInterview from "./pages/CreateInterview"
+import PricingPlan from "./pages/menuPages/PricingPlan"
 
 
 
@@ -107,6 +108,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/career" element={<Career />} />
           <Route path="/sales" element={<Sales />} />
+          <Route path="/pricing" element={<PricingPlan />} />
 
           <Route path="/employers/jds" element={<JobDescriptions />} />
           <Route path="/employers/:jobSummaryHash" element={<JdDetails />} />

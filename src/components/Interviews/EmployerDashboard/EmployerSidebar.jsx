@@ -12,7 +12,7 @@ import jdIcon from '../../../assets/icons/job-description.png'
 import candidatesIcon from '../../../assets/icons/manage-candidates.png'
 import testIcon from '../../../assets/icons/test-management.png'
 import activeJdIcon from '../../../assets/icons/active-job-desc.png'
-import createTestIcon from '../../../assets/icons/candidatePool.png'
+import createTestIcon from '../../../assets/icons/createTest.png'
 import dashboardIcon from '../../../assets/icons/dashboard.png'
 import billingIcon from '../../../assets/icons/billing.png'
 import reportIcon from '../../../assets/icons/report.png'
@@ -34,6 +34,7 @@ import titleIcon4 from '../../../assets/icons/titleIcon4.png'
 import titleIcon5 from '../../../assets/icons/titleIcon5.png'
 import titleIcon6 from '../../../assets/icons/titleIcon6.png'
 import uploadProfileIcon from '../../../assets/icons/uploadProfileIcon.png'
+import interviewFlow from '../../../assets/icons/interview-flow.png'
 
 
 const Container = styled.div`
@@ -351,6 +352,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
               <Link to="/schedule" className='link'><img src={scheduleIcon} className='icon' />Schedule Interview</Link>
               <OpenInNewIcon className='arrowLink' />
             </div>
+            <SubPara isSelected={currentItem === 'interview-flow'} onClick={() => handleItemClick('interview-flow')} className='submenuItem'><img src={interviewFlow} className='icon' />Interview Flow</SubPara>
           </Submenu>
         </AccordionDetails>
       </Accordion>

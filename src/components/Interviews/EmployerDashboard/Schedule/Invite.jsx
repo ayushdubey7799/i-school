@@ -119,7 +119,7 @@ export default function Invite() {
         return;
       }
       const payload = {
-        jdId: array[array.length-1],
+        jdId: array[array.length - 1],
         productType: productType,
         resumeIds: array.slice(0, -1),
         testType: testType,
@@ -190,11 +190,11 @@ export default function Invite() {
 
                 <div className="slotBox">
                   <span className="span">Select time-slot</span>
-                 {!isTime && <TimeSlotPicker
+                  {!isTime && <TimeSlotPicker
                     selectedTimeSlot={selectedTimeSlot}
                     setSelectedTimeSlot={setSelectedTimeSlot}
                   />
-                 }
+                  }
                 </div>
               </div>
               <label className="smallTextBox">
@@ -286,9 +286,8 @@ export default function Invite() {
                 </div>
               </div>
 
-
               <div className="inputBox">
-                <span className="title">Test Type</span>
+                <span className="title">Interview Type</span>
                 <div className="childInputBox">
                   <label>
                     <input
@@ -325,6 +324,15 @@ export default function Invite() {
                       onChange={() => handleTestTypeChange('General')}
                     />
                     <span>General (Includes all types of Que)</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="InPerson"
+                      checked={testType === 'InPerson'}
+                      onChange={() => handleTestTypeChange('InPerson')}
+                    />
+                    <span>In Person</span>
                   </label>
                 </div>
               </div>
