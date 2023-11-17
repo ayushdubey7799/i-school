@@ -60,25 +60,37 @@ const Login = () => {
     setPasswordVisible(false);
     captchaRef.current.reset();
   };
-
   useEffect(() => {
-    if (token && accessToken && clientCode=="intelliview") {
+    const token = localStorage.getItem("token");
+    const key = localStorage.getItem("key");
+
+    console.log(token,key,accessToken,clientCodeStore)
+
+    if (token && accessToken && clientCodeStore && key=="invite") {
       (async function () {
         const res = await getInviteDetails(token, accessToken);
         if (res) {
-          navigate(`/slot-selection/${token}`)
+          if(key=="interview"){
+            navigate("/dashboard/jobseeker")
+          }
+          else{
+            navigate(`/slot-selection/${token}`)
+          }
         } else {
           const userConfirmed = confirm("You are already logged in with different email id, do you want to logout first?");
-
           if (userConfirmed) {
             persistor.purge();
             dispatch(logout());
           } else {
-            navigate("/dashboard/jobseeker");
+            clientCodeStore == "intelliview"
+        ? navigate("/dashboard/jobseeker")
+        : navigate("/dashboard/employer");
           }
         }
       })();
-    }else if (accessToken) {
+    }
+
+    if(!token && accessToken){
       clientCodeStore == "intelliview"
         ? navigate("/dashboard/jobseeker")
         : navigate("/dashboard/employer");
