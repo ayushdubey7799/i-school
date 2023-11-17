@@ -77,7 +77,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
             <select value={sortParams} onChange={handleSortParams} className='selectInput'>
               <option value="" disabled selected>Sort by</option>
               <option value="JDID">JD ID</option>
-              <option value="TotalInterviews">Total Interviews</option>
+              <option value="TotalInterviews">Total Candidates</option>
               <option value="Completed">Closed</option>
               <option value="InProgress">In Progress</option>
               <option value="FirstRound">First Round</option>
@@ -91,7 +91,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
           <TableHead className="tableHead">
             <TableRow>
               <TableCell align="center">JD ID</TableCell>
-              <TableCell align="center">Total Interviews</TableCell>
+              <TableCell align="center">Total Candidates</TableCell>
               <TableCell align="center">Closed</TableCell>
               <TableCell align="center">In Progress</TableCell>
               <TableCell align="center">First Round</TableCell>

@@ -52,12 +52,6 @@ function Row(props) {
                 <TableCell align="center">...</TableCell>
                 <TableCell align="center">...</TableCell>
                 <TableCell align="center">...</TableCell>
-                <TableCell align="center">
-                    <input
-                        type="checkbox"
-                        className="checkBox"
-                    />
-                </TableCell>
                 <TableCell component="th" scope="row" align="center">
                     <BoxRow>
                         <img src={actionDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
@@ -144,15 +138,14 @@ const InterviewFlow = ({ setPage }) => {
                 <Table aria-label="collapsible table">
                     <TableHead className="tableHead">
                         <TableRow>
-                            <TableCell align="center">JD ID</TableCell>
                             <TableCell align="center">Name</TableCell>
                             <TableCell align="center">Contact</TableCell>
-                            <TableCell align="center">Email</TableCell>
+                            <TableCell align="center">JD ID</TableCell>
                             <TableCell align="center">Recruiter</TableCell>
                             <TableCell align="center">Hiring Manager</TableCell>
                             <TableCell align="center">Current Round</TableCell>
+                            <TableCell align="center">Interview Name</TableCell>
                             <TableCell align="center">Status</TableCell>
-                            <TableCell align="center">Select</TableCell>
                             <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
