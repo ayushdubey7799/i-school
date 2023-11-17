@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -27,12 +27,37 @@ import ExportDialogContent from '../../../commonComponents/ExportDialogContent';
 import { toast } from 'react-toastify';
 import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 import AgencyShareDialogContent from '../../../commonComponents/AgencyShareDialogContent';
+import { deleteJd } from '../../../../functions/api/employers/deleteJd';
+import ModalHOC from '../../SeekerDashboard/ModalHOC';
+import JdForm from '../JdForm';
 
 
 function Row(props) {
   const { row, index } = props;
 
+  const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
+
+  const [jdData, setJdData] = useState(null);
+  const [editOpen, setEditOpen] = useState(false);
+  const accessToken = useSelector(state => state.auth.userData.accessToken);
+  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
+
+  const handleEdit = (row) => {
+    setEditOpen(true);
+    setJdData(row);
+  }
+
+  const handleDelete = async (id) => {
+    const res = await deleteJd(id, accessToken, clientCode);
+    if (res) {
+      toast.success("Successfully Deleted");
+    }
+    else {
+      toast.error("Error Occured")
+    }
+    handleClose();
+  }
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -79,23 +104,28 @@ function Row(props) {
   };
 
 
-  const handleEdit = () => {
-    console.log('Edit')
-  }
-
-  const handleDelete = () => {
-    console.log('deleted');
-    handleClose();
-  }
-
   const handleShareSocial = () => {
     console.log('Share Social')
   }
 
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
+    };
+  }, []);
 
 
   return (
     <React.Fragment>
+      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center'>
@@ -128,12 +158,12 @@ function Row(props) {
                 }
               }} />
             <div
-              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`}
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} />} />
+              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
-              <span onClick={handleEdit}>Edit <img src={editIcon} className='threeDotIcon' /></span>
+              <span onClick={() => handleEdit(row)}>Edit <img src={editIcon} className='threeDotIcon' /></span>
               <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
               <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
               <span onClick={handleShareSocial}>Share on Social <img src={shareIcon} className='threeDotIcon' /></span>
@@ -305,6 +335,18 @@ const StyledBox = styled.div`
       }
     }
     
+    &::-webkit-scrollbar {
+      width: 0rem;
+  }
+
+  
+    &::-webkit-scrollbar-thumb {
+      width: 0rem;
+  }
+  
+  & {
+    scrollbar-width: none;
+  } 
   }
 
   .MuiTableCell-root {

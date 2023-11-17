@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Table from "@mui/material/Table";
 import ModalHOC from '../../SeekerDashboard/ModalHOC';
 import TableBody from "@mui/material/TableBody";
@@ -21,6 +21,7 @@ import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 function Row(props) {
   const { row, index } = props;
 
+  const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
   // State, function to Open and close Dialog Box
@@ -56,6 +57,20 @@ function Row(props) {
     console.log("Deactivate");
   }
 
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
+    };
+  }, []);
+
   return (
     <React.Fragment>
       <TableRow
@@ -85,7 +100,7 @@ function Row(props) {
             />
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
-                }`}
+                }`} ref={dropdownRef}
             >
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='user' handleDelete={handleDelete} />} />
               <span onClick={handleEdit}>
@@ -163,6 +178,20 @@ const StyledDiv = styled.div`
       font-size: 1.2rem;
       font-weight: 700;
     }
+
+
+    &::-webkit-scrollbar {
+      width: 0rem;
+  }
+
+  
+    &::-webkit-scrollbar-thumb {
+      width: 0rem;
+  }
+  
+  & {
+    scrollbar-width: none;
+  } 
   }
 
   .MuiTableCell-root {

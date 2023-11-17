@@ -14,45 +14,49 @@ const ExportDialogContent = ({ handleClose, handleExport }) => {
                 <span className='title'>Format selection</span>
 
                 <div className='inputBox'>
-                    <label>
-                        <input
-                            type="radio"
-                            value="xls"
-                            checked={exportType === 'xls'}
-                            onChange={() => handleExportTypeChange('xls')}
-                        />
-                        <span>Export as .xls</span>
-                    </label>
+                    <div className='childInputBox'>
+                        <label>
+                            <input
+                                type="radio"
+                                value="xls"
+                                checked={exportType === 'xls'}
+                                onChange={() => handleExportTypeChange('xls')}
+                            />
+                            <span>Export as .xls</span>
+                        </label>
 
-                    <label>
-                        <input
-                            type="radio"
-                            value="csv"
-                            checked={exportType === 'csv'}
-                            onChange={() => handleExportTypeChange('csv')}
-                        />
-                        <span>Export as .csv</span>
-                    </label>
+                        <label>
+                            <input
+                                type="radio"
+                                value="csv"
+                                checked={exportType === 'csv'}
+                                onChange={() => handleExportTypeChange('csv')}
+                            />
+                            <span>Export as .csv</span>
+                        </label>
+                    </div>
 
-                    <label>
-                        <input
-                            type="radio"
-                            value="pdf"
-                            checked={exportType === 'pdf'}
-                            onChange={() => handleExportTypeChange('pdf')}
-                        />
-                        <span>Export as .pdf</span>
-                    </label>
+                    <div className='childInputBox'>
+                        <label>
+                            <input
+                                type="radio"
+                                value="pdf"
+                                checked={exportType === 'pdf'}
+                                onChange={() => handleExportTypeChange('pdf')}
+                            />
+                            <span>Export as .pdf</span>
+                        </label>
 
-                    <label>
-                        <input
-                            type="radio"
-                            value="link"
-                            checked={exportType === 'link'}
-                            onChange={() => handleExportTypeChange('link')}
-                        />
-                        <span>Share as link</span>
-                    </label>
+                        <label>
+                            <input
+                                type="radio"
+                                value="link"
+                                checked={exportType === 'link'}
+                                onChange={() => handleExportTypeChange('link')}
+                            />
+                            <span>Share as link</span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -71,18 +75,29 @@ const Box = styled.div`
 display: flex;
 width: 100%;
 flex-direction: column;
-padding: 1.5rem 3.5rem;
+padding: 1.5rem 5rem;
 box-sizing: border-box;
 gap: 2rem;
+align-items: center;
+
 
 .topBox {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.7rem;
 
     .inputBox {
         display: flex;
-        // flex-direction: column;
+        flex-direction: row;
+        align-items: start;
+        gap: 1rem;
+
+        .childInputBox {
+            display: flex;
+            flex-direction: column;
+
+        }
     }
     .title {
         font-size: 0.9rem;
