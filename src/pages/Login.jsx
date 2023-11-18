@@ -65,7 +65,7 @@ const Login = () => {
     const key = localStorage.getItem("key");
 
     console.log(token,key,accessToken,clientCodeStore)
-    if(accessToken && key=="interview")navigate('/dashboard/jobseeker');
+    if(accessToken && key=="interview" && clientCodeStore=="intelliview")navigate('/dashboard/jobseeker');
 
     if (token && accessToken && clientCodeStore && key=="invite") {
       (async function () {
@@ -91,6 +91,10 @@ const Login = () => {
       clientCodeStore == "intelliview"
         ? navigate("/dashboard/jobseeker")
         : navigate("/dashboard/employer");
+    }
+
+    if(clientCodeStore && clientCodeStore != 'intelliview'){
+      navigate('/dashboard/employer')
     }
   }, [accessToken]);
 

@@ -18,17 +18,19 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import eyeIcon from '../../../../assets/icons/visible.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
+import { useDispatch } from "react-redux";
+import { addResumes } from "../../../../slices/invitationSlice";
 
 
 function Row(props) {
   const { row, handleSelectArray, index } = props;
   const [selected, setSelected] = useState(false);
 
-  const handleSelectChange = (id) => {
+  const handleSelectChange = (row) => {
     if (selected) {
-      handleSelectArray(id, false);
+      handleSelectArray(row.id, false);
     } else {
-      handleSelectArray(id, true);
+      handleSelectArray(row, true);
     }
     setSelected((prev) => !prev);
   };
@@ -48,7 +50,7 @@ function Row(props) {
           <input
             type="checkbox"
             checked={selected}
-            onChange={() => handleSelectChange(row.resumeId)}
+            onChange={() => handleSelectChange(row)}
             className="checkBox"
           />
         </TableCell>
@@ -71,6 +73,7 @@ export default function MatchedResumes() {
   const clientCode = useSelector(
     (state) => state.auth.userData.user.clientCode
   );
+  const dispatch = useDispatch();
 
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
@@ -107,16 +110,13 @@ export default function MatchedResumes() {
     if (action) {
       setSelectedArray((prev) => [...prev, id]);
     } else {
-      setSelectedArray((prev) => [...prev].filter((item) => item != id));
+      setSelectedArray((prev) => [...prev].filter((item) => item.id != id));
     }
   };
 
   const handleSchedule = () => {
     if (selectedArray?.length > 0) {
-      localStorage.setItem(
-        "schedule",
-        JSON.stringify([...selectedArray, idToSendInvite])
-      );
+      dispatch(addResumes([...selectedArray,idToSendInvite]));
       navigate(`/schedule/invite/${jdId}`);
     }
     else {

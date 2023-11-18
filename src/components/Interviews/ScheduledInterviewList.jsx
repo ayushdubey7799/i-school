@@ -33,6 +33,7 @@ function Row(props) {
     // const res = await updateStatus(row.id, "started", accessToken);
     // setIsLoading(false);
     // if (res) {
+      localStorage.setItem("currentInterview","profile");
       navigate(`/create-interview/${row.id}`);
     // }
   }

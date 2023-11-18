@@ -22,8 +22,15 @@ const style = {
 }
 
 function CreateInterview() {
-    const stringsArray = ['Analyzing JD and Resume', 'Creating Questions', 'Creating Interview', 'Preparing Interview'];
-    const [currentString, setCurrentString] = useState('Analyzing JD and Resume');
+
+    console.log(localStorage.getItem("currentInterview"));
+    const stringsArray = localStorage.getItem("currentInterview") == "profile"
+    ?
+    ['Analyzing JD and Resume', 'Creating Questions', 'Creating Interview', 'Preparing Interview']
+    :
+    ['Analyzing skills', 'Creating Questions', 'Creating Interview', 'Preparing Interview'];
+
+    const [currentString, setCurrentString] = useState(stringsArray[0]);
     const { interviewId } = useParams();
     const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
@@ -45,7 +52,7 @@ function CreateInterview() {
         }
       }, 10000); 
       
-      dispatch(updateInterview({id:interviewId,status:"started",accessToken}))
+      // dispatch(updateInterview({id:interviewId,status:"started",accessToken}))
 
       return () => clearInterval(intervalId);
     }, []); //

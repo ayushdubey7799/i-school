@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import eyeIcon from '../../../../assets/icons/visible.png'
 import { data as sentInvites } from '../../../../utils/contantData';
 import { useNavigate } from 'react-router';
-
+import { useSelector } from 'react-redux';
 
 function Row(props) {
   const { row, index } = props;
@@ -22,9 +22,9 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? 'colored' : ''}`}
       >
-        <TableCell component="th" scope="row" align="center">...</TableCell>
-        <TableCell component="th" scope="row" align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
+        <TableCell component="th" scope="row" align="center">{row.name?row.name:"..."}</TableCell>
+        <TableCell component="th" scope="row" align="center">{row.email}</TableCell>
+        <TableCell align="center">{row.contact?row.contact:"..."}</TableCell>
         <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
           <img src={eyeIcon} />
         </TableCell>
@@ -36,6 +36,7 @@ function Row(props) {
 
 const InviteSuccess = () => {
   const navigate = useNavigate();
+  const invites = useSelector((state) => state.invite.selectedResumes).slice(0,-1);
 
   return (
     <MainContainer>
@@ -58,7 +59,7 @@ const InviteSuccess = () => {
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {sentInvites?.map((row, index) => (
+              {invites?.map((row, index) => (
                 <Row
                   key={row.resumeId}
                   row={row}

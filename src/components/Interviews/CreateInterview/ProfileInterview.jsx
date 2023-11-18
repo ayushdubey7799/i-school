@@ -116,6 +116,7 @@ const ProfileInterview = () => {
 
     console.log(ongoing);
     if (ongoing?.data?.id) {
+      localStorage.setItem("currentInterview","profile");
      navigate(`/create-interview/${ongoing.data.id}`)
     }
   };

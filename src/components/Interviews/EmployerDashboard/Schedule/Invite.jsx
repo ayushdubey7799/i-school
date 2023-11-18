@@ -61,6 +61,16 @@ export default function Invite() {
   const clientCode = useSelector(
     (state) => state.auth.userData.user.clientCode
   );
+  const array = useSelector((state) => state?.invite?.selectedResumes)?.reduce((acc,it) => {
+    if(typeof it == 'string'){
+      acc.push(it);
+    }
+    else{
+      acc.push(it.resumeId);
+    }
+    
+    return acc;
+  },[])
   const navigate = useNavigate();
   const [isTime, setIsTime] = useState(false);
 
@@ -70,10 +80,7 @@ export default function Invite() {
     setIsTime(!isTime);
   };
 
-  let array = localStorage.getItem("schedule");
-  if (array) {
-    array = JSON.parse(array);
-  }
+
   useEffect(() => {
     if (!accessToken || !clientCode) {
       toast.error("Login First");
