@@ -34,10 +34,11 @@ const Header = () => {
 
       <div id="right">
         <Link to="/dashboard/jobseeker" className="link">
-          <span className="demo">Back to Dashboard</span>
+          <span className="coloredText">Back to Dashboard</span>
         </Link>
+        |
         <Link to="/create" className="link">
-          <span className="demo">Start New Interview</span>
+          <span className="coloredText">Start New Interview</span>
         </Link>
 
 
@@ -79,6 +80,20 @@ const StyledDiv = styled.div`
     margin-left: -5%;
     cursor: pointer;
   }
+
+
+  .coloredText {
+    font-size: 0.75rem;
+    color: var(--lightOrange);
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .coloredText:hover {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
 
   h1 {
     margin: 0;

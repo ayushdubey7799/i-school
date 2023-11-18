@@ -33,7 +33,7 @@ const EmployerHeader = ({ setCurrentItem }) => {
       </div>
 
       <div id="right">
-        <span onClick={() => setCurrentItem('interview-dashboard')} className="demo">Go to Interview Dashboard</span>
+        <span onClick={() => setCurrentItem('interview-dashboard')} className="coloredText">Go to Interview Dashboard</span>
 
         <Link to="/demo" className="link">
           <span className="demoIcon"><img src={demoIcon} />
@@ -91,6 +91,19 @@ const StyledDiv = styled.div`
     align-items: center;
     gap: 1rem;
   }
+
+  .coloredText {
+    font-size: 0.75rem;
+    color: var(--lightOrange);
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .coloredText:hover {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
 
   .demo {
     background: linear-gradient(to bottom, #2282A4, var(--lightOrange));

@@ -33,7 +33,7 @@ const ResumeHeader = () => {
 
             <div id="right">
                 <Link to="/dashboard/jobseeker" className="link">
-                    <button className="demo">Back to Dashboard</button>
+                    <span className="coloredText">Back to Dashboard</span>
                 </Link>
                 <div className="profileIcon">
                     <IconButton>
@@ -69,6 +69,19 @@ const StyledDiv = styled.div`
     height: 3.5rem;
     margin-left: -5%;
     cursor: pointer;
+  }
+
+
+  .coloredText {
+    font-size: 0.75rem;
+    color: var(--lightOrange);
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .coloredText:hover {
+    font-weight: 600;
+    text-decoration: underline;
   }
 
   h1 {

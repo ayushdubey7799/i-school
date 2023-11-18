@@ -18,6 +18,7 @@ import LogoHeader from "../../../commonComponents/LogoHeader";
 import TimeSlotPicker from "./TimeSlotPicker";
 import InviteSteps from "./InviteSteps";
 import InviteReviewList from "./InviteReviewList";
+import { TextField } from '@mui/material';
 
 
 const timezonesName = {
@@ -56,6 +57,8 @@ export default function Invite() {
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState("");
   const [interviewType, setInterviewType] = useState('');
+  const [interviewerEmail, setInterviewerEmail] = useState('');
+  const [meetUrl, setMeetUrl] = useState('');
   const [testType, setTestType] = useState("");
   const accessToken = useSelector((state) => state.auth.userData.accessToken);
   const clientCode = useSelector(
@@ -220,7 +223,7 @@ export default function Invite() {
               <div className="inputBox">
                 <span className="title">Product Type</span>
                 <div className="childInputBox">
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="AI"
@@ -229,7 +232,7 @@ export default function Invite() {
                     />
                     <span>AI</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="Employer"
@@ -238,7 +241,7 @@ export default function Invite() {
                     />
                     <span>Employer</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="AI + Employer"
@@ -254,7 +257,7 @@ export default function Invite() {
               <div className="inputBox">
                 <span className="title">Interview Based on</span>
                 <div className="childInputBox">
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="JD"
@@ -263,7 +266,7 @@ export default function Invite() {
                     />
                     <span>JD</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="Resume"
@@ -272,7 +275,7 @@ export default function Invite() {
                     />
                     <span>Resume</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="JD + Resume"
@@ -281,7 +284,7 @@ export default function Invite() {
                     />
                     <span>JD + Resume</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="Skill"
@@ -296,7 +299,7 @@ export default function Invite() {
               <div className="inputBox">
                 <span className="title">Interview Type</span>
                 <div className="childInputBox">
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="MCQs"
@@ -305,7 +308,7 @@ export default function Invite() {
                     />
                     <span>MCQs</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="Subjective"
@@ -314,7 +317,7 @@ export default function Invite() {
                     />
                     <span>Subjective</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="Coding"
@@ -323,7 +326,7 @@ export default function Invite() {
                     />
                     <span>Coding</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="General"
@@ -332,7 +335,7 @@ export default function Invite() {
                     />
                     <span>General (Includes all types of Que)</span>
                   </label>
-                  <label>
+                  <label className="label">
                     <input
                       type="radio"
                       value="InPerson"
@@ -343,6 +346,51 @@ export default function Invite() {
                   </label>
                 </div>
               </div>
+
+              {testType === 'InPerson' &&
+                <div className="textBox">
+                  <TextField id="outlined-basic" label="Interviewer Email" variant="outlined" fullWidth
+                    type='email'
+                    value={interviewerEmail}
+                    onChange={(e) => setInterviewerEmail(e.target.value)}
+                    size='small'
+                    inputProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '0.8rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '0.8rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                  />
+                  <TextField id="outlined-basic" label="Meet Link (Optional)" variant="outlined" fullWidth
+                    type='url'
+                    value={meetUrl}
+                    onChange={(e) => setMeetUrl(e.target.value)}
+                    size='small'
+                    inputProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '0.8rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '0.8rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                  />
+                </div>
+              }
             </div>
           }
 
@@ -355,7 +403,6 @@ export default function Invite() {
         </div>
 
         <ButtonBox>
-          {step <= 3 && <Button onClick={() => handlePrev()}>Prev</Button>}
           {step <= 2 && <Button onClick={() => handleNext()}>Next</Button>}
           {step === 3 && <Button onClick={handleInvite}>Send Invite</Button>}
         </ButtonBox>
@@ -412,6 +459,12 @@ const Container = styled.div`
     width: 100%;
     justify-content: start;
     padding-left: 2rem;
+  }
+
+  .textBox {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
   }
   
   .smallText {
@@ -481,9 +534,10 @@ const Container = styled.div`
       padding: 0rem 1rem;
       margin-top: 4rem;
       margin-bottom: 1rem;
+      box-sizing: border-box;
 
       .inputBox {
-        width: 90%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
@@ -492,6 +546,7 @@ const Container = styled.div`
         border-radius: 0.5rem;
         position: relative;
         box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
       }
 
       .childInputBox {
@@ -520,7 +575,7 @@ const Container = styled.div`
     
   }
   
-label {
+.label {
 	display: flex;
 	cursor: pointer;
 	font-weight: 500;
