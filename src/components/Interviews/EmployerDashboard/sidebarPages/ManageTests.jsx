@@ -351,7 +351,7 @@ const ManageTests = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <ListTitle>Drop Questions here to create a test {createVisible && <button className='floatBtn'>Create Test</button>}
+              <ListTitle>Drop Questions here to create a test {createVisible && <span className='floatBtn'>Create Test</span>}
               </ListTitle>
 
               {data.list2.map((item, index) => (
