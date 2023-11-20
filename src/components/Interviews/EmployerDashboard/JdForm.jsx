@@ -12,6 +12,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { toast } from 'react-toastify';
 
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import { locations, technicalSkills } from '../../../utils/contantData';
+
 
 const Container = styled.div`
   width: 100%;
@@ -128,6 +132,34 @@ function JdForm({ array, handleClose }) {
     visibility: '',
     autoReqNumbers: true
   });
+  
+
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const handleLocationsChange = (_, newLocations) => {
+    setSelectedLocations(newLocations);
+  }
+
+  const handleSkillsChange = (_, newSkills) => {
+    setSelectedSkills(newSkills);
+  };
+
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      skills: selectedSkills.join(", ")
+    })
+  }, [selectedSkills]);
+
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      location: selectedLocations.join(", ")
+    })
+  }, [selectedLocations]);
 
 
 
@@ -160,10 +192,12 @@ function JdForm({ array, handleClose }) {
     console.log(array[0])
     if (array[0]) {
       setFormData(array[0]);
+      setSelectedSkills(array[0].skills.split(', '));
+      setSelectedLocations(array[0].location.split(', '));
     }
     setMode(array[1])
-    console.log("props", array[1]);
   }, [])
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -197,6 +231,8 @@ function JdForm({ array, handleClose }) {
     }
   };
 
+
+  console.log('locate', formData.skills);
 
   return (
     <Container>
@@ -290,57 +326,28 @@ function JdForm({ array, handleClose }) {
             },
           }} />
 
-        {/* <TextField id="outlined-basic" label="Description" variant="outlined"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }}
-          size='small'
-          inputProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-        /> */}
-
-<div className='fileInputBox'>
+        <div className='fileInputBox'>
           <Label>Job Description</Label>
           <textarea name='description' value={formData.description} onChange={handleChange} rows={5}></textarea>
         </div>
 
-
-
-        <TextField id="outlined-basic" label="Skills" variant="outlined"
-          type="text"
-          name="skills"
-          value={formData.skills}
-          onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }}
-          size='small'
-          inputProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          required />
+        <Stack spacing={3} sx={{ width: '100%' }}>
+          <Autocomplete
+            multiple
+            id="tags-standard"
+            options={technicalSkills}
+            getOptionLabel={(option) => option}
+            onChange={handleSkillsChange}
+            value={selectedSkills}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Skills"
+                sx={{ backgroundColor: '#F6F6FB' }}
+              />
+            )}
+          />
+        </Stack>
 
 
         <TextField id="outlined-basic" label="BU" variant="outlined"
@@ -388,27 +395,23 @@ function JdForm({ array, handleClose }) {
           }}
           required />
 
-        <TextField id="outlined-basic" label="Location" variant="outlined"
-          type="text"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          sx={{ backgroundColor: '#F6F6FB' }}
-          size='small'
-          inputProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }} />
+        <Stack spacing={3} sx={{ width: '100%' }}>
+          <Autocomplete
+            multiple
+            id="tags-standard"
+            options={locations}
+            getOptionLabel={(option) => option}
+            onChange={handleLocationsChange}
+            value={selectedLocations}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Location"
+                sx={{ backgroundColor: '#F6F6FB' }}
+              />
+            )}
+          />
+        </Stack>
 
         <TextField id="outlined-basic" label="Certification" variant="outlined"
           type="text"

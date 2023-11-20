@@ -1,8 +1,9 @@
-
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import filterIcon from '../../../assets/icons/filterIcon.png'
 import closeIcon from '../../../assets/icons/closeIcon.png'
+
+
 
 const FilterContainer = styled.div`
   width: 91.4%;
