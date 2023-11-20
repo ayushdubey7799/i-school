@@ -247,8 +247,8 @@ function JdForm({ array, handleClose }) {
 
         <TextField id="outlined-basic" label="Number of Reqs" variant="outlined"
           type="text"
-          name="reqNumber"
-          value={formData.reqNumber}
+          name="numOfReqs"
+          value={formData.numOfReqs}
           onChange={handleChange}
           sx={{ backgroundColor: '#F6F6FB' }}
           size='small'

@@ -1,4 +1,4 @@
-import React from "react"
+import React,{useEffect} from "react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
@@ -61,11 +61,13 @@ import CreateInterview from "./pages/CreateInterview"
 import PricingPlan from "./pages/menuPages/PricingPlan"
 import AccessDenied from "./pages/AccessDenied"
 import CodeEditor from "./pages/CodeEditor"
+import { useSelector } from "react-redux"
 
 
 
 
 const App = () => {
+
   return (
     <BrowserRouter>
       <ScrollToTop>

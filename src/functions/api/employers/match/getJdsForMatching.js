@@ -14,7 +14,7 @@ export const getJdsForMatching = async (
 
   try {
     const response = await axios.get(
-      `https://dev-api.intelliview.in/api/jds?active=true&page=1&size=100`,
+      `https://dev-api.intelliview.in/api/jds?page=1&size=100&active=true`,
       config
     );
     console.log("Data:", response.data);

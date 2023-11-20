@@ -31,11 +31,11 @@ const JobSeekerDashboard = () => {
   const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(accessToken,clientCode);
-    if(!accessToken)navigate('/login');
-    if(clientCode.toLowerCase() != 'intelliview')navigate('/access-denied');
-  }, []);
+  // useEffect(() => {
+  //   console.log(accessToken,clientCode);
+  //   if(!accessToken)navigate('/login');
+  //   if(clientCode.toLowerCase() != 'intelliview')navigate('/access-denied');
+  // }, []);
 
   const [currentItem, setCurrentItem] = useState('dashboard');
 
