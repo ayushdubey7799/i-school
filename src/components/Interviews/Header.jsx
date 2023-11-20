@@ -84,7 +84,7 @@ const StyledDiv = styled.div`
 
   .coloredText {
     font-size: 0.75rem;
-    color: var(--lightOrange);
+    color: var(--color);
     font-weight: 500;
     cursor: pointer;
   }

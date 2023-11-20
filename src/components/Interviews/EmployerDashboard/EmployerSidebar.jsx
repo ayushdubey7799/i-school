@@ -9,7 +9,7 @@ import inboxIcon from '../../../assets/icons/inbox.png'
 import scheduleIcon from '../../../assets/icons/schedule.png'
 import subsIcon from '../../../assets/icons/subscription.png'
 import jdIcon from '../../../assets/icons/job-description.png'
-import candidatesIcon from '../../../assets/icons/manage-candidates.png'
+import candidatePool from '../../../assets/icons/candidatePool.png'
 import testIcon from '../../../assets/icons/test-management.png'
 import activeJdIcon from '../../../assets/icons/active-job-desc.png'
 import createTestIcon from '../../../assets/icons/createTest.png'
@@ -39,7 +39,7 @@ import interviewFlow from '../../../assets/icons/interview-flow.png'
 
 const Container = styled.div`
 width: 17rem;
-height: calc(90% - 2rem);
+height: calc(98% - 2rem);
 padding-top: 1.5rem;
 display: flex;
 flex-direction: column;
@@ -304,7 +304,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
         <AccordionDetails style={{ marginTop: '-15px' }} className='details'>
           <Submenu>
             <SubPara isSelected={currentItem === 'candidate-register'} onClick={() => handleItemClick('candidate-register')} className='submenuItem'><img src={addUser} className='icon' />Add Candidates</SubPara>
-            <SubPara isSelected={currentItem === 'candidate-registered'} onClick={() => handleItemClick('candidate-registered')} className='submenuItem'><img src={createTestIcon} className='icon' />Candidates Pool</SubPara>
+            <SubPara isSelected={currentItem === 'candidate-registered'} onClick={() => handleItemClick('candidate-registered')} className='submenuItem'><img src={candidatePool} className='icon' />Candidates Pool</SubPara>
             <SubPara isSelected={currentItem === 'upload-profiles'} onClick={() => handleItemClick('upload-profiles')} className='submenuItem'><img src={uploadProfileIcon} className='icon' />Upload Profiles</SubPara>
           </Submenu>
         </AccordionDetails>
