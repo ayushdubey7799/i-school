@@ -15,10 +15,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton } from "@mui/material";
 import moment from "moment-timezone";
 import LogoHeader from "../../../commonComponents/LogoHeader";
-import TimeSlotPicker from "./TimeSlotPicker";
 import InviteSteps from "./InviteSteps";
 import InviteReviewList from "./InviteReviewList";
 import { TextField } from '@mui/material';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 
 
 const timezonesName = {
@@ -52,7 +54,7 @@ const timezonesName = {
 export default function Invite() {
   const { jdId } = useParams();
   const [value, setValue] = useState(dayjs(new Date()));
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState('00:00');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(dayjs(new Date()));
   const [productTypes, setProductTypes] = useState([]);
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState("");
@@ -64,16 +66,16 @@ export default function Invite() {
   const clientCode = useSelector(
     (state) => state.auth.userData.user.clientCode
   );
-  const array = useSelector((state) => state?.invite?.selectedResumes)?.reduce((acc,it) => {
-    if(typeof it == 'string'){
+  const array = useSelector((state) => state?.invite?.selectedResumes)?.reduce((acc, it) => {
+    if (typeof it == 'string') {
       acc.push(it);
     }
-    else{
+    else {
       acc.push(it.resumeId);
     }
-    
+
     return acc;
-  },[])
+  }, [])
   const navigate = useNavigate();
   const [isTime, setIsTime] = useState(false);
 
@@ -120,7 +122,7 @@ export default function Invite() {
 
 
     const makeApiCall = async () => {
-      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
+      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot.$H + ":" + selectedTimeSlot.$m + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
       console.log(selectedTimeSlot);
@@ -154,10 +156,9 @@ export default function Invite() {
 
     makeApiCall();
   };
-  // console.log(moment.tz.zone(selectedTimezone)?.name,"Date->", moment.tz(value.format("YYYY-MM-DD")+"T"+selectedHour + ":" + selectedMinute + ":" + "00.000",moment.tz.zone(selectedTimezone)?.name).utc().format());
-  // console.log(
-  //   selectedHour + ":" + selectedMinute + ":" + "00.000" + selectedTimezone
-  // );
+
+
+  console.log("Time Slot Hour and Minute", selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
 
   const handlePrev = () => {
     if (step > 1) {
@@ -199,22 +200,22 @@ export default function Invite() {
                 </LocalizationProvider>
 
                 <div className="slotBox">
-                  <span className="span">Select time-slot</span>
-                  {!isTime && <TimeSlotPicker
-                    selectedTimeSlot={selectedTimeSlot}
-                    setSelectedTimeSlot={setSelectedTimeSlot}
-                  />
-                  }
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['MobileTimePicker']} className='slotChildBox'>
+                      {!isTime && <MobileTimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
+                        onChange={(newValue) => setSelectedTimeSlot(newValue)} sx={{ width: '100%' }} />}
+                    </DemoContainer>
+                  </LocalizationProvider>
+                  <label className="smallTextBox">
+                    <input
+                      type="checkbox"
+                      checked={isTime}
+                      onChange={handleCheckboxChange}
+                    />
+                    <span className="smallText">Alow slot selection to candidate (Interview Date will be fixed)</span>
+                  </label>
                 </div>
               </div>
-              <label className="smallTextBox">
-                <input
-                  type="checkbox"
-                  checked={isTime}
-                  onChange={handleCheckboxChange}
-                />
-                <span className="smallText">Alow slot selection to candidate (Interview Date will be fixed)</span>
-              </label>
             </div>
           }
 
@@ -482,7 +483,7 @@ const Container = styled.div`
 
     .step1Box {
       display: flex;
-      width: 100%;
+      width: 50%;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -492,7 +493,7 @@ const Container = styled.div`
       .step1ChildBox {
         display: flex;
         width: 100%;
-        flex-direction: row;
+        flex-direction: column;
         gap: 1rem;
         justify-content: center;
         align-items: center;
@@ -501,26 +502,30 @@ const Container = styled.div`
       .calendarBox {
         border: 0.08rem solid lightgrey;
         border-radius: 0.5rem;
-        width: 40%;
-        height: 350px;
+        width: 100%;
       }
 
       .slotBox {
         display: flex;
-        width: 40%;
-        flex-direction: column;
-        justify-content: center;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
-        border: 0.08rem solid lightgrey;
-        border-radius: 0.5rem;
-        height: 350px;
 
-        .span {
-          font-size: 0.9rem;
-          margin-bottom: 1rem;
-          font-weight: 600;
+        .slotChildBox {
+          width: 50%;
+        }
+
+        .smallTextBox {
+          width: 50%;
+          display: flex;
+          align-items: start;
+          gap: 1rem;
+          height: 2rem;
         }
       }
+
+
     }
 
     .step2Box {

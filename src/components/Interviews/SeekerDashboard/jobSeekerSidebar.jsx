@@ -34,8 +34,7 @@ import titleIcon7 from '../../../assets/icons/titleIcon2.7.png'
 
 const Container = styled.div`
   width: 17rem;
-  height: calc(90% - 4rem);
-  height: 85vh;
+  height: calc(98% - 2rem);
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
