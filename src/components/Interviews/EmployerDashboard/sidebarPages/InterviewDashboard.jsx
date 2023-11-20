@@ -9,7 +9,9 @@ import metric4 from '../../../../assets/icons/EmpInterviewDash/metric4.png'
 import { Link } from "react-router-dom";
 import EmpScheduledInterviews from "./EmpScheduledInterviews";
 import EmpScheduledCandidateList from "./EmpScheduledCandidateList";
-
+import { getInterviewByStatus } from "../../../../functions/api/getInterviewByStatus";
+import { getStatusWiseCount } from "../../../../functions/api/interview/getStatusWiseCount";
+import { useSelector } from "react-redux";
 
 
 function Row(props) {
@@ -38,13 +40,37 @@ function Row(props) {
 
 const InterviewDashboard = ({ page, setPage }) => {
   const [currMetric, setCurrMetric] = useState('interviews');
+  const [metrics, setMetrics] = useState([]);
+
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
+  const [started,setStarted] = useState(0);
+  const [scheduled, setScheduled] = useState(0);
+  const [completed, setCompleted] = useState(0);
 
+  const accessToken = useSelector(state => state.auth.userData?.accessToken)
+  const [filteredData, setFilteredData] = useState({});
+  const [value, setValue] = useState("COMPLETED");
 
   useEffect(() => {
     setPage(1);
-  }, []);
+
+    const getCount = async () => {
+      const res = await getStatusWiseCount(accessToken);
+      setMetrics(res?.data);
+      console.log(res?.data);
+    }
+    getCount();
+  }, [currMetric])
+
+  useEffect(() => {
+    if (metrics.length) {
+      setStarted(metrics.find((item) => item.status == "STARTED")?.count);
+      setCompleted(metrics.find((item) => item.status == "COMPLETED")?.count);
+      setScheduled(metrics.find((item) => item.status == "SCHEDULED")?.count)
+    }
+  }, [metrics])
+ 
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);
@@ -57,6 +83,7 @@ const InterviewDashboard = ({ page, setPage }) => {
   const handleSearchParams = (e) => {
     setSearchParams(e.target.value);
   }
+console.log("--------->>>>",started,completed,scheduled)
 
   return (
     <MainContainer>
@@ -64,7 +91,7 @@ const InterviewDashboard = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'upcoming' ? 'selected' : ''}`} onClick={() => setCurrMetric('upcoming')} >
           <div className='top'>
             <img src={metric1} />
-            <span className='achievedNumberDigit'>10</span>
+            <span className='achievedNumberDigit'>{scheduled}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Upcoming</span>
@@ -72,7 +99,7 @@ const InterviewDashboard = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'scheduledToday' ? 'selected' : ''}`} onClick={() => setCurrMetric('scheduledToday')}>
           <div className='top'>
             <img src={metric2} />
-            <span className='achievedNumberDigit'>20</span>
+            <span className='achievedNumberDigit'>{scheduled}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Scheduled Today</span>
@@ -80,7 +107,7 @@ const InterviewDashboard = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'completed' ? 'selected' : ''}`} onClick={() => setCurrMetric('completed')}>
           <div className='top'>
             <img src={metric3} />
-            <span className='achievedNumberDigit'>17</span>
+            <span className='achievedNumberDigit'>{completed}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>Completed (last 7 days)</span>
@@ -88,7 +115,7 @@ const InterviewDashboard = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === 'inprogress' ? 'selected' : ''}`} onClick={() => setCurrMetric('inprogress')}>
           <div className='top'>
             <img src={metric4} />
-            <span className='achievedNumberDigit'>12</span>
+            <span className='achievedNumberDigit'>{started}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>In Progress</span>

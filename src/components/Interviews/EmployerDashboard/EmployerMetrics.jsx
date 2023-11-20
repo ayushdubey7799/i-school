@@ -108,8 +108,8 @@ const EmployeMetrics = ({ page, setPage }) => {
   useEffect(() => {
     const getCount = async () => {
       const res = await getStatusWiseCount(accessToken);
-      setMetrics(res.data);
-      console.log(res.data);
+      setMetrics(res?.data);
+      console.log(res?.data);
     }
     getCount();
 

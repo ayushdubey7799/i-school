@@ -19,7 +19,6 @@ import Privacy from './pages/menuPages/Privacy'
 import Terms from './pages/menuPages/Terms'
 import Disclaimer from './pages/menuPages/Disclaimer'
 import ScrollToTop from "./components/commonComponents/ScrollToTop"
-import { ToastContainer } from 'react-toastify';
 import Reset from "./pages/Reset"
 import Contact from "./pages/menuPages/Contact"
 import JobDescriptions from "./pages/JobDescriptions"
@@ -61,8 +60,8 @@ import CreateInterview from "./pages/CreateInterview"
 import PricingPlan from "./pages/menuPages/PricingPlan"
 import AccessDenied from "./pages/AccessDenied"
 import CodeEditor from "./pages/CodeEditor"
-import { useSelector } from "react-redux"
-
+import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
+import { AuthenticationConstants } from "./utils/constants"
 
 
 
@@ -78,24 +77,35 @@ const App = () => {
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />
           <Route path="/reset" element={<Forgot />} />
-          <Route path="/dashboard/interviews" element={<InterviewDashboard />} />
-          <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
-          <Route path="/dashboard/employer" element={<EmployerDashboard />} />
-          <Route path="/dashboard/req-agency" element={<ReqAgencyDashboard />} />
-          <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus />} />
-          <Route path="/schedule" element={<ScheduleInterview />} />
-          <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
-          <Route path="/schedule/invite/:jdId" element={<Invite />} />
-          <Route path="/schedule/invite/success" element={<InviteSuccess />} />
 
-          <Route path="/interview-invite" element={<InviteRedirect />} />
-          <Route path="/slot-selection/:token" element={<SlotSelection />} />
-          <Route path="/create" element={<NewInterviewDetails />} />
-          <Route path="/create-interview/:interviewId" element={<CreateInterview />} />
-          <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
-          <Route path="/score/:interviewId" element={<Scorecard />} />
-          <Route path="/proctor-test" element={<QuestionComponent />} />
-          <Route path="/speech" element={<SpeechToText />} />
+          <Route element={<ProtectedRoute role={"basic"} />}>
+
+            <Route path="/dashboard/interviews" element={<InterviewDashboard />} />
+            <Route path="/dashboard/req-agency" element={<ReqAgencyDashboard />} />
+            <Route path="/score/:interviewId" element={<Scorecard />} />
+
+            <Route element={<ProtectedRoute role={AuthenticationConstants.jobseeker}/>}>
+              <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
+              <Route path="/proctor-test" element={<QuestionComponent />} />
+              <Route path="/slot-selection/:token" element={<SlotSelection />} />
+              <Route path="/create" element={<NewInterviewDetails />} />
+              <Route path="/create-interview/:interviewId" element={<CreateInterview />} />
+              <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
+            </Route>
+
+            <Route element={<ProtectedRoute role={AuthenticationConstants.employer}/>}>
+              <Route path="/dashboard/employer" element={<EmployerDashboard />} />
+              <Route path="/schedule" element={<ScheduleInterview />} />
+              <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
+              <Route path="/schedule/invite/:jdId" element={<Invite />} />
+              <Route path="/schedule/invite/success" element={<InviteSuccess />} />
+              <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus />} />
+            </Route>
+
+          </Route>
+
+
+          
 
 
           <Route path="/profile" element={<ProfilePage />} />
@@ -122,27 +132,20 @@ const App = () => {
           <Route path="/product/intelliview" element={<Intelliview />} />
           <Route path="/product/intellisource" element={<IntelliSource />} />
           <Route path="/product/intelliboard" element={<IntelliBoard />} />
-
           <Route path="/service/screening" element={<Screening />} />
           <Route path="/service/data-analytics" element={<DataAnalytics />} />
           <Route path="/service/talent-management" element={<TalentManagement />} />
-
           <Route path="/solution/enterprise" element={<Enterprises />} />
           <Route path="/solution/recruitment-agency" element={<RecruitmentAgency />} />
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
-
-          <Route path='access-denied' element={<AccessDenied />} />
-
-          <Route path="code-editor" element={<CodeEditor />} />
+          <Route path='/access-denied' element={<AccessDenied />} />
+          <Route path="/code-editor" element={<CodeEditor />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
   )
 }
 
-// git@bitbucket.org:crystalsky/intelliview-web.git
-// "eslintConfig": {
-//   "extends": "react-app"
-// }
+
 export default App

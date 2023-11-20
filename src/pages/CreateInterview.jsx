@@ -52,7 +52,7 @@ function CreateInterview() {
         }
       }, 10000); 
       
-      // dispatch(updateInterview({id:interviewId,status:"started",accessToken}))
+      dispatch(updateInterview({id:interviewId,status:"started",accessToken}))
 
       return () => clearInterval(intervalId);
     }, []); //

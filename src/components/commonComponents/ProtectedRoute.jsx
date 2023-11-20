@@ -1,22 +1,21 @@
 import React from 'react';
-import { Route, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthenticationConstants } from '../../utils/constants';
-import AccessDenied from '../../pages/AccessDenied';
-const ProtectedRoute = ({ path,component: Component, role }) => {
-    const navigate = useNavigate();
+import { isAuthenticated } from '../../utils/isAuthenticated';
+const ProtectedRoute = ({ role }) => {
     let currentUser = isAuthenticated();
     
     if(currentUser == AuthenticationConstants.deny){
         toast.warn("Login to access this resource")
-        navigate('/login');
+        return <Navigate to='/login'/>
+    }
+   
+    if(role !== "basic" && role !== currentUser){
+        return <Navigate to='/access-denied'/>
     }
 
-    if(role !== currentUser){
-        navigate('/access-denied')
-    }
-
-    return <Route path={path} element={Component}/>
+    return <Outlet />
 }
 
 export default ProtectedRoute;

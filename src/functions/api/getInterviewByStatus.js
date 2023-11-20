@@ -14,8 +14,8 @@ export const getInterviewByStatus = async (status,accessToken) => {
       
         params: {
           page: 1,
-        size: 100,
-        status: status
+          size: 100,
+          status: status
         }
     };
 
