@@ -18,6 +18,7 @@ import Loader from "../commonComponents/Loader";
 import { useNavigate } from "react-router";
 import ScoreChart from "../commonComponents/ScoreChart";
 import searchBlack from '../../assets/icons/searchBlack.png'
+import ProgressBar from "../commonComponents/ProgressBar";
 
 
 const Row = (props) => {
@@ -42,15 +43,11 @@ const Row = (props) => {
         </TableCell>{" "}
         <TableCell component="th" scope="row" align='center'>
           {row.createdAt.split('T')[0]}
-        </TableCell>{" "}
+        </TableCell>
         {row.status == 'COMPLETED' &&
-          <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', alignItems: 'center' }} align="center">
-            <ScoreChart data={[
-              ["Score", "Percentage"],
-              ["YourScore", row.score],
-              ["", (row.maxScore - row.score)]
-            ]} />
-            <span>{row.score}/{row.maxScore}</span>
+          <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', alignItems: 'center', justifyContent: 'center' }} align="center">
+            <ProgressBar progress={row.score} />
+            <span style={{fontSize: '0.7rem'}}>{row.score}/{row.maxScore}</span>
           </TableCell>
         }
         {row.status == 'COMPLETED' &&

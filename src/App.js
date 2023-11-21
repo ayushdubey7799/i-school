@@ -62,8 +62,6 @@ import AccessDenied from "./pages/AccessDenied"
 import CodeEditor from "./pages/CodeEditor"
 import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
 import { AuthenticationConstants } from "./utils/constants"
-import Trial from "./pages/Trial"
-
 
 
 const App = () => {
@@ -143,8 +141,6 @@ const App = () => {
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/code-editor" element={<CodeEditor />} />
 
-
-          <Route path='/trial' element={<Trial/>} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>
