@@ -104,7 +104,7 @@ const Container = styled.div`
 
   .hrLine {
     width: 90%;
-    border-top: 0.06rem solid lightgrey;
+    border-top: 0.06rem solid #f6f6f6;
     border-radius: 0.2rem;
     margin: 0.8rem 0 0.8rem 0;
     align-self: center;

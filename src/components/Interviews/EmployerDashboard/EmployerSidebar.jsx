@@ -88,7 +88,7 @@ overflow-y: scroll;
 
   .hrLine {
     width: 90%;
-    border-top: 0.1rem groove lightgrey;
+    border-top: 0.1rem groove #f6f6f6;
     border-radius: 0.2rem;
     margin: 1rem 0 0rem 0;
     align-self: center;

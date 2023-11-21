@@ -10,6 +10,8 @@ import { addProfileWithFile } from '../../../../functions/api/resume/addProfileW
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+
 const Container = styled.div`
   width:90%;
   margin: 1rem auto;
@@ -50,36 +52,38 @@ const Component = styled.div`
     font-weight: 500;
 
   }
-`;
 
-
-const Form = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 60%;
-  gap: 1rem;
-
-  span {
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  #outlined-basic {
-    padding: 0.5rem 0.5rem;
-    background-color: #F6F6FB;
-  }
-  
-  .resumeBox {
+  form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 60%;
     gap: 1rem;
-    margin-top: 0rem;
+
+
+    span {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+  
+    #outlined-basic {
+      padding: 0.5rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+    
+    .resumeBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 1rem;
+      margin-top: 0rem;
+    }
   }
 `;
+
+
 
 const Label = styled.label`
   font-weight: 600;
@@ -162,12 +166,13 @@ const RegisterCandidate = () => {
 
       <Component>
         <span className='title'>Register New Candidate</span>
-        <Form>
-          <TextField id="outlined-basic" label="Email" variant="outlined"
+        <ValidatorForm>
+          <TextValidator id="outlined-basic" label="Email" variant="outlined"
             type='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            errorMessages={["This field is required", 'Email is not valid']}
+            validators={['required', 'isEmail']}
             size='small'
             inputProps={{
               sx: {
@@ -182,14 +187,20 @@ const RegisterCandidate = () => {
                 fontSize: '0.8rem',
                 fontWeight: '400'
               },
-            }} />
+            }}
+            fullWidth />
 
-          <TextField id="outlined-basic" label="First Name" variant="outlined"
+
+
+          <TextValidator id="outlined-basic" label="First Name" variant="outlined"
             type='text'
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
             size='small'
+            errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+            validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+            fullWidth
             inputProps={{
               sx: {
                 color: '#626264',
@@ -205,12 +216,15 @@ const RegisterCandidate = () => {
               },
             }} />
 
-          <TextField id="outlined-basic" label="Last Name" variant="outlined"
+          <TextValidator id="outlined-basic" label="Last Name" variant="outlined"
             type='text'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
             size='small'
+            errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+            validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+            fullWidth
             inputProps={{
               sx: {
                 color: '#626264',
@@ -226,11 +240,14 @@ const RegisterCandidate = () => {
               },
             }} />
 
-          <TextField id="outlined-basic" label="Phone" variant="outlined"
+          <TextValidator id="outlined-basic" label="Phone" variant="outlined"
             type='tel'
             value={contact}
             onChange={(e) => setContact(e.target.value)}
             size='small'
+            errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+            validators={['required', 'isNumber', 'minStringLength:10']}
+            fullWidth
             inputProps={{
               sx: {
                 color: '#626264',
@@ -248,7 +265,7 @@ const RegisterCandidate = () => {
             required
           />
 
-          <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+          <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth required>
             <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Select Referral/Source</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -284,11 +301,14 @@ const RegisterCandidate = () => {
             </Select>
           </FormControl>
 
-          {source && <TextField id="outlined-basic" label="Referral/Source text" variant="outlined"
+          {source && <TextValidator id="outlined-basic" label="Referral/Source text" variant="outlined"
             type='text'
             value={refText}
             onChange={(e) => setRefText(e.target.value)}
             size='small'
+            errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+            validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+            fullWidth
             inputProps={{
               sx: {
                 color: '#626264',
@@ -316,11 +336,10 @@ const RegisterCandidate = () => {
             />
             <span>Select Resume</span>
           </div>
-        </Form>
+        </ValidatorForm>
 
         <button onClick={handleRegister} className='registerBtn'>Register Candidate</button>
       </Component>
-
     </Container>
   );
 };

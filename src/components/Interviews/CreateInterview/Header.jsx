@@ -87,14 +87,14 @@ const StyledDiv = styled.div`
 
 
   .coloredText {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     color: var(--color);
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
   }
 
   .coloredText:hover {
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: underline;
   }
 
@@ -136,7 +136,7 @@ const StyledDiv = styled.div`
   text-decoration: none;
   color: #333;
   transition: background-color 0.3s ease;
-  border-bottom: 0.1rem groove lightgrey;
+  border-bottom: 0.1rem groove #f6f6f6;
 }
 
 .dropdown span:hover {

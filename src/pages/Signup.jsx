@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { register } from "../functions/api/authentication/register";
@@ -16,7 +16,12 @@ import registerIcon1 from '../assets/registerIcon1.jpg'
 import registerIcon2 from '../assets/registerIcon2.jpg'
 import registerIcon3 from '../assets/registerIcon3.jpg'
 import { employerRegister } from "../functions/api/employers/authentication/employerRegister";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -89,7 +94,7 @@ const Signup = () => {
 
   const handleSubmitEmployer = async (e) => {
     e.preventDefault();
-   
+
     const details = {
       "address": address,
       "city": location,
@@ -106,7 +111,7 @@ const Signup = () => {
     }
 
 
-    
+
     const registerRes = await employerRegister(details);
     if (registerRes) {
       toast.success("Onboard request sent");
@@ -115,9 +120,41 @@ const Signup = () => {
     else {
       toast.error("Error");
     }
-    }
+  }
 
 
+  // func for password validation
+  useEffect(() => {
+    // custom rules
+    ValidatorForm.addValidationRule('hasSpecialCharacter', (value) => {
+      return /[!@#$%^&*]/.test(value);
+    });
+
+    ValidatorForm.addValidationRule('hasCapitalLetter', (value) => {
+      return /[A-Z]/.test(value);
+    });
+
+    ValidatorForm.addValidationRule('hasSmallLetter', (value) => {
+      return /[a-z]/.test(value);
+    });
+
+    ValidatorForm.addValidationRule('hasNumberDigit', (value) => {
+      return /\d/.test(value);
+    });
+
+    ValidatorForm.addValidationRule('hasMinLength', (value) => {
+      return value.length >= 8;
+    });
+
+    // Cleanup the rules when component unmounts
+    return () => {
+      ValidatorForm.removeValidationRule('hasSpecialCharacter');
+      ValidatorForm.removeValidationRule('hasCapitalLetter');
+      ValidatorForm.removeValidationRule('hasSmallLetter');
+      ValidatorForm.removeValidationRule('hasNumberDigit');
+      ValidatorForm.removeValidationRule('hasMinLength');
+    };
+  }, [password]);
 
   return (
     <StyledSignup>
@@ -175,69 +212,146 @@ const Signup = () => {
           value == 'job-seeker' ?
             <div id="form">
               <p>Enter your details below to create your account.</p>
-              <form onSubmit={handleSubmitJobSeeker}>
-
+              <ValidatorForm onSubmit={handleSubmitJobSeeker}>
                 <div className="inputBox">
-                  <input
+                  <TextValidator
+                    label="Name"
                     type="name"
-                    id="name"
-                    value={name}
                     onChange={(e) => setName(e.target.value)}
-                    required
+                    value={name}
+                    errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+                    validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+                    fullWidth
+                    inputProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
                   />
-                  <label htmlFor="name" className="label">Name</label>
-                </div>
-
-                <div className="inputBox">
-                  <select
-                    id="gender"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <option value="" disabled selected>
-                      Select
-                    </option>
-                    <option value='male'>Male</option>
-                    <option value='female'>Female</option>
-                    <option value='not-disclose'>Rather not disclose</option>
-                  </select>
-                  <label htmlFor="gender">Gender</label>
                 </div>
 
 
                 <div className="inputBox">
-                  <input
+
+                  <FormControl fullWidth required>
+                    <InputLabel id="demo-simple-select-label" style={{ fontSize: '1rem' }}>Gender</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={gender}
+                      label="Gender"
+                      onChange={(e) => setGender(e.target.value)}
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                    >
+                      <MenuItem value='male'>Male</MenuItem>
+                      <MenuItem value='female'>Female</MenuItem>
+                      <MenuItem value='not-disclose'>Rather not disclose</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+
+
+                <div className="inputBox">
+                  <TextValidator
+                    label="Email"
                     type="email"
-                    id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
+                    errorMessages={["This field is required", 'Email is not valid']}
+                    validators={['required', 'isEmail']}
+                    fullWidth
+                    inputProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
                   />
-                  <label htmlFor="email">Email</label>
                 </div>
 
 
                 <div className="inputBox">
-                  <input
+                  <TextValidator
+                    label="Phone number"
                     type="tel"
-                    id="contact"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    required
+                    errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+                    validators={['required', 'isNumber', 'minStringLength:10']}
+                    fullWidth
+                    inputProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
                   />
-                  <label htmlFor="contact">Phone number</label>
                 </div>
 
 
                 <div className="inputBox">
-                  <input
+                  <TextValidator
+                    label="Password"
                     type={passwordVisible ? "text" : "password"}
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
+                    validators={['required', 'hasSpecialCharacter', 'hasCapitalLetter', 'hasSmallLetter', 'hasNumberDigit', 'hasMinLength', 'maxStringLength:29']}
+                    errorMessages={['This field is required', 'Must contain a special character', 'Must contain a capital letter', 'Must contain a small letter', 'Must contain a number digit', 'Must be at least 8 characters long', 'Must be less than 30 chatacters long']}
+                    fullWidth
+                    inputProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        color: '#626264',
+                        fontSize: '1rem',
+                        fontWeight: '400'
+                      },
+                    }}
                   />
-                  <label htmlFor="password">Password</label>
                   <FontAwesomeIcon
                     icon={faEye}
                     id="eye"
@@ -247,7 +361,7 @@ const Signup = () => {
                 </div>
 
                 <button type="submit" className="btn">Create Account</button>
-              </form>
+              </ValidatorForm>
               <p>
                 Have an account ? <Link to="/login" className="link link1">Sign In</Link>
               </p>
@@ -255,143 +369,293 @@ const Signup = () => {
             : value == 'employer' ?
               <div id="form">
                 <p>Enter your details below to create your account.</p>
-                <form onSubmit={handleSubmitEmployer}>
-
+                <ValidatorForm onSubmit={handleSubmitEmployer}>
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Company"
                       type="name"
-                      id="company"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 2 characters long']}
+                      validators={['required', 'minStringLength:2']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="company">Company</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Co-ordinator name"
                       type="text"
-                      id="co-Ordinator"
                       value={coOrdinator}
                       onChange={(e) => setCoOrdinator(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+                      validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="co-Ordinator">Co-ordinator name</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Legal Name"
                       type="text"
-                      id="legal-name"
                       value={legalName}
                       onChange={(e) => setLegalName(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 2 characters long']}
+                      validators={['required', 'minStringLength:2']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="legal-name">Legal Name</label>
                   </div>
 
                   <div className="inputBox">
-                    <select
-                      value={industry}
-                      onChange={(e) => setIndustry(e.target.value)}
-                      id="industry"
-                    >
-                      <option value="" disabled selected>
-                        Select
-                      </option>
-                      <option value='technology'>Technology</option>
-                      <option value='telecom'>Telecom</option>
-                      <option value='services'>Services</option>
-                      <option value='manufacturing'>Manufacturing</option>
-                      <option value='engineering'>Engineering</option>
-                      <option value='bfsi'>BFSI</option>
-                      <option value='commerce'>Commerce</option>
-                      <option value='construction'>Construction</option>
-                      <option value='powerEnergy'>Power & Energy</option>
-                      <option value='healthcare'>Healthcare</option>
-                      <option value='logistics'>Logistics</option>
-                      <option value='agriculture'>Agriculture</option>
-                      <option value='lifestyle'>Lifestyle</option>
-                      <option value='others'>Others</option>
-                    </select>
-                    <label htmlFor="industry">Industry</label>
+                    <FormControl fullWidth required>
+                      <InputLabel id="demo-simple-select-label" style={{ fontSize: '1rem' }}>Industry</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Industry"
+                        value={industry}
+                        onChange={(e) => setIndustry(e.target.value)}
+                        inputProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                        InputLabelProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                      >
+                        <MenuItem value='technology'>Technology</MenuItem>
+                        <MenuItem value='telecom'>Telecom</MenuItem>
+                        <MenuItem value='services'>Services</MenuItem>
+                        <MenuItem value='manufacturing'>Manufacturing</MenuItem>
+                        <MenuItem value='engineering'>Engineering</MenuItem>
+                        <MenuItem value='bfsi'>BFSI</MenuItem>
+                        <MenuItem value='commerce'>Commerce</MenuItem>
+                        <MenuItem value='construction'>Construction</MenuItem>
+                        <MenuItem value='powerEnergy'>Power & Energy</MenuItem>
+                        <MenuItem value='healthcare'>Healthcare</MenuItem>
+                        <MenuItem value='logistics'>Logistics</MenuItem>
+                        <MenuItem value='agriculture'>Agriculture</MenuItem>
+                        <MenuItem value='lifestyle'>Lifestyle</MenuItem>
+                        <MenuItem value='others'>Others</MenuItem>
+                      </Select>
+                    </FormControl>
                   </div>
 
                   <div className="inputBox">
-                    <select
-                      value={employees}
-                      onChange={(e) => setEmployees(e.target.value)}
-                      id="employees"
-                    >
-                      <option value="" disabled selected>
-                        Select
-                      </option>
-                      <option value='1'>1</option>
-                      <option value='2-5'>2-5</option>
-                      <option value='6-10'>6-10</option>
-                      <option value='11-25'>11-25</option>
-                      <option value='26-50'>26-50</option>
-                      <option value='51-200'>51-200</option>
-                      <option value='201-1000'>201-1000</option>
-                      <option value='1001-10000'>1001-10000</option>
-                      <option value='10001+'>10001+</option>
-                    </select>
-                    <label htmlFor="employees">Number of Employees</label>
+                    <FormControl fullWidth required>
+                      <InputLabel id="demo-simple-select-label" style={{ fontSize: '1rem' }}>Number of Employees</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Number of Employees"
+                        value={employees}
+                        onChange={(e) => setEmployees(e.target.value)}
+                        inputProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                        InputLabelProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                      >
+                        <MenuItem value='1'>1</MenuItem>
+                        <MenuItem value='2-5'>2-5</MenuItem>
+                        <MenuItem value='6-10'>6-10</MenuItem>
+                        <MenuItem value='11-25'>11-25</MenuItem>
+                        <MenuItem value='26-50'>26-50</MenuItem>
+                        <MenuItem value='51-200'>51-200</MenuItem>
+                        <MenuItem value='201-1000'>201-1000</MenuItem>
+                        <MenuItem value='1001-10000'>1001-10000</MenuItem>
+                        <MenuItem value='10001+'>10001+</MenuItem>
+                      </Select>
+                    </FormControl>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Location"
                       type="text"
-                      id="location"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 2 characters long']}
+                      validators={['required', 'minStringLength:2']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="location">Location</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Address"
                       type="text"
-                      id="address"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 3 characters long']}
+                      validators={['required', 'minStringLength:3']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="address">Address</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Email"
                       type="email"
-                      id="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Email is not valid']}
+                      validators={['required', 'isEmail']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="email">Email</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Phone number"
                       type="tel"
-                      id="contact"
                       value={contact}
                       onChange={(e) => setContact(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+                      validators={['required', 'isNumber', 'minStringLength:10']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="contact">Phone number</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
-                      type={passwordVisible ? 'text' : 'password'}
+                    <TextValidator
+                      label="Password"
+                      type={passwordVisible ? "text" : "password"}
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      required
+                      validators={['required', 'hasSpecialCharacter', 'hasCapitalLetter', 'hasSmallLetter', 'hasNumberDigit', 'hasMinLength', 'maxStringLength:29']}
+                      errorMessages={['This field is required', 'Must contain a special character', 'Must contain a capital letter', 'Must contain a small letter', 'Must contain a number digit', 'Must be at least 8 characters long', 'Must be less than 30 chatacters long']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="password">Password</label>
                     <FontAwesomeIcon
                       icon={faEye}
                       id="eye"
@@ -401,7 +665,7 @@ const Signup = () => {
                   </div>
 
                   <button type="submit" className="btn">Create Account</button>
-                </form>
+                </ValidatorForm>
                 <p>
                   Have an account ? <Link to="/login" className="link link1">Sign In</Link>
                 </p>
@@ -409,133 +673,293 @@ const Signup = () => {
 
               : <div id="form">
                 <p>Enter your details below to create your account.</p>
-                <form onSubmit={handleSubmitEmployer}>
-
+                <ValidatorForm onSubmit={handleSubmitEmployer}>
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Company"
                       type="name"
-                      id="company"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 2 characters long']}
+                      validators={['required', 'minStringLength:2']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="company">Company</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Co-ordinator name"
                       type="text"
-                      id="co-Ordinator"
                       value={coOrdinator}
                       onChange={(e) => setCoOrdinator(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+                      validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="co-Ordinator">Co-ordinator name</label>
                   </div>
 
                   <div className="inputBox">
-                    <select
-                      value={industry}
-                      onChange={(e) => setIndustry(e.target.value)}
-                      id="industry"
-                    >
-                      <option value="" disabled selected>
-                        Select
-                      </option>
-                      <option value='technology'>Technology</option>
-                      <option value='telecom'>Telecom</option>
-                      <option value='services'>Services</option>
-                      <option value='manufacturing'>Manufacturing</option>
-                      <option value='engineering'>Engineering</option>
-                      <option value='bfsi'>BFSI</option>
-                      <option value='commerce'>Commerce</option>
-                      <option value='construction'>Construction</option>
-                      <option value='powerEnergy'>Power & Energy</option>
-                      <option value='healthcare'>Healthcare</option>
-                      <option value='logistics'>Logistics</option>
-                      <option value='agriculture'>Agriculture</option>
-                      <option value='lifestyle'>Lifestyle</option>
-                      <option value='others'>Others</option>
-                    </select>
-                    <label htmlFor="industry">Industry</label>
-                  </div>
-
-
-                  <div className="inputBox">
-                    <select
-                      value={employees}
-                      onChange={(e) => setEmployees(e.target.value)}
-                      id="employees"
-                    >
-                      <option value="" disabled selected>
-                        Select
-                      </option>
-                      <option value='1'>1</option>
-                      <option value='2-5'>2-5</option>
-                      <option value='6-10'>6-10</option>
-                      <option value='11-25'>11-25</option>
-                      <option value='26-50'>26-50</option>
-                      <option value='51-200'>51-200</option>
-                      <option value='201-1000'>201-1000</option>
-                      <option value='1001-10000'>1001-10000</option>
-                      <option value='10001+'>10001+</option>
-                    </select>
-                    <label htmlFor="employees">Number of Employees</label>
-                  </div>
-
-                  <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Legal Name"
                       type="text"
-                      id="location"
+                      value={legalName}
+                      onChange={(e) => setLegalName(e.target.value)}
+                      errorMessages={["This field is required", 'Must be a least 2 characters long']}
+                      validators={['required', 'minStringLength:2']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                    />
+                  </div>
+
+                  <div className="inputBox">
+                    <FormControl fullWidth required>
+                      <InputLabel id="demo-simple-select-label" style={{ fontSize: '1rem' }}>Industry</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Industry"
+                        value={industry}
+                        onChange={(e) => setIndustry(e.target.value)}
+                        inputProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                        InputLabelProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                      >
+                        <MenuItem value='technology'>Technology</MenuItem>
+                        <MenuItem value='telecom'>Telecom</MenuItem>
+                        <MenuItem value='services'>Services</MenuItem>
+                        <MenuItem value='manufacturing'>Manufacturing</MenuItem>
+                        <MenuItem value='engineering'>Engineering</MenuItem>
+                        <MenuItem value='bfsi'>BFSI</MenuItem>
+                        <MenuItem value='commerce'>Commerce</MenuItem>
+                        <MenuItem value='construction'>Construction</MenuItem>
+                        <MenuItem value='powerEnergy'>Power & Energy</MenuItem>
+                        <MenuItem value='healthcare'>Healthcare</MenuItem>
+                        <MenuItem value='logistics'>Logistics</MenuItem>
+                        <MenuItem value='agriculture'>Agriculture</MenuItem>
+                        <MenuItem value='lifestyle'>Lifestyle</MenuItem>
+                        <MenuItem value='others'>Others</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  <div className="inputBox">
+                    <FormControl fullWidth required>
+                      <InputLabel id="demo-simple-select-label" style={{ fontSize: '1rem' }}>Number of Employees</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Number of Employees"
+                        value={employees}
+                        onChange={(e) => setEmployees(e.target.value)}
+                        inputProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                        InputLabelProps={{
+                          sx: {
+                            color: '#626264',
+                            fontSize: '1rem',
+                            fontWeight: '400'
+                          },
+                        }}
+                      >
+                        <MenuItem value='1'>1</MenuItem>
+                        <MenuItem value='2-5'>2-5</MenuItem>
+                        <MenuItem value='6-10'>6-10</MenuItem>
+                        <MenuItem value='11-25'>11-25</MenuItem>
+                        <MenuItem value='26-50'>26-50</MenuItem>
+                        <MenuItem value='51-200'>51-200</MenuItem>
+                        <MenuItem value='201-1000'>201-1000</MenuItem>
+                        <MenuItem value='1001-10000'>1001-10000</MenuItem>
+                        <MenuItem value='10001+'>10001+</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  <div className="inputBox">
+                    <TextValidator
+                      label="Location"
+                      type="text"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 2 characters long']}
+                      validators={['required', 'minStringLength:2']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="location">Location</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Address"
                       type="text"
-                      id="address"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a least 3 characters long']}
+                      validators={['required', 'minStringLength:3']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="address">Address</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Email"
                       type="email"
-                      id="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Email is not valid']}
+                      validators={['required', 'isEmail']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="email">Email</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
+                    <TextValidator
+                      label="Phone number"
                       type="tel"
-                      id="contact"
                       value={contact}
                       onChange={(e) => setContact(e.target.value)}
-                      required
+                      errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+                      validators={['required', 'isNumber', 'minStringLength:10']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="contact">Phone number</label>
                   </div>
 
                   <div className="inputBox">
-                    <input
-                      type={passwordVisible ? 'text' : 'password'}
+                    <TextValidator
+                      label="Password"
+                      type={passwordVisible ? "text" : "password"}
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      required
+                      validators={['required', 'hasSpecialCharacter', 'hasCapitalLetter', 'hasSmallLetter', 'hasNumberDigit', 'hasMinLength', 'maxStringLength:29']}
+                      errorMessages={['This field is required', 'Must contain a special character', 'Must contain a capital letter', 'Must contain a small letter', 'Must contain a number digit', 'Must be at least 8 characters long', 'Must be less than 30 chatacters long']}
+                      fullWidth
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '1rem',
+                          fontWeight: '400'
+                        },
+                      }}
                     />
-                    <label htmlFor="password">Password</label>
                     <FontAwesomeIcon
                       icon={faEye}
                       id="eye"
@@ -545,7 +969,7 @@ const Signup = () => {
                   </div>
 
                   <button type="submit" className="btn">Create Account</button>
-                </form>
+                </ValidatorForm>
                 <p>
                   Have an account ? <Link to="/login" className="link link1">Sign In</Link>
                 </p>
@@ -593,6 +1017,11 @@ const StyledSignup = styled.div`
       color: var(--color);
     }
 
+    .link1:hover {
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
   #form {
     width: 80%;
     background-color: var(--backgroundColor);
@@ -606,42 +1035,19 @@ const StyledSignup = styled.div`
     width: 60%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     position: relative;
     margin-top: 1rem;
   }
 
   input {
     width: 100%;
-    height: 2.5rem;
-    margin-top: 0.7rem;
-    padding-left: 0.5rem;
     border-radius: 0.3rem;
-    border: 0.05rem solid lightgrey;
     background-color: var(--white);
-    font-size: 1rem;
   }
 
   input:focus {
     outline-color: var(--lightOrange);
-  }
-
-  
-  label {
-    position: absolute;
-    top: -0.8rem;
-    left: 0rem;
-    transition: color 0.3s;
-  }
-
-  input:focus + label {
-    color: var(--lightOrange);
-  }
-
-
-  label {
-    color: var(--color);
-    font-size: 0.8rem;
-    font-weight: 600;
   }
 
   .btn {
@@ -695,7 +1101,7 @@ option {
 
 .eye-icon {
   position: absolute;
-  top: 60%;
+  top: 50%;
   right: 2%;
   transform: translateY(-50%);
   cursor: pointer;
