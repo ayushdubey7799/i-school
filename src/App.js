@@ -64,7 +64,6 @@ import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
 import { AuthenticationConstants } from "./utils/constants"
 
 
-
 const App = () => {
 
   return (
@@ -141,6 +140,7 @@ const App = () => {
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/code-editor" element={<CodeEditor />} />
+
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

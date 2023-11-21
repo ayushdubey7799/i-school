@@ -64,15 +64,15 @@ const Login = () => {
     const token = localStorage.getItem("token");
     const key = localStorage.getItem("key");
 
-    console.log(token,key,accessToken,clientCodeStore)
-    if(accessToken && key=="interview" && clientCodeStore=="intelliview")navigate('/dashboard/jobseeker');
+    console.log(token, key, accessToken, clientCodeStore)
+    if (accessToken && key == "interview" && clientCodeStore == "intelliview") navigate('/dashboard/jobseeker');
 
-    if (token && accessToken && clientCodeStore && key=="invite") {
+    if (token && accessToken && clientCodeStore && key == "invite") {
       (async function () {
         const res = await getInviteDetails(token, accessToken);
         if (res) {
-              navigate(`/slot-selection/${token}`)
-          
+          navigate(`/slot-selection/${token}`)
+
         } else {
           const userConfirmed = confirm("You are already logged in with different email id, do you want to logout first?");
           if (userConfirmed) {
@@ -80,20 +80,20 @@ const Login = () => {
             dispatch(logout());
           } else {
             clientCodeStore == "intelliview"
-        ? navigate("/dashboard/jobseeker")
-        : navigate("/dashboard/employer");
+              ? navigate("/dashboard/jobseeker")
+              : navigate("/dashboard/employer");
           }
         }
       })();
     }
 
-    if(!token && accessToken){
+    if (!token && accessToken) {
       clientCodeStore == "intelliview"
         ? navigate("/dashboard/jobseeker")
         : navigate("/dashboard/employer");
     }
 
-    if(clientCodeStore && clientCodeStore != 'intelliview'){
+    if (clientCodeStore && clientCodeStore != 'intelliview') {
       navigate('/dashboard/employer')
     }
   }, [accessToken]);
@@ -241,8 +241,8 @@ const Login = () => {
               </button>
             </form>
             <p>
-              <Link to="/signup" className="link link1">
-                Don't have an account ? Sign Up
+              <Link to="/signup" className="link">
+                Don't have an account ? <span className="link1">Sign Up</span>
               </Link>
             </p>
           </div>
@@ -309,8 +309,8 @@ const Login = () => {
               </button>
             </form>
             <p>
-              <Link to="/signup" className="link link1">
-                Don't have an account ? Sign Up
+              <Link to="/signup" className="link">
+                Don't have an account ? <span className="link1">Sign Up</span>
               </Link>
             </p>
           </div>
@@ -377,8 +377,8 @@ const Login = () => {
               </button>
             </form>
             <p>
-              <Link to="/signup" className="link link1">
-                Don't have an account ? Sign Up
+              <Link to="/signup" className="link">
+                Don't have an account ? <span className="link1">Sign Up</span>
               </Link>
             </p>
           </div>
@@ -427,11 +427,16 @@ const StyledLogin = styled.div`
 
   .link {
     text-decoration: none;
-    color: var(--lightOrange);
+    color: var(--color);
   }
 
   .link1 {
     color: var(--color);
+  }
+
+  .link1:hover {
+    font-weight: 600;
+    text-decoration: underline;
   }
 
   .resetBox {

@@ -6,30 +6,33 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 1rem;
   border-radius: 5px;
+  background-color: var(--white);
 
-`;
-
-const Form = styled.form`
-  display: flex;
+  form {
+    display: flex;
   flex-direction: column;
+  justify-content: center;
   padding-bottom: 1rem;
   gap: 1rem;
-
 
   #outlined-basic {
     padding: 0.5rem 0.5rem;
     background-color: #F6F6FB;
   }
 
-  #demo-simple-select-label {
-    font-size: 0.8rem;
+//   #demo-simple-select-label {
+//     font-size: 0.8rem;
+//   }
   }
 `;
+
 
 
 
@@ -80,15 +83,18 @@ function ManageUserForm({ array, handleClose }) {
     return (
         <Container>
             <h3>User Registration</h3>
-            <Form onSubmit={handleSubmit}>
 
-                <TextField id="outlined-basic" label="Name" variant="outlined"
+            <ValidatorForm onSubmit={handleSubmit}>
+
+                <TextValidator id="outlined-basic" label="Name" variant="outlined"
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    sx={{ backgroundColor: '#F6F6FB' }}
                     size='small'
+                    errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+                    validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+                    fullWidth
                     inputProps={{
                         sx: {
                             color: '#626264',
@@ -105,14 +111,16 @@ function ManageUserForm({ array, handleClose }) {
                     }}
                 />
 
-                <TextField id="outlined-basic" label="Email" variant="outlined"
+                <TextValidator id="outlined-basic" label="Email" variant="outlined"
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     disabled={mode == "edit"}
-                    sx={{ backgroundColor: '#F6F6FB' }}
                     size='small'
+                    errorMessages={["This field is required", 'Email is not valid']}
+                    validators={['required', 'isEmail']}
+                    fullWidth
                     inputProps={{
                         sx: {
                             color: '#626264',
@@ -129,14 +137,16 @@ function ManageUserForm({ array, handleClose }) {
                     }}
                 />
 
-                <TextField id="outlined-basic" label="Contact" variant="outlined"
+                <TextValidator id="outlined-basic" label="Contact" variant="outlined"
                     type="tel"
                     name="contact"
                     value={formData.contact}
                     onChange={handleChange}
                     disabled={mode == "edit"}
-                    sx={{ backgroundColor: '#F6F6FB' }}
                     size='small'
+                    errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+                    validators={['required', 'isNumber', 'minStringLength:10']}
+                    fullWidth
                     inputProps={{
                         sx: {
                             color: '#626264',
@@ -154,7 +164,7 @@ function ManageUserForm({ array, handleClose }) {
                 />
 
 
-                <FormControl sx={{ backgroundColor: '#F6F6FB', padding: '0' }} fullWidth>
+                <FormControl sx={{ backgroundColor: '#F6F6FB', padding: '0' }} fullWidth required>
                     <InputLabel id="demo-simple-select-label">Role</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -192,13 +202,15 @@ function ManageUserForm({ array, handleClose }) {
                 {
                     formData.role === 'Agency' &&
                     <>
-                        <TextField id="outlined-basic" label="Agency Name" variant="outlined"
-                            type="tel"
+                        <TextValidator id="outlined-basic" label="Agency Name" variant="outlined"
+                            type="text"
                             name="agencyName"
                             value={formData.agencyName}
                             onChange={handleChange}
-                            sx={{ backgroundColor: '#F6F6FB' }}
                             size='small'
+                            errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+                            validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+                            fullWidth
                             inputProps={{
                                 sx: {
                                     color: '#626264',
@@ -214,13 +226,15 @@ function ManageUserForm({ array, handleClose }) {
                                 },
                             }}
                         />
-                        <TextField id="outlined-basic" label="Agency Contact" variant="outlined"
+                        <TextValidator id="outlined-basic" label="Agency Contact" variant="outlined"
                             type="tel"
                             name="agencyContact"
                             value={formData.agencyContact}
                             onChange={handleChange}
-                            sx={{ backgroundColor: '#F6F6FB' }}
                             size='small'
+                            fullWidth
+                            errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+                            validators={['required', 'isNumber', 'minStringLength:10']}
                             inputProps={{
                                 sx: {
                                     color: '#626264',
@@ -240,7 +254,7 @@ function ManageUserForm({ array, handleClose }) {
                 }
 
                 <Button type="submit">{mode == "create" ? "Add User" : "Edit User"}</Button>
-            </Form>
+            </ValidatorForm>
         </Container>
     );
 }

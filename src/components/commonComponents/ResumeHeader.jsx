@@ -73,14 +73,14 @@ const StyledDiv = styled.div`
 
 
   .coloredText {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     color: var(--color);
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
   }
 
   .coloredText:hover {
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: underline;
   }
 
