@@ -483,6 +483,7 @@ const BoxRow = styled.div`
   font-size: 0.7rem;
   min-width: 10rem;
   justify-content: start;
+  padding: 0.5rem 0.5rem;
 }
 
 

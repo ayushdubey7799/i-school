@@ -22,6 +22,10 @@ const Container = styled.div`
   padding-bottom: 1rem;
   gap: 1rem;
 
+  .MuiFormHelperText-root {
+    font-size: 0.6rem;
+  }
+  
   #outlined-basic {
     padding: 0.5rem 0.5rem;
     background-color: #F6F6FB;

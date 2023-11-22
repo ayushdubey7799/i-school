@@ -60,6 +60,9 @@ const Component = styled.div`
     width: 60%;
     gap: 1rem;
 
+    .MuiFormHelperText-root {
+      font-size: 0.6rem;
+    }
 
     span {
       font-weight: 600;
