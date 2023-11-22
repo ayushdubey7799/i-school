@@ -143,7 +143,6 @@ const App = () => {
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/code-editor" element={<CodeEditor />} />
-
           <Route path="/trial" element={<Trial />} />
         </Routes>
       </ScrollToTop>
