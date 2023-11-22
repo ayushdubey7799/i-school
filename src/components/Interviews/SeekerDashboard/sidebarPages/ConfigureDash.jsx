@@ -11,6 +11,7 @@ const ConfigureDash = () => {
     const [selectedMetric2, setSelectedMetric2] = useState();
     const [selectedMetric3, setSelectedMetric3] = useState();
     const [selectedMetric4, setSelectedMetric4] = useState();
+    const [selectedOptionCount, setSelectedOptionCount] = useState(0);
 
     // const availableMetrics = seekerMetricOptions.filter((metric) => selectedMetric1.text != metric.text || selectedMetric2.text != metric.text || selectedMetric3.text != metric.text || selectedMetric4.text != metric.text);
 
@@ -42,15 +43,19 @@ const ConfigureDash = () => {
 
     return (
         <MainBox>
+            <Button onClick={handleSave}>Save Changes</Button>
             <div className='optionBox'>
                 {
                     seekerMetricOptions.map((option, i) => (
-                        <div className={`option ${selected == option.text ? 'selected' : ''}`} onClick={() => handleOptionClick(option.text)}>Metric {i + 1}</div>
+                        <div className={`option ${selected == option.text ? 'selected' : ''}`} onClick={() => {
+                            handleOptionClick(option.text)
+                            setSelectedOptionCount(i);
+                        }}>Metric {i + 1}</div>
                     ))
                 }
             </div>
 
-            <div className='contentBox'>
+            <ContentBox selectedOptionCount={selectedOptionCount}>
                 {
                     seekerMetricOptions.map((option, i) => (
                         <label>
@@ -63,8 +68,7 @@ const ConfigureDash = () => {
                         </label>
                     ))
                 }
-            </div>
-            <Button onClick={handleSave}>Save Changes</Button>
+            </ContentBox>
         </MainBox>
     )
 }
@@ -80,6 +84,7 @@ justify-content: start;
 align-items: center;
 gap: 2.5%;
 margin: 1rem auto;
+position: relative;
 
 .optionBox {
     display: flex;
@@ -108,11 +113,27 @@ margin: 1rem auto;
 .selected {
     background-color: var(--lightOrange);
     color: var(--white);
-
+    position: relative;
 }
 
-.contentBox {
-    width: 100%;
+
+
+`
+
+const Button = styled.button`
+background-color: var(--lightOrange);
+padding: 0.5rem 1rem;
+border: none;
+border-radius: 0.5rem;
+margin-bottom: 1rem;
+color: var(--white);
+font-size: 0.9rem;
+font-weight: 600;
+cursor: pointer;
+align-self: end;
+`
+
+const ContentBox = styled.div`
     // height: 20rem;
     background-color: var(--white);
     margin-top: 1rem;
@@ -123,8 +144,10 @@ margin: 1rem auto;
     flex-direction: column;
     border: 0.08rem solid lightgrey;
     gap: 0.5rem;
-
-
+    position: absolute;
+    top: 7rem;
+    left: ${(props) => (props.selectedOptionCount < 3 && props.selectedOptionCount * 25)}%;
+    right: ${(props) => (props.selectedOptionCount === 3 ? '0%' : 'auto')};
      
 label {
 	display: flex;
@@ -168,21 +191,5 @@ label {
 		}
 	}
 }
-}
-
-
-
-`
-
-const Button = styled.button`
-background-color: var(--lightOrange);
-padding: 0.5rem 1rem;
-border: none;
-border-radius: 0.5rem;
-margin-top: 1rem;
-color: var(--white);
-font-size: 0.9rem;
-font-weight: 600;
-cursor: pointer;
 
 `

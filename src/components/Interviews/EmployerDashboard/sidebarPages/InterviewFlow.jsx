@@ -10,154 +10,157 @@ import styled from "styled-components";
 import { data as interviews } from "../../../../utils/contantData";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import actionDot from '../../../../assets/icons/threeDot.png'
+import moveNextRoundIcon from '../../../../assets/icons/moveNextRoundIcon.png'
+import putHoldIcon from '../../../../assets/icons/putOnHoldIcon.png'
+import moveOutIcon from '../../../../assets/icons/moveOutInterviewIcon.png'
 
 function Row(props) {
-    const { row, index } = props;
+  const { row, index } = props;
 
-    const dropdownRef = useRef(null);
-    const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
+  const dropdownRef = useRef(null);
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
-    const openDropdown = (index) => {
-        setOpenDropdownIndex(index);
+  const openDropdown = (index) => {
+    setOpenDropdownIndex(index);
+  };
+
+
+  const closeAllDropdowns = () => {
+    setOpenDropdownIndex(-1);
+  };
+
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeAllDropdowns();
+      }
     };
 
+    document.addEventListener('mousedown', handleDocumentClick);
 
-    const closeAllDropdowns = () => {
-        setOpenDropdownIndex(-1);
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
     };
+  }, []);
 
-    useEffect(() => {
-        const handleDocumentClick = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                closeAllDropdowns();
-            }
-        };
-
-        document.addEventListener('mousedown', handleDocumentClick);
-
-        return () => {
-            document.removeEventListener('mousedown', handleDocumentClick);
-        };
-    }, []);
-
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell component="th" scope="row" align="center">
-                    <BoxRow>
-                        <img src={actionDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
-                            onClick={() => {
-                                if (openDropdownIndex === index) {
-                                    closeAllDropdowns();
-                                } else if (openDropdownIndex !== index) {
-                                    closeAllDropdowns();
-                                    openDropdown(index);
-                                }
-                            }}
-                        />
-                        <div
-                            className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
-                        >
-                            <span>Move to next Round</span>
-                            <span>Put on Hold</span>
-                            <span>Move out from Interview</span>
-                        </div>
-                    </BoxRow>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center">...</TableCell>
+        <TableCell component="th" scope="row" align="center">
+          <BoxRow>
+            <img src={actionDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
+              onClick={() => {
+                if (openDropdownIndex === index) {
+                  closeAllDropdowns();
+                } else if (openDropdownIndex !== index) {
+                  closeAllDropdowns();
+                  openDropdown(index);
+                }
+              }}
+            />
+            <div
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
+            >
+              <span className="dropdownText">Move to next Round <img src={moveNextRoundIcon} /></span>
+              <span className="dropdownText">Put on Hold <img src={putHoldIcon} /></span>
+              <span className="dropdownText">Move out from Interview <img src={moveOutIcon} /></span>
+            </div>
+          </BoxRow>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const InterviewFlow = ({ setPage }) => {
-    const [searchParams, setSearchParams] = useState('');
-    const [sortParams, setSortParams] = useState('');
-    const [filterParams, setFilterParams] = useState('');
+  const [searchParams, setSearchParams] = useState('');
+  const [sortParams, setSortParams] = useState('');
+  const [filterParams, setFilterParams] = useState('');
 
-    const handleSortParams = (e) => {
-        setSortParams(e.target.value);
-    }
+  const handleSortParams = (e) => {
+    setSortParams(e.target.value);
+  }
 
-    const handleSearch = () => {
-        console.log("Search");
-    }
+  const handleSearch = () => {
+    console.log("Search");
+  }
 
-    const handleSearchParams = (e) => {
-        setSearchParams(e.target.value);
-    }
+  const handleSearchParams = (e) => {
+    setSearchParams(e.target.value);
+  }
 
-    const handleFilterParams = (e) => {
-        setFilterParams(e.target.value);
-    }
+  const handleFilterParams = (e) => {
+    setFilterParams(e.target.value);
+  }
 
 
-    return (
-        <Content>
-            <TableContainer component={Paper} className="tableBox">
-                <div className="titleBox">
-                    <span className="title">Manage Interview Flow</span>
-                </div>
+  return (
+    <Content>
+      <TableContainer component={Paper} className="tableBox">
+        <div className="titleBox">
+          <span className="title">Manage Interview Flow</span>
+        </div>
 
-                <SearchBarContainer>
-                    <div className='skillBox'>
-                        <img src={searchBlack} />
-                        <input
-                            className='skillInput'
-                            type="text"
-                            placeholder="Search"
-                            value={searchParams}
-                            onChange={handleSearchParams}
-                        />
-                    </div>
+        <SearchBarContainer>
+          <div className='skillBox'>
+            <img src={searchBlack} />
+            <input
+              className='skillInput'
+              type="text"
+              placeholder="Search"
+              value={searchParams}
+              onChange={handleSearchParams}
+            />
+          </div>
 
-                    <div className='selectBox'>
-                        <select value={filterParams} onChange={handleFilterParams} className='selectInput'>
-                            <option value="" disabled selected>Filter by Round</option>
-                            <option value="First">First</option>
-                            <option value="Second">Second</option>
-                            <option value="Third">Third</option>
-                            <option value="Fourth">Fourth</option>
-                            <option value="HR">HR</option>
-                        </select>
-                        <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                            <option value="" disabled selected>Filter by JD ID</option>
-                            <option value="JDID">JD ID</option>
-                        </select>
-                    </div>
-                </SearchBarContainer>
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center">Name</TableCell>
-                            <TableCell align="center">Contact</TableCell>
-                            <TableCell align="center">JD ID</TableCell>
-                            <TableCell align="center">Recruiter</TableCell>
-                            <TableCell align="center">Hiring Manager</TableCell>
-                            <TableCell align="center">Current Round</TableCell>
-                            <TableCell align="center">Interview Name</TableCell>
-                            <TableCell align="center">Status</TableCell>
-                            <TableCell align="center">Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {interviews?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Content>
-    )
+          <div className='selectBox'>
+            <select value={filterParams} onChange={handleFilterParams} className='selectInput'>
+              <option value="" disabled selected>Filter by Round</option>
+              <option value="First">First</option>
+              <option value="Second">Second</option>
+              <option value="Third">Third</option>
+              <option value="Fourth">Fourth</option>
+              <option value="HR">HR</option>
+            </select>
+            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+              <option value="" disabled selected>Filter by JD ID</option>
+              <option value="JDID">JD ID</option>
+            </select>
+          </div>
+        </SearchBarContainer>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Contact</TableCell>
+              <TableCell align="center">JD ID</TableCell>
+              <TableCell align="center">Recruiter</TableCell>
+              <TableCell align="center">Hiring Manager</TableCell>
+              <TableCell align="center">Current Round</TableCell>
+              <TableCell align="center">Interview Name</TableCell>
+              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {interviews?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Content>
+  )
 }
 
 export default InterviewFlow
@@ -329,11 +332,11 @@ const BoxRow = styled.div`
   box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
   right: 10%;
-  top: 1rem;
   border-radius: 0.5rem;
   font-size: 0.7rem;
-  min-width: 10rem;
+  min-width: 13rem;
   justify-content: start;
+  padding: 0.5rem 0.5rem;
 }
 
 
@@ -359,6 +362,20 @@ const BoxRow = styled.div`
   border: 0.08rem solid grey;
   padding: 0.15rem;
   border-radius: 0.2rem;
+}
+
+
+.dropdownText {
+  
+
+  img {
+  width: 0.6rem;
+  height: 0.6rem;
+  cursor: pointer;
+  border: 0.08rem solid grey;
+  padding: 0.15rem;
+  border-radius: 0.2rem;
+  }
 }
 `
 

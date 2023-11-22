@@ -1,4 +1,4 @@
-import React,{useEffect} from "react"
+import React, { useEffect } from "react"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
@@ -62,6 +62,7 @@ import AccessDenied from "./pages/AccessDenied"
 import CodeEditor from "./pages/CodeEditor"
 import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
 import { AuthenticationConstants } from "./utils/constants"
+import Trial from "./pages/Trial"
 import Resume from "./components/commonComponents/Resume"
 import ReqModalDetails from "./components/Interviews/EmployerDashboard/ReqModalDetails"
 
@@ -85,7 +86,7 @@ const App = () => {
             <Route path="/dashboard/req-agency" element={<ReqAgencyDashboard />} />
             <Route path="/score/:interviewId" element={<Scorecard />} />
 
-            <Route element={<ProtectedRoute role={AuthenticationConstants.jobseeker}/>}>
+            <Route element={<ProtectedRoute role={AuthenticationConstants.jobseeker} />}>
               <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
               <Route path="/proctor-test" element={<QuestionComponent />} />
               <Route path="/slot-selection/:token" element={<SlotSelection />} />
@@ -94,7 +95,7 @@ const App = () => {
               <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
             </Route>
 
-            <Route element={<ProtectedRoute role={AuthenticationConstants.employer}/>}>
+            <Route element={<ProtectedRoute role={AuthenticationConstants.employer} />}>
               <Route path="/dashboard/employer" element={<EmployerDashboard />} />
               <Route path="/schedule" element={<ScheduleInterview />} />
               <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
@@ -106,7 +107,7 @@ const App = () => {
           </Route>
 
 
-          
+
 
           <Route path="/testing" element={<ReqModalDetails />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -143,6 +144,7 @@ const App = () => {
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/code-editor" element={<CodeEditor />} />
 
+          <Route path="/trial" element={<Trial />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

@@ -132,7 +132,7 @@ function JdForm({ array, handleClose }) {
     visibility: '',
     autoReqNumbers: true
   });
-  
+
 
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -324,11 +324,12 @@ function JdForm({ array, handleClose }) {
               fontSize: '0.8rem',
               fontWeight: '400'
             },
-          }} />
+          }}
+          required />
 
         <div className='fileInputBox'>
           <Label>Job Description</Label>
-          <textarea name='description' value={formData.description} onChange={handleChange} rows={5}></textarea>
+          <textarea name='description' value={formData.description} onChange={handleChange} rows={5} required></textarea>
         </div>
 
         <Stack spacing={3} sx={{ width: '100%' }}>
@@ -339,6 +340,7 @@ function JdForm({ array, handleClose }) {
             getOptionLabel={(option) => option}
             onChange={handleSkillsChange}
             value={selectedSkills}
+            required
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -711,7 +713,7 @@ function JdForm({ array, handleClose }) {
           </Select>
         </FormControl>
 
-        <Button type="submit">{mode == "create" ? "Submit" : "Edit Changes"}</Button>
+        <Button type="submit">{mode == "create" ? "Submit" : "Save Changes"}</Button>
 
       </Form>
     </Container>

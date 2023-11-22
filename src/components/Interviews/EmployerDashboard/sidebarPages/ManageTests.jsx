@@ -6,6 +6,8 @@ import CreateQuestionForm from '../CreateQuestionForm';
 import filterIcon from '../../../../assets/icons/filterIcon.png'
 import searchIcon from '../../../../assets/icons/searchIcon.png'
 import closeIcon from '../../../../assets/icons/closeIcon.png'
+import editIcon from '../../../../assets/icons/editBlack.png'
+import deleteIcon from '../../../../assets/icons/delete.png'
 
 
 const initialData = {
@@ -136,7 +138,27 @@ const ListItem = styled.div`
       box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
       transform: scale(1.02)
   }
+
+  .questionBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+
+    .iconBox {
+      display: flex;
+      gap: 0.5rem;
+      align-items: start;
+    }
+
+    img {
+      width: 1rem;
+      cursor: pointer;
+    }
+
+  }
 `;
+
+{/* <span className='questionBox'><span>Q. {item.question}</span> <span className='iconBox'><img src={editIcon}/><img src={deleteIcon}/></span> </span> */}
 
 const ManageTests = () => {
   const [data, setData] = useState(initialData);
@@ -333,8 +355,7 @@ const ManageTests = () => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      Q. {item.question}
-                      <br />
+                      <span className='questionBox'><span>Q. {item.question}</span> <span className='iconBox'><img src={editIcon}/><img src={deleteIcon}/></span> </span>
                       <br />
                       A. {item.answer}
                     </ListItem>
@@ -398,7 +419,7 @@ const SearchBarContainer = styled.div`
 
 
   .skillBox {
-
+    width: 50%;
   }
 
 
@@ -406,9 +427,10 @@ const SearchBarContainer = styled.div`
   .skillInput {
   flex-grow: 1;
   border: none;
+  border-bottom: 0.1rem solid lightgrey;
   height: 100%;
   width: 100%;
-  padding: 0.1rem;
+  padding: 0.1rem 0.1rem 0.4rem 0.1rem;
   font-size: 0.75rem;
   background-color: var(--white);
   outline: none;

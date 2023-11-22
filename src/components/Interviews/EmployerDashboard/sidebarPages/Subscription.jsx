@@ -31,6 +31,9 @@ margin: 1rem 0;
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
+    // background-color: var(--white);
+    // padding: 1.5rem 3rem;
+    // border-radius: 0.5rem;
 }
 
 .title {
