@@ -25,7 +25,7 @@ const FilterContainer = styled.div`
     top: 0;
     right: 0.5rem;
     width: calc(100% - 20.3rem);
-    height: 50%;
+    height: 20rem;
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     z-index: 1;
@@ -34,9 +34,10 @@ const FilterContainer = styled.div`
   }
   
   .content {
-    height: 50%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-evenly;.
+    align-items: center;
+    height: 65%;
     margin-top: 1rem;
   }
   
@@ -460,7 +461,11 @@ const InputBox = styled.div`
 display: flex;
 flex-direction: column;
 gap: 0.5rem;
-
+background-color: var(--white);
+border: 0.09rem solid lightgrey;
+padding: 1rem 0.8rem;
+height: 100%;
+border-radius: 0.5rem;
 
 
 .childInputBox {
