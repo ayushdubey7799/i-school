@@ -132,7 +132,7 @@ function JdForm({ array, handleClose }) {
     visibility: '',
     autoReqNumbers: true
   });
-  
+
 
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -711,7 +711,7 @@ function JdForm({ array, handleClose }) {
           </Select>
         </FormControl>
 
-        <Button type="submit">{mode == "create" ? "Submit" : "Edit Changes"}</Button>
+        <Button type="submit">{mode == "create" ? "Submit" : "Save Changes"}</Button>
 
       </Form>
     </Container>
