@@ -78,8 +78,6 @@ padding: 2rem 1rem;
 margin: 0 auto;
 box-sizing: border-box;
 flex-direction: column;
-
-
 `
 
 const LanguageSelector = styled.select`

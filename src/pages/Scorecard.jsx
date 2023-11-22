@@ -12,53 +12,38 @@ import { useSelector } from "react-redux";
 
 const Scorecard = () => {
     const accessToken = useSelector(state => state.auth.userData?.accessToken)
-
+    const [fetchError,setFetchError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [fetchAgainOption, setFetchAgainOption] = useState(true);
     const { interviewId } = useParams();
-    const [trigger, setTrigger] = useState(true);
+    const [intervalId,setIntervalId] = useState(null);
     const [data, setData] = useState(null);
     const [scoreArray, setScoreArray] = useState([]);
-    const [countDown, setCountDown] = useState(5);
+    const [countDown, setCountDown] = useState(8);
     const [time, setTime] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
         if(document.fullscreenElement)document.exitFullscreen();
 
         if (!accessToken) navigate("/login");
-        async function fetchScore(id, accessToken) {
+        async function fetchScore() {
             setIsLoading(true);
-            const scoreRes = await getScore(id, accessToken);
+           const scoreRes = await getScore(interviewId, accessToken);
             console.log(scoreRes?.data?.questions[0]);
-            if (!scoreRes) {
-                setFetchAgainOption(true);
-                setTrigger(false);
-                setCountDown(5);
-            } else {
+            if (scoreRes) {
                 setData(scoreRes);
-                setScoreArray(scoreRes.data.questions);
-                setFetchAgainOption(false);
+                setScoreArray(scoreRes?.data?.questions);
             }
-            setIsLoading(false);
+            
+            console.log("API called");
         }
 
-        if (fetchAgainOption && countDown > 0) {
-            let intervalId = setInterval(() => {
-                setCountDown((prevCd) => prevCd - 1);
-                if (!fetchAgainOption) {
-                    setCountDown(0);
-                }
-                if (countDown === 0) {
-                    clearInterval(intervalId);
-                }
-            }, 1000);
-
-            return () => clearInterval(intervalId);
-        }
-
-        if (trigger === true) {
-            fetchScore(interviewId, accessToken);
-        }
+        
+            let id = setInterval(() => {
+               fetchScore();
+               setCountDown(countDown => countDown-1);
+            }, 15000);
+            console.log(id);
+            setIntervalId(id);
 
         let timer = localStorage.getItem("time");
         if (timer) {
@@ -69,22 +54,27 @@ const Scorecard = () => {
 
         return () => {
             localStorage.removeItem("time");
+            if(intervalId){
+                clearInterval(intervalId);
+               setIntervalId(null);
+            };
         }
 
-    }, [trigger, countDown]);
+    }, []);
+    
+    if((scoreArray.length || countDown == 0 )&& intervalId){
+        if(!scoreArray.length)setFetchError(true);
+        clearInterval(intervalId);
+        setIntervalId(null);
+        setIsLoading(false);
+    };
 
-
-    console.log(scoreArray);
-
+    console.log(intervalId,countDown,scoreArray);
+    if(fetchError)return <h3>Internal Server Error, server taking time to response, come back later</h3>
     return (
         <StyledScorecard>
             {isLoading ? (
                 <Loader message="Fetching Your Score... please wait" />
-            ) : fetchAgainOption ? (
-                <div className="scoreEvalStyle">
-                    <h1>Score evaluation</h1>
-                    <button onClick={() => setTrigger(true)} disabled={countDown > 0} className="scoreEvalStyleBtn">{countDown === 0 ? "TRY AGAIN" : `TRY AGAIN IN ${countDown}s`} </button>
-                </div>
             ) : (
                 <div className="mainContainer">
                     <div style={{ height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem' }}>

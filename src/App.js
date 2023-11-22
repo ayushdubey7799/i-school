@@ -63,6 +63,7 @@ import CodeEditor from "./pages/CodeEditor"
 import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
 import { AuthenticationConstants } from "./utils/constants"
 import Resume from "./components/commonComponents/Resume"
+import ReqModalDetails from "./components/Interviews/EmployerDashboard/ReqModalDetails"
 
 
 const App = () => {
@@ -107,7 +108,7 @@ const App = () => {
 
           
 
-          <Route path="/resume" element={<Resume />} />
+          <Route path="/testing" element={<ReqModalDetails />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/about" element={<About />} />
