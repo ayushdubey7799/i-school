@@ -88,7 +88,7 @@ function ManageUserForm({ array, handleClose }) {
         <Container>
             <h3>User Registration</h3>
 
-            <ValidatorForm onSubmit={handleSubmit}>
+            <ValidatorForm onSubmit={handleSubmit} instantFeedback={false}>
 
                 <TextValidator id="outlined-basic" label="Name" variant="outlined"
                     type="text"
