@@ -988,6 +988,9 @@ const StyledSignup = styled.div`
   justify-content: center;
   align-items: center;
   
+  .MuiFormHelperText-root {
+    font-size: 0.6rem;
+  }
 
   .box {
     display: flex;

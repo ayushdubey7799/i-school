@@ -9,6 +9,9 @@ import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import { data as billing } from "../../../../utils/contantData";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
+import exportIcon from '../../../../assets/icons/export.png'
+import CommonDialog from '../../../commonComponents/CommonDialog';
+import ExportDialogContent from "../../../commonComponents/ExportDialogContent";
 
 
 function Row(props) {
@@ -56,10 +59,33 @@ export default function Billing() {
 
   }
 
+  // State, function to Open and close Export Dialog Box
+  const [openExport, setOpenExport] = React.useState(false);
+
+  const handleExportClickOpen = () => {
+    setOpenExport(true);
+  };
+
+  const handleExportClose = () => {
+    setOpenExport(false);
+  };
+
+  // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
+  const handleExport = () => {
+    console.log('Exported');
+    handleExportClose();
+    toast.success('Exported Successfully');
+  }
+
   return (
     <StyledDiv>
       <TableContainer component={Paper} className="tableBox">
-        <span className="title">Billings</span>
+        <CommonDialog open={openExport} handleClose={handleExportClose} component={<ExportDialogContent handleClose={handleExportClose} handleExport={handleExport} />} />
+        <span className='titleBox'>
+          <span className="title">Billings</span>
+          <span className='exportBtn' onClick={handleExportClickOpen}><img src={exportIcon} className='icon' />Export</span>
+        </span>
+
         <SearchBarContainer>
           <div className='skillBox'>
             <img src={searchBlack} />
@@ -113,8 +139,8 @@ export default function Billing() {
 
 const StyledDiv = styled.div`
 margin: 1rem 0% 2rem 0%;
-width: 90%;
-padding: 0 4%;
+width: 94%;
+padding: 0 3%;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -124,16 +150,34 @@ align-items: center;
   background-color: #ececec;
 }
 
-.tableBox {
-  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
-  border-radius: 0.5rem;
-  padding-top: 1rem;
-
+.titleBox {
+  display: flex;
+  padding: 1rem 0.7rem 0 0.7rem;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0.8rem;
 
   .title {
-    padding-left: 1.2rem;
     font-size: 1.2rem;
     font-weight: 700;
+  }
+
+  .exportBtn {
+    font-size: 0.9rem;
+    font-weight: 600;
+    background-color: var(--lightOrange);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    color: var(--white);
+    cursor: pointer;
+
+  }
+
+  .icon {
+    width: 1rem;
   }
 }
 

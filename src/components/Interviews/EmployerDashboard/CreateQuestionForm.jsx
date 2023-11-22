@@ -173,7 +173,7 @@ function CreateQuestionForm() {
       <h3>Create Question Form</h3>
       <Form onSubmit={editingIndex === -1 ? handleAddQuestion : handleUpdateQuestion}>
 
-        <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+        <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
           <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Question Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -227,6 +227,7 @@ function CreateQuestionForm() {
               fontWeight: '400'
             },
           }}
+          required
         />
 
         <TextField id="outlined-basic" label="Tag" variant="outlined"
@@ -249,6 +250,7 @@ function CreateQuestionForm() {
               fontWeight: '400'
             },
           }}
+          required
         />
 
         <div className='textAreaBox'>
@@ -258,10 +260,11 @@ function CreateQuestionForm() {
             rows={5}
             value={formData.description}
             onChange={handleChange}
+            required
           />
         </div>
 
-        <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+        <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
           <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -320,6 +323,7 @@ function CreateQuestionForm() {
                       fontWeight: '400'
                     },
                   }}
+                  required
                 />
               </div>
             ))}
@@ -344,6 +348,7 @@ function CreateQuestionForm() {
                   fontWeight: '400'
                 },
               }}
+              required
             />
           </>
         )}

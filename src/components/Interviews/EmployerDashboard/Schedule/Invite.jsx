@@ -354,18 +354,17 @@ export default function Invite() {
                     type='email'
                     value={interviewerEmail}
                     onChange={(e) => setInterviewerEmail(e.target.value)}
-                    size='small'
                     inputProps={{
                       sx: {
                         color: '#626264',
-                        fontSize: '0.8rem',
+                        fontSize: '0.9rem',
                         fontWeight: '400'
                       },
                     }}
                     InputLabelProps={{
                       sx: {
                         color: '#626264',
-                        fontSize: '0.8rem',
+                        fontSize: '0.9rem',
                         fontWeight: '400'
                       },
                     }}
@@ -374,18 +373,17 @@ export default function Invite() {
                     type='url'
                     value={meetUrl}
                     onChange={(e) => setMeetUrl(e.target.value)}
-                    size='small'
                     inputProps={{
                       sx: {
                         color: '#626264',
-                        fontSize: '0.8rem',
+                        fontSize: '0.9rem',
                         fontWeight: '400'
                       },
                     }}
                     InputLabelProps={{
                       sx: {
                         color: '#626264',
-                        fontSize: '0.8rem',
+                        fontSize: '0.9rem',
                         fontWeight: '400'
                       },
                     }}
@@ -546,11 +544,10 @@ const Container = styled.div`
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        border: 0.08rem solid grey;
+        border: 0.08rem solid #C4C4C4;
         padding: 1rem 1rem;
-        border-radius: 0.5rem;
+        border-radius: 0.3rem;
         position: relative;
-        box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
         box-sizing: border-box;
       }
 
@@ -562,7 +559,7 @@ const Container = styled.div`
       }
 
       .title {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 500;
         position: absolute;
         top: -0.8rem;
