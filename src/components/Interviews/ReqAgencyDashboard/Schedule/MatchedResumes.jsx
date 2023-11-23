@@ -38,11 +38,8 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-
+        {row.name}
         </TableCell>
-        <TableCell component="th" scope="row">
-
-        </TableCell>{" "}
         {/* <TableCell component="th" scope="row">
           {row["Date of creation"]}
         </TableCell>{" "}
@@ -131,7 +128,6 @@ export default function MatchedResumes() {
               <TableRow>
                 <TableCell />
                 <TableCell>Name</TableCell>
-                <TableCell>Match Percentage</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Contact</TableCell>
                 <TableCell>Score</TableCell>

@@ -90,7 +90,7 @@ function Row(props) {
           {row.jdId}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.createdAt}
+          {row.createdAt?.slice(0,10)}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           {row.createdBy}

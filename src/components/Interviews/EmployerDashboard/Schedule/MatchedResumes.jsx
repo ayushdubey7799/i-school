@@ -41,10 +41,9 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? 'colored' : ''}`}
       >
-        <TableCell component="th" scope="row" align="center"></TableCell>
-        <TableCell component="th" scope="row" align="center"></TableCell>
+        <TableCell component="th" scope="row" align="center">{row.name}</TableCell>
         <TableCell align="center">{row.email}</TableCell>
-        <TableCell align="center"></TableCell>
+        <TableCell align="center">{row.contact}</TableCell>
         <TableCell align="center">{row.score}</TableCell>
         <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
           <input
@@ -177,7 +176,7 @@ export default function MatchedResumes() {
             <TableHead className="tableHead">
               <TableRow>
                 <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Match Percentage</TableCell>
+                {/* <TableCell align="center">Match Percentage</TableCell> */}
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Contact</TableCell>
                 <TableCell align="center">Score</TableCell>

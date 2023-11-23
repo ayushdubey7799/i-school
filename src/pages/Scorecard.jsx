@@ -12,38 +12,53 @@ import { useSelector } from "react-redux";
 
 const Scorecard = () => {
     const accessToken = useSelector(state => state.auth.userData?.accessToken)
-    const [fetchError,setFetchError] = useState(false);
+    const [apiCall,setApiCall] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [fetchAgainOption, setFetchAgainOption] = useState(true);
     const { interviewId } = useParams();
-    const [intervalId,setIntervalId] = useState(null);
+    const [trigger, setTrigger] = useState(true);
     const [data, setData] = useState(null);
     const [scoreArray, setScoreArray] = useState([]);
-    const [countDown, setCountDown] = useState(8);
+    const [countDown, setCountDown] = useState(5);
     const [time, setTime] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
         if(document.fullscreenElement)document.exitFullscreen();
 
         if (!accessToken) navigate("/login");
-        async function fetchScore() {
+        async function fetchScore(id, accessToken) {
             setIsLoading(true);
-           const scoreRes = await getScore(interviewId, accessToken);
+            const scoreRes = await getScore(id, accessToken);
             console.log(scoreRes?.data?.questions[0]);
-            if (scoreRes) {
+            if (!scoreRes) {
+                setFetchAgainOption(true);
+                setTrigger(false);
+                setCountDown(5);
+            } else {
                 setData(scoreRes);
-                setScoreArray(scoreRes?.data?.questions);
+                setScoreArray(scoreRes.data.questions);
+                setFetchAgainOption(false);
             }
-            
-            console.log("API called");
+            setIsLoading(false);
         }
 
-        
-            let id = setInterval(() => {
-               fetchScore();
-               setCountDown(countDown => countDown-1);
-            }, 15000);
-            console.log(id);
-            setIntervalId(id);
+        if (fetchAgainOption && countDown > 0) {
+            let intervalId = setInterval(() => {
+                setCountDown((prevCd) => prevCd - 1);
+                if (!fetchAgainOption) {
+                    setCountDown(0);
+                }
+                if (countDown === 0) {
+                    clearInterval(intervalId);
+                }
+            }, 1000);
+
+            return () => clearInterval(intervalId);
+        }
+
+        if (trigger === true) {
+            fetchScore(interviewId, accessToken);
+        }
 
         let timer = localStorage.getItem("time");
         if (timer) {
@@ -54,27 +69,22 @@ const Scorecard = () => {
 
         return () => {
             localStorage.removeItem("time");
-            if(intervalId){
-                clearInterval(intervalId);
-               setIntervalId(null);
-            };
         }
 
-    }, []);
-    
-    if((scoreArray.length || countDown == 0 )&& intervalId){
-        if(!scoreArray.length)setFetchError(true);
-        clearInterval(intervalId);
-        setIntervalId(null);
-        setIsLoading(false);
-    };
+    }, [trigger, countDown]);
 
-    console.log(intervalId,countDown,scoreArray);
-    if(fetchError)return <h3>Internal Server Error, server taking time to response, come back later</h3>
+
+    console.log(scoreArray);
+
     return (
         <StyledScorecard>
             {isLoading ? (
                 <Loader message="Fetching Your Score... please wait" />
+            ) : fetchAgainOption ? (
+                <div className="scoreEvalStyle">
+                    <h1>Score evaluation</h1>
+                    <button onClick={() => setTrigger(true)} disabled={countDown > 0} className="scoreEvalStyleBtn">{countDown === 0 ? "TRY AGAIN" : `TRY AGAIN IN ${countDown}s`} </button>
+                </div>
             ) : (
                 <div className="mainContainer">
                     <div style={{ height: '3.5rem', position: 'absolute', top: '1rem', left: '3rem' }}>
@@ -89,11 +99,11 @@ const Scorecard = () => {
                         <h3>Total Questions: {data.data.totalQuestions}</h3>
                         <h3>Attempted: {data.data.answeredCnt}</h3>
                         {time && <h3>Time Taken: {time}</h3>}
-                        <h3>Your Score: {data.data.score}</h3>
+                        <h3>Your Score: {apiCall?"...":data.data.score}</h3>
                         <h3>Maximum Score: {data.data.maxScore}</h3>
                     </div>
                     <div>
-                        <ScorecardTemplate rows={scoreArray} />
+                        <ScorecardTemplate rows={scoreArray} setTrigger={setTrigger} apiCall={apiCall} setApiCall={setApiCall}/>
                     </div>
                     <span className="bottomText">
                         Your total score is {data.data.score} out of {data.data.maxScore}
@@ -175,4 +185,3 @@ export const StyledScorecard = styled.div`
     margin-top: 3rem;
   }
 `;
-

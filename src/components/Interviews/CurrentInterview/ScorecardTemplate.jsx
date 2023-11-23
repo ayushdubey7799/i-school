@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useRef } from 'react';
 
 function Row(props) {
   const { row } = props;
@@ -32,7 +33,7 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.question}
         </TableCell>
-        <TableCell align="right">{row.skipped?"0":(row.processingState == "NEW" || row.processingState == "PROCESSING"?"Evaluating...":row.score)}</TableCell>
+        <TableCell align="right">{row.skipped?"0":row.processingState=="FAILED"?"Failed":(row.processingState == "NEW" || row.processingState == "PROCESSING"?"Evaluating...":row.score)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
@@ -52,8 +53,9 @@ function Row(props) {
   );
 }
 
-export default function ScorecardTemplate({rows}) {
+export default function ScorecardTemplate({rows,setTrigger,apiCall,setApiCall}) {
   const [tableRows, setTableRows] = useState(rows);
+  const idRef = useRef(null);
 
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
@@ -61,6 +63,24 @@ export default function ScorecardTemplate({rows}) {
     updatedRows[rowIndex].open = !updatedRows[rowIndex].open;
     setTableRows(updatedRows);
   };
+
+useEffect(() => {
+  setApiCall(rows.some((item) => item.processingState == "PROCESSING" || (item.processingState == "NEW" && item.skipped == false)));
+
+  return () => {
+    if(idRef.current){
+      clearTimeout(idRef.current);
+      idRef.current = null;
+    }
+  }
+},[])
+
+if(apiCall){
+  idRef.current = setTimeout(() => {
+    setTrigger(prev => !prev);
+  },7000);
+}
+
 
   return (
     <TableContainer component={Paper}>

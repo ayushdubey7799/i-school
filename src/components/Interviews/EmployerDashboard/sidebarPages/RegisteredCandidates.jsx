@@ -19,11 +19,14 @@ import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import { toast } from "react-toastify";
+import { deleteCandidate } from "../../../../functions/api/resume/deleteCandidate";
 function Row(props) {
   const { row, index } = props;
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,10 +37,12 @@ function Row(props) {
   };
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
-  const handleDelete = () => {
-    console.log('deleted');
+  const handleDelete = async () => {
+    const res = await deleteCandidate(row.id,accessToken,clientCode);
+    if(res){
     handleClose();
     toast.success('Deleted Successfully');
+    }
   }
 
   // State, function to open and close Drawer
@@ -60,7 +65,7 @@ function Row(props) {
         <TableCell align="center">{row.firstName ? row.firstName : "..."}</TableCell>
         <TableCell align="center">{row.email ? row.email : "..."}</TableCell>
         <TableCell align="center">{row.contact ? row.contact : "..."}</TableCell>
-        <TableCell align="center">{row.createdAt ? row.createdAt : "..."}</TableCell>
+        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0,10) : "..."}</TableCell>
         <TableCell align="center">{row.source ? row.source : "..."}</TableCell>
         <TableCell align="center">
           <input
