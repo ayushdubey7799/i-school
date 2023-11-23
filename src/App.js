@@ -65,6 +65,10 @@ import { AuthenticationConstants } from "./utils/constants"
 import Trial from "./pages/Trial"
 import Resume from "./components/commonComponents/Resume"
 import ReqModalDetails from "./components/Interviews/EmployerDashboard/ReqModalDetails"
+import EmployerDashboard2 from "./pages/EmployerDashboard2"
+import Invite2 from "./components/Interviews/EmployerDashboard2.jsx/Schedule/Invite2"
+import InviteSuccess2 from "./components/Interviews/EmployerDashboard2.jsx/Schedule/InviteSuccess2"
+import Login2 from "./pages/Login2"
 
 
 const App = () => {
@@ -75,6 +79,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/login2" element={<Login2 />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/activate" element={<Activate />} />
           <Route path="/pwdreset/:id" element={<Reset />} />
@@ -85,6 +90,7 @@ const App = () => {
             <Route path="/dashboard/interviews" element={<InterviewDashboard />} />
             <Route path="/dashboard/req-agency" element={<ReqAgencyDashboard />} />
             <Route path="/score/:interviewId" element={<Scorecard />} />
+            <Route path="/dashboard/employer2" element={<EmployerDashboard2 />} />
 
             <Route element={<ProtectedRoute role={AuthenticationConstants.jobseeker} />}>
               <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
@@ -102,6 +108,9 @@ const App = () => {
               <Route path="/schedule/invite/:jdId" element={<Invite />} />
               <Route path="/schedule/invite/success" element={<InviteSuccess />} />
               <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus />} />
+
+              <Route path="/schedule/invite2" element={<Invite2 />} />
+              <Route path="/schedule/invite2/success2" element={<InviteSuccess2 />} />
             </Route>
 
           </Route>

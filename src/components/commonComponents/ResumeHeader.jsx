@@ -11,43 +11,51 @@ import { persistor } from "../../store";
 import { logout } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
 
+import profileFeedback from '../../assets/icons/profileFeedback.png'
+import profileHelp from '../../assets/icons/profileHelp.png'
+import profileReset from '../../assets/icons/profileReset.png'
+import profileLogout from '../../assets/icons/profileLogout.png'
+
 const ResumeHeader = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const user = useSelector(state => state.auth.userData.user);
 
+  const handleLogout = () => {
+    persistor.purge();
+    dispatch(logout())
+    navigate("/");
+  };
 
-    const handleLogout = () => {
-        persistor.purge();
-        dispatch(logout())
-        navigate("/");
-    };
+  console.log(accessToken);
 
-    console.log(accessToken);
+  return (
+    <StyledDiv>
+      <div id="left">
+        <img src={logo} onClick={() => navigate("/")} />
+      </div>
 
-    return (
-        <StyledDiv>
-            <div id="left">
-                <img src={logo} onClick={() => navigate("/")} />
-            </div>
+      <div id="right">
+        <Link to="/dashboard/jobseeker" className="link">
+          <span className="coloredText">Back to Dashboard</span>
+        </Link>
+        <div className="profileIcon">
+          <IconButton>
+            <img src={profileIcon} className="profileImg" />
+          </IconButton>
+        </div>
 
-            <div id="right">
-                <Link to="/dashboard/jobseeker" className="link">
-                    <span className="coloredText">Back to Dashboard</span>
-                </Link>
-                <div className="profileIcon">
-                    <IconButton>
-                        <img src={profileIcon} className="profileImg" />
-                    </IconButton>
-                </div>
-
-                <div class="dropdown" id="dropdown">
-                    <span onClick={() => navigate('/reset')}>Reset Password</span>
-                    <span onClick={handleLogout}>Logout</span>
-                </div>
-            </div>
-        </StyledDiv>
-    );
+        <div class="dropdown" id="dropdown">
+          <span className="titleText span" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user?.firstName}</b></span>
+          <span onClick={() => navigate('/feedback')} className="span">Feedback <img src={profileFeedback} /></span>
+          <span onClick={() => navigate('/support')} className="span">Help <img src={profileHelp} /></span>
+          <span onClick={() => navigate('/reset')} className="span">Reset Password <img src={profileReset} /></span>
+          <span onClick={handleLogout} className="span">Logout <img src={profileLogout} /></span>
+        </div>
+      </div>
+    </StyledDiv>
+  );
 };
 
 export default ResumeHeader;
@@ -126,14 +134,21 @@ const StyledDiv = styled.div`
     font-weight: 400;
     font-size: 0.8rem;
     border-radius: 0.5rem;
+
+    img {
+      width: 1rem;
+    }
 }
 
 .dropdown span {
-    display: block;
+    display: flex;
     padding: 8px 10px;
     text-decoration: none;
     color: #333;
     transition: background-color 0.3s ease;
+    border-bottom: 0.1rem groove #f6f6f6;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 .dropdown span:hover {

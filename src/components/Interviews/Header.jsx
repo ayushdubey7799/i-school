@@ -11,6 +11,11 @@ import { persistor } from "../../store";
 import { logout } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
 
+import profileFeedback from '../../assets/icons/profileFeedback.png'
+import profileHelp from '../../assets/icons/profileHelp.png'
+import profileReset from '../../assets/icons/profileReset.png'
+import profileLogout from '../../assets/icons/profileLogout.png'
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,11 +54,11 @@ const Header = () => {
         </div>
 
         <div class="dropdown" id="dropdown">
-          <span className="titleText" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user.firstName}</b></span>
-          <span onClick={() => navigate('/feedback')}>Feedback</span>
-          <span onClick={() => navigate('/support')}>Help</span>
-          <span onClick={() => navigate('/reset')}>Reset Password</span>
-          <span onClick={handleLogout}>Logout</span>
+          <span className="titleText span" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user?.firstName}</b></span>
+          <span onClick={() => navigate('/feedback')} className="span">Feedback <img src={profileFeedback} /></span>
+          <span onClick={() => navigate('/support')} className="span">Help <img src={profileHelp} /></span>
+          <span onClick={() => navigate('/reset')} className="span">Reset Password <img src={profileReset} /></span>
+          <span onClick={handleLogout} className="span">Logout <img src={profileLogout} /></span>
         </div>
       </div>
     </StyledDiv>
@@ -155,15 +160,21 @@ const StyledDiv = styled.div`
       font-weight: 400;
       font-size: 0.9rem;
     }
+
+    img {
+      width: 1rem;
+    }
 }
 
 .dropdown span {
-  display: block;
+  display: flex;
   padding: 8px 10px;
   text-decoration: none;
   color: #333;
   transition: background-color 0.3s ease;
   border-bottom: 0.1rem groove #f6f6f6;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .dropdown span:hover {
