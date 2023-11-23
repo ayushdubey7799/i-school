@@ -211,7 +211,6 @@ const Signup = () => {
         {
           value == 'job-seeker' ?
             <div id="form">
-              <p>Enter your details below to create your account.</p>
               <ValidatorForm onSubmit={handleSubmitJobSeeker}>
                 <div className="inputBox">
                   <TextValidator
@@ -360,6 +359,8 @@ const Signup = () => {
                   />
                 </div>
 
+                <span className="terms">By creating an account, you agree to our Terms of Service and Privacy Policy.</span>
+
                 <button type="submit" className="btn">Create Account</button>
               </ValidatorForm>
               <p>
@@ -368,7 +369,6 @@ const Signup = () => {
             </div>
             : value == 'employer' ?
               <div id="form">
-                <p>Enter your details below to create your account.</p>
                 <ValidatorForm onSubmit={handleSubmitEmployer}>
                   <div className="inputBox">
                     <TextValidator
@@ -663,6 +663,8 @@ const Signup = () => {
                       className={`eye-icon ${passwordVisible ? "visible" : ""}`}
                     />
                   </div>
+
+                  <span className="terms">By creating an account, you agree to our Terms of Service and Privacy Policy.</span>
 
                   <button type="submit" className="btn">Create Account</button>
                 </ValidatorForm>
@@ -672,7 +674,6 @@ const Signup = () => {
               </div>
 
               : <div id="form">
-                <p>Enter your details below to create your account.</p>
                 <ValidatorForm onSubmit={handleSubmitEmployer}>
                   <div className="inputBox">
                     <TextValidator
@@ -967,6 +968,8 @@ const Signup = () => {
                       className={`eye-icon ${passwordVisible ? "visible" : ""}`}
                     />
                   </div>
+
+                  <span className="terms">By creating an account, you agree to our Terms of Service and Privacy Policy.</span>
 
                   <button type="submit" className="btn">Create Account</button>
                 </ValidatorForm>
@@ -992,6 +995,11 @@ const StyledSignup = styled.div`
     font-size: 0.6rem;
   }
 
+  .terms {
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+
   .box {
     display: flex;
     flex-direction: column;
@@ -1009,6 +1017,7 @@ const StyledSignup = styled.div`
     justify-content: center;
     gap: 1rem;
     width: 100%;
+    margin-top: 1rem;
     }
 
     .link {

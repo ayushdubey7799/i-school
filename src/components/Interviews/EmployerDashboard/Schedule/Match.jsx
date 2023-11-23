@@ -91,7 +91,7 @@ const Option = ({ match, handleTrigger }) => {
           {match.matchedCount} <img src={refresh} />
         </Button>
       )}
-      {match.status === "RUNNING" && <Button><span style={{fontSize: '0.8rem'}}>Refreshing Profiles...</span><span class="loader"></span></Button>}
+      {match.status === "RUNNING" && <Button><span style={{ fontSize: '0.8rem' }}>Refreshing Profiles...</span><span class="loader"></span></Button>}
     </div>
   );
 };

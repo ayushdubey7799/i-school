@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import mammoth from "mammoth/mammoth.browser";
 import { styled } from "styled-components";
 import { createInterview } from "../../../functions/api/interview/createInterview";
@@ -9,8 +9,6 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import CustomInput from "../../commonComponents/CustomInput";
 import { pdfjs } from 'react-pdf';
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
@@ -28,10 +26,6 @@ const ProfileInterview = () => {
   const navigate = useNavigate();
   const [jd, setJd] = useState();
   const [resume, setResume] = useState();
-
-  // Use a ref to store the Quill editor instance
-  const quillRef1 = useRef();
-  const quillRef2 = useRef();
 
   useEffect(() => {
     if (resume) {
@@ -71,26 +65,22 @@ const ProfileInterview = () => {
     }
   }, [jd]);
 
-  const handleInputChange = () => {
-    if (quillRef1.current) {
-      const val = quillRef1.current.getEditor().root.innerHTML;
-      console.log(val);
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const val = e.target.value;
+    console.log(name, val);
 
-      setInterviewDetails({ ...interviewDetails, jobSummary: val });
-
-      console.log(interviewDetails.jobSummary, interviewDetails.resumeText);
+    switch (name) {
+      case "jobSummary":
+        setInterviewDetails({ ...interviewDetails, jobSummary: val });
+        break;
+      case "resumeText":
+        setInterviewDetails({ ...interviewDetails, resumeText: val });
+        break;
+      default:
+        console.log("Hello there!");
     }
-  };
-
-  const handleInputChange2 = () => {
-    if (quillRef2.current) {
-      const val = quillRef2.current.getEditor().root.innerHTML;
-      console.log(val);
-
-      setInterviewDetails({ ...interviewDetails, resumeText: val });
-
-      console.log(interviewDetails.jobSummary, interviewDetails.resumeText);
-    }
+    console.log(interviewDetails.jobSummary, interviewDetails.resumeText);
   };
 
   const handleCreateInterview = async (e) => {
@@ -126,8 +116,8 @@ const ProfileInterview = () => {
 
     console.log(ongoing);
     if (ongoing?.data?.id) {
-      localStorage.setItem("currentInterview", "profile");
-      navigate(`/create-interview/${ongoing.data.id}`)
+      localStorage.setItem("currentInterview","profile");
+     navigate(`/create-interview/${ongoing.data.id}`)
     }
   };
 
@@ -205,10 +195,16 @@ const ProfileInterview = () => {
           <div className="inputCont">
             <div className="box1">
               <label for="jobDescription" className="label">Job Description</label>
-              <div className="textEditorBox">
-                <ReactQuill theme="snow" className="textEditor" value={interviewDetails.jobSummary} name="jobSummary" onChange={handleInputChange} ref={quillRef1} />
-              </div>
+              <br />
+              <textarea
+                rows={7}
+                type="text"
+                value={interviewDetails.jobSummary}
+                name="jobSummary"
+                onChange={handleInputChange}
+              />
             </div>
+            {/* <PdfTextExtractor/> */}
             <CustomInput
               accept={".doc, .docx, .txt, .pdf"}
               id="jdInput"
@@ -220,9 +216,14 @@ const ProfileInterview = () => {
           <div className="inputCont">
             <div className="box2">
               <label for="resumeText" className="label">Resume</label>
-              <div className="textEditorBox">
-                <ReactQuill theme="snow" className="textEditor" value={interviewDetails.resumeText} name="resumeText" onChange={handleInputChange2} ref={quillRef2} />
-              </div>
+              <br />
+              <textarea
+                rows={7}
+                type="text"
+                value={interviewDetails.resumeText}
+                name="resumeText"
+                onChange={handleInputChange}
+              />
             </div>
 
             <CustomInput
@@ -254,20 +255,32 @@ const StyledForm = styled.form`
   margin-top: 3rem;
   margin-bottom: 2rem;
 
-  .textEditor {
-    background-color: var(--white);
-}
-
   div {
     width: 100%;
+  }
+
+  .inputCont {
+    position: relative;
   }
 
   .label {
     font-size: 1.2rem;
     font-weight: 600;
+    position: absolute;
+    top: 0.8rem;
+    left: 1rem;
     background-color: var(--white);
     padding: 0 0.5rem;
-    display: block;
+  }
+
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    font-size: 1rem;
+    outline-color: var(--lightOrange);
   }
 
   option {
@@ -293,12 +306,5 @@ const StyledForm = styled.form`
 
   @media (max-width: 500px) {
     width: 40rem;
-  }
-
-  .box1, .box2 {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 0.3rem;
   }
 `;

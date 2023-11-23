@@ -21,6 +21,9 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { getInviteDetails } from "../functions/api/employers/schedule/getInviteDetails";
 import { persistor } from "../store";
 
+import googleAuthIcon from '../assets/googleAuthIcon.png'
+import linkedinAuthIcon from '../assets/linkedinAuthIcon.png'
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -191,8 +194,6 @@ const Login = () => {
         </Tabs>
         {value == "job-seeker" ? (
           <div id="form">
-            <p>Enter your details below to login</p>
-
             <form onSubmit={handleSubmit}>
               <div className="inputBox">
                 <input
@@ -223,6 +224,10 @@ const Login = () => {
               </div>
 
               <div className="resetBox">
+                <span className="remember">
+                  <input type="checkbox" />
+                  Remember me
+                </span>
                 <span>
                   <Link to="/reset" className="reset">
                     Forgot Password
@@ -235,11 +240,25 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
+              <span className="terms">By logging in, you agree to our Terms and Conditions.</span>
 
               <button type="submit" className="btn">
                 Login
               </button>
             </form>
+
+            <div className="bottomBox">
+              <div className="textBox">
+                <span className="or">OR</span>
+                <span className="loginWith">Login with</span>
+              </div>
+
+              <div className="logoBox">
+                <img src={googleAuthIcon} className="logo" />
+                <img src={linkedinAuthIcon} className="logo" />
+              </div>
+            </div>
+
             <p>
               <Link to="/signup" className="link">
                 Don't have an account ? <span className="link1">Sign Up</span>
@@ -248,8 +267,6 @@ const Login = () => {
           </div>
         ) : value == "employer" ? (
           <div id="form">
-            <p>Enter your details below to login</p>
-
             <form onSubmit={handleSubmit}>
               <div className="inputBox">
                 <input
@@ -291,6 +308,10 @@ const Login = () => {
               </div>
 
               <div className="resetBox">
+                <span className="remember">
+                  <input type="checkbox" />
+                  Remember me
+                </span>
                 <span>
                   <Link to="/reset" className="reset">
                     Forgot Password
@@ -303,6 +324,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
+              <span className="terms">By logging in, you agree to our Terms and Conditions.</span>
 
               <button type="submit" className="btn">
                 Login
@@ -316,8 +338,6 @@ const Login = () => {
           </div>
         ) : (
           <div id="form">
-            <p>Enter your details below to login</p>
-
             <form onSubmit={handleSubmit}>
               <div className="inputBox">
                 <input
@@ -359,6 +379,10 @@ const Login = () => {
               </div>
 
               <div className="resetBox">
+                <span className="remember">
+                  <input type="checkbox" />
+                  Remember me
+                </span>
                 <span>
                   <Link to="/reset" className="reset">
                     Forgot Password
@@ -371,6 +395,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
+              <span className="terms">By logging in, you agree to our Terms and Conditions.</span>
 
               <button type="submit" className="btn">
                 Login
@@ -406,6 +431,13 @@ const StyledLogin = styled.div`
     font-size: 1rem;
   }
 
+  .terms {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: #000;
+    line-height: 0.8rem;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -413,6 +445,7 @@ const StyledLogin = styled.div`
     justify-content: center;
     gap: 1rem;
     width: 100%;
+    margin-top: 1rem;
   }
 
   #form {
@@ -442,13 +475,30 @@ const StyledLogin = styled.div`
   .resetBox {
     display: flex;
     width: 60%;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .reset {
     font-size: 0.9rem;
     text-decoration: none;
     font-weight: 500;
+  }
+
+  .remember {
+    display: flex;
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-weight: 500;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.4rem;
+
+    input {
+      width: 1rem;
+      margin: 0rem;
+      cursor: pointer;
+    }
   }
 
   .inputBox {
@@ -556,4 +606,43 @@ const StyledLogin = styled.div`
   .custom-tab-selected .MuiTab-label {
     text-transform: none;
   }
+
+  .bottomBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.5rem;
+    gap: 0.5rem;
+
+    .textBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      .or {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .loginWith {
+        font-size: 0.8rem;
+        font-weight: 400;
+      }
+    }
+
+    .logoBox {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.3rem;
+      margin-bottom: 0.5rem;
+
+      img {
+        width: 3rem;
+        cursor: pointer;
+      }
+    }
+
+  }
+
 `;
