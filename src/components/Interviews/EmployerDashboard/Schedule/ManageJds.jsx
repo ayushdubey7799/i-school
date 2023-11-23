@@ -47,13 +47,13 @@ function Row(props) {
           <Match jdId={row.jdId} count={row.matchCount} />
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          ...
+          {row.createdAt?.slice(0,10)}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          ...
+          {row.recruiter}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          ...
+          {row.hiringManager}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <Link to={`/schedule/matches/${row.jdId}`} className="btn">View Profile</Link>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import ModalHOC from '../../SeekerDashboard/ModalHOC';
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -16,65 +15,23 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 
-import EmployerDetails from '../EmployerDetails';
-import JdDetails from '../../../../pages/JdDetails';
-import JdForm from '../JdForm';
-import attachIcon from '../../../../assets/icons/attach.png'
-import editIcon from '../../../../assets/icons/edit.png'
-import deleteIcon from '../../../../assets/icons/delete.png'
-import searchBlack from '../../../../assets/icons/searchBlack.png'
-import { getJds } from '../../../../functions/api/employers/getJds';
+
+
 import { useSelector } from 'react-redux';
-import { deleteJd } from '../../../../functions/api/employers/deleteJd';
 import { toast } from 'react-toastify';
-import CloneJDForm from './CloneJDForm';
-import CommonDialog from '../../../commonComponents/CommonDialog';
-import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
-import ReqModalDetails from '../ReqModalDetails';
 
 
 function Row(props) {
-  const { row, isSelected, onToggle, index } = props;
-  const [jdData, setJdData] = useState(null);
-  const [editOpen, setEditOpen] = useState(false);
-  const [reqModal,setReqModal] = useState(false);
-  const accessToken = useSelector(state => state.auth.userData.accessToken);
-  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
-  const handleEdit = (row) => {
-    setEditOpen(true);
-    setJdData(row);
-  }
-
-  const handleDelete = async (id) => {
-    const res = await deleteJd(id, accessToken, clientCode);
-    if (res) {
-      toast.success("Successfully Deleted");
-    }
-    else {
-      toast.error("Error Occured")
-    }
-    handleClose();
-  }
-
-  // State, function to Open and close Dialog Box
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+  const { row,index } = props;
+ 
   const handleClose = () => {
-    setOpen(false);
   };
-  console.log(row.jdId,row.reqNumbers);
+
   return (
     <React.Fragment>
-      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
-      <ModalHOC setOpenNewInterviewModal={setReqModal} openNewInterviewModal={reqModal} Component={ReqModalDetails} array={row.reqNumbers} />
-
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell>
+        {/* <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -85,9 +42,9 @@ function Row(props) {
           >
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
+        </TableCell> */}
         <TableCell component="th" scope="row" align='center'>
-          {row.jdId}
+          {row.reqNumber}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           {row.createdAt?.slice(0,10)}
@@ -96,15 +53,15 @@ function Row(props) {
           {row.createdBy}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
+          {/* <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
           <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='JD' handleClose={handleClose} handleDelete={handleDelete} deleteId={row.id} />} />
-            <p onClick={() => setReqModal(true)}>View Reqs</p>
             <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
             <img src={deleteIcon} onClick={() => handleClickOpen()} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
-          </div>
+          </div> */}
+          <input type='checkbox' checked={!row.closed} onClick={handleClose}/>
         </TableCell>
       </TableRow>
-      <TableRow>
+      {/* <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={row.open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
@@ -135,123 +92,38 @@ function Row(props) {
             </Box>
           </Collapse>
         </TableCell>
-      </TableRow>
+      </TableRow> */}
     </React.Fragment>
   );
 }
 
 
-const JdRegistration = () => {
-  const [openBasic, setOpenBasic] = useState(false);
-  const [openBasic2, setOpenBasic2] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [tableRows, setTableRows] = useState([]);
+const ReqModalDetails = ({array}) => {
+  const requests = array?array:[];
+  console.log("array----->",array?array[0]?.reqNumber:"");
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
 
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
 
-
-  useEffect(() => {
-    async function getData() {
-      const res = await getJds(accessToken, clientCode);
-      setTableRows(res?.data?.data);
-    }
-    getData();
-  }, []);
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
-
-  const handleSearch = () => {
-
-  }
-
-
-  const handleToggle = (row) => {
-    const updatedRows = [...tableRows];
-    const rowIndex = updatedRows.findIndex((r) => r.id === row.id);
-
-    if (selectedRow === rowIndex) {
-      // Deselect the row if it's already selected
-      setSelectedRow(null);
-      updatedRows[rowIndex].open = false;
-    } else {
-      if (selectedRow !== null) {
-        updatedRows[selectedRow].open = false;
-      }
-
-      setSelectedRow(rowIndex);
-      updatedRows[rowIndex].open = true;
-    }
-
-    setTableRows(updatedRows);
-  };
+   
 
   return (
     <Container1>
-      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null, "create"]} />
-      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} Component={CloneJDForm} />
-
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <Component>
-            <span className='title'>Job Descriptions</span>
-
-            <div className='btnBox'>
-              <EditButton onClick={() => setOpenBasic2(true)}>Clone Existing JD</EditButton>
-              <EditButton onClick={() => setOpenBasic(true)}>Create JD</EditButton>
-            </div>
-          </Component>
-
-          <SearchBarContainer>
-            <div className='skillBox'>
-              <img src={searchBlack} />
-              <input
-                className='skillInput'
-                type="text"
-                placeholder="Search"
-              />
-            </div>
-
-            <div className='selectBox'>
-              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filter by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Test_ID">Test ID</option>
-                <option value="Created By">Created By</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                <option value="" disabled selected>Sort by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Test_ID">Test ID</option>
-                <option value="Created By">Created By</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-            </div>
-          </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell />
-                <TableCell align='center'>JD ID</TableCell>
+                {/* <TableCell /> */}
+                <TableCell align='center'>Req Numer</TableCell>
                 <TableCell align='center'>Date of Creation</TableCell>
                 <TableCell align='center'>Created By</TableCell>
                 <TableCell align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {tableRows?.map((row, index) => (
-                <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} index={index} />
+              {requests?.map((row, index) => (
+                <Row key={row.id} row={row} index={index} />
               ))}
             </TableBody>
           </Table>
@@ -261,7 +133,7 @@ const JdRegistration = () => {
   );
 };
 
-export default JdRegistration;
+export default ReqModalDetails;
 
 
 const StyledBox = styled.div`

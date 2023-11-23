@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 const Scorecard = () => {
     const accessToken = useSelector(state => state.auth.userData?.accessToken)
-
+    const [apiCall,setApiCall] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [fetchAgainOption, setFetchAgainOption] = useState(true);
     const { interviewId } = useParams();
@@ -99,11 +99,11 @@ const Scorecard = () => {
                         <h3>Total Questions: {data.data.totalQuestions}</h3>
                         <h3>Attempted: {data.data.answeredCnt}</h3>
                         {time && <h3>Time Taken: {time}</h3>}
-                        <h3>Your Score: {data.data.score}</h3>
+                        <h3>Your Score: {apiCall?"...":data.data.score}</h3>
                         <h3>Maximum Score: {data.data.maxScore}</h3>
                     </div>
                     <div>
-                        <ScorecardTemplate rows={scoreArray} />
+                        <ScorecardTemplate rows={scoreArray} setTrigger={setTrigger} apiCall={apiCall} setApiCall={setApiCall}/>
                     </div>
                     <span className="bottomText">
                         Your total score is {data.data.score} out of {data.data.maxScore}
@@ -185,4 +185,3 @@ export const StyledScorecard = styled.div`
     margin-top: 3rem;
   }
 `;
-

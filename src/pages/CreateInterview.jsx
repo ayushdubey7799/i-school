@@ -26,7 +26,7 @@ function CreateInterview() {
     console.log(localStorage.getItem("currentInterview"));
     const stringsArray = localStorage.getItem("currentInterview") == "profile"
     ?
-    ['Analyzing JD,Analyzing Resume', 'Creating Questions', 'Creating Interview', 'Preparing Interview']
+    ['Analyzing JD','Analyzing Resume', 'Creating Questions', 'Creating Interview', 'Preparing Interview']
     :
     ['Analyzing skills', 'Creating Questions', 'Creating Interview', 'Preparing Interview'];
 

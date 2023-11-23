@@ -63,6 +63,8 @@ import CodeEditor from "./pages/CodeEditor"
 import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
 import { AuthenticationConstants } from "./utils/constants"
 import Trial from "./pages/Trial"
+import Resume from "./components/commonComponents/Resume"
+import ReqModalDetails from "./components/Interviews/EmployerDashboard/ReqModalDetails"
 
 
 const App = () => {
@@ -107,7 +109,7 @@ const App = () => {
 
 
 
-
+          <Route path="/testing" element={<ReqModalDetails />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/about" element={<About />} />
@@ -141,7 +143,6 @@ const App = () => {
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/code-editor" element={<CodeEditor />} />
-
           <Route path="/trial" element={<Trial />} />
         </Routes>
       </ScrollToTop>
