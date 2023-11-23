@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useRef } from 'react';
+import { styled } from "styled-components";
 
 function Row(props) {
   const { row } = props;
@@ -33,7 +34,7 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.question}
         </TableCell>
-        <TableCell align="right">{row.skipped?"0":row.processingState=="FAILED"?"Failed":(row.processingState == "NEW" || row.processingState == "PROCESSING"?"Evaluating...":row.score)}</TableCell>
+        <TableCell align="right">{row.skipped?"0":row.processingState=="FAILED"?"Failed":(row.processingState == "NEW" || row.processingState == "PROCESSING"?<Loader></Loader>:row.score)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
@@ -78,7 +79,7 @@ useEffect(() => {
 if(apiCall){
   idRef.current = setTimeout(() => {
     setTrigger(prev => !prev);
-  },7000);
+  },30000);
 }
 
 
@@ -101,3 +102,26 @@ if(apiCall){
     </TableContainer>
   );
 }
+
+
+const Loader = styled.span`
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1.5px solid var(--lightOrange);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+
+`
