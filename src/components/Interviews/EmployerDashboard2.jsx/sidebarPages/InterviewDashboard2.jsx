@@ -11,35 +11,9 @@ import { getInterviewByStatus } from "../../../../functions/api/getInterviewBySt
 import { getStatusWiseCount } from "../../../../functions/api/interview/getStatusWiseCount";
 import { useSelector } from "react-redux";
 import { getPreFilteredCount } from "../../../../functions/api/interview/getPreFilteredCount";
-import EmpScheduledInterviews2 from "./EmpScheduledInterviews2";
 import EmpScheduledCandidateList2 from "./EmpScheduledCandidateList2";
 
-function Row(props) {
-    const { row, index } = props;
-
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}
-                className={`${index % 2 == 1 ? "colored" : ""}`}
-            >
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell component="th" scope="row" align="center">
-                    <button className="btn">View Details</button>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
-}
-
-const InterviewDashboard2 = ({ page, setPage }) => {
+const InterviewDashboard2 = () => {
     const [currMetric, setCurrMetric] = useState("interviews");
     const [metrics, setMetrics] = useState([]);
 
@@ -56,7 +30,6 @@ const InterviewDashboard2 = ({ page, setPage }) => {
     const [value, setValue] = useState("COMPLETED");
 
     useEffect(() => {
-        setPage(1);
         const getCount = async () => {
             const res = await Promise.allSettled([
                 getPreFilteredCount(accessToken, "UPCOMING"),
@@ -149,8 +122,7 @@ const InterviewDashboard2 = ({ page, setPage }) => {
                     <span className="achievedNumberText">In Progress</span>
                 </div>
             </Container>
-            {page === 1 && <EmpScheduledInterviews2 setPage={setPage} />}
-            {page === 2 && <EmpScheduledCandidateList2 setPage={setPage} />}
+            <EmpScheduledCandidateList2/>
         </MainContainer>
     );
 };

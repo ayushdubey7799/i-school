@@ -26,7 +26,6 @@ const EmployerDashboard2 = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentItem, setCurrentItem] = useState("interview-dashboard");
 
-    const [empScheduledPage, setEmpScheduledPage] = useState(1);
 
     useEffect(() => {
         // if (!accessToken) navigate("/login");
@@ -71,7 +70,7 @@ const EmployerDashboard2 = () => {
                 />
 
                 <MainContent>
-                    {currentItem === "interview-dashboard" && <InterviewDashboard2 page={empScheduledPage} setPage={setEmpScheduledPage} />}
+                    {currentItem === "interview-dashboard" && <InterviewDashboard2/>}
 
                     {currentItem === "profile" && <EmployerProfile2 />}
                     {currentItem === "subscriptions" && <Subscription2 />}

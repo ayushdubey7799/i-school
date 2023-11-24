@@ -48,10 +48,10 @@ const ResumeHeader = () => {
 
         <div class="dropdown" id="dropdown">
           <span className="titleText span" style={{ marginBottom: '0rem', border: 'none' }}>Signed In as <b>{user?.firstName}</b></span>
-          <span onClick={() => navigate('/feedback')} className="span">Feedback <img src={profileFeedback} /></span>
-          <span onClick={() => navigate('/support')} className="span">Help <img src={profileHelp} /></span>
-          <span onClick={() => navigate('/reset')} className="span">Reset Password <img src={profileReset} /></span>
-          <span onClick={handleLogout} className="span">Logout <img src={profileLogout} /></span>
+          <span onClick={() => navigate('/feedback')} className="span"><img src={profileFeedback} /> Feedback</span>
+          <span onClick={() => navigate('/support')} className="span"><img src={profileHelp} /> Help</span>
+          <span onClick={() => navigate('/reset')} className="span"><img src={profileReset} /> Reset Password</span>
+          <span onClick={handleLogout} className="span"><img src={profileLogout} /> Logout</span>
         </div>
       </div>
     </StyledDiv>
