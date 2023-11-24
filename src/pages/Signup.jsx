@@ -359,7 +359,7 @@ const Signup = () => {
                   />
                 </div>
 
-                <span className="terms">By creating an account, you agree to our Terms of Service and Privacy Policy.</span>
+                <a className="terms" onClick={() => navigate('/terms')}>By creating an account, you agree to our Terms of Service and Privacy Policy.</a>
 
                 <button type="submit" className="btn">Create Account</button>
               </ValidatorForm>
@@ -664,7 +664,7 @@ const Signup = () => {
                     />
                   </div>
 
-                  <span className="terms">By creating an account, you agree to our Terms of Service and Privacy Policy.</span>
+                  <a className="terms" onClick={() => navigate('/terms')}>By creating an account, you agree to our Terms of Service and Privacy Policy.</a>
 
                   <button type="submit" className="btn">Create Account</button>
                 </ValidatorForm>
@@ -969,7 +969,7 @@ const Signup = () => {
                     />
                   </div>
 
-                  <span className="terms">By creating an account, you agree to our Terms of Service and Privacy Policy.</span>
+                  <a className="terms" onClick={() => navigate('/terms')}>By creating an account, you agree to our Terms of Service and Privacy Policy.</a>
 
                   <button type="submit" className="btn">Create Account</button>
                 </ValidatorForm>
@@ -998,6 +998,8 @@ const StyledSignup = styled.div`
   .terms {
     font-size: 0.7rem;
     font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
   }
 
   .box {

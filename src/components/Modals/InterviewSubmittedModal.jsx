@@ -40,10 +40,10 @@ export default function InterviewSubmittedModal({ scoreModal, setScoreModal, int
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: '40%' }}>
-          <h2>Interview Submitted Successfully</h2>
+          <h3>Interview Submitted Successfully</h3>
           <StyledForm>
             <div>
-              <label for="reviews">Reviews:</label>
+              <label for="reviews">Feedback:</label>
               <br />
               <textarea rows={7} type="text" name="reviews" />
             </div>

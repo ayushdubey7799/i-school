@@ -11,11 +11,7 @@ const InviteSteps2 = ({ step, setStep }) => {
             </div>
             <div className='topBox'>
                 <div className={`checkBox ${step >= 2 ? "active" : ""}`}>2</div>
-                <span>Select Interview Parameters</span>
-            </div>
-            <div className='topBox'>
-                <div className={`checkBox ${step >= 3 ? "active" : ""}`}>3</div>
-                <span>Review and Confirm</span>
+                <span>Select Interview Parameters and Confirm</span>
             </div>
         </Box>
     )

@@ -240,7 +240,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
-              <span className="terms">By logging in, you agree to our Terms and Conditions.</span>
+              <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
               <button type="submit" className="btn">
                 Login
@@ -324,7 +324,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
-              <span className="terms">By logging in, you agree to our Terms and Conditions.</span>
+              <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
               <button type="submit" className="btn">
                 Login
@@ -395,7 +395,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
-              <span className="terms">By logging in, you agree to our Terms and Conditions.</span>
+              <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
               <button type="submit" className="btn">
                 Login
@@ -436,6 +436,8 @@ const StyledLogin = styled.div`
     font-weight: 400;
     color: #000;
     line-height: 0.8rem;
+    text-decoration: none;
+    cursor: pointer;
   }
 
   form {

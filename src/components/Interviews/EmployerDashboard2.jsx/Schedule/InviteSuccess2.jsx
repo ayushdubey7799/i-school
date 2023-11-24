@@ -24,7 +24,6 @@ function Row(props) {
       >
         <TableCell component="th" scope="row" align="center">{row.name?row.name:"..."}</TableCell>
         <TableCell component="th" scope="row" align="center">{row.email}</TableCell>
-        <TableCell align="center">{row.contact?row.contact:"..."}</TableCell>
         <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
           <img src={eyeIcon} />
         </TableCell>
@@ -45,7 +44,7 @@ const InviteSuccess2 = () => {
       <Container>
         <span className='mainTitle'>
           <span>Invitation Sent Successfully</span>
-          <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
+          <Button onClick={() => navigate('/dashboard/employer2')}>Back to Dashboard</Button>
         </span>
 
         <TableContainer component={Paper} className="tableBox">
@@ -54,7 +53,6 @@ const InviteSuccess2 = () => {
               <TableRow>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Email</TableCell>
-                <TableCell align="center">Contact</TableCell>
                 <TableCell align="center">Details</TableCell>
               </TableRow>
             </TableHead>

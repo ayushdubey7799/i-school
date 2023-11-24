@@ -16,12 +16,15 @@ import { IconButton } from "@mui/material";
 import moment from "moment-timezone";
 import LogoHeader from "../../../commonComponents/LogoHeader";
 import InviteSteps2 from "./InviteSteps2";
-import InviteReviewList2 from "./InviteReviewList2";
-import { TextField } from '@mui/material';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import { technicalSkills } from "../../../../utils/contantData";
+import { WithContext as ReactTags } from 'react-tag-input';
 
 const timezonesName = {
   'GMT': 'Greenwich Mean Time',
@@ -59,9 +62,28 @@ export default function Invite2() {
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState("");
   const [interviewType, setInterviewType] = useState('');
-  const [interviewerEmail, setInterviewerEmail] = useState('');
-  const [meetUrl, setMeetUrl] = useState('');
   const [testType, setTestType] = useState("");
+
+  const [resumeText, setResumeText] = useState('');
+  const [jdText, setJdText] = useState('');
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const [emailList, setEmailList] = useState([]);
+
+  const handleEmailDelete = (i) => {
+    const newEmails = [...emailList];
+    newEmails.splice(i, 1);
+    setEmailList(newEmails);
+  };
+
+  const handleEmailAddition = (email) => {
+    setEmailList([...emailList, email]);
+  };
+
+  const handleSkillsChange = (_, newSkills) => {
+    setSelectedSkills(newSkills);
+  };
+
   const accessToken = useSelector((state) => state.auth.userData.accessToken);
   const clientCode = useSelector(
     (state) => state.auth.userData.user.clientCode
@@ -171,6 +193,13 @@ export default function Invite2() {
       setStep(step + 1);
     }
   }
+
+  const KeyCodes = {
+    comma: 188,
+    enter: 13
+  };
+
+  const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
   return (
     <MainContainer>
@@ -294,6 +323,91 @@ export default function Invite2() {
                 </div>
               </div>
 
+              {interviewType === 'JD' &&
+                <div className="textBox">
+
+                  <div className="box1">
+                    <label for="JD" className="label1">JD</label>
+                    <br />
+                    <textarea
+                      rows={5}
+                      type="text"
+                      value={jdText}
+                      onChange={(e) => setJdText(e.target.value)}
+                    />
+                  </div>
+                </div>
+              }
+
+              {interviewType === 'Resume' &&
+                <div className="textBox">
+
+                  <div className="box2">
+                    <label for="Resume" className="label1">Resume</label>
+                    <br />
+                    <textarea
+                      rows={5}
+                      type="text"
+                      value={resumeText}
+                      onChange={(e) => setResumeText(e.target.value)}
+                    />
+                  </div>
+                </div>
+              }
+
+
+              {interviewType === 'JD + Resume' &&
+                <div className="textBox">
+
+                  <div className="box1">
+                    <label for="JD" className="label1">JD</label>
+                    <br />
+                    <textarea
+                      rows={5}
+                      type="text"
+                      value={jdText}
+                      onChange={(e) => setJdText(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="box2">
+                    <label for="Resume" className="label1">Resume</label>
+                    <br />
+                    <textarea
+                      rows={5}
+                      type="text"
+                      value={resumeText}
+                      onChange={(e) => setResumeText(e.target.value)}
+                    />
+                  </div>
+                </div>
+              }
+
+              {interviewType === 'Skill' &&
+                <div className="textBox">
+                  <Stack spacing={3} sx={{ width: '100%', marginBottom: '1rem' }}>
+                    <Autocomplete
+                      multiple
+                      id="tags-standard"
+                      options={technicalSkills}
+                      getOptionLabel={(option) => option}
+                      onChange={handleSkillsChange}
+                      value={selectedSkills}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="standard"
+                          placeholder="Skills..."
+
+                        />
+                      )}
+                    />
+                  </Stack>
+                </div>}
+
+
+
+
               <div className="inputBox">
                 <span className="title">Interview Type</span>
                 <div className="childInputBox">
@@ -343,63 +457,24 @@ export default function Invite2() {
                   </label>
                 </div>
               </div>
-
-              {testType === 'InPerson' &&
-                <div className="textBox">
-                  <TextField id="outlined-basic" label="Interviewer Email" variant="outlined" fullWidth
-                    type='email'
-                    value={interviewerEmail}
-                    onChange={(e) => setInterviewerEmail(e.target.value)}
-                    inputProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                    InputLabelProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                  />
-                  <TextField id="outlined-basic" label="Meet Link (Optional)" variant="outlined" fullWidth
-                    type='url'
-                    value={meetUrl}
-                    onChange={(e) => setMeetUrl(e.target.value)}
-                    inputProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                    InputLabelProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                  />
-                </div>
-              }
-            </div>
-          }
-
-          {
-            step === 3 &&
-            <div className="step3Box">
-              <InviteReviewList2 />
+              <div className="textBox">
+                <ReactTags
+                  tags={emailList}
+                  delimiters={delimiters}
+                  handleDelete={handleEmailDelete}
+                  handleAddition={handleEmailAddition}
+                  placeholder="Add Emails"
+                  inputFieldPosition="top"
+                  allowUnique="true"
+                />
+              </div>
             </div>
           }
         </div>
 
         <ButtonBox>
-          {step <= 2 && <Button onClick={() => handleNext()}>Next</Button>}
-          {step === 3 && <Button onClick={handleInvite}>Send Invite</Button>}
+          {step < 2 && <Button onClick={() => handleNext()}>Next</Button>}
+          {step === 2 && <Button onClick={handleInvite}>Send Invite</Button>}
         </ButtonBox>
       </Container>
     </MainContainer>
@@ -423,6 +498,51 @@ const Container = styled.div`
   // height: calc(100vh - 8rem);
   justify-content: center;
 
+  .ReactTags__tags {
+    display: flex;
+    gap: 2rem;
+    box-sizing: border-box;
+  }
+
+  .ReactTags__tagInputField {
+    width: 20rem;
+    padding: 0.5rem 1rem;
+    outline-color: var(--lightOrange);
+  }
+
+  .ReactTags__selected {
+    width: 80%;
+    display: flex;
+    flex-flow: row wrap;
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+    border: 0.1rem solid var(--lightOrange);
+    padding: 1rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .ReactTags__selected .ReactTags__tag {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    border: 0.08rem solid lightgrey;
+    padding: 0rem 0 0rem 0.3rem;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+  }
+
+  .ReactTags__selected .ReactTags__remove {
+    background-color: var(--lightOrange);
+    color: var(--white);
+    cursor: pointer;
+    border: none;
+    height: 1.75rem;
+    width: 1.75rem;
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+  }
+
+
   .prev {
     background-color: var(--lightOrange);
     padding: 0.1rem;
@@ -434,6 +554,31 @@ const Container = styled.div`
 
   .prev:hover {
     color: var(--color);
+  }
+
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    font-size: 1rem;
+    outline-color: var(--lightOrange);
+  }
+
+  .box1, .box2 {
+    position: relative;
+    width: 100%;
+    margin-top: -1rem;
+  }
+
+  .label1 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    position: absolute;
+    top: 0.6rem;
+    left: 1rem;
+    background-color: var(--white);
+    padding: 0 0.5rem;
   }
 
   .btn {

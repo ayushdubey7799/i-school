@@ -39,7 +39,7 @@ import interviewFlow from '../../../assets/icons/interview-flow.png'
 
 const Container = styled.div`
 width: 17rem;
-height: calc(98% - 2rem);
+height: calc(98% - 4rem);
 padding-top: 1.5rem;
 display: flex;
 flex-direction: column;
@@ -427,7 +427,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
 
       <span className='hrLine'></span>
       <CatTitle className='categoryTitle'><img src={titleIcon6} /> Support</CatTitle>
-      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
+      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', marginBottom: '-10px', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
         <AccordionSummary
           aria-controls="panel5bh-content"
           id="panel5bh-header"

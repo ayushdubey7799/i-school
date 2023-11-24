@@ -204,114 +204,114 @@ img {
 
 
 const EmployerSidebar2 = ({ currentItem, setCurrentItem }) => {
-    const [expanded, setExpanded] = useState(false);
-    const [nestedExpanded, setNestedExpanded] = useState('');
-    const handleItemClick = (item) => {
-        setCurrentItem(item);
-    };
-    const handleChange = (panel, isNested = false) => (event, isExpanded) => {
-        if (isNested) {
-            setNestedExpanded(isExpanded ? panel : '');
-        } else {
-            setExpanded(isExpanded ? panel : '');
-            setNestedExpanded('');
-        }
-    };
+  const [expanded, setExpanded] = useState(false);
+  const [nestedExpanded, setNestedExpanded] = useState('');
+  const handleItemClick = (item) => {
+    setCurrentItem(item);
+  };
+  const handleChange = (panel, isNested = false) => (event, isExpanded) => {
+    if (isNested) {
+      setNestedExpanded(isExpanded ? panel : '');
+    } else {
+      setExpanded(isExpanded ? panel : '');
+      setNestedExpanded('');
+    }
+  };
 
-    return (
-        <Container>
-            <CatTitle className='categoryTitle'><img src={titleIcon3} /> Interview & ATS</CatTitle>
-            <Accordion expanded={expanded === 'panel10'} onChange={handleChange('panel10')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel10bh-content"
-                    id="panel10bh-header"
-                    classes={{
-                        root: 'custom-accordion-summary-root',
-                        expanded: expanded === 'panel10' ? 'expanded' : ''
-                    }}
-                >
-                    <span className={`menuTitle ${expanded === 'panel10' ? 'selected' : ''}`}>Manage Interviews</span>
-                    {expanded === 'panel10' && <Arrow></Arrow>}
-                </AccordionSummary>
-                <AccordionDetails style={{ marginTop: '-15px' }} className='details'>
-                    <Submenu>
-                        <SubPara isSelected={currentItem === 'interview-dashboard'} onClick={() => handleItemClick('interview-dashboard')} className='submenuItem'><img src={dashboardIcon} className='icon' />Interview Dashboard</SubPara>
-                        <div className='linkBox'>
-                            <Link to="/schedule/invite2" className='link'><img src={scheduleIcon} className='icon' />Schedule Interview</Link>
-                            <OpenInNewIcon className='arrowLink' />
-                        </div>
-                    </Submenu>
-                </AccordionDetails>
-            </Accordion>
-
-
-            <span className='hrLine'></span>
-            <CatTitle className='categoryTitle'><img src={titleIcon5} /> Admin</CatTitle>
-            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel3bh-content"
-                    id="panel3bh-header"
-                    classes={{
-                        root: 'custom-accordion-summary-root topTitle',
-                        expanded: expanded === 'panel3' ? 'expanded' : ''
-                    }}
-                >
-                    <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Manage Profile</span>
-                    {expanded === 'panel3' && <Arrow></Arrow>}
-                </AccordionSummary>
-                <AccordionDetails className='details'>
-                    <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
-                        <img src={profileIcon} className='icon' />
-                        Profile
-                    </MenuItem>
-                    <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
-                        <img src={subsIcon} className='icon' />
-                        Subscriptions
-                    </MenuItem>
-                    <MenuItem isSelected={currentItem === 'billing'} onClick={() => handleItemClick('billing')}>
-                        <img src={billingIcon} className='icon' />
-                        Billing
-                    </MenuItem>
-                    <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
-                        <img src={inboxIcon} className='icon' />
-                        Notifications
-                    </MenuItem>
-                </AccordionDetails>
-            </Accordion>
+  return (
+    <Container>
+      <CatTitle className='categoryTitle'><img src={titleIcon3} /> Interviews</CatTitle>
+      <Accordion expanded={expanded === 'panel10'} onChange={handleChange('panel10')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel10bh-content"
+          id="panel10bh-header"
+          classes={{
+            root: 'custom-accordion-summary-root',
+            expanded: expanded === 'panel10' ? 'expanded' : ''
+          }}
+        >
+          <span className={`menuTitle ${expanded === 'panel10' ? 'selected' : ''}`}>Manage Interviews</span>
+          {expanded === 'panel10' && <Arrow></Arrow>}
+        </AccordionSummary>
+        <AccordionDetails style={{ marginTop: '-15px' }} className='details'>
+          <Submenu>
+            <SubPara isSelected={currentItem === 'interview-dashboard'} onClick={() => handleItemClick('interview-dashboard')} className='submenuItem'><img src={dashboardIcon} className='icon' />Interview Dashboard</SubPara>
+            <div className='linkBox'>
+              <Link to="/schedule/invite2" className='link'><img src={scheduleIcon} className='icon' />Schedule Interview</Link>
+              <OpenInNewIcon className='arrowLink' />
+            </div>
+          </Submenu>
+        </AccordionDetails>
+      </Accordion>
 
 
-            <span className='hrLine'></span>
-            <CatTitle className='categoryTitle'><img src={titleIcon6} /> Support</CatTitle>
-            <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
-                <AccordionSummary
-                    aria-controls="panel5bh-content"
-                    id="panel5bh-header"
-                    classes={{
-                        root: 'custom-accordion-summary-root',
-                        expanded: expanded === 'panel5' ? 'expanded' : ''
-                    }}
-                >
-                    <a className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`} href='https://intelliview.zohodesk.com/portal/en/newticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
-                    {/* <img src={createTicketIcon} className='icon' /> */}
-                </AccordionSummary>
-            </Accordion>
+      <span className='hrLine'></span>
+      <CatTitle className='categoryTitle'><img src={titleIcon5} /> Admin</CatTitle>
+      <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3bh-content"
+          id="panel3bh-header"
+          classes={{
+            root: 'custom-accordion-summary-root topTitle',
+            expanded: expanded === 'panel3' ? 'expanded' : ''
+          }}
+        >
+          <span className={`menuTitle ${expanded === 'panel3' ? 'selected' : ''}`}>Manage Profile</span>
+          {expanded === 'panel3' && <Arrow></Arrow>}
+        </AccordionSummary>
+        <AccordionDetails className='details'>
+          <MenuItem isSelected={currentItem === 'profile'} onClick={() => handleItemClick('profile')}>
+            <img src={profileIcon} className='icon' />
+            Profile
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
+            <img src={subsIcon} className='icon' />
+            Subscriptions
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'billing'} onClick={() => handleItemClick('billing')}>
+            <img src={billingIcon} className='icon' />
+            Billing
+          </MenuItem>
+          <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
+            <img src={inboxIcon} className='icon' />
+            Notifications
+          </MenuItem>
+        </AccordionDetails>
+      </Accordion>
 
-            <Accordion expanded={expanded === 'panel5.2'} onChange={handleChange('panel5.2')} style={{ width: '100%', boxShadow: 'none', marginTop: '0.5rem', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
-                <AccordionSummary
-                    aria-controls="panel5.2bh-content"
-                    id="panel5.2bh-header"
-                    classes={{
-                        root: 'custom-accordion-summary-root',
-                        expanded: expanded === 'panel5.2' ? 'expanded' : ''
-                    }}
-                >
-                    <span className={`menuTitle ${expanded === 'panel5.2' ? 'selected' : ''}`} isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')} style={{ marginTop: '-1rem' }}>Contact Support</span>
-                    {/* <img src={callSupportIcon} className='icon' /> */}
-                </AccordionSummary>
-            </Accordion>
-        </Container>
-    );
+
+      <span className='hrLine'></span>
+      <CatTitle className='categoryTitle'><img src={titleIcon6} /> Support</CatTitle>
+      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} style={{ width: '100%', boxShadow: 'none', margin: '0', marginBottom: '-10px', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
+        <AccordionSummary
+          aria-controls="panel5bh-content"
+          id="panel5bh-header"
+          classes={{
+            root: 'custom-accordion-summary-root',
+            expanded: expanded === 'panel5' ? 'expanded' : ''
+          }}
+        >
+          <a className={`menuTitle ${expanded === 'panel5' ? 'selected' : ''}`} href='https://intelliview.zohodesk.com/portal/en/newticket' target='_blank' rel='noopener noreferrer'>Create Ticket</a>
+          {/* <img src={createTicketIcon} className='icon' /> */}
+        </AccordionSummary>
+      </Accordion>
+
+      <Accordion expanded={expanded === 'panel5.2'} onChange={handleChange('panel5.2')} style={{ width: '100%', boxShadow: 'none', marginTop: '0.5rem', border: 'none' }} classes={{ root: 'custom-accordion-root' }}>
+        <AccordionSummary
+          aria-controls="panel5.2bh-content"
+          id="panel5.2bh-header"
+          classes={{
+            root: 'custom-accordion-summary-root',
+            expanded: expanded === 'panel5.2' ? 'expanded' : ''
+          }}
+        >
+          <span className={`menuTitle ${expanded === 'panel5.2' ? 'selected' : ''}`} isSelected={currentItem === 'call-support'} onClick={() => handleItemClick('call-support')} style={{ marginTop: '-1rem' }}>Contact Support</span>
+          {/* <img src={callSupportIcon} className='icon' /> */}
+        </AccordionSummary>
+      </Accordion>
+    </Container>
+  );
 };
 export default React.memo(EmployerSidebar2);
