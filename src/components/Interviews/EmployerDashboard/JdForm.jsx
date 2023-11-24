@@ -258,7 +258,7 @@ function JdForm({ array, handleClose }) {
           type='text'
           value={autoReq ? "" : formData.reqNumber}
           onChange={handleChange}
-          disabled={autoReq}
+          disabled={autoReq || mode == "edit"}
           sx={{ backgroundColor: '#F6F6FB' }}
           size='small'
           inputProps={{
@@ -302,7 +302,8 @@ function JdForm({ array, handleClose }) {
               fontWeight: '400'
             },
           }}
-          required />
+          required 
+          disabled={mode == "edit"}/>
 
         <TextField id="outlined-basic" label="Title" variant="outlined"
           type="text"
