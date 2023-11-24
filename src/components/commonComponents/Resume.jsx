@@ -49,8 +49,8 @@ const Resume = () => {
 
   return (
     <div>
-      {/* <a download='resume.pdf' href="blob:https://dev-api.intelliview.in/2bd5b51d-88da-4156-b1cf-6128fac40626">Download</a> */}
-      <a href={blobUrl} download="resume.pdf">
+      {/* <a download='resume.pdf' href="blob:https://dev-api.intelliview.in/8d5bfa00-c617-48d9-b636-d63c9c9bf696">Download</a> */}
+      <a href={blobUrl} >
         Download
       </a>
       <br />
