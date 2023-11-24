@@ -109,7 +109,7 @@ const App = () => {
 
 
 
-          <Route path="/testing" element={<ReqModalDetails />} />
+          <Route path="/testing" element={<Resume />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/about" element={<About />} />
