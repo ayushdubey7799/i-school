@@ -41,7 +41,7 @@ display: flex;
 flex-direction: column;
 margin-left: 10%;
 margin-right: 10%;
-gap: 2rem;
+gap: 1rem;
 
 @media (max-width: 700px) {
     margin-bottom: 15rem;
@@ -60,14 +60,14 @@ gap: 2rem;
     word-wrap: break-word;
     font-weight: 600;
     font-size: 1.1rem;
-    line-height: 1.7rem;
+    line-height: 1.3rem;
     color:  rgb(70, 78, 98);
 }
 
 .text {
     word-wrap: break-word;
     font-size: 0.8rem;
-    line-height: 1.7rem;
+    line-height: 1.1rem;
     font-weight: 500;
     color:  rgb(70, 78, 98);
 }
@@ -81,7 +81,7 @@ gap: 2rem;
 .researchBox {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.5rem;
 }
 `
 

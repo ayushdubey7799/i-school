@@ -124,7 +124,7 @@ margin-right: 5%;
     padding: 3rem 5%;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     border-radius: 1rem;
     align-items: center;
 }
@@ -133,7 +133,7 @@ margin-right: 5%;
     font-size: 1.8rem;
     font-weight: 600;
     word-wrap: break-word;
-    line-height: 2.3rem;
+    line-height: 2rem;
     text-align: center;
 }
 
@@ -152,7 +152,7 @@ margin-right: 5%;
 .detailBox {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     align-items: center;
 }
 
@@ -169,7 +169,7 @@ margin-right: 5%;
 }
 
 .part {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .leftBox {
@@ -188,7 +188,7 @@ margin-right: 5%;
 }
 
 .rightBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 

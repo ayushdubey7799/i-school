@@ -142,7 +142,7 @@ display: flex;
 flex-direction: column;
 margin-left: 10%;
 margin-right: 10%;
-gap: 2rem;
+gap: 1rem;
 
 
 .top {
@@ -162,7 +162,7 @@ gap: 2rem;
     font-size: 1.8rem;
     font-weight: 600;
     word-wrap: break-word;
-    line-height: 2.3rem;
+    line-height: 2rem;
     text-align: center;
 }
 
@@ -183,7 +183,7 @@ gap: 2rem;
 .smallTitle {
     font-size: 1.3rem;
     font-weight: 600;
-    line-height: 1rem;
+    line-height: 1.4rem;
     text-align: center;
     color: var(--grey);
 }

@@ -113,7 +113,7 @@ display: flex;
 flex-direction: column;
 margin-left: 10%;
 margin-right: 10%;
-gap: 2rem;
+gap: 1rem;
 
 .mainTitle {
     font-weight: 900;
