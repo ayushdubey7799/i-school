@@ -2,7 +2,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 
-export const auth = async (password, email, clientcode='intelliview') => {
+export const auth = async (password, email, clientcode) => {
   const requestData = {
     password: password,
     username: email

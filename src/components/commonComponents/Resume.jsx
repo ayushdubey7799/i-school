@@ -27,15 +27,15 @@ const Resume = () => {
     };
   }, []);
 
-  
-
-return (<>
-      <a href={blobUrl} download="resume.pdf">
+  return (
+    <div>
+      {/* <a download='resume.pdf' href="blob:https://dev-api.intelliview.in/8d5bfa00-c617-48d9-b636-d63c9c9bf696">Download</a> */}
+      <a href={blobUrl} >
         Download
       </a>
       {/* <iframe src="https://docs.google.com/document/d/1m9yv3oTF-uC3D-kQQbmTIbdPOrnuYJg_O5dBhmH5uoc/edit?usp=sharing" height="700" width="1000" frameborder="0"/> */}
       <Display/>
-     </>
+     </div>
   );
 };
 
