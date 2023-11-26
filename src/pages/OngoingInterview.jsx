@@ -17,11 +17,12 @@ import Timer from "../components/Interviews/CurrentInterview/Timer";
 import logo from "../assets/IntelliViewLogo.png";
 import { submitAnswerWithFile } from "../functions/api/interview/submitAnswerWithFile";
 import { ReactMediaRecorder } from "react-media-recorder";
-import startRecBtn from '../assets/icons/startRecBtn.png'
-import stopRecBtn from '../assets/icons/stopRecBtn.png'
-import idle from '../assets/icons/recStatusIdle.png'
-import recording from '../assets/icons/recStatusRecording.png'
-import stopped from '../assets/icons/recStatusStopped.png'
+import startRecBtn from "../assets/icons/startRecBtn.png";
+import stopRecBtn from "../assets/icons/stopRecBtn.png";
+import idle from "../assets/icons/recStatusIdle.png";
+import recording from "../assets/icons/recStatusRecording.png";
+import stopped from "../assets/icons/recStatusStopped.png";
+import CodeEditor from "./CodeEditor";
 
 const OngoingInterview = ({ start, handleStart }) => {
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -34,8 +35,11 @@ const OngoingInterview = ({ start, handleStart }) => {
   const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
   const [audioData, setAudioData] = useState(null);
-  const navigate = useNavigate();
 
+  const [language, setLanguage] = useState("javascript");
+
+  const navigate = useNavigate();
+  
   ////////////////////////////////////////////////// TIMER CODE
   const initialMinutes = 60;
   const [minutes, setMinutes] = useState(initialMinutes);
@@ -153,11 +157,10 @@ const OngoingInterview = ({ start, handleStart }) => {
     console.log(fetchedData);
     setData(fetchedData?.data[0]);
     setIsLoading(false);
-    setInput('');
+    setInput("");
     handleStart();
     startTimer();
   }
-
 
 
   return (
@@ -184,14 +187,18 @@ const OngoingInterview = ({ start, handleStart }) => {
           {start ? (
             <>
               <div>{data?.question}</div>
-              <textarea
-                // onPaste={handlePaste}
-                // onCut={handleCutCopy}
-                // onCopy={handleCutCopy}
-                rows={10}
-                value={input}
-                onChange={(e) => handleChange(e)}
-              />
+              {data.questionType == "Coding" ? (
+               <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage}/>
+              ) : (
+                <textarea
+                  // onPaste={handlePaste}
+                  // onCut={handleCutCopy}
+                  // onCopy={handleCutCopy}
+                  rows={10}
+                  value={input}
+                  onChange={(e) => handleChange(e)}
+                />
+              )}
               {data?.lastQuestion ? (
                 <button
                   onClick={() => {
@@ -238,14 +245,29 @@ const OngoingInterview = ({ start, handleStart }) => {
                                   src={stopRecBtn}
                                 />
                               </div>
-                              <audio
-                                src={mediaBlobUrl}
-                                controls
-                              />
+                              <audio src={mediaBlobUrl} controls />
                               <span id="status1">
-                                {status === 'idle' && <img id="idle" src={idle} className="statusIcon"/>}
-                                {status === 'recording' && <img id="rec" src={recording} className="statusIcon"/>}
-                                {status === 'stopped' && <img id="stop" src={stopped} className="statusIcon"/>}
+                                {status === "idle" && (
+                                  <img
+                                    id="idle"
+                                    src={idle}
+                                    className="statusIcon"
+                                  />
+                                )}
+                                {status === "recording" && (
+                                  <img
+                                    id="rec"
+                                    src={recording}
+                                    className="statusIcon"
+                                  />
+                                )}
+                                {status === "stopped" && (
+                                  <img
+                                    id="stop"
+                                    src={stopped}
+                                    className="statusIcon"
+                                  />
+                                )}
                                 <span id="status2">{status}</span>
                               </span>
                             </AudioBox>
@@ -374,29 +396,26 @@ const StyledInterview = styled.div`
   }
 `;
 
-
 const AudioBox = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-top: 1rem;
-
-
-.btnImgBox {
+  width: 100%;
   display: flex;
-  gap: 2rem;
-}
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
 
-#status2{
-  font-size:0.6rem;
-  display: none;
-}
-
-#status1:hover{
-  #status2{
-    display:block;
+  .btnImgBox {
+    display: flex;
+    gap: 2rem;
   }
-}
-`
 
+  #status2 {
+    font-size: 0.6rem;
+    display: none;
+  }
+
+  #status1:hover {
+    #status2 {
+      display: block;
+    }
+  }
+`;
