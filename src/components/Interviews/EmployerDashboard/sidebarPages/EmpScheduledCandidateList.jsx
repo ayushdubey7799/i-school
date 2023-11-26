@@ -20,6 +20,8 @@ import { useSelector } from "react-redux";
 
 function Row(props) {
   const { row, index } = props;
+  
+  
 
   const [state, setState] = React.useState({
     right: false,
@@ -36,12 +38,12 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
+        <TableCell align="center">{row?.interview?.userName}</TableCell>
+        <TableCell align="center">{row?.interview?.userEmail}</TableCell>
+        <TableCell align="center">{row?.interview?.userContact}</TableCell>
+        <TableCell align="center">{row?.interview?.recruiter}</TableCell>
+        <TableCell align="center">{row?.interview?.hiringManager}</TableCell>
+        <TableCell align="center">{row?.interview?.status}</TableCell>
         <TableCell component="th" scope="row" align="center">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails />} />
@@ -132,7 +134,7 @@ const EmpScheduledCandidateList = ({ page,setPage }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {candidateLists?.map((row, index) => (
+            {tableRows?.map((row, index) => (
               <Row key={row.id} row={row} index={index} />
             ))}
           </TableBody>
