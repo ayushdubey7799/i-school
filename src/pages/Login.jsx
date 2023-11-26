@@ -44,7 +44,7 @@ const Login = () => {
   const [value, setValue] = useState("job-seeker");
   const error = useSelector((state) => state.auth?.error);
 
-  console.log("error-------> ",JSON.parse(error)?.status);
+  // console.log("error-------> ",JSON.parse(error)?.status);
 
   const captchaRef = useRef(null);
   const [captchaError, setCaptchaError] = useState(false);

@@ -41,10 +41,9 @@ const EmpScheduledInterviews = ({ setPage }) => {
   const [sortParams, setSortParams] = useState('');
   const [tableRows,setTableRows] = useState([]);
   const jdData = useSelector(state => state?.jd?.activeJds);
-  console.log("Active",jdData[2].metrics);
 
   useEffect(() => {
-    if(jdData.length){
+    if(jdData?.length){
       const finalResult = jdData.reduce((acc,it) => {
             let jdInfoReq = {
                jdId: it.jdId,
