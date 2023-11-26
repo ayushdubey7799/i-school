@@ -31,6 +31,8 @@ import CloneJDForm from './CloneJDForm';
 import CommonDialog from '../../../commonComponents/CommonDialog';
 import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 import ReqModalDetails from '../ReqModalDetails';
+import { useDispatch } from 'react-redux';
+import { getAvailableJds } from '../../../../slices/jdSlice';
 
 
 function Row(props) {
@@ -146,20 +148,28 @@ const JdRegistration = () => {
   const [openBasic2, setOpenBasic2] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
+  const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
-
+  const testingData = useSelector(state => state?.jd?.availableJds);
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
-
+  
 
   useEffect(() => {
     async function getData() {
-      const res = await getJds(accessToken, clientCode);
-      setTableRows(res?.data?.data);
+      dispatch(getAvailableJds({accessToken,clientCode}));
+      const res = await getJds(accessToken,clientCode);
+      if(res)setTableRows(res?.data?.data);
     }
     getData();
   }, []);
+
+  // useEffect(()=> {
+  //   if(testingData.length){
+  //     setTableRows([...testingData]);
+  //   }
+  // },[testingData])
 
   const handleSearchParams = (e) => {
     setSearchParams(e.target.value);

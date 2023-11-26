@@ -10,6 +10,7 @@ import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import { data as interviews } from "../../../../utils/contantData";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
+import { useSelector } from "react-redux";
 
 function Row(props) {
   const { row, index, setPage } = props;
@@ -18,16 +19,16 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
+        <TableCell align="center">{row.jdId}</TableCell>
+        <TableCell align="center">{row.totalCandidates}</TableCell>
+        <TableCell align="center">{row.closed}</TableCell>
+        <TableCell align="center">{row.inProgress}</TableCell>
+        <TableCell align="center">{row.firstStage?row.firstStage:'0'}</TableCell>
+        <TableCell align="center">{row.secondStage?row.secondStage:'0'}</TableCell>
+        <TableCell align="center">{row.thirdStage?row.thirdStage:'0'}</TableCell>
         <TableCell align="center">...</TableCell>
         <TableCell component="th" scope="row" align="center">
-          <button className="btn" onClick={() => setPage(2)}>View Details</button>
+          <button className="btn" onClick={() => setPage({index: 2,jdId: row.jdId})}>View Details</button>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -38,6 +39,30 @@ function Row(props) {
 const EmpScheduledInterviews = ({ setPage }) => {
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
+  const [tableRows,setTableRows] = useState([]);
+  const jdData = useSelector(state => state?.jd?.activeJds);
+  console.log("Active",jdData[2].metrics);
+
+  useEffect(() => {
+    if(jdData.length){
+      const finalResult = jdData.reduce((acc,it) => {
+            let jdInfoReq = {
+               jdId: it.jdId,
+               totalCandidates: it.metrics?.find((item) => item.type == 'TOTAL')?.count,
+               closed: it.metrics?.find((item) => item.type == 'CLOSED')?.count,
+               inProgress: it.metrics?.find((item) => item.type == 'PROGRESS')?.count,
+               firstStage: it.metrics?.find((item) => item.stage == 1)?.count,
+               secondStage: it.metrics?.find((item) => item.stage == 2)?.count,
+               thirdStage: it.metrics?.find((item) => item.stage == 3)?.count,
+            }
+
+            return [...acc,jdInfoReq];
+      },[])
+
+      setTableRows(finalResult);
+    }
+  },[jdData])
+
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);
@@ -102,7 +127,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {interviews?.map((row, index) => (
+            {tableRows?.map((row, index) => (
               <Row key={row.id} row={row} index={index} setPage={setPage} />
             ))}
           </TableBody>

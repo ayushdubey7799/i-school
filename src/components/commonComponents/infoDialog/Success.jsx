@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import successIcon from '../../../assets/alertBox/successIcon.png'
 
 const Success = ({ handleClose, open, msg }) => {
-
+     console.log("Success called")
     return (
         <React.Fragment>
             <Dialog

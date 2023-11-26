@@ -15,6 +15,8 @@ import visibleIcon from '../../../../assets/icons/visible.png'
 import shareIcon from '../../../../assets/icons/share.png'
 import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import SeekerInterviewDetails from "../../SeekerDashboard/sidebarPages/SeekerInterviewDetails";
+import { getAllTrackers } from "../../../../functions/api/interview/getAllTrackers";
+import { useSelector } from "react-redux";
 
 function Row(props) {
   const { row, index } = props;
@@ -52,9 +54,22 @@ function Row(props) {
 }
 
 
-const EmpScheduledCandidateList = ({ setPage }) => {
+const EmpScheduledCandidateList = ({ page,setPage }) => {
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
+  const [tableRows,setTableRows] = useState([]);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  
+  useEffect(() => {
+   const getData = async () => {
+    const res = await getAllTrackers(accessToken,clientCode,page.jdId);
+    console.log(res?.data?.data);
+    setTableRows(res?.data?.data);
+   }
+
+   getData();
+  },[]);
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);
@@ -73,8 +88,8 @@ const EmpScheduledCandidateList = ({ setPage }) => {
     <Content>
       <TableContainer component={Paper} className="tableBox">
         <div className="titleBox">
-          <span className="title">Candidate Lists for JD ID:- ...</span>
-          <button className="btn1" onClick={() => setPage(1)}>Back to Scheduled Interviews</button>
+          <span className="title">Candidate Lists for JD ID:- {page.jdId}</span>
+          <button className="btn1" onClick={() => setPage({index: 1, jdId: null})}>Back to Scheduled Interviews</button>
         </div>
 
         <SearchBarContainer>

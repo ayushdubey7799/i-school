@@ -56,7 +56,7 @@ const InterviewDashboard = ({ page, setPage }) => {
   const [value, setValue] = useState("COMPLETED");
 
   useEffect(() => {
-    setPage(1);
+    setPage({index: 1, jdId: null});
     const getCount = async () => {
       const res = await Promise.allSettled([
         getPreFilteredCount(accessToken, "UPCOMING"),
@@ -153,8 +153,8 @@ const InterviewDashboard = ({ page, setPage }) => {
           <span className="achievedNumberText">In Progress</span>
         </div>
       </Container>
-      {page === 1 && <EmpScheduledInterviews setPage={setPage} />}
-      {page === 2 && <EmpScheduledCandidateList setPage={setPage} />}
+      {page?.index === 1 && <EmpScheduledInterviews setPage={setPage} />}
+      {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}
     </MainContainer>
   );
 };

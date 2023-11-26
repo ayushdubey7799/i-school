@@ -4,7 +4,9 @@ import authReducer from './slices/authSlice'
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import interviewReducer from "./slices/interviewSlice";
-import inviteReducer from './slices/invitationSlice'
+import inviteReducer from './slices/invitationSlice';
+import jdReducer from './slices/jdSlice';
+
 const persistConfig = {
     key: 'root',
     storage,
@@ -16,7 +18,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
     auth: authReducer,
     interview: interviewReducer,
-    invite: inviteReducer
+    invite: inviteReducer,
+    jd: jdReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -27,21 +27,34 @@ const Resume = () => {
     };
   }, []);
 
-  const docs = [
-    { 
-      uri: require('../../files/Resume1.pdf'), 
-      fileType: "pdf",
-      fileName: "Resume.pdf"
-    }
-];
+  
 
 return (<>
-<DocViewer documents={docs} pluginRenderers={DocViewerRenderers} style={{height:"90vh", width:"40%"}}/> 
-      {/* <a href={blobUrl} download="resume.pdf">
+      <a href={blobUrl} download="resume.pdf">
         Download
-      </a> */}
+      </a>
+      {/* <iframe src="https://docs.google.com/document/d/1m9yv3oTF-uC3D-kQQbmTIbdPOrnuYJg_O5dBhmH5uoc/edit?usp=sharing" height="700" width="1000" frameborder="0"/> */}
+      <Display/>
      </>
   );
 };
 
 export default Resume;
+
+const Display = React.memo(() => {
+  const docs = [
+    { 
+      // uri: require('../../files/Resume1.pdf'), 
+      uri: 'https://intelliview-pub.s3.ap-south-1.amazonaws.com/ReactExp.pdf',
+      fileType: "pdf",
+      fileName: "Resume.pdf"
+    },
+    { 
+      uri: 'https://intelliview-pub.s3.ap-south-1.amazonaws.com/TestingDoc.docx',
+      fileType: "docx",
+      fileName: "tewsting.docx"
+    }
+];
+return <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} style={{height:"90vh", width:"60%"}}/> 
+
+});
