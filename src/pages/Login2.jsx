@@ -17,201 +17,212 @@ import employerLoginIcon from '../assets/icons/EmployerLoginIcon.png'
 
 
 const Login2 = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const userData = useSelector((state) => state.auth.userData);
-    const accessToken = useSelector((state) => state.auth.userData?.accessToken);
-    const clientCodeStore = useSelector(
-        (state) => state.auth.userData?.user?.clientCode
-    );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.auth.userData);
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const clientCodeStore = useSelector(
+    (state) => state.auth.userData?.user?.clientCode
+  );
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [clientCode, setClientCode] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [clientCode, setClientCode] = useState("");
 
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const captchaRef = useRef(null);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const captchaRef = useRef(null);
+  const [captchaError, setCaptchaError] = useState(false);
 
-    const [searchParams] = useSearchParams();
-    const token = searchParams.get("token");
-    const key = searchParams.get("key");
-    if (key == "invite" || key == "interview") {
-        console.log(token, key);
 
-        localStorage.setItem("token", token);
-        localStorage.setItem("key", key);
+
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const key = searchParams.get("key");
+  if (key == "invite" || key == "interview") {
+    console.log(token, key);
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("key", key);
+  }
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setEmail("");
+    setPassword("");
+    setPasswordVisible(false);
+    captchaRef.current.reset();
+    setCaptchaError(false);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const key = localStorage.getItem("key");
+
+    console.log(token, key, accessToken, clientCodeStore)
+    if (accessToken && key == "interview" && clientCodeStore == "intelliview") navigate('/dashboard/jobseeker');
+
+    if (token && accessToken && clientCodeStore && key == "invite") {
+      (async function () {
+        const res = await getInviteDetails(token, accessToken);
+        if (res) {
+          navigate(`/slot-selection/${token}`)
+
+        } else {
+          const userConfirmed = confirm("You are already logged in with different email id, do you want to logout first?");
+          if (userConfirmed) {
+            persistor.purge();
+            dispatch(logout());
+          } else {
+            clientCodeStore == "intelliview"
+              ? navigate("/dashboard/jobseeker")
+              : navigate("/dashboard/employer");
+          }
+        }
+      })();
     }
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+    if (!token && accessToken) {
+      clientCodeStore == "intelliview"
+        ? navigate("/dashboard/jobseeker")
+        : navigate("/dashboard/employer");
+    }
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-        setEmail("");
-        setPassword("");
-        setPasswordVisible(false);
-        captchaRef.current.reset();
-    };
+    if (clientCodeStore && clientCodeStore != 'intelliview') {
+      navigate('/dashboard/employer')
+    }
+  }, [accessToken]);
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        const key = localStorage.getItem("key");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        console.log(token, key, accessToken, clientCodeStore)
-        if (accessToken && key == "interview" && clientCodeStore == "intelliview") navigate('/dashboard/jobseeker');
+    const token = captchaRef.current.getValue();
 
-        if (token && accessToken && clientCodeStore && key == "invite") {
-            (async function () {
-                const res = await getInviteDetails(token, accessToken);
-                if (res) {
-                    navigate(`/slot-selection/${token}`)
+    if (!token) {
+      setCaptchaError(true);
+    } else {
+      console.log(token);
+      setCaptchaError(false);
+      captchaRef.current.reset();
 
-                } else {
-                    const userConfirmed = confirm("You are already logged in with different email id, do you want to logout first?");
-                    if (userConfirmed) {
-                        persistor.purge();
-                        dispatch(logout());
-                    } else {
-                        clientCodeStore == "intelliview"
-                            ? navigate("/dashboard/jobseeker")
-                            : navigate("/dashboard/employer");
-                    }
-                }
-            })();
+      let val = validate(email, password);
+
+      if (val) {
+        {
+          console.log("IN LOGIN", clientCode);
+          dispatch(performLogin({ password, email, clientCode }));
+          setClientCode("");
         }
-
-        if (!token && accessToken) {
-            clientCodeStore == "intelliview"
-                ? navigate("/dashboard/jobseeker")
-                : navigate("/dashboard/employer");
-        }
-
-        if (clientCodeStore && clientCodeStore != 'intelliview') {
-            navigate('/dashboard/employer')
-        }
-    }, [accessToken]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const token = captchaRef.current.getValue();
-        console.log(token);
-        captchaRef.current.reset();
-
-        let val = validate(email, password);
-
-        if (val) {
-            {
-                console.log("IN LOGIN", clientCode);
-                dispatch(performLogin({ password, email, clientCode }));
-                setClientCode("");
-            }
-        }
-        setEmail("");
-        setPassword("");
-    };
+      }
+      setEmail("");
+      setPassword("");
+    }
+  };
 
 
 
-    return (
-        <StyledLogin>
+  return (
+    <StyledLogin>
 
-            <div
-                style={{
-                    height: "3.5rem",
-                    position: "absolute",
-                    top: "1rem",
-                    left: "3rem",
-                }}
-            >
-                <img src={logo} style={{ height: "100%" }} />
+      <div
+        style={{
+          height: "3.5rem",
+          position: "absolute",
+          top: "1rem",
+          left: "3rem",
+        }}
+      >
+        <img src={logo} style={{ height: "100%" }} />
+      </div>
+
+      <IconButton onClick={() => navigate("/")} className="prev">
+        <ArrowBackIcon sx={{ fontSize: "30px" }} />
+      </IconButton>
+
+      <Box
+        sx={{
+          width: "70%",
+          position: "relative",
+          top: "6rem",
+          margin: "0 1rem",
+          marginBottom: "7rem",
+        }}
+        className="box"
+      >
+        <span className="topImg"><img src={employerLoginIcon} /></span>
+
+        <div id="form">
+          <form onSubmit={handleSubmit}>
+            <div className="inputBox">
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label htmlFor="email">Email</label>
             </div>
 
-            <IconButton onClick={() => navigate("/")} className="prev">
-                <ArrowBackIcon sx={{ fontSize: "30px" }} />
-            </IconButton>
+            <div className="inputBox">
+              <input
+                type="text"
+                id="clientCode"
+                value={clientCode}
+                onChange={(e) => setClientCode(e.target.value)}
+                required
+              />
+              <label htmlFor="clientCode">Client Code</label>
+            </div>
 
-            <Box
-                sx={{
-                    width: "70%",
-                    position: "relative",
-                    top: "6rem",
-                    margin: "0 1rem",
-                    marginBottom: "7rem",
-                }}
-                className="box"
-            >
-                <span className="topImg"><img src={employerLoginIcon}/></span>
+            <div className="inputBox">
+              <input
+                type={passwordVisible ? "text" : "password"}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label htmlFor="password">Password</label>
+              <FontAwesomeIcon
+                icon={faEye}
+                id="eye"
+                onClick={togglePasswordVisibility}
+                className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+              />
+            </div>
 
-                <div id="form">
-                    <form onSubmit={handleSubmit}>
-                        <div className="inputBox">
-                            <input
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                            <label htmlFor="email">Email</label>
-                        </div>
+            <div className="resetBox">
+              <span className="remember">
+                <input type="checkbox" />
+                Remember me
+              </span>
+              <span>
+                <Link to="/reset" className="reset">
+                  Forgot Password
+                </Link>
+              </span>
+            </div>
 
-                        <div className="inputBox">
-                            <input
-                                type="text"
-                                id="clientCode"
-                                value={clientCode}
-                                onChange={(e) => setClientCode(e.target.value)}
-                                required
-                            />
-                            <label htmlFor="clientCode">Client Code</label>
-                        </div>
+            <ReCAPTCHA
+              sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
+              ref={captchaRef}
+              size="normal"
+            />
+            {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
+            <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
-                        <div className="inputBox">
-                            <input
-                                type={passwordVisible ? "text" : "password"}
-                                id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <label htmlFor="password">Password</label>
-                            <FontAwesomeIcon
-                                icon={faEye}
-                                id="eye"
-                                onClick={togglePasswordVisibility}
-                                className={`eye-icon ${passwordVisible ? "visible" : ""}`}
-                            />
-                        </div>
-
-                        <div className="resetBox">
-                            <span className="remember">
-                                <input type="checkbox" />
-                                Remember me
-                            </span>
-                            <span>
-                                <Link to="/reset" className="reset">
-                                    Forgot Password
-                                </Link>
-                            </span>
-                        </div>
-
-                        <ReCAPTCHA
-                            sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
-                            ref={captchaRef}
-                            size="normal"
-                        />
-                        <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
-
-                        <button type="submit" className="btn">
-                            Login
-                        </button>
-                    </form>
-                </div>
-            </Box>
-        </StyledLogin>
-    )
+            <button type="submit" className="btn">
+              Login
+            </button>
+          </form>
+        </div>
+      </Box>
+    </StyledLogin>
+  )
 }
 
 export default Login2;
@@ -226,6 +237,13 @@ const StyledLogin = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .captchaErrorText {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: red;
+    margin-top: -0.5rem;
   }
 
   .topImg {

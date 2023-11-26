@@ -122,7 +122,7 @@ margin-right: 5%;
     padding: 3rem 5%;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     border-radius: 1rem;
     align-items: center;
 }
@@ -150,7 +150,7 @@ margin-right: 5%;
 .detailBox {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     align-items: center;
 }
 
@@ -174,7 +174,7 @@ margin-right: 5%;
     width: 40%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .rightBox {
@@ -186,7 +186,7 @@ margin-right: 5%;
 }
 
 .rightBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 
@@ -207,7 +207,7 @@ margin-right: 5%;
     display: flex;
     flex-flow: row wrap;
     column-gap: 5%;
-    row-gap: 2rem;
+    row-gap: 1rem;
     margin-top: 2rem;
     background: linear-gradient(to bottom, var(--grey), black);
     color: white;

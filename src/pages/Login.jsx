@@ -47,6 +47,7 @@ const Login = () => {
   console.log("error-------> ",JSON.parse(error)?.status);
 
   const captchaRef = useRef(null);
+  const [captchaError, setCaptchaError] = useState(false);
 
   const [searchParams] = useSearchParams();
 
@@ -69,6 +70,7 @@ const Login = () => {
     setPassword("");
     setPasswordVisible(false);
     captchaRef.current.reset();
+    setCaptchaError(false);
   };
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -112,20 +114,26 @@ const Login = () => {
     e.preventDefault();
 
     const token = captchaRef.current.getValue();
-    console.log(token);
-    captchaRef.current.reset();
 
-    let val = validate(email, password);
+    if (!token) {
+      setCaptchaError(true);
+    } else {
+      console.log(token);
+      setCaptchaError(false);
+      captchaRef.current.reset();
 
-    if (val) {
-      {
-        console.log("IN LOGIN", clientCode);
-        dispatch(performLogin({ password, email, clientCode }));
-        setClientCode("");
+      let val = validate(email, password);
+
+      if (val) {
+        {
+          console.log("IN LOGIN", clientCode);
+          dispatch(performLogin({ password, email, clientCode }));
+          setClientCode("");
+        }
       }
+      setEmail("");
+      setPassword("");
     }
-    setEmail("");
-    setPassword("");
   };
 
   useEffect(() => {
@@ -265,6 +273,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
+              {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
               <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
               <button type="submit" className="btn">
@@ -349,6 +358,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
+              {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
               <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
               <button type="submit" className="btn">
@@ -420,6 +430,7 @@ const Login = () => {
                 ref={captchaRef}
                 size="normal"
               />
+              {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
               <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
               <button type="submit" className="btn">
@@ -450,6 +461,13 @@ const StyledLogin = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .captchaErrorText {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: red;
+    margin-top: -0.5rem;
   }
 
   p {
