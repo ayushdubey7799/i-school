@@ -8,7 +8,7 @@ import productCard3 from '../../assets/homepage6.jpeg'
 import bg1 from '../../assets/bg1.jpg'
 import bg2 from '../../assets/bg5.jpg'
 import { useNavigate } from 'react-router'
-import VideoContent from './VideoContent'
+import BenefitsSection from './BenefitsSection'
 
 const DetailedContent = () => {
     const navigate = useNavigate();
@@ -52,12 +52,6 @@ const DetailedContent = () => {
                     <div className='visualDetailTextBox'>
                         <span className='visualDetailTitle'>Efficient Sourcing</span>
                         <span className='visualDetailText'>One of the most time-consuming tasks in recruitment is reviewing resumes and job applications. AI-powered resume screening systems can significantly improve this process. These systems use natural language processing (NLP) and machine learning algorithms to quickly analyze and rank resumes based on their relevance to the job description.</span>
-
-                        {/* <div className='visualDetailSpecBox'>
-                            <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Tristique senectus et netus</span>
-                            <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Pharetra sit amet aliquam</span>
-                            <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Vitae suscipit tellus mauris</span>
-                        </div> */}
                     </div>
                     <div className='visualDetailImgBox'>
                         <img src={homepage1} />
@@ -70,15 +64,11 @@ const DetailedContent = () => {
                     <div className='visualDetailTextBox'>
                         <span className='visualDetailTitle'>Processes to Fuel Growth</span>
                         <span className='visualDetailText'>To fully leverage the growth potential of AI in hiring processes, it's essential to choose the right AI tools and platforms, integrate them seamlessly into your existing systems, and provide appropriate training to HR professionals to use these tools effectively. Additionally, continuous monitoring and refinement of AI-driven processes are crucial to ensure ongoing success and alignment with your organization's growth goals.</span>
-
-                        {/* <div className='visualDetailSpecBox'>
-                            <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Integer feugiat scelerisque varius</span>
-                            <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Ornare arcu dui vivamus arcu</span>
-                            <span className='visualDetailSpec'><span className='rightSign'>&#x2713;</span>Nec tincidunt praesent semper feugiat</span>
-                        </div> */}
                     </div>
                 </div>
             </div>
+
+            <BenefitsSection />
 
             <div className='contactSection'>
                 <span className='contactSectionTitle'>Become part of advanced Recruitment Solutions powered by AI, same time with Human Touch in your journey of growth.</span>
@@ -182,7 +172,7 @@ margin-top: 5rem;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.2rem;
     width: 20%;
     min-height: 15rem;
 }
@@ -236,7 +226,7 @@ margin-top: 5rem;
     width: 40%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .visualDetailTitle {
@@ -277,7 +267,7 @@ margin-top: 5rem;
 
 
 .visualDetailImgBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 
@@ -287,7 +277,7 @@ margin-top: 5rem;
     background-color: var(--lightOrange);
     justify-content: center;
     align-items: center;
-    padding: 6rem 7.5%;
+    padding: 4rem 7.5%;
     width: 85%;
     gap: 2rem;
     background-image: url(${bg1});
@@ -333,7 +323,7 @@ margin-top: 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .achievedNumberDigit {
@@ -357,7 +347,7 @@ margin-top: 5rem;
     width: 100%;
     margin-top: 3rem;
     margin-bottom: 5rem;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .productTitle {
@@ -368,7 +358,7 @@ margin-top: 5rem;
 
 .productText {
     font-size: 1rem;
-    line-height: 1.5rem;
+    line-height: 1rem;
     width: 60%;
     text-align: center;
     font-weight: 400;
@@ -423,7 +413,7 @@ margin-top: 5rem;
     background-color: var(--orange);
     justify-content: center;
     align-items: center;
-    padding: 6rem 0%;
+    padding: 4rem 0%;
     width: 94%;
     margin: 0% 3%;
     gap: 2rem;
