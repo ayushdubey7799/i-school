@@ -145,7 +145,7 @@ margin-right: 5%;
 .detailBox {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     align-items: center;
 }
 
@@ -176,12 +176,12 @@ margin-right: 5%;
     width: 55%;
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center;
 
 }
 
 .rightBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 
@@ -202,7 +202,7 @@ margin-right: 5%;
     display: flex;
     flex-flow: row wrap;
     column-gap: 5%;
-    row-gap: 2rem;
+    row-gap: 1rem;
     background: linear-gradient(to bottom, var(--grey), black);
     color: white;
     padding: 2rem 5%;

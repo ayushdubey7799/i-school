@@ -8,6 +8,7 @@ import emailIcon from '../../../../assets/icons/Profile/email.png'
 import addIcon from '../../../../assets/icons/addIcon.png'
 import editIcon from '../../../../assets/icons/editBlack.png'
 import shareIcon from '../../../../assets/icons/share.png'
+import Rating from '@mui/material/Rating';
 
 const ProfileNew = () => {
 
@@ -61,7 +62,8 @@ const ProfileNew = () => {
                         profileData.skills.map((skill, index) => (
                             <div className='card'>
                                 <span className='skill'>{skill.name}</span>
-                                <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span>
+                                <Rating name="read-only" value={skill.score} readOnly className='score'/>
+                                {/* <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span> */}
                                 <button className='btn'>Take Assessment</button>
                             </div>
                         ))
@@ -360,9 +362,7 @@ align-items: center;
         }
 
         .score {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: grey;
+            font-size: 1.3rem;
         }
 
         .btn {

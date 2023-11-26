@@ -176,7 +176,7 @@ margin-right: 5%;
 }
 
 .rightBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 

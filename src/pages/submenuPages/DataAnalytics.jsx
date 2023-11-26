@@ -113,10 +113,10 @@ const DataAnalytics = () => {
 
                     <span className='text'>Embrace the future of recruitment with our AI-Based Recruitment Data Analytics and Reports solution. Leverage data to make more informed, unbiased, and efficient hiring decisions. Boost your organization's growth by securing the best talent the smart way.</span>
                     <span className='text'>Are you ready to transform your hiring process? <span className='linkNav' onClick={() => navigate('/contact')}>Contact us</span> today to learn more about our AI-driven solutions and embark on a journey to a more effective, efficient, and data-driven recruitment strategy.</span>
-        
+
                 </div>
             </StyledContent>
-            <Footer/>
+            <Footer />
         </StyledPage>
     )
 }
@@ -150,7 +150,7 @@ margin-right: 5%;
     padding: 3rem 5%;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     border-radius: 1rem;
     align-items: center;
 }
@@ -159,7 +159,7 @@ margin-right: 5%;
     font-size: 1.8rem;
     font-weight: 600;
     word-wrap: break-word;
-    line-height: 2.3rem;
+    line-height: 2rem;
     text-align: center;
 }
 
@@ -178,7 +178,7 @@ margin-right: 5%;
 .detailBox {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     align-items: center;
 }
 
@@ -195,14 +195,14 @@ margin-right: 5%;
 }
 
 .part {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .leftBox {
     width: 40%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .rightBox {
@@ -214,7 +214,7 @@ margin-right: 5%;
 }
 
 .rightBox > img {
-    width: 55%;
+    width: 40%;
 }
 
 
@@ -235,7 +235,7 @@ margin-right: 5%;
     display: flex;
     flex-flow: row wrap;
     column-gap: 5%;
-    row-gap: 2rem;
+    row-gap: 1rem;
     background: linear-gradient(to bottom, var(--grey), black);
     color: white;
     padding: 2rem 5%;

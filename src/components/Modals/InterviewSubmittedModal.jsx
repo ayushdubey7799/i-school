@@ -40,7 +40,7 @@ export default function InterviewSubmittedModal({ scoreModal, setScoreModal, int
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: '40%' }}>
-          <h3>Interview Submitted Successfully</h3>
+          <span style={{fontSize: '1.3rem', fontWeight: '500', display: 'flex', width: '100%', justifyContent: 'center', alignSelf: 'center', margin: '1rem'}}>Interview Submitted Successfully</span>
           <StyledForm>
             <div>
               <label for="reviews">Feedback:</label>

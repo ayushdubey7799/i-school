@@ -145,7 +145,7 @@ display: flex;
 flex-direction: column;
 margin-left: 10%;
 margin-right: 10%;
-gap: 2rem;
+gap: 1.5rem;
 
 
 
@@ -234,7 +234,7 @@ b {
     display: flex;
     flex-flow: row wrap;
     column-gap: 5%;
-    row-gap: 2rem;
+    row-gap: 1rem;
     background: linear-gradient(to top, #99C6FF, var(--lightOrange));
     color: white;
     padding: 2rem 5%;

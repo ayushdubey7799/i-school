@@ -77,7 +77,7 @@ flex-direction: column;
 align-items: center;
 margin-left: 10%;
 margin-right: 10%;
-gap: 4rem;
+gap: 3.3rem;
 
 .mainTitle {
     font-weight: 900;
