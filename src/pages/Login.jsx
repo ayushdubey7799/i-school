@@ -20,15 +20,18 @@ import registerIcon3 from "../assets/registerIcon3.jpg";
 import ReCAPTCHA from "react-google-recaptcha";
 import { getInviteDetails } from "../functions/api/employers/schedule/getInviteDetails";
 import { persistor } from "../store";
-
 import googleAuthIcon from '../assets/googleAuthIcon.png'
 import linkedinAuthIcon from '../assets/linkedinAuthIcon.png'
+import Success from "../components/commonComponents/infoDialog/Success";
+import Error from "../components/commonComponents/infoDialog/Error";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [errorPopup,setErrorPopup] = useState(false);
   const userData = useSelector((state) => state.auth.userData);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  
   const clientCodeStore = useSelector(
     (state) => state.auth.userData?.user?.clientCode
   );
@@ -39,11 +42,15 @@ const Login = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [value, setValue] = useState("job-seeker");
+  const error = useSelector((state) => state.auth?.error);
+
+  console.log("error-------> ",JSON.parse(error)?.status);
 
   const captchaRef = useRef(null);
   const [captchaError, setCaptchaError] = useState(false);
 
   const [searchParams] = useSearchParams();
+
   const token = searchParams.get("token");
   const key = searchParams.get("key");
   if (key == "invite" || key == "interview") {
@@ -128,6 +135,24 @@ const Login = () => {
       setPassword("");
     }
   };
+
+  useEffect(() => {
+    if(error && JSON.parse(error)?.status == "FAILED"){
+      setErrorPopup(true);
+    }
+
+  },[error])
+
+  const handleRetryFunc = () => {
+   dispatch(logout())
+    setErrorPopup(false);
+  }
+
+   
+    if(errorPopup){
+      return <Error open={errorPopup} handleClose={setErrorPopup} msg={JSON.parse(error)?.notify?.message} handleRetryFunc={handleRetryFunc}/>
+    }
+
 
   return (
     <StyledLogin>

@@ -21,7 +21,9 @@ export const auth = async (password, email, clientcode) => {
     console.log('Data:', response.data);
     return response.data;
   } catch (error) {
-    toast.error("Bad Credentials");
+
+    // toast.error("Bad Credentials");
     console.error('Error:', error);
+    return error;
   }
 }

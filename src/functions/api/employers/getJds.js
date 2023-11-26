@@ -2,9 +2,8 @@ import axios from "axios";
 
 export const getJds = async (
   accessToken,
-  clientCode,
-  active=false
-) => {
+  clientCode
+  ) => {
   const config = {
     headers: {
       Authorization: `Bearer ${accessToken}`,

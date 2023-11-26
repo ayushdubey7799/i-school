@@ -51,7 +51,7 @@ function Row(props) {
 }
 
 
-const EmpScheduledCandidateList2 = ({ setPage }) => {
+const EmpScheduledCandidateList2 = () => {
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
 

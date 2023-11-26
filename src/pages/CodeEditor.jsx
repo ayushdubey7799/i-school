@@ -2,29 +2,25 @@ import React, { useState, useEffect } from 'react'
 import Editor, { useMonaco } from '@monaco-editor/react';
 import styled from 'styled-components'
 
-const CodeEditor = () => {
-    const [codeValue, setCodeValue] = useState('');
-    const [language, setLanguage] = useState('javascript');
-    const monaco = useMonaco();
+const CodeEditor = ({input,setInput,language,setLanguage}) => {
+    
 
     const handleCodeEditorChange = (value, event) => {
-        setCodeValue(value);
+        setInput(value);
     }
 
     const handleLanguageChange = (event) => {
         const selectedLanguage = event.target.value;
         setLanguage(selectedLanguage);
-        setCodeValue('');
+        setInput('');
     };
 
-    useEffect(() => {
-        if (monaco) {
-            monaco.editor.setModelLanguage(monaco.editor.getModels()[0], language);
-        }
-    }, [monaco, language]);
+    // useEffect(() => {
+    //     if (monaco) {
+    //         monaco.editor.setModelLanguage(monaco.editor.getModels()[0], setLanguage);
+    //     }
+    // }, [monaco, language]);
 
-    console.log('lang', language);
-    console.log('value', codeValue);
 
     return (
         <Box>
@@ -62,7 +58,7 @@ const CodeEditor = () => {
                 theme="vs-dark"
                 height="80vh"
                 language={language}
-                value={codeValue}
+                value={input}
                 onChange={handleCodeEditorChange}
             />
         </Box>

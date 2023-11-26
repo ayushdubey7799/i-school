@@ -46,7 +46,7 @@ const EmployerDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentItem, setCurrentItem] = useState("dashboard");
 
-  const [empScheduledPage, setEmpScheduledPage] = useState(1);
+  const [empScheduledPage, setEmpScheduledPage] = useState({index: 1, jdId: null});
 
   useEffect(() => {
     // if (!accessToken) navigate("/login");
