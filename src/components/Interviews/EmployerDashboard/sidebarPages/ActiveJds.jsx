@@ -30,6 +30,8 @@ import AgencyShareDialogContent from '../../../commonComponents/AgencyShareDialo
 import { deleteJd } from '../../../../functions/api/employers/deleteJd';
 import ModalHOC from '../../SeekerDashboard/ModalHOC';
 import JdForm from '../JdForm';
+import { getActiveJds } from '../../../../slices/jdSlice';
+import { useDispatch } from 'react-redux';
 
 
 function Row(props) {
@@ -181,10 +183,12 @@ const ActiveJds = () => {
   const [tableRows, setTableRows] = useState([]);
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
+  const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   useEffect(() => {
     async function getData() {
+      dispatch(getActiveJds({accessToken,clientCode}));
       const res = await getJdsForMatching(accessToken, clientCode);
       setTableRows(res?.data?.data);
     }

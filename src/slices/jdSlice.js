@@ -1,17 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth } from "../functions/api/authentication/auth";
+import { getJds } from "../functions/api/employers/getJds";
+import { getJdsForMatching } from "../functions/api/employers/match/getJdsForMatching";
 
 
 
-export const performLogin = createAsyncThunk('auth/performLogin', async ({password,email,clientCode}) => {
-    console.log("IN LOGIN",clientCode);
-
-    const response = await auth(password, email, clientCode);
+export const getAvailableJds = createAsyncThunk('jd/getJds', async ({accessToken,clientCode}) => {
+    const response = await getJds(accessToken, clientCode);
     return response.data;
 })
 
+export const getActiveJds = createAsyncThunk('jd/getActiveJds', async ({accessToken,clientCode}) => {
+    const response = await getJdsForMatching(accessToken, clientCode);
+    return response.data;
+})
+
+
 const initialState = {
-    userData: null,
+    availableJds: null,
+    activeJds: null,
     status: 'idle',
     error: null,
 }
@@ -20,26 +27,28 @@ const jdSlice = createSlice({
     name: 'jd',
     initialState,
     reducers: {
-        logout: (state) => {
-            state.userData = null;
-            state.status = "idle";
-            state.error = null;
-        }
     },
     
     extraReducers: (builder) => {
-        builder.addCase(performLogin.pending, (state) => {
+        builder.addCase(getAvailableJds.pending, (state) => {
             state.status = 'loading';
-        }).addCase(performLogin.fulfilled, (state, action) => {
-            state.userData = action.payload;
+        }).addCase(getAvailableJds.fulfilled, (state, action) => {
+            state.availableJds = action.payload.data;
             state.status = 'succeeded';
-        }).addCase(performLogin.rejected, (state, action) => {
+        }).addCase(getAvailableJds.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+        }).addCase(getActiveJds.pending, (state) => {
+            state.status = 'loading';
+        }).addCase(getActiveJds.fulfilled, (state, action) => {
+            state.activeJds = action.payload?.data;
+            state.status = 'succeeded';
+        }).addCase(getActiveJds.rejected, (state, action) => {
             state.status = 'failed';
             state.error = action.error.message;
         })
     }
 });
-export const {logout} = authSlice.actions;
-export default authSlice.reducer;
+export default jdSlice.reducer;
 
 

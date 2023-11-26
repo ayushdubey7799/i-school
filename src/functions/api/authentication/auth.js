@@ -2,7 +2,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 
-export const auth = async (password, email, clientcode = "BRAJ01") => {
+export const auth = async (password, email, clientcode='intelliview') => {
   const requestData = {
     password: password,
     username: email
@@ -21,7 +21,9 @@ export const auth = async (password, email, clientcode = "BRAJ01") => {
     console.log('Data:', response.data);
     return response.data;
   } catch (error) {
-    toast.error("Bad Credentials");
+
+    // toast.error("Bad Credentials");
     console.error('Error:', error);
+    return error;
   }
 }

@@ -142,7 +142,7 @@ const EmployeMetrics = ({ page, setPage }) => {
 
 
   useEffect(() => {
-    setPage(1);
+    setPage({index: 1,jdId:null});
   }, []);
 
   return (
@@ -181,7 +181,7 @@ const EmployeMetrics = ({ page, setPage }) => {
           <span className='achievedNumberText'>{EmpMetrics4.title}</span>
         </div>
       </Container>
-      {currMetric === 'interviews' && <>{page === 1 && <EmpScheduledInterviews page={page} setPage={setPage} />}  {page === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}</>}
+      {currMetric === 'interviews' && <>{page?.index === 1 && <EmpScheduledInterviews page={page} setPage={setPage} />}  {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}</>}
       {currMetric === 'activeJDs' && <ActiveJds />}
       {currMetric === 'candidatesPool' && <RegisteredCandidates />}
     </MainContainer>
