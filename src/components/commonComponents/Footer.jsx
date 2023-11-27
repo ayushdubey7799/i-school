@@ -27,6 +27,9 @@ const Footer = () => {
           <StyledLink to="/case-studies">
             <span className="link">Case Studies</span>
           </StyledLink>
+          <StyledLink to="/research-paper">
+            <span className="link">Research Papers</span>
+          </StyledLink>
           <StyledLink to="/career">
             <span className="link">Careers</span>
           </StyledLink>

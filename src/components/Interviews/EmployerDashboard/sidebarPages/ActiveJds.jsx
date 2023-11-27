@@ -32,6 +32,8 @@ import ModalHOC from '../../SeekerDashboard/ModalHOC';
 import JdForm from '../JdForm';
 import { getActiveJds } from '../../../../slices/jdSlice';
 import { useDispatch } from 'react-redux';
+import JdsDetails from './JdsDetails';
+import ReqModalDetails from '../ReqModalDetails';
 
 
 function Row(props) {
@@ -44,6 +46,16 @@ function Row(props) {
   const [editOpen, setEditOpen] = useState(false);
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
+
+  // state to open and close Drawer
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  // state to open and close Drawer
+  const [reqState, setReqState] = React.useState({
+    right: false,
+  });
 
   const handleEdit = (row) => {
     setEditOpen(true);
@@ -84,16 +96,20 @@ function Row(props) {
   };
 
 
-  // State, function to open and close Drawer
-  const [state, setState] = React.useState({
-    right: false,
-  });
-
+  // function to open and close Drawer
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setState({ ...state, [anchor]: open });
+  };
+
+  //function to open and close Drawer
+  const toggleReqDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setReqState({ ...reqState, [anchor]: open });
   };
 
   const openDropdown = (index) => {
@@ -124,6 +140,8 @@ function Row(props) {
     };
   }, []);
 
+  console.log(row);
+
 
   return (
     <React.Fragment>
@@ -137,7 +155,7 @@ function Row(props) {
           ...
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center">
-          {row.createdAt?.slice(0,10)}
+          {row.createdAt?.slice(0, 10)}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           {row.recruiter}
@@ -162,12 +180,14 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
-              <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
+              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} />} />
+              <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
               <span onClick={() => handleEdit(row)}>Edit <img src={editIcon} className='threeDotIcon' /></span>
               <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
               <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
+              <span onClick={toggleReqDrawer('right', true)}>View Reqs <img src={eyeIcon} className='threeDotIcon' /></span>
               <span onClick={handleShareSocial}>Share on Social <img src={shareIcon} className='threeDotIcon' /></span>
               <span onClick={handleClickOpenShareAgency}>Share with Agency <img src={shareWithEmp} className='threeDotIcon' /></span>
             </div>
@@ -188,7 +208,7 @@ const ActiveJds = () => {
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   useEffect(() => {
     async function getData() {
-      dispatch(getActiveJds({accessToken,clientCode}));
+      dispatch(getActiveJds({ accessToken, clientCode }));
       const res = await getJdsForMatching(accessToken, clientCode);
       setTableRows(res?.data?.data);
     }
