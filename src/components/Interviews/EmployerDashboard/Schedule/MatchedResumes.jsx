@@ -20,7 +20,8 @@ import eyeIcon from '../../../../assets/icons/visible.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { useDispatch } from "react-redux";
 import { addResumes } from "../../../../slices/invitationSlice";
-
+import iIcon from '../../../../assets/icons/iIcon.png'
+import CommonDialog from "../../../commonComponents/CommonDialog";
 
 function Row(props) {
   const { row, handleSelectArray, index } = props;
@@ -61,6 +62,8 @@ function Row(props) {
   );
 }
 
+
+
 export default function MatchedResumes() {
   const { jdId } = useParams();
   const [tableRows, setTableRows] = useState([]);
@@ -76,6 +79,17 @@ export default function MatchedResumes() {
 
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
+
+  // State, function to Open and close Dialog Box
+  const [openInfo, setOpenInfo] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenInfo(true);
+  };
+
+  const handleClose = () => {
+    setOpenInfo(false);
+  };
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);
@@ -115,7 +129,7 @@ export default function MatchedResumes() {
 
   const handleSchedule = () => {
     if (selectedArray?.length > 0) {
-      dispatch(addResumes([...selectedArray,idToSendInvite]));
+      dispatch(addResumes([...selectedArray, idToSendInvite]));
       navigate(`/schedule/invite/${jdId}`);
     }
     else {
@@ -144,34 +158,34 @@ export default function MatchedResumes() {
             Matched Resumes for Jd Id: {jdId}
           </span>
           <SearchBarContainer>
-          <div className='skillBox'>
-            <img src={searchBlack} />
-            <input
-              className='skillInput'
-              type="text"
-              placeholder="Search"
-            />
-          </div>
+            <div className='skillBox'>
+              <img src={searchBlack} />
+              <input
+                className='skillInput'
+                type="text"
+                placeholder="Search"
+              />
+            </div>
 
-          <div className='selectBox'>
-            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filter by</option>
-              <option value="Name">Name</option>
-              <option value="MatchPercentage">Match Percentage</option>
-              <option value="Email">Email</option>
-              <option value="Contact">Contact</option>
-              <option value="Score">Score</option>
-            </select>
-            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-              <option value="" disabled selected>Sort by</option>
-              <option value="Name">Name</option>
-              <option value="MatchPercentage">Match Percentage</option>
-              <option value="Email">Email</option>
-              <option value="Contact">Contact</option>
-              <option value="Score">Score</option>
-            </select>
-          </div>
-        </SearchBarContainer>
+            <div className='selectBox'>
+              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
+                <option value="" disabled selected>Filter by</option>
+                <option value="Name">Name</option>
+                <option value="MatchPercentage">Match Percentage</option>
+                <option value="Email">Email</option>
+                <option value="Contact">Contact</option>
+                <option value="Score">Score</option>
+              </select>
+              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
+                <option value="" disabled selected>Sort by</option>
+                <option value="Name">Name</option>
+                <option value="MatchPercentage">Match Percentage</option>
+                <option value="Email">Email</option>
+                <option value="Contact">Contact</option>
+                <option value="Score">Score</option>
+              </select>
+            </div>
+          </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
@@ -179,7 +193,10 @@ export default function MatchedResumes() {
                 {/* <TableCell align="center">Match Percentage</TableCell> */}
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Contact</TableCell>
-                <TableCell align="center">Score</TableCell>
+                <TableCell align="center" className="score">
+                  <CommonDialog open={openInfo} handleClose={handleClose} component={<InfoText />} />
+                  Score <img className="iIcon" src={iIcon} onClick={handleClickOpen} />
+                </TableCell>
                 <TableCell align="center">Select Candidates</TableCell>
                 <TableCell align="center">Details</TableCell>
               </TableRow>
@@ -203,6 +220,21 @@ export default function MatchedResumes() {
     </StyledDiv>
   );
 }
+
+
+const InfoText = () => {
+  return (
+    <InfoBox>It's Resume-JD matching Score.</InfoBox>
+  )
+}
+
+const InfoBox = styled.div`
+padding: 2rem 3rem;
+font-size: 1rem;
+font-weight: 500;
+
+
+`
 
 const StyledDiv = styled.div`
   display: flex;
@@ -255,6 +287,19 @@ const Content = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+
+
+    .score {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .iIcon {
+      width: 1.1rem;
+    }
+    
   }
 
   .tableBody {

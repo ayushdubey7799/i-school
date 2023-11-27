@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ModalHOC from '../../SeekerDashboard/ModalHOC';
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 
 import EmployerDetails from '../EmployerDetails';
 import JdDetails from '../../../../pages/JdDetails';
 import JdForm from '../JdForm';
-import attachIcon from '../../../../assets/icons/attach.png'
 import editIcon from '../../../../assets/icons/edit.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
+import threeDot from '../../../../assets/icons/threeDot.png'
+import eyeIcon from '../../../../assets/icons/visible.png'
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { getJds } from '../../../../functions/api/employers/getJds';
 import { useSelector } from 'react-redux';
@@ -33,15 +28,46 @@ import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 import ReqModalDetails from '../ReqModalDetails';
 import { useDispatch } from 'react-redux';
 import { getAvailableJds } from '../../../../slices/jdSlice';
+import CommonDrawer from '../../../commonComponents/CommonDrawer';
+import JdsDetails from './JdsDetails';
 
 
 function Row(props) {
-  const { row, isSelected, onToggle, index } = props;
+  const { row, index } = props;
   const [jdData, setJdData] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
-  const [reqModal,setReqModal] = useState(false);
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
+
+  const dropdownRef = useRef(null);
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
+
+
+  // state to open and close Drawer
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  // state to open and close Drawer
+  const [reqState, setReqState] = React.useState({
+    right: false,
+  });
+
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
+    };
+  }, []);
+
+
   const handleEdit = (row) => {
     setEditOpen(true);
     setJdData(row);
@@ -68,74 +94,71 @@ function Row(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(row.jdId,row.reqNumbers);
+
+
+  //function to open and close Drawer
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
+
+  //function to open and close Drawer
+  const toggleReqDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setReqState({ ...reqState, [anchor]: open });
+  };
+
+  const openDropdown = (index) => {
+    setOpenDropdownIndex(index);
+  };
+
+  const closeAllDropdowns = () => {
+    setOpenDropdownIndex(-1);
+  };
+
+  console.log(row.jdId, row.reqNumbers);
   return (
     <React.Fragment>
       <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
-      <ModalHOC setOpenNewInterviewModal={setReqModal} openNewInterviewModal={reqModal} Component={ReqModalDetails} array={row.reqNumbers} />
 
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent row click event from firing
-              onToggle(row);
-            }}
-          >
-            {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
         <TableCell component="th" scope="row" align='center'>
           {row.jdId}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.createdAt?.slice(0,10)}
+          {row.createdAt?.slice(0, 10)}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           {row.createdBy}
         </TableCell>
+
         <TableCell component="th" scope="row" align="center">
-          <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='JD' handleClose={handleClose} handleDelete={handleDelete} deleteId={row.id} />} />
-            <p onClick={() => setReqModal(true)}>View Reqs</p>
-            <img src={editIcon} onClick={() => handleEdit(row)} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
-            <img src={deleteIcon} onClick={() => handleClickOpen()} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid #FE4C4F', padding: '0.3rem', borderRadius: '0.3rem' }} />
-          </div>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
-          <Collapse in={row.open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="body1" gutterBottom>
-                <div style={{ fontSize: "0.7rem", }}><b>Title</b>: {row.title}</div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  <b>Description</b>: {row.description}
-                </div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}><b>Skills</b>: {row.skills}</div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  <b>Experience</b>: {row.exp}
-                </div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  <b>Location</b>: {row.location}
-                </div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}>
-                  <b>WorkType</b>: {row.workType}
-                </div>
-                <br />
-                <div style={{ fontSize: "0.7rem" }}><b>CTC</b>: {row.ctc}</div>
-                <br />
-              </Typography>
-            </Box>
-          </Collapse>
+          <BoxRow>
+            <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
+              onClick={() => {
+                if (openDropdownIndex === index) {
+                  closeAllDropdowns();
+                } else {
+                  openDropdown(index);
+                }
+              }} />
+            <div
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
+            >
+              <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
+              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} />} />
+              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
+              <span onClick={() => handleEdit(row)}>Edit <img src={editIcon} className='threeDotIcon' /></span>
+              <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
+              <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
+              <span onClick={toggleReqDrawer('right', true)}>View Reqs <img src={eyeIcon} className='threeDotIcon' /></span>
+            </div>
+          </BoxRow>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -154,13 +177,13 @@ const JdRegistration = () => {
   const testingData = useSelector(state => state?.jd?.availableJds);
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
-  
+
 
   useEffect(() => {
     async function getData() {
-      dispatch(getAvailableJds({accessToken,clientCode}));
-      const res = await getJds(accessToken,clientCode);
-      if(res)setTableRows(res?.data?.data);
+      dispatch(getAvailableJds({ accessToken, clientCode }));
+      const res = await getJds(accessToken, clientCode);
+      if (res) setTableRows(res?.data?.data);
     }
     getData();
   }, []);
@@ -252,7 +275,6 @@ const JdRegistration = () => {
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell />
                 <TableCell align='center'>JD ID</TableCell>
                 <TableCell align='center'>Date of Creation</TableCell>
                 <TableCell align='center'>Created By</TableCell>
@@ -433,3 +455,51 @@ const SearchBarContainer = styled.div`
   }
 
 `
+const BoxRow = styled.div`
+  position: relative;
+  display: inline-block;
+
+.three-dots {
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--white);
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 10%;
+  border-radius: 0.5rem;
+  font-size: 0.7rem;
+  min-width: 10rem;
+  justify-content: start;
+  padding: 0.5rem 0.5rem;
+}
+
+
+.dropdown-content span {
+  padding: 0.3rem 0.8rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color);
+  cursor: pointer;
+}
+
+
+.dropdown:hover .dropdown-content, .dropdown-content.open {
+  display: block;
+}
+
+.threeDotIcon {
+  width: 0.6rem;
+  height: 0.6rem;
+  cursor: pointer;
+  border: 0.08rem solid grey;
+  padding: 0.15rem;
+  border-radius: 0.2rem;
+}
+`
+
