@@ -21,6 +21,8 @@ import { TextField } from '@mui/material';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import Success from "../../../commonComponents/infoDialog/Success";
+import Error from "../../../commonComponents/infoDialog/Error";
 
 
 const timezonesName = {
@@ -62,6 +64,9 @@ export default function Invite() {
   const [interviewerEmail, setInterviewerEmail] = useState('');
   const [meetUrl, setMeetUrl] = useState('');
   const [testType, setTestType] = useState("");
+  const [successPopup,setSuccessPopup] = useState(false);
+  const [errorPopup,setErrorPopup] = useState(null);
+
   const accessToken = useSelector((state) => state.auth.userData.accessToken);
   const clientCode = useSelector(
     (state) => state.auth.userData.user.clientCode
@@ -125,7 +130,7 @@ export default function Invite() {
       const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot.$H + ":" + selectedTimeSlot.$m + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
-      console.log(selectedTimeSlot);
+      console.log(dateTime);
       if (!productType || !testType || !value.format("YYYY-MM-DD")) {
         toast.error("Fill all fields");
         return;
@@ -146,9 +151,13 @@ export default function Invite() {
       console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
-        console.log("API call successful:", response.data);
-        toast.success("Invites sent successfully");
-        navigate("/schedule/invite/success");
+        console.log("=======>",response);
+        if(response.status == "FAILED"){
+          setErrorPopup({status: true, msg: response?.notify?.message})
+        }else{
+          setSuccessPopup(true);
+
+        }
       } catch (error) {
         toast.error("error-> ", error?.message);
         console.error("API call failed:", error);
@@ -159,7 +168,7 @@ export default function Invite() {
   };
 
 
-  console.log("Time Slot Hour and Minute", selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
+  console.log("Time Slot Hour and Minute", selectedTimeSlot.$H + " " + typeof selectedTimeSlot.$m);
 
   const handlePrev = () => {
     if (step > 1) {
@@ -173,7 +182,22 @@ export default function Invite() {
     }
   }
 
+  const handleSuccessFunc = () => {
+    setSuccessPopup(false);
+    navigate("/schedule/invite/success");
+  }
+
+  const handleErrorRetry = () => {
+    setErrorPopup({status: false, msg: ""});
+    setStep(1);
+    // navigate(`/schedule/invite/${array[array.length - 1]}`);
+  }
+
   return (
+    <>
+    {successPopup && <Success open={successPopup} handleClose={handleSuccessFunc} msg={"Invites sent successfully"} />}
+    {errorPopup?.status && <Error open={errorPopup.status} handleClose={handleErrorRetry} msg={errorPopup.msg} handleRetryFunc={handleErrorRetry}/>}
+
     <MainContainer>
       <LogoHeader />
       <Container>
@@ -408,6 +432,7 @@ export default function Invite() {
         </ButtonBox>
       </Container>
     </MainContainer>
+    </>
   );
 }
 
