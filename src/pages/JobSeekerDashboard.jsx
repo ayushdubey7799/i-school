@@ -51,7 +51,7 @@ const JobSeekerDashboard = () => {
 
           {currentItem === "configure-dashboard" && <ConfigureDash />}
           {currentItem === 'job-search' && <JobSearchBar />}
-          {currentItem === 'interviewDash' && <InterviewTabs />}
+          {/* {currentItem === 'interview-dashboard' && <InterviewTabs />} */}
           {currentItem === 'applied-jobs' && <JobApplication />}
           {currentItem === 'recommended-jobs' && <RecommendedJobs />}
           {currentItem === 'saved-jobs' && <SavedJobs />}

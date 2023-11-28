@@ -22,7 +22,7 @@ export default function NewInterviewDetails() {
     return (
         <StyledCreateInterview>
             <Header />
-            <Box sx={{ width: "65%", position: "relative", top: "7rem", margin: "0 2rem", marginBottom: '7rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className='box'>
+            <Box sx={{ width: "55%", position: "relative", top: "7rem", margin: "0 2rem", marginBottom: '7rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className='box'>
                 <Tabs
                     style={{ width: '100%', borderRadius: '3rem', backgroundColor: 'var(--lightOrange)' }}
                     value={value}

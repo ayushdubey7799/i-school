@@ -179,8 +179,8 @@ export default function ManageJds({ rows }) {
           <TableHead className="tableHead">
             <TableRow>
               <TableCell />
-              <TableCell align="center">JD_ID</TableCell>
-              <TableCell align="center">Req_ID</TableCell>
+              <TableCell align="center">JD ID</TableCell>
+              <TableCell align="center">Req ID</TableCell>
               <TableCell align="center">No of Profiles available</TableCell>
               <TableCell align="center">Date of Creation</TableCell>
               <TableCell align="center">Recruiter</TableCell>
