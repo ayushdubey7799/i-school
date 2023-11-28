@@ -202,6 +202,7 @@ const ProfileInterview = () => {
                 value={interviewDetails.jobSummary}
                 name="jobSummary"
                 onChange={handleInputChange}
+                placeholder="Enter Job Description..."
               />
             </div>
             {/* <PdfTextExtractor/> */}
@@ -223,6 +224,7 @@ const ProfileInterview = () => {
                 value={interviewDetails.resumeText}
                 name="resumeText"
                 onChange={handleInputChange}
+                placeholder="Enter Resume text..."
               />
             </div>
 
@@ -270,6 +272,7 @@ const StyledForm = styled.form`
     top: 0.8rem;
     left: 1rem;
     background-color: var(--white);
+    color: #757575;
     padding: 0 0.5rem;
   }
 
@@ -278,7 +281,7 @@ const StyledForm = styled.form`
     width: 100%;
     margin-top: 0.5rem;
     border-radius: 0.5rem;
-    padding: 0.5rem 0.5rem;
+    padding: 0.75rem 0.5rem;
     font-size: 1rem;
     outline-color: var(--lightOrange);
   }

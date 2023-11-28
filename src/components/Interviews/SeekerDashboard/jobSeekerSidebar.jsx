@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import profileIcon from '../../../assets/icons/profile.png'
 import jobSearchIcon from '../../../assets/icons/job-search.png'
@@ -171,6 +171,13 @@ const Arrow = styled.div`
 const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
   const [expanded, setExpanded] = useState(false);
 
+  const navigate = useNavigate();
+
+  const handleLinkClick = () => {
+    // Open the link in a new tab
+    window.open('/create', '_blank');
+  };
+
   const handleItemClick = (item) => {
     setCurrentItem(item);
   };
@@ -179,10 +186,12 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+
+
   return (
     <Container>
 
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }}>
+      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} style={{ width: '100%', boxShadow: 'none', margin: '0' }} classes={{ root: 'custom-accordion-root' }} >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
@@ -192,7 +201,7 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
             expanded: expanded === 'panel1' ? 'expanded' : ''
           }}
         >
-          <span className={`menuTitle ${expanded === 'panel1' ? 'selected' : ''}`}><img src={titleIcon1} /> Home</span>
+          <span className={`menuTitle ${expanded === 'panel1' ? 'selected' : ''}`} onClick={() => handleItemClick('dashboard')}><img src={titleIcon1} /> Home</span>
           {expanded === 'panel1' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails className='details'>
@@ -284,13 +293,19 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
           {expanded === 'panel4' && <Arrow></Arrow>}
         </AccordionSummary>
         <AccordionDetails className='details'>
-          <MenuItem isSelected={currentItem === 'interview-dashboard'} onClick={() => handleItemClick('interview-dashboard')}>
+          <MenuItem isSelected={currentItem === 'interview-dashboard'} onClick={() => {
+            handleItemClick('interview-dashboard')
+            navigate('/dashboard/interviews')
+          }}>
             <img src={interviewDashboardIcon} className='icon' />
-            <Link to='/dashboard/interviews'>Interview Dashboard</Link>
+            <a>Interview Dashboard</a>
           </MenuItem>
-          <MenuItem isSelected={currentItem === 'practice-interview'} onClick={() => handleItemClick('practice-interview')}>
+          <MenuItem isSelected={currentItem === 'practice-mock'} onClick={() => {
+            navigate('/dashboard/interviews')
+            handleLinkClick()
+          }}>
             <img src={practiceInterviewIcon} className='icon' />
-            <a href='/create' target='_blank' rel='noopener noreferrer'>Mock Interview</a>
+            <a>Mock Interview</a>
             <OpenInNewIcon className='openNew' />
           </MenuItem>
         </AccordionDetails>
