@@ -149,12 +149,10 @@ const Login = () => {
   }
 
    
-    if(errorPopup){
-      return <Error open={errorPopup} handleClose={setErrorPopup} msg={JSON.parse(error)?.notify?.message} handleRetryFunc={handleRetryFunc}/>
-    }
-
 
   return (
+    <>
+    {errorPopup && <Error open={errorPopup} handleClose={setErrorPopup} msg={JSON.parse(error)?.notify?.message} handleRetryFunc={handleRetryFunc}/>}
     <StyledLogin>
       <div
         style={{
@@ -446,6 +444,7 @@ const Login = () => {
         )}
       </Box>
     </StyledLogin>
+    </>
   );
 };
 

@@ -187,7 +187,7 @@ const OngoingInterview = ({ start, handleStart }) => {
           {start ? (
             <>
               <div>{data?.question}</div>
-              {data.questionType == "Coding" ? (
+              {data?.questionType == "coding" ? (
                <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage}/>
               ) : (
                 <textarea

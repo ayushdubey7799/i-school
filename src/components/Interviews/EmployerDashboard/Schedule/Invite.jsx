@@ -103,7 +103,7 @@ export default function Invite() {
     // }
     // getTypes();
     setProductTypes(["JD", "Resume", "JD + Resume", "Skill"]);
-    setTestTypes(["MCQs", "Subjective", "Coding"]);
+    setTestTypes(["MCQs", "Subjective", "coding"]);
   }, []);
 
   const handleProductTypeChange = (inp) => {
@@ -321,9 +321,9 @@ export default function Invite() {
                   <label className="label">
                     <input
                       type="radio"
-                      value="Coding"
-                      checked={testType === 'Coding'}
-                      onChange={() => handleTestTypeChange('Coding')}
+                      value="coding"
+                      checked={testType === 'coding'}
+                      onChange={() => handleTestTypeChange('coding')}
                     />
                     <span>Coding</span>
                   </label>

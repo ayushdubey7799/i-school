@@ -65,7 +65,7 @@ const SlotSelection = () => {
     const time = dateTime.slice(11);
     console.log(date + "T" + time);
     const scheduleTest = async () => {
-      console.log(token);
+      console.log(token,date);
       const res = await scheduleByCandidate(
         {
           slot: date + "T" + time,
