@@ -93,8 +93,8 @@ const InterviewList = ({ filteredData }) => {
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align='center'>Jd_id</TableCell>
-              <TableCell align='center'>Test_id</TableCell>
+              <TableCell align='center'>JD ID</TableCell>
+              <TableCell align='center'>Test ID</TableCell>
               <TableCell align='center'>Date of Interview</TableCell>
               <TableCell align='center'>Score</TableCell>
               <TableCell align='center'>Ranking</TableCell>

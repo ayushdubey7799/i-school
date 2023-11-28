@@ -46,15 +46,14 @@ function Row(props) {
         <TableCell align="center">{row.email}</TableCell>
         <TableCell align="center">{row.contact}</TableCell>
         <TableCell align="center">{row.score}</TableCell>
-        <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
+        <TableCell align="center">...</TableCell>
+        <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
           <input
             type="checkbox"
             checked={selected}
             onChange={() => handleSelectChange(row)}
             className="checkBox"
           />
-        </TableCell>
-        <TableCell align="center">
           <img src={eyeIcon} />
         </TableCell>
       </TableRow>
@@ -89,6 +88,17 @@ export default function MatchedResumes() {
 
   const handleClose = () => {
     setOpenInfo(false);
+  };
+
+  // State, function to Open and close Dialog Box
+  const [openAIScoreInfo, setOpenAIScoreInfo] = React.useState(false);
+
+  const handleAIScoreClickOpen = () => {
+    setOpenAIScoreInfo(true);
+  };
+
+  const handleAIScoreClose = () => {
+    setOpenAIScoreInfo(false);
   };
 
   const handleSortParams = (e) => {
@@ -155,7 +165,7 @@ export default function MatchedResumes() {
           />
 
           <span style={{ fontSize: '1.1rem', fontWeight: '600', padding: '1rem 0rem 0rem 3rem', display: 'block' }}>
-            Matched Resumes for Jd Id: {jdId}
+            Matched Resumes for JD ID: {jdId}
           </span>
           <SearchBarContainer>
             <div className='skillBox'>
@@ -193,12 +203,15 @@ export default function MatchedResumes() {
                 {/* <TableCell align="center">Match Percentage</TableCell> */}
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Contact</TableCell>
-                <TableCell align="center" className="score">
-                  <CommonDialog open={openInfo} handleClose={handleClose} component={<InfoText />} />
-                  Score <img className="iIcon" src={iIcon} onClick={handleClickOpen} />
+                <TableCell align="center" >
+                  <CommonDialog open={openInfo} handleClose={handleClose} component={<InfoText info={openInfo} />} />
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>Score <img className="iIcon" src={iIcon} onClick={handleClickOpen} /></span>
                 </TableCell>
-                <TableCell align="center">Select Candidates</TableCell>
-                <TableCell align="center">Details</TableCell>
+                <TableCell align="center">
+                  <CommonDialog open={openAIScoreInfo} handleClose={handleAIScoreClose} component={<InfoText info={openInfo} />} />
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>AI Score <img className="iIcon" src={iIcon} onClick={handleAIScoreClickOpen} /></span>
+                </TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -222,9 +235,9 @@ export default function MatchedResumes() {
 }
 
 
-const InfoText = () => {
+const InfoText = ({ info }) => {
   return (
-    <InfoBox>It's Resume-JD matching Score.</InfoBox>
+    <InfoBox>{info ? `Keyword Match Score` : `JD-Resume Match AI Score`}</InfoBox>
   )
 }
 
@@ -287,14 +300,6 @@ const Content = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
-
-
-    .score {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-    }
 
     .iIcon {
       width: 1.1rem;
