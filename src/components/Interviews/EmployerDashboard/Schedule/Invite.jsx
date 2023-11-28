@@ -141,6 +141,7 @@ export default function Invite() {
         timeZone: "UTC",
         welcomeMessage: "string",
       };
+      
       if (isTime) delete payload.slotTime;
       console.log(payload);
       try {
