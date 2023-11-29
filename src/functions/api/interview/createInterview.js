@@ -3,8 +3,7 @@ import axios from "axios"
 
 
 
-export const createInterview = async (jobSummary,resumeText, accessToken) => {
-  console.log(jobSummary,resumeText);
+export const createInterview = async (payload, accessToken) => {
   // const token = JSON.parse(localStorage.getItem("token"));
 
 const config = {
@@ -13,13 +12,10 @@ const config = {
     'Content-Type': 'application/json'
   }
 };
-  const requestData = {
-    jobSummary,
-    resumeText
-  };
+  
 
     try {
-        const response = await axios.post('https://dev-api.intelliview.in/api/interviews',requestData,config);
+        const response = await axios.post('https://dev-api.intelliview.in/api/interviews',payload,config);
         console.log('Data:', response.data);
         console.log("Status", response.status)
         return response.data;

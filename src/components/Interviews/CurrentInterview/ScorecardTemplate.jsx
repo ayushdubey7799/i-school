@@ -41,7 +41,7 @@ function Row(props) {
           <Collapse in={row.open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1}}>
               <Typography variant="body1" gutterBottom>
-                <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:"skipped"}</div>
+                <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:row.answerFile?row.answerFile?.srcFilename:"skipped"}</div>
                 <br/>
                 <br/>
                 <strong>Expected Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.expectedAnswer?row.expectedAnswer:"Not Available"}</div>

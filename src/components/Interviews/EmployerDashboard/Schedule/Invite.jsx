@@ -152,6 +152,8 @@ export default function Invite() {
         resumeIds: array.slice(0, -1),
         testType: testType,
         interviewType: interviewType,
+        noOfQuestions: numberOfQue,
+        difficultyLevel: difficultyLevel,
         slotDate: date,
         slotTime: time,
         timeZone: "UTC",
@@ -179,7 +181,7 @@ export default function Invite() {
   };
 
 
-  console.log("Time Slot Hour and Minute", selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
+  console.log("Time Slot Hour and Minute", "0"+selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
 
   const handlePrev = () => {
     if (step > 1) {
