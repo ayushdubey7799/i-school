@@ -165,7 +165,7 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0rem;
-  width: 94%;
+  width: 96%;
   padding: 0 2.5%;
   margin: 1rem 0% 2rem 0%;
   align-items: center;
@@ -174,7 +174,7 @@ const MainContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 98%;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0% 2rem 0%;

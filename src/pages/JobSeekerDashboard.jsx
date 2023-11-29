@@ -41,7 +41,7 @@ const JobSeekerDashboard = () => {
 
   return (
     <MainBox>
-      <JobSeekerHeader />
+      <JobSeekerHeader setCurrentItem={setCurrentItem} />
       <StyledContent>
         <JobSeekerSidebar currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <MainContent>
@@ -76,12 +76,13 @@ const MainBox = styled.div`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
+width: 100%;
 background-color: #f4f4f4;
 `
 
 const MainContent = styled.div`
   flex-grow: 1;
-  margin-left: 17rem;
+  margin-left: 16rem;
   padding-top: 2rem;
   display: flex;
   flex-direction: column;

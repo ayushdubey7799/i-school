@@ -6,7 +6,8 @@ import { IconButton } from "@mui/material";
 import logo from "../../assets/IntelliViewLogo.png";
 import { useSelector } from "react-redux";
 import profileIcon from '../../assets/profileIcon.png'
-import demoIcon from '../../assets/icons/demoIcon.png'
+import notificationIcon from '../../assets/icons/notification.png'
+import demoIcon from '../../assets/icons/demoIconNew.jpg'
 import profileFeedback from '../../assets/icons/profileFeedback.png'
 import profileHelp from '../../assets/icons/profileHelp.png'
 import profileReset from '../../assets/icons/profileReset.png'
@@ -45,11 +46,12 @@ const EmployerHeader = ({ setCurrentItem }) => {
           </span>
         </Link>
 
+        <div className="notificationIcon" onClick={() => setCurrentItem('inbox')}>
+          <img src={notificationIcon} />
+        </div>
 
         <div className="profileIcon">
-          <IconButton>
             <img src={profileIcon} className="profileImg" />
-          </IconButton>
         </div>
 
         <div class="dropdown" id="dropdown">
@@ -93,7 +95,7 @@ const StyledDiv = styled.div`
   #right {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .coloredText {
@@ -127,8 +129,8 @@ const StyledDiv = styled.div`
 
 
     img {
-      width: 1.7rem;
-      height: 1.7rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
 
     .altText {
@@ -158,9 +160,19 @@ const StyledDiv = styled.div`
     color: var(--white);
   }
 
+  .notificationIcon {
+    width: 1.5rem;
+    cursor: pointer;
+    margin-top: 0.1rem;
+
+    img {
+      width: 100%;
+    }
+  }
 
   .profileIcon {
     position: relative;
+    cursor: pointer;
   }
 
   .profileImg {

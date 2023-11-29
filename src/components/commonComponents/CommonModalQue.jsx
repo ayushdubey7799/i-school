@@ -3,7 +3,7 @@ import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 
 
-export default function CommonModal({
+export default function CommonModalQue({
     open,
     setOpen,
     component,
@@ -41,8 +41,7 @@ const MainBox = styled.div`
 
 display: flex;
   margin: 0 auto;
-  min-width: 50%;
-  max-width: 70%;
+  width: 40%;
   height: 60vh;
   background-color: var(--white);
   padding-top: 2rem;
