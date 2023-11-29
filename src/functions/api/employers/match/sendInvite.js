@@ -18,7 +18,9 @@ const config = {
         console.log("Status", response.status)
         return response.data;
       } catch (error) {
-        console.error('Error:', error);
+
+        console.error('Error:', error.response.data);
+        return error?.response?.data;
       }
 }
 

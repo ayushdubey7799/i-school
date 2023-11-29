@@ -25,6 +25,8 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { technicalSkills } from "../../../../utils/contantData";
 import { WithContext as ReactTags } from 'react-tag-input';
+import Success from "../../../commonComponents/infoDialog/Success";
+import { success } from "mammoth/mammoth.browser";
 
 const timezonesName = {
   'GMT': 'Greenwich Mean Time',
@@ -69,6 +71,7 @@ export default function Invite2() {
   const [selectedSkills, setSelectedSkills] = useState([]);
 
   const [emailList, setEmailList] = useState([]);
+  const [isSuccess,setIsSuccess] = useState(false);
 
   const handleEmailDelete = (i) => {
     const newEmails = [...emailList];
@@ -125,7 +128,7 @@ export default function Invite2() {
     // }
     // getTypes();
     setProductTypes(["JD", "Resume", "JD + Resume", "Skill"]);
-    setTestTypes(["MCQs", "Subjective", "Coding"]);
+    setTestTypes(["MCQs", "Subjective", "coding"]);
   }, []);
 
   const handleProductTypeChange = (inp) => {
@@ -144,6 +147,7 @@ export default function Invite2() {
 
 
     const makeApiCall = async () => {
+      console.log(typeof selectedTimeSlot.$m);
       const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot.$H + ":" + selectedTimeSlot.$m + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
@@ -166,10 +170,11 @@ export default function Invite2() {
       if (isTime) delete payload.slotTime;
       console.log(payload);
       try {
-        const response = await sendInvite(payload, accessToken, clientCode);
-        console.log("API call successful:", response.data);
-        toast.success("Invites sent successfully");
-        navigate("/schedule/invite2/success2");
+        // const response = await sendInvite(payload, accessToken, clientCode);
+        // console.log("API call successful:", response.data);
+        // toast.success("Invites sent successfully");
+        setIsSuccess(true);
+        
       } catch (error) {
         toast.error("error-> ", error?.message);
         console.error("API call failed:", error);
@@ -200,8 +205,14 @@ export default function Invite2() {
   };
 
   const delimiters = [KeyCodes.comma, KeyCodes.enter];
+  
+  const handleRetryFunc = () => {
+    setIsSuccess(false);
+    navigate("/schedule/invite2/success2");
+  }
 
   return (
+    <>{isSuccess && <Success  open={isSuccess} handleClose={setIsSuccess} msg={JSON.parse(error)?.notify?.message} handleRetryFunc={handleRetryFunc}/>}
     <MainContainer>
       <LogoHeader />
       <Container>
@@ -478,6 +489,7 @@ export default function Invite2() {
         </ButtonBox>
       </Container>
     </MainContainer>
+    </>
   );
 }
 
