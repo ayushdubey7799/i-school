@@ -234,16 +234,24 @@ const OngoingInterview = ({ start, handleStart }) => {
                           return (
                             <AudioBox>
                               <div className="btnImgBox">
+                                <div className="btn1">
                                 <img
                                   onClick={startRecording}
                                   className="btnImg"
                                   src={startRecBtn}
                                 />
+                                <span className="btn1Text">Start recording your answer</span>
+                                </div>
+                                
+                                <div className="btn2">
                                 <img
                                   onClick={stopRecording}
                                   className="btnImg"
                                   src={stopRecBtn}
                                 />
+                                <span className="btn2Text">Stop recording</span>
+                                </div>
+                                
                               </div>
                               <audio src={mediaBlobUrl} controls />
                               <span id="status1">
@@ -373,6 +381,39 @@ const StyledInterview = styled.div`
     border: none;
     cursor: pointer;
   }
+
+  .btn1, .btn2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .btn1Text, .btn2Text {
+    font-size: 0.65rem;
+    font-weight: 400;
+    position: absolute;
+    top: 2.5rem;
+    display: none;
+    width: 9rem;
+  }
+
+  .btn1:hover {
+    
+    .btn1Text {
+      display: flex;
+    }
+  }
+
+  .btn2:hover {
+    
+    .btn2Text {
+      display: flex;
+      left: -1.3rem;
+    }
+  }
+
 
   .btnImg {
     width: 2rem;

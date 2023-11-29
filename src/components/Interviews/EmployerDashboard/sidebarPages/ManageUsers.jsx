@@ -104,13 +104,13 @@ function Row(props) {
             >
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='user' handleDelete={handleDelete} />} />
               <span onClick={handleEdit}>
-                Edit <img src={editIcon} className="threeDotIcon" />
+                <img src={editIcon} className="threeDotIcon" /> Edit
               </span>
               <span onClick={handleClickOpen}>
-                Delete <img src={deleteIcon} className="threeDotIcon" />
+                <img src={deleteIcon} className="threeDotIcon" /> Delete
               </span>
               <span onClick={handleDeactivate}>
-                Deactivate <img src={unVisible} className="threeDotIcon" />
+                <img src={unVisible} className="threeDotIcon" /> Deactivate
               </span>
             </div>
           </BoxRow>
@@ -158,8 +158,8 @@ export default function ManageUsers() {
 
 const StyledDiv = styled.div`
   margin: 1rem 0% 2rem 0%;
-  width: 90%;
-  padding: 0 4%;
+  width: 94%;
+  padding: 0 3%;
   display: flex;
   flex-direction: column;
   align-items: center;

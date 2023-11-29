@@ -21,7 +21,7 @@ import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { useDispatch } from "react-redux";
 import { addResumes } from "../../../../slices/invitationSlice";
 import iIcon from '../../../../assets/icons/iIcon.png'
-import CommonDialog from "../../../commonComponents/CommonDialog";
+import { Tooltip } from 'react-tooltip'
 
 function Row(props) {
   const { row, handleSelectArray, index } = props;
@@ -79,27 +79,6 @@ export default function MatchedResumes() {
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
 
-  // State, function to Open and close Dialog Box
-  const [openInfo, setOpenInfo] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpenInfo(true);
-  };
-
-  const handleClose = () => {
-    setOpenInfo(false);
-  };
-
-  // State, function to Open and close Dialog Box
-  const [openAIScoreInfo, setOpenAIScoreInfo] = React.useState(false);
-
-  const handleAIScoreClickOpen = () => {
-    setOpenAIScoreInfo(true);
-  };
-
-  const handleAIScoreClose = () => {
-    setOpenAIScoreInfo(false);
-  };
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);
@@ -204,12 +183,12 @@ export default function MatchedResumes() {
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Contact</TableCell>
                 <TableCell align="center" >
-                  <CommonDialog open={openInfo} handleClose={handleClose} component={<InfoText info={openInfo} />} />
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>Score <img className="iIcon" src={iIcon} onClick={handleClickOpen} /></span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>Score <img className="iIcon" src={iIcon} data-tooltip-id="score" data-tooltip-html="<div>Keyword Match Score</div>" /></span>
+                  <Tooltip id="score" />
                 </TableCell>
                 <TableCell align="center">
-                  <CommonDialog open={openAIScoreInfo} handleClose={handleAIScoreClose} component={<InfoText info={openInfo} />} />
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>AI Score <img className="iIcon" src={iIcon} onClick={handleAIScoreClickOpen} /></span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>AI Score <img className="iIcon" src={iIcon} data-tooltip-id="AI-Score" data-tooltip-html="<div>JD-Resume Match AI Score</div>" /></span>
+                  <Tooltip id="AI-Score" />
                 </TableCell>
                 <TableCell align="center">Actions</TableCell>
               </TableRow>
@@ -234,20 +213,6 @@ export default function MatchedResumes() {
   );
 }
 
-
-const InfoText = ({ info }) => {
-  return (
-    <InfoBox>{info ? `Keyword Match Score` : `JD-Resume Match AI Score`}</InfoBox>
-  )
-}
-
-const InfoBox = styled.div`
-padding: 2rem 3rem;
-font-size: 1rem;
-font-weight: 500;
-
-
-`
 
 const StyledDiv = styled.div`
   display: flex;

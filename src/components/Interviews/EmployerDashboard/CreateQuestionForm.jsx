@@ -69,28 +69,8 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-const QuestionList = styled.ul`
-  list-style: none;
-  padding: 0rem;
-  margin-top: 1rem;
-`;
 
-const QuestionItem = styled.li`
-  margin-bottom: 0.6rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: #eef;
-
-
-  .btnBox {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    gap: 1rem;
-  }
-`;
-
-function CreateQuestionForm() {
+function CreateQuestionForm({editingIndex, setEditingIndex}) {
   const [formData, setFormData] = useState({
     type: '',
     role: '',
@@ -103,7 +83,6 @@ function CreateQuestionForm() {
   });
 
   const [questions, setQuestions] = useState([]);
-  const [editingIndex, setEditingIndex] = useState(-1);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -138,12 +117,6 @@ function CreateQuestionForm() {
     });
   };
 
-  const handleEditQuestion = (index) => {
-    setEditingIndex(index);
-    const questionToEdit = questions[index];
-    setFormData({ ...questionToEdit });
-  };
-
   const handleUpdateQuestion = (e) => {
     e.preventDefault();
     const updatedQuestions = [...questions];
@@ -170,7 +143,7 @@ function CreateQuestionForm() {
 
   return (
     <Container>
-      <h3>Create Question Form</h3>
+      <h3>{editingIndex === -1 ? 'Create' : 'Update' } Question Form</h3>
       <Form onSubmit={editingIndex === -1 ? handleAddQuestion : handleUpdateQuestion}>
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
@@ -357,33 +330,6 @@ function CreateQuestionForm() {
           {editingIndex === -1 ? 'Add Question' : 'Update Question'}
         </Button>
       </Form>
-
-      <QuestionList>
-        {questions.map((question, index) => (
-          <QuestionItem key={index}>
-            <p>Type: {question.type}</p>
-            <p>Tag: {question.tag}</p>
-            <p>Que Description: {question.description}</p>
-            <p>Difficulty: {question.difficulty}</p>
-            {question.type === 'Objective' && (
-              <>
-                <p>Choices:</p>
-                <ul>
-                  {question.choices.map((choice, choiceIndex) => (
-                    <li key={choiceIndex}>{choice}</li>
-                  ))}
-                </ul>
-                <p>Correct Answer: {question.correctAnswer}</p>
-              </>
-            )}
-
-            <div className='btnBox'>
-              <Button onClick={() => handleEditQuestion(index)}>Edit</Button>
-              <Button onClick={() => handleDeleteQuestion(index)}>Delete</Button>
-            </div>
-          </QuestionItem>
-        ))}
-      </QuestionList>
     </Container>
   );
 }

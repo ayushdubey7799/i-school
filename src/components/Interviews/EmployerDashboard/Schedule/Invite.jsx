@@ -24,6 +24,11 @@ import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 import Success from "../../../commonComponents/infoDialog/Success";
 import Error from "../../../commonComponents/infoDialog/Error";
 
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+
 
 const timezonesName = {
   'GMT': 'Greenwich Mean Time',
@@ -61,11 +66,13 @@ export default function Invite() {
   const [testTypes, setTestTypes] = useState([]);
   const [productType, setProductType] = useState("");
   const [interviewType, setInterviewType] = useState('');
+  const [difficultyLevel, setDifficultyLevel] = useState('');
+  const [numberOfQue, setNumberOfQue] = useState('');
   const [interviewerEmail, setInterviewerEmail] = useState('');
   const [meetUrl, setMeetUrl] = useState('');
   const [testType, setTestType] = useState("");
-  const [successPopup,setSuccessPopup] = useState(false);
-  const [errorPopup,setErrorPopup] = useState(null);
+  const [successPopup, setSuccessPopup] = useState(false);
+  const [errorPopup, setErrorPopup] = useState(null);
 
   const accessToken = useSelector((state) => state.auth.userData.accessToken);
   const clientCode = useSelector(
@@ -146,15 +153,15 @@ export default function Invite() {
         timeZone: "UTC",
         welcomeMessage: "string",
       };
-      
+
       if (isTime) delete payload.slotTime;
       console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
-        console.log("=======>",response);
-        if(response.status == "FAILED"){
-          setErrorPopup({status: true, msg: response?.notify?.message})
-        }else{
+        console.log("=======>", response);
+        if (response.status == "FAILED") {
+          setErrorPopup({ status: true, msg: response?.notify?.message })
+        } else {
           setSuccessPopup(true);
 
         }
@@ -188,250 +195,328 @@ export default function Invite() {
   }
 
   const handleErrorRetry = () => {
-    setErrorPopup({status: false, msg: ""});
+    setErrorPopup({ status: false, msg: "" });
     setStep(1);
     // navigate(`/schedule/invite/${array[array.length - 1]}`);
   }
 
   return (
     <>
-    {successPopup && <Success open={successPopup} handleClose={handleSuccessFunc} msg={"Invites sent successfully"} />}
-    {errorPopup?.status && <Error open={errorPopup.status} handleClose={handleErrorRetry} msg={errorPopup.msg} handleRetryFunc={handleErrorRetry}/>}
+      {successPopup && <Success open={successPopup} handleClose={handleSuccessFunc} msg={"Invites sent successfully"} />}
+      {errorPopup?.status && <Error open={errorPopup.status} handleClose={handleErrorRetry} msg={errorPopup.msg} handleRetryFunc={handleErrorRetry} />}
 
-    <MainContainer>
-      <LogoHeader />
-      <Container>
-        <InviteSteps step={step} setStep={setStep} />
-        <IconButton onClick={() => navigate(`/schedule/matches/${jdId}`)} className="prev">
-          <ArrowBackIcon sx={{ fontSize: "30px" }} />
-        </IconButton>
-        <div className="mainBox">
-          {step === 1 &&
-            <div className="step1Box">
-              <div className="step1ChildBox">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <div className="calendarBox">
-                    <DateCalendar
-                      value={value}
-                      onChange={(newValue) => setValue(dayjs(newValue))}
-                      views={['day']}
-                      sx={{
-                        // width: "100%",
-                        height: '100%',
-                        display: 'flex',
+      <MainContainer>
+        <LogoHeader />
+        <Container>
+          <InviteSteps step={step} setStep={setStep} />
+          <IconButton onClick={() => navigate(`/schedule/matches/${jdId}`)} className="prev">
+            <ArrowBackIcon sx={{ fontSize: "30px" }} />
+          </IconButton>
+          <div className="mainBox">
+            {step === 1 &&
+              <div className="step1Box">
+                <div className="step1ChildBox">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <div className="calendarBox">
+                      <DateCalendar
+                        value={value}
+                        onChange={(newValue) => setValue(dayjs(newValue))}
+                        views={['day']}
+                        sx={{
+                          // width: "100%",
+                          height: '100%',
+                          display: 'flex',
+                        }}
+                      />
+                    </div>
+                  </LocalizationProvider>
+
+                  <div className="slotBox">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={['MobileTimePicker']} className='slotChildBox'>
+                        {!isTime && <MobileTimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
+                          onChange={(newValue) => setSelectedTimeSlot(newValue)} sx={{ width: '100%' }} />}
+                      </DemoContainer>
+                    </LocalizationProvider>
+                    <label className="smallTextBox">
+                      <input
+                        type="checkbox"
+                        checked={isTime}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span className="smallText">Alow slot selection to candidate (Interview Date will be fixed)</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            }
+
+            {step === 2 &&
+              <div className="step2Box">
+                <div className="inputBox">
+                  <span className="title">Product Type</span>
+                  <div className="childInputBox">
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="AI"
+                        checked={productType === 'AI'}
+                        onChange={() => handleProductTypeChange('AI')}
+                      />
+                      <span>AI</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="Employer"
+                        checked={productType === 'Employer'}
+                        onChange={() => handleProductTypeChange('Employer')}
+                      />
+                      <span>Employer</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="AI + Employer"
+                        checked={productType === 'AI + Employer'}
+                        onChange={() => handleProductTypeChange('AI + Employer')}
+                      />
+                      <span>AI + Employer</span>
+                    </label>
+                  </div>
+                </div>
+
+
+                <div className="inputBox">
+                  <span className="title">Interview Based on</span>
+                  <div className="childInputBox">
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="JD"
+                        checked={interviewType === 'JD'}
+                        onChange={() => handleInterviewTypeChange('JD')}
+                      />
+                      <span>JD</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="Resume"
+                        checked={interviewType === 'Resume'}
+                        onChange={() => handleInterviewTypeChange('Resume')}
+                      />
+                      <span>Resume</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="JD + Resume"
+                        checked={interviewType === 'JD + Resume'}
+                        onChange={() => handleInterviewTypeChange('JD + Resume')}
+                      />
+                      <span>JD + Resume</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="Skill"
+                        checked={interviewType === 'Skill'}
+                        onChange={() => handleInterviewTypeChange('Skill')}
+                      />
+                      <span>Skill</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="inputBox">
+                  <span className="title">Interview Type</span>
+                  <div className="childInputBox">
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="MCQs"
+                        checked={testType === 'MCQs'}
+                        onChange={() => handleTestTypeChange('MCQs')}
+                      />
+                      <span>MCQs</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="Subjective"
+                        checked={testType === 'Subjective'}
+                        onChange={() => handleTestTypeChange('Subjective')}
+                      />
+                      <span>Subjective</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="coding"
+                        checked={testType === 'coding'}
+                        onChange={() => handleTestTypeChange('coding')}
+                      />
+                      <span>Coding</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="General"
+                        checked={testType === 'General'}
+                        onChange={() => handleTestTypeChange('General')}
+                      />
+                      <span>General (Includes all types of Que)</span>
+                    </label>
+                    <label className="label">
+                      <input
+                        type="radio"
+                        value="InPerson"
+                        checked={testType === 'InPerson'}
+                        onChange={() => handleTestTypeChange('InPerson')}
+                      />
+                      <span>In Person</span>
+                    </label>
+                  </div>
+                </div>
+
+                {testType === 'InPerson' &&
+                  <div className="textBox">
+                    <TextField id="outlined-basic" label="Interviewer Email" variant="outlined" fullWidth
+                      type='email'
+                      value={interviewerEmail}
+                      onChange={(e) => setInterviewerEmail(e.target.value)}
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '0.9rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '0.9rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                    />
+                    <TextField id="outlined-basic" label="Meet Link (Optional)" variant="outlined" fullWidth
+                      type='url'
+                      value={meetUrl}
+                      onChange={(e) => setMeetUrl(e.target.value)}
+                      inputProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '0.9rem',
+                          fontWeight: '400'
+                        },
+                      }}
+                      InputLabelProps={{
+                        sx: {
+                          color: '#626264',
+                          fontSize: '0.9rem',
+                          fontWeight: '400'
+                        },
                       }}
                     />
                   </div>
-                </LocalizationProvider>
+                }
 
-                <div className="slotBox">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['MobileTimePicker']} className='slotChildBox'>
-                      {!isTime && <MobileTimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
-                        onChange={(newValue) => setSelectedTimeSlot(newValue)} sx={{ width: '100%' }} />}
-                    </DemoContainer>
-                  </LocalizationProvider>
-                  <label className="smallTextBox">
-                    <input
-                      type="checkbox"
-                      checked={isTime}
-                      onChange={handleCheckboxChange}
-                    />
-                    <span className="smallText">Alow slot selection to candidate (Interview Date will be fixed)</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          }
-
-          {step === 2 &&
-            <div className="step2Box">
-              <div className="inputBox">
-                <span className="title">Product Type</span>
-                <div className="childInputBox">
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="AI"
-                      checked={productType === 'AI'}
-                      onChange={() => handleProductTypeChange('AI')}
-                    />
-                    <span>AI</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="Employer"
-                      checked={productType === 'Employer'}
-                      onChange={() => handleProductTypeChange('Employer')}
-                    />
-                    <span>Employer</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="AI + Employer"
-                      checked={productType === 'AI + Employer'}
-                      onChange={() => handleProductTypeChange('AI + Employer')}
-                    />
-                    <span>AI + Employer</span>
-                  </label>
-                </div>
-              </div>
-
-
-              <div className="inputBox">
-                <span className="title">Interview Based on</span>
-                <div className="childInputBox">
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="JD"
-                      checked={interviewType === 'JD'}
-                      onChange={() => handleInterviewTypeChange('JD')}
-                    />
-                    <span>JD</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="Resume"
-                      checked={interviewType === 'Resume'}
-                      onChange={() => handleInterviewTypeChange('Resume')}
-                    />
-                    <span>Resume</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="JD + Resume"
-                      checked={interviewType === 'JD + Resume'}
-                      onChange={() => handleInterviewTypeChange('JD + Resume')}
-                    />
-                    <span>JD + Resume</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="Skill"
-                      checked={interviewType === 'Skill'}
-                      onChange={() => handleInterviewTypeChange('Skill')}
-                    />
-                    <span>Skill</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="inputBox">
-                <span className="title">Interview Type</span>
-                <div className="childInputBox">
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="MCQs"
-                      checked={testType === 'MCQs'}
-                      onChange={() => handleTestTypeChange('MCQs')}
-                    />
-                    <span>MCQs</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="Subjective"
-                      checked={testType === 'Subjective'}
-                      onChange={() => handleTestTypeChange('Subjective')}
-                    />
-                    <span>Subjective</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="coding"
-                      checked={testType === 'coding'}
-                      onChange={() => handleTestTypeChange('coding')}
-                    />
-                    <span>Coding</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="General"
-                      checked={testType === 'General'}
-                      onChange={() => handleTestTypeChange('General')}
-                    />
-                    <span>General (Includes all types of Que)</span>
-                  </label>
-                  <label className="label">
-                    <input
-                      type="radio"
-                      value="InPerson"
-                      checked={testType === 'InPerson'}
-                      onChange={() => handleTestTypeChange('InPerson')}
-                    />
-                    <span>In Person</span>
-                  </label>
-                </div>
-              </div>
-
-              {testType === 'InPerson' &&
                 <div className="textBox">
-                  <TextField id="outlined-basic" label="Interviewer Email" variant="outlined" fullWidth
-                    type='email'
-                    value={interviewerEmail}
-                    onChange={(e) => setInterviewerEmail(e.target.value)}
-                    inputProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                    InputLabelProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                  />
-                  <TextField id="outlined-basic" label="Meet Link (Optional)" variant="outlined" fullWidth
-                    type='url'
-                    value={meetUrl}
-                    onChange={(e) => setMeetUrl(e.target.value)}
-                    inputProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                    InputLabelProps={{
-                      sx: {
-                        color: '#626264',
-                        fontSize: '0.9rem',
-                        fontWeight: '400'
-                      },
-                    }}
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Difficulty Level</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={difficultyLevel}
+                      label="Difficulty Level"
+                      onChange={(e) => setDifficultyLevel(e.target.value)}
+                    >
+                      <MenuItem value="easy">Easy</MenuItem>
+                      <MenuItem value="moderate">Moderate</MenuItem>
+                      <MenuItem value="difficult">Difficult</MenuItem>
+                    </Select>
+                  </FormControl>
+
+                  {
+                    testType === 'coding' ? <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Number of Questions</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={numberOfQue}
+                        onChange={(e) => setNumberOfQue(e.target.value)}
+                        label="Number of Questions"
+                      >
+                        <MenuItem value="1">1</MenuItem>
+                        <MenuItem value="2">2</MenuItem>
+                        <MenuItem value="3">3</MenuItem>
+                        <MenuItem value="4">4</MenuItem>
+                        <MenuItem value="5">5</MenuItem>
+                      </Select>
+                    </FormControl> :
+
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Number of Questions</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={numberOfQue}
+                          onChange={(e) => setNumberOfQue(e.target.value)}
+                          label="Number of Questions"
+                        >
+                          <MenuItem value="1">1</MenuItem>
+                          <MenuItem value="2">2</MenuItem>
+                          <MenuItem value="3">3</MenuItem>
+                          <MenuItem value="4">4</MenuItem>
+                          <MenuItem value="5">5</MenuItem>
+                          <MenuItem value="6">6</MenuItem>
+                          <MenuItem value="7">7</MenuItem>
+                          <MenuItem value="8">8</MenuItem>
+                          <MenuItem value="9">9</MenuItem>
+                          <MenuItem value="10">10</MenuItem>
+                          <MenuItem value="11">11</MenuItem>
+                          <MenuItem value="12">12</MenuItem>
+                          <MenuItem value="13">13</MenuItem>
+                          <MenuItem value="14">14</MenuItem>
+                          <MenuItem value="15">15</MenuItem>
+                          <MenuItem value="16">16</MenuItem>
+                          <MenuItem value="17">17</MenuItem>
+                          <MenuItem value="18">18</MenuItem>
+                          <MenuItem value="19">19</MenuItem>
+                          <MenuItem value="20">20</MenuItem>
+                          <MenuItem value="21">21</MenuItem>
+                          <MenuItem value="22">22</MenuItem>
+                          <MenuItem value="23">23</MenuItem>
+                          <MenuItem value="24">24</MenuItem>
+                          <MenuItem value="25">25</MenuItem>
+                          <MenuItem value="26">26</MenuItem>
+                          <MenuItem value="27">27</MenuItem>
+                          <MenuItem value="28">28</MenuItem>
+                          <MenuItem value="29">29</MenuItem>
+                          <MenuItem value="30">30</MenuItem>
+                        </Select>
+                      </FormControl>
+                  }
                 </div>
-              }
-            </div>
-          }
+              </div>
+            }
 
-          {
-            step === 3 &&
-            <div className="step3Box">
-              <InviteReviewList />
-            </div>
-          }
-        </div>
+            {
+              step === 3 &&
+              <div className="step3Box">
+                <InviteReviewList />
+              </div>
+            }
+          </div>
 
-        <ButtonBox>
-          {step <= 2 && <Button onClick={() => handleNext()}>Next</Button>}
-          {step === 3 && <Button onClick={handleInvite}>Send Invite</Button>}
-        </ButtonBox>
-      </Container>
-    </MainContainer>
+          <ButtonBox>
+            {step <= 2 && <Button onClick={() => handleNext()}>Next</Button>}
+            {step === 3 && <Button onClick={handleInvite}>Send Invite</Button>}
+          </ButtonBox>
+        </Container>
+      </MainContainer>
     </>
   );
 }

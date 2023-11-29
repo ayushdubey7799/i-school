@@ -5,7 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import profileIcon from '../../../assets/icons/profile.png'
-import inboxIcon from '../../../assets/icons/inbox.png'
+import notificationIcon from '../../../assets/icons/notification.png'
 import scheduleIcon from '../../../assets/icons/schedule.png'
 import subsIcon from '../../../assets/icons/subscription.png'
 import jdIcon from '../../../assets/icons/job-description.png'
@@ -418,7 +418,7 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
             Billing
           </MenuItem>
           <MenuItem isSelected={currentItem === 'inbox'} onClick={() => handleItemClick('inbox')}>
-            <img src={inboxIcon} className='icon' />
+            <img src={notificationIcon} className='icon' />
             Notifications
           </MenuItem>
         </AccordionDetails>

@@ -100,10 +100,10 @@ const EmployerDashboard = () => {
           {currentItem === "manage-ssubscriptions" && <JdRegistration />}
 
           {currentItem === "candidate-register" && <RegisterCandidate />}
-          {currentItem === "candidate-registered" && <RegisteredCandidates setCurrentItem={setCurrentItem} />}
+          <div className="innerBox">{currentItem === "candidate-registered" && <RegisteredCandidates setCurrentItem={setCurrentItem} />}</div>
           {currentItem === "upload-profiles" && <UploadCandidateProfile />}
           {currentItem === "manage-tests" && <CreateQuestion />}
-          {currentItem === "activeJds" && <ActiveJds />}
+          <div className="innerBox">{currentItem === "activeJds" && <ActiveJds />}</div>
           {currentItem === "create-tests" && <ManageTests />}
           {currentItem === "available-tests" && <AvailableTest />}
           {currentItem === "interview-dashboard" && <InterviewDashboard page={empScheduledPage} setPage={setEmpScheduledPage} />}
@@ -144,6 +144,10 @@ const MainContent = styled.div`
   align-items: center;
   justify-content: flex-start;
   background-color: #f4f4f4;
+
+  .innerBox {
+    width: 96%;
+  }
 `;
 
 const StyledContent = styled.div`

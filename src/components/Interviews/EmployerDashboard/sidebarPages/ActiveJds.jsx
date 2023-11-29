@@ -184,12 +184,12 @@ function Row(props) {
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
-              <span onClick={() => handleEdit(row)}>Edit <img src={editIcon} className='threeDotIcon' /></span>
-              <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
-              <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
-              <span onClick={toggleReqDrawer('right', true)}>View Reqs <img src={eyeIcon} className='threeDotIcon' /></span>
-              <span onClick={handleShareSocial}>Share on Social <img src={shareIcon} className='threeDotIcon' /></span>
-              <span onClick={handleClickOpenShareAgency}>Share with Agency <img src={shareWithEmp} className='threeDotIcon' /></span>
+              <span onClick={() => handleEdit(row)}><img src={editIcon} className='threeDotIcon' /> Edit</span>
+              <span onClick={handleClickOpen}><img src={deleteIcon} className='threeDotIcon' /> Delete</span>
+              <span onClick={toggleDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Details</span>
+              <span onClick={toggleReqDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Reqs</span>
+              <span onClick={handleShareSocial}><img src={shareIcon} className='threeDotIcon' /> Share on Social</span>
+              <span onClick={handleClickOpenShareAgency}><img src={shareWithEmp} className='threeDotIcon' /> Share with Agency</span>
             </div>
           </BoxRow>
         </TableCell>
@@ -412,7 +412,7 @@ const StyledBox = styled.div`
 
 
 const Container1 = styled.div`
-  width:94%;
+  width: 98%;
   margin: 1rem auto;
   display: flex;
   flex-direction: column;
