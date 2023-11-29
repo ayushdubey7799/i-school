@@ -38,9 +38,9 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">{row?.interview?.userName}</TableCell>
-        <TableCell align="center">{row?.interview?.userEmail}</TableCell>
-        <TableCell align="center">{row?.interview?.userContact}</TableCell>
+        <TableCell align="center">{row?.interview?.name}</TableCell>
+        <TableCell align="center">{row?.interview?.email}</TableCell>
+        <TableCell align="center">{row?.interview?.contact}</TableCell>
         <TableCell align="center">{row?.interview?.recruiter}</TableCell>
         <TableCell align="center">{row?.interview?.hiringManager}</TableCell>
         <TableCell align="center">{row?.interview?.status}</TableCell>

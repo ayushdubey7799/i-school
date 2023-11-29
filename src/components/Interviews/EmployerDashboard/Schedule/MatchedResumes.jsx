@@ -46,7 +46,7 @@ function Row(props) {
         <TableCell align="center">{row.email}</TableCell>
         <TableCell align="center">{row.contact}</TableCell>
         <TableCell align="center">{row.score}</TableCell>
-        <TableCell align="center">...</TableCell>
+        <TableCell align="center">{row.aiScore}</TableCell>
         <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
           <input
             type="checkbox"
