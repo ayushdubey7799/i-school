@@ -134,6 +134,10 @@ export default function Invite() {
 
 
     const makeApiCall = async () => {
+      if(selectedTimeSlot.$H < 10)selectedTimeSlot.$H = "0"+selectedTimeSlot.$H
+      if(selectedTimeSlot.$M < 10)selectedTimeSlot.$M = "0"+selectedTimeSlot.$M
+      console.log("Time", selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
+
       const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot.$H + ":" + selectedTimeSlot.$m + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
@@ -148,6 +152,8 @@ export default function Invite() {
         resumeIds: array.slice(0, -1),
         testType: testType,
         interviewType: interviewType,
+        noOfQuestions: numberOfQue,
+        difficultyLevel: difficultyLevel,
         slotDate: date,
         slotTime: time,
         timeZone: "UTC",
@@ -158,10 +164,10 @@ export default function Invite() {
       console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
-        console.log("=======>", response);
-        if (response.status == "FAILED") {
-          setErrorPopup({ status: true, msg: response?.notify?.message })
-        } else {
+        console.log("=======>",response);
+        if(response.status == "FAILED"){
+          setErrorPopup({status: true, msg: response?.notify?.message})
+        }else{
           setSuccessPopup(true);
 
         }
@@ -175,7 +181,7 @@ export default function Invite() {
   };
 
 
-  console.log("Time Slot Hour and Minute", selectedTimeSlot.$H + " " + typeof selectedTimeSlot.$m);
+  console.log("Time Slot Hour and Minute", "0"+selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
 
   const handlePrev = () => {
     if (step > 1) {

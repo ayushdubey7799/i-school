@@ -13,6 +13,8 @@ import actionDot from '../../../../assets/icons/threeDot.png'
 import moveNextRoundIcon from '../../../../assets/icons/moveNextRoundIcon.png'
 import putHoldIcon from '../../../../assets/icons/putOnHoldIcon.png'
 import moveOutIcon from '../../../../assets/icons/moveOutInterviewIcon.png'
+import { getAllTrackers } from "../../../../functions/api/interview/getAllTrackers";
+import { useSelector } from "react-redux";
 
 function Row(props) {
   const { row, index } = props;
@@ -86,6 +88,17 @@ const InterviewFlow = ({ setPage }) => {
   const [searchParams, setSearchParams] = useState('');
   const [sortParams, setSortParams] = useState('');
   const [filterParams, setFilterParams] = useState('');
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getAllTrackers(accessToken,clientCode);
+      console.log(res);
+    }
+
+    getData();
+  },[])
 
   const handleSortParams = (e) => {
     setSortParams(e.target.value);

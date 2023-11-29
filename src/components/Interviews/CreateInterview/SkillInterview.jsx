@@ -18,8 +18,8 @@ const SkillInterview = () => {
   const [interviewDetails, setInterviewDetails] = useState({
     skills: "",
     experience: "",
-    difficulty: "easy",
-    interviewType: "mcq"
+    difficultyLevel: "easy",
+    testType: "mcq"
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -38,11 +38,11 @@ const SkillInterview = () => {
       case 'experience':
         setInterviewDetails({ ...interviewDetails, experience: val })
         break;
-      case 'difficulty':
-        setInterviewDetails({ ...interviewDetails, difficulty: val })
+      case 'difficultyLevel':
+        setInterviewDetails({ ...interviewDetails, difficultyLevel: val })
         break;
-      case 'interviewType':
-        setInterviewDetails({ ...interviewDetails, interviewType: val })
+      case 'testType':
+        setInterviewDetails({ ...interviewDetails, testType: val })
         break;
       default:
         console.log('Hello there!');
@@ -55,15 +55,21 @@ const SkillInterview = () => {
     setLoaderMessage("Creating Interview... please wait");
     setIsLoading(true);
 
-    if (!interviewDetails.skills || !interviewDetails.experience || !interviewDetails.difficulty || !interviewDetails.interviewType) {
+    if (!interviewDetails.skills || !interviewDetails.experience || !interviewDetails.difficultyLevel || !interviewDetails.testType) {
 
       toast.warning('Please fill all inputs');
       setIsLoading(false);
       setLoaderMessage('');
       return;
     }
-
-    const ongoing = await createInterview(interviewDetails.skills.trim(), `Experience ${interviewDetails.experience.trim()}`, accessToken)
+     
+      const payload = {
+        difficultyLevel: "string",
+        testType: interviewDetails.testType,
+        jobSummary: interviewDetails.skills.trim(),
+        resumeText: `Experience ${interviewDetails.experience.trim()}`,
+      };
+    const ongoing = await createInterview(payload, accessToken)
     console.log(ongoing);
 
     if (ongoing?.data?.id) {
@@ -102,10 +108,10 @@ const SkillInterview = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={interviewDetails.difficulty}
+              value={interviewDetails.difficultyLevel}
               label="Difficulty Level"
               onChange={handleInputChange}
-              name="difficulty"
+              name="difficultyLevel"
             >
               <MenuItem value="easy">Easy</MenuItem>
               <MenuItem value="moderate">Moderate</MenuItem>
@@ -115,14 +121,14 @@ const SkillInterview = () => {
 
 
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Type of Interview</InputLabel>
+            <InputLabel id="demo-simple-select-label">Test Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={interviewDetails.interviewType}
+              value={interviewDetails.testType}
               label="Type of Interview"
               onChange={handleInputChange}
-              name="interviewType"
+              name="testType"
             >
               <MenuItem value="mcq">MCQ</MenuItem>
               <MenuItem value="coding">Coding</MenuItem>
