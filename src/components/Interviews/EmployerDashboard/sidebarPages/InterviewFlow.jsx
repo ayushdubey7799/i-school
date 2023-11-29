@@ -72,9 +72,9 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
-              <span className="dropdownText">Move to next Round <img src={moveNextRoundIcon} /></span>
-              <span className="dropdownText">Put on Hold <img src={putHoldIcon} /></span>
-              <span className="dropdownText">Move out from Interview <img src={moveOutIcon} /></span>
+              <span className="dropdownText"><img src={moveNextRoundIcon} /> Move to next Round</span>
+              <span className="dropdownText"><img src={putHoldIcon} /> Put on Hold</span>
+              <span className="dropdownText"><img src={moveOutIcon} /> Move out from Interview</span>
             </div>
           </BoxRow>
         </TableCell>

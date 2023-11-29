@@ -6,6 +6,7 @@ import { IconButton } from "@mui/material";
 import logo from "../../assets/IntelliViewLogo.png";
 import { useSelector } from "react-redux";
 import profileIcon from '../../assets/profileIcon.png'
+import notificationIcon from '../../assets/icons/notification.png'
 
 import { persistor } from "../../store";
 import { logout } from "../../slices/authSlice";
@@ -16,7 +17,7 @@ import profileHelp from '../../assets/icons/profileHelp.png'
 import profileReset from '../../assets/icons/profileReset.png'
 import profileLogout from '../../assets/icons/profileLogout.png'
 
-const JobSeekerHeader = () => {
+const JobSeekerHeader = ({ setCurrentItem }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
@@ -38,10 +39,12 @@ const JobSeekerHeader = () => {
       </div>
 
       <div id="right">
+        <div className="notificationIcon" onClick={() => setCurrentItem('inbox')}>
+          <img src={notificationIcon} />
+        </div>
+
         <div className="profileIcon">
-          <IconButton>
-            <img src={profileIcon} className="profileImg" />
-          </IconButton>
+          <img src={profileIcon} className="profileImg" />
         </div>
 
         <div class="dropdown" id="dropdown">
@@ -85,7 +88,7 @@ const StyledDiv = styled.div`
   #right {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
 
   
@@ -99,9 +102,19 @@ const StyledDiv = styled.div`
     color: var(--white);
   }
 
+  .notificationIcon {
+    width: 1.5rem;
+    cursor: pointer;
+    margin-top: 0.1rem;
+
+    img {
+      width: 100%;
+    }
+  }
 
   .profileIcon {
     position: relative;
+    cursor: pointer;
   }
 
   .profileImg {

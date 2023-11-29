@@ -207,8 +207,8 @@ const SearchBarContainer = styled.div`
 
 const Content = styled.div`
 margin: 1rem 0% 2rem 0%;
-width: 100%;
-padding: 0 1.5%;
+width: 98%;
+padding: 0 1%;
 display: flex;
 flex-direction: column;
 align-items: center;

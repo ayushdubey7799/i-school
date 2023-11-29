@@ -153,10 +153,10 @@ function Row(props) {
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
               <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} />} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
-              <span onClick={() => handleEdit(row)}>Edit <img src={editIcon} className='threeDotIcon' /></span>
-              <span onClick={handleClickOpen}>Delete <img src={deleteIcon} className='threeDotIcon' /></span>
-              <span onClick={toggleDrawer('right', true)}>View Details <img src={eyeIcon} className='threeDotIcon' /></span>
-              <span onClick={toggleReqDrawer('right', true)}>View Reqs <img src={eyeIcon} className='threeDotIcon' /></span>
+              <span onClick={() => handleEdit(row)}><img src={editIcon} className='threeDotIcon' /> Edit</span>
+              <span onClick={handleClickOpen}><img src={deleteIcon} className='threeDotIcon' /> Delete</span>
+              <span onClick={toggleDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Details</span>
+              <span onClick={toggleReqDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Reqs</span>
             </div>
           </BoxRow>
         </TableCell>

@@ -8,6 +8,8 @@ import searchIcon from '../../../../assets/icons/searchIcon.png'
 import closeIcon from '../../../../assets/icons/closeIcon.png'
 import editIcon from '../../../../assets/icons/editBlack.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
+import CommonModal from '../../../commonComponents/CommonModal';
+import CommonModalQue from '../../../commonComponents/CommonModalQue';
 
 
 const initialData = {
@@ -158,7 +160,7 @@ const ListItem = styled.div`
   }
 `;
 
-{/* <span className='questionBox'><span>Q. {item.question}</span> <span className='iconBox'><img src={editIcon}/><img src={deleteIcon}/></span> </span> */}
+{/* <span className='questionBox'><span>Q. {item.question}</span> <span className='iconBox'><img src={editIcon}/><img src={deleteIcon}/></span> </span> */ }
 
 const ManageTests = () => {
   const [data, setData] = useState(initialData);
@@ -169,8 +171,11 @@ const ManageTests = () => {
   const [queType, setQueType] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(-1);
+
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef(null);
+
 
 
   useEffect(() => {
@@ -345,8 +350,11 @@ const ManageTests = () => {
                   </div>
                 )}
               </SearchBarContainer>
-              <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={CreateQuestionForm} />
-              <ListTitle>Available Questions <span onClick={() => setOpenBasic(true)} className='floatBtn'>Add Question</span></ListTitle>
+              <CommonModalQue open={openBasic} setOpen={setOpenBasic} component={<CreateQuestionForm editingIndex={editingIndex} setEditingIndex={setEditingIndex} />} />
+              <ListTitle>Available Questions <span onClick={() => {
+                setOpenBasic(true)
+                setEditingIndex(-1)
+              }} className='floatBtn'>Add Question</span></ListTitle>
               {data.list1.map((item, index) => (
                 <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                   {(provided) => (
@@ -355,7 +363,10 @@ const ManageTests = () => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <span className='questionBox'><span>Q. {item.question}</span> <span className='iconBox'><img src={editIcon}/><img src={deleteIcon}/></span> </span>
+                      <span className='questionBox'><span>Q. {item.question}</span> <span className='iconBox'><img src={editIcon} onClick={() => {
+                        setOpenBasic(true);
+                        setEditingIndex(index);
+                      }} /><img src={deleteIcon} /></span> </span>
                       <br />
                       A. {item.answer}
                     </ListItem>
