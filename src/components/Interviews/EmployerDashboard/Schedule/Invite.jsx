@@ -67,7 +67,7 @@ export default function Invite() {
   const [productType, setProductType] = useState("");
   const [interviewType, setInterviewType] = useState('');
   const [difficultyLevel, setDifficultyLevel] = useState('');
-  const [numberOfQue, setNumberOfQue] = useState('');
+  const [numberOfQue, setNumberOfQue] = useState(0);
   const [interviewerEmail, setInterviewerEmail] = useState('');
   const [meetUrl, setMeetUrl] = useState('');
   const [testType, setTestType] = useState("");
@@ -124,6 +124,7 @@ export default function Invite() {
 
   const handleTestTypeChange = (inp) => {
     setTestType(inp);
+    setNumberOfQue(0);
   };
 
   const handleInterviewTypeChange = (inp) => {
@@ -132,13 +133,9 @@ export default function Invite() {
 
   const handleInvite = () => {
 
-
     const makeApiCall = async () => {
-      if(selectedTimeSlot.$H < 10)selectedTimeSlot.$H = "0"+selectedTimeSlot.$H
-      if(selectedTimeSlot.$M < 10)selectedTimeSlot.$M = "0"+selectedTimeSlot.$M
-      console.log("Time", selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
 
-      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot.$H + ":" + selectedTimeSlot.$m + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
+      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + (selectedTimeSlot.$H < 10 ? '0' + selectedTimeSlot.$H : selectedTimeSlot.$H) + ":" + (selectedTimeSlot.$m < 10 ? '0' + selectedTimeSlot.$m : selectedTimeSlot.$m) + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
       console.log(dateTime);
@@ -164,10 +161,10 @@ export default function Invite() {
       console.log(payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
-        console.log("=======>",response);
-        if(response.status == "FAILED"){
-          setErrorPopup({status: true, msg: response?.notify?.message})
-        }else{
+        console.log("=======>", response);
+        if (response.status == "FAILED") {
+          setErrorPopup({ status: true, msg: response?.notify?.message })
+        } else {
           setSuccessPopup(true);
 
         }
@@ -180,8 +177,6 @@ export default function Invite() {
     makeApiCall();
   };
 
-
-  console.log("Time Slot Hour and Minute", "0"+selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
 
   const handlePrev = () => {
     if (step > 1) {
@@ -204,6 +199,20 @@ export default function Invite() {
     setErrorPopup({ status: false, msg: "" });
     setStep(1);
     // navigate(`/schedule/invite/${array[array.length - 1]}`);
+  }
+
+  const handleIncreaseNumber = () => {
+    if (numberOfQue < 5 && testType === 'coding') {
+      setNumberOfQue(prevNum => prevNum + 1);
+    } else if (numberOfQue < 30 && testType !== 'coding') {
+      setNumberOfQue(prevNum => prevNum + 1);
+    }
+  }
+
+  const handleDecreaseNumber = () => {
+    if (numberOfQue > 0) {
+      setNumberOfQue(prevNum => prevNum - 1);
+    }
   }
 
   return (
@@ -239,8 +248,8 @@ export default function Invite() {
 
                   <div className="slotBox">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['MobileTimePicker']} className='slotChildBox'>
-                        {!isTime && <MobileTimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
+                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox'>
+                        {!isTime && <TimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
                           onChange={(newValue) => setSelectedTimeSlot(newValue)} sx={{ width: '100%' }} />}
                       </DemoContainer>
                     </LocalizationProvider>
@@ -430,81 +439,48 @@ export default function Invite() {
                 }
 
                 <div className="textBox">
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Difficulty Level</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={difficultyLevel}
-                      label="Difficulty Level"
-                      onChange={(e) => setDifficultyLevel(e.target.value)}
-                    >
-                      <MenuItem value="easy">Easy</MenuItem>
-                      <MenuItem value="moderate">Moderate</MenuItem>
-                      <MenuItem value="difficult">Difficult</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <div className="inputBox">
+                    <span className="title">Difficulty Level</span>
+                    <div className="childInputBox">
+                      <label className="label">
+                        <input
+                          type="radio"
+                          value="easy"
+                          checked={difficultyLevel === 'easy'}
+                          onChange={() => setDifficultyLevel('easy')}
+                        />
+                        <span>Easy</span>
+                      </label>
+                      <label className="label">
+                        <input
+                          type="radio"
+                          value="moderate"
+                          checked={difficultyLevel === 'moderate'}
+                          onChange={() => setDifficultyLevel('moderate')}
+                        />
+                        <span>Moderate</span>
+                      </label>
+                      <label className="label">
+                        <input
+                          type="radio"
+                          value="difficult"
+                          checked={difficultyLevel === 'difficult'}
+                          onChange={() => setDifficultyLevel('difficult')}
+                        />
+                        <span>Difficult</span>
+                      </label>
+                    </div>
+                  </div>
 
-                  {
-                    testType === 'coding' ? <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Number of Questions</InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={numberOfQue}
-                        onChange={(e) => setNumberOfQue(e.target.value)}
-                        label="Number of Questions"
-                      >
-                        <MenuItem value="1">1</MenuItem>
-                        <MenuItem value="2">2</MenuItem>
-                        <MenuItem value="3">3</MenuItem>
-                        <MenuItem value="4">4</MenuItem>
-                        <MenuItem value="5">5</MenuItem>
-                      </Select>
-                    </FormControl> :
+                  <div className="numberMainBox">
+                    <label className="label">Number of Questions</label>
+                    <div className="numberBox">
 
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Number of Questions</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={numberOfQue}
-                          onChange={(e) => setNumberOfQue(e.target.value)}
-                          label="Number of Questions"
-                        >
-                          <MenuItem value="1">1</MenuItem>
-                          <MenuItem value="2">2</MenuItem>
-                          <MenuItem value="3">3</MenuItem>
-                          <MenuItem value="4">4</MenuItem>
-                          <MenuItem value="5">5</MenuItem>
-                          <MenuItem value="6">6</MenuItem>
-                          <MenuItem value="7">7</MenuItem>
-                          <MenuItem value="8">8</MenuItem>
-                          <MenuItem value="9">9</MenuItem>
-                          <MenuItem value="10">10</MenuItem>
-                          <MenuItem value="11">11</MenuItem>
-                          <MenuItem value="12">12</MenuItem>
-                          <MenuItem value="13">13</MenuItem>
-                          <MenuItem value="14">14</MenuItem>
-                          <MenuItem value="15">15</MenuItem>
-                          <MenuItem value="16">16</MenuItem>
-                          <MenuItem value="17">17</MenuItem>
-                          <MenuItem value="18">18</MenuItem>
-                          <MenuItem value="19">19</MenuItem>
-                          <MenuItem value="20">20</MenuItem>
-                          <MenuItem value="21">21</MenuItem>
-                          <MenuItem value="22">22</MenuItem>
-                          <MenuItem value="23">23</MenuItem>
-                          <MenuItem value="24">24</MenuItem>
-                          <MenuItem value="25">25</MenuItem>
-                          <MenuItem value="26">26</MenuItem>
-                          <MenuItem value="27">27</MenuItem>
-                          <MenuItem value="28">28</MenuItem>
-                          <MenuItem value="29">29</MenuItem>
-                          <MenuItem value="30">30</MenuItem>
-                        </Select>
-                      </FormControl>
-                  }
+                      <button className="numberBtn btn1" onClick={handleDecreaseNumber}>-</button>
+                      <input className="numberInput" type="number" value={numberOfQue} onChange={(e) => setNumberOfQue(e.target.value)} max={testType === 'coding' ? 5 : 30} />
+                      <button className="numberBtn btn2" onClick={handleIncreaseNumber}>+</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             }
@@ -544,6 +520,78 @@ const Container = styled.div`
   // height: calc(100vh - 8rem);
   justify-content: center;
 
+  /* Hide the up and down arrows in number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.numberMainBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: -0.75rem;
+
+  .label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
+
+
+  .numberBox {
+    width: 50%;
+    height: 3rem;
+    display: flex;
+
+    .numberBtn {
+      height: 100%;
+      width: 4rem;
+      border: none;
+      background-color: var(--lightOrange);
+      color: var(--white);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .btn1 {
+      border-top-left-radius: 0.4rem;
+      border-bottom-left-radius: 0.4rem;
+    }
+
+    .btn2 {
+      border-top-right-radius: 0.4rem;
+      border-bottom-right-radius: 0.4rem;
+    }
+
+    .numberInput {
+      height: 100%;
+      width: 8rem;
+      padding: 0 3rem;
+      box-sizing: border-box;
+      font-size: 1rem;
+      border: none;
+      outline: none;
+      background-color: #F0F0F0;
+    }
+
+  }
+
+  // <div className="numberBox">
+  //                   <button className="numberBtn" onClick={handleDecreaseNumber}>-</button>
+  //                   <input className="numberInput" type="number" value={numberOfQue} onChange={(e) => setNumberOfQue(e.target.value)} />
+  //                   <button className="numberBtn" onClick={handleIncreaseNumber}>+</button>
+  //                 </div>
+
   .prev {
     background-color: var(--lightOrange);
     padding: 0.1rem;
@@ -579,6 +627,7 @@ const Container = styled.div`
 
   .textBox {
     display: flex;
+    align-items: start;
     width: 100%;
     gap: 2rem;
   }
