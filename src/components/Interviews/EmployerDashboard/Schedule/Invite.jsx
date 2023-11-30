@@ -133,13 +133,9 @@ export default function Invite() {
 
   const handleInvite = () => {
 
-
     const makeApiCall = async () => {
-      if (selectedTimeSlot.$H < 10) selectedTimeSlot.$H = "0" + selectedTimeSlot.$H
-      if (selectedTimeSlot.$M < 10) selectedTimeSlot.$M = "0" + selectedTimeSlot.$M
-      console.log("Time", selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
 
-      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + selectedTimeSlot.$H + ":" + selectedTimeSlot.$m + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
+      const dateTime = moment(value.format("YYYY-MM-DD") + "T" + (selectedTimeSlot.$H < 10 ? '0' + selectedTimeSlot.$H : selectedTimeSlot.$H) + ":" + (selectedTimeSlot.$m < 10 ? '0' + selectedTimeSlot.$m : selectedTimeSlot.$m) + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
       console.log(dateTime);
@@ -181,8 +177,6 @@ export default function Invite() {
     makeApiCall();
   };
 
-
-  console.log("Time Slot Hour and Minute", "0" + selectedTimeSlot.$H + " " + selectedTimeSlot.$m);
 
   const handlePrev = () => {
     if (step > 1) {
@@ -254,8 +248,8 @@ export default function Invite() {
 
                   <div className="slotBox">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['MobileTimePicker']} className='slotChildBox'>
-                        {!isTime && <MobileTimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
+                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox'>
+                        {!isTime && <TimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
                           onChange={(newValue) => setSelectedTimeSlot(newValue)} sx={{ width: '100%' }} />}
                       </DemoContainer>
                     </LocalizationProvider>

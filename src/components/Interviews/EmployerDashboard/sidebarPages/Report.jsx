@@ -5,13 +5,13 @@ import ReportMetricCard from '../commonComponents/ReportMetricCard'
 import Chart from "react-google-charts";
 
 
-export const declineData = [
+const declineData = [
     ["role", "ratio"],
     ["Candidate Decline", 48],
     ["Client Decline", 52],
 ];
 
-export const declineOptions = {
+const declineOptions = {
     pieHole: 0.3,
     is3D: false,
     backgroundColor: "transparent",
@@ -35,14 +35,14 @@ export const declineOptions = {
     shadow: "none",
 };
 
-export const sentimentData = [
+const sentimentData = [
     ["sentiment", "ratio"],
     ["Positive", 36],
     ["Negative", 32],
     ["Neutral", 32],
 ];
 
-export const sentimentOptions = {
+const sentimentOptions = {
     pieHole: 0.3,
     is3D: false,
     backgroundColor: "transparent",
@@ -66,13 +66,13 @@ export const sentimentOptions = {
     shadow: "none",
 };
 
-export const genderData = [
+const genderData = [
     ["gender", "ratio"],
     ["Male", 60],
     ["Female", 40],
 ];
 
-export const genderOptions = {
+const genderOptions = {
     pieHole: 0.3,
     is3D: false,
     backgroundColor: "transparent",
@@ -96,7 +96,37 @@ export const genderOptions = {
     shadow: "none",
 };
 
-export const openPosData = [
+const withdrawData = [
+    ["Withdraw", "rate"],
+    ["Candidate Withdrawal Rate", 60],
+    ["", 40],
+];
+
+const withdrawOptions = {
+    pieHole: 0.3,
+    is3D: false,
+    backgroundColor: "transparent",
+    legend: {
+        position: "none", // Set the legend position to 'none' to remove the legend
+    },
+    colors: ["#eb3795", "lightgrey",],
+    chartArea: {
+        left: 0,
+        right: 0,
+        top: 2,
+        bottom: 2,
+        width: "100%",
+        height: "100%",
+    },
+    pieSliceTextStyle: {
+        color: "white", // Text color inside the pie slices
+    },
+    pieSliceBorderColor: "transparent",
+    sliceVisibilityThreshold: 0,
+    shadow: "none",
+};
+
+const openPosData = [
     ["openPositions", "ratio"],
     ["Marketing", 26],
     ["Accounts", 22],
@@ -107,7 +137,7 @@ export const openPosData = [
 ];
 
 
-export const openPosOptions = {
+const openPosOptions = {
     pieHole: 0.3,
     is3D: false,
     backgroundColor: "transparent",
@@ -130,6 +160,112 @@ export const openPosOptions = {
     sliceVisibilityThreshold: 0,
     shadow: "none",
 };
+
+const applicationSourceData = [
+    ["Source", "Applications", { role: "style" }],
+    ["Job Boards", 31, "#f483e2"],
+    ["Website", 28, "#f483e2"],
+    ["Social Media", 21, "#f483e2"],
+    ["Referral", 20, "#f483e2"],
+];
+
+const appOptions = {
+    legend: {
+        position: "none", // Set the legend position to 'none' to remove the legend
+    },
+    chartArea: {
+        left: '1rem',
+        right: '1rem',
+        top: '3rem',
+        bottom: '3rem',
+        width: "80%",
+        height: "80%",
+    },
+}
+
+const clientDeclineReasonData = [
+    ["Reason", "Decline %", { role: "style" }],
+    ["Salary", 31, "#fec007"],
+    ["Experience", 29, "#fec007"],
+    ["Other", 21, "#fec007"],
+    ["Technical", 11, "#fec007"],
+    ["Culture", 8, "#fec007"],
+];
+
+const clientDeclineReasonOptions = {
+    legend: {
+        position: "none", // Set the legend position to 'none' to remove the legend
+    },
+    chartArea: {
+        left: '1rem',
+        right: '1rem',
+        top: '3rem',
+        bottom: '3rem',
+        width: "80%",
+        height: "80%",
+    },
+}
+
+const candidateDeclineReasonData = [
+    ["Reason", "Decline %", { role: "style" }],
+    ["Salary", 31, "#ef6102"],
+    ["Experience", 29, "#ef6102"],
+    ["Other", 21, "#ef6102"],
+    ["Technical", 8, "#ef6102"],
+    ["Culture", 6, "#ef6102"],
+    ["Another Offer", 5, "#ef6102"],
+];
+
+const candidateDeclineReasonOptions = {
+    legend: {
+        position: "none", // Set the legend position to 'none' to remove the legend
+    },
+    chartArea: {
+        left: '1rem',
+        right: '1rem',
+        top: '3rem',
+        bottom: '3rem',
+        width: "80%",
+        height: "80%",
+    },
+}
+
+
+const reqData = [
+    ["ReqStatus", "Req %"],
+    ["Hired", 50],
+    ["Offer Initiated", 17],
+    ["Interviewed", 14],
+    ["Qualified", 9],
+    ["Shortlisted", 6],
+    ["Applications Received", 4],
+];
+
+
+const reqOptions = {
+    pieHole: 0.3,
+    is3D: false,
+    backgroundColor: "transparent",
+    legend: {
+        position: "none", // Set the legend position to 'none' to remove the legend
+    },
+    colors: ["#43a047", "#6300ef", "#fcba87", "#c0cb32", "#4384f4", "#d81b60",],
+    chartArea: {
+        left: 0,
+        right: 0,
+        top: 2,
+        bottom: 2,
+        width: "100%",
+        height: "100%",
+    },
+    pieSliceTextStyle: {
+        color: "white", // Text color inside the pie slices
+    },
+    pieSliceBorderColor: "transparent",
+    sliceVisibilityThreshold: 0,
+    shadow: "none",
+};
+
 
 
 const Report = () => {
@@ -161,8 +297,8 @@ const Report = () => {
                             <div className='innerBox2'>
                                 <Chart
                                     chartType="PieChart"
-                                    width="30vw"
-                                    height="30vw"
+                                    width="28vw"
+                                    height="28vw"
                                     data={openPosData}
                                     options={openPosOptions}
                                     className="donut-chart"
@@ -176,6 +312,8 @@ const Report = () => {
                     </div>
                     <div className='mainCard child1'>
                         <span className='title'>Applications Received by Source</span>
+
+                        <Chart chartType="ColumnChart" width="35vw" height="20rem" data={applicationSourceData} options={appOptions} />
                     </div>
                 </div>
                 <div className='right'>
@@ -189,8 +327,8 @@ const Report = () => {
                             <div className='innerBox2'>
                                 <Chart
                                     chartType="PieChart"
-                                    width="15vw"
-                                    height="15vw"
+                                    width="17vw"
+                                    height="17vw"
                                     data={genderData}
                                     options={genderOptions}
                                     className="donut-chart"
@@ -200,7 +338,7 @@ const Report = () => {
                         </div>
                     </div>
                     <div className='mainCard child2'>
-                        <div className='innerChild1' style={{alignSelf: 'center'}}>
+                        <div className='innerChild1' style={{ alignSelf: 'center' }}>
                             <span className='title'>72.73%</span>
                             <span className='text'>Offer Acceptance Ratio</span>
                         </div>
@@ -218,7 +356,14 @@ const Report = () => {
                     </div>
                     <div className='mainCard child3'>
                         <span className='title'>Candidate Withdrawal Rate</span>
-
+                        <Chart
+                            chartType="PieChart"
+                            width="17vw"
+                            height="17vw"
+                            data={withdrawData}
+                            options={withdrawOptions}
+                            className="donut-chart"
+                        />
                     </div>
                 </div>
             </div>
@@ -236,7 +381,14 @@ const Report = () => {
                             <ReportDepartmentText text='Applications Received' color='#d81b60' />
                         </div>
                         <div className='innerBox2'>
-
+                            <Chart
+                                chartType="PieChart"
+                                width="28vw"
+                                height="28vw"
+                                data={reqData}
+                                options={reqOptions}
+                                className="donut-chart"
+                            />
                         </div>
                     </div>
                 </div>
@@ -285,9 +437,11 @@ const Report = () => {
                 </div>
                 <div className='mainCard middle'>
                     <span className='title'>Reasons for Client Decline</span>
+                    <Chart chartType="ColumnChart" width="24vw" height="20rem" data={clientDeclineReasonData} options={clientDeclineReasonOptions} />
                 </div>
                 <div className='mainCard right'>
                     <span className='title'>Reason for Candidate Decline</span>
+                    <Chart chartType="ColumnChart" width="24vw" height="20rem" data={candidateDeclineReasonData} options={candidateDeclineReasonOptions} />
                 </div>
             </div>
         </Box>
@@ -372,7 +526,7 @@ gap: 1rem;
     width: 28%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.3rem;
 
     .child1 {
         width: 100%;
@@ -386,11 +540,12 @@ gap: 1rem;
 
     .child2 {
         width: 100%;
+        gap: 3rem;
 
         .innerChild1 {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 1rem;
             align-items: center;
 
             .title {
@@ -410,6 +565,7 @@ gap: 1rem;
             gap: 1rem;
             justify-content: space-between;
             align-items: start;
+            
 
             .number {
                 font-size: 1.5rem;
@@ -445,6 +601,8 @@ gap: 1rem;
     
     .child3 {
         width: 100%;
+        align-items: center;
+        gap: 2rem;
 
         .title {
             font-size: 1rem;
