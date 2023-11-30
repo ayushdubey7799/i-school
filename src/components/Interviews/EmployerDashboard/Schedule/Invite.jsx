@@ -28,6 +28,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import TimeSlot from "../commonComponents/TimeSlot";
 
 
 const timezonesName = {
@@ -130,6 +131,8 @@ export default function Invite() {
   const handleInterviewTypeChange = (inp) => {
     setInterviewType(inp);
   }
+
+  console.log(selectedTimeSlot);
 
   const handleInvite = () => {
 
@@ -249,8 +252,7 @@ export default function Invite() {
                   <div className="slotBox">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox'>
-                        {!isTime && <TimePicker label="Time Slot" defaultValue={selectedTimeSlot} value={selectedTimeSlot}
-                          onChange={(newValue) => setSelectedTimeSlot(newValue)} sx={{ width: '100%' }} />}
+                        {!isTime && <TimeSlot selectedTimeSlot={selectedTimeSlot} setSelectedTimeSlot={setSelectedTimeSlot}/>}
                       </DemoContainer>
                     </LocalizationProvider>
                     <label className="smallTextBox">
