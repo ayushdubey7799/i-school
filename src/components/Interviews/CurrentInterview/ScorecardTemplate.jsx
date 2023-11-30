@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useRef } from 'react';
 import { styled } from "styled-components";
+import { codingQuestionFormat } from '../../../utils/codingQuestionFormat';
 
 function Row(props) {
   const { row } = props;
@@ -31,8 +32,8 @@ function Row(props) {
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.question}
+        <TableCell component="th" scope="row" dangerouslySetInnerHTML={{ __html: codingQuestionFormat(row.question)}} >
+          
         </TableCell>
         <TableCell align="right">{row.skipped?"0":row.processingState=="FAILED"?"Failed":(row.processingState == "NEW" || row.processingState == "PROCESSING"?<Loader></Loader>:row.score)}</TableCell>
       </TableRow>
@@ -41,7 +42,7 @@ function Row(props) {
           <Collapse in={row.open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1}}>
               <Typography variant="body1" gutterBottom>
-                <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:row.answerFile?row.answerFile?.srcFilename:"skipped"}</div>
+                <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:row.answerFile?"Recorded Audio file":"skipped"}</div>
                 <br/>
                 <br/>
                 <strong>Expected Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.expectedAnswer?row.expectedAnswer:"Not Available"}</div>

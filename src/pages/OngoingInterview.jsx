@@ -23,6 +23,7 @@ import idle from "../assets/icons/recStatusIdle.png";
 import recording from "../assets/icons/recStatusRecording.png";
 import stopped from "../assets/icons/recStatusStopped.png";
 import CodeEditor from "./CodeEditor";
+import { codingQuestionFormat } from "../utils/codingQuestionFormat";
 
 const OngoingInterview = ({ start, handleStart }) => {
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -186,7 +187,7 @@ const OngoingInterview = ({ start, handleStart }) => {
 
           {start ? (
             <>
-              <div>{data?.question}</div>
+              <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question)}}></div>
               {data?.questionType == "coding" ? (
                <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage}/>
               ) : (
