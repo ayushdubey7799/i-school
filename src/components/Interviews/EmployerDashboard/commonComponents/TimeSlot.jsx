@@ -63,7 +63,7 @@ const TimeSlot = ({ selectedTimeSlot, setSelectedTimeSlot }) => {
                     <div className='minBox'>
                         {[...Array(12)].map((_, i) => (
                             <MinSpan key={i} value={(i * 5)} isSelected={selectedTimeSlot.$m == (i * 5)} onClick={(e) => handleSelect((i * 5), '$m')}>
-                                {i * 5 < 10 ? `0${i}` : i * 5}
+                                {(i * 5) < 10 ? `0${i*5}` : (i * 5)}
                             </MinSpan>
                         ))}
                     </div>
