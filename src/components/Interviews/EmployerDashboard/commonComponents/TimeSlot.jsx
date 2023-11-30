@@ -91,12 +91,13 @@ const MainBox = styled.div`
     outline-color: lightgrey;
     outline-width: 0.05rem;
     border-radius: 0.3rem;
+    font-size: 1.2rem;
 }
 
 .dropDown {
     display: flex;
     flex-direction: column;
-    width: 15rem;
+    width: 17rem;
     background-color: var(--white);
     padding: 1rem 1rem;
     box-sizing: border-box;
@@ -105,7 +106,6 @@ const MainBox = styled.div`
     border-radius: 0.5rem;
     position: absolute;
     margin-top: 1rem;
-    margin-left: -0.5rem;
 
     .hrBox {
         display: flex;
