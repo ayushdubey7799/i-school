@@ -101,19 +101,8 @@ export default function ManageJds({ rows }) {
 
   const navigate = useNavigate();
 
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
-
   const handleSearch = () => {
     console.log("Search");
-  }
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
   }
 
   useEffect(() => {
@@ -155,24 +144,6 @@ export default function ManageJds({ rows }) {
               type="text"
               placeholder="Search"
             />
-          </div>
-
-          <div className='selectBox'>
-            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filter by</option>
-              <option value="JDID">JD ID</option>
-              <option value="ReqID">Req ID</option>
-              <option value="Recruiter">Recruiter</option>
-              <option value="HiringManager">Hiring Manager</option>
-            </select>
-            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-              <option value="" disabled selected>Sort by</option>
-              <option value="JDID">JD ID</option>
-              <option value="ReqID">Req ID</option>
-              <option value="DateOfCreation">Date of Creation</option>
-              <option value="Recruiter">Recruiter</option>
-              <option value="HiringManager">Hiring Manager</option>
-            </select>
           </div>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
@@ -319,29 +290,6 @@ const SearchBarContainer = styled.div`
   font-size: 1rem;
   background-color: transparent;
   outline: none;
-  }
-
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
   }
 
 `

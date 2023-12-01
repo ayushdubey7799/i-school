@@ -86,23 +86,17 @@ function Row(props) {
 
 const InterviewFlow = ({ setPage }) => {
   const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
-  const [filterParams, setFilterParams] = useState('');
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken,clientCode);
+      const res = await getAllTrackers(accessToken, clientCode);
       console.log(res);
     }
 
     getData();
-  },[])
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
+  }, [])
 
   const handleSearch = () => {
     console.log("Search");
@@ -110,10 +104,6 @@ const InterviewFlow = ({ setPage }) => {
 
   const handleSearchParams = (e) => {
     setSearchParams(e.target.value);
-  }
-
-  const handleFilterParams = (e) => {
-    setFilterParams(e.target.value);
   }
 
 
@@ -134,21 +124,6 @@ const InterviewFlow = ({ setPage }) => {
               value={searchParams}
               onChange={handleSearchParams}
             />
-          </div>
-
-          <div className='selectBox'>
-            <select value={filterParams} onChange={handleFilterParams} className='selectInput'>
-              <option value="" disabled selected>Filter by Round</option>
-              <option value="First">First</option>
-              <option value="Second">Second</option>
-              <option value="Third">Third</option>
-              <option value="Fourth">Fourth</option>
-              <option value="HR">HR</option>
-            </select>
-            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-              <option value="" disabled selected>Filter by JD ID</option>
-              <option value="JDID">JD ID</option>
-            </select>
           </div>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
@@ -218,29 +193,6 @@ const SearchBarContainer = styled.div`
   font-size: 1rem;
   background-color: transparent;
   outline: none;
-  }
-
-
-  .selectBox {
-    width: 35%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
   }
 
 `

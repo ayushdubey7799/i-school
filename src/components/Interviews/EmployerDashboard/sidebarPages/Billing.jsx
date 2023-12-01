@@ -44,17 +44,6 @@ function Row(props) {
 }
 
 export default function Billing() {
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
-
   const handleSearch = () => {
 
   }
@@ -96,20 +85,6 @@ export default function Billing() {
             />
           </div>
 
-          <div className='selectBox'>
-            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filter by</option>
-              <option value="SerialNo">Serial No.</option>
-              <option value="InvoiceNo">Invoice No.</option>
-              <option value="Email">Email</option>
-            </select>
-            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-              <option value="" disabled selected>Sort by</option>
-              <option value="SerialNo">Serial No.</option>
-              <option value="InvoiceNo">Invoice No.</option>
-              <option value="Email">Email</option>
-            </select>
-          </div>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
@@ -261,29 +236,6 @@ const SearchBarContainer = styled.div`
   font-size: 1rem;
   background-color: transparent;
   outline: none;
-  }
-
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
   }
 
 `
