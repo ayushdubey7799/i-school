@@ -12,9 +12,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Loader from "../commonComponents/Loader";
 import { useNavigate } from "react-router";
 import ScoreChart from "../commonComponents/ScoreChart";
 import searchBlack from '../../assets/icons/searchBlack.png'
@@ -25,9 +22,6 @@ const Row = (props) => {
   const { row, index } = props;
 
   const navigate = useNavigate();
-
-  const score = 65;
-  const maxScore = 100;
 
   return (
     <React.Fragment>
@@ -47,7 +41,7 @@ const Row = (props) => {
         {row.status == 'COMPLETED' &&
           <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', alignItems: 'center', justifyContent: 'center' }} align="center">
             <ProgressBar progress={row.score} maxScore={row.maxScore} />
-            <span style={{fontSize: '0.7rem'}}>{row.score}/{row.maxScore}</span>
+            <span style={{ fontSize: '0.7rem' }}>{row.score}/{row.maxScore}</span>
           </TableCell>
         }
         {/* <TableCell component="th" scope="row" align='center'>

@@ -116,8 +116,8 @@ const ProfileInterview = () => {
 
     console.log(ongoing);
     if (ongoing?.data?.id) {
-      localStorage.setItem("currentInterview","profile");
-     navigate(`/create-interview/${ongoing.data.id}`)
+      localStorage.setItem("currentInterview", "profile");
+      navigate(`/create-interview/${ongoing.data.id}`)
     }
   };
 
@@ -202,7 +202,6 @@ const ProfileInterview = () => {
                 value={interviewDetails.jobSummary}
                 name="jobSummary"
                 onChange={handleInputChange}
-                placeholder="Enter Job Description..."
               />
             </div>
             {/* <PdfTextExtractor/> */}
@@ -224,7 +223,6 @@ const ProfileInterview = () => {
                 value={interviewDetails.resumeText}
                 name="resumeText"
                 onChange={handleInputChange}
-                placeholder="Enter Resume text..."
               />
             </div>
 

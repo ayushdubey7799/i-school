@@ -164,9 +164,9 @@ function Row(props) {
         <TableCell component="th" scope="row" align="center">
           {row.hiringManager}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        {/* <TableCell component="th" scope="row" align="center">
           ...
-        </TableCell>
+        </TableCell> */}
         <TableCell component="th" scope="row" align="center">
           <BoxRow>
             <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
@@ -201,8 +201,6 @@ function Row(props) {
 
 const ActiveJds = () => {
   const [tableRows, setTableRows] = useState([]);
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
@@ -233,14 +231,6 @@ const ActiveJds = () => {
     toast.success('Exported Successfully');
   }
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
-
   const handleSearch = () => {
 
   }
@@ -265,27 +255,6 @@ const ActiveJds = () => {
                 placeholder="Search"
               />
             </div>
-
-            <div className='selectBox'>
-              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filter by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Req_ID">Req ID</option>
-                <option value="Recruiter">Recruiter</option>
-                <option value="HiringManager">Hiring Manager</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                <option value="" disabled selected>Sort by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Req_ID">Req ID</option>
-                <option value="Recruiter">Recruiter</option>
-                <option value="HiringManager">Hiring Manager</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-            </div>
           </SearchBarContainer>
 
           <Table aria-label="collapsible table">
@@ -296,7 +265,7 @@ const ActiveJds = () => {
                 <TableCell align='center'>Active Since</TableCell>
                 <TableCell align='center'>Recruiter</TableCell>
                 <TableCell align='center'>Hiring Manager</TableCell>
-                <TableCell align='center'>Comments</TableCell>
+                {/* <TableCell align='center'>Comments</TableCell> */}
                 <TableCell align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -450,8 +419,6 @@ const SearchBarContainer = styled.div`
     }
   }
 
-
-
   .skillInput {
   flex-grow: 1;
   border: none;
@@ -461,29 +428,6 @@ const SearchBarContainer = styled.div`
   font-size: 1rem;
   background-color: transparent;
   outline: none;
-  }
-
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
   }
 
 `

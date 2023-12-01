@@ -92,20 +92,11 @@ function Row(props) {
 
 const ScheduledInterviewList = () => {
   const [appliedJobs, setAppliedJobs] = useState();
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
 
 
   useEffect(() => {
@@ -143,29 +134,6 @@ const ScheduledInterviewList = () => {
                 type="text"
                 placeholder="Search"
               />
-            </div>
-
-            <div className='selectBox'>
-              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filter by</option>
-                <option value="JobTitle">Job Title</option>
-                <option value="Company">Company</option>
-                <option value="Location">Location</option>
-                <option value="Status">Status</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CompanyType">Company Type</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                <option value="" disabled selected>Sort by</option>
-                <option value="JobTitle">Job Title</option>
-                <option value="Company">Company</option>
-                <option value="Location">Location</option>
-                <option value="Status">Status</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CompanyType">Company Type</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
             </div>
           </SearchBarContainer>
           <Table aria-label="collapsible table">
@@ -319,29 +287,6 @@ const SearchBarContainer = styled.div`
   font-size: 1rem;
   background-color: transparent;
   outline: none;
-  }
-
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
   }
 
 `
