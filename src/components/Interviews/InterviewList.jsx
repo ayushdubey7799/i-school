@@ -36,7 +36,7 @@ const Row = (props) => {
         sx={{ "& > *": { borderBottom: "unset" } }}
       >
         <TableCell component="th" scope="row" align='center'>
-          1
+          {row.jdId?row.jdId:"Mock"}
         </TableCell>
         <TableCell component="th" scope="row" align='center'>
           {row.id.slice(0, 8)}
@@ -50,9 +50,9 @@ const Row = (props) => {
             <span style={{fontSize: '0.7rem'}}>{row.score}/{row.maxScore}</span>
           </TableCell>
         }
-        <TableCell component="th" scope="row" align='center'>
+        {/* <TableCell component="th" scope="row" align='center'>
           In top ... %
-        </TableCell>
+        </TableCell> */}
         {row.status == 'COMPLETED' &&
           <TableCell component="th" scope="row" align="center">
             <button onClick={() => navigate(`/score/${row.id}`)} className="btn">Get Details</button>
@@ -97,7 +97,7 @@ const InterviewList = ({ filteredData }) => {
               <TableCell align='center'>Test ID</TableCell>
               <TableCell align='center'>Date of Interview</TableCell>
               <TableCell align='center'>Score</TableCell>
-              <TableCell align='center'>Ranking</TableCell>
+              {/* <TableCell align='center'>Ranking</TableCell> */}
               <TableCell align="center">Details</TableCell>
             </TableRow>
           </TableHead>

@@ -19,6 +19,7 @@ import Loader from '../commonComponents/Loader';
 import view from '../../assets/icons/visible.png'
 import CommonDrawer from '../commonComponents/CommonDrawer';
 import SeekerInterviewDetails from './SeekerDashboard/sidebarPages/SeekerInterviewDetails';
+import { timeZoneConversion } from '../../utils/timeZoneConversation';
 
 
 function Row(props) {
@@ -66,7 +67,7 @@ function Row(props) {
           {row.appliedDate}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='rowText'>
-          {row.scheduledAt}
+          {timeZoneConversion(row.scheduledAt)}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='rowText'>
           {row.status}
