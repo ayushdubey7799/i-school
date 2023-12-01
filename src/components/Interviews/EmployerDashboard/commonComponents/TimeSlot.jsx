@@ -46,9 +46,27 @@ const TimeSlot = ({ selectedTimeSlot, setSelectedTimeSlot }) => {
         };
     }, []);
 
+    function formatTime(selectedTimeSlot) {
+        const hour = selectedTimeSlot.$H;
+        const minute = selectedTimeSlot.$m;
+
+        let formattedHour;
+        if (hour > 12) {
+            formattedHour =
+                hour % 12 < 10 ? '0' + (hour - 12) : (hour % 12 >= 10 ? hour - 12 : '00');
+        } else {
+            formattedHour = hour > 9 && hour <= 12 ? hour : '0' + hour;
+        }
+
+        const formattedMinute = minute < 10 ? '0' + minute : minute;
+        const period = hour > 11 ? 'PM' : 'AM';
+
+        return `${formattedHour}:${formattedMinute} ${period}`;
+    }
+
     return (
         <MainBox ref={dropdownRef}>
-            <input value={`${(selectedTimeSlot.$H > 12 && (selectedTimeSlot.$H % 12) < 10) ? '0' + (selectedTimeSlot.$H - 12) : (selectedTimeSlot.$H > 12 && (selectedTimeSlot.$H % 12) >= 10) ? (selectedTimeSlot.$H - 12) : ((selectedTimeSlot.$H % 12) == 0) ? '00' : ((selectedTimeSlot.$H > 9 && selectedTimeSlot.$H <= 12)) ? selectedTimeSlot.$H : '0' + selectedTimeSlot.$H}:${selectedTimeSlot.$m < 10 ? '0' + selectedTimeSlot.$m : selectedTimeSlot.$m} ${selectedTimeSlot.$H > 11 ? 'PM' : 'AM'}`} type='text' readOnly className='timeSlot' onClick={handleClick} />
+            <input value={formatTime(selectedTimeSlot)} type='text' readOnly className='timeSlot' onClick={handleClick} />
 
             {showPicker && (
                 <div className='dropDown'>
@@ -63,7 +81,7 @@ const TimeSlot = ({ selectedTimeSlot, setSelectedTimeSlot }) => {
                     <div className='minBox'>
                         {[...Array(12)].map((_, i) => (
                             <MinSpan key={i} value={(i * 5)} isSelected={selectedTimeSlot.$m == (i * 5)} onClick={(e) => handleSelect((i * 5), '$m')}>
-                                {(i * 5) < 10 ? `0${i*5}` : (i * 5)}
+                                {(i * 5) < 10 ? `0${i * 5}` : (i * 5)}
                             </MinSpan>
                         ))}
                     </div>
