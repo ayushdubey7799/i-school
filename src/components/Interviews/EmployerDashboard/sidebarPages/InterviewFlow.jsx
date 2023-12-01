@@ -49,14 +49,14 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
+        <TableCell align="center">{row.name}</TableCell>
+        <TableCell align="center">{row.contact}</TableCell>
+        <TableCell align="center">{row.jdId}</TableCell>
+        <TableCell align="center">{row.recruiter}</TableCell>
+        <TableCell align="center">{row.hiringManager}</TableCell>
+        <TableCell align="center">{row.round}</TableCell>
+        <TableCell align="center">{row.interviewName}</TableCell>
+        <TableCell align="center">{row.status}</TableCell>
         <TableCell component="th" scope="row" align="center">
           <BoxRow>
             <img src={actionDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
@@ -85,15 +85,38 @@ function Row(props) {
 
 
 const InterviewFlow = ({ setPage }) => {
+  const [tableRows,setTableRows] = useState([]);
   const [searchParams, setSearchParams] = useState('');
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken, clientCode);
-      console.log(res);
+      const res = await getAllTrackers(accessToken,clientCode);
+      let array = res?.data?.data;
+     if(array){ 
+      const finalResult = array.reduce((acc,it) => {
+        let current = it.interview;
+        let jdInfoReq = {
+           name: current?.userName,
+           contact: current?.userContact,
+           jdId: it.jdId,
+           recruiter: current?.recruiter,
+           hiringManager: current?.hiringManager,
+           round: current?.stage,
+           interviewName: current?.interviewName,
+           status: current?.status
+        }
+  
+        return [...acc,jdInfoReq];
+      },[]);
+    
+      setTableRows(finalResult);
     }
+
+    }
+
+   
 
     getData();
   }, [])
@@ -141,7 +164,7 @@ const InterviewFlow = ({ setPage }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {interviews?.map((row, index) => (
+            {tableRows?.map((row, index) => (
               <Row key={row.id} row={row} index={index} />
             ))}
           </TableBody>
