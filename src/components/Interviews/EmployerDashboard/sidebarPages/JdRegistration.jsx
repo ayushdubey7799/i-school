@@ -175,8 +175,6 @@ const JdRegistration = () => {
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   const testingData = useSelector(state => state?.jd?.availableJds);
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
 
 
   useEffect(() => {
@@ -194,13 +192,6 @@ const JdRegistration = () => {
   //   }
   // },[testingData])
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
 
   const handleSearch = () => {
 
@@ -251,25 +242,6 @@ const JdRegistration = () => {
                 type="text"
                 placeholder="Search"
               />
-            </div>
-
-            <div className='selectBox'>
-              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filter by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Test_ID">Test ID</option>
-                <option value="Created By">Created By</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                <option value="" disabled selected>Sort by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Test_ID">Test ID</option>
-                <option value="Created By">Created By</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
             </div>
           </SearchBarContainer>
           <Table aria-label="collapsible table">
@@ -431,28 +403,6 @@ const SearchBarContainer = styled.div`
   outline: none;
   }
 
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
-  }
 
 `
 const BoxRow = styled.div`

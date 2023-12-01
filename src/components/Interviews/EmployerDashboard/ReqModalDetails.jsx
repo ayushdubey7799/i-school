@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,11 +7,44 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import threeDotIcon from '../../../assets/icons/threeDot.png'
+import threeDot from '../../../assets/icons/threeDot.png'
 
 
 function Row(props) {
   const { row, index } = props;
+  const dropdownRef = useRef(null);
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
+
+  const openDropdown = (index) => {
+    setOpenDropdownIndex(index);
+  };
+
+
+  const closeAllDropdowns = () => {
+    setOpenDropdownIndex(-1);
+  };
+
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
+    };
+  }, []);
+
+  const handleCloseReq = () => {
+
+  }
+
+  const handleReOpenReq = () => {
+
+  }
 
   return (
     <React.Fragment>
@@ -27,9 +60,22 @@ function Row(props) {
           {row.createdBy}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center' }}>
-            <img src={threeDotIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', padding: '0.3rem', }} />
-          </div>
+          <BoxRow>
+            <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
+              onClick={() => {
+                if (openDropdownIndex === index) {
+                  closeAllDropdowns();
+                } else {
+                  openDropdown(index);
+                }
+              }} />
+            <div
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
+            >
+              <span onClick={handleCloseReq}><img className='threeDotIcon' /> Close</span>
+              <span onClick={handleReOpenReq}><img className='threeDotIcon' /> ReOpen</span>
+            </div>
+          </BoxRow>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -138,4 +184,52 @@ const Container1 = styled.div`
   gap: 1rem;
 `;
 
+
+const BoxRow = styled.div`
+  position: relative;
+  display: inline-block;
+
+.three-dots {
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--white);
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 10%;
+  border-radius: 0.5rem;
+  font-size: 0.7rem;
+  min-width: 10rem;
+  justify-content: start;
+  padding: 0.5rem 0.5rem;
+}
+
+
+.dropdown-content span {
+  padding: 0.3rem 0.8rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color);
+  cursor: pointer;
+}
+
+
+.dropdown:hover .dropdown-content, .dropdown-content.open {
+  display: block;
+}
+
+.threeDotIcon {
+  width: 0.6rem;
+  height: 0.6rem;
+  cursor: pointer;
+  border: 0.08rem solid grey;
+  padding: 0.15rem;
+  border-radius: 0.2rem;
+}
+`
 

@@ -13,6 +13,10 @@ import { getInterviewByStatus } from "../../../../functions/api/getInterviewBySt
 import { getStatusWiseCount } from "../../../../functions/api/interview/getStatusWiseCount";
 import { useSelector } from "react-redux";
 import { getPreFilteredCount } from "../../../../functions/api/interview/getPreFilteredCount";
+import UpcomingInterview from "./UpcomingInterview";
+import ScheduledTodayInterview from "./ScheduledTodayInterview";
+import CompletedLast7Days from "./CompletedLast7Days";
+import InProgressInterview from "./InProgressInterview";
 
 function Row(props) {
   const { row, index } = props;
@@ -153,8 +157,12 @@ const InterviewDashboard = ({ page, setPage }) => {
           <span className="achievedNumberText">In Progress</span>
         </div>
       </Container>
-      {page?.index === 1 && <EmpScheduledInterviews setPage={setPage} />}
-      {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}
+      {/* {page?.index === 1 && <EmpScheduledInterviews setPage={setPage} />}
+      {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />} */}
+      {currMetric === 'upcoming' && <UpcomingInterview/>}
+      {currMetric === 'scheduledToday' && <ScheduledTodayInterview/>}
+      {currMetric === 'completed' && <CompletedLast7Days/>}
+      {currMetric === 'inprogress' && <InProgressInterview/>}
     </MainContainer>
   );
 };

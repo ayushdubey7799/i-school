@@ -46,7 +46,7 @@ export default function InterviewTabs() {
         <StyledBox>
           <Tabs
             style={{
-              width: '25%',
+              width: '50%',
               borderRadius: '3rem',
               backgroundColor: 'var(--lightOrange)'
             }}
@@ -78,6 +78,15 @@ export default function InterviewTabs() {
               }}
               classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
             />
+            <Tab
+              value="STARTED"
+              label="Mock"
+              sx={{
+                color: "var(--lightOrange)",
+                fontSize: "0.8rem",
+              }}
+              classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
+            />
           </Tabs>
           {value === 'COMPLETED' && <InterviewList filteredData={filteredData} />}
           {value === 'NOT_STARTED' && <ScheduledInterviewList />}
@@ -95,6 +104,10 @@ const StyledBox = styled.div`
     min-height: 30rem;
     margin: 0 5%;
     margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 
 
 

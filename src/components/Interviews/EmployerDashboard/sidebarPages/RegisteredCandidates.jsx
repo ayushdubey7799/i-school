@@ -38,10 +38,10 @@ function Row(props) {
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
   const handleDelete = async () => {
-    const res = await deleteCandidate(row.id,accessToken,clientCode);
-    if(res){
-    handleClose();
-    toast.success('Deleted Successfully');
+    const res = await deleteCandidate(row.id, accessToken, clientCode);
+    if (res) {
+      handleClose();
+      toast.success('Deleted Successfully');
     }
   }
 
@@ -65,7 +65,7 @@ function Row(props) {
         <TableCell align="center">{row.firstName ? row.firstName : "..."}</TableCell>
         <TableCell align="center">{row.email ? row.email : "..."}</TableCell>
         <TableCell align="center">{row.contact ? row.contact : "..."}</TableCell>
-        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0,10) : "..."}</TableCell>
+        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0, 10) : "..."}</TableCell>
         <TableCell align="center">{row.source ? row.source : "..."}</TableCell>
         <TableCell align="center">
           <input
@@ -91,9 +91,6 @@ function Row(props) {
 
 
 export default function RegisteredCandidates({ setCurrentItem }) {
-
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
   const [candidates, setCandidates] = useState([]);
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
@@ -108,16 +105,8 @@ export default function RegisteredCandidates({ setCurrentItem }) {
     getCandidates();
   }, []);
 
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
-
   const handleSearch = () => {
     console.log("Search");
-  }
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
   }
 
 
@@ -136,25 +125,6 @@ export default function RegisteredCandidates({ setCurrentItem }) {
               type="text"
               placeholder="Search"
             />
-          </div>
-
-          <div className='selectBox'>
-            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filter by</option>
-              <option value="Name">Name</option>
-              <option value="Email">Email</option>
-              <option value="Contact">Contact</option>
-              <option value="RegBy">Reg By</option>
-              <option value="CandidateAvl">Candidate  Availability</option>
-            </select>
-            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-              <option value="" disabled selected>Sort by</option>
-              <option value="Name">Name</option>
-              <option value="Email">Email</option>
-              <option value="Contact">Contact</option>
-              <option value="RegBy">Reg By</option>
-              <option value="CandidateAvl">Candidate  Availability</option>
-            </select>
           </div>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
@@ -311,28 +281,6 @@ const SearchBarContainer = styled.div`
   outline: none;
   }
 
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
-  }
 
 `
 
