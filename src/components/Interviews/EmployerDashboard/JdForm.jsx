@@ -15,6 +15,9 @@ import { toast } from 'react-toastify';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import { locations, technicalSkills } from '../../../utils/contantData';
+import Saved from '../../commonComponents/infoDialog/Saved';
+import Created from '../../commonComponents/infoDialog/Created';
+import Error from '../../commonComponents/infoDialog/Error';
 
 
 const Container = styled.div`
@@ -137,6 +140,23 @@ function JdForm({ array, handleClose }) {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
 
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [createdPopup, setCreatedPopup] = useState(false);
+  const [savedPopup, setSavedPopup] = useState(false);
+
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  }
+
+  const handleCreatedPopUpClose = () => {
+    setCreatedPopup(false);
+  }
+
+  const handleSavedPopUpClose = () => {
+    setSavedPopup(false);
+  }
+
   const handleLocationsChange = (_, newLocations) => {
     setSelectedLocations(newLocations);
   }
@@ -217,25 +237,40 @@ function JdForm({ array, handleClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (mode == "create") {
-      const resObj = await addJd(formData, accessToken, clientCode);
-      if (resObj) toast.success("JD successfully created");
-      handleClose();
-      console.log(resObj);
-    }
-    else {
-      const editRes = await editJd(formData, accessToken, clientCode);
-      if (editRes) toast.success("JD successfully Edited");
-      handleClose();
-      console.log(editRes);
+    handleClose();
+    try {
+      if (mode === "create") {
+        const resObj = await addJd(formData, accessToken, clientCode);
+        if (resObj) {
+          setCreatedPopup(true);
+          console.log(resObj);
+        }
+      } else {
+        const editRes = await editJd(formData, accessToken, clientCode);
+        if (editRes) {
+          setSavedPopup(true);
+          console.log(editRes);
+        }
+      }
+    } catch (error) {
+      // Handle the error appropriately
+      console.error("Error during JD submission:", error);
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setErrorPopup(true);
+      // Optionally, you can also log more details about the error or perform additional error handling steps.
     }
   };
 
 
+  { errorMsg && console.log(errorMsg) }
   console.log('locate', formData.skills);
 
   return (
     <Container>
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={handleRegister} />}
+      {createdPopup && <Created handleClose={handleCreatedPopUpClose} open={createdPopup} msg='JD successfully created' />}
+      {savedPopup && <Saved handleClose={handleSavedPopUpClose} open={savedPopup} msg='JD successfully updated' />}
       <h3>JD Registration</h3>
       <Form onSubmit={handleSubmit}>
         <TextField id="outlined-basic" label="JD ID (ABC_XX__)" variant="outlined" type='text' name="jdId" value={formData.jdId} onChange={handleChange} disabled={mode == "edit"} sx={{ backgroundColor: '#F6F6FB' }} size='small'
@@ -302,8 +337,8 @@ function JdForm({ array, handleClose }) {
               fontWeight: '400'
             },
           }}
-          required 
-          disabled={mode == "edit"}/>
+          required
+          disabled={mode == "edit"} />
 
         <TextField id="outlined-basic" label="Title" variant="outlined"
           type="text"
