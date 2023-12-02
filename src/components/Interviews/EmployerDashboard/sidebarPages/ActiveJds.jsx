@@ -164,7 +164,6 @@ function Row(props) {
     };
   }, []);
 
-  console.log(row);
 
 
   return (
@@ -206,7 +205,7 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
-              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} />} />
+              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id}/>} />
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
@@ -230,14 +229,16 @@ const ActiveJds = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
-  useEffect(() => {
-    async function getData() {
-      dispatch(getActiveJds({ accessToken, clientCode }));
-      const res = await getJdsForMatching(accessToken, clientCode);
-      setTableRows(res?.data?.data);
-    }
-    getData();
-  }, []);
+  const jdData = useSelector(state => state?.jd?.activeJds);
+
+  // useEffect(() => {
+  //   async function getData() {
+  //     dispatch(getActiveJds({ accessToken, clientCode }));
+  //     const res = await getJdsForMatching(accessToken, clientCode);
+  //     setTableRows(res?.data?.data);
+  //   }
+  //   getData();
+  // }, [jdData]);
 
   // State, function to Open and close Export Dialog Box
   const [openExport, setOpenExport] = React.useState(false);
@@ -260,7 +261,6 @@ const ActiveJds = () => {
   const handleSearch = () => {
 
   }
-
 
   return (
     <Container1>
@@ -296,7 +296,7 @@ const ActiveJds = () => {
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {tableRows?.map((row, index) => (
+              {jdData?.map((row, index) => (
                 <Row key={row.id} row={row} index={index} />
               ))}
             </TableBody>

@@ -11,6 +11,9 @@ import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import { data as interviews } from "../../../../utils/contantData";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { useSelector } from "react-redux";
+import { getActiveJds } from "../../../../slices/jdSlice";
+import { useDispatch } from "react-redux";
+import { getJdsForMatching } from "../../../../functions/api/employers/match/getJdsForMatching";
 
 function Row(props) {
   const { row, index, setPage } = props;
@@ -37,8 +40,23 @@ function Row(props) {
 
 
 const EmpScheduledInterviews = ({ setPage }) => {
-  const [tableRows, setTableRows] = useState([]);
-  const jdData = useSelector(state => state?.jd?.activeJds);
+  const [tableRows,setTableRows] = useState([]);
+  const [jdData, setJdData] = useState([]);
+
+  const dispatch = useDispatch();
+  const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
+  const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
+
+  useEffect(() => {
+    async function getData() {
+      dispatch(getActiveJds({ accessToken, clientCode }));
+      const res = await getJdsForMatching(accessToken, clientCode);
+      setJdData(res?.data?.data);
+    }
+    getData();
+  }, []);
+
+  // const jdData = useSelector(state => state?.jd?.activeJds);
 
   useEffect(() => {
     if (jdData?.length) {
@@ -64,7 +82,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
     console.log("Search");
   }
 
-
+console.log(tableRows);
   return (
     <Content>
       <TableContainer component={Paper} className="tableBox">

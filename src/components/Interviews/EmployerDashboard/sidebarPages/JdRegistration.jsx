@@ -174,7 +174,7 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
-              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} />} />
+              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id}/>} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <span onClick={() => handleEdit(row)}><img src={editIcon} className='threeDotIcon' /> Edit</span>
               <span onClick={handleClickOpen}><img src={deleteIcon} className='threeDotIcon' /> Delete</span>

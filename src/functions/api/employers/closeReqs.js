@@ -1,8 +1,14 @@
 import axios from "axios"
 
 
-export const closeReq = async (id, accessToken, clientCode) => {
-
+export const closeReq = async (reqId, closed, reqNumber, accessToken, clientCode) => {
+   
+    const payload = {
+        closed: closed,
+        id: reqId,
+        reqNumber: reqNumber
+    }
+console.log("========pppp===>",payload);
 const config = {
   headers: {
     Authorization: `Bearer ${accessToken}`,
@@ -12,7 +18,7 @@ const config = {
 };
 
     try {
-        const response = await axios.delete(`https://dev-api.intelliview.in/api/jds/${id}`,config);
+        const response = await axios.put(`https://dev-api.intelliview.in/api/jds/${reqId}/reqNumbers/${reqNumber}`,payload,config);
         console.log('Data:', response.data);
         console.log("Status", response.status)
         return response.data;

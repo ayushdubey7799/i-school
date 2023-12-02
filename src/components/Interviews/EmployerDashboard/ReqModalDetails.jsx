@@ -8,10 +8,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import threeDot from '../../../assets/icons/threeDot.png'
+import { closeReq } from '../../../functions/api/employers/closeReqs';
+import { useSelector } from 'react-redux';
 
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, index, id } = props;
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
@@ -38,13 +42,11 @@ function Row(props) {
     };
   }, []);
 
-  const handleCloseReq = () => {
+  const handleReqStatus =async (change) => {
+     const res = await closeReq(id,change,row.reqNumber,accessToken,clientCode);
 
   }
 
-  const handleReOpenReq = () => {
-
-  }
 
   return (
     <React.Fragment>
@@ -72,8 +74,12 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
-              <span onClick={handleCloseReq}><img className='threeDotIcon' /> Close</span>
-              <span onClick={handleReOpenReq}><img className='threeDotIcon' /> ReOpen</span>
+              {
+                row.closed?
+                  <span onClick={() => handleReqStatus(false)}><img className='threeDotIcon' /> ReOpen</span>
+                  :
+                  <span onClick={() => handleReqStatus(true)}><img className='threeDotIcon' /> Close</span>
+              }
             </div>
           </BoxRow>
         </TableCell>
@@ -83,11 +89,14 @@ function Row(props) {
 }
 
 
-const ReqModalDetails = ({ reqs }) => {
+const ReqModalDetails = ({ reqs,jdId,id }) => {
   const requests = reqs ? reqs : [];
+
+  console.log('here===p===p==>>>',jdId)
 
   return (
     <Container1>
+      <h3>JD ID: {jdId}</h3>
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
           <Table aria-label="collapsible table">
@@ -101,7 +110,7 @@ const ReqModalDetails = ({ reqs }) => {
             </TableHead>
             <TableBody className="tableBody">
               {requests?.map((row, index) => (
-                <Row key={row.id} row={row} index={index} />
+                <Row key={row.id} row={row} index={index} id={id}/>
               ))}
             </TableBody>
           </Table>
