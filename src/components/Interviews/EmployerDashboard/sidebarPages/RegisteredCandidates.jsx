@@ -20,11 +20,20 @@ import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import { toast } from "react-toastify";
 import { deleteCandidate } from "../../../../functions/api/resume/deleteCandidate";
+import Deleted from "../../../commonComponents/infoDialog/Deleted";
+import Error from "../../../commonComponents/infoDialog/Error";
+
+
 function Row(props) {
   const { row, index } = props;
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
+
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
@@ -37,12 +46,31 @@ function Row(props) {
   };
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
-  const handleDelete = async () => {
-    const res = await deleteCandidate(row.id,accessToken,clientCode);
-    if(res){
-    handleClose();
-    toast.success('Deleted Successfully');
+  const handleDelete = async (id) => {
+
+    try {
+      const res = await deleteCandidate(id, accessToken, clientCode);
+      if (res) {
+        setDeletePopup(true);
+      }
+    } catch (error) {
+      // Handle network errors or unexpected issues
+      console.log('Abhi');
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setErrorPopup(true);
+    } finally {
+      // Close the modal or perform other cleanup tasks
+      handleClose();
     }
+  }
+
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  }
+
+  const handleDeletePopUpClose = () => {
+    setDeletePopup(false);
   }
 
   // State, function to open and close Drawer
@@ -57,15 +85,19 @@ function Row(props) {
     setState({ ...state, [anchor]: open });
   };
 
+  { errorMsg && console.log(errorMsg) }
+
   console.log(row)
   return (
     <React.Fragment>
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
+      {deletePopup && <Deleted handleClose={handleDeletePopUpClose} open={deletePopup} msg='Candidate successfully deleted' />}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell align="center">{row.firstName ? row.firstName : "..."}</TableCell>
         <TableCell align="center">{row.email ? row.email : "..."}</TableCell>
         <TableCell align="center">{row.contact ? row.contact : "..."}</TableCell>
-        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0,10) : "..."}</TableCell>
+        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0, 10) : "..."}</TableCell>
         <TableCell align="center">{row.source ? row.source : "..."}</TableCell>
         <TableCell align="center">
           <input
@@ -75,7 +107,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="center">
           <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='Candidate Data' handleClose={handleClose} handleDelete={handleDelete} />} />
+          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='Candidate Data' handleClose={handleClose} handleDelete={() => handleDelete(row.id)} />} />
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
             <img src={shareIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
@@ -91,9 +123,6 @@ function Row(props) {
 
 
 export default function RegisteredCandidates({ setCurrentItem }) {
-
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
   const [candidates, setCandidates] = useState([]);
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
@@ -108,16 +137,8 @@ export default function RegisteredCandidates({ setCurrentItem }) {
     getCandidates();
   }, []);
 
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
-
   const handleSearch = () => {
     console.log("Search");
-  }
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
   }
 
 
@@ -136,25 +157,6 @@ export default function RegisteredCandidates({ setCurrentItem }) {
               type="text"
               placeholder="Search"
             />
-          </div>
-
-          <div className='selectBox'>
-            <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-              <option value="" disabled selected>Filter by</option>
-              <option value="Name">Name</option>
-              <option value="Email">Email</option>
-              <option value="Contact">Contact</option>
-              <option value="RegBy">Reg By</option>
-              <option value="CandidateAvl">Candidate  Availability</option>
-            </select>
-            <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-              <option value="" disabled selected>Sort by</option>
-              <option value="Name">Name</option>
-              <option value="Email">Email</option>
-              <option value="Contact">Contact</option>
-              <option value="RegBy">Reg By</option>
-              <option value="CandidateAvl">Candidate  Availability</option>
-            </select>
           </div>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
@@ -311,28 +313,6 @@ const SearchBarContainer = styled.div`
   outline: none;
   }
 
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
-  }
 
 `
 

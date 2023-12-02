@@ -21,7 +21,10 @@ const Error = ({ handleClose, open, msg, handleRetryFunc }) => {
                         <span className='text'>{msg}</span>
                     </div>
 
-                    <button className='btn' onClick={handleRetryFunc}>Try again</button>
+                    <button className='btn' onClick={() => {
+                        handleRetryFunc()
+                        handleClose()
+                    }}>Try again</button>
                 </Box>
             </Dialog>
         </React.Fragment>

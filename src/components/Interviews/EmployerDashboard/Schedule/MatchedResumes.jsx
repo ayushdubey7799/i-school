@@ -155,25 +155,6 @@ export default function MatchedResumes() {
                 placeholder="Search"
               />
             </div>
-
-            <div className='selectBox'>
-              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filter by</option>
-                <option value="Name">Name</option>
-                <option value="MatchPercentage">Match Percentage</option>
-                <option value="Email">Email</option>
-                <option value="Contact">Contact</option>
-                <option value="Score">Score</option>
-              </select>
-              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                <option value="" disabled selected>Sort by</option>
-                <option value="Name">Name</option>
-                <option value="MatchPercentage">Match Percentage</option>
-                <option value="Email">Email</option>
-                <option value="Contact">Contact</option>
-                <option value="Score">Score</option>
-              </select>
-            </div>
           </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
@@ -342,27 +323,5 @@ const SearchBarContainer = styled.div`
   outline: none;
   }
 
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
-  }
 
 `

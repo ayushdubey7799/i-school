@@ -17,7 +17,7 @@ const JdsDetails = ({ Jds }) => {
         <Box>
             <div className='basicDetails'>
                 <div className='box1'>
-                    <span className='jobTitle'>{Jds.title}</span>
+                    <span className='jobTitle'>{Jds.title} <span className='jdId'>JD ID: {Jds.jdId}</span></span>
                     <span className='company'>Company Name</span>
                 </div>
 
@@ -99,6 +99,13 @@ margin: 2rem auto;
         .jobTitle {
             font-size: 1.3rem;
             font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+
+            .jdId {
+                font-size: 1rem;
+                font-weight: 500;
+            }
         }
 
         .company {

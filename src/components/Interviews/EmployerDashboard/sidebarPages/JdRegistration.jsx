@@ -30,6 +30,8 @@ import { useDispatch } from 'react-redux';
 import { getAvailableJds } from '../../../../slices/jdSlice';
 import CommonDrawer from '../../../commonComponents/CommonDrawer';
 import JdsDetails from './JdsDetails';
+import Error from '../../../commonComponents/infoDialog/Error';
+import Deleted from '../../../commonComponents/infoDialog/Deleted';
 
 
 function Row(props) {
@@ -41,6 +43,10 @@ function Row(props) {
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
 
 
   // state to open and close Drawer
@@ -74,14 +80,30 @@ function Row(props) {
   }
 
   const handleDelete = async (id) => {
-    const res = await deleteJd(id, accessToken, clientCode);
-    if (res) {
-      toast.success("Successfully Deleted");
+    try {
+      const res = await deleteJd(id, accessToken, clientCode);
+
+      // Check if the request was successful
+      if (res) {
+        setDeletePopup(true);
+      }
+    } catch (error) {
+      // Handle network errors or unexpected issues
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setErrorPopup(true);
+    } finally {
+      // Close the modal or perform other cleanup tasks
+      handleClose();
     }
-    else {
-      toast.error("Error Occured")
-    }
-    handleClose();
+  };
+
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  }
+
+  const handleDeletePopUpClose = () => {
+    setDeletePopup(false);
   }
 
   // State, function to Open and close Dialog Box
@@ -124,7 +146,8 @@ function Row(props) {
   return (
     <React.Fragment>
       <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
-
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
+      {deletePopup && <Deleted handleClose={handleDeletePopUpClose} open={deletePopup} msg='JD successfully deleted' />}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center'>
@@ -151,7 +174,7 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
-              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} />} />
+              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id}/>} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <span onClick={() => handleEdit(row)}><img src={editIcon} className='threeDotIcon' /> Edit</span>
               <span onClick={handleClickOpen}><img src={deleteIcon} className='threeDotIcon' /> Delete</span>
@@ -175,8 +198,6 @@ const JdRegistration = () => {
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   const testingData = useSelector(state => state?.jd?.availableJds);
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
 
 
   useEffect(() => {
@@ -194,13 +215,6 @@ const JdRegistration = () => {
   //   }
   // },[testingData])
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
 
   const handleSearch = () => {
 
@@ -251,25 +265,6 @@ const JdRegistration = () => {
                 type="text"
                 placeholder="Search"
               />
-            </div>
-
-            <div className='selectBox'>
-              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filter by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Test_ID">Test ID</option>
-                <option value="Created By">Created By</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                <option value="" disabled selected>Sort by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Test_ID">Test ID</option>
-                <option value="Created By">Created By</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
             </div>
           </SearchBarContainer>
           <Table aria-label="collapsible table">
@@ -431,28 +426,6 @@ const SearchBarContainer = styled.div`
   outline: none;
   }
 
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
-  }
 
 `
 const BoxRow = styled.div`

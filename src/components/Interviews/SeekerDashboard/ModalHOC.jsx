@@ -11,6 +11,7 @@ export default function ModalHOC({
   setOpenNewInterviewModal,
   Component,
   array = []
+  
 }) {
 
   const handleOpen = () => {

@@ -34,6 +34,8 @@ import { getActiveJds } from '../../../../slices/jdSlice';
 import { useDispatch } from 'react-redux';
 import JdsDetails from './JdsDetails';
 import ReqModalDetails from '../ReqModalDetails';
+import Deleted from '../../../commonComponents/infoDialog/Deleted';
+import Error from '../../../commonComponents/infoDialog/Error';
 
 
 function Row(props) {
@@ -44,6 +46,11 @@ function Row(props) {
 
   const [jdData, setJdData] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
+
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
 
@@ -63,15 +70,24 @@ function Row(props) {
   }
 
   const handleDelete = async (id) => {
-    const res = await deleteJd(id, accessToken, clientCode);
-    if (res) {
-      toast.success("Successfully Deleted");
+    try {
+      const res = await deleteJd(id, accessToken, clientCode);
+
+      // Check if the request was successful
+      if (res) {
+        setDeletePopup(true);
+      }
+    } catch (error) {
+      // Handle network errors or unexpected issues
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setErrorPopup(true);
+    } finally {
+      // Close the modal or perform other cleanup tasks
+      handleClose();
     }
-    else {
-      toast.error("Error Occured")
-    }
-    handleClose();
-  }
+  };
+
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -94,6 +110,14 @@ function Row(props) {
   const handleCloseShareAgency = () => {
     setOpenShareAgency(false);
   };
+
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  }
+
+  const handleDeletePopUpClose = () => {
+    setDeletePopup(false);
+  }
 
 
   // function to open and close Drawer
@@ -140,12 +164,13 @@ function Row(props) {
     };
   }, []);
 
-  console.log(row);
 
 
   return (
     <React.Fragment>
       <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
+      {deletePopup && <Deleted handleClose={handleDeletePopUpClose} open={deletePopup} msg='JD successfully deleted' />}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center'>
@@ -164,9 +189,9 @@ function Row(props) {
         <TableCell component="th" scope="row" align="center">
           {row.hiringManager}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        {/* <TableCell component="th" scope="row" align="center">
           ...
-        </TableCell>
+        </TableCell> */}
         <TableCell component="th" scope="row" align="center">
           <BoxRow>
             <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
@@ -180,7 +205,7 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
-              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} />} />
+              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id}/>} />
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
@@ -201,19 +226,19 @@ function Row(props) {
 
 const ActiveJds = () => {
   const [tableRows, setTableRows] = useState([]);
-  const [searchParams, setSearchParams] = useState('');
-  const [sortParams, setSortParams] = useState('');
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
-  useEffect(() => {
-    async function getData() {
-      dispatch(getActiveJds({ accessToken, clientCode }));
-      const res = await getJdsForMatching(accessToken, clientCode);
-      setTableRows(res?.data?.data);
-    }
-    getData();
-  }, []);
+  const jdData = useSelector(state => state?.jd?.activeJds);
+
+  // useEffect(() => {
+  //   async function getData() {
+  //     dispatch(getActiveJds({ accessToken, clientCode }));
+  //     const res = await getJdsForMatching(accessToken, clientCode);
+  //     setTableRows(res?.data?.data);
+  //   }
+  //   getData();
+  // }, [jdData]);
 
   // State, function to Open and close Export Dialog Box
   const [openExport, setOpenExport] = React.useState(false);
@@ -233,18 +258,9 @@ const ActiveJds = () => {
     toast.success('Exported Successfully');
   }
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  }
-
   const handleSearch = () => {
 
   }
-
 
   return (
     <Container1>
@@ -265,27 +281,6 @@ const ActiveJds = () => {
                 placeholder="Search"
               />
             </div>
-
-            <div className='selectBox'>
-              <select value={searchParams} onChange={handleSearchParams} className='selectInput'>
-                <option value="" disabled selected>Filter by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Req_ID">Req ID</option>
-                <option value="Recruiter">Recruiter</option>
-                <option value="HiringManager">Hiring Manager</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-              <select value={sortParams} onChange={handleSortParams} className='selectInput'>
-                <option value="" disabled selected>Sort by</option>
-                <option value="JD_ID">JD ID</option>
-                <option value="Req_ID">Req ID</option>
-                <option value="Recruiter">Recruiter</option>
-                <option value="HiringManager">Hiring Manager</option>
-                <option value="NoticePeriod">Notice Period</option>
-                <option value="CandidateAvl">Candidate  Availability</option>
-              </select>
-            </div>
           </SearchBarContainer>
 
           <Table aria-label="collapsible table">
@@ -296,12 +291,12 @@ const ActiveJds = () => {
                 <TableCell align='center'>Active Since</TableCell>
                 <TableCell align='center'>Recruiter</TableCell>
                 <TableCell align='center'>Hiring Manager</TableCell>
-                <TableCell align='center'>Comments</TableCell>
+                {/* <TableCell align='center'>Comments</TableCell> */}
                 <TableCell align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {tableRows?.map((row, index) => (
+              {jdData?.map((row, index) => (
                 <Row key={row.id} row={row} index={index} />
               ))}
             </TableBody>
@@ -450,8 +445,6 @@ const SearchBarContainer = styled.div`
     }
   }
 
-
-
   .skillInput {
   flex-grow: 1;
   border: none;
@@ -461,29 +454,6 @@ const SearchBarContainer = styled.div`
   font-size: 1rem;
   background-color: transparent;
   outline: none;
-  }
-
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    width: 50%;
-    outline: none;
-    color: #757B80;
-
-    option {
-    font-size: 0.8rem;
-    font-weight: 400;
-  }
   }
 
 `
