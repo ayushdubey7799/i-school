@@ -34,6 +34,8 @@ import { getActiveJds } from '../../../../slices/jdSlice';
 import { useDispatch } from 'react-redux';
 import JdsDetails from './JdsDetails';
 import ReqModalDetails from '../ReqModalDetails';
+import Deleted from '../../../commonComponents/infoDialog/Deleted';
+import Error from '../../../commonComponents/infoDialog/Error';
 
 
 function Row(props) {
@@ -44,6 +46,11 @@ function Row(props) {
 
   const [jdData, setJdData] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
+
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
 
@@ -63,15 +70,24 @@ function Row(props) {
   }
 
   const handleDelete = async (id) => {
-    const res = await deleteJd(id, accessToken, clientCode);
-    if (res) {
-      toast.success("Successfully Deleted");
+    try {
+      const res = await deleteJd(id, accessToken, clientCode);
+
+      // Check if the request was successful
+      if (res) {
+        setDeletePopup(true);
+      }
+    } catch (error) {
+      // Handle network errors or unexpected issues
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setErrorPopup(true);
+    } finally {
+      // Close the modal or perform other cleanup tasks
+      handleClose();
     }
-    else {
-      toast.error("Error Occured")
-    }
-    handleClose();
-  }
+  };
+
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -94,6 +110,14 @@ function Row(props) {
   const handleCloseShareAgency = () => {
     setOpenShareAgency(false);
   };
+
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  }
+
+  const handleDeletePopUpClose = () => {
+    setDeletePopup(false);
+  }
 
 
   // function to open and close Drawer
@@ -146,6 +170,8 @@ function Row(props) {
   return (
     <React.Fragment>
       <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
+      {deletePopup && <Deleted handleClose={handleDeletePopUpClose} open={deletePopup} msg='JD successfully deleted' />}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center'>

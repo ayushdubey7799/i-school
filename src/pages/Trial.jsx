@@ -44,9 +44,9 @@ const Trial = () => {
     }
 
     return (
-        <div style={{display: 'flex', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center', gap: '1rem'}}>
+        <div style={{ display: 'flex', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
             <Success open={open1} handleClose={handleClose1} msg='Success Msg' />
-            <Error open={open2} handleClose={handleClose2} msg='Error Msg'/>
+            <Error open={open2} handleClose={handleClose2} msg='Error Msg' />
             <Saved open={open3} handleClose={handleClose3} msg='Saved Msg' />
             <Deleted open={open4} handleClose={handleClose4} msg='Delete Msg' />
             <Done open={open5} handleClose={handleClose5} msg='Done Msg' />
@@ -62,6 +62,8 @@ const Trial = () => {
             <button onClick={() => setOpen6(true)}>Failed</button>
             <button onClick={() => setOpen7(true)}>Access Denied</button>
             <button onClick={() => setOpen8(true)}>Created</button>
+
+            <iframe src="https://lottie.host/embed/9dba8e12-cd91-4060-bd90-7764990671d0/e0U0LcjhCB.json" style={{ backgroundColor: 'transparent', border: 'none' }}></iframe>
         </div>
     )
 }
