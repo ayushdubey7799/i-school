@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import Error from '../../../commonComponents/infoDialog/Error';
+import Created from '../../../commonComponents/infoDialog/Created';
 
 const Container = styled.div`
   width:90%;
@@ -125,6 +127,11 @@ const RegisterCandidate = () => {
   const [refText, setRefText] = useState('');
   const [source, setSource] = useState('');
 
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [successPopup, setSuccessPopup] = useState(false);
+
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
 
@@ -137,39 +144,63 @@ const RegisterCandidate = () => {
     }
   };
 
-  const handleRegister = async () => {
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("payload", JSON.stringify({
-      email,
-      firstName,
-      lastName,
-      contact,
-      source
-    }))
-    const res = await addProfileWithFile(formData, accessToken, clientCode);
-    console.log(res);
-    if (res) {
-      toast.success("Profile successfully added");
-      setEmail("");
-      setContact("");
-      setFirstName("");
-      setLastName("");
-      setSource("");
-      setSelectedFile(null);
-    }
-
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
   }
+
+  const handleSuccessPopUpClose = () => {
+    setSuccessPopup(false);
+  }
+
+  const handleRegister = async () => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("payload", JSON.stringify({
+        email,
+        firstName,
+        lastName,
+        contact,
+        source
+      }));
+
+      const res = await addProfileWithFile(formData, accessToken, clientCode);
+
+      if (res) {
+        setLoading(false);
+        setSuccessPopup(true);
+        setEmail("");
+        setContact("");
+        setFirstName("");
+        setLastName("");
+        setSource("");
+        setSelectedFile(null);
+        setSelectedFileName('');
+        setRefText('');
+      }
+    } catch (error) {
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setLoading(false);
+      setErrorPopup(true);
+    }
+  };
+
+  { errorMsg && console.log(errorMsg) }
 
   const DecideComponent = () => {
     return <div>working</div>
   }
+
   return (
     <Container>
-
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={handleRegister} />}
+      {successPopup && <Created handleClose={handleSuccessPopUpClose} open={successPopup} msg='Profile successfully created' />}
       <Component>
         <span className='title'>Register New Candidate</span>
-        <ValidatorForm>
+        {loading && <span>Loading...</span>}
+        <ValidatorForm onSubmit={handleRegister}>
           <TextValidator id="outlined-basic" label="Email" variant="outlined"
             type='email'
             value={email}
@@ -336,12 +367,14 @@ const RegisterCandidate = () => {
               accept="*"
               onChange={handleFileChange}
               style={{ display: 'none' }}
+              required
             />
             <span>Select Resume</span>
           </div>
+          <button className='registerBtn'>Register Candidate</button>
         </ValidatorForm>
 
-        <button onClick={handleRegister} className='registerBtn'>Register Candidate</button>
+
       </Component>
     </Container>
   );

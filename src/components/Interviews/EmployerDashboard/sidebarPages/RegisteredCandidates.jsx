@@ -20,11 +20,20 @@ import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import { toast } from "react-toastify";
 import { deleteCandidate } from "../../../../functions/api/resume/deleteCandidate";
+import Deleted from "../../../commonComponents/infoDialog/Deleted";
+import Error from "../../../commonComponents/infoDialog/Error";
+
+
 function Row(props) {
   const { row, index } = props;
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
+
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
@@ -37,12 +46,31 @@ function Row(props) {
   };
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
-  const handleDelete = async () => {
-    const res = await deleteCandidate(row.id, accessToken, clientCode);
-    if (res) {
+  const handleDelete = async (id) => {
+
+    try {
+      const res = await deleteCandidate(id, accessToken, clientCode);
+      if (res) {
+        setDeletePopup(true);
+      }
+    } catch (error) {
+      // Handle network errors or unexpected issues
+      console.log('Abhi');
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setErrorPopup(true);
+    } finally {
+      // Close the modal or perform other cleanup tasks
       handleClose();
-      toast.success('Deleted Successfully');
     }
+  }
+
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  }
+
+  const handleDeletePopUpClose = () => {
+    setDeletePopup(false);
   }
 
   // State, function to open and close Drawer
@@ -57,9 +85,13 @@ function Row(props) {
     setState({ ...state, [anchor]: open });
   };
 
+  { errorMsg && console.log(errorMsg) }
+
   console.log(row)
   return (
     <React.Fragment>
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
+      {deletePopup && <Deleted handleClose={handleDeletePopUpClose} open={deletePopup} msg='Candidate successfully deleted' />}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell align="center">{row.firstName ? row.firstName : "..."}</TableCell>
@@ -75,7 +107,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="center">
           <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='Candidate Data' handleClose={handleClose} handleDelete={handleDelete} />} />
+          <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent text='Candidate Data' handleClose={handleClose} handleDelete={() => handleDelete(row.id)} />} />
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
             <img src={shareIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
