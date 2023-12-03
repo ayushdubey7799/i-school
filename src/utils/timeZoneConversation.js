@@ -1,7 +1,8 @@
 const utcDateTimeString = "2023-11-30T15:54:00";
 
 export const timeZoneConversion = (utcDateTimeString) => {
-  const utcDateTime = new Date(utcDateTimeString + "Z"); 
+  if(utcDateTimeString.slice(-1) != 'Z')utcDateTimeString = utcDateTimeString+"Z";
+  const utcDateTime = new Date(utcDateTimeString); 
 
   const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 

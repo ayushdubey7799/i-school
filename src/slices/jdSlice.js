@@ -5,8 +5,8 @@ import { getJdsForMatching } from "../functions/api/employers/match/getJdsForMat
 
 
 
-export const getAvailableJds = createAsyncThunk('jd/getJds', async ({accessToken,clientCode}) => {
-    const response = await getJds(accessToken, clientCode);
+export const getAvailableJds = createAsyncThunk('jd/getJds', async ({accessToken,clientCode,page,size}) => {
+    const response = await getJds(accessToken, clientCode,page=1,size=100);
     return response.data;
 })
 
@@ -18,6 +18,7 @@ export const getActiveJds = createAsyncThunk('jd/getActiveJds', async ({accessTo
 
 const initialState = {
     availableJds: null,
+    cloneSpecificData: null,
     activeJds: null,
     status: 'idle',
     error: null,
@@ -27,13 +28,36 @@ const jdSlice = createSlice({
     name: 'jd',
     initialState,
     reducers: {
-    },
+           },
     
     extraReducers: (builder) => {
         builder.addCase(getAvailableJds.pending, (state) => {
             state.status = 'loading';
         }).addCase(getAvailableJds.fulfilled, (state, action) => {
             state.availableJds = action.payload.data;
+            state.cloneSpecificData = action.payload.data.map((item) => {
+                return {jdId: item.jdId,
+                    numOfReqs: item.reqNumber,
+                    title: item.title,
+                    description: item.description,
+                    skills: item.skills,
+                    bu: item.bu,
+                    exp: item.exp,
+                    location: item.location,
+                    certification: item.certification,
+                    workType: item.workType,
+                    ctc: item.ctc,
+                    keywords: item.keywords,
+                    jd: item.jd,
+                    noticePeriod: item.noticePeriod,
+                    companyType: item.companyType,
+                    candidateAvl: item.candidateAvl,
+                    hiringManager: item.hiringManager,
+                    recruiter: item.recruiter,
+                    // jdUpload: item.jdUpload,
+                    visibility: item.visibility,
+                    autoReqNumbers: true,}
+            })
             state.status = 'succeeded';
         }).addCase(getAvailableJds.rejected, (state, action) => {
             state.status = 'failed';

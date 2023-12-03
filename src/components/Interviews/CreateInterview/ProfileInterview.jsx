@@ -107,10 +107,16 @@ const ProfileInterview = () => {
       setLoaderMessage("");
       return;
     }
+  const payload = {
+    difficultyLevel: 'moderate',
+    testType: 'subjective',
+    jobSummary: interviewDetails.jobSummary.trim(),
+    resumeText: interviewDetails.resumeText.trim(),
+}
+   
 
     const ongoing = await createInterview(
-      interviewDetails.jobSummary.trim(),
-      interviewDetails.resumeText.trim(),
+      payload,
       accessToken
     );
 
