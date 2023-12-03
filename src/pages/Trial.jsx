@@ -7,6 +7,7 @@ import Failed from '../components/commonComponents/infoDialog/Failed';
 import Error from '../components/commonComponents/infoDialog/Error';
 import AccessDenied1 from '../components/commonComponents/infoDialog/AccessDenied1';
 import Created from '../components/commonComponents/infoDialog/Created';
+import LoaderDialog from '../components/commonComponents/infoDialog/LoaderDialog';
 
 const Trial = () => {
     const [open1, setOpen1] = useState(false);
@@ -17,6 +18,7 @@ const Trial = () => {
     const [open6, setOpen6] = useState(false);
     const [open7, setOpen7] = useState(false);
     const [open8, setOpen8] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     const handleClose1 = () => {
         setOpen1(false);
@@ -62,7 +64,9 @@ const Trial = () => {
             <button onClick={() => setOpen6(true)}>Failed</button>
             <button onClick={() => setOpen7(true)}>Access Denied</button>
             <button onClick={() => setOpen8(true)}>Created</button>
+            <button onClick={() => setLoader(!loader)}>Loader</button>
 
+            {loader && <LoaderDialog/>}
             <iframe src="https://lottie.host/embed/9dba8e12-cd91-4060-bd90-7764990671d0/e0U0LcjhCB.json" style={{ backgroundColor: 'transparent', border: 'none' }}></iframe>
         </div>
     )

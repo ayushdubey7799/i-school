@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Success from '../../../commonComponents/infoDialog/Success';
 import Error from '../../../commonComponents/infoDialog/Error';
+import LoaderDialog from '../../../commonComponents/infoDialog/LoaderDialog';
 
 
 const UploadCandidateProfile = () => {
@@ -63,7 +64,7 @@ const UploadCandidateProfile = () => {
 
   return (
     <Box>
-      {loading && <span>Loading...</span>}
+      {loading && <LoaderDialog />}
       {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={handleFileUpload} />}
       {successPopup && <Success handleClose={handleSuccessPopUpClose} open={successPopup} msg='Profiles uploaded successfully' />}
       <span className='title'>Upload Profiles</span>
