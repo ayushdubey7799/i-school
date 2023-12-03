@@ -1,23 +1,22 @@
 import axios from "axios";
 
-export const getResumeFile = async (
+export const getAllAlerts = async (
   accessToken,
   clientCode
-) => {
+  ) => {
   const config = {
-    responseType: 'blob',
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/octet-stream",
+      "Content-Type": "application/json",
       "X-Client-Code": clientCode,
-    }
+    },
   };
   try {
     const response =
-      await axios.get(`https://dev-api.intelliview.in/api/media/downloadById?fileType=resume&id=8d5bfa00-c617-48d9-b636-d63c9c9bf696
+      await axios.get(`https://dev-api.intelliview.in/api/alerts
         `,config);
-    
-    console.log("Data:", response);
+
+    console.log("Data:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error:", error);

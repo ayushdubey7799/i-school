@@ -1,14 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useSelector } from 'react-redux';
 
 const jds = ['jd1', 'jd2', 'jd3', 'jd4', 'jd5', 'jd6']
 
-const CloneJDForm = () => {
-    const [selectedJd, setSelectedJd] = useState('');
+const CloneJDForm = ({array}) => {
+    const [selectedJd, setSelectedJd] = useState(null);
+    const jdData = useSelector(state => state.jd.cloneSpecificData);
+    useEffect(() => {
+        array[2](selectedJd);
+    },[selectedJd])
+    
+
+    const handleClone = () => {
+        array[0](true);
+        array[1](false);
+    }
 
     return (
         <Box>
@@ -18,19 +29,19 @@ const CloneJDForm = () => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={selectedJd}
+                    value={selectedJd?.jdId}
                     label="All JDs"
                     onChange={(e) => setSelectedJd(e.target.value)}
                 >
                     {
-                        jds.map((jd, i) => (
-                            <MenuItem value={jd}>{jd}</MenuItem>
+                        jdData?.map((item, i) => (
+                            <MenuItem value={item}>{item?.jdId}</MenuItem>
                         ))
                     }
                 </Select>
             </FormControl>
 
-            <Button>Clone JD</Button>
+            <Button onClick={handleClone}>Clone JD</Button>
         </Box>
     )
 }

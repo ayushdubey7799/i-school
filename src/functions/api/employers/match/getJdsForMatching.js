@@ -1,7 +1,9 @@
 import axios from "axios";
 export const getJdsForMatching = async (
   accessToken,
-  clientCode
+  clientCode,
+  page=1,
+  size=100
 ) => {
   const config = {
     headers: {
@@ -14,7 +16,7 @@ export const getJdsForMatching = async (
 
   try {
     const response = await axios.get(
-      `https://dev-api.intelliview.in/api/jds?page=1&size=100&active=true`,
+      `https://dev-api.intelliview.in/api/jds?page=${page}&size=${size}&active=true`,
       config
     );
     console.log("Data:", response.data);

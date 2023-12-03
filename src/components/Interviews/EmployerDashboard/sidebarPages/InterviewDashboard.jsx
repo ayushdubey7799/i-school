@@ -157,8 +157,8 @@ const InterviewDashboard = ({ page, setPage }) => {
           <span className="achievedNumberText">In Progress</span>
         </div>
       </Container>
-      {/* {page?.index === 1 && <EmpScheduledInterviews setPage={setPage} />}
-      {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />} */}
+      {page?.index === 1 && <EmpScheduledInterviews setPage={setPage} />}
+      {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}
       {currMetric === 'upcoming' && <UpcomingInterview/>}
       {currMetric === 'scheduledToday' && <ScheduledTodayInterview/>}
       {currMetric === 'completed' && <CompletedLast7Days/>}

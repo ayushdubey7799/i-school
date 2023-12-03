@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Match from "./Match";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
   const { row, isSelected, onToggle, index } = props;
@@ -100,6 +101,24 @@ export default function ManageJds({ rows }) {
   const [tableRows, setTableRows] = useState([]);
 
   const navigate = useNavigate();
+  const [total, setTotal] = useState(0);
+
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change) {
+      setPage((prev) => prev + 1);
+    } else {
+      setPage((prev) => prev - 1);
+    }
+  };
+
 
   const handleSearch = () => {
     console.log("Search");
@@ -136,16 +155,19 @@ export default function ManageJds({ rows }) {
           <span>Active Job Descriptions</span>
           <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
         </span>
-        <SearchBarContainer>
-          <div className='skillBox'>
-            <img src={searchBlack} />
-            <input
-              className='skillInput'
-              type="text"
-              placeholder="Search"
-            />
+        <div style={{ display: "flex" }}>
+            <SearchBarContainer>
+              <div className="skillBox">
+                <img src={searchBlack} />
+                <input
+                  className="skillInput"
+                  type="text"
+                  placeholder="Search"
+                />
+              </div>
+            </SearchBarContainer>
+            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange}/>
           </div>
-        </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
@@ -165,6 +187,8 @@ export default function ManageJds({ rows }) {
             ))}
           </TableBody>
         </Table>
+        <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange}/>
+
       </TableContainer>
     </StyledBox>
   );

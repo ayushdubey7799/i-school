@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import ModalHOC from '../../SeekerDashboard/ModalHOC';
+import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,44 +10,46 @@ import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 
-import EmployerDetails from '../EmployerDetails';
-import JdDetails from '../../../../pages/JdDetails';
-import JdForm from '../JdForm';
-import editIcon from '../../../../assets/icons/edit.png'
-import deleteIcon from '../../../../assets/icons/delete.png'
-import threeDot from '../../../../assets/icons/threeDot.png'
-import eyeIcon from '../../../../assets/icons/visible.png'
-import searchBlack from '../../../../assets/icons/searchBlack.png'
-import { getJds } from '../../../../functions/api/employers/getJds';
-import { useSelector } from 'react-redux';
-import { deleteJd } from '../../../../functions/api/employers/deleteJd';
-import { toast } from 'react-toastify';
-import CloneJDForm from './CloneJDForm';
-import CommonDialog from '../../../commonComponents/CommonDialog';
-import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
-import ReqModalDetails from '../ReqModalDetails';
-import { useDispatch } from 'react-redux';
-import { getAvailableJds } from '../../../../slices/jdSlice';
-import CommonDrawer from '../../../commonComponents/CommonDrawer';
-import JdsDetails from './JdsDetails';
-import Error from '../../../commonComponents/infoDialog/Error';
-import Deleted from '../../../commonComponents/infoDialog/Deleted';
-
+import EmployerDetails from "../EmployerDetails";
+import JdDetails from "../../../../pages/JdDetails";
+import JdForm from "../JdForm";
+import editIcon from "../../../../assets/icons/edit.png";
+import deleteIcon from "../../../../assets/icons/delete.png";
+import threeDot from "../../../../assets/icons/threeDot.png";
+import eyeIcon from "../../../../assets/icons/visible.png";
+import searchBlack from "../../../../assets/icons/searchBlack.png";
+import { getJds } from "../../../../functions/api/employers/getJds";
+import { useSelector } from "react-redux";
+import { deleteJd } from "../../../../functions/api/employers/deleteJd";
+import { toast } from "react-toastify";
+import CloneJDForm from "./CloneJDForm";
+import CommonDialog from "../../../commonComponents/CommonDialog";
+import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
+import ReqModalDetails from "../ReqModalDetails";
+import { useDispatch } from "react-redux";
+import { getAvailableJds } from "../../../../slices/jdSlice";
+import CommonDrawer from "../../../commonComponents/CommonDrawer";
+import JdsDetails from "./JdsDetails";
+import Error from "../../../commonComponents/infoDialog/Error";
+import Deleted from "../../../commonComponents/infoDialog/Deleted";
+import { timeZoneConversion } from "../../../../utils/timeZoneConversation";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
   const { row, index } = props;
   const [jdData, setJdData] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
-  const accessToken = useSelector(state => state.auth.userData.accessToken);
-  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
+  const accessToken = useSelector((state) => state.auth.userData.accessToken);
+  const clientCode = useSelector(
+    (state) => state.auth.userData.user.clientCode
+  );
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
   const [errorPopup, setErrorPopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
-
 
   // state to open and close Drawer
   const [state, setState] = React.useState({
@@ -66,18 +68,17 @@ function Row(props) {
       }
     };
 
-    document.addEventListener('mousedown', handleDocumentClick);
+    document.addEventListener("mousedown", handleDocumentClick);
 
     return () => {
-      document.removeEventListener('mousedown', handleDocumentClick);
+      document.removeEventListener("mousedown", handleDocumentClick);
     };
   }, []);
-
 
   const handleEdit = (row) => {
     setEditOpen(true);
     setJdData(row);
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -89,7 +90,9 @@ function Row(props) {
       }
     } catch (error) {
       // Handle network errors or unexpected issues
-      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      const errMsg =
+        error.response.data.notify.message ||
+        "An error occurred. Please try again.";
       setErrorMsg(errMsg);
       setErrorPopup(true);
     } finally {
@@ -100,11 +103,11 @@ function Row(props) {
 
   const handleErrorPopUpClose = () => {
     setErrorPopup(false);
-  }
+  };
 
   const handleDeletePopUpClose = () => {
     setDeletePopup(false);
-  }
+  };
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -117,10 +120,12 @@ function Row(props) {
     setOpen(false);
   };
 
-
   //function to open and close Drawer
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setState({ ...state, [anchor]: open });
@@ -128,7 +133,10 @@ function Row(props) {
 
   //function to open and close Drawer
   const toggleReqDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setReqState({ ...reqState, [anchor]: open });
@@ -145,41 +153,107 @@ function Row(props) {
   console.log(row.jdId, row.reqNumbers);
   return (
     <React.Fragment>
-      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
-      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
-      {deletePopup && <Deleted handleClose={handleDeletePopUpClose} open={deletePopup} msg='JD successfully deleted' />}
+      <ModalHOC
+        setOpenNewInterviewModal={setEditOpen}
+        openNewInterviewModal={editOpen}
+        Component={JdForm}
+        array={[jdData, "edit"]}
+      />
+      {errorPopup && (
+        <Error
+          handleClose={handleErrorPopUpClose}
+          open={errorPopup}
+          msg={errorMsg}
+          handleRetryFunc={() => handleDelete(row.id)}
+        />
+      )}
+      {deletePopup && (
+        <Deleted
+          handleClose={handleDeletePopUpClose}
+          open={deletePopup}
+          msg="JD successfully deleted"
+        />
+      )}
       <TableRow
-        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell component="th" scope="row" align='center'>
+        sx={{ "& > *": { borderBottom: "unset" } }}
+        className={`${index % 2 == 1 ? "colored" : ""}`}
+      >
+        <TableCell component="th" scope="row" align="center">
           {row.jdId}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.createdAt?.slice(0, 10)}
+          {row.title}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.createdBy}
+          {row.location}
         </TableCell>
+        <TableCell component="th" scope="row" align="center">
+          {timeZoneConversion(row.createdAt)}
+        </TableCell>
+        
 
         <TableCell component="th" scope="row" align="center">
           <BoxRow>
-            <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
+            <img
+              src={threeDot}
+              style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
+              className={`three-dots ${
+                openDropdownIndex === index ? "active" : ""
+              }`}
               onClick={() => {
                 if (openDropdownIndex === index) {
                   closeAllDropdowns();
                 } else {
                   openDropdown(index);
                 }
-              }} />
+              }}
+            />
             <div
-              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
+              className={`dropdown-content ${
+                openDropdownIndex === index ? "open" : ""
+              }`}
+              ref={dropdownRef}
             >
-              <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
-              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id}/>} />
-              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
-              <span onClick={() => handleEdit(row)}><img src={editIcon} className='threeDotIcon' /> Edit</span>
-              <span onClick={handleClickOpen}><img src={deleteIcon} className='threeDotIcon' /> Delete</span>
-              <span onClick={toggleDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Details</span>
-              <span onClick={toggleReqDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Reqs</span>
+              <CommonDrawer
+                toggleDrawer={toggleDrawer}
+                state={state}
+                component={<JdsDetails Jds={row} />}
+              />
+              <CommonDrawer
+                toggleDrawer={toggleReqDrawer}
+                state={reqState}
+                component={
+                  <ReqModalDetails
+                    reqs={row.reqNumbers}
+                    jdId={row.jdId}
+                    id={row?.id}
+                  />
+                }
+              />
+              <CommonDialog
+                open={open}
+                handleClose={handleClose}
+                component={
+                  <DeleteDialogContent
+                    handleClose={handleClose}
+                    text="JD"
+                    handleDelete={handleDelete}
+                    deleteId={row.id}
+                  />
+                }
+              />
+              <span onClick={() => handleEdit(row)}>
+                <img src={editIcon} className="threeDotIcon" /> Edit
+              </span>
+              <span onClick={handleClickOpen}>
+                <img src={deleteIcon} className="threeDotIcon" /> Delete
+              </span>
+              <span onClick={toggleDrawer("right", true)}>
+                <img src={eyeIcon} className="threeDotIcon" /> View Details
+              </span>
+              <span onClick={toggleReqDrawer("right", true)}>
+                <img src={eyeIcon} className="threeDotIcon" /> View Reqs
+              </span>
             </div>
           </BoxRow>
         </TableCell>
@@ -188,38 +262,54 @@ function Row(props) {
   );
 }
 
-
 const JdRegistration = () => {
   const [openBasic, setOpenBasic] = useState(false);
   const [openBasic2, setOpenBasic2] = useState(false);
+  const [openBasic3, setOpenBasic3] = useState(false);
+
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
+  const [cloneData,setCloneData] = useState(null);
   const dispatch = useDispatch();
-  const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
-  const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
-  const testingData = useSelector(state => state?.jd?.availableJds);
+  const accessToken = useSelector(
+    (state) => state?.auth?.userData?.accessToken
+  );
+  const clientCode = useSelector(
+    (state) => state?.auth?.userData?.user?.clientCode
+  );
+  const testingData = useSelector((state) => state?.jd?.availableJds);
+  const [total, setTotal] = useState(0);
 
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change) {
+      setPage((prev) => prev + 1);
+    } else {
+      setPage((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
     async function getData() {
       dispatch(getAvailableJds({ accessToken, clientCode }));
-      const res = await getJds(accessToken, clientCode);
-      if (res) setTableRows(res?.data?.data);
+      const res = await getJds(accessToken, clientCode, page, size);
+      if (res) {
+        setTableRows(res?.data?.data);
+        setTotal(res?.data?.total);
+      }
     }
     getData();
-  }, []);
+  }, [page, size]);
 
-  // useEffect(()=> {
-  //   if(testingData.length){
-  //     setTableRows([...testingData]);
-  //   }
-  // },[testingData])
-
-
-  const handleSearch = () => {
-
-  }
-
+  
+  const handleSearch = () => {};
 
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
@@ -241,47 +331,80 @@ const JdRegistration = () => {
     setTableRows(updatedRows);
   };
 
+  console.log('========>>>>>>.',cloneData);
+
   return (
     <Container1>
-      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={JdForm} array={[null, "create"]} />
-      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} Component={CloneJDForm} />
+      <ModalHOC
+        openNewInterviewModal={openBasic}
+        setOpenNewInterviewModal={setOpenBasic}
+        Component={JdForm}
+        array={[null, "create"]}
+      />
+      <ModalHOC
+        openNewInterviewModal={openBasic2}
+        setOpenNewInterviewModal={setOpenBasic2}
+        Component={CloneJDForm}
+        array={[setOpenBasic3,setOpenBasic2,setCloneData]}
+      />
+       <ModalHOC
+        openNewInterviewModal={openBasic3}
+        setOpenNewInterviewModal={setOpenBasic3}
+        Component={JdForm}
+        array={[cloneData, "clone"]}
+      />
 
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
           <Component>
-            <span className='title'>Job Descriptions</span>
+            <span className="title">Job Descriptions</span>
 
-            <div className='btnBox'>
-              <EditButton onClick={() => setOpenBasic2(true)}>Clone Existing JD</EditButton>
-              <EditButton onClick={() => setOpenBasic(true)}>Create JD</EditButton>
+            <div className="btnBox">
+              <EditButton onClick={() => setOpenBasic2(true)}>
+                Clone Existing JD
+              </EditButton>
+              <EditButton onClick={() => setOpenBasic(true)}>
+                Create JD
+              </EditButton>
             </div>
           </Component>
-
-          <SearchBarContainer>
-            <div className='skillBox'>
-              <img src={searchBlack} />
-              <input
-                className='skillInput'
-                type="text"
-                placeholder="Search"
-              />
-            </div>
-          </SearchBarContainer>
+          <div style={{ display: "flex" }}>
+            <SearchBarContainer>
+              <div className="skillBox">
+                <img src={searchBlack} />
+                <input
+                  className="skillInput"
+                  type="text"
+                  placeholder="Search"
+                />
+              </div>
+            </SearchBarContainer>
+            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange}/>
+          </div>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align='center'>JD ID</TableCell>
-                <TableCell align='center'>Date of Creation</TableCell>
-                <TableCell align='center'>Created By</TableCell>
-                <TableCell align='center'>Actions</TableCell>
+                <TableCell align="center">JD ID</TableCell>
+                <TableCell align="center">Title</TableCell>
+
+                <TableCell align='center'>Location </TableCell>
+                <TableCell align="center">Date of Creation</TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
               {tableRows?.map((row, index) => (
-                <Row key={row.id} row={row} isSelected={selectedRow === index} onToggle={handleToggle} index={index} />
+                <Row
+                  key={row.id}
+                  row={row}
+                  isSelected={selectedRow === index}
+                  onToggle={handleToggle}
+                  index={index}
+                />
               ))}
             </TableBody>
           </Table>
+          <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage}/>
         </TableContainer>
       </StyledBox>
     </Container1>
@@ -289,7 +412,6 @@ const JdRegistration = () => {
 };
 
 export default JdRegistration;
-
 
 const StyledBox = styled.div`
   display: flex;
@@ -303,10 +425,9 @@ const StyledBox = styled.div`
   }
 
   .tableBox {
-    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
     padding-top: 1rem;
-
 
     .title {
       padding-left: 1.2rem;
@@ -347,11 +468,7 @@ const StyledBox = styled.div`
   .tableBody {
     width: 100%;
   }
-
-  
 `;
-
-
 
 const Container1 = styled.div`
   width: 98%;
@@ -364,8 +481,8 @@ const Container1 = styled.div`
 `;
 
 const Component = styled.div`
-  width: 99%; 
-  padding: 0.5rem 0rem;;
+  width: 99%;
+  padding: 0.5rem 0rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -381,10 +498,7 @@ const EditButton = styled.button`
   margin-right: 0.6rem;
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
-
 `;
-
-
 
 const SearchBarContainer = styled.div`
   display: flex;
@@ -394,10 +508,9 @@ const SearchBarContainer = styled.div`
   margin: 1rem auto 0.5rem auto;
   height: 3rem;
   background-color: var(--white);
-  border-radius: 0.5rem;;
+  border-radius: 0.5rem;
   padding: 0rem 1rem;
   gap: 1rem;
-
 
   .skillBox {
     position: relative;
@@ -413,66 +526,106 @@ const SearchBarContainer = styled.div`
     }
   }
 
-
-
   .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
+    flex-grow: 1;
+    border: none;
+    height: 1rem;
+    width: 50%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: transparent;
+    outline: none;
   }
-
-
-`
+`;
 const BoxRow = styled.div`
   position: relative;
   display: inline-block;
 
-.three-dots {
-  cursor: pointer;
-}
+  .three-dots {
+    cursor: pointer;
+  }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--white);
-  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  right: 10%;
-  border-radius: 0.5rem;
-  font-size: 0.7rem;
-  min-width: 10rem;
-  justify-content: start;
-  padding: 0.5rem 0.5rem;
-}
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 10%;
+    border-radius: 0.5rem;
+    font-size: 0.7rem;
+    min-width: 10rem;
+    justify-content: start;
+    padding: 0.5rem 0.5rem;
+  }
 
+  .dropdown-content span {
+    padding: 0.3rem 0.8rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color);
+    cursor: pointer;
+  }
 
-.dropdown-content span {
-  padding: 0.3rem 0.8rem;
-  text-decoration: none;
+  .dropdown:hover .dropdown-content,
+  .dropdown-content.open {
+    display: block;
+  }
+
+  .threeDotIcon {
+    width: 0.6rem;
+    height: 0.6rem;
+    cursor: pointer;
+    border: 0.08rem solid grey;
+    padding: 0.15rem;
+    border-radius: 0.2rem;
+  }
+`;
+
+const SelectWrapper = styled.div`
+  width: 50%;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--color);
+  margin-right: 10px;
+`;
+
+const Select = styled.select`
+  width: 50%;
+  height: 2rem;
+  padding-left: 0.5rem;
+  margin-left: 0.5rem;
+
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const PaginationButton = styled.button`
+  padding: 8px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   cursor: pointer;
-}
+  background-color: #fff;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
 
 
-.dropdown:hover .dropdown-content, .dropdown-content.open {
-  display: block;
-}
-
-.threeDotIcon {
-  width: 0.6rem;
-  height: 0.6rem;
-  cursor: pointer;
-  border: 0.08rem solid grey;
-  padding: 0.15rem;
-  border-radius: 0.2rem;
+const PaginationNumber = styled.p`
+&:hover {
+  background-color: #f0f0f0;
 }
 `
-
