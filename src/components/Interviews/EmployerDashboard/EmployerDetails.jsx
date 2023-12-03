@@ -82,31 +82,6 @@ function EmployerDetails({ handleClose }) {
 
   return (
     <Container>
-      {/* <div>
-      <h2>User Information</h2>
-      <ul>
-        <li>First Name: {user.firstName}</li>
-        <li>Last Name: {user.lastName}</li>
-        <li>Username: {user.username}</li>
-        <li>Email: {user.email}</li>
-        <li>Phone Number: {user.primaryContact}</li>
-        <li>Address: {user.address}</li>
-        <li>City: {user.city}</li>
-        <li>State: {user.state}</li>
-        <li>Client Code: {user.clientCode}</li>
-        <li>Created At: {user.createdAt}</li>
-        <li>Updated At: {user.updatedAt}</li>
-        <li>Created By: {user.createdBy}</li>
-        <li>Last Modified By: {user.lastModifiedBy}</li>
-        <li>ID: {user.id}</li>
-        <li>Activation Required: {user.activationRequired ? 'Yes' : 'No'}</li>
-        <li>Active: {user.active ? 'Yes' : 'No'}</li>
-        <li>Enforce Password Change: {user.enforcePwdChange ? 'Yes' : 'No'}</li>
-        <li>Profile ID: {user.profileId}</li>
-        <li>User State: {user.userState}</li>
-        <li>User Type: {user.userType}</li>
-      </ul>
-    </div> */}
       <Form onSubmit={handleSubmit}>
 
         <TextField id="outlined-basic" label="Company" variant="outlined" type='text' name="company" value={formData.company} onChange={handleChange} sx={{ backgroundColor: '#F6F6FB' }} size='small'

@@ -1,84 +1,91 @@
-import React from 'react'
-import styled from 'styled-components'
-import searchIcon from '../../../../assets/icons/searchIcon.png'
-import notificationIcon from '../../../../assets/icons/notification.png'
-
-
-const notifications = [
-    {
-        title: "New Message",
-        description: "You have a new message from John Doe",
-        time: "1h ago",
-    },
-    {
-        title: "Meeting Reminder",
-        description: "Don't forget your meeting at 2:30 PM",
-        time: "2h ago",
-    },
-    {
-        title: "Payment Received",
-        description: "You've received a payment of $100",
-        time: "3h ago",
-    },
-    {
-        title: "New Follower",
-        description: "You have a new follower on social media",
-        time: "4h ago",
-    },
-    {
-        title: "Product Update",
-        description: "Check out the latest product updates",
-        time: "5h ago",
-    },
-];
-
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import searchIcon from "../../../../assets/icons/searchIcon.png";
+import notificationIcon from "../../../../assets/icons/notification.png";
+import { getAllAlerts } from "../../../../functions/api/employers/notifications/getAllAlerts";
+import { useSelector } from "react-redux";
+import { createBlobUrl } from "../../../commonComponents/Resume";
+import { getBlobData } from "../../../../functions/api/resume/getBlobData";
+import { timeZoneConversion } from "../../../../utils/timeZoneConversation";
 
 const Inbox = () => {
-    return (
-        <Box>
-            <div className='box1'>
-                <div className='searchBar'>
-                    <input
-                        type='text'
-                        placeholder='Search'
-                    />
-                    <img src={searchIcon} />
-                </div>
-                <img src={notificationIcon} className='notificationIcon' />
-            </div>
+  const [notifications, setNotifications] = useState(null);
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const clientCode = useSelector(
+    (state) => state.auth.userData?.user?.clientCode
+  );
 
-            <div className='box2'>
-                <div className='left'>
-                    <span className='title'>Notifications</span>
-                    <span className='text'>You have {notifications.length} notifications to go through</span>
-                </div>
+  useEffect(() => {
+    const getAlerts = async () => {
+      const res = await getAllAlerts(accessToken, clientCode);
 
-                <div className='right'>
-                    Mark all as Read
-                </div>
-            </div>
+      if (res) setNotifications(res?.messages);
+      console.log(res);
+    };
+    getAlerts();
+  }, []);
+  const handleDownload = async (url) => {
+    const res = await getBlobData(url, accessToken, clientCode);
+    console.log(res);
+    const a = document.createElement('a');
+    a.href = res;
+    a.setAttribute('download', 'your-filename.ext');
+    a.click();
+  };
 
-            <div className='box3'>
-                {
-                    notifications.map((notify, i) => (
-                        <div className='mainCard'>
-                            <div className='card'>
-                                <div className='textBox'>
-                                    <div className='title'>{notify.title} <span className='time'>{notify.time}</span></div>
-                                    <div className='text'>{notify.description}</div>
-                                </div>
-                                <span className='btn'>View</span>
-                            </div>
-                        </div>
-                    ))
+  return (
+    <Box>
+      <div className="box1">
+        <div className="searchBar">
+          <input type="text" placeholder="Search" />
+          <img src={searchIcon} />
+        </div>
+        <img src={notificationIcon} className="notificationIcon" />
+      </div>
+      <div className="box2">
+        <div className="left">
+          <span className="title">Notifications</span>
+          <span className="text">
+            You have {notifications?.length} notifications to go through
+          </span>
+        </div>
+
+        <div className="right">Mark all as Read</div>
+      </div>
+
+      <div className="box3">
+        {notifications?.map((notify, i) => (
+          <div className="mainCard">
+            <div className="card">
+              <div className="textBox">
+                <div className="title">
+                  {notify.title} <span className="time">{notify?.time}</span>
+                </div>
+                <div className="text">
+                  {notify?.message}{" "}
+                  {notify.url ? 
+                  <button onClick={() => handleDownload(notify.url)}>
+                  Download file
+                  </button>
+                  :
+                  <></>
+                    
                 }
+                </div>
+                <div className="text">
+                    {timeZoneConversion(notify.updatedAt)}
+                </div>
+              </div>
+              <span className="btn">View</span>
             </div>
-        </Box>
-    )
-}
+          </div>
+        ))}
+      </div>
+    </Box>
+  );
+};
 
-export default Inbox
-
+export default Inbox;
 
 const Box = styled.div`
 width: 90%;
@@ -213,4 +220,4 @@ margin-bottom: 1rem;
 }
 
 
-`
+`;

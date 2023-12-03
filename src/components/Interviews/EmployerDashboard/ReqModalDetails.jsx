@@ -59,7 +59,7 @@ function Row(props) {
           {row.createdAt?.slice(0, 10)}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.createdBy}
+          {row.closed?"CLOSED":"OPEN"}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <BoxRow>
@@ -76,7 +76,7 @@ function Row(props) {
             >
               {
                 row.closed?
-                  <span onClick={() => handleReqStatus(false)}><img className='threeDotIcon' /> ReOpen</span>
+                  <span> Already Closed</span>
                   :
                   <span onClick={() => handleReqStatus(true)}><img className='threeDotIcon' /> Close</span>
               }
@@ -92,7 +92,6 @@ function Row(props) {
 const ReqModalDetails = ({ reqs,jdId,id }) => {
   const requests = reqs ? reqs : [];
 
-  console.log('here===p===p==>>>',jdId)
 
   return (
     <Container1>
@@ -104,7 +103,7 @@ const ReqModalDetails = ({ reqs,jdId,id }) => {
               <TableRow>
                 <TableCell align='center'>Req Numer</TableCell>
                 <TableCell align='center'>Date of Creation</TableCell>
-                <TableCell align='center'>Created By</TableCell>
+                <TableCell align='center'>Status</TableCell>
                 <TableCell align='center'>Actions</TableCell>
               </TableRow>
             </TableHead>

@@ -36,6 +36,8 @@ import JdsDetails from './JdsDetails';
 import ReqModalDetails from '../ReqModalDetails';
 import Deleted from '../../../commonComponents/infoDialog/Deleted';
 import Error from '../../../commonComponents/infoDialog/Error';
+import { exportJd } from '../../../../functions/api/employers/exportJd';
+import { Pagination, PaginationSizeFilter } from '../../../commonComponents/Pagination';
 
 
 function Row(props) {
@@ -229,16 +231,33 @@ const ActiveJds = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
-  const jdData = useSelector(state => state?.jd?.activeJds);
+  // const jdData = useSelector(state => state?.jd?.activeJds);
+  const [total, setTotal] = useState(0);
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     dispatch(getActiveJds({ accessToken, clientCode }));
-  //     const res = await getJdsForMatching(accessToken, clientCode);
-  //     setTableRows(res?.data?.data);
-  //   }
-  //   getData();
-  // }, [jdData]);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change) {
+      setPage((prev) => prev + 1);
+    } else {
+      setPage((prev) => prev - 1);
+    }
+  };
+
+  useEffect(() => {
+    async function getData() {
+      const res = await getJdsForMatching(accessToken, clientCode, page, size);
+      setTableRows(res?.data?.data);
+      setTotal(res?.data?.total);
+    }
+    getData();
+  }, [page,size]);
 
   // State, function to Open and close Export Dialog Box
   const [openExport, setOpenExport] = React.useState(false);
@@ -252,8 +271,9 @@ const ActiveJds = () => {
   };
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
-  const handleExport = () => {
-    console.log('Exported');
+  const handleExport = async () => {
+    console.log('Exporting');
+    const res = await exportJd('.pdf',accessToken,clientCode)
     handleExportClose();
     toast.success('Exported Successfully');
   }
@@ -264,7 +284,6 @@ const ActiveJds = () => {
 
   return (
     <Container1>
-
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
           <CommonDialog open={openExport} handleClose={handleExportClose} component={<ExportDialogContent handleClose={handleExportClose} handleExport={handleExport} />} />
@@ -272,17 +291,19 @@ const ActiveJds = () => {
             <span className='title'>Active JDs</span>
             <span className='btn' onClick={handleExportClickOpen}><img src={exportIcon} className='icon' />Export</span>
           </span>
-          <SearchBarContainer>
-            <div className='skillBox'>
-              <img src={searchBlack} />
-              <input
-                className='skillInput'
-                type="text"
-                placeholder="Search"
-              />
-            </div>
-          </SearchBarContainer>
-
+          <div style={{ display: "flex" }}>
+            <SearchBarContainer>
+              <div className="skillBox">
+                <img src={searchBlack} />
+                <input
+                  className="skillInput"
+                  type="text"
+                  placeholder="Search"
+                />
+              </div>
+            </SearchBarContainer>
+            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange}/>
+          </div>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
@@ -296,11 +317,13 @@ const ActiveJds = () => {
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {jdData?.map((row, index) => (
+              {tableRows?.map((row, index) => (
                 <Row key={row.id} row={row} index={index} />
               ))}
             </TableBody>
           </Table>
+          <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage}/>
+
         </TableContainer>
       </StyledBox>
     </Container1>

@@ -62,7 +62,7 @@ import AccessDenied from "./pages/AccessDenied"
 import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
 import { AuthenticationConstants } from "./utils/constants"
 import Trial from "./pages/Trial"
-import Resume from "./components/commonComponents/Resume"
+// import Resume from "./components/commonComponents/Resume"
 import ReqModalDetails from "./components/Interviews/EmployerDashboard/ReqModalDetails"
 import EmployerDashboard2 from "./pages/EmployerDashboard2"
 import Invite2 from "./components/Interviews/EmployerDashboard2.jsx/Schedule/Invite2"
@@ -117,7 +117,7 @@ const App = () => {
 
 
 
-          <Route path="/testing" element={<Resume />} />
+          {/* <Route path="/testing" element={<Resume />} /> */}
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/about" element={<About />} />
