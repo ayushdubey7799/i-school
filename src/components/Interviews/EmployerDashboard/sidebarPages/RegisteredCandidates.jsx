@@ -133,7 +133,16 @@ function Row(props) {
           {row.firstName ? row.firstName : "..."}
         </TableCell>
         <TableCell align="center">{row.email ? row.email : "..."}</TableCell>
-        <TableCell align="center">
+        <TableCell align="center">{row.contact ? row.contact : "..."}</TableCell>
+        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0, 10) : "..."}</TableCell>
+        {/* <TableCell align="center">{row.source ? row.source : "..."}</TableCell> */}
+        {/* <TableCell align="center">
+          <input
+            type="checkbox"
+            className="checkBox"
+          />
+        </TableCell> */}
+        {/*<TableCell align="center">
           {row.contact ? row.contact : "..."}
         </TableCell>
         <TableCell align="center">
@@ -142,7 +151,7 @@ function Row(props) {
         <TableCell align="center">{row.source ? row.source : "..."}</TableCell>
         <TableCell align="center">
           <input type="checkbox" className="checkBox" />
-        </TableCell>
+        </TableCell>*/}
         <TableCell align="center">
           <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
           <CommonDialog
@@ -249,8 +258,8 @@ export default function RegisteredCandidates({ setCurrentItem }) {
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">Contact</TableCell>
               <TableCell align="center">Date of Reg</TableCell>
-              <TableCell align="center">Source</TableCell>
-              <TableCell align="center">Select</TableCell>
+              {/* <TableCell align="center">Source</TableCell> */}
+              {/* <TableCell align="center">Select</TableCell> */}
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
