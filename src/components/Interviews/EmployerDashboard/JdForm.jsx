@@ -18,6 +18,7 @@ import { locations, technicalSkills } from "../../../utils/contantData";
 import Saved from "../../commonComponents/infoDialog/Saved";
 import Created from "../../commonComponents/infoDialog/Created";
 import Error from "../../commonComponents/infoDialog/Error";
+import { checkJdExist } from "../../../functions/api/employers/checkJdExist";
 
 const Container = styled.div`
   width: 100%;
@@ -105,6 +106,7 @@ const Button = styled.button`
 
 function JdForm({ array, handleClose }) {
   console.log("==========>",array)
+  const [jdExist,setJdExist] = useState(false);
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
   const [formData, setFormData] = useState({
@@ -183,8 +185,8 @@ function JdForm({ array, handleClose }) {
     (state) => state.auth.userData.user.clientCode
   );
   useEffect(() => {
-    console.log(array[0]);
     if (array[0]) {
+      checkJdPresent(array[0].jdId)
       setFormData(array[0]);
       setInitialReqs(array[0].numOfReqs);
       setSelectedSkills(array[0].skills.split(", "));
@@ -266,10 +268,20 @@ function JdForm({ array, handleClose }) {
     errorMsg && console.log(errorMsg);
   }
 
+ 
 
-// const checkJdPresent = async () => {
-//   const res = 
-// }
+
+const checkJdPresent = async (jdId) => {
+  const res = await checkJdExist(accessToken,clientCode,jdId);
+  if(res.data){
+    setJdExist(true);
+  }
+}
+
+ const handleJdPresentError = async () => {
+   setJdExist(false);
+ }
+
   return (
     <Container>
       {errorPopup && (
@@ -304,8 +316,8 @@ function JdForm({ array, handleClose }) {
           name="jdId"
           value={formData.jdId}
           onChange={handleChange}
-          // onBlur={checkJdPresent}
-          // onFocus={handleJdPresentError}
+          onBlur={() => checkJdPresent(formData.jdId)}
+          onFocus={handleJdPresentError}
           disabled={mode == "edit"}
           sx={{ backgroundColor: "#F6F6FB" }}
           size="small"
@@ -325,7 +337,7 @@ function JdForm({ array, handleClose }) {
           }}
           required
         />
-
+     {jdExist && <p>JD already exists</p>}
      
         <TextField
           id="outlined-basic"
@@ -353,6 +365,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
           required
         />
         {reqsError && <p>Error Message</p>}
@@ -381,6 +394,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
           required
         />
 
@@ -392,6 +406,7 @@ function JdForm({ array, handleClose }) {
             onChange={handleChange}
             rows={5}
             required
+            disabled={jdExist}
           ></textarea>
         </div>
 
@@ -409,6 +424,7 @@ function JdForm({ array, handleClose }) {
                 {...params}
                 label="Skills"
                 sx={{ backgroundColor: "#F6F6FB" }}
+                disabled={jdExist}
               />
             )}
           />
@@ -438,6 +454,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
         />
 
         <TextField
@@ -464,6 +481,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
           required
         />
 
@@ -480,8 +498,11 @@ function JdForm({ array, handleClose }) {
                 {...params}
                 label="Location"
                 sx={{ backgroundColor: "#F6F6FB" }}
+                disabled={jdExist}
+                
               />
             )}
+            disabled={jdExist}
           />
         </Stack>
 
@@ -509,6 +530,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
         />
 
         <TextField
@@ -535,6 +557,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
         />
 
         <TextField
@@ -561,6 +584,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
         />
 
         <TextField
@@ -587,6 +611,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
         />
 
         <TextField
@@ -613,6 +638,7 @@ function JdForm({ array, handleClose }) {
               fontWeight: "400",
             },
           }}
+          disabled={jdExist}
         />
 
         {/* <div className='fileInputBox'>
@@ -647,6 +673,7 @@ function JdForm({ array, handleClose }) {
             sx={{
               padding: "0rem 0 0.5rem 0",
             }}
+            disabled={jdExist}
           >
             <MenuItem value="Full-time">Full-time</MenuItem>
             <MenuItem value="Part-time">Part-time</MenuItem>
@@ -681,6 +708,7 @@ function JdForm({ array, handleClose }) {
             sx={{
               padding: "0rem 0 0.5rem 0",
             }}
+            disabled={jdExist}
           >
             <MenuItem value="Immediate">Immediate</MenuItem>
             <MenuItem value="1week">1 Week</MenuItem>
@@ -719,6 +747,7 @@ function JdForm({ array, handleClose }) {
             sx={{
               padding: "0rem 0 0.5rem 0",
             }}
+            disabled={jdExist}
           >
             <MenuItem value="service">Service</MenuItem>
             <MenuItem value="product">Product</MenuItem>
@@ -756,6 +785,7 @@ function JdForm({ array, handleClose }) {
             sx={{
               padding: "0rem 0 0.5rem 0",
             }}
+            disabled={jdExist}
           >
             <MenuItem value="Immediate">Immediate</MenuItem>
             <MenuItem value="1week">1 Week</MenuItem>
@@ -793,13 +823,14 @@ function JdForm({ array, handleClose }) {
             sx={{
               padding: "0rem 0 0.5rem 0",
             }}
+            disabled={jdExist}
           >
             <MenuItem value="PUBLIC">Public</MenuItem>
             <MenuItem value="PRIVATE">Private</MenuItem>
           </Select>
         </FormControl>
 
-        <Button type="submit">
+        <Button type="submit"  disabled={jdExist}>
           {mode == "create" ? "Submit" : "Save Changes"}
         </Button>
       </Form>
