@@ -104,9 +104,14 @@ const Button = styled.button`
   align-self: center;
 `;
 
+<<<<<<< HEAD
 function JdForm({ array, handleClose }) {
   console.log("==========>",array)
   const [jdExist,setJdExist] = useState(false);
+=======
+function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopup, setSavedPopup, }) {
+  console.log("==========>", array)
+>>>>>>> 5544973700f729b585093481050616f6915dab79
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
   const [formData, setFormData] = useState({
@@ -141,22 +146,6 @@ function JdForm({ array, handleClose }) {
   const [initialReqs, setInitialReqs] = useState(0);
   const [reqsError, setReqsError] = useState(false);
 
-  const [errorMsg, setErrorMsg] = useState("");
-  const [errorPopup, setErrorPopup] = useState(false);
-  const [createdPopup, setCreatedPopup] = useState(false);
-  const [savedPopup, setSavedPopup] = useState(false);
-
-  const handleErrorPopUpClose = () => {
-    setErrorPopup(false);
-  };
-
-  const handleCreatedPopUpClose = () => {
-    setCreatedPopup(false);
-  };
-
-  const handleSavedPopUpClose = () => {
-    setSavedPopup(false);
-  };
 
   const handleLocationsChange = (_, newLocations) => {
     setSelectedLocations(newLocations);
@@ -264,9 +253,6 @@ function JdForm({ array, handleClose }) {
     }
   };
 
-  {
-    errorMsg && console.log(errorMsg);
-  }
 
  
 
@@ -284,28 +270,6 @@ const checkJdPresent = async (jdId) => {
 
   return (
     <Container>
-      {errorPopup && (
-        <Error
-          handleClose={handleErrorPopUpClose}
-          open={errorPopup}
-          msg={errorMsg}
-          handleRetryFunc={handleRegister}
-        />
-      )}
-      {createdPopup && (
-        <Created
-          handleClose={handleCreatedPopUpClose}
-          open={createdPopup}
-          msg="JD successfully created"
-        />
-      )}
-      {savedPopup && (
-        <Saved
-          handleClose={handleSavedPopUpClose}
-          open={savedPopup}
-          msg="JD successfully updated"
-        />
-      )}
       <h3>JD Registration</h3>
       <Form onSubmit={handleSubmit}>
         <TextField

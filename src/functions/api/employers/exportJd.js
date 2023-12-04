@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-export const exportJd = async (ext, accessToken, clientCode) => {
+export const exportJd = async (ext='.pdf', accessToken, clientCode) => {
 
 const config = {
   headers: {

@@ -85,8 +85,8 @@ function Row(props) {
             className="checkBox"
           />
           <img src={eyeIcon} onClick={() =>
-                handleDownload(row.resumeId, row.srcFilename)
-              }/>
+            handleDownload(row.resumeId, row.srcFilename)
+          } />
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -132,9 +132,9 @@ export default function MatchedResumes() {
   };
 
   const handlePageChange = (change) => {
-    if (change) {
+    if (change && (page < Math.ceil(+total / +size))) {
       setPage((prev) => prev + 1);
-    } else {
+    } else if (!change && page > 1) {
       setPage((prev) => prev - 1);
     }
   };
@@ -153,7 +153,7 @@ export default function MatchedResumes() {
       }
     }
     getData();
-  }, [page,size]);
+  }, [page, size]);
   console.log(tableRows);
 
   const handleSelectArray = (id, action) => {
@@ -200,22 +200,16 @@ export default function MatchedResumes() {
           >
             Matched Resumes for JD ID: {jdId}
           </span>
-          <div style={{ display: "flex" }}>
-            <SearchBarContainer>
-              <div className="skillBox">
-                <img src={searchBlack} />
-                <input
-                  className="skillInput"
-                  type="text"
-                  placeholder="Search"
-                />
-              </div>
-            </SearchBarContainer>
-            <PaginationSizeFilter
-              size={size}
-              handleSizeChange={handleSizeChange}
-            />
-          </div>
+          <SearchBarContainer>
+            <div className="skillBox">
+              <img src={searchBlack} />
+              <input
+                className="skillInput"
+                type="text"
+                placeholder="Search"
+              />
+            </div>
+          </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
@@ -273,13 +267,21 @@ export default function MatchedResumes() {
               ))}
             </TableBody>
           </Table>
-          <Pagination
-            total={total}
-            size={size}
-            page={page}
-            handlePageChange={handlePageChange}
-            setPage={setPage}
-          />
+
+          <div className="paginationBox">
+            <PaginationSizeFilter
+              size={size}
+              handleSizeChange={handleSizeChange}
+            />
+            <Pagination
+              total={total}
+              size={size}
+              page={page}
+              handlePageChange={handlePageChange}
+              setPage={setPage}
+            />
+          </div>
+
         </TableContainer>
         <button onClick={() => handleSchedule()} className="btn">
           Next
@@ -305,6 +307,14 @@ const Content = styled.div`
   .colored {
     background-color: #ececec;
   }
+
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
+  }
+  
 
   .prev {
     background-color: var(--lightOrange);

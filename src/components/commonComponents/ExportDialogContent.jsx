@@ -62,7 +62,7 @@ const ExportDialogContent = ({ handleClose, handleExport }) => {
 
             <span className='btnBox'>
                 <button className='btn btn1' onClick={handleClose}>Cancel</button>
-                <button className='btn btn2' onClick={handleExport}>{exportType === 'link' ? 'Share' : 'Export'}</button>
+                <button className='btn btn2' onClick={() => handleExport(exportType)}>{exportType === 'link' ? 'Share' : 'Export'}</button>
             </span>
         </Box>
     )

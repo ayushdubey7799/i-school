@@ -48,7 +48,7 @@ function Row(props) {
           <Match jdId={row.jdId} count={row.matchCount} />
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.createdAt?.slice(0,10)}
+          {row.createdAt?.slice(0, 10)}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           {row.recruiter}
@@ -155,19 +155,16 @@ export default function ManageJds({ rows }) {
           <span>Active Job Descriptions</span>
           <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
         </span>
-        <div style={{ display: "flex" }}>
-            <SearchBarContainer>
-              <div className="skillBox">
-                <img src={searchBlack} />
-                <input
-                  className="skillInput"
-                  type="text"
-                  placeholder="Search"
-                />
-              </div>
-            </SearchBarContainer>
-            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange}/>
-          </div>
+          <SearchBarContainer>
+            <div className="skillBox">
+              <img src={searchBlack} />
+              <input
+                className="skillInput"
+                type="text"
+                placeholder="Search"
+              />
+            </div>
+          </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
@@ -187,7 +184,11 @@ export default function ManageJds({ rows }) {
             ))}
           </TableBody>
         </Table>
-        <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange}/>
+
+        <div className="paginationBox">
+          <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange} />
+          <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} />
+        </div>
 
       </TableContainer>
     </StyledBox>
@@ -207,6 +208,13 @@ const StyledBox = styled.div`
     background-color: #ececec;
   }
 
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
+  }
+  
 
   .mainTitle {
     font-size: 1.1rem;
