@@ -107,6 +107,7 @@ const Button = styled.button`
 
 function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopup, setSavedPopup, }) {
   console.log("==========>", array)
+  const [jdExist,setJdExist] = useState(false);
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
   const [formData, setFormData] = useState({
@@ -170,7 +171,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   );
   useEffect(() => {
     if (array[0]) {
-      checkJdPresent(array[0].jdId)
+      if(array[1]!='edit')checkJdPresent(array[0].jdId)
       setFormData(array[0]);
       setInitialReqs(array[0].numOfReqs);
       setSelectedSkills(array[0].skills.split(", "));
@@ -253,10 +254,10 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
 
 
 const checkJdPresent = async (jdId) => {
-  const res = await checkJdExist(accessToken,clientCode,jdId);
+  if(mode!='edit'){const res = await checkJdExist(accessToken,clientCode,jdId);
   if(res.data){
     setJdExist(true);
-  }
+  }}
 }
 
  const handleJdPresentError = async () => {
@@ -327,7 +328,7 @@ const checkJdPresent = async (jdId) => {
           disabled={jdExist}
           required
         />
-        {reqsError && <p>Error Message</p>}
+        {reqsError && <p>Error Message:</p>}
 
         <TextField
           id="outlined-basic"
