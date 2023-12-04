@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import threeDot from '../../../assets/icons/threeDot.png'
 import { closeReq } from '../../../functions/api/employers/closeReqs';
 import { useSelector } from 'react-redux';
+import Success from '../../commonComponents/infoDialog/Success';
 
 
 function Row(props) {
@@ -18,6 +19,18 @@ function Row(props) {
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [successPopup, setSuccessPopup] = useState(false);
+
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  }
+
+  const handleSuccessPopUpClose = () => {
+    setSuccessPopup(false);
+  }
 
   const openDropdown = (index) => {
     setOpenDropdownIndex(index);
@@ -42,14 +55,34 @@ function Row(props) {
     };
   }, []);
 
-  const handleReqStatus =async (change) => {
-     const res = await closeReq(id,change,row.reqNumber,accessToken,clientCode);
+  const handleReqStatus = async (change) => {
+    try {
+      const res = await closeReq(id, change, row.reqNumber, accessToken, clientCode);
+      if (res) {
+        setSuccessPopup(true);
+        console.log('Response:', res);
+      }
 
-  }
+    } catch (error) {
+      // Handle the error
+      console.error('Error during request status change:', error);
+      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      setErrorMsg(errMsg);
+      setErrorPopup(true);
+    }
+  };
+
 
 
   return (
     <React.Fragment>
+      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleReqStatus(true)} />}
+      {successPopup &&
+        <Success
+          handleClose={handleSuccessPopUpClose}
+          open={successPopup}
+          msg={`Req number ${row.reqNumber} successfully closed`} />
+      }
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center'>
@@ -59,7 +92,7 @@ function Row(props) {
           {row.createdAt?.slice(0, 10)}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.closed?"CLOSED":"OPEN"}
+          {row.closed ? "CLOSED" : "OPEN"}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
           <BoxRow>
@@ -75,7 +108,7 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
               {
-                row.closed?
+                row.closed ?
                   <span> Already Closed</span>
                   :
                   <span onClick={() => handleReqStatus(true)}><img className='threeDotIcon' /> Close</span>
@@ -89,7 +122,7 @@ function Row(props) {
 }
 
 
-const ReqModalDetails = ({ reqs,jdId,id }) => {
+const ReqModalDetails = ({ reqs, jdId, id }) => {
   const requests = reqs ? reqs : [];
 
 
@@ -109,7 +142,7 @@ const ReqModalDetails = ({ reqs,jdId,id }) => {
             </TableHead>
             <TableBody className="tableBody">
               {requests?.map((row, index) => (
-                <Row key={row.id} row={row} index={index} id={id}/>
+                <Row key={row.id} row={row} index={index} id={id} />
               ))}
             </TableBody>
           </Table>

@@ -32,7 +32,9 @@ const UploadCandidateProfile = () => {
     setFiles((prevFiles) => [...prevFiles, ...Array.from(selectedFiles)]);
   };
 
-  const handleFileUpload = async () => {
+  const handleFileUpload = async (e) => {
+    e.preventDefault()
+
     try {
       setLoading(true);
       const formData = new FormData();
@@ -68,7 +70,7 @@ const UploadCandidateProfile = () => {
       {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={handleFileUpload} />}
       {successPopup && <Success handleClose={handleSuccessPopUpClose} open={successPopup} msg='Profiles uploaded successfully' />}
       <span className='title'>Upload Profiles</span>
-      <div className='resumeBox'>
+      <form onSubmit={handleFileUpload}>
         <Label htmlFor='input'><img src={browseIcon} />
           <span>{files.map((item) => <p>{item.name}</p>)}</span>
         </Label>
@@ -80,10 +82,12 @@ const UploadCandidateProfile = () => {
           onChange={handleFileChange}
           style={{ display: 'none' }}
           multiple
+          required
         />
         <span>Select Folder or Zip File</span>
-      </div>
-      <button onClick={handleFileUpload} className='registerBtn'>Upload</button>
+        <button className='registerBtn'>Upload</button>
+      </form>
+      
     </Box>
   )
 }
@@ -123,7 +127,7 @@ const Box = styled.div`
 
   }
 
-  .resumeBox {
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;

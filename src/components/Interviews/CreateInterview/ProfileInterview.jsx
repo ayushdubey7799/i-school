@@ -20,6 +20,8 @@ const ProfileInterview = () => {
     jobSummary: "",
     resumeText: "",
   });
+  const [testType, setTestType] = useState('');
+  const [difficultyLevel, setDifficultyLevel] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
@@ -107,13 +109,14 @@ const ProfileInterview = () => {
       setLoaderMessage("");
       return;
     }
-  const payload = {
-    difficultyLevel: 'moderate',
-    testType: 'subjective',
-    jobSummary: interviewDetails.jobSummary.trim(),
-    resumeText: interviewDetails.resumeText.trim(),
-}
-   
+    const payload = {
+      difficultyLevel: difficultyLevel,
+      testType: testType,
+      jobSummary: interviewDetails.jobSummary.trim(),
+      resumeText: interviewDetails.resumeText.trim(),
+    }
+
+    console.log('Payload', payload);
 
     const ongoing = await createInterview(
       payload,
@@ -240,6 +243,82 @@ const ProfileInterview = () => {
             />
           </div>
 
+          <div className="inputBox">
+            <span className="title">Interview Type</span>
+            <div className="childInputBox">
+              <label className="label1">
+                <input
+                  type="radio"
+                  value="MCQs"
+                  checked={testType === 'MCQs'}
+                  onChange={() => setTestType('MCQs')}
+                />
+                <span>MCQs</span>
+              </label>
+              <label className="label1">
+                <input
+                  type="radio"
+                  value="Subjective"
+                  checked={testType === 'Subjective'}
+                  onChange={() => setTestType('Subjective')}
+                />
+                <span>Subjective</span>
+              </label>
+              <label className="label1">
+                <input
+                  type="radio"
+                  value="coding"
+                  checked={testType === 'coding'}
+                  onChange={() => setTestType('coding')}
+                />
+                <span>Coding</span>
+              </label>
+              <label className="label1">
+                <input
+                  type="radio"
+                  value="General"
+                  checked={testType === 'General'}
+                  onChange={() => setTestType('General')}
+                />
+                <span>General (Includes all types of Que)</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="inputBox">
+            <div className="childInputBox">
+              <span className="title">Difficulty Level</span>
+              <label className="label1">
+                <input
+                  type="radio"
+                  value="easy"
+                  checked={difficultyLevel === 'easy'}
+                  onChange={() => setDifficultyLevel('easy')}
+                />
+                <span>Easy</span>
+              </label>
+              <label className="label1">
+                <input
+                  type="radio"
+                  value="moderate"
+                  checked={difficultyLevel === 'moderate'}
+                  onChange={() => setDifficultyLevel('moderate')}
+                />
+                <span>Moderate</span>
+              </label>
+              <label className="label1">
+                <input
+                  type="radio"
+                  value="difficult"
+                  checked={difficultyLevel === 'difficult'}
+                  onChange={() => setDifficultyLevel('difficult')}
+                />
+                <span>Difficult</span>
+              </label>
+            </div>
+          </div>
+
+
           <button onClick={(e) => handleCreateInterview(e)}>
             Start Interview
           </button>
@@ -284,6 +363,7 @@ const StyledForm = styled.form`
     box-sizing: border-box;
     width: 100%;
     margin-top: 0.5rem;
+    border: 0.08rem solid #C4C4C4;
     border-radius: 0.5rem;
     padding: 0.75rem 0.5rem;
     font-size: 1rem;
@@ -313,5 +393,80 @@ const StyledForm = styled.form`
 
   @media (max-width: 500px) {
     width: 40rem;
+  }
+
+
+
+
+  .inputBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 0.08rem solid #C4C4C4;
+    padding: 1rem 1rem;
+    border-radius: 0.3rem;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .childInputBox {
+    display: flex;
+    gap: 0.5rem;
+    flex-flow: row wrap;
+
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: 500;
+    position: absolute;
+    top: -0.8rem;
+    background-color: var(--white);
+    padding: 0 0.3rem;
+  }
+
+
+
+  .label1 {
+    display: flex;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    margin-bottom: 0rem;
+  
+    input {
+      position: absolute;
+      left: -9999px;
+      &:checked + span {
+        background-color: #f0f0f6;
+        &:before {
+          box-shadow: inset 0 0 0 0.3rem var(--lightOrange);
+        }
+      }
+    }
+    span {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+      border-radius: 99rem; // or something higher...
+      transition: 0.25s ease;
+      &:hover {
+        background-color: mix(#fff, var(--lightOrange), 84%);
+      }
+      &:before {
+        display: flex;
+        flex-shrink: 0;
+        content: "";
+        background-color: #fff;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        margin-right: 0.375em;
+        transition: 0.25s ease;
+        box-shadow: inset 0 0 0 0.125em var(--lightOrange);
+      }
+    }
   }
 `;

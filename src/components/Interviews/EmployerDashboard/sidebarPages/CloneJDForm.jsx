@@ -14,7 +14,6 @@ const CloneJDForm = ({array}) => {
     useEffect(() => {
         array[2](selectedJd);
     },[selectedJd])
-    
 
     const handleClone = () => {
         array[0](true);

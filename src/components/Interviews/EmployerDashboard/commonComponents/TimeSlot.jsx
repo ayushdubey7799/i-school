@@ -101,7 +101,7 @@ export default TimeSlot
 
 
 const MainBox = styled.div`
-
+width: 100%;
 
 .timeSlot {
     border: 0.08rem solid lightgrey;
@@ -110,6 +110,7 @@ const MainBox = styled.div`
     outline-width: 0.05rem;
     border-radius: 0.3rem;
     font-size: 1.2rem;
+    width: calc(100% - 3rem);
 }
 
 .dropDown {

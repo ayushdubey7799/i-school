@@ -208,6 +208,7 @@ const RegisterCandidate = () => {
             errorMessages={["This field is required", 'Email is not valid']}
             validators={['required', 'isEmail']}
             size='small'
+            required
             inputProps={{
               sx: {
                 color: '#626264',

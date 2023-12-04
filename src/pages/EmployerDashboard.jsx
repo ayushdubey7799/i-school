@@ -27,6 +27,7 @@ import InterviewDashboard from "../components/Interviews/EmployerDashboard/sideb
 import UploadCandidateProfile from "../components/Interviews/EmployerDashboard/sidebarPages/UploadCandidateProfile";
 import EmpConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/EmpConfigureDash";
 import InterviewFlow from "../components/Interviews/EmployerDashboard/sidebarPages/InterviewFlow";
+import RequestDemoPage from "../components/Interviews/EmployerDashboard/sidebarPages/RequestDemoPage";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -118,6 +119,7 @@ const EmployerDashboard = () => {
           {currentItem === "configure-report" && <ConfigureReports />}
 
           {currentItem === "call-support" && <CallSupport />}
+          {currentItem === "demo" && <RequestDemoPage />}
 
         </MainContent>
       </StyledContent>
@@ -157,4 +159,5 @@ const StyledContent = styled.div`
   margin-top: 4rem;
   background-color: var(--white);
   color: var(--color);
+  background-color: #f4f4f4;
 `;
