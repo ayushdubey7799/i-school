@@ -271,9 +271,9 @@ const ActiveJds = () => {
   };
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
-  const handleExport = async () => {
+  const handleExport = async (exportType) => {
     console.log('Exporting');
-    const res = await exportJd('.pdf',accessToken,clientCode)
+    const res = await exportJd(exportType,accessToken,clientCode)
     handleExportClose();
     toast.success('Exported Successfully');
   }
