@@ -38,6 +38,7 @@ import Deleted from '../../../commonComponents/infoDialog/Deleted';
 import Error from '../../../commonComponents/infoDialog/Error';
 import { exportJd } from '../../../../functions/api/employers/exportJd';
 import { Pagination, PaginationSizeFilter } from '../../../commonComponents/Pagination';
+import Saved from '../../../commonComponents/infoDialog/Saved';
 
 
 function Row(props) {
@@ -52,6 +53,7 @@ function Row(props) {
   const [errorMsg, setErrorMsg] = useState('');
   const [errorPopup, setErrorPopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
+  const [savedPopup, setSavedPopup] = useState(false);
 
   const accessToken = useSelector(state => state.auth.userData.accessToken);
   const clientCode = useSelector(state => state.auth.userData.user.clientCode);
@@ -90,7 +92,6 @@ function Row(props) {
     }
   };
 
-
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
 
@@ -121,6 +122,9 @@ function Row(props) {
     setDeletePopup(false);
   }
 
+  const handleSavedPopUpClose = () => {
+    setSavedPopup(false);
+  };
 
   // function to open and close Drawer
   const toggleDrawer = (anchor, open) => (event) => {
@@ -170,9 +174,22 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} Component={JdForm} array={[jdData, "edit"]} />
+      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} component={<JdForm array={[jdData, 'edit']} handleClose={() => setEditOpen(false)} setErrorMsg={setErrorMsg} setErrorPopup={setErrorPopup} setSavedPopup={setSavedPopup} />} />
       {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
-      {deletePopup && <Deleted handleClose={handleDeletePopUpClose} open={deletePopup} msg='JD successfully deleted' />}
+      {deletePopup && (
+        <Deleted
+          handleClose={handleDeletePopUpClose}
+          open={deletePopup}
+          msg={`JD ID ${row.jdId} successfully deleted`}
+        />
+      )}
+      {savedPopup && (
+        <Saved
+          handleClose={handleSavedPopUpClose}
+          open={savedPopup}
+          msg={`JD ID ${row.jdId} successfully updated`}
+        />
+      )}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center'>
@@ -207,7 +224,7 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
-              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id}/>} />
+              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id} />} />
               <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
               <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
@@ -243,9 +260,9 @@ const ActiveJds = () => {
   };
 
   const handlePageChange = (change) => {
-    if (change) {
+    if (change && (page < Math.ceil(+total / +size))) {
       setPage((prev) => prev + 1);
-    } else {
+    } else if (!change && page > 1) {
       setPage((prev) => prev - 1);
     }
   };
@@ -257,7 +274,7 @@ const ActiveJds = () => {
       setTotal(res?.data?.total);
     }
     getData();
-  }, [page,size]);
+  }, [page, size]);
 
   // State, function to Open and close Export Dialog Box
   const [openExport, setOpenExport] = React.useState(false);
@@ -273,7 +290,7 @@ const ActiveJds = () => {
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
   const handleExport = async () => {
     console.log('Exporting');
-    const res = await exportJd('.pdf',accessToken,clientCode)
+    const res = await exportJd('.pdf', accessToken, clientCode)
     handleExportClose();
     toast.success('Exported Successfully');
   }
@@ -302,7 +319,6 @@ const ActiveJds = () => {
                 />
               </div>
             </SearchBarContainer>
-            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange}/>
           </div>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
@@ -322,7 +338,11 @@ const ActiveJds = () => {
               ))}
             </TableBody>
           </Table>
-          <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage}/>
+
+          <div className='paginationBox'>
+            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange} />
+            <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage} />
+          </div>
 
         </TableContainer>
       </StyledBox>
@@ -344,6 +364,12 @@ const StyledBox = styled.div`
     background-color: #ececec;
   }
 
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
+  }
   
 
   .tableBox {

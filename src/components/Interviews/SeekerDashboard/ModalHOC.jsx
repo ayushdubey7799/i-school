@@ -9,9 +9,7 @@ import closeIcon from '../../../assets/icons/closeIcon.png'
 export default function ModalHOC({
   openNewInterviewModal,
   setOpenNewInterviewModal,
-  Component,
-  array = []
-  
+  component,
 }) {
 
   const handleOpen = () => {
@@ -32,11 +30,10 @@ export default function ModalHOC({
       open={openNewInterviewModal}
       onClose={handleClose}
       closeAfterTransition
-      disableBackdropClick
     >
       <MainBox>
         <Btn onClick={handleClose}><img src={closeIcon} /></Btn>
-        <Component array={array} handleClose={handleClose} />
+        {component && component}
       </MainBox>
     </Modal>
   )

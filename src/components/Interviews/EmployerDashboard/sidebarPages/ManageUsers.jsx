@@ -10,13 +10,13 @@ import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import { data as users } from "../../../../utils/contantData";
 
-import manageUserForm from '../ManageUserForm';
 import unVisible from "../../../../assets/icons/unVisible.png";
 import editIcon from "../../../../assets/icons/edit.png";
 import deleteIcon from "../../../../assets/icons/delete.png";
 import threeDot from "../../../../assets/icons/threeDot.png";
 import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
+import ManageUserForm from "../ManageUserForm";
 
 function Row(props) {
   const { row, index } = props;
@@ -126,7 +126,7 @@ export default function ManageUsers() {
   return (
     <StyledDiv>
       <TableContainer component={Paper} className="tableBox">
-        <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={manageUserForm} array={[null, "create"]} />
+        <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} component={<ManageUserForm array={[null, "create"]} handleClose={() => setOpenBasic(false)} />} />
         <Component>
           <span className="title">Manage Users</span>
 

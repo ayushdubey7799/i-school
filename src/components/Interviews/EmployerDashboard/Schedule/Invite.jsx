@@ -250,8 +250,8 @@ export default function Invite() {
                   </LocalizationProvider>
 
                   <div className="slotBox">
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox'>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox' sx={{width: '40%'}}>
                         {!isTime && <TimeSlot selectedTimeSlot={selectedTimeSlot} setSelectedTimeSlot={setSelectedTimeSlot}/>}
                       </DemoContainer>
                     </LocalizationProvider>
