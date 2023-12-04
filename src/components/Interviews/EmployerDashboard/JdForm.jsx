@@ -104,14 +104,9 @@ const Button = styled.button`
   align-self: center;
 `;
 
-<<<<<<< HEAD
-function JdForm({ array, handleClose }) {
-  console.log("==========>",array)
-  const [jdExist,setJdExist] = useState(false);
-=======
+
 function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopup, setSavedPopup, }) {
   console.log("==========>", array)
->>>>>>> 5544973700f729b585093481050616f6915dab79
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
   const [formData, setFormData] = useState({
