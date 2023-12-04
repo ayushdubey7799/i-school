@@ -6,7 +6,7 @@ import axios from "axios"
 export const createInterview = async (payload, accessToken) => {
   // const token = JSON.parse(localStorage.getItem("token"));
 
-
+console.log(payload,"========",accessToken);
 const config = {
   headers: {
     Authorization: `Bearer ${accessToken}`,

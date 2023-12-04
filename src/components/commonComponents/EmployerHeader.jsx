@@ -40,18 +40,18 @@ const EmployerHeader = ({ setCurrentItem }) => {
       <div id="right">
         <span onClick={() => setCurrentItem('interview-dashboard')} className="coloredText">Go to Interview Dashboard</span>
 
-        <Link to="/demo" className="link">
+        <div className="notificationIcon" onClick={() => setCurrentItem('demo')}>
           <span className="demoIcon"><img src={demoIcon} />
             <span className="altText">Schedule Demo</span>
           </span>
-        </Link>
+        </div>
 
         <div className="notificationIcon" onClick={() => setCurrentItem('inbox')}>
           <img src={notificationIcon} />
         </div>
 
         <div className="profileIcon">
-            <img src={profileIcon} className="profileImg" />
+          <img src={profileIcon} className="profileImg" />
         </div>
 
         <div class="dropdown" id="dropdown">

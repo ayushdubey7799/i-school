@@ -34,6 +34,8 @@ import Error from "../../../commonComponents/infoDialog/Error";
 import Deleted from "../../../commonComponents/infoDialog/Deleted";
 import { timeZoneConversion } from "../../../../utils/timeZoneConversation";
 import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
+import Saved from "../../../commonComponents/infoDialog/Saved";
+import Created from "../../../commonComponents/infoDialog/Created";
 
 function Row(props) {
   const { row, index } = props;
@@ -49,7 +51,11 @@ function Row(props) {
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorPopup, setErrorPopup] = useState(false);
+  const [deleteErrorPopup, setDeleteErrorPopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
+  const [savedPopup, setSavedPopup] = useState(false);
+  const [createdPopup, setCreatedPopup] = useState(false);
+
 
   // state to open and close Drawer
   const [state, setState] = React.useState({
@@ -105,8 +111,20 @@ function Row(props) {
     setErrorPopup(false);
   };
 
+  const handleDeleteErrorPopUpClose = () => {
+    setDeleteErrorPopup(false);
+  };
+
   const handleDeletePopUpClose = () => {
     setDeletePopup(false);
+  };
+
+  const handleSavedPopUpClose = () => {
+    setSavedPopup(false);
+  };
+
+  const handleCreatedPopUpClose = () => {
+    setCreatedPopup(false);
   };
 
   // State, function to Open and close Dialog Box
@@ -150,19 +168,20 @@ function Row(props) {
     setOpenDropdownIndex(-1);
   };
 
+
+
   console.log(row.jdId, row.reqNumbers);
   return (
     <React.Fragment>
       <ModalHOC
         setOpenNewInterviewModal={setEditOpen}
         openNewInterviewModal={editOpen}
-        Component={JdForm}
-        array={[jdData, "edit"]}
+        component={<JdForm array={[jdData, 'edit']} handleClose={() => setEditOpen(false)} errorMsg={errorMsg} setErrorPopup={setErrorPopup} setCreatedPopup={setCreatedPopup} setSavedPopup={setSavedPopup} />}
       />
-      {errorPopup && (
+      {deleteErrorPopup && (
         <Error
-          handleClose={handleErrorPopUpClose}
-          open={errorPopup}
+          handleClose={handleDeleteErrorPopUpClose}
+          open={deleteErrorPopup}
           msg={errorMsg}
           handleRetryFunc={() => handleDelete(row.id)}
         />
@@ -171,7 +190,29 @@ function Row(props) {
         <Deleted
           handleClose={handleDeletePopUpClose}
           open={deletePopup}
-          msg="JD successfully deleted"
+          msg={`JD ID ${row.jdId} successfully deleted`}
+        />
+      )}
+      {savedPopup && (
+        <Saved
+          handleClose={handleSavedPopUpClose}
+          open={savedPopup}
+          msg={`JD ID ${row.jdId} successfully updated`}
+        />
+      )}
+      {errorPopup && (
+        <Error
+          handleClose={handleErrorPopUpClose}
+          open={errorPopup}
+          msg={errorMsg}
+          handleRetryFunc={handleErrorPopUpClose}
+        />
+      )}
+      {createdPopup && (
+        <Created
+          handleClose={handleCreatedPopUpClose}
+          open={createdPopup}
+          msg="JD successfully created"
         />
       )}
       <TableRow
@@ -190,16 +231,15 @@ function Row(props) {
         <TableCell component="th" scope="row" align="center">
           {timeZoneConversion(row.createdAt)}
         </TableCell>
-        
+
 
         <TableCell component="th" scope="row" align="center">
           <BoxRow>
             <img
               src={threeDot}
               style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
-              className={`three-dots ${
-                openDropdownIndex === index ? "active" : ""
-              }`}
+              className={`three-dots ${openDropdownIndex === index ? "active" : ""
+                }`}
               onClick={() => {
                 if (openDropdownIndex === index) {
                   closeAllDropdowns();
@@ -209,9 +249,8 @@ function Row(props) {
               }}
             />
             <div
-              className={`dropdown-content ${
-                openDropdownIndex === index ? "open" : ""
-              }`}
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
+                }`}
               ref={dropdownRef}
             >
               <CommonDrawer
@@ -267,9 +306,14 @@ const JdRegistration = () => {
   const [openBasic2, setOpenBasic2] = useState(false);
   const [openBasic3, setOpenBasic3] = useState(false);
 
+  const [errorMsg, setErrorMsg] = useState("");
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [savedPopup, setSavedPopup] = useState(false);
+  const [createdPopup, setCreatedPopup] = useState(false);
+
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
-  const [cloneData,setCloneData] = useState(null);
+  const [cloneData, setCloneData] = useState(null);
   const dispatch = useDispatch();
   const accessToken = useSelector(
     (state) => state?.auth?.userData?.accessToken
@@ -289,9 +333,9 @@ const JdRegistration = () => {
   };
 
   const handlePageChange = (change) => {
-    if (change) {
+    if (change && (page < Math.ceil(+total / +size))) {
       setPage((prev) => prev + 1);
-    } else {
+    } else if (!change && page > 1) {
       setPage((prev) => prev - 1);
     }
   };
@@ -308,8 +352,8 @@ const JdRegistration = () => {
     getData();
   }, [page, size]);
 
-  
-  const handleSearch = () => {};
+
+  const handleSearch = () => { };
 
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
@@ -331,27 +375,60 @@ const JdRegistration = () => {
     setTableRows(updatedRows);
   };
 
-  console.log('========>>>>>>.',cloneData);
+  const handleErrorPopUpClose = () => {
+    setErrorPopup(false);
+  };
+
+  const handleSavedPopUpClose = () => {
+    setSavedPopup(false);
+  };
+
+  const handleCreatedPopUpClose = () => {
+    setCreatedPopup(false);
+  };
+
+  console.log('========>>>>>>.', cloneData);
 
   return (
     <Container1>
+      {savedPopup && (
+        <Saved
+          handleClose={handleSavedPopUpClose}
+          open={savedPopup}
+          msg={`JD successfully updated`}
+        />
+      )}
+      {errorPopup && (
+        <Error
+          handleClose={handleErrorPopUpClose}
+          open={errorPopup}
+          msg={errorMsg}
+          handleRetryFunc={handleErrorPopUpClose}
+        />
+      )}
+      {createdPopup && (
+        <Created
+          handleClose={handleCreatedPopUpClose}
+          open={createdPopup}
+          msg="JD successfully created"
+        />
+      )}
       <ModalHOC
-        openNewInterviewModal={openBasic}
         setOpenNewInterviewModal={setOpenBasic}
-        Component={JdForm}
-        array={[null, "create"]}
+        openNewInterviewModal={openBasic}
+        component={<JdForm array={[null, 'create']} handleClose={() => setOpenBasic(false)} errorMsg={errorMsg} setErrorPopup={setErrorPopup} setCreatedPopup={setCreatedPopup} setSavedPopup={setSavedPopup} />}
       />
+
       <ModalHOC
-        openNewInterviewModal={openBasic2}
         setOpenNewInterviewModal={setOpenBasic2}
-        Component={CloneJDForm}
-        array={[setOpenBasic3,setOpenBasic2,setCloneData]}
+        openNewInterviewModal={openBasic2}
+        component={<CloneJDForm array={[setOpenBasic3, setOpenBasic2, setCloneData]} />}
       />
-       <ModalHOC
-        openNewInterviewModal={openBasic3}
+
+      <ModalHOC
         setOpenNewInterviewModal={setOpenBasic3}
-        Component={JdForm}
-        array={[cloneData, "clone"]}
+        openNewInterviewModal={openBasic3}
+        component={<JdForm array={[cloneData, 'clone']} handleClose={() => setOpenBasic3(false)} errorMsg={errorMsg} setErrorPopup={setErrorPopup} setCreatedPopup={setCreatedPopup} setSavedPopup={setSavedPopup} />}
       />
 
       <StyledBox>
@@ -379,7 +456,7 @@ const JdRegistration = () => {
                 />
               </div>
             </SearchBarContainer>
-            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange}/>
+            
           </div>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
@@ -404,7 +481,12 @@ const JdRegistration = () => {
               ))}
             </TableBody>
           </Table>
-          <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage}/>
+
+          <div className="paginationBox">
+          <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange} />
+          <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage} />
+          </div>
+    
         </TableContainer>
       </StyledBox>
     </Container1>
@@ -422,6 +504,13 @@ const StyledBox = styled.div`
 
   .colored {
     background-color: #ececec;
+  }
+
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
   }
 
   .tableBox {

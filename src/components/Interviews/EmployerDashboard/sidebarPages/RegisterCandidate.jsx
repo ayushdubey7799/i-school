@@ -199,7 +199,7 @@ const RegisterCandidate = () => {
       {successPopup && <Created handleClose={handleSuccessPopUpClose} open={successPopup} msg='Profile successfully created' />}
       <Component>
         <span className='title'>Register New Candidate</span>
-        {loading && <span>Loading...</span>}
+        {/* {loading && <span>Loading...</span>} */}
         <ValidatorForm onSubmit={handleRegister}>
           <TextValidator id="outlined-basic" label="Email" variant="outlined"
             type='email'
@@ -208,6 +208,7 @@ const RegisterCandidate = () => {
             errorMessages={["This field is required", 'Email is not valid']}
             validators={['required', 'isEmail']}
             size='small'
+            required
             inputProps={{
               sx: {
                 color: '#626264',

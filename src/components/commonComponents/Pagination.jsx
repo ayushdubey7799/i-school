@@ -1,47 +1,38 @@
 import React from "react";
-import styled from 'styled-components'; 
+import styled from 'styled-components';
+import nextIcon from '../../assets/icons/nextIcon.png'
+import greyNextIcon from '../../assets/icons/greyNextIcon.png'
+import prevIcon from '../../assets/icons/prevIcon.png'
+import greyPrevIcon from '../../assets/icons/greyPrevIcon.png'
 
-export const Pagination = ({ total, size, page, handlePageChange,setPage }) => {
-   console.log(total,size);
-    const nlength = Math.ceil(+total/+size);
-    console.log('====>>',nlength);
+export const Pagination = ({ total, size, page, handlePageChange, setPage }) => {
+
+  const totalPages = Math.ceil(+total / +size);
+
   return (
     <PaginationWrapper>
+      <span className="text">Page {page} of {totalPages}</span>
       <PaginationButton
         onClick={() => handlePageChange(false)}
-        disabled={page == 1}
+        inActive={page == 1}
       >
-        Prev
+        {page == 1 ? <img src={greyPrevIcon} /> : <img src={prevIcon} />}
       </PaginationButton>
-      {new Array(nlength)?.fill(0).map((item, index) => {
-        return (
-          <PaginationNumber
-            onClick={() => setPage(index + 1)}
-            style={{
-              backgroundColor: page == index + 1 ? "grey" : "white",
-              borderRadius: "30%",
-              padding: "0.5rem",
-              cursor: "pointer",
-            }}
-          >
-            {index + 1}
-          </PaginationNumber>
-        );
-      })}
+
       <PaginationButton
         onClick={() => handlePageChange(true)}
-        disabled={total / (page * size) < 1}
+        inActive={total / (page * size) < 1}
       >
-        Next
+        {(total / (page * size) < 1) ? <img src={greyNextIcon} /> : <img src={nextIcon} />}
       </PaginationButton>
     </PaginationWrapper>
   );
 };
 
-export const PaginationSizeFilter = ({size,handleSizeChange}) => {
+export const PaginationSizeFilter = ({ size, handleSizeChange }) => {
   return (
     <SelectWrapper>
-      <label htmlFor="pageSize">Page Size:</label>
+      <label htmlFor="pageSize">Rows per page </label>
       <Select id="pageSize" value={size} onChange={handleSizeChange}>
         <option value={5}>5</option>
         <option value={10}>10</option>
@@ -52,46 +43,61 @@ export const PaginationSizeFilter = ({size,handleSizeChange}) => {
 };
 
 const SelectWrapper = styled.div`
-  width: 50%;
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 1rem;
+  height: 2rem;
+  box-sizing: border-box;
+
+  label {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
 `;
 
 const Select = styled.select`
-  width: 50%;
-  height: 2rem;
-  padding-left: 0.5rem;
+  width: 5rem;
+  padding: 0.5rem 0.5rem;
   margin-left: 0.5rem;
+  box-sizing: border-box;
+  font-size: 0.8rem;
+  border: 0.075rem solid #ccc;
+  border-radius: 0.25rem;
 
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  option {
+    
+  }
 `;
 
 const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
   align-items: center;
-  margin-top: 20px;
+
+  .text {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
 `;
 
 const PaginationButton = styled.button`
-  padding: 8px 16px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.075rem solid #ccc;
+  border-radius: 0.25rem;
   background-color: #fff;
+  cursor: ${({ inActive }) => (inActive ? 'default' : 'pointer')};
 
   &:hover {
     background-color: #f0f0f0;
   }
-`;
 
-const PaginationNumber = styled.p`
-  &:hover {
-    background-color: #f0f0f0;
+  img {
+    width: 0.75rem;
   }
 `;
+
