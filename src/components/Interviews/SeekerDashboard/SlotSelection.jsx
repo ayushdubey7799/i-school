@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import styled from "styled-components";
-import { schedule } from "../../../functions/api/employers/match/schedule";
 import { scheduleByCandidate } from "../../../functions/api/employers/schedule/scheduleByCandidate";
 import { getInviteDetails } from "../../../functions/api/employers/schedule/getInviteDetails";
 import TimeSlotPicker from "../EmployerDashboard/Schedule/TimeSlotPicker";
@@ -12,21 +11,12 @@ import moment from "moment-timezone";
 import { persistor } from "../../../store";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../slices/authSlice";
+
+
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const TimeSelector = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const TimeInput = styled.select`
-  margin: 10px;
-  padding: 5px;
-  font-size: 16px;
 `;
 
 const ScheduleButton = styled.button`
@@ -65,7 +55,7 @@ const SlotSelection = () => {
     const time = dateTime.slice(11);
     console.log(date + "T" + time);
     const scheduleTest = async () => {
-      console.log(token,date);
+      console.log(token, date);
       const res = await scheduleByCandidate(
         {
           slot: date + "T" + time,
@@ -89,7 +79,7 @@ const SlotSelection = () => {
   const handleRedirect = () => {
     persistor.purge();
     dispatch(logout())
-    
+
   }
 
   return (
@@ -103,21 +93,21 @@ const SlotSelection = () => {
           <p>Test Type: {inviteDetails.testType}</p>
 
           <TimeSlotPicker
-        selectedTimeSlot={selectedTimeSlot}
-        setSelectedTimeSlot={setSelectedTimeSlot}
-      />
+            selectedTimeSlot={selectedTimeSlot}
+            setSelectedTimeSlot={setSelectedTimeSlot}
+          />
 
-      <ScheduleButton onClick={handleScheduleInterview}>
-        Schedule Interview
-      </ScheduleButton>
+          <ScheduleButton onClick={handleScheduleInterview}>
+            Schedule Interview
+          </ScheduleButton>
         </div>
-        
-      ):
-      <div>
-        <h1>Login with same email you got invite on to schedule</h1>
-        <Link onClick={handleRedirect} to={'/login'}>Redirect to Login Page</Link>
-      </div>}
-     
+
+      ) :
+        <div>
+          <h1>Login with same email you got invite on to schedule</h1>
+          <Link onClick={handleRedirect} to={'/login'}>Redirect to Login Page</Link>
+        </div>}
+
     </PageContainer>
   );
 };

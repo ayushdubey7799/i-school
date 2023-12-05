@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import ColoredDot from '../../../../assets/icons/coloredDot.png'
 import { useNavigate } from 'react-router'
+import SubscriptionFeatureText from '../seekerCommonComponents/SubscriptionFeatureText'
 
 const SubscriptionContent = () => {
     const navigate = useNavigate();
@@ -15,13 +16,13 @@ const SubscriptionContent = () => {
                 <button className='btn' onClick={() => navigate('/signup')}>Start for Free</button>
 
                 <div className='mainFeature'>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 10 Interviews Per Month</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> One Profile</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> One Resume</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Job Search & View</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 10 Jobs Apply</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Email Support (NBD)</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Basic Dashboard</span>
+                    <SubscriptionFeatureText text='10 Interviews Per Month' />
+                    <SubscriptionFeatureText text='One Profile' />
+                    <SubscriptionFeatureText text='One Resume' />
+                    <SubscriptionFeatureText text='Job Search & View' />
+                    <SubscriptionFeatureText text='10 Jobs Apply' />
+                    <SubscriptionFeatureText text='Email Support (NBD)' />
+                    <SubscriptionFeatureText text='Basic Dashboard' />
                 </div>
             </div>
             <div className='box'>
@@ -31,15 +32,15 @@ const SubscriptionContent = () => {
                 <button className='btn'>Buy Now</button>
 
                 <div className='mainFeature'>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 50 Interviews Per month</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Detailed Profile</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 3 Resumes</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI CV Make</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Cover Letter Maker</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Job Search and View</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 50 job apply</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Business Hours Email & Phone Support</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Dashboard</span>
+                    <SubscriptionFeatureText text='50 Interviews Per month' />
+                    <SubscriptionFeatureText text='Detailed Profile' />
+                    <SubscriptionFeatureText text='Upto 3 Resumes' />
+                    <SubscriptionFeatureText text='AI CV Make' />
+                    <SubscriptionFeatureText text='Cover Letter Maker' />
+                    <SubscriptionFeatureText text='Job Search and View' />
+                    <SubscriptionFeatureText text='Upto 50 job apply' />
+                    <SubscriptionFeatureText text='Business Hours Email & Phone Support' />
+                    <SubscriptionFeatureText text='Dashboard' />
                 </div>
             </div>
             <div className='box'>
@@ -49,16 +50,16 @@ const SubscriptionContent = () => {
                 <button className='btn'>Buy Now</button>
 
                 <div className='mainFeature'>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 200 Interviews Per month</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI powered Profile</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 6 Resumes</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI CV Maker</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> AI Cover letter maker</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Job Search and View</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Upto 200 job apply</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> 24x7 Email & Phone Support</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Dashboard</span>
-                    <span className='featureText'> <img src={ColoredDot} className='featureDot' /> Reports</span>
+                    <SubscriptionFeatureText text='200 Interviews Per month' />
+                    <SubscriptionFeatureText text='AI powered Profile' />
+                    <SubscriptionFeatureText text='Upto 6 Resumes' />
+                    <SubscriptionFeatureText text='AI CV Maker' />
+                    <SubscriptionFeatureText text='AI Cover letter maker' />
+                    <SubscriptionFeatureText text='Job Search and View' />
+                    <SubscriptionFeatureText text='Upto 200 job apply' />
+                    <SubscriptionFeatureText text='24x7 Email & Phone Support' />
+                    <SubscriptionFeatureText text='Dashboard' />
+                    <SubscriptionFeatureText text='Reports' />
                 </div>
             </div>
         </MainBox>
@@ -128,7 +129,6 @@ justify-content: space-evenly;
     background: linear-gradient(to bottom, #8ACCDC, var(--lightOrange));
 }
 
-
 .mainFeature {
     display: flex;
     flex-direction: column;
@@ -136,20 +136,5 @@ justify-content: space-evenly;
     padding: 1rem 0;
 }
 
-
-.featureDot {
-    width: 0.5rem;
-    height: 0.5rem;
-}
-
-.featureText {
-    font-size: 0.85rem;
-    font-weight: 400;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    text-wrap: break-word;
-}
-
-
 `
+

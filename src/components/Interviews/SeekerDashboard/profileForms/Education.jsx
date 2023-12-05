@@ -60,7 +60,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-function Education({handleClose}) {
+function Education({ handleClose }) {
   const [formData, setFormData] = useState({
     education: '',
     university: '',
@@ -88,7 +88,7 @@ function Education({handleClose}) {
   return (
 
     <FormContainer>
-    <h3>Add Education</h3>
+      <h3>Add Education</h3>
 
       <Form onSubmit={handleSubmit}>
         <Label>Education:</Label>

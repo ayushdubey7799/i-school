@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import closeIcon from '../../../assets/icons/closeIcon.png'
 
 
@@ -15,12 +13,9 @@ export default function ModalHOC({
   const handleOpen = () => {
     setOpenNewInterviewModal(true);
   };
+  
   const handleClose = (event, reason) => {
     console.log(event, reason);
-    // if (reason && reason == "backdropClick") {
-    //   toast.warn("WARNING")
-    //   return;
-    // }
     setOpenNewInterviewModal(false);
   };
 

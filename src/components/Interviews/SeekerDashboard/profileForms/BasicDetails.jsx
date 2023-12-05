@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
-import { useNavigate } from "react-router";
-
 
 
 export default function BasicDetails({ handleClose }) {
@@ -31,13 +27,13 @@ export default function BasicDetails({ handleClose }) {
 
 
 
-  
-  
+
+
 
   return (
-    
-          <FormContainer>
-          <h1>Basic Details</h1>
+
+    <FormContainer>
+      <h1>Basic Details</h1>
       <Form onSubmit={handleSubmit}>
         <Label>Name:</Label>
         <Input
@@ -68,7 +64,7 @@ export default function BasicDetails({ handleClose }) {
             />
             Experienced
           </RadioLabel>
-          </div>
+        </div>
         <Label>Mobile Number:</Label>
         <Input
           type="text"
@@ -83,14 +79,14 @@ export default function BasicDetails({ handleClose }) {
           value={formData.email}
           onChange={handleChange}
         />
-         <Label>Current CTC (in Lakhs):</Label>
+        <Label>Current CTC (in Lakhs):</Label>
         <Input
           type="text"
           name="current"
           value={formData.current}
           onChange={handleChange}
         />
-         <Label>Expected CTC (in Lakhs):</Label>
+        <Label>Expected CTC (in Lakhs):</Label>
         <Input
           type="text"
           name="expected"

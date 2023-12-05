@@ -2,7 +2,6 @@
 import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import InterviewList from "./InterviewList";
@@ -16,7 +15,6 @@ import MockInterviews from "./SeekerDashboard/sidebarPages/MockInterviews";
 export default function InterviewTabs() {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [value, setValue] = useState("COMPLETED");
-  // const [staticValue, setStaticValue] = useState('COMPLETED');
   const [filteredData, setFilteredData] = useState({});
 
 
