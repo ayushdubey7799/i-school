@@ -11,11 +11,12 @@ import { getInterviewByStatus } from "../../functions/api/getInterviewByStatus";
 import styled from "styled-components";
 import Loader from "../commonComponents/Loader";
 import ScheduledInterviewList from "./ScheduledInterviewList";
+import MockInterviews from "./SeekerDashboard/sidebarPages/MockInterviews";
 
 export default function InterviewTabs() {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [value, setValue] = useState("COMPLETED");
-  const [staticValue, setStaticValue] = useState('COMPLETED');
+  // const [staticValue, setStaticValue] = useState('COMPLETED');
   const [filteredData, setFilteredData] = useState({});
 
 
@@ -29,7 +30,7 @@ export default function InterviewTabs() {
 
   useEffect(() => {
     async function getData(value) {
-      const response = await getInterviewByStatus(staticValue, accessToken);
+      const response = await getInterviewByStatus(value, accessToken);
       if (response) {
         setFilteredData(response);
         console.log('data score', response);
@@ -90,6 +91,7 @@ export default function InterviewTabs() {
           </Tabs>
           {value === 'COMPLETED' && <InterviewList filteredData={filteredData} />}
           {value === 'NOT_STARTED' && <ScheduledInterviewList />}
+          {value === 'STARTED' && <MockInterviews filteredData={filteredData} />}
         </StyledBox>
       }
     </>
