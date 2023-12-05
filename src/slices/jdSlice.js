@@ -56,7 +56,8 @@ const jdSlice = createSlice({
                     recruiter: item.recruiter,
                     // jdUpload: item.jdUpload,
                     visibility: item.visibility,
-                    autoReqNumbers: true,}
+                    autoReqNumbers: true
+                }
             })
             state.status = 'succeeded';
         }).addCase(getAvailableJds.rejected, (state, action) => {
