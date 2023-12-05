@@ -4,10 +4,7 @@ import styled from 'styled-components';
 import profileIcon from '../../../assets/icons/profile.png'
 import jobSearchIcon from '../../../assets/icons/job-search.png'
 import practiceInterviewIcon from '../../../assets/icons/practice.png'
-import inboxIcon from '../../../assets/icons/inbox.png'
 import subsIcon from '../../../assets/icons/subscription.png'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import dashboardIcon from '../../../assets/icons/dashboard.png'
 import appliedJobIcon from '../../../assets/icons/job-applied.png'
@@ -43,7 +40,6 @@ const Container = styled.div`
   font-size: 0.9rem;
   font-weight: 500;
   background-color: var(--white);
-  // box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
   position: fixed;
   left: 0;
   overflow-y: scroll;
@@ -64,9 +60,6 @@ const Container = styled.div`
     background-color: transparent;
   }
 
-  // &:hover::-webkit-scrollbar-thumb {
-  //   background-color: lightgrey;
-  // }
 
   .menuTitle {
     font-size: 0.9rem;

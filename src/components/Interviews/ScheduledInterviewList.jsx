@@ -10,8 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import { useSelector } from 'react-redux';
 import { jobListings } from '../../utils/contantData';
-import save from '../../assets/icons/save.png'
-import share from '../../assets/icons/share.png'
 import searchBlack from '../../assets/icons/searchBlack.png'
 import { getInterviewByStatus } from '../../functions/api/getInterviewByStatus';
 import { updateStatus } from '../../functions/api/interview/updateStatus';
@@ -29,14 +27,8 @@ function Row(props) {
   const navigate = useNavigate();
 
   const startInterview = async () => {
-    // setLoaderMessage("Creating Interview...  Please Wait");
-    // setIsLoading(true);
-    // const res = await updateStatus(row.id, "started", accessToken);
-    // setIsLoading(false);
-    // if (res) {
       localStorage.setItem("currentInterview","profile");
       navigate(`/create-interview/${row.id}`);
-    // }
   }
 
   const [state, setState] = React.useState({
@@ -105,7 +97,6 @@ const ScheduledInterviewList = () => {
       const res = await getInterviewByStatus("SCHEDULED", accessToken);
       if (res) {
         setFilteredJobs(res?.data?.data);
-        // setFilteredJobs(res)
       }
     }
 

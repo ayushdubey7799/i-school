@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router';
 import styled from 'styled-components'
 import SelectCVTempPage from '../../../../pages/SelectCVTempPage';
 import CommonModal from '../../../commonComponents/CommonModal';
+
 
 const CreateResume = () => {
     const [openModal, setOpenModal] = useState(false);

@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import metric1 from '../../../assets/icons/metric1.png'
-import metric2 from '../../../assets/icons/metric2.png'
-import metric3 from '../../../assets/icons/metric3.png'
-import metric4 from '../../../assets/icons/metric4.png'
-import { useNavigate } from 'react-router';
-import RecommendedJobs from './sidebarPages/RecommendedJobs';
-import JobApplication from './sidebarPages/JobApplication';
-import InterviewTabs from '../InterviewTabs';
+import RecommendedJobs from './sidebarPages/RecommendedJobsList';
 import { getStatusWiseCount } from '../../../functions/api/interview/getStatusWiseCount';
 import { useSelector } from 'react-redux';
 
@@ -19,6 +12,8 @@ import { seekerMetric4 } from '../../../utils/contantData';
 import { getInterviewByStatus } from '../../../functions/api/getInterviewByStatus';
 import InterviewList from '../InterviewList';
 import ScheduledInterviewList from '../ScheduledInterviewList';
+import AppliedJobs from './sidebarPages/AppliedJobs';
+
 
 const MainContainer = styled.div`
 display: flex;
@@ -142,7 +137,7 @@ const Metrics = () => {
       <Container>
         <div className={`achievedNumberBox ${currMetric === seekerMetric1.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric1.text)}>
           <div className='top'>
-            <img src={metric1} />
+            <img src={seekerMetric1.img} />
             <span className='achievedNumberDigit'>{scheduled ? scheduled : 0}</span>
           </div>
           <span className='hrLine'></span>
@@ -150,7 +145,7 @@ const Metrics = () => {
         </div>
         <div className={`achievedNumberBox ${currMetric === seekerMetric2.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric2.text)}>
           <div className='top'>
-            <img src={metric2} />
+            <img src={seekerMetric2.img} />
             <span className='achievedNumberDigit'>{completed ? completed : 0}</span>
           </div>
           <span className='hrLine'></span>
@@ -175,7 +170,7 @@ const Metrics = () => {
       </Container>
 
       {currMetric === 'recommendedJobs' && <RecommendedJobs />}
-      {currMetric === 'appliedJobs' && <JobApplication />}
+      {currMetric === 'appliedJobs' && <AppliedJobs />}
       {currMetric === 'interviewCompleted' && <InterviewList filteredData={filteredData} />}
       {currMetric === 'interviewScheduled' && <ScheduledInterviewList />}
     </MainContainer>
