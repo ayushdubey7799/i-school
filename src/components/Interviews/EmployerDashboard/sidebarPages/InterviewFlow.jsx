@@ -15,13 +15,16 @@ import putHoldIcon from '../../../../assets/icons/putOnHoldIcon.png'
 import moveOutIcon from '../../../../assets/icons/moveOutInterviewIcon.png'
 import { getAllTrackers } from "../../../../functions/api/interview/getAllTrackers";
 import { useSelector } from "react-redux";
-
+import { addResumes } from "../../../../slices/invitationSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 function Row(props) {
   const { row, index } = props;
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const openDropdown = (index) => {
     setOpenDropdownIndex(index);
   };
@@ -30,6 +33,11 @@ function Row(props) {
   const closeAllDropdowns = () => {
     setOpenDropdownIndex(-1);
   };
+
+  const handleMove = () => {
+     dispatch(addResumes([row.resumeId,row.jdId]));
+     navigate(`/schedule/invite/${row.jdId}`);
+  }
 
   useEffect(() => {
     const handleDocumentClick = (event) => {
@@ -72,7 +80,7 @@ function Row(props) {
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
-              <span className="dropdownText"><img src={moveNextRoundIcon} /> Move to next Round</span>
+              <span className="dropdownText" onClick={handleMove}><img src={moveNextRoundIcon} /> Move to next Round</span>
               <span className="dropdownText"><img src={putHoldIcon} /> Put on Hold</span>
               <span className="dropdownText"><img src={moveOutIcon} /> Move out from Interview</span>
             </div>
@@ -105,7 +113,8 @@ const InterviewFlow = ({ setPage }) => {
            hiringManager: current?.hiringManager,
            round: current?.stage,
            interviewName: current?.interviewName,
-           status: current?.status
+           status: current?.status,
+           resumeId: current.resumeId
         }
   
         return [...acc,jdInfoReq];
