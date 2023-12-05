@@ -31,7 +31,7 @@ const Component = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   border-radius: 0.7rem;
   font-size: 0.9rem;
   background-color: var(--white);
@@ -45,11 +45,12 @@ const Component = styled.div`
     cursor: pointer;
     color: var(--white);
     font-size: 1rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    align-self: center;
   }
 
   .title {
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     font-size: 1.1rem;
     font-weight: 500;
 
@@ -68,7 +69,7 @@ const Component = styled.div`
 
     span {
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 0.2rem;
     }
   
     #outlined-basic {
@@ -82,7 +83,7 @@ const Component = styled.div`
       align-items: center;
       justify-content: center;
       width: 100%;
-      gap: 1rem;
+      gap: 0.5rem;
       margin-top: 0rem;
     }
   }

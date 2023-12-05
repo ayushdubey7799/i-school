@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import linkedin from '../../../../assets/icons/linkedinBlack.png'
@@ -28,6 +28,23 @@ const EmployerProfileDetails = () => {
         userType: user.userType,
         userName: user.username,
     });
+
+    const textAreaRef = useRef(null);
+    const [aboutEdit, setAboutEdit] = useState(false);
+    const [aboutCompany, setAboutCompany] = useState('An AI recruitment company leverages advanced artificial intelligence and machine learning technologies to revolutionize the traditional hiring process. By integrating cutting-edge algorithms and automation, these companies enhance talent acquisition efficiency, ensuring faster and more accurate candidate matching. AI recruitment platforms analyze vast amounts of data, including resumes, job descriptions, and candidate profiles, to identify the most suitable matches for specific roles. Through predictive analytics and natural language processing, these solutions streamline candidate screening, assessment, and interview processes. Ultimately, AI recruitment companies empower organizations to make data-driven hiring decisions, reduce time-to-fill, and discover top-tier talent in a competitive job market.')
+
+    const handleAboutSave = () => {
+        setAboutEdit(false);
+    }
+
+    useEffect(() => {
+        // Focus and set the cursor at the end of the textarea when aboutEdit becomes true
+        if (aboutEdit && textAreaRef.current) {
+            const textLength = aboutCompany.length;
+            textAreaRef.current.focus();
+            textAreaRef.current.setSelectionRange(textLength, textLength);
+        }
+    }, [aboutEdit, aboutCompany]);
 
     console.log(user);
 
@@ -89,7 +106,21 @@ const EmployerProfileDetails = () => {
                         <span className='text'><span className='boldText'>Account Manager Contact:</span> 8000020000</span>
                     </div>
                 </div>
+            </div>
 
+            <div className='contactMainBox'>
+                <span className='mainTitle'>
+                    <span>About Company</span>
+                    <span className='editBtn2'>{aboutEdit ? <button onClick={handleAboutSave}>Save</button> : <img src={editIcon} onClick={() => setAboutEdit(true)} />}</span>
+                </span>
+
+                <textarea
+                    value={aboutCompany}
+                    onChange={(e) => setAboutCompany(e.target.value)}
+                    disabled={!aboutEdit}
+                    rows={10}
+                    className='textarea'
+                    ref={textAreaRef} />
             </div>
         </Box>
     )
@@ -215,6 +246,27 @@ align-items: center;
                 width: 100%;
             }
         }
+
+        .editBtn2 {
+            padding-right: 1rem;
+            display: flex;
+            align-items: center;
+            
+            button {
+                background-color: var(--lightOrange);
+                padding: 0.3rem 0.6rem;
+                font-size: 0.9rem;
+                border: none;
+                font-weight: 600;
+                color: var(--white);
+                border-radius: 0.3rem;
+                cursor: pointer;
+            }
+            img {
+                width: 1rem;
+                cursor: pointer;
+            }
+        }
     }
 
     .contactBox {
@@ -244,35 +296,15 @@ align-items: center;
 
     }
 
-
+    .textarea {
+        background-color: var(--white);
+        padding: 1rem;
+        line-height: 1.2rem;
+        font-size: 0.9rem;
+        border-radius: 0.75rem;
+        outline-color: var(--grey);
+        outline-width: 0.05rem;
+        border: 0.075rem solid lightgrey;
+    }
 }
 `
-
-
-
-
-{/* <div>
-      <h2>User Information</h2>
-      <ul>
-        <li>First Name: {user.firstName}</li>
-        <li>Last Name: {user.lastName}</li>
-        <li>Username: {user.username}</li>
-        <li>Email: {user.email}</li>
-        <li>Phone Number: {user.primaryContact}</li>
-        <li>Address: {user.address}</li>
-        <li>City: {user.city}</li>
-        <li>State: {user.state}</li>
-        <li>Client Code: {user.clientCode}</li>
-        <li>Created At: {user.createdAt}</li>
-        <li>Updated At: {user.updatedAt}</li>
-        <li>Created By: {user.createdBy}</li>
-        <li>Last Modified By: {user.lastModifiedBy}</li>
-        <li>ID: {user.id}</li>
-        <li>Activation Required: {user.activationRequired ? 'Yes' : 'No'}</li>
-        <li>Active: {user.active ? 'Yes' : 'No'}</li>
-        <li>Enforce Password Change: {user.enforcePwdChange ? 'Yes' : 'No'}</li>
-        <li>Profile ID: {user.profileId}</li>
-        <li>User State: {user.userState}</li>
-        <li>User Type: {user.userType}</li>
-      </ul>
-    </div> */}
