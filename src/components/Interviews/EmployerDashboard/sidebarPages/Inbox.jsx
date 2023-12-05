@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { createBlobUrl } from "../../../commonComponents/Resume";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
 import { timeZoneConversion } from "../../../../utils/timeZoneConversation";
+import download from '../../../../assets/icons/download.png'
 
 const Inbox = () => {
   const [notifications, setNotifications] = useState(null);
@@ -63,20 +64,19 @@ const Inbox = () => {
                 </div>
                 <div className="text">
                   {notify?.message}{" "}
-                  {notify.url ? 
-                  <button onClick={() => handleDownload(notify.url)}>
-                  Download file
-                  </button>
-                  :
-                  <></>
-                    
-                }
+
                 </div>
                 <div className="text">
-                    {timeZoneConversion(notify.updatedAt)}
+                  <b>{timeZoneConversion(notify.updatedAt)}</b>
                 </div>
               </div>
-              <span className="btn">View</span>
+              <span className="btn"> {notify.url ?
+                <span onClick={() => handleDownload(notify.url)}>
+                  <img src={download} />
+                </span>
+                :
+                <></>
+              }</span>
             </div>
           </div>
         ))}
@@ -191,7 +191,7 @@ margin-bottom: 1rem;
 .textBox {
     display: flex;
     flex-direction: column;
-
+    gap: 0.3rem;
 
 
     .title {
@@ -212,10 +212,13 @@ margin-bottom: 1rem;
 }
 
 .btn {
-    color: var(--lightOrange);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
+
+    img {
+      width: 2rem;
+    }
 }
 }
 
