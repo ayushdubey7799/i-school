@@ -19,6 +19,8 @@ import Saved from "../../commonComponents/infoDialog/Saved";
 import Created from "../../commonComponents/infoDialog/Created";
 import Error from "../../commonComponents/infoDialog/Error";
 import { checkJdExist } from "../../../functions/api/employers/checkJdExist";
+import { setJdTrigger } from "../../../slices/jdSlice";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   width: 100%;
@@ -107,7 +109,7 @@ const Button = styled.button`
 
 function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopup, setSavedPopup, }) {
   console.log("==========>", array)
-  const [jdExist,setJdExist] = useState(false);
+  const [jdExist, setJdExist] = useState(false);
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
   const [formData, setFormData] = useState({
@@ -142,6 +144,9 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   const [initialReqs, setInitialReqs] = useState(0);
   const [reqsError, setReqsError] = useState(false);
 
+  const dispatch = useDispatch();
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);
+
 
   const handleLocationsChange = (_, newLocations) => {
     setSelectedLocations(newLocations);
@@ -171,7 +176,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   );
   useEffect(() => {
     if (array[0]) {
-      if(array[1]!='edit')checkJdPresent(array[0].jdId)
+      if (array[1] != 'edit') checkJdPresent(array[0].jdId)
       setFormData(array[0]);
       setInitialReqs(array[0].numOfReqs);
       setSelectedSkills(array[0].skills.split(", "));
@@ -229,12 +234,14 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
         if (resObj) {
           setCreatedPopup(true);
           console.log(resObj);
+          dispatch(setJdTrigger(!jdTrigger));
         }
       } else {
         const editRes = await editJd(formData, accessToken, clientCode);
         if (editRes) {
           setSavedPopup(true);
           console.log(editRes);
+          dispatch(setJdTrigger(!jdTrigger));
         }
       }
     } catch (error) {
@@ -250,19 +257,21 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   };
 
 
- 
 
 
-const checkJdPresent = async (jdId) => {
-  if(mode!='edit'){const res = await checkJdExist(accessToken,clientCode,jdId);
-  if(res.data){
-    setJdExist(true);
-  }}
-}
 
- const handleJdPresentError = async () => {
-   setJdExist(false);
- }
+  const checkJdPresent = async (jdId) => {
+    if (mode != 'edit') {
+      const res = await checkJdExist(accessToken, clientCode, jdId);
+      if (res.data) {
+        setJdExist(true);
+      }
+    }
+  }
+
+  const handleJdPresentError = async () => {
+    setJdExist(false);
+  }
 
   return (
     <Container>
@@ -297,8 +306,8 @@ const checkJdPresent = async (jdId) => {
           }}
           required
         />
-     {jdExist && <p>JD already exists</p>}
-     
+        {jdExist && <p>JD already exists</p>}
+
         <TextField
           id="outlined-basic"
           label="Number of Reqs"
@@ -459,7 +468,7 @@ const checkJdPresent = async (jdId) => {
                 label="Location"
                 sx={{ backgroundColor: "#F6F6FB" }}
                 disabled={jdExist}
-                
+
               />
             )}
             disabled={jdExist}
@@ -790,7 +799,7 @@ const checkJdPresent = async (jdId) => {
           </Select>
         </FormControl>
 
-        <Button type="submit"  disabled={jdExist}>
+        <Button type="submit" disabled={jdExist}>
           {mode == "create" ? "Submit" : "Save Changes"}
         </Button>
       </Form>

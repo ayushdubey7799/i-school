@@ -44,6 +44,8 @@ import Saved from '../../../commonComponents/infoDialog/Saved';
 function Row(props) {
   const { row, index } = props;
 
+  const dispatch = useDispatch();
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger); 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
@@ -80,6 +82,7 @@ function Row(props) {
       // Check if the request was successful
       if (res) {
         setDeletePopup(true);
+        dispatch(setJdTrigger(!jdTrigger));
       }
     } catch (error) {
       // Handle network errors or unexpected issues
@@ -249,6 +252,7 @@ const ActiveJds = () => {
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   // const jdData = useSelector(state => state?.jd?.activeJds);
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger); 
   const [total, setTotal] = useState(0);
 
   const [page, setPage] = useState(1);
@@ -274,7 +278,7 @@ const ActiveJds = () => {
       setTotal(res?.data?.total);
     }
     getData();
-  }, [page, size]);
+  }, [page, size, jdTrigger, dispatch]);
 
   // State, function to Open and close Export Dialog Box
   const [openExport, setOpenExport] = React.useState(false);

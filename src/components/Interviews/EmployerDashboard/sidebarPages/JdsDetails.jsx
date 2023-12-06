@@ -35,10 +35,10 @@ const JdsDetails = ({ Jds }) => {
             </div>
 
             <div className='details'>
-                <div className='box1'>
+                {/* <div className='box1'>
                     <span className='title'>Job highlights</span>
-                    <span className='text'>{Jds.jobSummary}</span>
-                </div>
+                    <pre className='text jdSummary'>{Jds.jobSummary.replace(/\\n/g, '\n')}</pre>
+                </div> */}
 
                 <div className='box2'>
                     <span className='title'>Job description</span>
@@ -95,6 +95,7 @@ margin: 2rem auto;
         display: flex;
         flex-direction: column;
         gap: 0.3rem;
+
 
         .jobTitle {
             font-size: 1.3rem;
@@ -175,6 +176,12 @@ margin: 2rem auto;
         }
 
         .text {
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .jdSummary {
+            line-height: 1.1rem;
             font-size: 0.9rem;
             font-weight: 400;
         }
