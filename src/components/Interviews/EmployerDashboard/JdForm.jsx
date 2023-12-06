@@ -28,6 +28,23 @@ const Container = styled.div`
   padding: 1rem;
   border-radius: 0.3rem;
 
+  .mainTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .helperText {
+    display: block;
+    font-size: 0.75rem;
+    margin: -0.5rem 0;
+    color: red;
+    font-weight: 400;
+
+  }
+
   .check {
     width: 100%;
     display: flex;
@@ -62,9 +79,32 @@ const Form = styled.form`
   padding-bottom: 1rem;
   gap: 1rem;
 
-  #outlined-basic {
-    padding: 0.5rem 0.5rem;
-    background-color: #f6f6fb;
+  @media (max-width: 2000px) {
+    #outlined-basic {
+      padding: 0.75rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1700px) {
+    #outlined-basic {
+      padding: 0.85rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1350px) {
+    #outlined-basic {
+      padding: 0.95rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    #outlined-basic {
+      padding: 1rem 0.5rem;
+      background-color: #F6F6FB;
+    }
   }
 
   #demo-simple-select-label {
@@ -82,16 +122,6 @@ const Label = styled.label`
   top: -0.5rem;
   left: 1rem;
   background-color: var(--white);
-`;
-
-const Input = styled.input`
-  padding: 1rem;
-  border: 1px solid #ccc;
-  background-color: #f6f6fb;
-  outline-color: #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  width: 100%;
 `;
 
 const Button = styled.button`
@@ -275,11 +305,11 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
 
   return (
     <Container>
-      <h3>JD Registration</h3>
+      <span className='mainTitle'>JD Registration</span>
       <Form onSubmit={handleSubmit}>
         <TextField
           id="outlined-basic"
-          label="JD ID (ABC_XX__)"
+          label="JD ID"
           variant="outlined"
           type="text"
           name="jdId"
@@ -289,7 +319,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           onFocus={handleJdPresentError}
           disabled={mode == "edit"}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -306,7 +335,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           }}
           required
         />
-        {jdExist && <p>JD already exists</p>}
+        {jdExist && <span className='helperText'>JD already exists</span>}
 
         <TextField
           id="outlined-basic"
@@ -319,7 +348,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           onBlur={() => checkReqs()}
           onFocus={() => setReqsError(false)}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -337,7 +365,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           disabled={jdExist}
           required
         />
-        {reqsError && <p>Error Message:</p>}
+        {reqsError && <span>Error Message:</span>}
 
         <TextField
           id="outlined-basic"
@@ -348,7 +376,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.title}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -379,7 +406,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           ></textarea>
         </div>
 
-        <Stack spacing={3} sx={{ width: "100%" }}>
+        <Stack spacing={3} sx={{ width: "100%", }}>
           <Autocomplete
             multiple
             id="tags-standard"
@@ -392,7 +419,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
               <TextField
                 {...params}
                 label="Skills"
-                sx={{ backgroundColor: "#F6F6FB" }}
+                sx={{ backgroundColor: "#F6F6FB", }}
                 disabled={jdExist}
               />
             )}
@@ -408,7 +435,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.bu}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -435,7 +461,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.exp}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -484,7 +509,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.certification}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -511,7 +535,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.ctc}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -538,7 +561,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.keywords}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -565,7 +587,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.hiringManager}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -592,7 +613,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.recruiter}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -609,11 +629,6 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           }}
           disabled={jdExist}
         />
-
-        {/* <div className='fileInputBox'>
-          <Label>Job Description</Label>
-          <textarea name='jobSummary' value={formData.jobSummary} onChange={handleChange} rows={5}></textarea>
-        </div> */}
 
         <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
           <InputLabel id="demo-simple-select-label">Worker Type</InputLabel>

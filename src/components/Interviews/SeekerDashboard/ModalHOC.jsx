@@ -46,15 +46,15 @@ export default function ModalHOC({
 
 const Btn = styled.button`
 position: absolute;
-right: 0.8rem;
-top: 0.8rem;
+right: 1rem;
+top: 1rem;
 background-color: transparent;
 border: none;
 cursor: pointer;
 
 
 img {
-  width: 2rem;
+  width: 1.2rem;
 }
 
 `

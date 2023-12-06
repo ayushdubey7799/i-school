@@ -24,7 +24,7 @@ import Error from "../../../commonComponents/infoDialog/Error";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, index, candidateTrigger ,setCandidateTrigger } = props;
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -51,6 +51,7 @@ function Row(props) {
     try {
       const res = await deleteCandidate(id, accessToken, clientCode);
       if (res) {
+        await setCandidateTrigger(!candidateTrigger);
         setDeletePopup(true);
       }
     } catch (error) {
@@ -219,10 +220,12 @@ function Row(props) {
 
 export default function RegisteredCandidates({ setCurrentItem }) {
   const [candidates, setCandidates] = useState([]);
+  const [candidateTrigger, setCandidateTrigger] = useState(false);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const clientCode = useSelector(
     (state) => state.auth.userData?.user?.clientCode
   );
+
   useEffect(() => {
     const getCandidates = async () => {
       const res = await getProfiles(accessToken, clientCode);
@@ -232,7 +235,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
     };
 
     getCandidates();
-  }, []);
+  }, [candidateTrigger]);
 
   const handleSearch = () => {
     console.log("Search");
@@ -265,7 +268,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
           </TableHead>
           <TableBody className="tableBody">
             {candidates?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} />
+              <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger}/>
             ))}
           </TableBody>
         </Table>
