@@ -10,13 +10,16 @@ import Paper from "@mui/material/Paper";
 import threeDot from '../../../assets/icons/threeDot.png'
 import { closeReq } from '../../../functions/api/employers/closeReqs';
 import { useSelector } from 'react-redux';
+import { useDispatch } from "react-redux";
 import Success from '../../commonComponents/infoDialog/Success';
-
+import { setJdTrigger } from "../../../slices/jdSlice";
 
 function Row(props) {
   const { row, index, id } = props;
+  const dispatch = useDispatch();
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
@@ -61,6 +64,7 @@ function Row(props) {
       if (res) {
         setSuccessPopup(true);
         console.log('Response:', res);
+        dispatch(setJdTrigger(!jdTrigger));
       }
 
     } catch (error) {

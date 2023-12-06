@@ -68,9 +68,9 @@ const CodeEditor = ({input,setInput,language,setLanguage}) => {
 export default CodeEditor
 
 const Box = styled.div`
-width: 98%;
+width: 100%;
 display: flex;
-padding: 2rem 1rem;
+padding: 2rem 0rem;
 margin: 0 auto;
 box-sizing: border-box;
 flex-direction: column;

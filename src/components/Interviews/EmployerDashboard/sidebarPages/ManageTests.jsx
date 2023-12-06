@@ -8,8 +8,6 @@ import searchIcon from '../../../../assets/icons/searchIcon.png'
 import closeIcon from '../../../../assets/icons/closeIcon.png'
 import editIcon from '../../../../assets/icons/editBlack.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
-import CommonModal from '../../../commonComponents/CommonModal';
-import CommonModalQue from '../../../commonComponents/CommonModalQue';
 
 
 const initialData = {
@@ -350,7 +348,7 @@ const ManageTests = () => {
                   </div>
                 )}
               </SearchBarContainer>
-              <CommonModalQue open={openBasic} setOpen={setOpenBasic} component={<CreateQuestionForm editingIndex={editingIndex} setEditingIndex={setEditingIndex} />} />
+              <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} component={<CreateQuestionForm editingIndex={editingIndex} setEditingIndex={setEditingIndex} />} />
               <ListTitle>Available Questions <span onClick={() => {
                 setOpenBasic(true)
                 setEditingIndex(-1)

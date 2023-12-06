@@ -56,8 +56,8 @@ const SelectWrapper = styled.div`
 `;
 
 const Select = styled.select`
-  width: 5rem;
-  padding: 0.5rem 0.5rem;
+  width: 3.5rem;
+  padding: 0.5rem 0.1rem;
   margin-left: 0.5rem;
   box-sizing: border-box;
   font-size: 0.8rem;

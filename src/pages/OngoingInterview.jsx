@@ -182,10 +182,14 @@ const OngoingInterview = ({ start, handleStart }) => {
 
           {start ? (
             <>
-              <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
               {data?.questionType == "coding" ? (
-                <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />
+                <div className='codingMainBox'>
+              <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question)}}></div>
+               <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage}/>
+               </div>
               ) : (
+                <>
+                <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question)}}></div>
                 <textarea
                   // onPaste={handlePaste}
                   // onCut={handleCutCopy}
@@ -194,6 +198,7 @@ const OngoingInterview = ({ start, handleStart }) => {
                   value={input}
                   onChange={(e) => handleChange(e)}
                 />
+                </>
               )}
               {data?.lastQuestion ? (
                 <button
@@ -312,10 +317,15 @@ export default OngoingInterview;
 const StyledInterview = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 94%;
   margin: 3rem auto;
-  margin-top: 8rem;
-  gap: 2rem;
+  gap: 1.5rem;
+
+  .codingMainBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
 
   .statusIcon {
     width: 1.5rem;
@@ -323,7 +333,6 @@ const StyledInterview = styled.div`
 
   .timer {
     width: 3rem;
-    // height: 3rem;
     background-color: var(--white);
     color: var(--color);
     border: 0.1rem solid var(--lightOrange);

@@ -19,12 +19,31 @@ import Saved from "../../commonComponents/infoDialog/Saved";
 import Created from "../../commonComponents/infoDialog/Created";
 import Error from "../../commonComponents/infoDialog/Error";
 import { checkJdExist } from "../../../functions/api/employers/checkJdExist";
+import { setJdTrigger } from "../../../slices/jdSlice";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 1rem;
   border-radius: 0.3rem;
+
+  .mainTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .helperText {
+    display: block;
+    font-size: 0.75rem;
+    margin: -0.5rem 0;
+    color: red;
+    font-weight: 400;
+
+  }
 
   .check {
     width: 100%;
@@ -60,9 +79,32 @@ const Form = styled.form`
   padding-bottom: 1rem;
   gap: 1rem;
 
-  #outlined-basic {
-    padding: 0.5rem 0.5rem;
-    background-color: #f6f6fb;
+  @media (max-width: 2000px) {
+    #outlined-basic {
+      padding: 0.75rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1700px) {
+    #outlined-basic {
+      padding: 0.85rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1350px) {
+    #outlined-basic {
+      padding: 0.95rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    #outlined-basic {
+      padding: 1rem 0.5rem;
+      background-color: #F6F6FB;
+    }
   }
 
   #demo-simple-select-label {
@@ -82,16 +124,6 @@ const Label = styled.label`
   background-color: var(--white);
 `;
 
-const Input = styled.input`
-  padding: 1rem;
-  border: 1px solid #ccc;
-  background-color: #f6f6fb;
-  outline-color: #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  width: 100%;
-`;
-
 const Button = styled.button`
   padding: 0.7rem 1.5rem;
   background-color: var(--lightOrange);
@@ -107,7 +139,7 @@ const Button = styled.button`
 
 function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopup, setSavedPopup, }) {
   console.log("==========>", array)
-  const [jdExist,setJdExist] = useState(false);
+  const [jdExist, setJdExist] = useState(false);
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
   const [formData, setFormData] = useState({
@@ -142,6 +174,9 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   const [initialReqs, setInitialReqs] = useState(0);
   const [reqsError, setReqsError] = useState(false);
 
+  const dispatch = useDispatch();
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);
+
 
   const handleLocationsChange = (_, newLocations) => {
     setSelectedLocations(newLocations);
@@ -171,7 +206,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   );
   useEffect(() => {
     if (array[0]) {
-      if(array[1]!='edit')checkJdPresent(array[0].jdId)
+      if (array[1] != 'edit') checkJdPresent(array[0].jdId)
       setFormData(array[0]);
       setInitialReqs(array[0].numOfReqs);
       setSelectedSkills(array[0].skills.split(", "));
@@ -229,12 +264,14 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
         if (resObj) {
           setCreatedPopup(true);
           console.log(resObj);
+          dispatch(setJdTrigger(!jdTrigger));
         }
       } else {
         const editRes = await editJd(formData, accessToken, clientCode);
         if (editRes) {
           setSavedPopup(true);
           console.log(editRes);
+          dispatch(setJdTrigger(!jdTrigger));
         }
       }
     } catch (error) {
@@ -250,27 +287,29 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   };
 
 
- 
 
 
-const checkJdPresent = async (jdId) => {
-  if(mode!='edit'){const res = await checkJdExist(accessToken,clientCode,jdId);
-  if(res.data){
-    setJdExist(true);
-  }}
-}
 
- const handleJdPresentError = async () => {
-   setJdExist(false);
- }
+  const checkJdPresent = async (jdId) => {
+    if (mode != 'edit') {
+      const res = await checkJdExist(accessToken, clientCode, jdId);
+      if (res.data) {
+        setJdExist(true);
+      }
+    }
+  }
+
+  const handleJdPresentError = async () => {
+    setJdExist(false);
+  }
 
   return (
     <Container>
-      <h3>JD Registration</h3>
+      <span className='mainTitle'>JD Registration</span>
       <Form onSubmit={handleSubmit}>
         <TextField
           id="outlined-basic"
-          label="JD ID (ABC_XX__)"
+          label="JD ID"
           variant="outlined"
           type="text"
           name="jdId"
@@ -280,7 +319,6 @@ const checkJdPresent = async (jdId) => {
           onFocus={handleJdPresentError}
           disabled={mode == "edit"}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -297,8 +335,8 @@ const checkJdPresent = async (jdId) => {
           }}
           required
         />
-     {jdExist && <p>JD already exists</p>}
-     
+        {jdExist && <span className='helperText'>JD already exists</span>}
+
         <TextField
           id="outlined-basic"
           label="Number of Reqs"
@@ -310,7 +348,6 @@ const checkJdPresent = async (jdId) => {
           onBlur={() => checkReqs()}
           onFocus={() => setReqsError(false)}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -328,7 +365,7 @@ const checkJdPresent = async (jdId) => {
           disabled={jdExist}
           required
         />
-        {reqsError && <p>Error Message:</p>}
+        {reqsError && <span>Error Message:</span>}
 
         <TextField
           id="outlined-basic"
@@ -339,7 +376,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.title}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -370,7 +406,7 @@ const checkJdPresent = async (jdId) => {
           ></textarea>
         </div>
 
-        <Stack spacing={3} sx={{ width: "100%" }}>
+        <Stack spacing={3} sx={{ width: "100%", }}>
           <Autocomplete
             multiple
             id="tags-standard"
@@ -383,7 +419,7 @@ const checkJdPresent = async (jdId) => {
               <TextField
                 {...params}
                 label="Skills"
-                sx={{ backgroundColor: "#F6F6FB" }}
+                sx={{ backgroundColor: "#F6F6FB", }}
                 disabled={jdExist}
               />
             )}
@@ -399,7 +435,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.bu}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -426,7 +461,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.exp}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -459,7 +493,7 @@ const checkJdPresent = async (jdId) => {
                 label="Location"
                 sx={{ backgroundColor: "#F6F6FB" }}
                 disabled={jdExist}
-                
+
               />
             )}
             disabled={jdExist}
@@ -475,7 +509,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.certification}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -502,7 +535,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.ctc}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -529,7 +561,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.keywords}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -556,7 +587,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.hiringManager}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -583,7 +613,6 @@ const checkJdPresent = async (jdId) => {
           value={formData.recruiter}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
-          size="small"
           inputProps={{
             sx: {
               color: "#626264",
@@ -600,11 +629,6 @@ const checkJdPresent = async (jdId) => {
           }}
           disabled={jdExist}
         />
-
-        {/* <div className='fileInputBox'>
-          <Label>Job Description</Label>
-          <textarea name='jobSummary' value={formData.jobSummary} onChange={handleChange} rows={5}></textarea>
-        </div> */}
 
         <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
           <InputLabel id="demo-simple-select-label">Worker Type</InputLabel>
@@ -790,7 +814,7 @@ const checkJdPresent = async (jdId) => {
           </Select>
         </FormControl>
 
-        <Button type="submit"  disabled={jdExist}>
+        <Button type="submit" disabled={jdExist}>
           {mode == "create" ? "Submit" : "Save Changes"}
         </Button>
       </Form>

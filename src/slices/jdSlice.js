@@ -5,12 +5,12 @@ import { getJdsForMatching } from "../functions/api/employers/match/getJdsForMat
 
 
 
-export const getAvailableJds = createAsyncThunk('jd/getJds', async ({accessToken,clientCode,page,size}) => {
-    const response = await getJds(accessToken, clientCode,page=1,size=100);
+export const getAvailableJds = createAsyncThunk('jd/getJds', async ({ accessToken, clientCode, page, size }) => {
+    const response = await getJds(accessToken, clientCode, page = 1, size = 100);
     return response.data;
 })
 
-export const getActiveJds = createAsyncThunk('jd/getActiveJds', async ({accessToken,clientCode}) => {
+export const getActiveJds = createAsyncThunk('jd/getActiveJds', async ({ accessToken, clientCode }) => {
     const response = await getJdsForMatching(accessToken, clientCode);
     return response.data;
 })
@@ -20,6 +20,7 @@ const initialState = {
     availableJds: null,
     cloneSpecificData: null,
     activeJds: null,
+    JdTrigger: false,  // New state added
     status: 'idle',
     error: null,
 }
@@ -28,15 +29,19 @@ const jdSlice = createSlice({
     name: 'jd',
     initialState,
     reducers: {
-           },
-    
+        setJdTrigger: (state, action) => {
+            state.JdTrigger = action.payload;
+        },
+    },
+
     extraReducers: (builder) => {
         builder.addCase(getAvailableJds.pending, (state) => {
             state.status = 'loading';
         }).addCase(getAvailableJds.fulfilled, (state, action) => {
             state.availableJds = action.payload.data;
             state.cloneSpecificData = action.payload.data.map((item) => {
-                return {jdId: item.jdId,
+                return {
+                    jdId: item.jdId,
                     numOfReqs: item.reqNumber,
                     title: item.title,
                     description: item.description,
@@ -74,6 +79,8 @@ const jdSlice = createSlice({
         })
     }
 });
+
+export const { setJdTrigger } = jdSlice.actions;
 export default jdSlice.reducer;
 
 

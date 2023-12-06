@@ -12,9 +12,32 @@ const Container = styled.div`
   padding: 1rem;
 
 
-  #outlined-basic {
-    padding: 0.5rem 0.5rem;
-    background-color: #F6F6FB;
+  @media (max-width: 2000px) {
+    #outlined-basic {
+      padding: 0.75rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1700px) {
+    #outlined-basic {
+      padding: 0.85rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1350px) {
+    #outlined-basic {
+      padding: 0.95rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    #outlined-basic {
+      padding: 1rem 0.5rem;
+      background-color: #F6F6FB;
+    }
   }
 
   .textAreaBox {
@@ -185,7 +208,6 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
           name="role"
           value={formData.role}
           onChange={handleChange}
-          size='small'
           inputProps={{
             sx: {
               color: '#626264',
@@ -208,7 +230,6 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
           name="tag"
           value={formData.tag}
           onChange={handleChange}
-          size='small'
           inputProps={{
             sx: {
               color: '#626264',
@@ -281,7 +302,6 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
                   type='text'
                   value={choice}
                   onChange={(e) => handleChoiceChange(e, index)}
-                  size='small'
                   inputProps={{
                     sx: {
                       color: '#626264',
@@ -297,6 +317,7 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
                     },
                   }}
                   required
+                  fullWidth
                 />
               </div>
             ))}
@@ -306,7 +327,6 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
               name="correctAnswer"
               value={formData.correctAnswer}
               onChange={handleChange}
-              size='small'
               inputProps={{
                 sx: {
                   color: '#626264',

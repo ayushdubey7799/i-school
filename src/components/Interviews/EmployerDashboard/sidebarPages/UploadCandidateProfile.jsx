@@ -85,7 +85,7 @@ const UploadCandidateProfile = () => {
           required
         />
         <span>Select Folder or Zip File</span>
-        <button className='registerBtn'>Upload</button>
+        <button className='registerBtn' type='submit'>Upload</button>
       </form>
       
     </Box>

@@ -63,7 +63,6 @@ export default function Billing() {
   const handleExport = () => {
     console.log('Exported');
     handleExportClose();
-    toast.success('Exported Successfully');
   }
 
   return (

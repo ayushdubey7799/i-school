@@ -26,9 +26,32 @@ const Container = styled.div`
     font-size: 0.6rem;
   }
   
-  #outlined-basic {
-    padding: 0.5rem 0.5rem;
-    background-color: #F6F6FB;
+  @media (max-width: 2000px) {
+    #outlined-basic {
+      padding: 0.75rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1700px) {
+    #outlined-basic {
+      padding: 0.85rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1350px) {
+    #outlined-basic {
+      padding: 0.95rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    #outlined-basic {
+      padding: 1rem 0.5rem;
+      background-color: #F6F6FB;
+    }
   }
 
 //   #demo-simple-select-label {
@@ -95,7 +118,6 @@ function ManageUserForm({ array, handleClose }) {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    size='small'
                     errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
                     validators={['required', 'minStringLength:3', 'maxStringLength:29']}
                     fullWidth
@@ -121,7 +143,6 @@ function ManageUserForm({ array, handleClose }) {
                     value={formData.email}
                     onChange={handleChange}
                     disabled={mode == "edit"}
-                    size='small'
                     errorMessages={["This field is required", 'Email is not valid']}
                     validators={['required', 'isEmail']}
                     fullWidth
@@ -147,7 +168,6 @@ function ManageUserForm({ array, handleClose }) {
                     value={formData.contact}
                     onChange={handleChange}
                     disabled={mode == "edit"}
-                    size='small'
                     errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
                     validators={['required', 'isNumber', 'minStringLength:10']}
                     fullWidth
@@ -193,7 +213,7 @@ function ManageUserForm({ array, handleClose }) {
                             },
                         }}
                         sx={{
-                            padding: '0rem 0 0.3rem 0',
+                            padding: '0rem 0 0.6rem 0',
                         }}
                     >
                         <MenuItem value="Admin">Admin</MenuItem>
@@ -211,7 +231,6 @@ function ManageUserForm({ array, handleClose }) {
                             name="agencyName"
                             value={formData.agencyName}
                             onChange={handleChange}
-                            size='small'
                             errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
                             validators={['required', 'minStringLength:3', 'maxStringLength:29']}
                             fullWidth
@@ -235,7 +254,6 @@ function ManageUserForm({ array, handleClose }) {
                             name="agencyContact"
                             value={formData.agencyContact}
                             onChange={handleChange}
-                            size='small'
                             fullWidth
                             errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
                             validators={['required', 'isNumber', 'minStringLength:10']}

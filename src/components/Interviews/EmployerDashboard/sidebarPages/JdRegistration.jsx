@@ -27,7 +27,7 @@ import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import ReqModalDetails from "../ReqModalDetails";
 import { useDispatch } from "react-redux";
-import { getAvailableJds } from "../../../../slices/jdSlice";
+import { getAvailableJds, setJdTrigger } from "../../../../slices/jdSlice";
 import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import JdsDetails from "./JdsDetails";
 import Error from "../../../commonComponents/infoDialog/Error";
@@ -45,6 +45,8 @@ function Row(props) {
   const clientCode = useSelector(
     (state) => state.auth.userData.user.clientCode
   );
+  const dispatch = useDispatch();
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger); 
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
@@ -93,6 +95,7 @@ function Row(props) {
       // Check if the request was successful
       if (res) {
         setDeletePopup(true);
+        dispatch(setJdTrigger(!jdTrigger));
       }
     } catch (error) {
       // Handle network errors or unexpected issues
@@ -322,6 +325,11 @@ const JdRegistration = () => {
     (state) => state?.auth?.userData?.user?.clientCode
   );
   const testingData = useSelector((state) => state?.jd?.availableJds);
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);  
+
+
+  console.log('Shoot', jdTrigger)
+
   const [total, setTotal] = useState(0);
 
   const [page, setPage] = useState(1);
@@ -350,8 +358,9 @@ const JdRegistration = () => {
       }
     }
     getData();
-  }, [page, size]);
+  }, [page, size, jdTrigger, dispatch]);
 
+  console.log('Shot', jdTrigger)
 
   const handleSearch = () => { };
 
