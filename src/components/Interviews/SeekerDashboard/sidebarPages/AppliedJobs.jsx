@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import ProfileFilter from '../seekerCommonComponents/ProfileFilter'
 import JobSearchBar from './JobSearchBar'
-import RecommendedJobsList from './RecommendedJobsList'
+import AppliedJobsList from './AppliedJobsList'
 
 
-const RecommendedJobs = () => {
+const AppliedJobs = () => {
     const [exp, setExp] = useState();
     const [selectedLocations, setSelectedLocations] = useState([]);
     const [selectedSkills, setSelectedSkills] = useState([]);
@@ -17,13 +17,13 @@ const RecommendedJobs = () => {
                 <ProfileFilter />
             </div>
             <InnerBox>
-                <RecommendedJobsList />
+                <AppliedJobsList />
             </InnerBox>
         </MainBox>
     )
 }
 
-export default RecommendedJobs
+export default AppliedJobs
 
 const MainBox = styled.div`
 padding-bottom: 4rem;

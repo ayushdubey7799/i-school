@@ -1,19 +1,13 @@
 import React, { useState } from "react";
-import InterviewCard from "./InterviewCard";
 import { styled } from "styled-components";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router";
-import ScoreChart from "../commonComponents/ScoreChart";
 import searchBlack from '../../assets/icons/searchBlack.png'
 import ProgressBar from "../commonComponents/ProgressBar";
 
@@ -30,7 +24,7 @@ const Row = (props) => {
         sx={{ "& > *": { borderBottom: "unset" } }}
       >
         <TableCell component="th" scope="row" align='center'>
-          {row.jdId?row.jdId:"Mock"}
+          {row.jdId ? row.jdId : "Mock"}
         </TableCell>
         <TableCell component="th" scope="row" align='center'>
           {row.id.slice(0, 8)}
@@ -44,9 +38,6 @@ const Row = (props) => {
             <span style={{ fontSize: '0.7rem' }}>{row.score}/{row.maxScore}</span>
           </TableCell>
         }
-        {/* <TableCell component="th" scope="row" align='center'>
-          In top ... %
-        </TableCell> */}
         {row.status == 'COMPLETED' &&
           <TableCell component="th" scope="row" align="center">
             <button onClick={() => navigate(`/score/${row.id}`)} className="btn">Get Details</button>
@@ -58,11 +49,6 @@ const Row = (props) => {
 }
 
 const InterviewList = ({ filteredData }) => {
-  const [searchParams, setSearchParams] = useState('');
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
 
 
   if (!filteredData?.data?.data?.length) {
@@ -91,7 +77,6 @@ const InterviewList = ({ filteredData }) => {
               <TableCell align='center'>Test ID</TableCell>
               <TableCell align='center'>Date of Interview</TableCell>
               <TableCell align='center'>Score</TableCell>
-              {/* <TableCell align='center'>Ranking</TableCell> */}
               <TableCell align="center">Details</TableCell>
             </TableRow>
           </TableHead>

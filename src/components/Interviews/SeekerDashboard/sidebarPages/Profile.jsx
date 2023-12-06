@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BasicDetails from '../BasicDetails';
+import BasicDetails from '../profileForms/BasicDetails';
 import ModalHOC from '../ModalHOC';
-import KeySkills from '../Keyskills';
-import Education from '../Education';
-import Projects from '../Projects';
-import ProfessionalInfo from '../ProfessionalInfo';
+import KeySkills from '../profileForms/Keyskills';
+import Education from '../profileForms/Education';
+import Projects from '../profileForms/Projects';
+import ProfessionalInfo from '../profileForms/ProfessionalInfo';
 import editIcon from '../../../../assets/icons/edit.png'
 import uploadIcon from '../../../../assets/icons/upload.png'
 import browseIcon from '../../../../assets/icons/browse.png'

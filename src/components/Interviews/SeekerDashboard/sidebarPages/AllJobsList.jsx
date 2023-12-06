@@ -25,6 +25,7 @@ function Row(props) {
     right: false,
   });
 
+  // Open and close drawer for job details view.
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -71,7 +72,7 @@ function Row(props) {
 }
 
 
-const FilteredJobs = () => {
+const AllJobsList = () => {
 
   return (
     <Container1>
@@ -103,7 +104,7 @@ const FilteredJobs = () => {
   );
 };
 
-export default FilteredJobs;
+export default AllJobsList;
 
 
 const StyledBox = styled.div`

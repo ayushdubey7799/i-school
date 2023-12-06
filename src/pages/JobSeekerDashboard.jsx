@@ -1,41 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import JobSeekerSidebar from "../components/Interviews/SeekerDashboard/jobSeekerSidebar";
 import Metrics from "../components/Interviews/SeekerDashboard/Metrics";
-import Profile from "../components/Interviews/SeekerDashboard/sidebarPages/Profile";
-import JobSearchBar from "../components/Interviews/SeekerDashboard/sidebarPages/JobSearchBar";
 import JobSeekerHeader from "../components/commonComponents/JobSeekerHeader";
-import JobApplication from "../components/Interviews/SeekerDashboard/sidebarPages/JobApplication";
 import CreateResume from "../components/Interviews/SeekerDashboard/sidebarPages/CreateResume";
 import EnhanceResume from "../components/Interviews/SeekerDashboard/sidebarPages/EnhanceResume";
 import Subscription from "../components/Interviews/SeekerDashboard/sidebarPages/Subscription";
 import Inbox from "../components/Interviews/SeekerDashboard/sidebarPages/Inbox";
 import CallSupport from "../components/Interviews/SeekerDashboard/sidebarPages/CallSupport";
-import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/RecommendedJobs";
-import InterviewTabs from "../components/Interviews/InterviewTabs";
-import SavedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/SavedJobs";
 import ProfileNew from "../components/Interviews/SeekerDashboard/sidebarPages/ProfileNew";
 import ConfigureDash from "../components/Interviews/SeekerDashboard/sidebarPages/ConfigureDash";
+import AllJobs from "../components/Interviews/SeekerDashboard/sidebarPages/AllJobs";
+import AppliedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/AppliedJobs";
+import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/RecommendedJobs";
+import SavedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/SavedJobs";
 
-
-const Verification = () => <div>Verification Content</div>;
-const PracticeInterview = () => <div>Practice Interview Content</div>;
 
 const JobSeekerDashboard = () => {
   const navigate = useNavigate();
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
-
-  const [openNewInterviewModal, setOpenNewInterviewModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   console.log(accessToken,clientCode);
-  //   if(!accessToken)navigate('/login');
-  //   if(clientCode.toLowerCase() != 'intelliview')navigate('/access-denied');
-  // }, []);
 
   const [currentItem, setCurrentItem] = useState('dashboard');
 
@@ -50,9 +36,8 @@ const JobSeekerDashboard = () => {
           }
 
           {currentItem === "configure-dashboard" && <ConfigureDash />}
-          {currentItem === 'job-search' && <JobSearchBar />}
-          {/* {currentItem === 'interview-dashboard' && <InterviewTabs />} */}
-          {currentItem === 'applied-jobs' && <JobApplication />}
+          {currentItem === 'job-search' && <AllJobs />}
+          {currentItem === 'applied-jobs' && <AppliedJobs />}
           {currentItem === 'recommended-jobs' && <RecommendedJobs />}
           {currentItem === 'saved-jobs' && <SavedJobs />}
           {currentItem === 'create-resume' && <CreateResume />}

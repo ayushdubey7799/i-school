@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
-import Content from "../components/Interviews/CurrentInterview/Content";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import { IconButton, Input } from "@mui/material";
-import MyDrawer from "../components/Interviews/Drawer";
 import { styled } from "styled-components";
 import { createInterview } from "../functions/api/interview/createInterview";
 import { updateStatus } from "../functions/api/interview/updateStatus";
@@ -30,7 +26,6 @@ const OngoingInterview = ({ start, handleStart }) => {
   const { interviewId } = useParams();
   const [data, setData] = useState(null);
   const [id, setId] = useState(1);
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [scoreModal, setScoreModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
@@ -40,8 +35,8 @@ const OngoingInterview = ({ start, handleStart }) => {
   const [language, setLanguage] = useState("javascript");
 
   const navigate = useNavigate();
-  
-  ////////////////////////////////////////////////// TIMER CODE
+
+  // TIMER CODE
   const initialMinutes = 60;
   const [minutes, setMinutes] = useState(initialMinutes);
   const [seconds, setSeconds] = useState(0);
@@ -84,7 +79,7 @@ const OngoingInterview = ({ start, handleStart }) => {
     setMinutes(initialMinutes);
     setSeconds(0);
   };
-  /////////////////////////////////////////////// TIMER CODE ENDS
+  //TIMER CODE ENDS
   useEffect(() => {
     if (!accessToken) navigate("/login");
   }, []);
@@ -187,7 +182,6 @@ const OngoingInterview = ({ start, handleStart }) => {
 
           {start ? (
             <>
-              
               {data?.questionType == "coding" ? (
                 <div className='codingMainBox'>
               <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question)}}></div>
@@ -242,23 +236,23 @@ const OngoingInterview = ({ start, handleStart }) => {
                             <AudioBox>
                               <div className="btnImgBox">
                                 <div className="btn1">
-                                <img
-                                  onClick={startRecording}
-                                  className="btnImg"
-                                  src={startRecBtn}
-                                />
-                                <span className="btn1Text">Start recording your answer</span>
+                                  <img
+                                    onClick={startRecording}
+                                    className="btnImg"
+                                    src={startRecBtn}
+                                  />
+                                  <span className="btn1Text">Start recording your answer</span>
                                 </div>
-                                
+
                                 <div className="btn2">
-                                <img
-                                  onClick={stopRecording}
-                                  className="btnImg"
-                                  src={stopRecBtn}
-                                />
-                                <span className="btn2Text">Stop recording</span>
+                                  <img
+                                    onClick={stopRecording}
+                                    className="btnImg"
+                                    src={stopRecBtn}
+                                  />
+                                  <span className="btn2Text">Stop recording</span>
                                 </div>
-                                
+
                               </div>
                               <audio src={mediaBlobUrl} controls />
                               <span id="status1">
