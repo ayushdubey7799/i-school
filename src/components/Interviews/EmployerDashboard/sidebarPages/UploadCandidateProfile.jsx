@@ -116,14 +116,16 @@ const Box = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     color: var(--white);
-    font-size: 1rem;
-    margin-top: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    font-family: Quicksand, sans-serif;
   }
 
   .title {
     margin-bottom: 2rem;
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
 
   }
 
@@ -135,12 +137,15 @@ const Box = styled.div`
     width: 100%;
     gap: 1rem;
     margin-top: 0rem;
+
+    span {
+      font-size: 0.8rem;
+    }
   }
 `;
 
 
 const Label = styled.label`
-  font-weight: 600;
   margin: 0.7rem 1rem;
   display: flex;
   align-items: center;
@@ -153,10 +158,7 @@ const Label = styled.label`
   
   span {
     color: var(--color);
-    
+    font-weight: 400;
+    font-size: 0.8rem;
   }
-`;
-
-const FileInput = styled.input`
-  margin-bottom: 0rem;
 `;

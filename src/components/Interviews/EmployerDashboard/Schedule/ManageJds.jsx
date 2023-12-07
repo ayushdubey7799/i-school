@@ -17,6 +17,7 @@ import styled from "styled-components";
 import Match from "./Match";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
+import TableSearchBar from "../commonComponents/TableSearchBar";
 
 function Row(props) {
   const { row, isSelected, onToggle, index } = props;
@@ -26,7 +27,7 @@ function Row(props) {
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? 'colored' : ''} ${isSelected ? "selected" : ''}`}>
-        <TableCell>
+        <TableCell className="tableCell">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -37,31 +38,31 @@ function Row(props) {
           >
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        </TableCell >
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.jdId}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.reqNumber}
-        </TableCell>{" "}
-        <TableCell component="th" scope="row" align="center" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+        </TableCell >{" "}
+        <TableCell component="th" scope="row" align="center" style={{ display: 'flex', justifyContent: 'center', width: '100%' }} className="tableCell">
           <Match jdId={row.jdId} count={row.matchCount} />
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.createdAt?.slice(0, 10)}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.recruiter}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.hiringManager}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           <Link to={`/schedule/matches/${row.jdId}`} className="btn">View Profile</Link>
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5} className="tableCell">
           <Collapse in={row.open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
@@ -99,6 +100,7 @@ function Row(props) {
 export default function ManageJds({ rows }) {
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   const navigate = useNavigate();
   const [total, setTotal] = useState(0);
@@ -152,30 +154,23 @@ export default function ManageJds({ rows }) {
     <StyledBox>
       <TableContainer component={Paper} className="tableBox">
         <span className='mainTitle'>
-          <span>Active Job Descriptions</span>
+          <span className="title">Active Job Descriptions</span>
           <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
         </span>
           <SearchBarContainer>
-            <div className="skillBox">
-              <img src={searchBlack} />
-              <input
-                className="skillInput"
-                type="text"
-                placeholder="Search"
-              />
-            </div>
+            <TableSearchBar value={searchValue} setValue={setSearchValue}/>
           </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell />
-              <TableCell align="center">JD ID</TableCell>
-              <TableCell align="center">Req ID</TableCell>
-              <TableCell align="center">No of Profiles available</TableCell>
-              <TableCell align="center">Date of Creation</TableCell>
-              <TableCell align="center">Recruiter</TableCell>
-              <TableCell align="center">Hiring Manager</TableCell>
-              <TableCell align="center">View Profiles</TableCell>
+              <TableCell className="tableCell"/>
+              <TableCell align="center" className="tableCell">JD ID</TableCell>
+              <TableCell align="center" className="tableCell">Req ID</TableCell>
+              <TableCell align="center" className="tableCell">No of Profiles available</TableCell>
+              <TableCell align="center" className="tableCell">Date of Creation</TableCell>
+              <TableCell align="center" className="tableCell">Recruiter</TableCell>
+              <TableCell align="center" className="tableCell">Hiring Manager</TableCell>
+              <TableCell align="center" className="tableCell">View Profiles</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
@@ -208,6 +203,11 @@ const StyledBox = styled.div`
     background-color: #ececec;
   }
 
+  .title {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
   .paginationBox {
     display: flex;
     justify-content: end;
@@ -217,7 +217,7 @@ const StyledBox = styled.div`
   
 
   .mainTitle {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     margin: 1rem 0 1rem 3rem;
     width: calc(98% - 3rem);
@@ -244,13 +244,16 @@ const StyledBox = styled.div`
     background-color: var(--lightOrange);
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 0.3rem 0.2rem;
     border: none;
     color: var(--white);
     font-size: 0.9rem;
+    font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
+    font-family: Quicksand, sans-serif;
   }
 
   .selected {
@@ -261,10 +264,25 @@ const StyledBox = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
   }
 
   
@@ -280,7 +298,8 @@ const Button = styled.button`
   cursor: pointer;
   align-self: center;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: Quicksand, sans-serif;
 `
 
 
@@ -289,39 +308,11 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
+  margin: 0.5rem auto;
   height: 3rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
 
 `

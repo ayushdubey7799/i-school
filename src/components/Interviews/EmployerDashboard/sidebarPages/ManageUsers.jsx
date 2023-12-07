@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 import { data as users } from "../../../../utils/contantData";
 
 import unVisible from "../../../../assets/icons/unVisible.png";
@@ -19,7 +19,7 @@ import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import ManageUserForm from "../ManageUserForm";
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, rowsLength, index } = props;
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
@@ -77,14 +77,14 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           ...
         </TableCell>{" "}
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">
-          <BoxRow>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">
+          <BoxRow isLast={index >= rowsLength - 2}>
             <img
               src={threeDot}
               style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
@@ -123,6 +123,7 @@ function Row(props) {
 export default function ManageUsers() {
   const [openBasic, setOpenBasic] = useState(false);
 
+
   return (
     <StyledDiv>
       <TableContainer component={Paper} className="tableBox">
@@ -138,16 +139,16 @@ export default function ManageUsers() {
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Contact</TableCell>
-              <TableCell align="center">Role</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Email</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Role</TableCell>
+              <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
             {users?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} />
+              <Row key={row.id} row={row} rowsLength={users.length} index={index} />
             ))}
           </TableBody>
         </Table>
@@ -175,8 +176,8 @@ const StyledDiv = styled.div`
 
     .title {
       padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
 
@@ -210,85 +211,30 @@ const StyledDiv = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
   }
 
-  .btn {
-    padding: 0.5rem 1rem;
-    margin-top: 3rem;
-    background-color: var(--lightOrange);
-    border: none;
-    color: var(--white);
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
-  }
 
   .checkBox {
     cursor: pointer;
-  }
-`;
-
-const SearchBarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 96%;
-  margin: 1rem auto 0.5rem auto;
-  height: 3rem;
-  background-color: var(--white);
-  border-radius: 0.5rem;
-  padding: 0rem 1rem;
-  gap: 1rem;
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-    flex-grow: 1;
-    border: none;
-    height: 1rem;
-    width: 50%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    background-color: transparent;
-    outline: none;
-  }
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.8rem;
-    width: 50%;
-    outline: none;
-
-    option {
-      font-size: 0.8rem;
-      font-weight: 400;
-    }
   }
 `;
 
@@ -313,6 +259,13 @@ const BoxRow = styled.div`
   font-size: 0.7rem;
   min-width: 10rem;
   justify-content: start;
+
+  ${(props) =>
+    props.isLast &&
+    css`
+      bottom: 1.4rem;
+      right: 10%;
+    `}
 }
 
 
@@ -356,9 +309,10 @@ const EditButton = styled.button`
   cursor: pointer;
   color: var(--white);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   margin-right: 0.6rem;
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
-
+  font-family: Quicksand, sans-serif;
 `;

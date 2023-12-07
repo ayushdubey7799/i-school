@@ -15,6 +15,13 @@ const Container = styled.div`
   border-radius: 5px;
   background-color: var(--white);
 
+  .title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
   form {
     display: flex;
   flex-direction: column;
@@ -30,6 +37,7 @@ const Container = styled.div`
     #outlined-basic {
       padding: 0.75rem 0.5rem;
       background-color: #F6F6FB;
+      font-family: Quicksand, sans-serif;
     }
   }
 
@@ -37,6 +45,7 @@ const Container = styled.div`
     #outlined-basic {
       padding: 0.85rem 0.5rem;
       background-color: #F6F6FB;
+      font-family: Quicksand, sans-serif;
     }
   }
 
@@ -44,6 +53,7 @@ const Container = styled.div`
     #outlined-basic {
       padding: 0.95rem 0.5rem;
       background-color: #F6F6FB;
+      font-family: Quicksand, sans-serif;
     }
   }
 
@@ -51,12 +61,10 @@ const Container = styled.div`
     #outlined-basic {
       padding: 1rem 0.5rem;
       background-color: #F6F6FB;
+      font-family: Quicksand, sans-serif;
     }
   }
 
-//   #demo-simple-select-label {
-//     font-size: 0.8rem;
-//   }
   }
 `;
 
@@ -71,6 +79,9 @@ const Button = styled.button`
   border-radius: 0.3rem;
   cursor: pointer;
   align-self: center;
+  font-family: Quicksand, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
 `;
 
 function ManageUserForm({ array, handleClose }) {
@@ -109,7 +120,7 @@ function ManageUserForm({ array, handleClose }) {
 
     return (
         <Container>
-            <h3>User Registration</h3>
+            <span className='title'>User Registration</span>
 
             <ValidatorForm onSubmit={handleSubmit} instantFeedback={false}>
 

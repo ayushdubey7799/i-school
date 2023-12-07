@@ -11,6 +11,12 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 1rem;
 
+  .title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 1rem;
+  }
 
   @media (max-width: 2000px) {
     #outlined-basic {
@@ -78,7 +84,7 @@ const Textarea = styled.textarea`
   border-radius: 5px;
   box-sizing: border-box;
   outline-color: #1976d2;
-    background-color: #F6F6FB;
+  background-color: #F6F6FB;
 `;
 
 
@@ -89,7 +95,9 @@ const Button = styled.button`
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
+  font-size: 0.9rem;
   font-weight: 600;
+  font-family: Quicksand, sans-serif;
 `;
 
 
@@ -166,7 +174,7 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
 
   return (
     <Container>
-      <h3>{editingIndex === -1 ? 'Create' : 'Update' } Question Form</h3>
+      <span className='title'>{editingIndex === -1 ? 'Create' : 'Update' } Question Form</span>
       <Form onSubmit={editingIndex === -1 ? handleAddQuestion : handleUpdateQuestion}>
 
         <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>

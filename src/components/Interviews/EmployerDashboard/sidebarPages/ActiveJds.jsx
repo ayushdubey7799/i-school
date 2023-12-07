@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,11 +9,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useSelector } from 'react-redux';
 
-import { jds } from '../../../../utils/contantData';
 import editIcon from '../../../../assets/icons/edit.png'
 import deleteIcon from '../../../../assets/icons/delete.png'
-import searchIcon from '../../../../assets/icons/searchIcon.png'
-import searchBlack from '../../../../assets/icons/searchBlack.png'
 import threeDot from '../../../../assets/icons/threeDot.png'
 import shareIcon from '../../../../assets/icons/share.png'
 import shareWithEmp from '../../../../assets/icons/shareWithEmp.png'
@@ -30,7 +27,7 @@ import AgencyShareDialogContent from '../../../commonComponents/AgencyShareDialo
 import { deleteJd } from '../../../../functions/api/employers/deleteJd';
 import ModalHOC from '../../SeekerDashboard/ModalHOC';
 import JdForm from '../JdForm';
-import { getActiveJds } from '../../../../slices/jdSlice';
+import { getActiveJds, setJdTrigger } from '../../../../slices/jdSlice';
 import { useDispatch } from 'react-redux';
 import JdsDetails from './JdsDetails';
 import ReqModalDetails from '../ReqModalDetails';
@@ -39,13 +36,14 @@ import Error from '../../../commonComponents/infoDialog/Error';
 import { exportJd } from '../../../../functions/api/employers/exportJd';
 import { Pagination, PaginationSizeFilter } from '../../../commonComponents/Pagination';
 import Saved from '../../../commonComponents/infoDialog/Saved';
+import TableSearchBar from '../commonComponents/TableSearchBar';
 
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, rowsLength, index } = props;
 
   const dispatch = useDispatch();
-  const jdTrigger = useSelector((state) => state.jd.JdTrigger); 
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
@@ -82,7 +80,6 @@ function Row(props) {
       // Check if the request was successful
       if (res) {
         setDeletePopup(true);
-        dispatch(setJdTrigger(!jdTrigger));
       }
     } catch (error) {
       // Handle network errors or unexpected issues
@@ -181,7 +178,10 @@ function Row(props) {
       {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
       {deletePopup && (
         <Deleted
-          handleClose={handleDeletePopUpClose}
+          handleClose={() => {
+            handleDeletePopUpClose()
+            dispatch(setJdTrigger(!jdTrigger))
+          }}
           open={deletePopup}
           msg={`JD ID ${row.jdId} successfully deleted`}
         />
@@ -195,27 +195,27 @@ function Row(props) {
       )}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell component="th" scope="row" align='center'>
+        <TableCell component="th" scope="row" align='center' className="tableCell">
           {row.jdId}
         </TableCell>
-        <TableCell component="th" scope="row" align='center'>
+        <TableCell component="th" scope="row" align='center' className="tableCell">
           ...
         </TableCell>{" "}
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.createdAt?.slice(0, 10)}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.recruiter}
 
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.hiringManager}
         </TableCell>
         {/* <TableCell component="th" scope="row" align="center">
           ...
         </TableCell> */}
-        <TableCell component="th" scope="row" align="center">
-          <BoxRow>
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          <BoxRow isLast={index >= rowsLength - 2}>
             <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
               onClick={() => {
                 if (openDropdownIndex === index) {
@@ -252,8 +252,10 @@ const ActiveJds = () => {
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   // const jdData = useSelector(state => state?.jd?.activeJds);
-  const jdTrigger = useSelector((state) => state.jd.JdTrigger); 
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);
   const [total, setTotal] = useState(0);
+
+  const [searchValue, setSearchValue] = useState('');
 
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
@@ -294,7 +296,7 @@ const ActiveJds = () => {
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
   const handleExport = async (exportType) => {
     console.log('Exporting');
-    const res = await exportJd(exportType,accessToken,clientCode)
+    const res = await exportJd(exportType, accessToken, clientCode)
 
     handleExportClose();
     toast.success('Exported Successfully');
@@ -315,31 +317,24 @@ const ActiveJds = () => {
           </span>
           <div style={{ display: "flex" }}>
             <SearchBarContainer>
-              <div className="skillBox">
-                <img src={searchBlack} />
-                <input
-                  className="skillInput"
-                  type="text"
-                  placeholder="Search"
-                />
-              </div>
+              <TableSearchBar value={searchValue} setValue={setSearchValue} />
             </SearchBarContainer>
           </div>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align='center'>JD ID</TableCell>
-                <TableCell align='center'>Test ID</TableCell>
-                <TableCell align='center'>Active Since</TableCell>
-                <TableCell align='center'>Recruiter</TableCell>
-                <TableCell align='center'>Hiring Manager</TableCell>
-                {/* <TableCell align='center'>Comments</TableCell> */}
-                <TableCell align='center'>Actions</TableCell>
+                <TableCell align='center' className="tableCell">JD ID</TableCell>
+                <TableCell align='center' className="tableCell">Test ID</TableCell>
+                <TableCell align='center' className="tableCell">Active Since</TableCell>
+                <TableCell align='center' className="tableCell">Recruiter</TableCell>
+                <TableCell align='center' className="tableCell">Hiring Manager</TableCell>
+                {/* <TableCell align='center' className="tableCell">Comments</TableCell> */}
+                <TableCell align='center' className="tableCell">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
               {tableRows?.map((row, index) => (
-                <Row key={row.id} row={row} index={index} />
+                <Row key={row.id} row={row} rowsLength={tableRows.length} index={index} />
               ))}
             </TableBody>
           </Table>
@@ -390,8 +385,9 @@ const StyledBox = styled.div`
       
 
       .title {
-        font-size: 1.2rem;
-        font-weight: 700;
+        padding-left: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
       }
 
       .btn {
@@ -435,10 +431,12 @@ const StyledBox = styled.div`
     padding: 0.4rem 0.7rem;
     border: none;
     color: var(--white);
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
+    font-family: Quicksand, sans-serif;
   }
 
   .selected {
@@ -449,10 +447,25 @@ const StyledBox = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
+    
   }
 
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
   }
 
   
@@ -477,38 +490,11 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
-  height: 3rem;
+  margin: 0.5rem auto;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
 
 `
 
@@ -532,6 +518,13 @@ const BoxRow = styled.div`
   min-width: 10rem;
   justify-content: start;
   padding: 0.5rem 0.5rem;
+
+  ${(props) =>
+    props.isLast &&
+    css`
+      bottom: 1.4rem;
+      right: 10%;
+    `}
 }
 
 

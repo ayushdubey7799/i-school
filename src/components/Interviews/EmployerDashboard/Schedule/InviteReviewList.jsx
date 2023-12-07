@@ -22,13 +22,13 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.name ? row.name : "..."}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.email}
         </TableCell>
-        <TableCell align="center">
+        <TableCell align="center" className="tableCell">
           {row.contact ? row.contact : "..."}
         </TableCell>
         <TableCell
@@ -39,6 +39,7 @@ function Row(props) {
             justifyContent: "center",
             gap: "0.3rem",
           }}
+          className="tableCell"
         >
           <img src={eyeIcon} />
         </TableCell>
@@ -58,10 +59,10 @@ const InviteReviewList = () => {
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Contact</TableCell>
-              <TableCell align="center">Details</TableCell>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Email</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Details</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
@@ -111,23 +112,27 @@ const Container = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
   }
 
-  .btn {
-    padding: 0.5rem 1rem;
-    margin-top: 3rem;
-    background-color: var(--lightOrange);
-    border: none;
-    color: var(--white);
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
-  }
 
   .checkBox {
     cursor: pointer;

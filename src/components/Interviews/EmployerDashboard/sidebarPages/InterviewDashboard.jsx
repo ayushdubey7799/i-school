@@ -174,7 +174,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   gap: 0rem;
   width: 96%;
-  padding: 0 2.5%;
+  padding: 0 2%;
   margin: 1rem 0% 2rem 0%;
   align-items: center;
 `;

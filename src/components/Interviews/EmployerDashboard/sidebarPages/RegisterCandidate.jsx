@@ -44,16 +44,17 @@ const Component = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     color: var(--white);
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     margin-top: 1rem;
     align-self: center;
+    font-family: Quicksand, sans-serif;
   }
 
   .title {
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   form {

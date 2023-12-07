@@ -551,13 +551,13 @@ input[type="number"] {
 
 
   .numberBox {
-    width: 50%;
+    width: 40%;
     height: 3rem;
     display: flex;
 
     .numberBtn {
       height: 100%;
-      width: 4rem;
+      width: 3.5rem;
       border: none;
       background-color: var(--lightOrange);
       color: var(--white);
@@ -568,22 +568,26 @@ input[type="number"] {
     .btn1 {
       border-top-left-radius: 0.4rem;
       border-bottom-left-radius: 0.4rem;
+      font-family: Quicksand, sans-serif;
     }
 
     .btn2 {
       border-top-right-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
+      font-family: Quicksand, sans-serif;
     }
 
     .numberInput {
       height: 100%;
-      width: 8rem;
-      padding: 0 3rem;
+      width: 6rem;
+      padding: 0 2.3rem;
       box-sizing: border-box;
-      font-size: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
       border: none;
       outline: none;
       background-color: #F0F0F0;
+      font-family: Quicksand, sans-serif;
     }
 
   }
@@ -601,6 +605,7 @@ input[type="number"] {
     top: 5rem;
     left: 1.5rem;
     color: var(--white);
+    font-family: Quicksand, sans-serif;
   }
 
   .prev:hover {
@@ -617,6 +622,7 @@ input[type="number"] {
     font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
+    font-family: Quicksand, sans-serif;
   }
 
   .smallTextBox {
@@ -632,10 +638,11 @@ input[type="number"] {
     align-items: start;
     width: 100%;
     gap: 2rem;
+
   }
   
   .smallText {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
 
   .mainBox {
@@ -727,8 +734,8 @@ input[type="number"] {
       }
 
       .title {
-        font-size: 1rem;
-        font-weight: 500;
+        font-size: 0.9rem;
+        font-weight: 600;
         position: absolute;
         top: -0.8rem;
         background-color: var(--white);
@@ -804,9 +811,10 @@ background-color: var(--lightOrange);
 color: var(--white);
 border: none;
 padding: 0.4rem 0.9rem;
-font-size: 1rem;
+font-size: 0.9rem;
 font-weight: 600;
 border-radius: 0.5rem;
 cursor: pointer;
+font-family: Quicksand, sans-serif;
 
 `

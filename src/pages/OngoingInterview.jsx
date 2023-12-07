@@ -184,20 +184,20 @@ const OngoingInterview = ({ start, handleStart }) => {
             <>
               {data?.questionType == "coding" ? (
                 <div className='codingMainBox'>
-              <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question)}}></div>
-               <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage}/>
-               </div>
+                  <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
+                  <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />
+                </div>
               ) : (
                 <>
-                <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question)}}></div>
-                <textarea
-                  // onPaste={handlePaste}
-                  // onCut={handleCutCopy}
-                  // onCopy={handleCutCopy}
-                  rows={10}
-                  value={input}
-                  onChange={(e) => handleChange(e)}
-                />
+                  <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
+                  <textarea
+                    // onPaste={handlePaste}
+                    // onCut={handleCutCopy}
+                    // onCopy={handleCutCopy}
+                    rows={10}
+                    value={input}
+                    onChange={(e) => handleChange(e)}
+                  />
                 </>
               )}
               {data?.lastQuestion ? (

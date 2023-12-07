@@ -7,13 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
-import ModalHOC from "../../SeekerDashboard/ModalHOC";
-import { data as interviews } from "../../../../utils/contantData";
-import searchBlack from '../../../../assets/icons/searchBlack.png'
 import { useSelector } from "react-redux";
 import { getActiveJds } from "../../../../slices/jdSlice";
 import { useDispatch } from "react-redux";
 import { getJdsForMatching } from "../../../../functions/api/employers/match/getJdsForMatching";
+import TableSearchBar from "../commonComponents/TableSearchBar";
 
 function Row(props) {
   const { row, index, setPage } = props;
@@ -22,15 +20,15 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">{row.jdId}</TableCell>
-        <TableCell align="center">{row.totalCandidates}</TableCell>
-        <TableCell align="center">{row.closed}</TableCell>
-        <TableCell align="center">{row.inProgress}</TableCell>
-        <TableCell align="center">{row.firstStage ? row.firstStage : '0'}</TableCell>
-        <TableCell align="center">{row.secondStage ? row.secondStage : '0'}</TableCell>
-        <TableCell align="center">{row.thirdStage ? row.thirdStage : '0'}</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell align="center" className="tableCell">{row.jdId}</TableCell>
+        <TableCell align="center" className="tableCell">{row.totalCandidates}</TableCell>
+        <TableCell align="center" className="tableCell">{row.closed}</TableCell>
+        <TableCell align="center" className="tableCell">{row.inProgress}</TableCell>
+        <TableCell align="center" className="tableCell">{row.firstStage ? row.firstStage : '0'}</TableCell>
+        <TableCell align="center" className="tableCell">{row.secondStage ? row.secondStage : '0'}</TableCell>
+        <TableCell align="center" className="tableCell">{row.thirdStage ? row.thirdStage : '0'}</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           <button className="btn" onClick={() => setPage({ index: 2, jdId: row.jdId })}>View Details</button>
         </TableCell>
       </TableRow>
@@ -40,12 +38,14 @@ function Row(props) {
 
 
 const EmpScheduledInterviews = ({ setPage }) => {
-  const [tableRows,setTableRows] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
   const [jdData, setJdData] = useState([]);
 
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
+
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     async function getData() {
@@ -82,7 +82,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
     console.log("Search");
   }
 
-console.log(tableRows);
+  console.log(tableRows);
   return (
     <Content>
       <TableContainer component={Paper} className="tableBox">
@@ -91,27 +91,20 @@ console.log(tableRows);
         </div>
 
         <SearchBarContainer>
-          <div className='skillBox'>
-            <img src={searchBlack} />
-            <input
-              className='skillInput'
-              type="text"
-              placeholder="Search"
-            />
-          </div>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">JD ID</TableCell>
-              <TableCell align="center">Total Candidates</TableCell>
-              <TableCell align="center">Closed</TableCell>
-              <TableCell align="center">In Progress</TableCell>
-              <TableCell align="center">First Round</TableCell>
-              <TableCell align="center">Second Round</TableCell>
-              <TableCell align="center">Third Round</TableCell>
-              <TableCell align="center">HR Round</TableCell>
-              <TableCell align="center">Details</TableCell>
+              <TableCell align="center" className="tableCell">JD ID</TableCell>
+              <TableCell align="center" className="tableCell">Total Candidates</TableCell>
+              <TableCell align="center" className="tableCell">Closed</TableCell>
+              <TableCell align="center" className="tableCell">In Progress</TableCell>
+              <TableCell align="center" className="tableCell">First Round</TableCell>
+              <TableCell align="center" className="tableCell">Second Round</TableCell>
+              <TableCell align="center" className="tableCell">Third Round</TableCell>
+              <TableCell align="center" className="tableCell">HR Round</TableCell>
+              <TableCell align="center" className="tableCell">Details</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
@@ -133,39 +126,11 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
-  height: 3rem;
+  margin: 0.5rem auto;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
-
 
 `
 
@@ -190,8 +155,8 @@ align-items: center;
 
   .title {
     padding-left: 1.2rem;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   .titleBox {
@@ -221,15 +186,30 @@ align-items: center;
 .tableHead {
   background-color: #d1fff0;
   width: 100%;
+
+  .tableCell {
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: Quicksand, sans-serif;
+    color: var(--color);
+  }
+  
 }
 
 .tableBody {
   width: 100%;
+
+  .tableCell {
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: Quicksand, sans-serif;
+    color: var(--color);
+  }
 }
 
 
 .btn {
-  padding: 0.3rem 0.2rem;
+  padding: 0.4rem 0.5rem;
   background-color: var(--lightOrange);
   border: none;
   color: var(--white);
@@ -237,7 +217,7 @@ align-items: center;
   font-weight: 500;
   border-radius: 0.5rem;
   cursor: pointer;
-  
+  font-family: Quicksand, sans-serif;
 }
 
 `

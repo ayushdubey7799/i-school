@@ -6,8 +6,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useSelector } from 'react-redux';
 
-const jds = ['jd1', 'jd2', 'jd3', 'jd4', 'jd5', 'jd6']
-
 const CloneJDForm = ({array}) => {
     const [selectedJd, setSelectedJd] = useState(null);
     const jdData = useSelector(state => state.jd.cloneSpecificData);
@@ -23,24 +21,29 @@ const CloneJDForm = ({array}) => {
     return (
         <Box>
             <span className='title'>Clone Existing JD</span>
+            <div className='box'>
             <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
-                <InputLabel id="demo-simple-select-label">All JDs</InputLabel>
+                <InputLabel id="demo-simple-select-label" sx={{fontStyle: 'Quicksand, sans-serif', fontSize: '0.9rem'}}>All JDs</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={selectedJd?.jdId}
                     label="All JDs"
                     onChange={(e) => setSelectedJd(e.target.value)}
+                    sx={{fontStyle: 'Quicksand, sans-serif', fontSize: '0.9rem'}}
                 >
                     {
                         jdData?.map((item, i) => (
-                            <MenuItem value={item}>{item?.jdId}</MenuItem>
+                            <MenuItem value={item} sx={{fontStyle: 'Quicksand, sans-serif', fontSize: '0.9rem'}}>{item?.jdId}</MenuItem>
                         ))
                     }
                 </Select>
             </FormControl>
 
-            <Button onClick={handleClone}>Clone JD</Button>
+            <div className='btnBox'>
+                <Button onClick={handleClone}>Clone JD</Button>
+                </div>
+            </div>
         </Box>
     )
 }
@@ -55,15 +58,29 @@ gap: 2rem;
 width: 100%;
 margin-top: 2rem;
 
-input {
+.box {
+    display: grid;
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    grid-template-columns: 3fr 2.5fr;
+
+    .btnBox {
+        display: flex;
+        width: 100%;
+        justify-content: end;
+        align-items: center;
+    }
+}
+
+input {
+    width: 50%;
 }
 
 .title {
     align-self: start;
-    font-size: 1.2rem;
-    font-weight: 700;
-
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 `
@@ -71,11 +88,13 @@ input {
 const Button = styled.button`
 background-color: var(--lightOrange);
 color: var(--white);
-padding: 0.4rem 0.9rem;
-font-size: 0.8rem;
+padding: 0.5rem 1rem;
+font-size: 0.9rem;
+font-weight: 600;
 border-radius: 0.3rem;
 border: none;
 cursor: pointer;
+font-family: Quicksand, sans-serif;
 
 
 `
