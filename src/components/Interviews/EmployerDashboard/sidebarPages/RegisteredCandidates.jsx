@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
-import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import deleteIcon from "../../../../assets/icons/delete.png";
 import searchBlack from "../../../../assets/icons/searchBlack.png";
 import visibleIcon from "../../../../assets/icons/visible.png";
@@ -17,14 +16,14 @@ import { useSelector } from "react-redux";
 import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
-import { toast } from "react-toastify";
 import { deleteCandidate } from "../../../../functions/api/resume/deleteCandidate";
 import Deleted from "../../../commonComponents/infoDialog/Deleted";
 import Error from "../../../commonComponents/infoDialog/Error";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
+import TableSearchBar from "../commonComponents/TableSearchBar";
 
 function Row(props) {
-  const { row, index, candidateTrigger ,setCandidateTrigger } = props;
+  const { row, index, candidateTrigger, setCandidateTrigger } = props;
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -51,7 +50,6 @@ function Row(props) {
     try {
       const res = await deleteCandidate(id, accessToken, clientCode);
       if (res) {
-        await setCandidateTrigger(!candidateTrigger);
         setDeletePopup(true);
       }
     } catch (error) {
@@ -121,7 +119,10 @@ function Row(props) {
       )}
       {deletePopup && (
         <Deleted
-          handleClose={handleDeletePopUpClose}
+          handleClose={() => {
+            handleDeletePopUpClose()
+            setCandidateTrigger(!candidateTrigger)
+          }}
           open={deletePopup}
           msg="Candidate successfully deleted"
         />
@@ -130,12 +131,12 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
-        <TableCell align="center">
+        <TableCell align="center" className="tableCell">
           {row.firstName ? row.firstName : "..."}
         </TableCell>
-        <TableCell align="center">{row.email ? row.email : "..."}</TableCell>
-        <TableCell align="center">{row.contact ? row.contact : "..."}</TableCell>
-        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0, 10) : "..."}</TableCell>
+        <TableCell align="center" className="tableCell">{row.email ? row.email : "..."}</TableCell>
+        <TableCell align="center" className="tableCell">{row.contact ? row.contact : "..."}</TableCell>
+        <TableCell align="center" className="tableCell">{row.createdAt ? row.createdAt.slice(0, 10) : "..."}</TableCell>
         {/* <TableCell align="center">{row.source ? row.source : "..."}</TableCell> */}
         {/* <TableCell align="center">
           <input
@@ -153,7 +154,7 @@ function Row(props) {
         <TableCell align="center">
           <input type="checkbox" className="checkBox" />
         </TableCell>*/}
-        <TableCell align="center">
+        <TableCell align="center" className="tableCell">
           <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
           <CommonDialog
             open={open}
@@ -226,6 +227,8 @@ export default function RegisteredCandidates({ setCurrentItem }) {
     (state) => state.auth.userData?.user?.clientCode
   );
 
+  const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
     const getCandidates = async () => {
       const res = await getProfiles(accessToken, clientCode);
@@ -249,26 +252,23 @@ export default function RegisteredCandidates({ setCurrentItem }) {
         </div>
 
         <SearchBarContainer>
-          <div className="skillBox">
-            <img src={searchBlack} />
-            <input className="skillInput" type="text" placeholder="Search" />
-          </div>
+          <TableSearchBar value={searchValue} setValue={setSearchValue}/>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Contact</TableCell>
-              <TableCell align="center">Date of Reg</TableCell>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Email</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Date of Reg</TableCell>
               {/* <TableCell align="center">Source</TableCell> */}
               {/* <TableCell align="center">Select</TableCell> */}
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
             {candidates?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger}/>
+              <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger} />
             ))}
           </TableBody>
         </Table>
@@ -296,8 +296,8 @@ const Content = styled.div`
 
     .title {
       padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
     .titleBox {
@@ -325,38 +325,31 @@ const Content = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
-  }
-
-  .btn {
-    padding: 0.5rem 1rem;
-    margin-top: 3rem;
-    background-color: var(--lightOrange);
-    border: none;
-    color: var(--white);
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
   }
 
   .checkBox {
     cursor: pointer;
   }
 
-  .resumeBtn {
-    background-color: var(--lightOrange);
-    padding: 0.4rem 0.7rem;
-    border: none;
-    color: var(--white);
-    font-size: 0.9rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    text-decoration: none;
-  }
 `;
 
 const SearchBarContainer = styled.div`
@@ -364,35 +357,11 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
+  margin: 0.5rem auto;
   height: 3rem;
   background-color: var(--white);
   border-radius: 0.5rem;
   padding: 0rem 1rem;
   gap: 1rem;
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-    flex-grow: 1;
-    border: none;
-    height: 1rem;
-    width: 50%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    background-color: transparent;
-    outline: none;
-  }
 `;
+

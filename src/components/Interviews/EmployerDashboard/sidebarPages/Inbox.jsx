@@ -41,7 +41,6 @@ const Inbox = () => {
           <input type="text" placeholder="Search" />
           <img src={searchIcon} />
         </div>
-        <img src={notificationIcon} className="notificationIcon" />
       </div>
       <div className="box2">
         <div className="left">
@@ -67,7 +66,7 @@ const Inbox = () => {
 
                 </div>
                 <div className="text">
-                  <b>{timeZoneConversion(notify.updatedAt)}</b>
+                  <span className="time">{timeZoneConversion(notify.updatedAt)}</span>
                 </div>
               </div>
               <span className="btn"> {notify.url ?
@@ -93,8 +92,6 @@ display: flex;
 flex-direction: column;
 gap: 2.5rem;
 margin-bottom: 3rem;
-
-
 
 
 
@@ -148,7 +145,7 @@ margin-bottom: 3rem;
 
 
         .title {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
@@ -196,7 +193,7 @@ margin-bottom: 1rem;
 
     .title {
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .text {

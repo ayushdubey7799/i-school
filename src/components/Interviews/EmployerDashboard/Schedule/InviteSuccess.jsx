@@ -9,7 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import eyeIcon from '../../../../assets/icons/visible.png'
-import { data as sentInvites } from '../../../../utils/contantData';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
@@ -22,10 +21,10 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? 'colored' : ''}`}
       >
-        <TableCell component="th" scope="row" align="center">{row.name?row.name:"..."}</TableCell>
-        <TableCell component="th" scope="row" align="center">{row.email}</TableCell>
-        <TableCell align="center">{row.contact?row.contact:"..."}</TableCell>
-        <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}>
+        <TableCell component="th" scope="row" align="center" className="tableCell">{row.name?row.name:"..."}</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">{row.email}</TableCell>
+        <TableCell align="center" className="tableCell">{row.contact?row.contact:"..."}</TableCell>
+        <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }} className="tableCell">
           <img src={eyeIcon} />
         </TableCell>
       </TableRow>
@@ -44,7 +43,7 @@ const InviteSuccess = () => {
 
       <Container>
         <span className='mainTitle'>
-          <span>Invitation Sent Successfully</span>
+          <span className='title'>Invitation Sent Successfully</span>
           <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
         </span>
 
@@ -52,10 +51,10 @@ const InviteSuccess = () => {
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Email</TableCell>
-                <TableCell align="center">Contact</TableCell>
-                <TableCell align="center">Details</TableCell>
+                <TableCell align="center" className="tableCell">Name</TableCell>
+                <TableCell align="center" className="tableCell">Email</TableCell>
+                <TableCell align="center" className="tableCell">Contact</TableCell>
+                <TableCell align="center" className="tableCell">Details</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -122,22 +121,25 @@ padding: 5rem 2% 2rem 2%;
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
-  }
-
-  .btn {
-    padding: 0.5rem 1rem;
-    margin-top: 3rem;
-    background-color: var(--lightOrange);
-    border: none;
-    color: var(--white);
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: Quicksand, sans-serif;
+      color: var(--color);
+    }
   }
 
   .checkBox {
@@ -160,6 +162,11 @@ padding: 5rem 2% 2rem 2%;
     display: flex;
     justify-content: space-between;
     gap: 27%;
+
+    .title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
 }
 
 
@@ -174,7 +181,8 @@ const Button = styled.button`
   cursor: pointer;
   align-self: center;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: Quicksand, sans-serif;
 `;
 
 

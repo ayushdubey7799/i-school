@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import closeIcon from '../../../assets/icons/closeIcon.png'
-
+import Backdrop from '@mui/material/Backdrop';
 
 export default function ModalHOC({
   openNewInterviewModal,
@@ -22,9 +22,14 @@ export default function ModalHOC({
 
   return (
     <Modal
-      open={openNewInterviewModal}
-      onClose={handleClose}
-      closeAfterTransition
+    open={openNewInterviewModal}
+    onClose={handleClose}
+    closeAfterTransition
+    BackdropComponent={Backdrop}
+    BackdropProps={{
+      invisible: true, // This will make the backdrop invisible
+      onClick: (event) => event.stopPropagation(), // Prevent closing on backdrop click
+    }}
     >
       <MainBox>
         <Btn onClick={handleClose}><img src={closeIcon} /></Btn>

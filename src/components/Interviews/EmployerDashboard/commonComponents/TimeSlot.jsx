@@ -109,8 +109,10 @@ width: 100%;
     outline-color: lightgrey;
     outline-width: 0.05rem;
     border-radius: 0.3rem;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     width: calc(100% - 3rem);
+    font-family: Quicksand, sans-serif;
 }
 
 .dropDown {
@@ -170,7 +172,7 @@ align-items: center;
 background-color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'transparent')};
 color: ${(props) => (props.isSelected ? 'var(--white)' : 'var(--color)')};
 cursor: pointer;
-font-size: 0.95rem;
+font-size: 0.9rem;
 font-weight: 500;
 padding: 0.5rem;
 border-radius: 0.3rem;
@@ -186,7 +188,7 @@ align-items: center;
 background-color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'transparent')};
 color: ${(props) => (props.isSelected ? 'var(--white)' : 'var(--color)')};
 cursor: pointer;
-font-size: 0.95rem;
+font-size: 0.9rem;
 font-weight: 500;
 padding: 0.5rem;
 border-radius: 0.3rem;
@@ -198,7 +200,7 @@ const AmPmSpan = styled.span`
 background-color: ${(props) => (props.isSelected ? 'var(--lightOrange)' : 'transparent')};
 color: ${(props) => (props.isSelected ? 'var(--white)' : 'var(--color)')};
 cursor: pointer;
-font-size: 0.95rem;
+font-size: 0.9rem;
 font-weight: 500;
 padding: 0.5rem;
 border-radius: 0.3rem;

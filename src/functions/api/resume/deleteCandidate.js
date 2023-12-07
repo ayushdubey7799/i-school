@@ -12,7 +12,7 @@ const config = {
 };
 
     try {
-        const response = await axios.get(`https://dev-api.intelliview.in/api/candidates/${id}`,config);
+        const response = await axios.delete(`https://dev-api.intelliview.in/api/candidates/${id}`,config);
         console.log('Data:', response.data);
         console.log("Status", response.status)
         return response.data;

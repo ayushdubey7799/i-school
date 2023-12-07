@@ -68,6 +68,7 @@ import EmployerDashboard2 from "./pages/EmployerDashboard2"
 import Invite2 from "./components/Interviews/EmployerDashboard2.jsx/Schedule/Invite2"
 import InviteSuccess2 from "./components/Interviews/EmployerDashboard2.jsx/Schedule/InviteSuccess2"
 import Login2 from "./pages/Login2"
+import CodingQueInterface from "./components/Interviews/SeekerDashboard/CodingQueInterface"
 
 
 const App = () => {
@@ -151,6 +152,7 @@ const App = () => {
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/trial" element={<Trial />} />
+          <Route path='/trial2' element={<CodingQueInterface/>} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

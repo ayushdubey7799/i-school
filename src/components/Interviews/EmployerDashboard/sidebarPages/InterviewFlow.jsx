@@ -6,9 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import styled from "styled-components";
-import { data as interviews } from "../../../../utils/contantData";
-import searchBlack from '../../../../assets/icons/searchBlack.png'
+import styled, { css } from 'styled-components';
 import actionDot from '../../../../assets/icons/threeDot.png'
 import moveNextRoundIcon from '../../../../assets/icons/moveNextRoundIcon.png'
 import putHoldIcon from '../../../../assets/icons/putOnHoldIcon.png'
@@ -18,8 +16,9 @@ import { useSelector } from "react-redux";
 import { addResumes } from "../../../../slices/invitationSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import TableSearchBar from "../commonComponents/TableSearchBar";
 function Row(props) {
-  const { row, index } = props;
+  const { row, rowsLength, index } = props;
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
@@ -35,8 +34,8 @@ function Row(props) {
   };
 
   const handleMove = () => {
-     dispatch(addResumes([row.resumeId,row.jdId]));
-     navigate(`/schedule/invite/${row.jdId}`);
+    dispatch(addResumes([row.resumeId, row.jdId]));
+    navigate(`/schedule/invite/${row.jdId}`);
   }
 
   useEffect(() => {
@@ -57,16 +56,16 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">{row.name}</TableCell>
-        <TableCell align="center">{row.contact}</TableCell>
-        <TableCell align="center">{row.jdId}</TableCell>
-        <TableCell align="center">{row.recruiter}</TableCell>
-        <TableCell align="center">{row.hiringManager}</TableCell>
-        <TableCell align="center">{row.round}</TableCell>
-        <TableCell align="center">{row.interviewName}</TableCell>
-        <TableCell align="center">{row.status}</TableCell>
-        <TableCell component="th" scope="row" align="center">
-          <BoxRow>
+        <TableCell align="center" className="tableCell">{row.name}</TableCell>
+        <TableCell align="center" className="tableCell">{row.contact}</TableCell>
+        <TableCell align="center" className="tableCell">{row.jdId}</TableCell>
+        <TableCell align="center" className="tableCell">{row.recruiter}</TableCell>
+        <TableCell align="center" className="tableCell">{row.hiringManager}</TableCell>
+        <TableCell align="center" className="tableCell">{row.round}</TableCell>
+        <TableCell align="center" className="tableCell">{row.interviewName}</TableCell>
+        <TableCell align="center" className="tableCell">{row.status}</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          <BoxRow isLast={index >= rowsLength - 2}>
             <img src={actionDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
               onClick={() => {
                 if (openDropdownIndex === index) {
@@ -93,39 +92,41 @@ function Row(props) {
 
 
 const InterviewFlow = ({ setPage }) => {
-  const [tableRows,setTableRows] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
   const [searchParams, setSearchParams] = useState('');
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
+  const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken,clientCode);
+      const res = await getAllTrackers(accessToken, clientCode);
       let array = res?.data?.data;
-     if(array){ 
-      const finalResult = array.reduce((acc,it) => {
-        let current = it.interview;
-        let jdInfoReq = {
-           name: current?.userName,
-           contact: current?.userContact,
-           jdId: it.jdId,
-           recruiter: current?.recruiter,
-           hiringManager: current?.hiringManager,
-           round: current?.stage,
-           interviewName: current?.interviewName,
-           status: current?.status,
-           resumeId: current.resumeId
-        }
-  
-        return [...acc,jdInfoReq];
-      },[]);
-    
-      setTableRows(finalResult);
-    }
+      if (array) {
+        const finalResult = array.reduce((acc, it) => {
+          let current = it.interview;
+          let jdInfoReq = {
+            name: current?.userName,
+            contact: current?.userContact,
+            jdId: it.jdId,
+            recruiter: current?.recruiter,
+            hiringManager: current?.hiringManager,
+            round: current?.stage,
+            interviewName: current?.interviewName,
+            status: current?.status,
+            resumeId: current.resumeId
+          }
+
+          return [...acc, jdInfoReq];
+        }, []);
+
+        setTableRows(finalResult);
+      }
 
     }
 
-   
+
 
     getData();
   }, [])
@@ -147,34 +148,25 @@ const InterviewFlow = ({ setPage }) => {
         </div>
 
         <SearchBarContainer>
-          <div className='skillBox'>
-            <img src={searchBlack} />
-            <input
-              className='skillInput'
-              type="text"
-              placeholder="Search"
-              value={searchParams}
-              onChange={handleSearchParams}
-            />
-          </div>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Contact</TableCell>
-              <TableCell align="center">JD ID</TableCell>
-              <TableCell align="center">Recruiter</TableCell>
-              <TableCell align="center">Hiring Manager</TableCell>
-              <TableCell align="center">Current Round</TableCell>
-              <TableCell align="center">Interview Name</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">JD ID</TableCell>
+              <TableCell align="center" className="tableCell">Recruiter</TableCell>
+              <TableCell align="center" className="tableCell">Hiring Manager</TableCell>
+              <TableCell align="center" className="tableCell">Current Round</TableCell>
+              <TableCell align="center" className="tableCell">Interview Name</TableCell>
+              <TableCell align="center" className="tableCell">Status</TableCell>
+              <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
             {tableRows?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} />
+              <Row key={row.id} rowsLength={tableRows.length} row={row} index={index} />
             ))}
           </TableBody>
         </Table>
@@ -192,40 +184,11 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
-  height: 3rem;
+  margin: 0.5rem auto;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
 
 `
 
@@ -250,8 +213,8 @@ align-items: center;
 
   .title {
     padding-left: 1.2rem;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   .titleBox {
@@ -292,24 +255,27 @@ align-items: center;
 .tableHead {
   background-color: #d1fff0;
   width: 100%;
+
+  .tableCell {
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: Quicksand, sans-serif;
+    color: var(--color);
+  }
+  
 }
 
 .tableBody {
   width: 100%;
+
+  .tableCell {
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: Quicksand, sans-serif;
+    color: var(--color);
+  }
 }
 
-
-.btn {
-  padding: 0.3rem 0.2rem;
-  background-color: var(--lightOrange);
-  border: none;
-  color: var(--white);
-  font-size: 0.8rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  
-}
 
 `
 
@@ -334,6 +300,13 @@ const BoxRow = styled.div`
   min-width: 13rem;
   justify-content: start;
   padding: 0.5rem 0.5rem;
+
+  ${(props) =>
+    props.isLast &&
+    css`
+      bottom: 1.4rem;
+      right: 10%;
+    `}s
 }
 
 
