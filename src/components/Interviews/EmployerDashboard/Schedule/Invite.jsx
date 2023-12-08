@@ -568,13 +568,13 @@ input[type="number"] {
     .btn1 {
       border-top-left-radius: 0.4rem;
       border-bottom-left-radius: 0.4rem;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
 
     .btn2 {
       border-top-right-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
 
     .numberInput {
@@ -587,7 +587,7 @@ input[type="number"] {
       border: none;
       outline: none;
       background-color: #F0F0F0;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
 
   }
@@ -605,7 +605,7 @@ input[type="number"] {
     top: 5rem;
     left: 1.5rem;
     color: var(--white);
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
   .prev:hover {
@@ -622,7 +622,7 @@ input[type="number"] {
     font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
   .smallTextBox {
@@ -815,6 +815,6 @@ font-size: 0.9rem;
 font-weight: 600;
 border-radius: 0.5rem;
 cursor: pointer;
-font-family: Quicksand, sans-serif;
+font-family: var(--font);
 
 `

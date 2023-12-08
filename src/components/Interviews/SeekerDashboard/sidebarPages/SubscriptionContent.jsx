@@ -100,20 +100,20 @@ justify-content: space-evenly;
 }
 
 .boxTitle {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
     align-self: center;
 }
 
 .boxSubTitle {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.8rem;
+    font-weight: 400;
     align-self: center;
 }
 
 
 .btn {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     background-color: var(--lightOrange);
     color: var(--white);
@@ -123,6 +123,7 @@ justify-content: space-evenly;
     cursor: pointer;
     margin-top: 0.5rem;
     align-self: center;
+    font-family: var(--font);
 }
 
 .btn:hover {

@@ -48,7 +48,7 @@ const Component = styled.div`
     font-weight: 600;
     margin-top: 1rem;
     align-self: center;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
   .title {

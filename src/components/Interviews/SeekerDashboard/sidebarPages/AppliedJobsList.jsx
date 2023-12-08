@@ -19,28 +19,28 @@ function Row(props) {
         <React.Fragment>
             <TableRow
                 sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell component="th" scope="row" align='center' className='logo'>
+                <TableCell component="th" scope="row" align='center' className='logo tableCell'>
                     <img src={row.companyLogo} />
                 </TableCell>
-                <TableCell component="th" scope="row" align='center' className='rowText'>
+                <TableCell component="th" scope="row" align='center' className='tableCell'>
                     {row.jobTitle}
                 </TableCell>{" "}
-                <TableCell component="th" scope="row" align="center" className='rowText'>
+                <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.companyName}
                 </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
+                <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.location}
                 </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
+                <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.appliedDate}
                 </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
+                <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.status}
                 </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
+                <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.matchPercentage}%
                 </TableCell>
-                <TableCell component="th" scope="row" align="center" className='rowText'>
+                <TableCell component="th" scope="row" align="center" className='tableCell'>
                     <Link to={`/attend/${row.jobId}`} className="btn">Attend</Link>
                 </TableCell>
             </TableRow>
@@ -70,14 +70,14 @@ const AppliedJobsList = () => {
                         <Table aria-label="collapsible table">
                             <TableHead className="tableHead">
                                 <TableRow>
-                                    <TableCell align='center'></TableCell>
-                                    <TableCell align='center'>Job Title</TableCell>
-                                    <TableCell align='center'>Company</TableCell>
-                                    <TableCell align='center'>Location</TableCell>
-                                    <TableCell align='center'>Applied Date</TableCell>
-                                    <TableCell align='center'>Status</TableCell>
-                                    <TableCell align='center'>% Match with Profile</TableCell>
-                                    <TableCell align='center'>Interview Link</TableCell>
+                                    <TableCell align='center' className='tableCell'></TableCell>
+                                    <TableCell align='center' className='tableCell'>Job Title</TableCell>
+                                    <TableCell align='center' className='tableCell'>Company</TableCell>
+                                    <TableCell align='center' className='tableCell'>Location</TableCell>
+                                    <TableCell align='center' className='tableCell'>Applied Date</TableCell>
+                                    <TableCell align='center' className='tableCell'>Status</TableCell>
+                                    <TableCell align='center' className='tableCell'>% Match with Profile</TableCell>
+                                    <TableCell align='center' className='tableCell'>Interview Link</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody className="tableBody">
@@ -115,9 +115,9 @@ const StyledBox = styled.div`
 
     .title {
         padding-left: 1.2rem;
-        line-height: 4rem;
-        font-size: 1.2rem;
-        font-weight: 700;
+        line-height: 3rem;
+        font-size: 0.9rem;
+        font-weight: 600;
       }
   }
 
@@ -131,26 +131,39 @@ const StyledBox = styled.div`
 
   .btn {
     background-color: var(--lightOrange);
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem 0.8rem;
     border: none;
     color: var(--white);
     font-size: 0.9rem;
+    font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
+    font-family: var(--font);
   }
 
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
-  }
-
-  .rowText {
-    font-size: 0.75rem;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
   .logo {

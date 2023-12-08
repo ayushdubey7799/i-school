@@ -80,7 +80,7 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
     <Content>
       <TableContainer component={Paper} className="tableBox">
         <div className="titleBox">
-          <span className="title">Candidate Lists for JD ID:- {page.jdId}</span>
+          <span className="title">Candidate Lists for JD ID:- {page.jdId.toUpperCase()}</span>
           <button className="btn1" onClick={() => setPage({ index: 1, jdId: null })}>Back to Scheduled Interviews</button>
         </div>
 
@@ -163,7 +163,7 @@ padding: 0 1%;
 display: flex;
 flex-direction: column;
 align-items: center;
-font-family: Quicksand, sans-serif;
+font-family: var(--font);
 color: var(--color);
 
 
@@ -213,7 +213,7 @@ color: var(--color);
   .tableCell {
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
     color: var(--color);
   }
   
@@ -225,7 +225,7 @@ color: var(--color);
   .tableCell {
     font-size: 0.8rem;
     font-weight: 400;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
     color: var(--color);
   }
 }
@@ -241,7 +241,7 @@ color: var(--color);
     font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
 `

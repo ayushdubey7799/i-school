@@ -94,7 +94,7 @@ width: 100%;
     font-size: 0.9rem;
     font-weight: 600;
     margin-top: 2rem;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
 }
 
 `

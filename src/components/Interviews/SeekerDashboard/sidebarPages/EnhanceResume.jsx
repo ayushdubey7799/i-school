@@ -142,5 +142,6 @@ const SubmitButton = styled.button`
   cursor: pointer;
   color: var(--white);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-family: var(--font);
 `;

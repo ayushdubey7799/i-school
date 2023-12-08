@@ -3,9 +3,9 @@ import SplitPane, { Pane } from 'split-pane-react';
 import 'split-pane-react/esm/themes/default.css';
 import styled from 'styled-components';
 
-const CodingQueInterface = () => {
-    const [sizes, setSizes] = useState(['50%', '50%']);
-    const [sizes2, setSizes2] = useState(['80%', '20%']);
+const CodingQueInterface = ({queComp, codeEditorComp}) => {
+    const [sizes, setSizes] = useState(['40%', '40%']);
+    const [sizes2, setSizes2] = useState(['75%', '25%']);
 
     const layoutCSS = {
         height: '100%',
@@ -27,19 +27,19 @@ const CodingQueInterface = () => {
 
     return (
         <MainBox>
-            <SplitPane split="vertical" sizes={sizes} onChange={setSizes}>
-                <Pane>
+            <SplitPane split="vertical" sizes={sizes} onChange={setSizes} style={{display: 'flex', gap: '2rem'}}>
+                <Pane maxSize='90%'>
                     <div className='leftBox' style={{ ...layoutCSS}}>
-                        <div style={contentCSS}>pane1</div>
+                        <div style={contentCSS}>{queComp && queComp}</div>
                     </div>
                 </Pane>
-                <Pane>
+                <Pane maxSize='90%'>
                     <div style={{ ...layoutCSS, ...rowCSS }} className='rightBox'>
                         <SplitPane split="horizontal" sizes={sizes2} onChange={setSizes2}>
-                            <Pane>
-                                <div style={{ ...contentCSS}} className='rightBox1'>pane2.0</div>
+                            <Pane maxSize='90%'>
+                                <div style={{ ...contentCSS}} className='rightBox1'>{codeEditorComp && codeEditorComp}</div>
                             </Pane>
-                            <Pane>
+                            <Pane maxSize='90%'>
                                 <div style={{ ...contentCSS}} className='rightBox2'>pane2.1</div>
                             </Pane>
                         </SplitPane>
@@ -54,23 +54,34 @@ export default CodingQueInterface;
 
 const MainBox = styled.div`
 height: 100vh;
-
+display: flex;
+gap: 2rem;
 
 .leftBox {
-    background-color: grey;
+    border-top: 0.1rem solid grey;
+    border-left: 0.1rem solid grey;
+    border-bottom: 0.1rem solid grey;
+    background-color: var(--white);
+    border-radius: 0.75rem;
+    overflow: auto;
 }
 
 .rightBox {
-    background-color: lightgrey;
+    background-color: var(--white);
 }
 
 .rightBox1 {
-    border: 0.1rem solid grey;
-    background-color: black;
+    border-top: 0.1rem solid grey;
+    border-left: 0.1rem solid grey;
+    border-right: 0.1rem solid grey;
+    border-radius: 0.75rem;
+    background-color: var(--white);
 }
 
 .rightBox2 {
-    
+    border: 0.1rem solid grey;
+    border-radius: 0.75rem;
+    background-color: var(--white);
 }
 
 `

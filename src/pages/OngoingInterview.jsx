@@ -20,6 +20,8 @@ import recording from "../assets/icons/recStatusRecording.png";
 import stopped from "../assets/icons/recStatusStopped.png";
 import CodeEditor from "./CodeEditor";
 import { codingQuestionFormat } from "../utils/codingQuestionFormat";
+import CodingQueInterface from '../components/Interviews/SeekerDashboard/CodingQueInterface'
+
 
 const OngoingInterview = ({ start, handleStart }) => {
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -178,14 +180,24 @@ const OngoingInterview = ({ start, handleStart }) => {
           <div className="head">
             <h3>Interview Id : {interviewId}</h3>
             <Timer minutes={minutes} seconds={seconds} />
+            {(start && data?.questionType == 'coding') && <button
+                  onClick={() => {
+                    handleSubmitAnswer(data.id, data.lastQuestion);
+                    handleSubmitInterview();
+                  }}
+                >
+                  Submit
+                </button>}
           </div>
 
           {start ? (
             <>
               {data?.questionType == "coding" ? (
                 <div className='codingMainBox'>
-                  <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
-                  <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />
+                  <CodingQueInterface 
+                  queComp={<div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>} 
+                  codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />}
+                  />
                 </div>
               ) : (
                 <>
@@ -200,7 +212,8 @@ const OngoingInterview = ({ start, handleStart }) => {
                   />
                 </>
               )}
-              {data?.lastQuestion ? (
+
+              {(data?.lastQuestion && data?.questionType !== 'coding' )? (
                 <button
                   onClick={() => {
                     handleSubmitAnswer(data.id, data.lastQuestion);
@@ -209,7 +222,8 @@ const OngoingInterview = ({ start, handleStart }) => {
                 >
                   Submit Interview
                 </button>
-              ) : (
+                
+              ) :  (data?.questionType !== 'coding' ) ? (
                 <>
                   <div className="btnBox1">
                     <button
@@ -296,7 +310,8 @@ const OngoingInterview = ({ start, handleStart }) => {
                     </button>
                   </div>
                 </>
-              )}
+              )
+            : <span></span>}
               <InterviewSubmittedModal
                 scoreModal={scoreModal}
                 setScoreModal={setScoreModal}
@@ -322,9 +337,6 @@ const StyledInterview = styled.div`
   gap: 1.5rem;
 
   .codingMainBox {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 2rem;
   }
 
   .statusIcon {

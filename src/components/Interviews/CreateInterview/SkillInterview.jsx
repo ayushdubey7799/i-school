@@ -199,9 +199,10 @@ input{
     padding: 0.7rem 1rem;
     border: 0.1rem solid var(--lightOrange);
     border-radius: 0.4rem;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
+    font-family: var(--font);
 }
 
 @media (max-width: 500px) {
