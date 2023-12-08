@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -31,7 +31,10 @@ import JdsDetails from "./JdsDetails";
 import Error from "../../../commonComponents/infoDialog/Error";
 import Deleted from "../../../commonComponents/infoDialog/Deleted";
 import { timeZoneConversion } from "../../../../utils/timeZoneConversation";
-import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
+import {
+  Pagination,
+  PaginationSizeFilter,
+} from "../../../commonComponents/Pagination";
 import Saved from "../../../commonComponents/infoDialog/Saved";
 import Created from "../../../commonComponents/infoDialog/Created";
 import TableSearchBar from "../commonComponents/TableSearchBar";
@@ -169,14 +172,22 @@ function Row(props) {
     setOpenDropdownIndex(-1);
   };
 
-
   console.log(row.jdId, row.reqNumbers);
   return (
     <React.Fragment>
       <ModalHOC
         setOpenNewInterviewModal={setEditOpen}
         openNewInterviewModal={editOpen}
-        component={<JdForm array={[jdData, 'edit']} handleClose={() => setEditOpen(false)} errorMsg={errorMsg} setErrorPopup={setErrorPopup} setCreatedPopup={setCreatedPopup} setSavedPopup={setSavedPopup} />}
+        component={
+          <JdForm
+            array={[jdData, "edit"]}
+            handleClose={() => setEditOpen(false)}
+            errorMsg={errorMsg}
+            setErrorPopup={setErrorPopup}
+            setCreatedPopup={setCreatedPopup}
+            setSavedPopup={setSavedPopup}
+          />
+        }
       />
       {deleteErrorPopup && (
         <Error
@@ -189,7 +200,7 @@ function Row(props) {
       {deletePopup && (
         <Deleted
           handleClose={() => {
-            handleDeletePopUpClose()
+            handleDeletePopUpClose();
             dispatch(setJdTrigger(!jdTrigger));
           }}
           open={deletePopup}
@@ -222,27 +233,52 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
-        <TableCell component="th" scope="row" align="center" className="tableCell">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           {row.jdId.toUpperCase()}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className="tableCell">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           {row.title}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className="tableCell">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           {row.location}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className="tableCell">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           {timeZoneConversion(row.createdAt)}
         </TableCell>
 
-
-        <TableCell component="th" scope="row" align="center" className="tableCell">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           <BoxRow isLast={index >= rowsLength - 2}>
             <img
               src={threeDot}
               style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
-              className={`three-dots ${openDropdownIndex === index ? "active" : ""
-                }`}
+              className={`three-dots ${
+                openDropdownIndex === index ? "active" : ""
+              }`}
               onClick={() => {
                 if (openDropdownIndex === index) {
                   closeAllDropdowns();
@@ -252,8 +288,9 @@ function Row(props) {
               }}
             />
             <div
-              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
-                }`}
+              className={`dropdown-content ${
+                openDropdownIndex === index ? "open" : ""
+              }`}
               ref={dropdownRef}
             >
               <CommonDrawer
@@ -314,6 +351,9 @@ const JdRegistration = () => {
   const [savedPopup, setSavedPopup] = useState(false);
   const [createdPopup, setCreatedPopup] = useState(false);
 
+  const [search, setSearch] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
+
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const [cloneData, setCloneData] = useState(null);
@@ -324,13 +364,12 @@ const JdRegistration = () => {
   const clientCode = useSelector(
     (state) => state?.auth?.userData?.user?.clientCode
   );
-  const testingData = useSelector((state) => state?.jd?.availableJds);
+  const jdData = useSelector((state) => state?.jd?.availableJds);
   const jdTrigger = useSelector((state) => state.jd.JdTrigger);
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
-
-  console.log('Shoot', jdTrigger)
+  console.log("Shoot", jdTrigger);
 
   const [total, setTotal] = useState(0);
 
@@ -343,7 +382,7 @@ const JdRegistration = () => {
   };
 
   const handlePageChange = (change) => {
-    if (change && (page < Math.ceil(+total / +size))) {
+    if (change && page < Math.ceil(+total / +size)) {
       setPage((prev) => prev + 1);
     } else if (!change && page > 1) {
       setPage((prev) => prev - 1);
@@ -362,9 +401,16 @@ const JdRegistration = () => {
     getData();
   }, [page, size, jdTrigger, dispatch]);
 
-  console.log('Shot', jdTrigger)
-
-  const handleSearch = () => { };
+  console.log("Shot", jdTrigger);
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() => jdData.filter((item => item.jdId.toLowerCase().includes(searchValue.toLowerCase()) || item.title.toLowerCase().includes(searchValue.toLowerCase()) )))
+    } else {
+      setSearch(false);
+    }
+  },[searchValue])
+    
 
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
@@ -398,7 +444,7 @@ const JdRegistration = () => {
     setCreatedPopup(false);
   };
 
-  console.log('========>>>>>>.', cloneData);
+  console.log("========>>>>>>.", cloneData);
 
   return (
     <Container1>
@@ -427,19 +473,39 @@ const JdRegistration = () => {
       <ModalHOC
         setOpenNewInterviewModal={setOpenBasic}
         openNewInterviewModal={openBasic}
-        component={<JdForm array={[null, 'create']} handleClose={() => setOpenBasic(false)} errorMsg={errorMsg} setErrorPopup={setErrorPopup} setCreatedPopup={setCreatedPopup} setSavedPopup={setSavedPopup} />}
+        component={
+          <JdForm
+            array={[null, "create"]}
+            handleClose={() => setOpenBasic(false)}
+            errorMsg={errorMsg}
+            setErrorPopup={setErrorPopup}
+            setCreatedPopup={setCreatedPopup}
+            setSavedPopup={setSavedPopup}
+          />
+        }
       />
 
       <ModalHOC
         setOpenNewInterviewModal={setOpenBasic2}
         openNewInterviewModal={openBasic2}
-        component={<CloneJDForm array={[setOpenBasic3, setOpenBasic2, setCloneData]} />}
+        component={
+          <CloneJDForm array={[setOpenBasic3, setOpenBasic2, setCloneData]} />
+        }
       />
 
       <ModalHOC
         setOpenNewInterviewModal={setOpenBasic3}
         openNewInterviewModal={openBasic3}
-        component={<JdForm array={[cloneData, 'clone']} handleClose={() => setOpenBasic3(false)} errorMsg={errorMsg} setErrorPopup={setErrorPopup} setCreatedPopup={setCreatedPopup} setSavedPopup={setSavedPopup} />}
+        component={
+          <JdForm
+            array={[cloneData, "clone"]}
+            handleClose={() => setOpenBasic3(false)}
+            errorMsg={errorMsg}
+            setErrorPopup={setErrorPopup}
+            setCreatedPopup={setCreatedPopup}
+            setSavedPopup={setSavedPopup}
+          />
+        }
       />
 
       <StyledBox>
@@ -458,39 +524,70 @@ const JdRegistration = () => {
           </Component>
           <div style={{ display: "flex" }}>
             <SearchBarContainer>
-              <TableSearchBar value={searchValue} setValue={setSearchValue}/>
+              <TableSearchBar value={searchValue} setValue={setSearchValue} />
             </SearchBarContainer>
           </div>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align="center" className="tableCell">JD ID</TableCell>
-                <TableCell align="center" className="tableCell">Title</TableCell>
+                <TableCell align="center" className="tableCell">
+                  JD ID
+                </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Title
+                </TableCell>
 
-                <TableCell align='center' className="tableCell">Location </TableCell>
-                <TableCell align="center" className="tableCell">Date of Creation</TableCell>
-                <TableCell align="center" className="tableCell">Actions</TableCell>
+                <TableCell align="center" className="tableCell">
+                  Location{" "}
+                </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Date of Creation
+                </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {tableRows?.map((row, index) => (
-                <Row
-                  key={row.id}
-                  row={row}
-                  rowsLength={tableRows.length}
-                  isSelected={selectedRow === index}
-                  onToggle={handleToggle}
-                  index={index}
-                />
-              ))}
+              {search
+                ? filteredData?.map((row,index) => {
+                    return (
+                      <Row
+                        key={row.id}
+                        row={row}
+                        rowsLength={filteredData.length}
+                        isSelected={selectedRow === index}
+                        onToggle={handleToggle}
+                        index={index}
+                      />
+                    );
+                  })
+                : tableRows?.map((row, index) => (
+                    <Row
+                      key={row.id}
+                      row={row}
+                      rowsLength={tableRows.length}
+                      isSelected={selectedRow === index}
+                      onToggle={handleToggle}
+                      index={index}
+                    />
+                  ))}
             </TableBody>
           </Table>
 
-          <div className="paginationBox">
-            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange} />
-            <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage} />
-          </div>
-
+         {!search && <div className="paginationBox">
+            <PaginationSizeFilter
+              size={size}
+              handleSizeChange={handleSizeChange}
+            />
+            <Pagination
+              total={total}
+              size={size}
+              page={page}
+              handlePageChange={handlePageChange}
+              setPage={setPage}
+            />
+          </div>}
         </TableContainer>
       </StyledBox>
     </Container1>
@@ -557,19 +654,18 @@ const StyledBox = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
-  
+
     .tableCell {
       font-size: 0.9rem;
       font-weight: 500;
       font-family: var(--font);
       color: var(--color);
     }
-    
   }
-  
+
   .tableBody {
     width: 100%;
-  
+
     .tableCell {
       font-size: 0.8rem;
       font-weight: 400;
@@ -609,7 +705,6 @@ const EditButton = styled.button`
   border-radius: 0.5rem;
   font-family: var(--font);
 `;
-
 
 const SearchBarContainer = styled.div`
   display: flex;
