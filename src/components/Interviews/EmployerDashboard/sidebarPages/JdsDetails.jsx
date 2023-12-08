@@ -17,7 +17,7 @@ const JdsDetails = ({ Jds }) => {
         <Box>
             <div className='basicDetails'>
                 <div className='box1'>
-                    <span className='jobTitle'>{Jds.title} <span className='jdId'>JD ID: {Jds.jdId}</span></span>
+                    <span className='jobTitle'>{Jds.title} <span className='jdId'>JD ID: {Jds.jdId.toUpperCase()}</span></span>
                     <span className='company'>Company Name</span>
                 </div>
 

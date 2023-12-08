@@ -73,12 +73,12 @@ width: 100%;
     }
 
     .title {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: 600;
     }
 
     .subTitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         color: #464E62;
     }
@@ -91,9 +91,10 @@ width: 100%;
     color: var(--white);
     border-radius: 0.3rem;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     margin-top: 2rem;
+    font-family: var(--font);
 }
 
 `

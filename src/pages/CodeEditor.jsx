@@ -3,7 +3,6 @@ import Editor, { useMonaco } from '@monaco-editor/react';
 import styled from 'styled-components'
 
 const CodeEditor = ({input,setInput,language,setLanguage}) => {
-    
 
     const handleCodeEditorChange = (value, event) => {
         setInput(value);
@@ -55,8 +54,8 @@ const CodeEditor = ({input,setInput,language,setLanguage}) => {
                 {/* Add more language options as needed */}
             </LanguageSelector>
             <Editor
-                theme="vs-dark"
-                height="80vh"
+                theme="light"
+                height="100%"
                 language={language}
                 value={input}
                 onChange={handleCodeEditorChange}
@@ -69,16 +68,19 @@ export default CodeEditor
 
 const Box = styled.div`
 width: 100%;
+height: 100%;
 display: flex;
-padding: 2rem 0rem;
-margin: 0 auto;
+padding: 0;
+margin: 0;
 box-sizing: border-box;
 flex-direction: column;
+align-items: start;
+
+
 `
 
 const LanguageSelector = styled.select`
   margin-bottom: 0rem;
-  width: 10rem;
   border-color: grey;
   font-size: 0.8rem;
   padding: 0.4rem 0.5rem;

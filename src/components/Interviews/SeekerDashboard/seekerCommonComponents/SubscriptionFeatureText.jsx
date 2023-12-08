@@ -11,7 +11,7 @@ const SubscriptionFeatureText = ({ text }) => {
 export default SubscriptionFeatureText
 
 const Span = styled.span`
-font-size: 0.85rem;
+font-size: 0.8rem;
     font-weight: 400;
     display: flex;
     gap: 0.5rem;

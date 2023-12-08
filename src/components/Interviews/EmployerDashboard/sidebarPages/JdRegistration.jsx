@@ -223,7 +223,7 @@ function Row(props) {
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          {row.jdId}
+          {row.jdId.toUpperCase()}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.title}
@@ -546,7 +546,7 @@ const StyledBox = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
   .selected {
@@ -561,7 +561,7 @@ const StyledBox = styled.div`
     .tableCell {
       font-size: 0.9rem;
       font-weight: 500;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
     
@@ -573,7 +573,7 @@ const StyledBox = styled.div`
     .tableCell {
       font-size: 0.8rem;
       font-weight: 400;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
   }
@@ -607,7 +607,7 @@ const EditButton = styled.button`
   margin-right: 0.6rem;
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
 `;
 
 

@@ -94,7 +94,7 @@ font-weight: 600;
 border-radius: 0.3rem;
 border: none;
 cursor: pointer;
-font-family: Quicksand, sans-serif;
+font-family: var(--font);
 
 
 `

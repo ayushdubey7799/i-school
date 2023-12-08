@@ -77,8 +77,8 @@ gap: 2%;
 }
 
 .achievedNumberText {
-  font-size: 1rem;
-    font-weight: 500;
+  font-size: 0.9rem;
+    font-weight: 600;
     color: var(--color);
     text-align: center;
 }

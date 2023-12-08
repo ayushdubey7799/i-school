@@ -23,8 +23,9 @@ const Select = styled.select`
   background-color: var(--white);
   outline: none;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 400;
   color: #b3b3b3;
+  font-family: var(--font);
 
   option {
     font-size: 0.9rem;

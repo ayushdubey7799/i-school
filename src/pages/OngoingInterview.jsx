@@ -20,6 +20,9 @@ import recording from "../assets/icons/recStatusRecording.png";
 import stopped from "../assets/icons/recStatusStopped.png";
 import CodeEditor from "./CodeEditor";
 import { codingQuestionFormat } from "../utils/codingQuestionFormat";
+import CodingQueInterface from '../components/Interviews/SeekerDashboard/CodingQueInterface'
+import CommonButton from "../components/Interviews/SeekerDashboard/seekerCommonComponents/CommonButton";
+
 
 const OngoingInterview = ({ start, handleStart }) => {
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -161,32 +164,30 @@ const OngoingInterview = ({ start, handleStart }) => {
 
   return (
     <>
-      <div
-        style={{
-          height: "3.5rem",
-          position: "absolute",
-          top: "1rem",
-          left: "3rem",
-        }}
-      >
-        <img src={logo} style={{ height: "100%" }} />
-      </div>
       {isLoading ? (
         <Loader message={loaderMessage} />
       ) : (
         <StyledInterview>
           <div className="head">
-            <h3>Interview Id : {interviewId}</h3>
+            <img src={logo} className="logo" />
+            <div className="topMiddleBox">
+            <span className="title">Interview Id : {interviewId}</span>
             <Timer minutes={minutes} seconds={seconds} />
+            </div>
+            {(start && data?.questionType == 'coding') &&
+              <CommonButton text='Submit' func={() => {
+                handleSubmitAnswer(data.id, data.lastQuestion);
+                handleSubmitInterview();
+              }} />}
           </div>
 
           {start ? (
             <>
               {data?.questionType == "coding" ? (
-                <div className='codingMainBox'>
-                  <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
-                  <CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />
-                </div>
+                  <CodingQueInterface
+                    queComp={<div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText"></div>}
+                    codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />}
+                  />
               ) : (
                 <>
                   <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
@@ -200,27 +201,23 @@ const OngoingInterview = ({ start, handleStart }) => {
                   />
                 </>
               )}
-              {data?.lastQuestion ? (
-                <button
-                  onClick={() => {
-                    handleSubmitAnswer(data.id, data.lastQuestion);
-                    handleSubmitInterview();
-                  }}
-                >
-                  Submit Interview
-                </button>
-              ) : (
+
+              {(data?.lastQuestion && data?.questionType !== 'coding') ? (
+                <CommonButton text='Submit Interview' func={() => {
+                  handleSubmitAnswer(data.id, data.lastQuestion);
+                  handleSubmitInterview();
+                }} />
+
+              ) : (data?.questionType !== 'coding') ? (
                 <>
                   <div className="btnBox1">
-                    <button
-                      onClick={async () => {
+                    <CommonButton
+                      text='Finish Interview'
+                      func={async () => {
                         await handleSubmitAnswer(data.id, data.lastQuestion);
                         await handleSubmitInterview();
                       }}
-                      className="btn"
-                    >
-                      Finish Interview
-                    </button>
+                    />
 
                     <div className="btnBox2">
                       <ReactMediaRecorder
@@ -285,18 +282,20 @@ const OngoingInterview = ({ start, handleStart }) => {
                       />
                     </div>
 
-                    <button
-                      onClick={() => {
+                    <CommonButton
+                      text='Next Question'
+                      func={() => {
                         handleSubmitAnswer(data.id, data.lastQuestion);
                         getData(false);
                       }}
                       className="btn"
-                    >
-                      Next Question
-                    </button>
+                    />
+
+
                   </div>
                 </>
-              )}
+              )
+                : <span></span>}
               <InterviewSubmittedModal
                 scoreModal={scoreModal}
                 setScoreModal={setScoreModal}
@@ -304,7 +303,7 @@ const OngoingInterview = ({ start, handleStart }) => {
               />
             </>
           ) : (
-            <button onClick={() => getData(true)}>Start Interview</button>
+            <CommonButton text='Start Interview' func={() => getData(true)} />
           )}
         </StyledInterview>
       )}
@@ -317,14 +316,19 @@ export default OngoingInterview;
 const StyledInterview = styled.div`
   display: flex;
   flex-direction: column;
-  width: 94%;
-  margin: 3rem auto;
-  gap: 1.5rem;
+  align-items: start;
+  width: 95%;
+  margin: 0rem auto;
+  gap: 0.5rem;
+
+  .questionText {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
 
   .codingMainBox {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 2rem;
+    display: flex;
+    width: 100%;
   }
 
   .statusIcon {
@@ -346,10 +350,27 @@ const StyledInterview = styled.div`
   .head {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0.75rem 0 0.25rem 0;
     width: 100%;
     align-items: center;
+    height: 2.5rem;
+
+    .topMiddleBox {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo {
+      height: 100%;
+    }
+
+    .title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
   }
+
 
   .btnBox1 {
     width: 100%;
@@ -366,26 +387,6 @@ const StyledInterview = styled.div`
     align-items: center;
   }
 
-  button {
-    width: 20%;
-    height: 3rem;
-    background-color: var(--lightOrange);
-    color: var(--backgroundColor);
-    border-radius: 0.5rem;
-    font-size: 1.1rem;
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn {
-    height: 3rem;
-    background-color: var(--lightOrange);
-    color: var(--backgroundColor);
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    border: none;
-    cursor: pointer;
-  }
 
   .btn1, .btn2 {
     display: flex;
@@ -437,8 +438,11 @@ const StyledInterview = styled.div`
   }
 
   textarea {
+    width: 100%;
     padding: 1rem;
     font-size: 1rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
   }
 `;
 

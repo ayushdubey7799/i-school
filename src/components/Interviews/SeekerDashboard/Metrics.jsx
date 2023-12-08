@@ -49,7 +49,7 @@ gap: 2%;
     gap: 1.7rem;
     background-color: var(--white);
     padding: 1rem 0 1.5rem 0;
-    width: 23%;
+    width: 22%;
     height: 6rem;
     border-radius: 0.5rem;
     box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
@@ -79,8 +79,8 @@ gap: 2%;
   }
   
   .achievedNumberText {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
     color: var(--color);
     text-align: center;
   } 

@@ -97,7 +97,7 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
 `;
 
 

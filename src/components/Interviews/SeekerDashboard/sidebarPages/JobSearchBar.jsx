@@ -102,6 +102,12 @@ const SearchBarContainer = styled.div`
   border: 0.08rem solid lightgrey;
   gap: 0.5rem;
 
+  #tags-standard {
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
   .locationBox {
     position: relative;
     width: 30%;
@@ -119,13 +125,14 @@ const SearchBarContainer = styled.div`
     padding: 0.5rem 1.1rem;
     border-radius: 1.1rem;
     color: var(--white);
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     border: none;
     display: flex;
     gap: 0.5rem;
     align-items: center;
     cursor: pointer;
+    font-family: var(--font);
   }
 
   .btn img {

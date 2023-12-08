@@ -40,10 +40,10 @@ function Row(props) {
           </IconButton>
         </TableCell >
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          {row.jdId}
+          {row.jdId.toUpperCase()}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          {row.reqNumber}
+          {row.reqNumber ? row.reqNumber.toUpperCase() : '...'}
         </TableCell >{" "}
         <TableCell component="th" scope="row" align="center" style={{ display: 'flex', justifyContent: 'center', width: '100%' }} className="tableCell">
           <Match jdId={row.jdId} count={row.matchCount} />
@@ -97,16 +97,13 @@ function Row(props) {
   );
 }
 
-export default function ManageJds({ rows }) {
+export default function ManageJds({ rows, total, page, setPage, size, setSize }) {
   const [selectedRow, setSelectedRow] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
   const navigate = useNavigate();
-  const [total, setTotal] = useState(0);
-
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(5);
+  
 
   const handleSizeChange = (event) => {
     setSize(parseInt(event.target.value, 10));
@@ -114,9 +111,9 @@ export default function ManageJds({ rows }) {
   };
 
   const handlePageChange = (change) => {
-    if (change) {
+    if (change && (page < Math.ceil(+total / +size))) {
       setPage((prev) => prev + 1);
-    } else {
+    } else if (!change && page > 1) {
       setPage((prev) => prev - 1);
     }
   };
@@ -157,13 +154,13 @@ export default function ManageJds({ rows }) {
           <span className="title">Active Job Descriptions</span>
           <Button onClick={() => navigate('/dashboard/employer')}>Back to Dashboard</Button>
         </span>
-          <SearchBarContainer>
-            <TableSearchBar value={searchValue} setValue={setSearchValue}/>
-          </SearchBarContainer>
+        <SearchBarContainer>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
+        </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell className="tableCell"/>
+              <TableCell className="tableCell" />
               <TableCell align="center" className="tableCell">JD ID</TableCell>
               <TableCell align="center" className="tableCell">Req ID</TableCell>
               <TableCell align="center" className="tableCell">No of Profiles available</TableCell>
@@ -253,7 +250,7 @@ const StyledBox = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
   .selected {
@@ -268,7 +265,7 @@ const StyledBox = styled.div`
     .tableCell {
       font-size: 0.9rem;
       font-weight: 500;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
     
@@ -280,7 +277,7 @@ const StyledBox = styled.div`
     .tableCell {
       font-size: 0.8rem;
       font-weight: 400;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
   }
@@ -299,7 +296,7 @@ const Button = styled.button`
   align-self: center;
   font-size: 0.9rem;
   font-weight: 600;
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
 `
 
 

@@ -135,7 +135,7 @@ justify-content: space-evenly;
     cursor: pointer;
     margin-top: 1rem;
     align-self: center;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
 }
 
 

@@ -18,6 +18,7 @@ import view from '../../assets/icons/visible.png'
 import CommonDrawer from '../commonComponents/CommonDrawer';
 import SeekerInterviewDetails from './SeekerDashboard/sidebarPages/SeekerInterviewDetails';
 import { timeZoneConversion } from '../../utils/timeZoneConversation';
+import SeekerTableSearchBar from './SeekerDashboard/seekerCommonComponents/SeekerTableSearchBar';
 
 
 function Row(props) {
@@ -27,8 +28,8 @@ function Row(props) {
   const navigate = useNavigate();
 
   const startInterview = async () => {
-      localStorage.setItem("currentInterview","profile");
-      navigate(`/create-interview/${row.id}`);
+    localStorage.setItem("currentInterview", "profile");
+    navigate(`/create-interview/${row.id}`);
   }
 
   const [state, setState] = React.useState({
@@ -46,31 +47,31 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell component="th" scope="row" align='center' className='logo'>
+        <TableCell component="th" scope="row" align='center' className='logo tableCell'>
           <img src={row.companyLogo} />
         </TableCell>
-        <TableCell component="th" scope="row" align='center' className='rowText'>
+        <TableCell component="th" scope="row" align='center' className='tableCell'>
           {row.title}
         </TableCell>{" "}
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.companyName}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.appliedDate}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {timeZoneConversion(row.scheduledAt)}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.status}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.matchPercentage}%
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           <button onClick={startInterview} className="btn">Attend</button>
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails />} />
             <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
@@ -89,6 +90,7 @@ const ScheduledInterviewList = () => {
   const [loaderMessage, setLoaderMessage] = useState("");
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
+  const [searchValue, setSearchValue] = useState('');
 
 
   useEffect(() => {
@@ -118,27 +120,20 @@ const ScheduledInterviewList = () => {
         {!isLoading && <TableContainer component={Paper} className="tableBox">
           <span className='title'>Scheduled Interviews</span>
           <SearchBarContainer>
-            <div className='skillBox'>
-              <img src={searchBlack} />
-              <input
-                className='skillInput'
-                type="text"
-                placeholder="Search"
-              />
-            </div>
+            <SeekerTableSearchBar value={searchValue} setValue={setSearchValue}/>
           </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align='center'></TableCell>
-                <TableCell align='center'>Job Title</TableCell>
-                <TableCell align='center'>Company</TableCell>
-                <TableCell align='center'>Applied Date</TableCell>
-                <TableCell align='center'>Scheduled Date/Time</TableCell>
-                <TableCell align='center'>Status</TableCell>
-                <TableCell align='center'>% Match with Profile</TableCell>
-                <TableCell align='center'>Interview Link</TableCell>
-                <TableCell align='center'>Details</TableCell>
+                <TableCell align='center' className='tableCell'></TableCell>
+                <TableCell align='center' className='tableCell'>Job Title</TableCell>
+                <TableCell align='center' className='tableCell'>Company</TableCell>
+                <TableCell align='center' className='tableCell'>Applied Date</TableCell>
+                <TableCell align='center' className='tableCell'>Scheduled Date/Time</TableCell>
+                <TableCell align='center' className='tableCell'>Status</TableCell>
+                <TableCell align='center' className='tableCell'>% Match with Profile</TableCell>
+                <TableCell align='center' className='tableCell'>Interview Link</TableCell>
+                <TableCell align='center' className='tableCell'>Details</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -177,8 +172,8 @@ const StyledBox = styled.div`
 
     .title {
       padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
   }
 
@@ -196,18 +191,35 @@ const StyledBox = styled.div`
     border: none;
     color: var(--white);
     font-size: 0.9rem;
+    font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
+    font-family: var(--font);
   }
 
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
   .rowText {
@@ -251,33 +263,4 @@ const SearchBarContainer = styled.div`
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
-
 `

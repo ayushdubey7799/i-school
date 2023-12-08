@@ -20,7 +20,7 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center" className="tableCell">{row.jdId}</TableCell>
+        <TableCell align="center" className="tableCell">{row.jdId.toUpperCase()}</TableCell>
         <TableCell align="center" className="tableCell">{row.totalCandidates}</TableCell>
         <TableCell align="center" className="tableCell">{row.closed}</TableCell>
         <TableCell align="center" className="tableCell">{row.inProgress}</TableCell>
@@ -190,7 +190,7 @@ align-items: center;
   .tableCell {
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
     color: var(--color);
   }
   
@@ -202,7 +202,7 @@ align-items: center;
   .tableCell {
     font-size: 0.8rem;
     font-weight: 400;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
     color: var(--color);
   }
 }
@@ -217,7 +217,7 @@ align-items: center;
   font-weight: 500;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
 }
 
 `

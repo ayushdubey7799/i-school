@@ -33,25 +33,25 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell component="th" scope="row" align='center' className='logo'>
+        <TableCell component="th" scope="row" align='center' className='logo tableCell'>
           <img src={row.companyLogo} />
         </TableCell>
-        <TableCell component="th" scope="row" align='center' className='rowText'>
+        <TableCell component="th" scope="row" align='center' className='tableCell'>
           {row.jobTitle}
         </TableCell>{" "}
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.companyName}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.location}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.postedDate}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.matchPercentage}%
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
             <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
@@ -59,7 +59,7 @@ function Row(props) {
             <img src={share} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='rowText'>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
         </TableCell>
       </TableRow>
@@ -77,14 +77,14 @@ const RecommendedJobsList = () => {
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align='center'></TableCell>
-                <TableCell align='center'>Job Title</TableCell>
-                <TableCell align='center'>Company</TableCell>
-                <TableCell align='center'>Location</TableCell>
-                <TableCell align='center'>Posted Date</TableCell>
-                <TableCell align='center'>% Match with Profile</TableCell>
-                <TableCell align='center'>Save/Share</TableCell>
-                <TableCell align='center'>Apply</TableCell>
+                <TableCell align='center' className='tableCell'></TableCell>
+                <TableCell align='center' className='tableCell'>Job Title</TableCell>
+                <TableCell align='center' className='tableCell'>Company</TableCell>
+                <TableCell align='center' className='tableCell'>Location</TableCell>
+                <TableCell align='center' className='tableCell'>Posted Date</TableCell>
+                <TableCell align='center' className='tableCell'>% Match with Profile</TableCell>
+                <TableCell align='center' className='tableCell'>Save/Share</TableCell>
+                <TableCell align='center' className='tableCell'>Apply</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -123,8 +123,8 @@ const StyledBox = styled.div`
     .title {
       display: block;
       padding: 0rem 0 1rem 1rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
   }
 
@@ -138,27 +138,41 @@ const StyledBox = styled.div`
 
   .btn {
     background-color: var(--lightOrange);
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem 0.8rem;
     border: none;
     color: var(--white);
     font-size: 0.9rem;
+    font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
+    font-family: var(--font);
   }
 
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
-  .rowText {
-    font-size: 0.75rem;
-  }
 
   .logo {
     width: 2rem;
