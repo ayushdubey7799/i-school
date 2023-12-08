@@ -5,8 +5,8 @@ import { getJdsForMatching } from "../functions/api/employers/match/getJdsForMat
 
 
 
-export const getAvailableJds = createAsyncThunk('jd/getJds', async ({ accessToken, clientCode, page, size }) => {
-    const response = await getJds(accessToken, clientCode, page = 1, size = 100);
+export const getAvailableJds = createAsyncThunk('jd/getJds', async ({ accessToken, clientCode}) => {
+    const response = await getJds(accessToken, clientCode, page = 1, size = 1000);
     return response.data;
 })
 
