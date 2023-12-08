@@ -2,8 +2,8 @@ import axios from "axios";
 export const getJdsForMatching = async (
   accessToken,
   clientCode,
-  page=1,
-  size=100
+  page = 1,
+  size = 1000
 ) => {
   const config = {
     headers: {

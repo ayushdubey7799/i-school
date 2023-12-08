@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const TableContainer = styled.div`
   margin: 20px;
-  font-family: Arial, sans-serif;
+  font-family: var(--font);
 `;
 
 const Table = styled.table`

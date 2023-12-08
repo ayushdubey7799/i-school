@@ -58,7 +58,7 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell align="center" className="tableCell">{row.name}</TableCell>
         <TableCell align="center" className="tableCell">{row.contact}</TableCell>
-        <TableCell align="center" className="tableCell">{row.jdId}</TableCell>
+        <TableCell align="center" className="tableCell">{row.jdId.toUpperCase()}</TableCell>
         <TableCell align="center" className="tableCell">{row.recruiter}</TableCell>
         <TableCell align="center" className="tableCell">{row.hiringManager}</TableCell>
         <TableCell align="center" className="tableCell">{row.round}</TableCell>
@@ -259,7 +259,7 @@ align-items: center;
   .tableCell {
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
     color: var(--color);
   }
   
@@ -271,7 +271,7 @@ align-items: center;
   .tableCell {
     font-size: 0.8rem;
     font-weight: 400;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
     color: var(--color);
   }
 }

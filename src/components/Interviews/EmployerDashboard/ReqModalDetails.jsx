@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,7 +15,7 @@ import Success from '../../commonComponents/infoDialog/Success';
 import { setJdTrigger } from "../../../slices/jdSlice";
 
 function Row(props) {
-  const { row, index, id } = props;
+  const { row, rowsLength, index, id } = props;
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
@@ -89,17 +89,17 @@ function Row(props) {
       }
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell component="th" scope="row" align='center'>
-          {row.reqNumber}
+        <TableCell component="th" scope="row" align='center' className='tableCell'>
+          {row.reqNumber.toUpperCase()}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.createdAt?.slice(0, 10)}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.closed ? "CLOSED" : "OPEN"}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
-          <BoxRow>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
+          <BoxRow isLast={index >= rowsLength - 1}>
             <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
               onClick={() => {
                 if (openDropdownIndex === index) {
@@ -132,21 +132,21 @@ const ReqModalDetails = ({ reqs, jdId, id }) => {
 
   return (
     <Container1>
-      <h3>JD ID: {jdId}</h3>
+      <span className='title'>JD ID: {jdId}</span>
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align='center'>Req Numer</TableCell>
-                <TableCell align='center'>Date of Creation</TableCell>
-                <TableCell align='center'>Status</TableCell>
-                <TableCell align='center'>Actions</TableCell>
+                <TableCell align='center' className='tableCell'>Req Numer</TableCell>
+                <TableCell align='center' className='tableCell'>Date of Creation</TableCell>
+                <TableCell align='center' className='tableCell'>Status</TableCell>
+                <TableCell align='center' className='tableCell'>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
               {requests?.map((row, index) => (
-                <Row key={row.id} row={row} index={index} id={id} />
+                <Row key={row.id} row={row} rowsLength={requests.length} index={index} id={id} />
               ))}
             </TableBody>
           </Table>
@@ -168,18 +168,6 @@ const StyledBox = styled.div`
     background-color: #ececec;
   }
 
-  .tableBox {
-    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
-    border-radius: 0.5rem;
-    padding-top: 0rem;
-
-
-    .title {
-      padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-  }
 
   .MuiTableCell-root {
     border: none;
@@ -208,10 +196,25 @@ const StyledBox = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
   
@@ -221,12 +224,18 @@ const StyledBox = styled.div`
 
 const Container1 = styled.div`
   width: 98%;
-  margin: 0rem auto;
   display: flex;
   flex-direction: column;
+  margin: 1rem auto;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
+
+  .title {
+    padding-left: 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
 `;
 
 
@@ -250,6 +259,13 @@ const BoxRow = styled.div`
   min-width: 10rem;
   justify-content: start;
   padding: 0.5rem 0.5rem;
+
+  ${(props) =>
+    props.isLast &&
+    css`
+      bottom: 1.4rem;
+      right: 10%;
+    `}
 }
 
 

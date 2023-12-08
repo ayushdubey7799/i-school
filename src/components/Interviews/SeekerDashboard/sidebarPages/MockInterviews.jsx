@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import ProgressBar from "../../../commonComponents/ProgressBar";
+import SeekerTableSearchBar from "../seekerCommonComponents/SeekerTableSearchBar";
 
 
 const Row = (props) => {
@@ -23,21 +24,21 @@ const Row = (props) => {
         className={`${index % 2 == 1 ? 'colored' : ''}`}
         sx={{ "& > *": { borderBottom: "unset" } }}
       >
-        <TableCell component="th" scope="row" align='center'>
-          {row.id.slice(0, 8)}
+        <TableCell component="th" scope="row" align='center' className='tableCell'>
+          {row.id.slice(0, 8).toUpperCase()}
         </TableCell>{" "}
-        <TableCell component="th" scope="row" align='center'>
+        <TableCell component="th" scope="row" align='center' className='tableCell'>
           {row.createdAt.split('T')[0]}
         </TableCell>
         {/* {row.status == 'COMPLETED' && */}
-        <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', alignItems: 'center', justifyContent: 'center' }} align="center">
+        <TableCell component="th" scope="row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', alignItems: 'center', justifyContent: 'center' }} align="center" className='tableCell'>
           <ProgressBar progress={row.score} maxScore={row.maxScore} />
           <span style={{ fontSize: '0.7rem' }}>{row.score}/{row.maxScore}</span>
         </TableCell>
         {/* } */}
 
         {/* {row.status == 'COMPLETED' && */}
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
           <button onClick={() => navigate(`/score/${row.id}`)} className="btn">Get Details</button>
         </TableCell>
         {/* } */}
@@ -47,11 +48,7 @@ const Row = (props) => {
 }
 
 const MockInterviews = ({ filteredData }) => {
-  const [searchParams, setSearchParams] = useState('');
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
+  const [searchValue, setSearchValue] = useState();
 
 
   if (!filteredData?.data?.data?.length) {
@@ -64,22 +61,15 @@ const MockInterviews = ({ filteredData }) => {
       <TableContainer component={Paper} className="tableBox">
         <span className='title'>Mock Interviews</span>
         <SearchBarContainer>
-          <div className='skillBox'>
-            <img src={searchBlack} />
-            <input
-              className='skillInput'
-              type="text"
-              placeholder="Search"
-            />
-          </div>
+          <SeekerTableSearchBar value={searchValue} setValue={setSearchValue}/>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align='center'>Test ID</TableCell>
-              <TableCell align='center'>Date of Interview</TableCell>
-              <TableCell align='center'>Score</TableCell>
-              <TableCell align="center">Details</TableCell>
+              <TableCell align='center' className='tableCell'>Test ID</TableCell>
+              <TableCell align='center' className='tableCell'>Date of Interview</TableCell>
+              <TableCell align='center' className='tableCell'>Score</TableCell>
+              <TableCell align="center" className='tableCell'>Details</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
@@ -112,10 +102,12 @@ const StyledInterviews = styled.div`
 
     .title {
       padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
-  }.tableBox {
+  }
+  
+  .tableBox {
     box-shadow: 0 0 0.7rem 0 rgba(0, 0, 0, 0.25);
     border-radius: 1rem;
   }
@@ -130,21 +122,38 @@ const StyledInterviews = styled.div`
 
   .btn {
     background-color: var(--lightOrange);
-    padding: 0.4rem 0.7rem;
+    padding: 0.5rem 0.8rem;
     border: none;
     color: var(--white);
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
+    font-family: var(--font);
   }
 
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
   .selected {
@@ -166,34 +175,5 @@ const SearchBarContainer = styled.div`
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
-
 
 `

@@ -341,7 +341,7 @@ const Content = styled.div`
     .tableCell {
       font-size: 0.9rem;
       font-weight: 500;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
     
@@ -356,7 +356,7 @@ const Content = styled.div`
     .tableCell {
       font-size: 0.8rem;
       font-weight: 400;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
   }
@@ -372,7 +372,7 @@ const Content = styled.div`
     font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
   .checkBox {
@@ -398,7 +398,7 @@ const Button = styled.button`
   align-self: center;
   font-size: 0.9rem;
   font-weight: 600;
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
 `
 
 const SearchBarContainer = styled.div`

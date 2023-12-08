@@ -37,7 +37,7 @@ const Container = styled.div`
     #outlined-basic {
       padding: 0.75rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
@@ -45,7 +45,7 @@ const Container = styled.div`
     #outlined-basic {
       padding: 0.85rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
@@ -53,7 +53,7 @@ const Container = styled.div`
     #outlined-basic {
       padding: 0.95rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
@@ -61,7 +61,7 @@ const Container = styled.div`
     #outlined-basic {
       padding: 1rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
@@ -79,7 +79,7 @@ const Button = styled.button`
   border-radius: 0.3rem;
   cursor: pointer;
   align-self: center;
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
   font-size: 0.9rem;
   font-weight: 600;
 `;

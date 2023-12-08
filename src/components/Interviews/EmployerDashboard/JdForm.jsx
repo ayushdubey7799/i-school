@@ -65,7 +65,7 @@ const Container = styled.div`
       padding: 0.5rem 1rem;
       font-size: 0.8rem;
       font-weight: 400;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
 
     textarea:focus {
@@ -84,7 +84,7 @@ const Form = styled.form`
     #outlined-basic {
       padding: 0.75rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
@@ -92,7 +92,7 @@ const Form = styled.form`
     #outlined-basic {
       padding: 0.85rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
@@ -100,7 +100,7 @@ const Form = styled.form`
     #outlined-basic {
       padding: 0.95rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
@@ -108,14 +108,14 @@ const Form = styled.form`
     #outlined-basic {
       padding: 1rem 0.5rem;
       background-color: #F6F6FB;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
     }
   }
 
   #demo-simple-select-label {
     font-size: 0.8rem;
     font-weight: 400;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 `;
 
@@ -128,7 +128,7 @@ const Label = styled.label`
   top: -0.5rem;
   left: 1rem;
   background-color: var(--white);
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
 `;
 
 const Button = styled.button`
@@ -141,7 +141,7 @@ const Button = styled.button`
   border-radius: 0.3rem;
   cursor: pointer;
   align-self: center;
-  font-family: Quicksand, sans-serif;
+  font-family: var(--font);
 `;
 
 

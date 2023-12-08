@@ -116,7 +116,7 @@ const Container = styled.div`
     .tableCell {
       font-size: 0.9rem;
       font-weight: 500;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
     
@@ -128,7 +128,7 @@ const Container = styled.div`
     .tableCell {
       font-size: 0.8rem;
       font-weight: 400;
-      font-family: Quicksand, sans-serif;
+      font-family: var(--font);
       color: var(--color);
     }
   }

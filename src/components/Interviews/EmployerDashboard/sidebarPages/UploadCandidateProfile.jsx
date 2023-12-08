@@ -119,7 +119,7 @@ const Box = styled.div`
     font-size: 0.9rem;
     font-weight: 600;
     margin-top: 1.5rem;
-    font-family: Quicksand, sans-serif;
+    font-family: var(--font);
   }
 
   .title {
