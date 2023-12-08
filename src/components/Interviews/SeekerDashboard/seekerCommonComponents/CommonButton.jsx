@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
 
-const CommonButton = ({ text, func }) => {
+const CommonButton = ({ text, func, disabled = false }) => {
 
     return (
-        <Button onClick={func}>{text}</Button>
+        <Button onClick={func} disabled={disabled}>{text}</Button>
     )
 }
 

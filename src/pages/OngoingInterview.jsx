@@ -22,6 +22,7 @@ import CodeEditor from "./CodeEditor";
 import { codingQuestionFormat } from "../utils/codingQuestionFormat";
 import CodingQueInterface from '../components/Interviews/SeekerDashboard/CodingQueInterface'
 import CommonButton from "../components/Interviews/SeekerDashboard/seekerCommonComponents/CommonButton";
+import InterviewTerms from "../components/Interviews/SeekerDashboard/seekerCommonComponents/InterviewTerms";
 
 
 const OngoingInterview = ({ start, handleStart }) => {
@@ -34,6 +35,8 @@ const OngoingInterview = ({ start, handleStart }) => {
   const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
   const [audioData, setAudioData] = useState(null);
+
+  const [agreed, setAgreed] = useState(false);
 
   const [language, setLanguage] = useState("javascript");
 
@@ -171,8 +174,8 @@ const OngoingInterview = ({ start, handleStart }) => {
           <div className="head">
             <img src={logo} className="logo" />
             <div className="topMiddleBox">
-            <span className="title">Interview Id : {interviewId}</span>
-            <Timer minutes={minutes} seconds={seconds} />
+              <span className="title">Interview Id : {interviewId}</span>
+              <Timer minutes={minutes} seconds={seconds} />
             </div>
             {(start && data?.questionType == 'coding') &&
               <CommonButton text='Submit' func={() => {
@@ -184,10 +187,10 @@ const OngoingInterview = ({ start, handleStart }) => {
           {start ? (
             <>
               {data?.questionType == "coding" ? (
-                  <CodingQueInterface
-                    queComp={<div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText"></div>}
-                    codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />}
-                  />
+                <CodingQueInterface
+                  queComp={<div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText"></div>}
+                  codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />}
+                />
               ) : (
                 <>
                   <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
@@ -303,7 +306,11 @@ const OngoingInterview = ({ start, handleStart }) => {
               />
             </>
           ) : (
-            <CommonButton text='Start Interview' func={() => getData(true)} />
+            <div className="startInterviewBox">
+              <InterviewTerms />
+              <label><input type="checkbox" onClick={() => setAgreed(!agreed)} className="checkbox"/>I agree</label>
+              <CommonButton text='Start Interview' func={() => getData(true)} disabled={!agreed} />
+            </div>
           )}
         </StyledInterview>
       )}
@@ -316,10 +323,30 @@ export default OngoingInterview;
 const StyledInterview = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   width: 95%;
   margin: 0rem auto;
   gap: 0.5rem;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .checkbox {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .startInterviewBox {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
 
   .questionText {
     font-size: 0.9rem;
