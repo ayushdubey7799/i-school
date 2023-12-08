@@ -112,7 +112,7 @@ const InterviewFlow = ({ setPage }) => {
             jdId: it.jdId,
             recruiter: current?.recruiter,
             hiringManager: current?.hiringManager,
-            round: current?.stage,
+            round: it?.stage,
             interviewName: current?.interviewName,
             status: current?.status,
             resumeId: current.resumeId
