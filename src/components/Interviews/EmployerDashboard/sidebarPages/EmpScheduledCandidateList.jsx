@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
+import fillFeedbackIcon from '../../../../assets/icons/fillFeedbackIcon.png'
 import visibleIcon from '../../../../assets/icons/visible.png'
 import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import SeekerInterviewDetails from "../../SeekerDashboard/sidebarPages/SeekerInterviewDetails";
@@ -16,7 +17,7 @@ import { useSelector } from "react-redux";
 import TableSearchBar from "../commonComponents/TableSearchBar";
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, jdId, index } = props;
 
 
 
@@ -36,15 +37,15 @@ function Row(props) {
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell align="center" className="tableCell">{row?.interview?.userName}</TableCell>
-        <TableCell align="center" className="tableCell">{row?.interview?.userEmail}</TableCell>
         <TableCell align="center" className="tableCell">{row?.interview?.userContact}</TableCell>
-        <TableCell align="center" className="tableCell">{row?.interview?.recruiter}</TableCell>
-        <TableCell align="center" className="tableCell">{row?.interview?.hiringManager}</TableCell>
-        <TableCell align="center" className="tableCell">{row?.interview?.status}</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">{row?.interview?.stage}</TableCell>
+        <TableCell align="center" className="tableCell"><img src={fillFeedbackIcon} className="icon"/></TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-            <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails />} />
-            <img src={visibleIcon} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
+            <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails jdId={jdId}/>} />
+            <img src={visibleIcon} className="icon" onClick={toggleDrawer('right', true)} />
           </div>
         </TableCell>
       </TableRow>
@@ -55,6 +56,7 @@ function Row(props) {
 
 const EmpScheduledCandidateList = ({ page, setPage }) => {
   const [tableRows, setTableRows] = useState([]);
+  const [total, setTotal] = useState(0);
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
@@ -64,6 +66,7 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
     const getData = async () => {
       const res = await getAllTrackers(accessToken, clientCode, page.jdId);
       console.log(res?.data?.data);
+      setTotal(res?.data?.total);
       setTableRows(res?.data?.data);
     }
 
@@ -86,22 +89,23 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
 
         <SearchBarContainer>
           <TableSearchBar value={searchValue} setValue={setSearchValue} />
+          <span className="headerText">Total Candidates: {total}</span>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
               <TableCell align="center" className="tableCell">Candidate Name</TableCell>
-              <TableCell align="center" className="tableCell">Email</TableCell>
               <TableCell align="center" className="tableCell">Contact</TableCell>
-              <TableCell align="center" className="tableCell">Recruiter</TableCell>
-              <TableCell align="center" className="tableCell">Hiring Manager</TableCell>
-              <TableCell align="center" className="tableCell">Status</TableCell>
+              <TableCell align="center" className="tableCell">Role</TableCell>
+              <TableCell align="center" className="tableCell">Interview Link</TableCell>
+              <TableCell align="center" className="tableCell">Current Round</TableCell>
+              <TableCell align="center" className="tableCell">Fill Feedback</TableCell>
               <TableCell align="center" className="tableCell">Details</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
             {tableRows?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} />
+              <Row key={row.id} row={row} jdId={page.jdId} index={index} />
             ))}
           </TableBody>
         </Table>
@@ -124,6 +128,11 @@ const SearchBarContainer = styled.div`
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
+
+  .headerText {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
 
 
   .skillBox {
@@ -165,6 +174,15 @@ flex-direction: column;
 align-items: center;
 font-family: var(--font);
 color: var(--color);
+
+.icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  cursor: pointer;
+  border: 0.075rem solid grey;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+}
 
 
 .colored {

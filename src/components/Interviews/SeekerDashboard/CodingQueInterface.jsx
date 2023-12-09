@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const CodingQueInterface = ({ queComp, codeEditorComp }) => {
     const [sizes, setSizes] = useState(['49.5%', '49.5%']);
-    const [sizes2, setSizes2] = useState(['80%', '20%']);
+    const [sizes2, setSizes2] = useState(['100%', '0%']);
 
     const layoutCSS = {
         height: '100%',
@@ -36,11 +36,11 @@ const CodingQueInterface = ({ queComp, codeEditorComp }) => {
                 <Pane minSize='10%' maxSize='90%'>
                     <div style={{ ...layoutCSS, ...rowCSS }} className='rightBox'>
                         <SplitPane split="horizontal" sizes={sizes2} onChange={setSizes2}>
-                            <Pane minSize='10%' maxSize='90%'>
+                            <Pane minSize='99%' maxSize='99%'>
                                 <div style={{ ...contentCSS }} className='rightBox1'>{codeEditorComp && codeEditorComp}</div>
                             </Pane>
-                            <Pane minSize='10%' maxSize='90%'>
-                                <div style={{ ...contentCSS }} className='rightBox2'>Test Cases Playground</div>
+                            <Pane minSize='0%' maxSize='1%'>
+                                {/* <div style={{ ...contentCSS }} className='rightBox2'></div> */}
                             </Pane>
                         </SplitPane>
                     </div>
@@ -65,6 +65,7 @@ display: flex;
     margin: 0 0.5rem 0 0;
     padding: 1rem;
     box-sizing: border-box;
+    
 
     &::-webkit-scrollbar {
         width: 0.2rem;
@@ -87,9 +88,6 @@ display: flex;
     } 
 }
 
-.middleBox {
-
-}
 
 .rightBox {
     background-color: var(--white);
@@ -104,8 +102,7 @@ display: flex;
     background-color: var(--white);
     // margin: 0 0 0.5rem 0;
     box-sizing: border-box;
-    padding: 0;
-
+    padding: 0 0 1rem 0;
 }
 
 
