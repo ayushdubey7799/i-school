@@ -2,24 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 
 const ProgressBar = ({ progress, maxScore }) => {
-    const [completedWidth, setCompletedWidth] = useState(0);
-
-    useEffect(() => {
-        // Update completed width when progress changes
-        setCompletedWidth(progress);
-    }, [progress]);
 
     const scorePercentage = ((progress * 100) / maxScore);
 
     const completedStyle = {
         height: '100%',
-        width: `${completedWidth}%`,
+        width: `${scorePercentage}%`,
         backgroundColor: 'green',
     };
 
     const remainingStyle = {
         height: '100%',
-        width: `${100 - completedWidth}%`,
+        width: `${100 - scorePercentage}%`,
         backgroundColor: 'lightgrey',
     };
 

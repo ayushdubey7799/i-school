@@ -47,7 +47,7 @@ const interviewData = [
 ];
 
 
-const SeekerInterviewDetails = () => {
+const SeekerInterviewDetails = ({jdId}) => {
 
     return (
         <Box>
@@ -57,20 +57,28 @@ const SeekerInterviewDetails = () => {
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>Name:</span> John Doe</span>
                         <span className='text'><span className='boldText'>Contact:</span> 8000020000</span>
+                        <span className='text'><span className='boldText'>Recruiter:</span> D Trump</span>
                     </div>
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>Email:</span> johndoe@gmail.com</span>
                         <span className='text'><span className='boldText'>Profile ID:</span> 142002</span>
+                        <span className='text'><span className='boldText'>Hiring Manager:</span> Napoleon Bonaparte</span>
                     </div>
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>UserName:</span> john2002</span>
                         <span className='resumeText'><span className='boldText'>Resume:</span><button>view resume</button></span>
                     </div>
                 </div>
+                <div className='textBox'>
+                    <div className='childBox'>
+                        
+                        
+                    </div>
+                </div>
             </div>
 
             <div className='box2'>
-                <span className='title'>Interview Details for JD ID: ...</span>
+                <span className='title'>Interview Details for JD ID: {jdId}</span>
                 <div className='cardMainBox'>
                     {
                         interviewData.map((interview, index) => (

@@ -8,13 +8,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { getActiveJds } from "../../../../slices/jdSlice";
+import { getActiveJds } from "../../slices/jdSlice";
 import { useDispatch } from "react-redux";
-import { getJdsForMatching } from "../../../../functions/api/employers/match/getJdsForMatching";
-import TableSearchBar from "../commonComponents/TableSearchBar";
+import { getJdsForMatching } from "../../functions/api/employers/match/getJdsForMatching";
+import TableSearchBar from "../Interviews/EmployerDashboard/commonComponents/TableSearchBar";
+import uploadIcon from '../../assets/icons/upload.png'
+
+
 
 function Row(props) {
-  const { row, index, setPage } = props;
+  const { row, index } = props;
 
   return (
     <React.Fragment>
@@ -28,8 +31,8 @@ function Row(props) {
         <TableCell align="center" className="tableCell">{row.secondStage ? row.secondStage : '0'}</TableCell>
         <TableCell align="center" className="tableCell">{row.thirdStage ? row.thirdStage : '0'}</TableCell>
         <TableCell align="center" className="tableCell">...</TableCell>
-        <TableCell component="th" scope="row" align="center" className="tableCell">
-          <button className="btn" onClick={() => setPage({ index: 2, jdId: row.jdId })}>View Details</button>
+        <TableCell component="th" scope="row" align="center" className="tableCell" style={{ display: 'flex', justifyContent: 'center' }}>
+          <button className="btn"><img src={uploadIcon} className="icon" /></button>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -37,7 +40,7 @@ function Row(props) {
 }
 
 
-const EmpScheduledInterviews = ({ setPage }) => {
+const AgencyInterviewDashboard = () => {
   const [tableRows, setTableRows] = useState([]);
   const [jdData, setJdData] = useState([]);
 
@@ -89,7 +92,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
     <Content>
       <TableContainer component={Paper} className="tableBox">
         <div className="titleBox">
-          <span className="title">Scheduled Interviews</span>
+          <span className="title">JDs List</span>
         </div>
 
         <SearchBarContainer>
@@ -106,12 +109,12 @@ const EmpScheduledInterviews = ({ setPage }) => {
               <TableCell align="center" className="tableCell">Second Round</TableCell>
               <TableCell align="center" className="tableCell">Third Round</TableCell>
               <TableCell align="center" className="tableCell">HR Round</TableCell>
-              <TableCell align="center" className="tableCell">Details</TableCell>
+              <TableCell align="center" className="tableCell">Upload Profiles</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
             {tableRows?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} setPage={setPage} />
+              <Row key={row.id} row={row} index={index} />
             ))}
           </TableBody>
         </Table>
@@ -120,7 +123,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
   )
 }
 
-export default EmpScheduledInterviews
+export default AgencyInterviewDashboard
 
 
 const SearchBarContainer = styled.div`
@@ -143,6 +146,7 @@ padding: 0 1%;
 display: flex;
 flex-direction: column;
 align-items: center;
+
 
 
 .colored {
@@ -211,15 +215,22 @@ align-items: center;
 
 
 .btn {
-  padding: 0.4rem 0.5rem;
   background-color: var(--lightOrange);
   border: none;
   color: var(--white);
-  font-size: 0.8rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   cursor: pointer;
-  font-family: var(--font);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.2rem;
+}
 }
 
 `
