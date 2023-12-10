@@ -17,6 +17,8 @@ import threeDot from "../../../../assets/icons/threeDot.png";
 import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import ManageUserForm from "../ManageUserForm";
+import { getEmployees, getEmployers } from "../../../../functions/api/employers/profile/getEmployees";
+import { useSelector } from "react-redux";
 
 function Row(props) {
   const { row, rowsLength, index } = props;
@@ -78,11 +80,11 @@ function Row(props) {
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          ...
+          {row.name}
         </TableCell>{" "}
-        <TableCell align="center" className="tableCell">...</TableCell>
-        <TableCell align="center" className="tableCell">...</TableCell>
-        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">{row.email}</TableCell>
+        <TableCell align="center" className="tableCell">{row.contact}</TableCell>
+        <TableCell align="center" className="tableCell">{row.role}</TableCell>
         <TableCell align="center" className="tableCell">
           <BoxRow isLast={index >= rowsLength - 2}>
             <img
@@ -122,7 +124,18 @@ function Row(props) {
 
 export default function ManageUsers() {
   const [openBasic, setOpenBasic] = useState(false);
+  const [users,setUsers] = useState([]);
 
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getEmployees(accessToken,clientCode);
+      setUsers(res?.data?.data)
+    }
+    getData();
+  },[])
 
   return (
     <StyledDiv>

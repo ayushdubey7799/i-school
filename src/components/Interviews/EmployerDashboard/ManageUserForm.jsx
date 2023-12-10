@@ -7,6 +7,9 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { toast } from 'react-toastify';
+import { addEmployee } from '../../../functions/api/employers/profile/addEmployee';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   width: 100%;
@@ -95,6 +98,9 @@ function ManageUserForm({ array, handleClose }) {
         agencyContact: '',
     });
 
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
 
     useEffect(() => {
         if (array[0]) {
@@ -113,9 +119,13 @@ function ManageUserForm({ array, handleClose }) {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        handleClose();
+        const res = await addEmployee(formData,accessToken,clientCode);
+        if(res){
+            toast.success("Employer added successfully");
+            handleClose()
+        };
     };
 
     return (
