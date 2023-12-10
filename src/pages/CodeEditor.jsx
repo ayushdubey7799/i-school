@@ -68,7 +68,7 @@ export default CodeEditor
 
 const Box = styled.div`
 width: 100%;
-height: 100%;
+height: 95%;
 display: flex;
 padding: 0;
 margin: 0;
@@ -81,10 +81,32 @@ align-items: start;
 
 const LanguageSelector = styled.select`
   margin-bottom: 0rem;
-  border-color: grey;
+  border-color: transparent;
   font-size: 0.8rem;
   padding: 0.4rem 0.5rem;
   border-top-left-radius: 0.3rem;
   border-top-right-radius: 0.3rem;
-  outline-color: grey;
+  outline-color: transparent;
+  margin-bottom: 0.5rem;
+
+
+  &::-webkit-scrollbar {
+    width: 0.2rem;
+}
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 0.2rem;
+    margin: 0.5rem 0;
+}
+
+  &::-webkit-scrollbar-thumb {
+    background: grey;
+    width: 0.2rem;
+    border-radius: 0.2rem;
+}
+
+& {
+  scrollbar-width: none;
+} 
 `;

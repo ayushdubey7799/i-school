@@ -173,15 +173,16 @@ const OngoingInterview = ({ start, handleStart }) => {
         <StyledInterview>
           <div className="head">
             <img src={logo} className="logo" />
-            <div className="topMiddleBox">
-              <span className="title">Interview Id : {interviewId}</span>
+            <span className="title">Interview Id : {interviewId}</span>
+            
+            <div className="topLastBox">
               <Timer minutes={minutes} seconds={seconds} />
+              {(start && data?.questionType == 'coding') &&
+                <CommonButton text='Submit' func={() => {
+                  handleSubmitAnswer(data.id, data.lastQuestion);
+                  handleSubmitInterview();
+                }} />}
             </div>
-            {(start && data?.questionType == 'coding') &&
-              <CommonButton text='Submit' func={() => {
-                handleSubmitAnswer(data.id, data.lastQuestion);
-                handleSubmitInterview();
-              }} />}
           </div>
 
           {start ? (
@@ -192,8 +193,8 @@ const OngoingInterview = ({ start, handleStart }) => {
                   codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />}
                 />
               ) : (
-                <>
-                  <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }}></div>
+                <div className="subjectiveBox">
+                  <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText questionText2"></div>
                   <textarea
                     // onPaste={handlePaste}
                     // onCut={handleCutCopy}
@@ -202,7 +203,7 @@ const OngoingInterview = ({ start, handleStart }) => {
                     value={input}
                     onChange={(e) => handleChange(e)}
                   />
-                </>
+                </div>
               )}
 
               {(data?.lastQuestion && data?.questionType !== 'coding') ? (
@@ -220,6 +221,7 @@ const OngoingInterview = ({ start, handleStart }) => {
                         await handleSubmitAnswer(data.id, data.lastQuestion);
                         await handleSubmitInterview();
                       }}
+                      width='15%'
                     />
 
                     <div className="btnBox2">
@@ -291,6 +293,7 @@ const OngoingInterview = ({ start, handleStart }) => {
                         handleSubmitAnswer(data.id, data.lastQuestion);
                         getData(false);
                       }}
+                      width='15%'
                       className="btn"
                     />
 
@@ -308,7 +311,7 @@ const OngoingInterview = ({ start, handleStart }) => {
           ) : (
             <div className="startInterviewBox">
               <InterviewTerms />
-              <label><input type="checkbox" onClick={() => setAgreed(!agreed)} className="checkbox"/>I agree</label>
+              <label><input type="checkbox" onClick={() => setAgreed(!agreed)} className="checkbox" />I agree</label>
               <CommonButton text='Start Interview' func={() => getData(true)} disabled={!agreed} />
             </div>
           )}
@@ -353,6 +356,15 @@ const StyledInterview = styled.div`
     font-weight: 500;
   }
 
+  .subjectiveBox {
+    margin-top: 3rem;
+    width: 100%;
+
+    .questionText2 {
+      margin-bottom: 1.5rem;
+    }
+  }
+
   .codingMainBox {
     display: flex;
     width: 100%;
@@ -382,10 +394,10 @@ const StyledInterview = styled.div`
     align-items: center;
     height: 2.5rem;
 
-    .topMiddleBox {
+    .topLastBox {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1rem;
     }
 
     .logo {

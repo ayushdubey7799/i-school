@@ -49,10 +49,10 @@ export default InterviewTerms
 const Box = styled.div`
 display: flex;
 flex-direction: column;
-gap: 0.2rem;
-height: 40vh;
-width: 60%;
-font-size: 0.85rem;
+gap: 0.3rem;
+height: 50vh;
+width: 90%;
+font-size: 0.9rem;
 font-weight: 400;
 line-height: 1rem;
 border: 0.075rem solid grey;
@@ -62,8 +62,8 @@ padding: 1rem;
 box-sizing: border-box;
 
 .title {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 600;
     margin: 0.5rem 0;
 }
 
