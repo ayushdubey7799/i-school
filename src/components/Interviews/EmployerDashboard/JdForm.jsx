@@ -36,13 +36,20 @@ const Container = styled.div`
     margin-bottom: 0.5rem;
   }
 
+  .relative {
+    position: relative;
+    width: 100%;
+  }
+
   .helperText {
     display: block;
     font-size: 0.75rem;
     margin: -0.5rem 0;
     color: red;
     font-weight: 400;
-
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
   }
 
   .check {
@@ -79,6 +86,13 @@ const Form = styled.form`
   flex-direction: column;
   padding-bottom: 1rem;
   gap: 1rem;
+
+  .inputBox {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
 
   @media (max-width: 2000px) {
     #outlined-basic {
@@ -314,93 +328,132 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   return (
     <Container>
       <span className='mainTitle'>JD Registration</span>
+
       <Form onSubmit={handleSubmit}>
-        <TextField
-          id="outlined-basic"
-          label="JD ID"
-          variant="outlined"
-          type="text"
-          name="jdId"
-          value={formData.jdId}
-          onChange={handleChange}
-          onBlur={() => checkJdPresent(formData.jdId)}
-          onFocus={handleJdPresentError}
-          disabled={mode == "edit"}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          required
-        />
-        {jdExist && <span className='helperText'>JD already exists</span>}
+        <div className="inputBox">
+          <div className="relative">
+          <TextField
+            id="outlined-basic"
+            label="JD ID"
+            variant="outlined"
+            type="text"
+            name="jdId"
+            value={formData.jdId}
+            onChange={handleChange}
+            onBlur={() => checkJdPresent(formData.jdId)}
+            onFocus={handleJdPresentError}
+            disabled={mode == "edit"}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            required
+            fullWidth
+          />
+          {jdExist && <span className='helperText'>JD already exists</span>}
+          </div>
 
-        <TextField
-          id="outlined-basic"
-          label="Number of Reqs"
-          variant="outlined"
-          type="text"
-          name="numOfReqs"
-          value={formData.numOfReqs}
-          onChange={handleChange}
-          onBlur={() => checkReqs()}
-          onFocus={() => setReqsError(false)}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-          required
-        />
-        {reqsError && <span>Error Message:</span>}
+          <TextField
+            id="outlined-basic"
+            label="Number of Reqs"
+            variant="outlined"
+            type="text"
+            name="numOfReqs"
+            value={formData.numOfReqs}
+            onChange={handleChange}
+            onBlur={() => checkReqs()}
+            onFocus={() => setReqsError(false)}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+            required
+            fullWidth
+          />
+          {/* {reqsError && <span>Error Message:</span>} */}
+        </div>
 
-        <TextField
-          id="outlined-basic"
-          label="Title"
-          variant="outlined"
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-          required
-        />
+
+        <div className="inputBox">
+          <TextField
+            id="outlined-basic"
+            label="Title"
+            variant="outlined"
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+            required
+            fullWidth
+          />
+
+          <TextField
+            id="outlined-basic"
+            label="Exp"
+            variant="outlined"
+            type="text"
+            name="exp"
+            value={formData.exp}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+            required
+            fullWidth
+          />
+        </div>
 
         <div className="fileInputBox">
           <Label>Job Description</Label>
@@ -414,26 +467,53 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           ></textarea>
         </div>
 
-        <Stack spacing={3} sx={{ width: "100%", }}>
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            options={technicalSkills}
-            getOptionLabel={(option) => option}
-            onChange={handleSkillsChange}
-            value={selectedSkills}
-            required
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Skills"
-                sx={{ backgroundColor: "#F6F6FB", }}
-                disabled={jdExist}
-              />
-            )}
-          />
-        </Stack>
+        <div className="inputBox">
+          <Stack spacing={3} sx={{ width: "100%", }}>
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              options={technicalSkills}
+              getOptionLabel={(option) => option}
+              onChange={handleSkillsChange}
+              value={selectedSkills}
+              required
+              fullWidth
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Skills"
+                  sx={{ backgroundColor: "#F6F6FB", }}
+                  disabled={jdExist}
+                />
+              )}
+            />
+          </Stack>
 
+          <Stack spacing={3} sx={{ width: "100%" }}>
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              options={locations}
+              getOptionLabel={(option) => option}
+              onChange={handleLocationsChange}
+              value={selectedLocations}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Location"
+                  sx={{ backgroundColor: "#F6F6FB" }}
+                  disabled={jdExist}
+
+                />
+              )}
+              disabled={jdExist}
+              fullWidth
+            />
+          </Stack>
+
+        </div>
+
+        <div className="inputBox">
         <TextField
           id="outlined-basic"
           label="BU"
@@ -458,55 +538,8 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
             },
           }}
           disabled={jdExist}
+          fullWidth
         />
-
-        <TextField
-          id="outlined-basic"
-          label="Exp"
-          variant="outlined"
-          type="text"
-          name="exp"
-          value={formData.exp}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-          required
-        />
-
-        <Stack spacing={3} sx={{ width: "100%" }}>
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            options={locations}
-            getOptionLabel={(option) => option}
-            onChange={handleLocationsChange}
-            value={selectedLocations}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Location"
-                sx={{ backgroundColor: "#F6F6FB" }}
-                disabled={jdExist}
-
-              />
-            )}
-            disabled={jdExist}
-          />
-        </Stack>
 
         <TextField
           id="outlined-basic"
@@ -532,8 +565,11 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
             },
           }}
           disabled={jdExist}
+          fullWidth
         />
+        </div>
 
+        <div className="inputBox">
         <TextField
           id="outlined-basic"
           label="CTC"
@@ -558,6 +594,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
             },
           }}
           disabled={jdExist}
+          fullWidth
         />
 
         <TextField
@@ -569,6 +606,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.keywords}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
+          fullWidth
           inputProps={{
             sx: {
               color: "#626264",
@@ -585,7 +623,9 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           }}
           disabled={jdExist}
         />
+        </div>
 
+        <div className="inputBox">
         <TextField
           id="outlined-basic"
           label="Hiring Manager"
@@ -595,6 +635,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
           value={formData.hiringManager}
           onChange={handleChange}
           sx={{ backgroundColor: "#F6F6FB" }}
+          fullWidth
           inputProps={{
             sx: {
               color: "#626264",
@@ -636,8 +677,11 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
             },
           }}
           disabled={jdExist}
+          fullWidth
         />
+        </div>
 
+        <div className="inputBox">
         <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
           <InputLabel id="demo-simple-select-label">Worker Type</InputLabel>
           <Select
@@ -711,7 +755,9 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
             <MenuItem value="6months">6 Months</MenuItem>
           </Select>
         </FormControl>
+        </div>
 
+        <div className="inputBox">
         <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
           <InputLabel id="demo-simple-select-label">Company Type</InputLabel>
           <Select
@@ -787,7 +833,9 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
             <MenuItem value="3months">3 Months</MenuItem>
           </Select>
         </FormControl>
+        </div>
 
+        <div className="inputBox" style={{width: 'calc(50% - 1rem)'}}>
         <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth required>
           <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
           <Select
@@ -821,12 +869,13 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
             <MenuItem value="PRIVATE">Private</MenuItem>
           </Select>
         </FormControl>
+        </div>
 
         <Button type="submit" disabled={jdExist}>
           {mode == "create" ? "Submit" : "Save Changes"}
         </Button>
       </Form>
-    </Container>
+    </Container >
   );
 }
 
