@@ -22,7 +22,7 @@ const CloneJDForm = ({array}) => {
         <Box>
             <span className='title'>Clone Existing JD</span>
             <div className='box'>
-            <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth>
+            <FormControl sx={{ backgroundColor: '#F6F6FB' }} fullWidth className='select'>
                 <InputLabel id="demo-simple-select-label" sx={{fontStyle: 'Quicksand, sans-serif', fontSize: '0.9rem'}}>All JDs</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
@@ -51,12 +51,13 @@ const CloneJDForm = ({array}) => {
 export default CloneJDForm
 
 const Box = styled.div`
-display: flex;
 flex-direction: column;
 align-items: center;
 gap: 2rem;
-width: 100%;
-margin-top: 2rem;
+width: 30rem;
+padding: 2rem 5rem;
+box-sizing: border-box;
+
 
 .box {
     display: grid;
@@ -73,14 +74,13 @@ margin-top: 2rem;
     }
 }
 
-input {
-    width: 50%;
-}
 
 .title {
     align-self: start;
     font-size: 0.9rem;
     font-weight: 600;
+    display: block;
+    margin-bottom: 2rem;
 }
 
 `

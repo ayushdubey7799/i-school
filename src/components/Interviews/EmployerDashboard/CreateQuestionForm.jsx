@@ -68,6 +68,25 @@ const Form = styled.form`
   flex-direction: column;
   padding-bottom: 1rem;
   gap: 0.7rem;
+
+  .inputBox {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .inputBoxMap {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    flex-flow: row wrap;
+  }
+
+  .box {
+    width: calc(50% - 1rem);
+  }
 `;
 
 const Label = styled.label`
@@ -98,10 +117,13 @@ const Button = styled.button`
   font-size: 0.9rem;
   font-weight: 600;
   font-family: var(--font);
+  display: flex;
+  align-self: center;
+  margin: 1rem auto;
 `;
 
 
-function CreateQuestionForm({editingIndex, setEditingIndex}) {
+function CreateQuestionForm({ editingIndex, setEditingIndex }) {
   const [formData, setFormData] = useState({
     type: '',
     role: '',
@@ -174,19 +196,49 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
 
   return (
     <Container>
-      <span className='title'>{editingIndex === -1 ? 'Create' : 'Update' } Question Form</span>
+      <span className='title'>{editingIndex === -1 ? 'Create' : 'Update'} Question Form</span>
       <Form onSubmit={editingIndex === -1 ? handleAddQuestion : handleUpdateQuestion}>
 
-        <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
-          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Question Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Question Type"
-            name="type"
-            value={formData.type}
+        <div className="inputBox">
+          <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
+            <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Question Type</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Question Type"
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              size='small'
+              inputProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              sx={{
+                padding: '0rem 0 0.5rem 0',
+              }}
+            >
+              <MenuItem value="Subjective">Subjective</MenuItem>
+              <MenuItem value="Objective">Objective</MenuItem>
+              <MenuItem value="Coding">Coding</MenuItem>
+            </Select>
+          </FormControl>
+
+          <TextField id="outlined-basic" label="Role (SDE, HR, Manager...)" variant="outlined"
+            type='text'
+            name="role"
+            value={formData.role}
             onChange={handleChange}
-            size='small'
             inputProps={{
               sx: {
                 color: '#626264',
@@ -201,59 +253,70 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
                 fontWeight: '400'
               },
             }}
-            sx={{
-              padding: '0rem 0 0.5rem 0',
+            required
+            fullWidth
+          />
+        </div>
+
+        <div className="inputBox">
+          <TextField id="outlined-basic" label="Tag" variant="outlined"
+            type='text'
+            name="tag"
+            value={formData.tag}
+            onChange={handleChange}
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
             }}
-          >
-            <MenuItem value="Subjective">Subjective</MenuItem>
-            <MenuItem value="Objective">Objective</MenuItem>
-            <MenuItem value="Coding">Coding</MenuItem>
-          </Select>
-        </FormControl>
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            required
+            fullWidth
+          />
 
-        <TextField id="outlined-basic" label="Role (SDE, HR, Manager...)" variant="outlined"
-          type='text'
-          name="role"
-          value={formData.role}
-          onChange={handleChange}
-          inputProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          required
-        />
-
-        <TextField id="outlined-basic" label="Tag" variant="outlined"
-          type='text'
-          name="tag"
-          value={formData.tag}
-          onChange={handleChange}
-          inputProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          required
-        />
+          <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
+            <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              size='small'
+              inputProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              sx={{
+                padding: '0rem 0 0.5rem 0',
+              }}
+            >
+              <MenuItem value="Technical">Technical</MenuItem>
+              <MenuItem value="Non-technical">Non-technical</MenuItem>
+              <MenuItem value="Aptitude">Aptitude</MenuItem>
+              <MenuItem value="Cultural">Cultural</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
 
         <div className='textAreaBox'>
           <label>Que Description</label>
@@ -266,46 +329,15 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
           />
         </div>
 
-        <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
-          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            size='small'
-            inputProps={{
-              sx: {
-                color: '#626264',
-                fontSize: '0.8rem',
-                fontWeight: '400'
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: '#626264',
-                fontSize: '0.8rem',
-                fontWeight: '400'
-              },
-            }}
-            sx={{
-              padding: '0rem 0 0.5rem 0',
-            }}
-          >
-            <MenuItem value="Technical">Technical</MenuItem>
-            <MenuItem value="Non-technical">Non-technical</MenuItem>
-            <MenuItem value="Aptitude">Aptitude</MenuItem>
-            <MenuItem value="Cultural">Cultural</MenuItem>
-          </Select>
-        </FormControl>
+
+
 
         {formData.type === 'Objective' && (
           <>
             <Label>Choices</Label>
+            <div className="inputBoxMap">
             {formData.choices.map((choice, index) => (
-              <div key={index}>
+              <div key={index} className='box'>
                 <TextField id="outlined-basic" label={index + 1} variant="outlined"
                   type='text'
                   value={choice}
@@ -329,7 +361,9 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
                 />
               </div>
             ))}
+            </div>
 
+            <div style={{width: 'calc(50% - 1rem)'}}>
             <TextField id="outlined-basic" label="Correct Answer" variant="outlined"
               type='text'
               name="correctAnswer"
@@ -350,7 +384,9 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
                 },
               }}
               required
+              fullWidth
             />
+            </div>
           </>
         )}
 

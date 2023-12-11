@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 import { forgetPassword } from '../functions/api/authentication/forget';
 import styled from 'styled-components';
@@ -7,64 +7,83 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton } from "@mui/material";
 import loginImg from "../assets/loginPageSecureImg.png";
 import { Link, useNavigate } from 'react-router-dom';
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 const Forgot = () => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
 
-    const handleReset = async (e) => {
-        e.preventDefault();
-        const res = await forgetPassword(email);
-        toast.success(res.message);
-        setEmail('');
+  const captchaRef = useRef(null);
+  const [captchaError, setCaptchaError] = useState(false);
+
+  const handleReset = async (e) => {
+    e.preventDefault();
+
+    const token = captchaRef.current.getValue();
+
+    if (!token) {
+      setCaptchaError(true);
+    } else {
+      const res = await forgetPassword(email);
+      setCaptchaError(false);
+      captchaRef.current.reset();
+      toast.success(res.message);
+      setEmail('');
     }
+  }
 
-    return (
-        <StyledDiv>
-            <div
-                style={{
-                    height: "3.5rem",
-                    position: "absolute",
-                    top: "1rem",
-                    left: "3rem",
-                }}
-            >
-                <img src={logo} style={{ height: "100%" }} />
-            </div>
+  return (
+    <StyledDiv>
+      <div
+        style={{
+          height: "3.5rem",
+          position: "absolute",
+          top: "1rem",
+          left: "3rem",
+        }}
+      >
+        <img src={logo} style={{ height: "100%" }} />
+      </div>
 
-            <IconButton onClick={() => navigate("/")} className="prev">
-                <ArrowBackIcon sx={{ fontSize: "30px" }} />
-            </IconButton>
-            <>
-                <div id="form">
-                    <h1>Reset</h1>
+      <IconButton onClick={() => navigate("/")} className="prev">
+        <ArrowBackIcon sx={{ fontSize: "30px" }} />
+      </IconButton>
+      <>
+        <div id="form">
+          <h1>Reset</h1>
 
-                    <p>Enter your Email</p>
+          <p>Enter your Email</p>
 
-                    <form onSubmit={handleReset}>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            placeholder="Enter Email Address"
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <button type="submit" className="btn">
-                            Reset your Password
-                        </button>
-                    </form>
-                    <p>
-                        Don't have an account? <Link to="/signup">Sign Up</Link>
-                    </p>
-                </div>
-                <div id="cover">
-                    <img src={loginImg} />
-                </div>
-            </>
-        </StyledDiv>
-    )
+          <form onSubmit={handleReset}>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              placeholder="Enter Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <ReCAPTCHA
+              sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
+              ref={captchaRef}
+              size="normal"
+            />
+            {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
+            <button type="submit" className="btn">
+              Reset your Password
+            </button>
+          </form>
+          <p>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
+        </div>
+        <div id="cover">
+          <img src={loginImg} />
+        </div>
+      </>
+    </StyledDiv>
+  )
 }
 
 export default Forgot
@@ -74,6 +93,14 @@ const StyledDiv = styled.div`
 display: flex;
   width: 100%;
   margin-top: 0rem;
+
+  .captchaErrorText {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: red;
+    margin-top: -0.5rem;
+  }
+
 
   form {
     display: flex;
