@@ -276,9 +276,8 @@ function Row(props) {
             <img
               src={threeDot}
               style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
-              className={`three-dots ${
-                openDropdownIndex === index ? "active" : ""
-              }`}
+              className={`three-dots ${openDropdownIndex === index ? "active" : ""
+                }`}
               onClick={() => {
                 if (openDropdownIndex === index) {
                   closeAllDropdowns();
@@ -288,9 +287,8 @@ function Row(props) {
               }}
             />
             <div
-              className={`dropdown-content ${
-                openDropdownIndex === index ? "open" : ""
-              }`}
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
+                }`}
               ref={dropdownRef}
             >
               <CommonDrawer
@@ -405,12 +403,12 @@ const JdRegistration = () => {
   useEffect(() => {
     if (searchValue?.trim()) {
       setSearch(true);
-      setFilteredData(() => jdData.filter((item => item.jdId.toLowerCase().includes(searchValue.toLowerCase()) || item.title.toLowerCase().includes(searchValue.toLowerCase()) )))
+      setFilteredData(() => jdData.filter((item => item.jdId.toLowerCase().includes(searchValue.toLowerCase()) || item.title.toLowerCase().includes(searchValue.toLowerCase()))))
     } else {
       setSearch(false);
     }
-  },[searchValue])
-    
+  }, [searchValue])
+
 
   const handleToggle = (row) => {
     const updatedRows = [...tableRows];
@@ -485,9 +483,9 @@ const JdRegistration = () => {
         }
       />
 
-      <ModalHOC
-        setOpenNewInterviewModal={setOpenBasic2}
-        openNewInterviewModal={openBasic2}
+      <CommonDialog
+        open={openBasic2}
+        handleClose={() => setOpenBasic2(false)}
         component={
           <CloneJDForm array={[setOpenBasic3, setOpenBasic2, setCloneData]} />
         }
@@ -550,32 +548,32 @@ const JdRegistration = () => {
             </TableHead>
             <TableBody className="tableBody">
               {search
-                ? filteredData?.map((row,index) => {
-                    return (
-                      <Row
-                        key={row.id}
-                        row={row}
-                        rowsLength={filteredData.length}
-                        isSelected={selectedRow === index}
-                        onToggle={handleToggle}
-                        index={index}
-                      />
-                    );
-                  })
-                : tableRows?.map((row, index) => (
+                ? filteredData?.map((row, index) => {
+                  return (
                     <Row
                       key={row.id}
                       row={row}
-                      rowsLength={tableRows.length}
+                      rowsLength={filteredData.length}
                       isSelected={selectedRow === index}
                       onToggle={handleToggle}
                       index={index}
                     />
-                  ))}
+                  );
+                })
+                : tableRows?.map((row, index) => (
+                  <Row
+                    key={row.id}
+                    row={row}
+                    rowsLength={tableRows.length}
+                    isSelected={selectedRow === index}
+                    onToggle={handleToggle}
+                    index={index}
+                  />
+                ))}
             </TableBody>
           </Table>
 
-         {!search && <div className="paginationBox">
+          {!search && <div className="paginationBox">
             <PaginationSizeFilter
               size={size}
               handleSizeChange={handleSizeChange}
@@ -740,8 +738,8 @@ const BoxRow = styled.div`
     padding: 0.5rem 0.5rem;
 
     ${(props) =>
-      props.isLast &&
-      css`
+    props.isLast &&
+    css`
         bottom: 1.4rem;
         right: 10%;
       `}

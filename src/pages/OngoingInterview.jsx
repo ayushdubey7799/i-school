@@ -7,7 +7,6 @@ import { updateStatus } from "../functions/api/interview/updateStatus";
 import { getQuestion } from "../functions/api/interview/getQuestion";
 import { submitAnswer } from "../functions/api/interview/submitAnswer";
 import { getScore } from "../functions/api/interview/getScore";
-import InterviewSubmittedModal from "../components/Modals/InterviewSubmittedModal";
 import Loader from "../components/commonComponents/Loader";
 import Timer from "../components/Interviews/CurrentInterview/Timer";
 import logo from "../assets/IntelliViewLogo.png";
@@ -30,7 +29,6 @@ const OngoingInterview = ({ start, handleStart }) => {
   const { interviewId } = useParams();
   const [data, setData] = useState(null);
   const [id, setId] = useState(1);
-  const [scoreModal, setScoreModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
   const [input, setInput] = useState("");
@@ -39,6 +37,7 @@ const OngoingInterview = ({ start, handleStart }) => {
   const [agreed, setAgreed] = useState(false);
 
   const [language, setLanguage] = useState("javascript");
+  const [theme, setTheme] = useState(false);
 
   const navigate = useNavigate();
 
@@ -136,7 +135,9 @@ const OngoingInterview = ({ start, handleStart }) => {
     setIsLoading(true);
     const submitRes = await updateStatus(interviewId, "completed", accessToken);
     console.log(submitRes);
-    if (submitRes) setScoreModal(true);
+    if (submitRes) {
+      navigate(`/score/${interviewId}`)
+    }
     setIsLoading(false);
     localStorage.setItem("time", JSON.stringify({ minutes, seconds }));
     stopTimer();
@@ -174,7 +175,7 @@ const OngoingInterview = ({ start, handleStart }) => {
           <div className="head">
             <img src={logo} className="logo" />
             <span className="title">Interview Id : {interviewId}</span>
-            
+
             <div className="topLastBox">
               <Timer minutes={minutes} seconds={seconds} />
               {(start && data?.questionType == 'coding') &&
@@ -190,7 +191,8 @@ const OngoingInterview = ({ start, handleStart }) => {
               {data?.questionType == "coding" ? (
                 <CodingQueInterface
                   queComp={<div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText"></div>}
-                  codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} />}
+                  codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />}
+                  theme={theme}
                 />
               ) : (
                 <div className="subjectiveBox">
@@ -302,11 +304,6 @@ const OngoingInterview = ({ start, handleStart }) => {
                 </>
               )
                 : <span></span>}
-              <InterviewSubmittedModal
-                scoreModal={scoreModal}
-                setScoreModal={setScoreModal}
-                interviewId={interviewId}
-              />
             </>
           ) : (
             <div className="startInterviewBox">

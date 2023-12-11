@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Editor, { useMonaco } from '@monaco-editor/react';
 import styled from 'styled-components'
+import ThemeToggle from '../components/Interviews/SeekerDashboard/seekerCommonComponents/ThemeToggle';
 
-const CodeEditor = ({input,setInput,language,setLanguage}) => {
+const CodeEditor = ({input,setInput,language,setLanguage, theme, setTheme}) => {
 
     const handleCodeEditorChange = (value, event) => {
         setInput(value);
@@ -23,7 +24,8 @@ const CodeEditor = ({input,setInput,language,setLanguage}) => {
 
     return (
         <Box>
-            <LanguageSelector value={language} onChange={handleLanguageChange}>
+            <div className='top'>
+            <LanguageSelector value={language} onChange={handleLanguageChange} style={{backgroundColor: theme ? '#1E1E1E' : 'white', color: theme ? 'white' : '#1E1E1E'}}>
                 <option value="typescript">TypeScript</option>
                 <option value="javascript">JavaScript</option>
                 <option value="css">CSS</option>
@@ -53,8 +55,10 @@ const CodeEditor = ({input,setInput,language,setLanguage}) => {
                 <option value="objective-c">Objective-C</option>
                 {/* Add more language options as needed */}
             </LanguageSelector>
+            <ThemeToggle currentTheme={theme} setCurrentTheme={setTheme}/>
+            </div>
             <Editor
-                theme="light"
+                theme= {theme ? 'vs-dark' : 'light'}
                 height="100%"
                 language={language}
                 value={input}
@@ -76,6 +80,12 @@ box-sizing: border-box;
 flex-direction: column;
 align-items: start;
 
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
 
 `
 

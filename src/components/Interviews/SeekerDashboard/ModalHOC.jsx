@@ -64,13 +64,11 @@ const MainBox = styled.div`
 
 display: flex;
   margin: 0 auto;
-  width: 40%;
-  height: 60vh;
+  width: 80%;
+  height: 80vh;
   background-color: var(--white);
-  padding-top: 2rem;
-  padding-left: 6rem;
-  padding-right: 6rem;
-  padding-bottom: 6rem;
+  padding: 2rem 3rem 3rem 2rem;
+  box-sizing: border-box;
   margin-bottom: 0.2rem;
   border-radius: 0.3rem;
   margin-top: 5rem;
