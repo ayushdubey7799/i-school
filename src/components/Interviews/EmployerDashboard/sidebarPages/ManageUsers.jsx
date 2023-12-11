@@ -19,9 +19,14 @@ import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import ManageUserForm from "../ManageUserForm";
 import { getEmployees, getEmployers } from "../../../../functions/api/employers/profile/getEmployees";
 import { useSelector } from "react-redux";
+import { editEmployee } from "../../../../functions/api/employers/profile/editEmployee";
+import { toast } from "react-toastify";
 
 function Row(props) {
   const { row, rowsLength, index } = props;
+  const [openBasic2, setOpenBasic2] = useState(false);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
@@ -47,7 +52,8 @@ function Row(props) {
   };
 
   const handleEdit = () => {
-    console.log("Edit");
+    setOpenBasic2(true);
+    // console.log("Edit");
   };
 
   const handleDelete = () => {
@@ -55,7 +61,10 @@ function Row(props) {
     handleClose();
   };
 
-  const handleDeactivate = () => {
+  const handleDeactivate = async () => {
+    row.active = false;
+    const res = await editEmployee(row.id,row,accessToken,clientCode);
+    if(res)toast.success("Deactivated Successfully");
     console.log("Deactivate");
   }
 
@@ -75,6 +84,8 @@ function Row(props) {
 
   return (
     <React.Fragment>
+      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} component={<ManageUserForm array={[row, "edit"]} handleClose={() => setOpenBasic2(false)} />} />
+
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
@@ -106,7 +117,7 @@ function Row(props) {
             >
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='user' handleDelete={handleDelete} />} />
               <span onClick={handleEdit}>
-                <img src={editIcon} className="threeDotIcon" /> Edit
+                <img src={editIcon}  className="threeDotIcon" /> Edit
               </span>
               <span onClick={handleClickOpen}>
                 <img src={deleteIcon} className="threeDotIcon" /> Delete
@@ -141,6 +152,7 @@ export default function ManageUsers() {
     <StyledDiv>
       <TableContainer component={Paper} className="tableBox">
         <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} component={<ManageUserForm array={[null, "create"]} handleClose={() => setOpenBasic(false)} />} />
+
         <Component>
           <span className="title">Manage Users</span>
 

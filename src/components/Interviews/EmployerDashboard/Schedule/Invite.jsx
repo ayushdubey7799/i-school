@@ -161,7 +161,11 @@ export default function Invite() {
       };
 
       if (isTime) delete payload.slotTime;
-      console.log(payload);
+      if(testType == 'InPerson'){
+        payload.interviewerEmail = interviewerEmail;
+        payload.meetingLink = meetUrl;
+      }
+      console.log("===========>>>>>",payload);
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
         console.log("=======>", response);
