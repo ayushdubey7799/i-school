@@ -40,10 +40,7 @@ const UploadCandidateProfile = () => {
       const formData = new FormData();
       files.forEach((file, index) => {
         formData.append(`files`, file);
-        // console.log(file.name);
       });
-
-      // console.log(formData.getAll("files"))
 
       const res = await bulkUpload(formData, accessToken, clientCode);
 
@@ -53,8 +50,6 @@ const UploadCandidateProfile = () => {
         setLoading(false);
       }
     } catch (error) {
-      // Handle network errors or unexpected issues
-      console.error("Error during file upload:", error);
       const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
       setErrorMsg(errMsg);
       setLoading(false);

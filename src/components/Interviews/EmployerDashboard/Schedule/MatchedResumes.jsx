@@ -47,7 +47,6 @@ function Row(props) {
       accessToken,
       clientCode
     );
-    console.log(res);
     const a = document.createElement("a");
     a.href = res;
     a.setAttribute("download", name);
@@ -140,7 +139,7 @@ export default function MatchedResumes() {
     }
     getData();
   }, [page, size]);
-  console.log(tableRows);
+  
 
   const handleSelectArray = (id, action) => {
     if (action) {
@@ -159,7 +158,6 @@ export default function MatchedResumes() {
     }
   };
 
-  console.log(selectedArray);
   return (
     <StyledDiv>
       <LogoHeader />

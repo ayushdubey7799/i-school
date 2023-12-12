@@ -45,7 +45,6 @@ const SkillInterview = () => {
   const handleInputChange = (e) => {
     const name = e.target.name;
     const val = e.target.value;
-    console.log(name, val);
     switch (name) {
       case 'experience':
         setInterviewDetails({ ...interviewDetails, experience: val })
@@ -59,7 +58,6 @@ const SkillInterview = () => {
       default:
         console.log('Hello there!');
     }
-    console.log(interviewDetails)
   }
 
   const handleCreateInterview = async (e) => {
@@ -82,19 +80,11 @@ const SkillInterview = () => {
       resumeText: `Experience ${interviewDetails.experience.trim()}`,
     };
     const ongoing = await createInterview(payload, accessToken)
-    console.log(ongoing);
 
     if (ongoing?.data?.id) {
       localStorage.setItem("currentInterview", "skill");
       navigate(`/create-interview/${ongoing.data.id}`)
     }
-    // if (ongoing?.data?.id) {
-    //   console.log("data");
-    //   const statusResponse = await updateStatus(ongoing.data.id, "started", accessToken);
-    //   console.log(statusResponse);
-    //   setIsLoading(false);
-    //   if (statusResponse?.status == "SUCCESS") navigate(`/ongoing-interview/${ongoing.data.id}`);
-    // }
   }
 
   return (

@@ -15,7 +15,6 @@ import { useSelector } from "react-redux";
 //       const blob = new Blob([res], { type: "application/octet-stream" });
 
 //       const url = URL.createObjectURL(blob);
-//       console.log(blob, url);
 //       setBlobUrl(url);
      
 //     };

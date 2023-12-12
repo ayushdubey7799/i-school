@@ -44,10 +44,9 @@ const InterviewerInviteDashboard = () => {
     }, [inviteLists])
 
     const handleSearch = () => {
-        console.log("Search");
+        
     }
 
-    console.log(tableRows);
     return (
         <Content>
             <TableContainer component={Paper} className="tableBox">

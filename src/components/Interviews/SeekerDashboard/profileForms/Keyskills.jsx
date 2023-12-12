@@ -45,8 +45,7 @@ function KeySkills() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can handle the submission of the key skills here.
-    console.log('Key Skills:', keySkills);
+
   };
 
   return (

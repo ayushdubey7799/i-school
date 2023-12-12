@@ -17,11 +17,6 @@ export default function InterviewTabs() {
   const [value, setValue] = useState("COMPLETED");
   const [filteredData, setFilteredData] = useState({});
 
-
-  if (filteredData.status == 'SUCCESS') {
-    console.log(filteredData.data.data);
-  }
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -31,7 +26,6 @@ export default function InterviewTabs() {
       const response = await getInterviewByStatus(value, accessToken);
       if (response) {
         setFilteredData(response);
-        console.log('data score', response);
       }
     }
     getData(value);

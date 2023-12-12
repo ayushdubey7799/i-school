@@ -24,7 +24,6 @@ function Row(props) {
   const { row, index } = props;
 
   const handleDelete = () => {
-    console.log('deleted');
     handleClose();
   }
 

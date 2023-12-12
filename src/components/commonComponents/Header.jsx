@@ -29,7 +29,6 @@ const Header = () => {
     navigate("/");
   };
 
-  console.log(accessToken);
 
   return (
     <StyledDiv>

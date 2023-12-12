@@ -53,9 +53,7 @@ const SlotSelection = () => {
       .format("YYYY-MM-DD HH:mm");
     const date = dateTime.slice(0, 10);
     const time = dateTime.slice(11);
-    console.log(date + "T" + time);
     const scheduleTest = async () => {
-      console.log(token, date);
       const res = await scheduleByCandidate(
         {
           slot: date + "T" + time,

@@ -33,7 +33,7 @@ const JobSearchBar = ({exp, setExp, selectedLocations, setSelectedLocations, sel
   };
 
   const handleJobSearch = () => {
-    console.log("Job search");
+    
   }
 
 

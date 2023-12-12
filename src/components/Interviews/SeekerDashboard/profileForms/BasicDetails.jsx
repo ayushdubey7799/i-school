@@ -21,7 +21,6 @@ export default function BasicDetails({ handleClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     handleClose();
   };
 
