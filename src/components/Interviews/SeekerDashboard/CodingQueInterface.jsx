@@ -37,7 +37,7 @@ const CodingQueInterface = ({ queComp, codeEditorComp, theme }) => {
                     <div style={{ ...layoutCSS, ...rowCSS }} className='rightBox'>
                         <SplitPane split="horizontal" sizes={sizes2} onChange={setSizes2}>
                             <Pane minSize='99%' maxSize='99%'>
-                                <div style={{ ...contentCSS, backgroundColor: theme ? '#1E1E1E' : 'white'}} className='rightBox1' >{codeEditorComp && codeEditorComp}</div>
+                                <div style={{ ...contentCSS, backgroundColor: theme ? 'white' : '#1E1E1E'}} className='rightBox1' >{codeEditorComp && codeEditorComp}</div>
                             </Pane>
                             <Pane minSize='0%' maxSize='1%'>
                                 {/* <div style={{ ...contentCSS }} className='rightBox2'></div> */}
