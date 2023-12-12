@@ -9,6 +9,8 @@ const ThemeToggle = ({ currentTheme, setCurrentTheme }) => {
             checked={currentTheme}
             onChange={() => setCurrentTheme(!currentTheme)}
             size={25}
+            sunColor="white"
+            moonColor="black"
         />
     );
 };
