@@ -3,7 +3,7 @@ import Editor, { useMonaco } from '@monaco-editor/react';
 import styled from 'styled-components'
 import ThemeToggle from '../components/Interviews/SeekerDashboard/seekerCommonComponents/ThemeToggle';
 
-const CodeEditor = ({input,setInput,language,setLanguage, theme, setTheme}) => {
+const CodeEditor = ({ input, setInput, language, setLanguage, theme, setTheme }) => {
 
     const handleCodeEditorChange = (value, event) => {
         setInput(value);
@@ -25,40 +25,40 @@ const CodeEditor = ({input,setInput,language,setLanguage, theme, setTheme}) => {
     return (
         <Box>
             <div className='top'>
-            <LanguageSelector value={language} onChange={handleLanguageChange} style={{backgroundColor: theme ? '#1E1E1E' : 'white', color: theme ? 'white' : '#1E1E1E'}}>
-                <option value="typescript">TypeScript</option>
-                <option value="javascript">JavaScript</option>
-                <option value="css">CSS</option>
-                <option value="less">LESS</option>
-                <option value="scss">SCSS</option>
-                <option value="json">JSON</option>
-                <option value="html">HTML</option>
-                <option value="xml">XML</option>
-                <option value="php">PHP</option>
-                <option value="csharp">C#</option>
-                <option value="cpp">C++</option>
-                <option value="razor">Razor</option>
-                <option value="markdown">Markdown</option>
-                <option value="java">Java</option>
-                <option value="vb">VB</option>
-                <option value="coffeescript">CoffeeScript</option>
-                <option value="handlebars">Handlebars</option>
-                <option value="batch">Batch</option>
-                <option value="pug">Pug</option>
-                <option value="fsharp">F#</option>
-                <option value="lua">Lua</option>
-                <option value="powershell">Powershell</option>
-                <option value="python">Python</option>
-                <option value="ruby">Ruby</option>
-                <option value="sass">SASS</option>
-                <option value="r">R</option>
-                <option value="objective-c">Objective-C</option>
-                {/* Add more language options as needed */}
-            </LanguageSelector>
-            <ThemeToggle currentTheme={theme} setCurrentTheme={setTheme}/>
+                <LanguageSelector value={language} onChange={handleLanguageChange} style={{ backgroundColor: theme ? 'white' : '#1E1E1E', color: theme ? '#1E1E1E' : 'white' }}>
+                    <option value="typescript">TypeScript</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="css">CSS</option>
+                    <option value="less">LESS</option>
+                    <option value="scss">SCSS</option>
+                    <option value="json">JSON</option>
+                    <option value="html">HTML</option>
+                    <option value="xml">XML</option>
+                    <option value="php">PHP</option>
+                    <option value="csharp">C#</option>
+                    <option value="cpp">C++</option>
+                    <option value="razor">Razor</option>
+                    <option value="markdown">Markdown</option>
+                    <option value="java">Java</option>
+                    <option value="vb">VB</option>
+                    <option value="coffeescript">CoffeeScript</option>
+                    <option value="handlebars">Handlebars</option>
+                    <option value="batch">Batch</option>
+                    <option value="pug">Pug</option>
+                    <option value="fsharp">F#</option>
+                    <option value="lua">Lua</option>
+                    <option value="powershell">Powershell</option>
+                    <option value="python">Python</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="sass">SASS</option>
+                    <option value="r">R</option>
+                    <option value="objective-c">Objective-C</option>
+                    {/* Add more language options as needed */}
+                </LanguageSelector>
+                <ThemeToggle currentTheme={theme} setCurrentTheme={setTheme} />
             </div>
             <Editor
-                theme= {theme ? 'vs-dark' : 'light'}
+                theme={theme ? 'light' : 'vs-dark'}
                 height="100%"
                 language={language}
                 value={input}

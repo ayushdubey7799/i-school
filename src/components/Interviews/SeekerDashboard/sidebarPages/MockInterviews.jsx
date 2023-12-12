@@ -51,7 +51,6 @@ const MockInterviews = ({ filteredData }) => {
 
 
   if (!filteredData?.data?.data?.length) {
-    console.log("working");
     return <h6 style={{ fontSize: '1.2rem' }}>No interview Here</h6>
   }
 

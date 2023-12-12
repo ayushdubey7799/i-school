@@ -65,7 +65,6 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
   useEffect(() => {
     const getData = async () => {
       const res = await getAllTrackers(accessToken, clientCode, page.jdId);
-      console.log(res?.data?.data);
       setTotal(res?.data?.total);
       setTableRows(res?.data?.data);
     }
@@ -75,7 +74,7 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
 
 
   const handleSearch = () => {
-    console.log("Search");
+    
   }
 
 

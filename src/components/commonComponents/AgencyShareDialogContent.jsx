@@ -14,7 +14,6 @@ const AgencyShareDialogContent = ({ handleClose }) => {
     const handleShare = () => {
         toast.success(`Shared with ${selectedAgency}`);
         handleClose();
-        console.log(selectedAgency);
     }
 
     return (

@@ -9,6 +9,7 @@ import bg1 from '../../assets/bg1.jpg'
 import bg2 from '../../assets/bg5.jpg'
 import { useNavigate } from 'react-router'
 import BenefitsSection from './BenefitsSection'
+import ReviewsSection from './ReviewsSection'
 
 const DetailedContent = () => {
     const navigate = useNavigate();
@@ -45,8 +46,6 @@ const DetailedContent = () => {
                 </div>
             </div>
 
-            {/* <VideoContent/> */}
-
             <div className='visualDetail'>
                 <div className='visualDetailBox'>
                     <div className='visualDetailTextBox'>
@@ -69,6 +68,8 @@ const DetailedContent = () => {
             </div>
 
             <BenefitsSection />
+
+            <ReviewsSection/>
 
             <div className='contactSection'>
                 <span className='contactSectionTitle'>Become part of advanced Recruitment Solutions powered by AI, same time with Human Touch in your journey of growth.</span>

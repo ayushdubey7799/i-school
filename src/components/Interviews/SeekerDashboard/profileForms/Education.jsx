@@ -81,8 +81,6 @@ function Education({ handleClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle the submission of education data here.
-    console.log('Education Form Data:', formData);
-    handleClose();
   };
 
   return (

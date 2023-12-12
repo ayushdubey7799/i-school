@@ -21,13 +21,11 @@ const Inbox = () => {
       const res = await getAllAlerts(accessToken, clientCode);
 
       if (res) setNotifications(res?.messages);
-      console.log(res);
     };
     getAlerts();
   }, []);
   const handleDownload = async (url) => {
     const res = await getBlobData(url, accessToken, clientCode);
-    console.log(res);
     const a = document.createElement('a');
     a.href = res;
     a.setAttribute('download', 'your-filename.ext');

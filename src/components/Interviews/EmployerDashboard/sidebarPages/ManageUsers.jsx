@@ -53,11 +53,9 @@ function Row(props) {
 
   const handleEdit = () => {
     setOpenBasic2(true);
-    // console.log("Edit");
   };
 
   const handleDelete = () => {
-    console.log("Delete");
     handleClose();
   };
 
@@ -65,7 +63,6 @@ function Row(props) {
     row.active = false;
     const res = await editEmployee(row.id,row,accessToken,clientCode);
     if(res)toast.success("Deactivated Successfully");
-    console.log("Deactivate");
   }
 
   useEffect(() => {

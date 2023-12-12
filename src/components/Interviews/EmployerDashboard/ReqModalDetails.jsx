@@ -63,13 +63,10 @@ function Row(props) {
       const res = await closeReq(id, change, row.reqNumber, accessToken, clientCode);
       if (res) {
         setSuccessPopup(true);
-        console.log('Response:', res);
         dispatch(setJdTrigger(!jdTrigger));
       }
 
     } catch (error) {
-      // Handle the error
-      console.error('Error during request status change:', error);
       const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
       setErrorMsg(errMsg);
       setErrorPopup(true);

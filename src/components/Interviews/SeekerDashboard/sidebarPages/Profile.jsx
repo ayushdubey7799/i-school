@@ -115,12 +115,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle the file upload here, for example, by sending the file to a server.
-    if (selectedFile) {
-      console.log('Selected File:', selectedFile);
-      // You can add code to upload the file to a server or perform any other actions here.
-    } else {
-      console.log('No file selected.');
-    }
+  
   };
 
   const DecideComponent = () => {

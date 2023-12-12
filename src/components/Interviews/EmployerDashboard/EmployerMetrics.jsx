@@ -110,14 +110,12 @@ const EmployeMetrics = ({ page, setPage }) => {
     const getCount = async () => {
       const res = await getStatusWiseCount(accessToken);
       setMetrics(res?.data);
-      console.log(res?.data);
     }
     getCount();
 
     async function getData() {
       const res = await getJdsForMatching(accessToken, clientCode);
       if (res?.data?.data?.length) setCount(res?.data?.data.length);
-      console.log(res);
     }
     getData();
 

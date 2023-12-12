@@ -15,7 +15,6 @@ export default function ModalHOC({
   };
   
   const handleClose = (event, reason) => {
-    console.log(event, reason);
     setOpenNewInterviewModal(false);
   };
 
