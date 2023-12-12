@@ -212,8 +212,6 @@ const RegisterCandidate = () => {
     }
   };
 
-  { errorMsg && console.log(errorMsg) }
-
   const DecideComponent = () => {
     return <div>working</div>
   }

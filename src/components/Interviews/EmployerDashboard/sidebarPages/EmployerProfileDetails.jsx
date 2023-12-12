@@ -46,7 +46,6 @@ const EmployerProfileDetails = () => {
         }
     }, [aboutEdit, aboutCompany]);
 
-    console.log(user);
 
     return (
         <Box>

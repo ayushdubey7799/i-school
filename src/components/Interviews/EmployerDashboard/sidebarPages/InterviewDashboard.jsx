@@ -68,7 +68,7 @@ const InterviewDashboard = ({ page, setPage }) => {
         getPreFilteredCount(accessToken, "COMPLETED"),
         getPreFilteredCount(accessToken, "IN_PROGRESS"),
       ]);
-      console.log(res);
+      
       
       setUpcoming(res[0]?.value?.data["UPCOMING"])
       setScheduled(res[1]?.value?.data["SCHEDULED_TODAY"])
@@ -93,13 +93,13 @@ const InterviewDashboard = ({ page, setPage }) => {
   };
 
   const handleSearch = () => {
-    console.log("Search");
+    
   };
 
   const handleSearchParams = (e) => {
     setSearchParams(e.target.value);
   };
-  console.log("--------->>>>", upcoming, completed, scheduled, inProgress);
+  
 
   return (
     <MainContainer>

@@ -38,7 +38,7 @@ const CompletedLast7Days = () => {
     }, [interviews])
 
     const handleSearch = () => {
-        console.log("Search");
+        
     }
 
 

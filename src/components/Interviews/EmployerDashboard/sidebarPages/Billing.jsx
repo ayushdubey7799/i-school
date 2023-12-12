@@ -64,7 +64,6 @@ export default function Billing() {
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
   const handleExport = () => {
-    console.log('Exported');
     handleExportClose();
   }
 

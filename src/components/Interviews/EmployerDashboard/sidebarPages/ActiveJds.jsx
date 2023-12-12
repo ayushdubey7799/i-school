@@ -163,7 +163,7 @@ function Row(props) {
   };
 
   const handleShareSocial = () => {
-    console.log("Share Social");
+    
   };
 
   useEffect(() => {
@@ -277,9 +277,8 @@ function Row(props) {
             <img
               src={threeDot}
               style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
-              className={`three-dots ${
-                openDropdownIndex === index ? "active" : ""
-              }`}
+              className={`three-dots ${openDropdownIndex === index ? "active" : ""
+                }`}
               onClick={() => {
                 if (openDropdownIndex === index) {
                   closeAllDropdowns();
@@ -289,9 +288,8 @@ function Row(props) {
               }}
             />
             <div
-              className={`dropdown-content ${
-                openDropdownIndex === index ? "open" : ""
-              }`}
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
+                }`}
               ref={dropdownRef}
             >
               <CommonDrawer
@@ -433,7 +431,6 @@ const ActiveJds = () => {
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
   const handleExport = async (exportType) => {
-    console.log("Exporting");
     const res = await exportJd(exportType, accessToken, clientCode);
 
     handleExportClose();
@@ -493,23 +490,23 @@ const ActiveJds = () => {
             <TableBody className="tableBody">
               {search
                 ? filteredData?.map((row, index) => {
-                    return (
-                      <Row
-                        key={row.id}
-                        row={row}
-                        rowsLength={filteredData.length}
-                        index={index}
-                      />
-                    );
-                  })
-                : tableRows?.map((row, index) => (
+                  return (
                     <Row
                       key={row.id}
                       row={row}
-                      rowsLength={tableRows.length}
+                      rowsLength={filteredData.length}
                       index={index}
                     />
-                  ))}
+                  );
+                })
+                : tableRows?.map((row, index) => (
+                  <Row
+                    key={row.id}
+                    row={row}
+                    rowsLength={tableRows.length}
+                    index={index}
+                  />
+                ))}
             </TableBody>
           </Table>
 
@@ -689,8 +686,8 @@ const BoxRow = styled.div`
     padding: 0.5rem 0.5rem;
 
     ${(props) =>
-      props.isLast &&
-      css`
+    props.isLast &&
+    css`
         bottom: 1.4rem;
         right: 10%;
       `}

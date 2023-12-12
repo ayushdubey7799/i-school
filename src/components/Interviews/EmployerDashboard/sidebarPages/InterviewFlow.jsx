@@ -132,7 +132,7 @@ const InterviewFlow = ({ setPage }) => {
   }, [])
 
   const handleSearch = () => {
-    console.log("Search");
+    
   }
 
   const handleSearchParams = (e) => {

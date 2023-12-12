@@ -5,7 +5,6 @@ function CustomInput({ accept, id, fileHandleFnc, text }) {
     const [fileSelected, setFileSelected] = useState("");
 
     const onChange = (e) => {
-        console.log(e.target.files);
         setFileSelected(e.target.files[0].name);
         fileHandleFnc(e.target.files[0]);
     };

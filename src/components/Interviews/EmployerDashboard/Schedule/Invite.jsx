@@ -132,8 +132,6 @@ export default function Invite() {
     setInterviewType(inp);
   }
 
-  console.log(selectedTimeSlot);
-
   const handleInvite = () => {
 
     const makeApiCall = async () => {
@@ -141,7 +139,6 @@ export default function Invite() {
       const dateTime = moment(value.format("YYYY-MM-DD") + "T" + (selectedTimeSlot.$H < 10 ? '0' + selectedTimeSlot.$H : selectedTimeSlot.$H) + ":" + (selectedTimeSlot.$m < 10 ? '0' + selectedTimeSlot.$m : selectedTimeSlot.$m) + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
-      console.log(dateTime);
       if (!productType || !testType || !value.format("YYYY-MM-DD")) {
         toast.error("Fill all fields");
         return;
@@ -161,10 +158,14 @@ export default function Invite() {
       };
 
       if (isTime) delete payload.slotTime;
-      console.log(payload);
+      if(testType == 'InPerson'){
+        payload.interviewerEmail = interviewerEmail;
+        payload.meetingLink = meetUrl;
+      }
+      
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
-        console.log("=======>", response);
+        
         if (response.status == "FAILED") {
           setErrorPopup({ status: true, msg: response?.notify?.message })
         } else {
@@ -173,7 +174,6 @@ export default function Invite() {
         }
       } catch (error) {
         toast.error("error-> ", error?.message);
-        console.error("API call failed:", error);
       }
     };
 

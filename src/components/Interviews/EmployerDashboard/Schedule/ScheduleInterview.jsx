@@ -18,7 +18,7 @@ const ScheduleInterview = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
 
-  console.log("token--->", accessToken, "clientcode --> ", clientCode)
+  
   useEffect(() => {
 
     if (!accessToken || !clientCode) {

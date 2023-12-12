@@ -54,7 +54,6 @@ function Row(props) {
       }
     } catch (error) {
       // Handle network errors or unexpected issues
-      console.log("Abhi");
       const errMsg =
         error.response.data.notify.message ||
         "An error occurred. Please try again.";
@@ -89,24 +88,19 @@ function Row(props) {
     setState({ ...state, [anchor]: open });
   };
 
-  {
-    errorMsg && console.log(errorMsg);
-  }
-
   const handleDownload = async (id, name) => {
     const res = await getBlobData(
       `api/media/downloadById?fileType=resume&id=${id}`,
       accessToken,
       clientCode
     );
-    console.log(res);
     const a = document.createElement("a");
     a.href = res;
     a.setAttribute("download", name);
     a.click();
   };
 
-  console.log(row);
+
   return (
     <React.Fragment>
       {errorPopup && (
@@ -241,7 +235,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
   }, [candidateTrigger]);
 
   const handleSearch = () => {
-    console.log("Search");
+    
   };
 
   return (

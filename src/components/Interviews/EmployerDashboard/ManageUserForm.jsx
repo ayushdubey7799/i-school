@@ -10,6 +10,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { toast } from 'react-toastify';
 import { addEmployee } from '../../../functions/api/employers/profile/addEmployee';
 import { useSelector } from 'react-redux';
+import { editEmployee } from '../../../functions/api/employers/profile/editEmployee';
 
 const Container = styled.div`
   width: 100%;
@@ -38,7 +39,6 @@ const Container = styled.div`
     gap: 2rem;
     margin-bottom: 1rem;
   }
-
   .input {
     width: 50%;
   }
@@ -99,7 +99,7 @@ const Button = styled.button`
 `;
 
 function ManageUserForm({ array, handleClose }) {
-    const [mode, setMode] = useState("create");
+    const [mode, setMode] = useState(array[1]);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -118,10 +118,8 @@ function ManageUserForm({ array, handleClose }) {
             setFormData(array[0]);
         }
         setMode(array[1])
-        console.log("props", array[1]);
     }, [])
 
-    console.log(formData);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -132,11 +130,26 @@ function ManageUserForm({ array, handleClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await addEmployee(formData, accessToken, clientCode);
-        if (res) {
-            toast.success("Employer added successfully");
-            handleClose()
-        };
+
+        if (mode == "create") {
+            const res = await addEmployee(formData, accessToken, clientCode);
+            if (res) {
+                toast.success("Employer added successfully");
+                handleClose()
+            };
+        }
+        else if (mode == 'edit') {
+            const payload = {
+                name: formData.name,
+                contact: formData.contact,
+                active: true
+            }
+            const res = await editEmployee(formData.id, payload, accessToken, clientCode);
+            if (res) {
+                toast.success("Employer edited successfully");
+                handleClose()
+            };
+        }
     };
 
     return (
@@ -207,7 +220,6 @@ function ManageUserForm({ array, handleClose }) {
                             name="contact"
                             value={formData.contact}
                             onChange={handleChange}
-                            disabled={mode == "edit"}
                             errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
                             validators={['required', 'isNumber', 'minStringLength:10']}
                             fullWidth
@@ -226,6 +238,7 @@ function ManageUserForm({ array, handleClose }) {
                                 },
                             }}
                         />
+
                     </div>
 
                     <div className='input'>
