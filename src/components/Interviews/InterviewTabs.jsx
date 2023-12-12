@@ -16,14 +16,22 @@ export default function InterviewTabs() {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [value, setValue] = useState("COMPLETED");
   const [filteredData, setFilteredData] = useState({});
-
+  const [mock,setMock] = useState(false);
 
   if (filteredData.status == 'SUCCESS') {
     console.log(filteredData.data.data);
   }
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    if(newValue == "MOCK"){
+      setMock(true);
+      setValue("COMPLETED");
+
+    }
+    else{
+      setMock(false);
+      setValue(newValue);
+    }
   };
 
   useEffect(() => {
@@ -49,7 +57,7 @@ export default function InterviewTabs() {
               borderRadius: '3rem',
               backgroundColor: 'var(--lightOrange)'
             }}
-            value={value}
+            value={mock?"MOCK":value}
             onChange={handleChange}
             TabIndicatorProps={{
               style: {
@@ -78,7 +86,7 @@ export default function InterviewTabs() {
               classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
             />
             <Tab
-              value="STARTED"
+              value="MOCK"
               label="Mock"
               sx={{
                 color: "var(--lightOrange)",
@@ -87,9 +95,9 @@ export default function InterviewTabs() {
               classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
             />
           </Tabs>
-          {value === 'COMPLETED' && <InterviewList filteredData={filteredData} />}
+          {value === 'COMPLETED' && !mock && <InterviewList filteredData={filteredData} />}
           {value === 'NOT_STARTED' && <ScheduledInterviewList />}
-          {value === 'STARTED' && <MockInterviews filteredData={filteredData} />}
+          {mock && <MockInterviews filteredData={filteredData} />}
         </StyledBox>
       }
     </>

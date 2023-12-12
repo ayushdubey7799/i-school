@@ -15,7 +15,6 @@ import SeekerTableSearchBar from "./SeekerDashboard/seekerCommonComponents/Seeke
 
 const Row = (props) => {
   const { row, index } = props;
-
   const navigate = useNavigate();
 
   return (
@@ -75,7 +74,7 @@ const InterviewList = ({ filteredData }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {filteredData?.data?.data?.map((row, index) => (
+            {filteredData?.data?.data?.filter?.((item) => item.jdId?true:false)?.map((row, index) => (
               <Row key={index} row={row} index={index} />
             ))}
           </TableBody>
@@ -177,7 +176,4 @@ const SearchBarContainer = styled.div`
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-
 `
