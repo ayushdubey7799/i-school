@@ -72,8 +72,7 @@ function Projects({handleClose}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle the submission of project data here.
-    console.log('Project Form Data:', formData);
-    handleClose();
+    
   };
 
   return (

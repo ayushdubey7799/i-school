@@ -160,7 +160,6 @@ const Button = styled.button`
 
 
 function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopup, setSavedPopup, }) {
-  console.log("==========>", array)
   const [jdExist, setJdExist] = useState(false);
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
@@ -255,9 +254,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   };
 
   const checkReqs = () => {
-    console.log("Checking");
     if (formData.numOfReqs < initialReqs) {
-      console.log("Reqs");
 
       setReqsError(true);
       setFormData({

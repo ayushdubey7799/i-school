@@ -67,17 +67,14 @@ export default function ScheduleModal({ array, handleClose }) {
 
       try {
         const response = await sendInvite(payload, accessToken, clientCode)
-        console.log('API call successful:', response.data);
         toast.success("Invites sent successfully");
       } catch (error) {
-        console.error('API call failed:', error);
       }
     };
 
     makeApiCall();
     handleClose();
   }
-  console.log("Date->", value.format('YYYY-MM-DD'));
 
   return (
     <Container>

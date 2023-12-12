@@ -21,7 +21,6 @@ const Match = ({ jdId, count }) => {
   const handleTrigger = async () => {
     const res = await triggerMatch(jdId, accessToken, clientCode);
     if (res?.data[0]) {
-      console.log(res.data[0]);
       setTrigger((prev) => !prev);
     }
   };
@@ -51,9 +50,7 @@ const Match = ({ jdId, count }) => {
 
     let id;
     getStatus().then(res => {
-      console.log(res?.data);
       if (res?.data?.length > 0 && res?.data[0]?.status == "RUNNING") {
-        console.log("Working");
         id = setTimeout(() => setTrigger(prev => !prev), 5000);
       }
 
@@ -72,7 +69,6 @@ const Match = ({ jdId, count }) => {
 export default Match;
 
 const Option = ({ match, handleTrigger }) => {
-  console.log(match.jdId, match.status);
 
 
   return (

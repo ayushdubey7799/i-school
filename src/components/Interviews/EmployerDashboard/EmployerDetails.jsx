@@ -75,9 +75,7 @@ function EmployerDetails({ handleClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here, e.g., send data to the server
-    console.log(formData);
-    // handleClose();
+    
   };
 
   return (

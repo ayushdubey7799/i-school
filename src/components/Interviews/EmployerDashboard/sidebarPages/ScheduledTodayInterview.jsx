@@ -38,7 +38,7 @@ const ScheduledTodayInterview = () => {
     }, [interviews])
 
     const handleSearch = () => {
-        console.log("Search");
+        
     }
 
 

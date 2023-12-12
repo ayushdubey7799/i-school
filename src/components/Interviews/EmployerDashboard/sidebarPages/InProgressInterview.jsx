@@ -38,7 +38,7 @@ const InProgressInterview = () => {
     }, [interviews])
 
     const handleSearch = () => {
-        console.log("Search");
+        
     }
 
 

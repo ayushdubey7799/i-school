@@ -49,8 +49,6 @@ const ProfileInterview = () => {
 
   useEffect(() => {
     if (jd) {
-      console.log(jd.type);
-
       if (jd.type === "text/plain") {
         handleTxtFile(jd, "jd");
       } else if (
@@ -70,7 +68,6 @@ const ProfileInterview = () => {
   const handleInputChange = (e) => {
     const name = e.target.name;
     const val = e.target.value;
-    console.log(name, val);
 
     switch (name) {
       case "jobSummary":
@@ -82,7 +79,6 @@ const ProfileInterview = () => {
       default:
         console.log("Hello there!");
     }
-    console.log(interviewDetails.jobSummary, interviewDetails.resumeText);
   };
 
   const handleCreateInterview = async (e) => {
@@ -116,14 +112,11 @@ const ProfileInterview = () => {
       resumeText: interviewDetails.resumeText.trim(),
     }
 
-    console.log('Payload', payload);
-
     const ongoing = await createInterview(
       payload,
       accessToken
     );
 
-    console.log(ongoing);
     if (ongoing?.data?.id) {
       localStorage.setItem("currentInterview", "profile");
       navigate(`/create-interview/${ongoing.data.id}`)

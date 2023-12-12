@@ -172,7 +172,7 @@ function Row(props) {
     setOpenDropdownIndex(-1);
   };
 
-  console.log(row.jdId, row.reqNumbers);
+  
   return (
     <React.Fragment>
       <ModalHOC
@@ -367,7 +367,6 @@ const JdRegistration = () => {
 
   const [searchValue, setSearchValue] = useState("");
 
-  console.log("Shoot", jdTrigger);
 
   const [total, setTotal] = useState(0);
 
@@ -399,7 +398,6 @@ const JdRegistration = () => {
     getData();
   }, [page, size, jdTrigger, dispatch]);
 
-  console.log("Shot", jdTrigger);
   useEffect(() => {
     if (searchValue?.trim()) {
       setSearch(true);
@@ -442,7 +440,6 @@ const JdRegistration = () => {
     setCreatedPopup(false);
   };
 
-  console.log("========>>>>>>.", cloneData);
 
   return (
     <Container1>

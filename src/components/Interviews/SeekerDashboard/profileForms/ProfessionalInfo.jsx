@@ -27,8 +27,7 @@ export default function ProfessionalInfo({handleClose}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    handleClose();
+    
   };
 
   return (

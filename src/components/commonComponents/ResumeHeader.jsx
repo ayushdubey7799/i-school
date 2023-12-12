@@ -28,7 +28,6 @@ const ResumeHeader = () => {
     navigate("/");
   };
 
-  console.log(accessToken);
 
   return (
     <StyledDiv>

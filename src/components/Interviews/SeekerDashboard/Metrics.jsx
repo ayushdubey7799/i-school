@@ -109,7 +109,6 @@ const Metrics = () => {
     const getCount = async () => {
       const res = await getStatusWiseCount(accessToken);
       setMetrics(res?.data);
-      console.log(res?.data);
     }
     getCount();
   }, [currMetric])
@@ -131,7 +130,6 @@ const Metrics = () => {
     getData(value);
   }, [value]);
 
-  console.log("------->", scheduled, completed)
   return (
     <MainContainer>
       <Container>

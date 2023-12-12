@@ -120,7 +120,7 @@ export default function ManageJds({ rows, total, page, setPage, size, setSize })
 
 
   const handleSearch = () => {
-    console.log("Search");
+    
   }
 
   useEffect(() => {
@@ -146,7 +146,7 @@ export default function ManageJds({ rows, total, page, setPage, size, setSize })
 
     setTableRows(updatedRows);
   };
-  // console.log(rows.data.data.tableRows);
+  
   return (
     <StyledBox>
       <TableContainer component={Paper} className="tableBox">
