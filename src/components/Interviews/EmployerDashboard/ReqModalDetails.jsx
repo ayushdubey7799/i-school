@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
 import Success from '../../commonComponents/infoDialog/Success';
 import { setJdTrigger } from "../../../slices/jdSlice";
+import { dateConversion } from '../../../utils/timeZoneConversation';
 
 function Row(props) {
   const { row, rowsLength, index, id } = props;
@@ -90,7 +91,7 @@ function Row(props) {
           {row.reqNumber.toUpperCase()}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-          {row.createdAt?.slice(0, 10)}
+          {dateConversion(row.createdAt)}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.closed ? "CLOSED" : "OPEN"}

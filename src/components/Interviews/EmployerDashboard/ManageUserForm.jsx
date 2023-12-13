@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { addEmployee } from '../../../functions/api/employers/profile/addEmployee';
 import { useSelector } from 'react-redux';
 import { editEmployee } from '../../../functions/api/employers/profile/editEmployee';
+import Created from '../../commonComponents/infoDialog/Created';
 
 const Container = styled.div`
   width: 100%;
@@ -98,7 +99,7 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-function ManageUserForm({ array, handleClose }) {
+function ManageUserForm({ array, handleClose, setSuccessPopup, setSavedPopup }) {
     const [mode, setMode] = useState(array[1]);
     const [formData, setFormData] = useState({
         name: '',
@@ -134,7 +135,7 @@ function ManageUserForm({ array, handleClose }) {
         if (mode == "create") {
             const res = await addEmployee(formData, accessToken, clientCode);
             if (res) {
-                toast.success("Employer added successfully");
+                setSuccessPopup(true);
                 handleClose()
             };
         }
@@ -146,7 +147,7 @@ function ManageUserForm({ array, handleClose }) {
             }
             const res = await editEmployee(formData.id, payload, accessToken, clientCode);
             if (res) {
-                toast.success("Employer edited successfully");
+                setSavedPopup(true);
                 handleClose()
             };
         }

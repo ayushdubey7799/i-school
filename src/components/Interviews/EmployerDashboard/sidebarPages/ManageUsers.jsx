@@ -21,6 +21,8 @@ import { getEmployees, getEmployers } from "../../../../functions/api/employers/
 import { useSelector } from "react-redux";
 import { editEmployee } from "../../../../functions/api/employers/profile/editEmployee";
 import { toast } from "react-toastify";
+import Created from "../../../commonComponents/infoDialog/Created";
+import Saved from "../../../commonComponents/infoDialog/Saved";
 
 function Row(props) {
   const { row, rowsLength, index } = props;
@@ -33,6 +35,7 @@ function Row(props) {
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
+  const [savedPopup, setSavedPopup] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,8 +64,8 @@ function Row(props) {
 
   const handleDeactivate = async () => {
     row.active = false;
-    const res = await editEmployee(row.id,row,accessToken,clientCode);
-    if(res)toast.success("Deactivated Successfully");
+    const res = await editEmployee(row.id, row, accessToken, clientCode);
+    if (res) toast.success("Deactivated Successfully");
   }
 
   useEffect(() => {
@@ -81,8 +84,15 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} component={<ManageUserForm array={[row, "edit"]} handleClose={() => setOpenBasic2(false)} />} />
+      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} component={<ManageUserForm array={[row, "edit"]} handleClose={() => setOpenBasic2(false)} setSavedPopup={setSavedPopup} />} />
 
+      {savedPopup && (
+        <Saved
+          handleClose={() => setSavedPopup(false)}
+          open={savedPopup}
+          msg={`User successfully updated`}
+        />
+      )}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
@@ -114,7 +124,7 @@ function Row(props) {
             >
               <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='user' handleDelete={handleDelete} />} />
               <span onClick={handleEdit}>
-                <img src={editIcon}  className="threeDotIcon" /> Edit
+                <img src={editIcon} className="threeDotIcon" /> Edit
               </span>
               <span onClick={handleClickOpen}>
                 <img src={deleteIcon} className="threeDotIcon" /> Delete
@@ -132,24 +142,33 @@ function Row(props) {
 
 export default function ManageUsers() {
   const [openBasic, setOpenBasic] = useState(false);
-  const [users,setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
+  const [successPopup, setSuccessPopup] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
-      const res = await getEmployees(accessToken,clientCode);
+      const res = await getEmployees(accessToken, clientCode);
       setUsers(res?.data?.data)
     }
     getData();
-  },[])
+  }, [])
 
   return (
     <StyledDiv>
       <TableContainer component={Paper} className="tableBox">
-        <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} component={<ManageUserForm array={[null, "create"]} handleClose={() => setOpenBasic(false)} />} />
+        <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} component={<ManageUserForm array={[null, "create"]} handleClose={() => setOpenBasic(false)} setSuccessPopup={setSuccessPopup} />} />
 
+        {successPopup && (
+          <Created
+            handleClose={() => setSuccessPopup(false)}
+            open={successPopup}
+            msg="User successfully added"
+          />
+        )}
         <Component>
           <span className="title">Manage Users</span>
 
