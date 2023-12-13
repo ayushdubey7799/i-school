@@ -30,7 +30,7 @@ import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import JdsDetails from "./JdsDetails";
 import Error from "../../../commonComponents/infoDialog/Error";
 import Deleted from "../../../commonComponents/infoDialog/Deleted";
-import { timeZoneConversion } from "../../../../utils/timeZoneConversation";
+import { dateConversion } from "../../../../utils/timeZoneConversation";
 import {
   Pagination,
   PaginationSizeFilter,
@@ -263,7 +263,7 @@ function Row(props) {
           align="center"
           className="tableCell"
         >
-          {timeZoneConversion(row.createdAt)}
+          {dateConversion(row.createdAt)}
         </TableCell>
 
         <TableCell

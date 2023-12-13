@@ -40,6 +40,7 @@ import {
 } from "../../../commonComponents/Pagination";
 import Saved from "../../../commonComponents/infoDialog/Saved";
 import TableSearchBar from "../commonComponents/TableSearchBar";
+import { dateConversion } from "../../../../utils/timeZoneConversation";
 
 function Row(props) {
   const { row, rowsLength, index } = props;
@@ -246,7 +247,7 @@ function Row(props) {
           align="center"
           className="tableCell"
         >
-          {row.createdAt?.slice(0, 10)}
+          { dateConversion(row.createdAt) }
         </TableCell>
         <TableCell
           component="th"

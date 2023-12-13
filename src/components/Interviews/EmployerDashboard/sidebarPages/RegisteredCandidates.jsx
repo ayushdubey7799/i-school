@@ -21,6 +21,7 @@ import Deleted from "../../../commonComponents/infoDialog/Deleted";
 import Error from "../../../commonComponents/infoDialog/Error";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
 import TableSearchBar from "../commonComponents/TableSearchBar";
+import { dateConversion } from "../../../../utils/timeZoneConversation";
 
 function Row(props) {
   const { row, index, candidateTrigger, setCandidateTrigger } = props;
@@ -130,7 +131,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="center" className="tableCell">{row.email ? row.email : "..."}</TableCell>
         <TableCell align="center" className="tableCell">{row.contact ? row.contact : "..."}</TableCell>
-        <TableCell align="center" className="tableCell">{row.createdAt ? row.createdAt.slice(0, 10) : "..."}</TableCell>
+        <TableCell align="center" className="tableCell">{row.createdAt ? dateConversion(row.createdAt) : "..."}</TableCell>
         {/* <TableCell align="center">{row.source ? row.source : "..."}</TableCell> */}
         {/* <TableCell align="center">
           <input
@@ -235,7 +236,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
   }, [candidateTrigger]);
 
   const handleSearch = () => {
-    
+
   };
 
   return (
@@ -246,7 +247,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
         </div>
 
         <SearchBarContainer>
-          <TableSearchBar value={searchValue} setValue={setSearchValue}/>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
