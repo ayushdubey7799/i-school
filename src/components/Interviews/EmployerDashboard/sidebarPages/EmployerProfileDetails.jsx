@@ -21,12 +21,13 @@ const EmployerProfileDetails = () => {
         email: user.email,
         contact: user.primaryContact.toUpperCase(),
         legalContact: "+91 8000020000",
-        linkedin: 'linkedin.com/in/intelliview',
-        websiteUrl: 'https://intelliview.in/',
+        companySocialUrl: 'linkedin.com/in/intelliview',
+        companyUrl: 'https://intelliview.in/',
         clientCode: user.clientCode,
         profileId: user.profileId,
         userType: user.userType,
         userName: user.username,
+        aboutCompany: user.companyDescription
     });
 
     const textAreaRef = useRef(null);
@@ -54,8 +55,8 @@ const EmployerProfileDetails = () => {
                 <div className='middleBox'>
                     <span className='name'>{companyProfile.company}</span>
                     <div className='infoBox'>
-                        <a href={companyProfile.websiteUrl}><img src={website} className='socialIcon' />{companyProfile.websiteUrl}</a>
-                        <a href={companyProfile.linkedin}><img src={linkedin} className='socialIcon' />{companyProfile.linkedin.slice(0, 35)}</a>
+                        <a href={companyProfile.companyUrl}><img src={website} className='socialIcon' />{companyProfile.companyUrl}</a>
+                        <a href={companyProfile.companySocialUrl}><img src={linkedin} className='socialIcon' />{companyProfile.companySocialUrl.slice(0, 35)}</a>
                     </div>
                 </div>
                 <span className='editBtn'><img src={editIcon} /></span>
@@ -114,7 +115,7 @@ const EmployerProfileDetails = () => {
                 </span>
 
                 <textarea
-                    value={aboutCompany}
+                    value={user.aboutCompany}
                     onChange={(e) => setAboutCompany(e.target.value)}
                     disabled={!aboutEdit}
                     rows={10}
