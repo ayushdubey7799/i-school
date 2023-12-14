@@ -41,7 +41,7 @@ function Row(props) {
         <TableCell align="center" className="tableCell">...</TableCell>
         <TableCell align="center" className="tableCell">...</TableCell>
         <TableCell align="center" className="tableCell">{row?.interview?.stage}</TableCell>
-        <TableCell align="center" className="tableCell"><img src={fillFeedbackIcon} className="icon"/></TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails jdId={jdId}/>} />
@@ -98,7 +98,7 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
               <TableCell align="center" className="tableCell">Role</TableCell>
               <TableCell align="center" className="tableCell">Interview Link</TableCell>
               <TableCell align="center" className="tableCell">Current Round</TableCell>
-              <TableCell align="center" className="tableCell">Fill Feedback</TableCell>
+              <TableCell align="center" className="tableCell">Comment</TableCell>
               <TableCell align="center" className="tableCell">Details</TableCell>
             </TableRow>
           </TableHead>

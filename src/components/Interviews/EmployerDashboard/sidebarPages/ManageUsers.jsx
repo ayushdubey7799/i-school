@@ -23,6 +23,7 @@ import { editEmployee } from "../../../../functions/api/employers/profile/editEm
 import { toast } from "react-toastify";
 import Created from "../../../commonComponents/infoDialog/Created";
 import Saved from "../../../commonComponents/infoDialog/Saved";
+import Success from "../../../commonComponents/infoDialog/Success";
 
 function Row(props) {
   const { row, rowsLength, index } = props;
@@ -36,6 +37,7 @@ function Row(props) {
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
   const [savedPopup, setSavedPopup] = useState(false);
+  const [deactivatePopup, setDeactivatePopup] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -65,7 +67,7 @@ function Row(props) {
   const handleDeactivate = async () => {
     row.active = false;
     const res = await editEmployee(row.id, row, accessToken, clientCode);
-    if (res) toast.success("Deactivated Successfully");
+    if (res) setDeactivatePopup(true);
   }
 
   useEffect(() => {
@@ -92,6 +94,12 @@ function Row(props) {
           open={savedPopup}
           msg={`User successfully updated`}
         />
+      )}
+      {deactivatePopup && (
+        <Success
+          handleClose={() => setDeactivatePopup(false)}
+          open={deactivatePopup}
+          msg={`${row.email} successfully deactivated`} />
       )}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}

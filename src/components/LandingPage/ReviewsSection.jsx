@@ -13,16 +13,19 @@ const reviews = [
 const ReviewsSection = () => {
     return (
         <Box>
-            {
-                reviews.map((review, i) => (
-                    <div className='card'>
-                        {/* <img className='img' src={review.profileImg} /> */}
-                        <span className='name'>{review.name}</span>
-                        <span className='title'>{review.title}</span>
-                        <span className='text'>{review.text}</span>
-                    </div>
-                ))
-            }
+
+            <div className='floatingBox'>
+                {
+                    reviews.map((review, i) => (
+                        <div className='card'>
+                            {/* <img className='img' src={review.profileImg} /> */}
+                            <span className='name'>{review.name}</span>
+                            <span className='title'>{review.title}</span>
+                            <span className='text'>{review.text}</span>
+                        </div>
+                    ))
+                }
+            </div>
         </Box>
     )
 }
@@ -31,17 +34,35 @@ export default ReviewsSection
 
 const Box = styled.div`
 width: 90%;
-margin: 2rem auto 4rem auto;
+margin: 5rem auto 4rem auto;
 display: flex;
-gap: 3%;
-justify-content: space-between;
+background: linear-gradient(to bottom, #f0f0f0, #89f3eb);
+border-radius: 0.75rem;
+position: relative;
+height: 26rem;
+
+
+.floatingBox {
+    width: 100%;
+    display: flex;
+    gap: 1%;
+    justify-content: space-evenly;
+    position: absolute;
+    top: -4rem;
+}
 
 .card {
-    width: 23%;
+    width: 18%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    box-shadow: 0 0.1rem 0.5rem 0.1rem rgba(0, 0, 0, 0.25);
+    padding: 1rem 1.5%;
+    border-radius: 1rem;
+    background-color: var(--white);
+    color: var(--color);
+    
 
     .img {
         width: 4rem;
@@ -49,20 +70,24 @@ justify-content: space-between;
     }
 
     .name {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 700;
+        text-align: center;
     }
 
     .title {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 600;
         line-height: 1.3rem;
+        text-align: center;
     }
 
     .text {
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 400;
         line-height: 1.3rem;
+        text-align: center;
+        color: var(--color);
     }
 }
 

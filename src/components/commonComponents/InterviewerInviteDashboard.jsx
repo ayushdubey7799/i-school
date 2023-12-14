@@ -11,71 +11,75 @@ import TableSearchBar from "../Interviews/EmployerDashboard/commonComponents/Tab
 import fillFeedbackIcon from '../../assets/icons/fillFeedbackIcon.png'
 import visibleIcon from '../../assets/icons/visible.png'
 import { jds as inviteLists } from "../../utils/contantData";
+import LogoHeader from "./LogoHeader";
 
 
 function Row(props) {
-    const { row, index } = props;
+  const { row, index } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell align="center" className="tableCell">...</TableCell>
-                <TableCell align="center" className="tableCell">...</TableCell>
-                <TableCell align="center" className="tableCell">...</TableCell>
-                <TableCell component="th" scope="row" align="center" className="tableCell">
-                    <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-                        <img src={visibleIcon} className="icon" />
-                    </div>
-                </TableCell>
-                <TableCell align="center" className="tableCell"><img src={fillFeedbackIcon} className="icon" /></TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
+            <img src={visibleIcon} className="icon" />
+          </div>
+        </TableCell>
+        <TableCell align="center" className="tableCell"><img src={fillFeedbackIcon} className="icon" /></TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const InterviewerInviteDashboard = () => {
-    const [tableRows, setTableRows] = useState([]);
-    const [searchValue, setSearchValue] = useState('');
+  const [tableRows, setTableRows] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
-    useEffect(() => {
-        setTableRows(inviteLists);
-    }, [inviteLists])
+  useEffect(() => {
+    setTableRows(inviteLists);
+  }, [inviteLists])
 
-    const handleSearch = () => {
-        
-    }
+  const handleSearch = () => {
 
-    return (
-        <Content>
-            <TableContainer component={Paper} className="tableBox">
-                <div className="titleBox">
-                    <span className="title">Invited Candidates List</span>
-                </div>
+  }
 
-                <SearchBarContainer>
-                    <TableSearchBar value={searchValue} setValue={setSearchValue} />
-                </SearchBarContainer>
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center" className="tableCell">Name</TableCell>
-                            <TableCell align="center" className="tableCell">Email</TableCell>
-                            <TableCell align="center" className="tableCell">Contact</TableCell>
-                            <TableCell align="center" className="tableCell">Resume</TableCell>
-                            <TableCell align="center" className="tableCell">Feedback</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {tableRows?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Content>
-    )
+  return (
+    <Content>
+      <LogoHeader />
+      <TableContainer component={Paper} className="tableBox">
+        <div className="titleBox">
+          <span className="title">Invited Candidates List</span>
+        </div>
+
+        <SearchBarContainer>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
+        </SearchBarContainer>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Email</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Current Round</TableCell>
+              <TableCell align="center" className="tableCell">Resume</TableCell>
+              <TableCell align="center" className="tableCell">Feedback</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {tableRows?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Content>
+  )
 }
 
 export default InterviewerInviteDashboard
@@ -95,7 +99,7 @@ const SearchBarContainer = styled.div`
 `
 
 const Content = styled.div`
-margin: 1rem 0% 2rem 0%;
+margin: 0rem 0% 2rem 0%;
 width: 98%;
 padding: 0 1%;
 display: flex;
@@ -117,6 +121,7 @@ align-items: center;
 }
 
 .tableBox {
+  margin-top: 5rem;
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
   border-radius: 0.5rem;
   padding-top: 1rem;

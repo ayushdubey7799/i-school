@@ -1,198 +1,291 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { EmpMetricOptions } from '../../../../utils/contantData';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+import EmpMetric1 from '../../../../assets/icons/metric2.1.png'
+import EmpMetric2 from '../../../../assets/icons/metric2.2.png'
+import EmpMetric3 from '../../../../assets/icons/metric2.3.png'
+import EmpMetric4 from '../../../../assets/icons/metric2.4.png'
+import EmpMetric5 from '../../../../assets/icons/metric2.5.png'
+import EmpMetric6 from '../../../../assets/icons/metric2.6.png'
+import EmpMetric7 from '../../../../assets/icons/metric2.7.png'
+import EmpMetric8 from '../../../../assets/icons/metric2.8.png'
+
+
+const initialData = {
+    list1: [
+        {
+            id: 1,
+            title: 'Interviews',
+            text: 'interviews',
+            img: EmpMetric1,
+        },
+        {
+            id: 2,
+            title: 'Active JDs',
+            text: 'activeJDs',
+            img: EmpMetric2,
+        },
+        {
+            id: 3,
+            title: 'Applications',
+            text: 'applications',
+            img: EmpMetric3,
+        },
+        {
+            id: 4,
+            title: 'Candidates Pool',
+            text: 'candidatesPool',
+            img: EmpMetric4,
+        },
+    ]
+
+    ,
+    list2: [
+        {
+            id: 5,
+            title: 'Invite Sent (Last 30 Days)',
+            text: 'inviteSent',
+            img: EmpMetric5,
+        },
+        {
+            id: 6,
+            title: 'Reviewed Profiles (Last 30 Days)',
+            text: 'reviewedProfile',
+            img: EmpMetric6,
+        },
+        {
+            id: 7,
+            title: 'JD Views (Last 30 Days)',
+            text: 'jdViews',
+            img: EmpMetric7,
+        },
+        {
+            id: 8,
+            title: 'Offers (Last 30 Days)',
+            text: 'offers',
+            img: EmpMetric8,
+        }
+    ],
+};
 
 
 const EmpConfigureDash = () => {
 
-    const [selected, setSelected] = useState(EmpMetricOptions[0].text);
-    const [selectedInput, setSelectedInput] = useState();
-    const [selectedMetric1, setSelectedMetric1] = useState();
-    const [selectedMetric2, setSelectedMetric2] = useState();
-    const [selectedMetric3, setSelectedMetric3] = useState();
-    const [selectedMetric4, setSelectedMetric4] = useState();
-    const [selectedOptionCount, setSelectedOptionCount] = useState(0);
+    const [data, setData] = useState(initialData);
 
-    // const availableMetrics = seekerMetricOptions.filter((metric) => selectedMetric1.text != metric.text || selectedMetric2.text != metric.text || selectedMetric3.text != metric.text || selectedMetric4.text != metric.text);
+    const onDragEnd = (result) => {
+        if (!result.destination) return;
 
+        const { source, destination, draggableId } = result;
 
-    const handleOptionClick = (option) => {
-        setSelected(option);
-    }
+        if (source.droppableId === destination.droppableId) {
+            // Reorder within the same list
+            const list = data[source.droppableId];
+            const updatedList = [...list];
+            const [movedItem] = updatedList.splice(source.index, 1);
+            updatedList.splice(destination.index, 0, movedItem);
 
-    const handleInputChange = (inp) => {
-        setSelectedInput(inp.text);
+            const updatedData = {
+                ...data,
+                [source.droppableId]: updatedList,
+            };
 
-        if (selected === EmpMetricOptions[0].text) {
-            setSelectedMetric1(inp);
-        } else if (selected === EmpMetricOptions[1].text) {
-            setSelectedMetric2(inp);
-        } else if (selected === EmpMetricOptions[2].text) {
-            setSelectedMetric3(inp);
-        } else if (selected === EmpMetricOptions[3].text) {
-            setSelectedMetric4(inp);
+            setData(updatedData);
+        } else {
+            // Move item between lists
+            const sourceList = data[source.droppableId];
+            const destinationList = data[destination.droppableId];
+            const updatedSourceList = [...sourceList];
+            const updatedDestinationList = [...destinationList];
+            const [movedItem] = updatedSourceList.splice(source.index, 1);
+            updatedDestinationList.splice(destination.index, 0, movedItem);
+
+            const updatedData = {
+                ...data,
+                [source.droppableId]: updatedSourceList,
+                [destination.droppableId]: updatedDestinationList,
+            };
+
+            setData(updatedData);
         }
-    }
+    };
 
-
-    const handleSave = () => {
-
-    }
 
 
 
     return (
-        <MainBox>
-            <Button onClick={handleSave}>Save Changes</Button>
-            <div className='optionBox'>
-                {
-                    EmpMetricOptions.map((option, i) => (
-                        <div className={`option ${selected == option.text ? 'selected' : ''}`} onClick={() => {
-                            handleOptionClick(option.text)
-                            setSelectedOptionCount(i);
-                        }}>Metric {i + 1}</div>
-                    ))
-                }
-            </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+            <Container>
+                <Droppable droppableId="list1" direction="vertical">
+                    {(provided) => (
+                        <LeftBox ref={provided.innerRef} {...provided.droppableProps}>
+                            <span className='title'>Current Metrics</span>
+                            {
+                                data.list1.map((item, index) => (
+                                    <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
+                                        {(provided) => (
+                                            <div className='cardBox'
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}>
+                                                <Card>
+                                                    <div className='top'>
+                                                        <img src={item.img} />
+                                                        <span className='achievedNumberDigit'>{index + 1}</span>
+                                                    </div>
+                                                    <span className='hrLine'></span>
+                                                    <span className='achievedNumberText'>{item.title}</span>
+                                                </Card>
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                            {provided.placeholder}
+                        </LeftBox>
+                    )}
+                </Droppable>
+                <Droppable droppableId="list2" direction="vertical">
+                    {(provided) => (
+                        <RightBox ref={provided.innerRef} {...provided.droppableProps}>
+                            <span className='title'>Optional Metrics</span>
+                            {
+                                data.list2.map((item, index) => (
+                                    <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
+                                        {(provided) => (
+                                            <div className='cardBox'
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}>
+                                                <Card>
+                                                    <div className='top'>
+                                                        <img src={item.img} />
+                                                        <span className='achievedNumberDigit'>{index + 1}</span>
+                                                    </div>
+                                                    <span className='hrLine'></span>
+                                                    <span className='achievedNumberText'>{item.title}</span>
+                                                </Card>
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                            {provided.placeholder}
+                        </RightBox>
+                    )}
+                </Droppable>
+            </Container>
+        </DragDropContext>
 
-            <ContentBox selectedOptionCount={selectedOptionCount}>
-                {
-                    EmpMetricOptions.map((option, i) => (
-                        <label>
-                            <input
-                                type="radio"
-                                checked={selectedInput == option.text}
-                                onClick={() => handleInputChange(option)}
-                            />
-                            <span>{option.title}</span>
-                        </label>
-                    ))
-                }
-            </ContentBox>
-        </MainBox>
     )
 }
 
 export default EmpConfigureDash
 
-
-const MainBox = styled.div`
-width: 90%;
+const Container = styled.div`
 display: flex;
-flex-direction: column;
-justify-content: start;
-align-items: center;
-gap: 2.5%;
-margin: 1rem auto;
-position: relative;
+width: 100%;
+flex-direction: row;
+align-items: start;
+margin: 2rem auto
+gap: 2rem;
 
-.optionBox {
-    display: flex;
+
+.cardBox {
     width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2.5%;
-}
-
-.option {
-    background-color: var(--white);
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    width: 19%;
-    height: 3rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0.08rem solid lightgrey;
-}
-
-.selected {
-    background-color: var(--lightOrange);
-    color: var(--white);
-
-}
-
-
-
-`
-
-const Button = styled.button`
-background-color: var(--lightOrange);
-padding: 0.5rem 1rem;
-border: none;
-border-radius: 0.5rem;
-margin-bottom: 1rem;
-color: var(--white);
-font-size: 0.9rem;
-font-weight: 600;
-cursor: pointer;
-align-self: end;
-
-`
-
-
-const ContentBox = styled.div`
-    // height: 20rem;
-    background-color: var(--white);
-    margin-top: 1rem;
-    border-radius: 1rem;
-    padding: 2rem 1rem;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    border: 0.08rem solid lightgrey;
-    gap: 0.5rem;
-    position: absolute;
-    top: 7rem;
-    left: ${(props) => (props.selectedOptionCount < 3 && props.selectedOptionCount * 25)}%;
-    right: ${(props) => (props.selectedOptionCount === 3 ? '0%' : 'auto')};
-
-     
-label {
-	display: flex;
-	cursor: pointer;
-	font-weight: 500;
-	position: relative;
-	margin-bottom: 0rem;
-    padding: 0 1rem;
-
-	input {
-		position: absolute;
-		left: -9999px;
-		&:checked + span {
-			// background-color: #f0f0f6;
-			&:before {
-				box-shadow: inset 0 0 0 0.3rem var(--lightOrange);
-			}
-		}
-	}
-	span {
-		display: flex;
-		align-items: center;
-        font-size: 0.9rem;
-		padding: 0.3rem 0.75rem 0.3rem 0.3rem;
-		border-radius: 99rem; // or something higher...
-		transition: 0.25s ease;
-		&:hover {
-			background-color: mix(#fff, var(--lightOrange), 84%);
-		}
-		&:before {
-			display: flex;
-			flex-shrink: 0;
-			content: "";
-			background-color: #fff;
-			width: 1rem;
-			height: 1rem;
-			border-radius: 50%;
-			margin-right: 0.375em;
-			transition: 0.25s ease;
-			box-shadow: inset 0 0 0 0.125em var(--lightOrange);
-		}
-	}
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 }
+
+`
+
+const LeftBox = styled.div`
+width: 98%;
+margin: 1rem 2rem;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+background-color: var(--white);
+padding: 2rem 3%;
+box-sizing: border-box;
+border-radius: 0.5rem;
+border: 0.075rem solid grey;
+gap: 2rem;
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+`
+
+const RightBox = styled.div`
+width: 98%;
+margin: 1rem 2rem;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+background-color: var(--white);
+padding: 2rem 3%;
+box-sizing: border-box;
+border-radius: 0.5rem;
+border: 0.075rem solid grey;
+gap: 2rem;
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+`
+
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.7rem;
+  background-color: var(--white);
+  padding: 1rem 0 1.5rem 0;
+  width: 90%;
+  height: 7rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
+
+  .top {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    img {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  .achievedNumberDigit {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color);
+  }
+  
+  .achievedNumberText {
+    font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color);
+      text-align: center;
+  }
+
+  .hrLine {
+    width: 100%;
+    border-top: 0.1rem groove lightgrey;
+    margin: -0.2rem 0 -0.9rem 0;
+    box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.25);
+  }
 
 `
