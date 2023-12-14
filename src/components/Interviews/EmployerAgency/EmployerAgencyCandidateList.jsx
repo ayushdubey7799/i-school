@@ -7,13 +7,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
-import fillFeedbackIcon from '../../assets/icons/fillFeedbackIcon.png'
-import visibleIcon from '../../assets/icons/visible.png'
-import CommonDrawer from "../commonComponents/CommonDrawer";
-import SeekerInterviewDetails from "../Interviews/SeekerDashboard/sidebarPages/SeekerInterviewDetails";
-import { getAllTrackers } from "../../functions/api/interview/getAllTrackers";
+// import fillFeedbackIcon from '../../assets/icons/fillFeedbackIcon.png'
+import visibleIcon from '../../../assets/icons/visible.png'
+import CommonDrawer from "../../commonComponents/CommonDrawer";
+import SeekerInterviewDetails from "../SeekerDashboard/sidebarPages/SeekerInterviewDetails";
+import { getAllTrackers } from "../../../functions/api/interview/getAllTrackers";
 import { useSelector } from "react-redux";
-import TableSearchBar from "../Interviews/EmployerDashboard/commonComponents/TableSearchBar";
+import TableSearchBar from "../EmployerDashboard/commonComponents/TableSearchBar";
 
 function Row(props) {
     const { row, jdId, index } = props;
@@ -51,7 +51,7 @@ function Row(props) {
 }
 
 
-const AgencyInterviewCandidateList = ({ page, setPage }) => {
+const EmployerAgencyCandidateList = ({ page, setPage }) => {
     const [tableRows, setTableRows] = useState([]);
     const [total, setTotal] = useState(0);
     const accessToken = useSelector(state => state.auth.userData?.accessToken);
@@ -109,7 +109,7 @@ const AgencyInterviewCandidateList = ({ page, setPage }) => {
     )
 }
 
-export default AgencyInterviewCandidateList
+export default EmployerAgencyCandidateList
 
 
 

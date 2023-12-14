@@ -1054,24 +1054,28 @@ export const seekerMetricOptions = [{
 
 
 export const EmpMetrics1 = {
+    id: 1,
     title: 'Interviews',
     text: 'interviews',
     img: EmpMetric1
 }
 
 export const EmpMetrics2 = {
+    id: 2,
     title: 'Active JDs',
     text: 'activeJDs',
     img: EmpMetric2
 }
 
 export const EmpMetrics3 = {
+    id: 3,
     title: 'Applications',
     text: 'applications',
     img: EmpMetric3
 }
 
 export const EmpMetrics4 = {
+    id: 4,
     title: 'Candidates Pool',
     text: 'candidatesPool',
     img: EmpMetric4
@@ -1079,21 +1083,25 @@ export const EmpMetrics4 = {
 
 
 export const EmpMetricOptions = [{
+    id: 5,
     title: 'Invite Sent (Last 30 Days)',
     text: 'inviteSent',
     img: EmpMetric5
 },
 {
+    id: 6,
     title: 'Reviewed Profiles (Last 30 Days)',
     text: 'reviewedProfile',
     img: EmpMetric6
 },
 {
+    id: 7,
     title: 'JD Views (Last 30 Days)',
     text: 'jdViews',
     img: EmpMetric7
 },
 {
+    id: 8,
     title: 'Offers (Last 30 Days)',
     text: 'offers',
     img: EmpMetric8

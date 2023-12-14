@@ -38,7 +38,7 @@ gap: 2%;
 
 
 .selected {
-  background-color: #d9fbf9 !important;
+  background: linear-gradient(to bottom, #f0f0f0, #d9fbf9);
 }
 
   .achievedNumberBox {
@@ -114,9 +114,9 @@ const Metrics = () => {
   }, [currMetric])
 
   useEffect(() => {
-    if (metrics.length) {
-      setCompleted(metrics.find((item) => item.status == "COMPLETED")?.count);
-      setScheduled(metrics.find((item) => item.status == "SCHEDULED")?.count)
+    if (metrics?.length) {
+      setCompleted(metrics?.find((item) => item.status == "COMPLETED")?.count);
+      setScheduled(metrics?.find((item) => item.status == "SCHEDULED")?.count)
     }
   }, [metrics])
 

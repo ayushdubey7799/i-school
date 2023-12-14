@@ -387,7 +387,7 @@ margin-top: 5rem;
 
 .productCard:hover {
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
-    background-color: #c0f8f4;
+    background: linear-gradient(to bottom, #f0f0f0, #89f3eb);
 }
 
 .productCardImg {

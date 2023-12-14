@@ -37,7 +37,7 @@ padding: 1rem 0% 2rem 0%;
 gap: 2%;
 
 .selected {
-  background-color: #d9fbf9 !important;
+  background: linear-gradient(to bottom, #f0f0f0, #d9fbf9);
 }
 
 .achievedNumberBox {
