@@ -8,11 +8,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { getActiveJds } from "../../slices/jdSlice";
+import { getActiveJds } from "../../../slices/jdSlice";
 import { useDispatch } from "react-redux";
-import { getJdsForMatching } from "../../functions/api/employers/match/getJdsForMatching";
-import TableSearchBar from "../Interviews/EmployerDashboard/commonComponents/TableSearchBar";
-import uploadIcon from '../../assets/icons/upload.png'
+import { getJdsForMatching } from "../../../functions/api/employers/match/getJdsForMatching";
+import TableSearchBar from "../EmployerDashboard/commonComponents/TableSearchBar";
+import uploadIcon from '../../../assets/icons/upload.png'
 
 
 
@@ -43,7 +43,7 @@ function Row(props) {
 }
 
 
-const AgencyInterviewJdList = ({ setPage }) => {
+const EmployerAgencyJdList = ({ setPage }) => {
   const [tableRows, setTableRows] = useState([]);
   const [jdData, setJdData] = useState([]);
 
@@ -127,7 +127,7 @@ const AgencyInterviewJdList = ({ setPage }) => {
   )
 }
 
-export default AgencyInterviewJdList
+export default EmployerAgencyJdList
 
 
 const SearchBarContainer = styled.div`
