@@ -41,6 +41,11 @@ import {
 import Saved from "../../../commonComponents/infoDialog/Saved";
 import TableSearchBar from "../commonComponents/TableSearchBar";
 import { dateConversion } from "../../../../utils/timeZoneConversation";
+import uploadIcon from '../../../../assets/icons/upload.png'
+
+import { useJwt } from 'react-jwt';
+
+
 
 function Row(props) {
   const { row, rowsLength, index } = props;
@@ -62,6 +67,10 @@ function Row(props) {
   const clientCode = useSelector(
     (state) => state.auth.userData.user.clientCode
   );
+
+
+  const [userRole, setUserRole] = useState('');
+  const decodedToken = useJwt(accessToken);
 
   // state to open and close Drawer
   const [state, setState] = React.useState({
@@ -164,7 +173,7 @@ function Row(props) {
   };
 
   const handleShareSocial = () => {
-    
+
   };
 
   useEffect(() => {
@@ -180,6 +189,15 @@ function Row(props) {
       document.removeEventListener("mousedown", handleDocumentClick);
     };
   }, []);
+
+  // Access Roles by access Token  
+  useEffect(() => {
+    const getUserRoles = () => {
+      const userRoles = decodedToken?.decodedToken?.grants || '';
+      setUserRole(userRoles);
+    }
+    getUserRoles();
+  }, [accessToken, decodedToken]);
 
   return (
     <React.Fragment>
@@ -233,6 +251,14 @@ function Row(props) {
         >
           {row.jdId.toUpperCase()}
         </TableCell>
+        {userRole === 'ROLE_AGENCY' && <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
+          ...
+        </TableCell>}
         <TableCell
           component="th"
           scope="row"
@@ -247,7 +273,7 @@ function Row(props) {
           align="center"
           className="tableCell"
         >
-          { dateConversion(row.createdAt) }
+          {dateConversion(row.createdAt)}
         </TableCell>
         <TableCell
           component="th"
@@ -265,6 +291,18 @@ function Row(props) {
         >
           {row.hiringManager}
         </TableCell>
+
+        {userRole === 'ROLE_AGENCY' && <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
+          ...
+        </TableCell>}
+        {userRole === 'ROLE_AGENCY' && <TableCell component="th" scope="row" align="center" className="tableCell" style={{ display: 'flex', justifyContent: 'center' }}>
+          <button className="btn1"><img src={uploadIcon} className="icon" /></button>
+        </TableCell>}
         {/* <TableCell component="th" scope="row" align="center">
           ...
         </TableCell> */}
@@ -369,6 +407,9 @@ const ActiveJds = () => {
   const jdData = useSelector((state) => state?.jd?.activeJds);
   const jdTrigger = useSelector((state) => state.jd.JdTrigger);
 
+  const [userRole, setUserRole] = useState('');
+  const decodedToken = useJwt(accessToken);
+
   const [total, setTotal] = useState(0);
   const [filteredData, setFilteredData] = useState([]);
 
@@ -390,6 +431,7 @@ const ActiveJds = () => {
       setPage((prev) => prev - 1);
     }
   };
+
 
   useEffect(() => {
     dispatch(getActiveJds(accessToken, clientCode));
@@ -438,6 +480,17 @@ const ActiveJds = () => {
     toast.success("Exported Successfully");
   };
 
+
+  // Access Roles by access Token  
+  useEffect(() => {
+    const getUserRoles = () => {
+      const userRoles = decodedToken?.decodedToken?.grants || '';
+      setUserRole(userRoles);
+    }
+    getUserRoles();
+  }, [accessToken, decodedToken]);
+
+
   return (
     <Container1>
       <StyledBox>
@@ -470,6 +523,9 @@ const ActiveJds = () => {
                 <TableCell align="center" className="tableCell">
                   JD ID
                 </TableCell>
+                {userRole === 'ROLE_AGENCY' && <TableCell align="center" className="tableCell">
+                  Employer
+                </TableCell>}
                 <TableCell align="center" className="tableCell">
                   Test ID
                 </TableCell>
@@ -482,6 +538,12 @@ const ActiveJds = () => {
                 <TableCell align="center" className="tableCell">
                   Hiring Manager
                 </TableCell>
+                {userRole === 'ROLE_AGENCY' && <TableCell align="center" className="tableCell">
+                  JD Source
+                </TableCell>}
+                {userRole === 'ROLE_AGENCY' && <TableCell align="center" className="tableCell">
+                  Upload Candidates
+                </TableCell>}
                 {/* <TableCell align='center' className="tableCell">Comments</TableCell> */}
                 <TableCell align="center" className="tableCell">
                   Actions
@@ -612,6 +674,25 @@ const StyledBox = styled.div`
     cursor: pointer;
     text-decoration: none;
     font-family: var(--font);
+  }
+
+  .btn1 {
+    background-color: var(--lightOrange);
+    border: none;
+    color: var(--white);
+    border-radius: 0.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  
+  
+    .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 0.2rem;
+  }
   }
 
   .selected {

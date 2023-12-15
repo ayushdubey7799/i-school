@@ -9,77 +9,72 @@ import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import { data as interviews } from "../../../../utils/contantData";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
+import TableSearchBar from "../commonComponents/TableSearchBar";
 
 function Row(props) {
-    const { row, index } = props;
+  const { row, index } = props;
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-                <TableCell align="center">...</TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const InProgressInterview = () => {
-    const [tableRows, setTableRows] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
-    useEffect(() => {
-        setTableRows(interviews)
-    }, [interviews])
+  useEffect(() => {
+    setTableRows(interviews)
+  }, [interviews])
 
-    const handleSearch = () => {
-        
-    }
+  const handleSearch = () => {
+
+  }
 
 
-    return (
-        <Content>
-            <TableContainer component={Paper} className="tableBox">
-                <div className="titleBox">
-                    <span className="title">In Progress Interviews</span>
-                </div>
+  return (
+    <Content>
+      <TableContainer component={Paper} className="tableBox">
+        <div className="titleBox">
+          <span className="title">In Progress Interviews</span>
+        </div>
 
-                <SearchBarContainer>
-                    <div className='skillBox'>
-                        <img src={searchBlack} />
-                        <input
-                            className='skillInput'
-                            type="text"
-                            placeholder="Search"
-                        />
-                    </div>
-                </SearchBarContainer>
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center">JD ID</TableCell>
-                            <TableCell align="center">Candidate Name</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">Contact</TableCell>
-                            <TableCell align="center">Scheduled Date/Time</TableCell>
-                            <TableCell align="center">Recruiter</TableCell>
-                            <TableCell align="center">Req ID</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {tableRows?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Content>
-    )
+        <SearchBarContainer>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
+        </SearchBarContainer>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center" className="tableCell">JD ID</TableCell>
+              <TableCell align="center" className="tableCell">Candidate Name</TableCell>
+              <TableCell align="center" className="tableCell">Email</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Scheduled Date/Time</TableCell>
+              <TableCell align="center" className="tableCell">Recruiter</TableCell>
+              <TableCell align="center" className="tableCell">Req ID</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {tableRows?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Content>
+  )
 }
 
 export default InProgressInterview
@@ -98,30 +93,6 @@ const SearchBarContainer = styled.div`
   gap: 1rem;
 
 
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
 
 
 `
@@ -147,8 +118,8 @@ align-items: center;
 
   .title {
     padding-left: 1.2rem;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   .titleBox {
@@ -178,10 +149,25 @@ align-items: center;
 .tableHead {
   background-color: #d1fff0;
   width: 100%;
+
+  .tableCell {
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font);
+    color: var(--color);
+  }
+  
 }
 
 .tableBody {
   width: 100%;
+
+  .tableCell {
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: var(--font);
+    color: var(--color);
+  }
 }
 
 

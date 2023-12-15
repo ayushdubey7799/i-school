@@ -13,7 +13,7 @@ import EmpMetric8 from '../../../../assets/icons/metric2.8.png'
 
 
 const initialData = {
-    list1: [
+    current: [
         {
             id: 1,
             title: 'Interviews',
@@ -41,7 +41,7 @@ const initialData = {
     ]
 
     ,
-    list2: [
+    optional: [
         {
             id: 5,
             title: 'Invite Sent (Last 30 Days)',
@@ -74,55 +74,47 @@ const EmpConfigureDash = () => {
 
     const [data, setData] = useState(initialData);
 
+
     const onDragEnd = (result) => {
         if (!result.destination) return;
-
-        const { source, destination, draggableId } = result;
-
-        if (source.droppableId === destination.droppableId) {
-            // Reorder within the same list
-            const list = data[source.droppableId];
-            const updatedList = [...list];
-            const [movedItem] = updatedList.splice(source.index, 1);
-            updatedList.splice(destination.index, 0, movedItem);
-
-            const updatedData = {
-                ...data,
-                [source.droppableId]: updatedList,
-            };
-
-            setData(updatedData);
-        } else {
-            // Move item between lists
-            const sourceList = data[source.droppableId];
-            const destinationList = data[destination.droppableId];
-            const updatedSourceList = [...sourceList];
-            const updatedDestinationList = [...destinationList];
-            const [movedItem] = updatedSourceList.splice(source.index, 1);
-            updatedDestinationList.splice(destination.index, 0, movedItem);
-
-            const updatedData = {
-                ...data,
-                [source.droppableId]: updatedSourceList,
-                [destination.droppableId]: updatedDestinationList,
-            };
-
-            setData(updatedData);
-        }
+    
+        const { source, destination } = result;
+    
+        // Clone the data to avoid modifying the state directly
+        const updatedData = { ...data };
+    
+        // Swap the items between source and destination lists
+        const sourceList = [...updatedData[source.droppableId]];
+        const destinationList = [...updatedData[destination.droppableId]];
+    
+        const [movedItem] = sourceList.splice(source.index, 1);
+        const [replacedItem] = destinationList.splice(destination.index, 1);
+    
+        // Replace the source index with the destination index in source list
+        sourceList.splice(destination.index, 0, replacedItem);
+    
+        // Replace the destination index with the source index in destination list
+        destinationList.splice(source.index, 0, movedItem);
+    
+        // Update the data with the modified lists
+        updatedData[source.droppableId] = sourceList;
+        updatedData[destination.droppableId] = destinationList;
+    
+        // Update the state with the modified data
+        setData(updatedData);
     };
-
-
+    
 
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <Container>
-                <Droppable droppableId="list1" direction="vertical">
+                <Droppable droppableId="optional" direction="vertical">
                     {(provided) => (
                         <LeftBox ref={provided.innerRef} {...provided.droppableProps}>
-                            <span className='title'>Current Metrics</span>
+                            <span className='title'>Optional Metrics</span>
                             {
-                                data.list1.map((item, index) => (
+                                data.optional.map((item, index) => (
                                     <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                                         {(provided) => (
                                             <div className='cardBox'
@@ -145,12 +137,12 @@ const EmpConfigureDash = () => {
                         </LeftBox>
                     )}
                 </Droppable>
-                <Droppable droppableId="list2" direction="vertical">
+                <Droppable droppableId="current" direction="vertical">
                     {(provided) => (
                         <RightBox ref={provided.innerRef} {...provided.droppableProps}>
-                            <span className='title'>Optional Metrics</span>
+                            <span className='title'>Current Metrics</span>
                             {
-                                data.list2.map((item, index) => (
+                                data.current.map((item, index) => (
                                     <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                                         {(provided) => (
                                             <div className='cardBox'
@@ -202,8 +194,8 @@ gap: 2rem;
 `
 
 const LeftBox = styled.div`
-width: 98%;
-margin: 1rem 2rem;
+width: 60%;
+margin: 1rem 20% 1rem 2rem;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -223,8 +215,8 @@ gap: 2rem;
 `
 
 const RightBox = styled.div`
-width: 98%;
-margin: 1rem 2rem;
+width: 60%;
+margin: 1rem 2rem 1rem 20%;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
