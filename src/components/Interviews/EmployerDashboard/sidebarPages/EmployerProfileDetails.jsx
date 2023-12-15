@@ -38,6 +38,8 @@ const EmployerProfileDetails = () => {
         setAboutEdit(false);
     }
 
+    
+
     useEffect(() => {
         // Focus and set the cursor at the end of the textarea when aboutEdit becomes true
         if (aboutEdit && textAreaRef.current) {
