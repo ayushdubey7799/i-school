@@ -24,6 +24,10 @@ import { toast } from "react-toastify";
 import Created from "../../../commonComponents/infoDialog/Created";
 import Saved from "../../../commonComponents/infoDialog/Saved";
 import Success from "../../../commonComponents/infoDialog/Success";
+import { deleteEmployee } from "../../../../functions/api/employers/profile/deleteEmployee";
+import Error from "../../../commonComponents/infoDialog/Error";
+import Deleted from "../../../commonComponents/infoDialog/Deleted";
+import DeactivateDialogContent from "../../../commonComponents/DeactivateDialogContent";
 
 function Row(props) {
   const { row, rowsLength, index } = props;
@@ -36,16 +40,13 @@ function Row(props) {
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
+  const [openDeactivate, setOpenDeactivate] = useState(false);
   const [savedPopup, setSavedPopup] = useState(false);
   const [deactivatePopup, setDeactivatePopup] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [deletePopup, setDeletePopup] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [deleteErrorPopup, setDeleteErrorPopup] = useState(false);
+  const [deactivateErrorPopup, setDeactivateErrorPopup] = useState(false);
 
 
   const openDropdown = (index) => {
@@ -60,14 +61,40 @@ function Row(props) {
     setOpenBasic2(true);
   };
 
-  const handleDelete = () => {
-    handleClose();
+  const handleDelete = async (id) => {
+    try {
+      const res = await deleteEmployee(id, accessToken, clientCode);
+      if (res) {
+        setDeletePopup(true);
+      }
+    } catch (error) {
+      // Handle network errors or unexpected issues
+      const errMsg =
+        error.response.data.notify.message ||
+        "An error occurred. Please try again.";
+      setErrorMsg(errMsg);
+      setDeleteErrorPopup(true);
+    } finally {
+      setOpen(false);
+    }
+
   };
 
-  const handleDeactivate = async () => {
-    row.active = false;
-    const res = await editEmployee(row.id, row, accessToken, clientCode);
-    if (res) setDeactivatePopup(true);
+
+  const handleDeactivate = async (id) => {
+    try {
+      row.active = false;
+      const res = await editEmployee(id, row, accessToken, clientCode);
+      if (res) setDeactivatePopup(true);
+    } catch (error) {
+      const errMsg =
+        error.response.data.notify.message ||
+        "An error occurred. Please try again.";
+      setErrorMsg(errMsg);
+      setDeactivateErrorPopup(true);
+    } finally {
+      setOpenDeactivate(false);
+    }
   }
 
   useEffect(() => {
@@ -101,6 +128,29 @@ function Row(props) {
           open={deactivatePopup}
           msg={`${row.email} successfully deactivated`} />
       )}
+      {deleteErrorPopup && (
+        <Error
+          handleClose={() => setDeleteErrorPopup(false)}
+          open={deleteErrorPopup}
+          msg={errorMsg}
+          handleRetryFunc={() => handleDelete(row.id)}
+        />
+      )}
+      {deactivateErrorPopup && (
+        <Error
+          handleClose={() => setErrorPopup(false)}
+          open={deactivateErrorPopup}
+          msg={errorMsg}
+          handleRetryFunc={() => handleDeactivate(row.id)}
+        />
+      )}
+      {deletePopup && (
+        <Deleted
+          handleClose={() => setDeletePopup(false)}
+          open={deletePopup}
+          msg={`${row.email} successfully deleted`}
+        />
+      )}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
@@ -130,14 +180,15 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
                 }`} ref={dropdownRef}
             >
-              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='user' handleDelete={handleDelete} />} />
+              <CommonDialog open={open} handleClose={() => setOpen(false)} component={<DeleteDialogContent handleClose={() => setOpen(false)} text='user' handleDelete={() => handleDelete(row.id)} />} />
+              <CommonDialog open={openDeactivate} handleClose={() => setOpenDeactivate(false)} component={<DeactivateDialogContent handleClose={() => setOpenDeactivate(false)} text='user' handleDeactivate={() => handleDeactivate(row.id)} />} />
               <span onClick={handleEdit}>
                 <img src={editIcon} className="threeDotIcon" /> Edit
               </span>
-              <span onClick={handleClickOpen}>
+              <span onClick={() => setOpen(true)}>
                 <img src={deleteIcon} className="threeDotIcon" /> Delete
               </span>
-              <span onClick={handleDeactivate}>
+              <span onClick={() => setOpenDeactivate(true)}>
                 <img src={unVisible} className="threeDotIcon" /> Deactivate
               </span>
             </div>
