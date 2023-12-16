@@ -7,58 +7,54 @@ import callIcon from '../../../../assets/icons/Profile/call.png'
 import emailIcon from '../../../../assets/icons/Profile/email.png'
 import logo from '../../../../assets/IntelliViewSmallLogo.png'
 import editIcon from '../../../../assets/icons/editBlack.png'
+import { getEmployer } from '../../../../functions/api/employers/profile/getEmployer';
 
 const EmployerProfileDetails = () => {
-    const user = useSelector(state => state.auth.userData.user);
-    const [companyProfile, setCompanyProfile] = useState({
-        logo: logo,
-        company: "IntelliView",
-        coordinatorName: user.firstName.toUpperCase(),
-        industry: "Recruitment",
-        employees: "10-50",
-        location: user.city.toUpperCase(),
-        address: user.address.toUpperCase(),
-        email: user.email,
-        contact: user.primaryContact.toUpperCase(),
-        legalContact: "+91 8000020000",
-        companySocialUrl: 'linkedin.com/in/intelliview',
-        companyUrl: 'https://intelliview.in/',
-        clientCode: user.clientCode,
-        profileId: user.profileId,
-        userType: user.userType,
-        userName: user.username,
-        aboutCompany: user.companyDescription
-    });
+    const accessToken = useSelector((state) => state.auth.userData.accessToken);
+    const clientCode = useSelector((state) => state.auth.userData.user.clientCode);
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        const getUser = async () => {
+            const res = await getEmployer(accessToken, clientCode);
+            if (res) {
+                setUser(res?.data);
+            }
+        }
+        getUser();
+    }, []);
+
+    console.log(user);
 
     const textAreaRef = useRef(null);
     const [aboutEdit, setAboutEdit] = useState(false);
-    const [aboutCompany, setAboutCompany] = useState('An AI recruitment company leverages advanced artificial intelligence and machine learning technologies to revolutionize the traditional hiring process. By integrating cutting-edge algorithms and automation, these companies enhance talent acquisition efficiency, ensuring faster and more accurate candidate matching. AI recruitment platforms analyze vast amounts of data, including resumes, job descriptions, and candidate profiles, to identify the most suitable matches for specific roles. Through predictive analytics and natural language processing, these solutions streamline candidate screening, assessment, and interview processes. Ultimately, AI recruitment companies empower organizations to make data-driven hiring decisions, reduce time-to-fill, and discover top-tier talent in a competitive job market.')
+    // const [aboutCompany, setAboutCompany] = useState();
 
     const handleAboutSave = () => {
         setAboutEdit(false);
     }
 
-    
+
 
     useEffect(() => {
         // Focus and set the cursor at the end of the textarea when aboutEdit becomes true
         if (aboutEdit && textAreaRef.current) {
-            const textLength = aboutCompany.length;
+            const textLength = user?.companyDescription?.length;
             textAreaRef.current.focus();
             textAreaRef.current.setSelectionRange(textLength, textLength);
         }
-    }, [aboutEdit, aboutCompany]);
+    }, [aboutEdit, user?.companyDescription]);
 
 
     return (
         <Box>
             <div className='topBox'>
-                <img src={companyProfile.logo} className='profileImg' />
+                <img src={logo} className='profileImg' />
                 <div className='middleBox'>
-                    <span className='name'>{companyProfile.company}</span>
+                    <span className='name'>{user?.companyName}</span>
                     <div className='infoBox'>
-                        <a href={companyProfile.companyUrl}><img src={website} className='socialIcon' />{companyProfile.companyUrl}</a>
-                        <a href={companyProfile.companySocialUrl}><img src={linkedin} className='socialIcon' />{companyProfile.companySocialUrl.slice(0, 35)}</a>
+                        <a href={user?.companyUrl}><img src={website} className='socialIcon' />{user?.companyUrl}</a>
+                        <a href={user?.companySocialUrl}><img src={linkedin} className='socialIcon' />{user?.companySocialUrl?.slice(0, 35)}</a>
                     </div>
                 </div>
                 <span className='editBtn'><img src={editIcon} /></span>
@@ -72,12 +68,12 @@ const EmployerProfileDetails = () => {
 
                 <div className='contactBox'>
                     <div className='childBox'>
-                        <span className='text'><span className='boldText'>Contact:</span> {companyProfile.contact}</span>
-                        <span className='text'><span className='boldText'>Contact Name:</span> {companyProfile.coordinatorName}</span>
+                        <span className='text'><span className='boldText'>Contact:</span> {user?.spocContact}</span>
+                        <span className='text'><span className='boldText'>Contact Name:</span> {user?.spocName}</span>
                     </div>
                     <div className='childBox'>
-                        <span className='text'><span className='boldText'>Email:</span> {companyProfile.email}</span>
-                        <span className='text'><span className='boldText'>Address:</span> {companyProfile.address} {companyProfile.location}</span>
+                        <span className='text'><span className='boldText'>Email:</span> {user?.spocEmail}</span>
+                        <span className='text'><span className='boldText'>Address:</span> {user?.address} {user?.city}</span>
                     </div>
                 </div>
 
@@ -92,20 +88,20 @@ const EmployerProfileDetails = () => {
 
                 <div className='contactBox'>
                     <div className='childBox'>
-                        <span className='text'><span className='boldText'>UserName:</span> {companyProfile.userName}</span>
-                        <span className='text'><span className='boldText'>User Type:</span> {companyProfile.userType}</span>
+                        <span className='text'><span className='boldText'>UserName:</span>...</span>
+                        <span className='text'><span className='boldText'>User Type:</span>...</span>
                     </div>
                     <div className='childBox'>
-                        <span className='text'><span className='boldText'>Coordinator Name:</span> {companyProfile.coordinatorName}</span>
-                        <span className='text'><span className='boldText'>Industry:</span> {companyProfile.industry}</span>
+                        <span className='text'><span className='boldText'>Coordinator Name:</span> {user?.coOrdinatorName}</span>
+                        <span className='text'><span className='boldText'>Industry:</span> {user?.industry}</span>
                     </div>
                     <div className='childBox'>
-                        <span className='text'><span className='boldText'>Employees:</span> {companyProfile.employees}</span>
-                        <span className='text'><span className='boldText'>Client Code:</span> {companyProfile.clientCode}</span>
+                        <span className='text'><span className='boldText'>Employees:</span> {user?.companySize}</span>
+                        <span className='text'><span className='boldText'>Client Code:</span> {user?.clientCode}</span>
                     </div>
                     <div className='childBox'>
-                        <span className='text'><span className='boldText'>Account Manager:</span> John Doe</span>
-                        <span className='text'><span className='boldText'>Account Manager Contact:</span> 8000020000</span>
+                        <span className='text'><span className='boldText'>Account Manager:</span> {user?.accountManagerName}</span>
+                        <span className='text'><span className='boldText'>Account Manager Contact:</span>{user?.accountManagerContact}</span>
                     </div>
                 </div>
             </div>
@@ -117,8 +113,7 @@ const EmployerProfileDetails = () => {
                 </span>
 
                 <textarea
-                    value={user.aboutCompany}
-                    onChange={(e) => setAboutCompany(e.target.value)}
+                    value={user?.companyDescription}
                     disabled={!aboutEdit}
                     rows={10}
                     className='textarea'

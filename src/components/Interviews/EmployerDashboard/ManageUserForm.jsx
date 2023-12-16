@@ -132,26 +132,41 @@ function ManageUserForm({ array, handleClose, setSuccessPopup, setSavedPopup }) 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (mode == "create") {
-            const res = await addEmployee(formData, accessToken, clientCode);
-            if (res) {
-                setSuccessPopup(true);
-                handleClose()
-            };
-        }
-        else if (mode == 'edit') {
-            const payload = {
-                name: formData.name,
-                contact: formData.contact,
-                active: true
+        try {
+            if (mode === "create") {
+                const res = await addEmployee(formData, accessToken, clientCode);
+                if (res) {
+                    setSuccessPopup(true);
+                    handleClose();
+                }
+            } else if (mode === 'edit') {
+                const payload = {
+                    name: formData.name,
+                    contact: formData.contact,
+                    active: true
+                };
+                const res = await editEmployee(formData.id, payload, accessToken, clientCode);
+                if (res) {
+                    setSavedPopup(true);
+                    handleClose();
+                }
             }
-            const res = await editEmployee(formData.id, payload, accessToken, clientCode);
-            if (res) {
-                setSavedPopup(true);
-                handleClose()
-            };
+        } catch (error) {
+            console.error('Error:', error.message);
+            const errMsg =
+                error.response.data.notify.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 8000, // Time in milliseconds, adjust as needed
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     };
+
 
     return (
         <Container>
