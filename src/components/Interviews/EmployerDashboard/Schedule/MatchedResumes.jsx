@@ -139,7 +139,7 @@ export default function MatchedResumes() {
     }
     getData();
   }, [page, size]);
-  
+
 
   const handleSelectArray = (id, action) => {
     if (action) {
@@ -252,9 +252,15 @@ export default function MatchedResumes() {
           </div>
 
         </TableContainer>
-        <button onClick={() => handleSchedule()} className="btn">
-          Next
-        </button>
+        <div className="btnBox">
+          <button onClick={() => handleSchedule()} className="btn">
+            Next
+          </button>
+
+          {selectedArray.length !== 0 && <button className="btn" onClick={() => navigate('/trial/table')}>Mark Shortlisted</button>}
+          {selectedArray.length !== 0 && <button className="btn" onClick={() => navigate('/trial/table')}>Mark Rejected</button>}
+
+        </div>
       </Content>
     </StyledDiv>
   );
@@ -357,6 +363,11 @@ const Content = styled.div`
       font-family: var(--font);
       color: var(--color);
     }
+  }
+
+  .btnBox {
+    display: flex;
+    gap: 1rem;
   }
 
 

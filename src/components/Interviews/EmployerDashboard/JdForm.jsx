@@ -329,36 +329,36 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
       <Form onSubmit={handleSubmit}>
         <div className="inputBox">
           <div className="relative">
-          <TextField
-            id="outlined-basic"
-            label="JD ID"
-            variant="outlined"
-            type="text"
-            name="jdId"
-            value={formData.jdId}
-            onChange={handleChange}
-            onBlur={() => checkJdPresent(formData.jdId)}
-            onFocus={handleJdPresentError}
-            disabled={mode == "edit"}
-            sx={{ backgroundColor: "#F6F6FB" }}
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            required
-            fullWidth
-          />
-          {jdExist && <span className='helperText'>JD already exists</span>}
+            <TextField
+              id="outlined-basic"
+              label="JD ID"
+              variant="outlined"
+              type="text"
+              name="jdId"
+              value={formData.jdId}
+              onChange={handleChange}
+              onBlur={() => checkJdPresent(formData.jdId)}
+              onFocus={handleJdPresentError}
+              disabled={mode == "edit"}
+              sx={{ backgroundColor: "#F6F6FB" }}
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              required
+              fullWidth
+            />
+            {jdExist && <span className='helperText'>JD already exists</span>}
           </div>
 
           <TextField
@@ -511,361 +511,361 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
         </div>
 
         <div className="inputBox">
-        <TextField
-          id="outlined-basic"
-          label="BU"
-          variant="outlined"
-          type="text"
-          name="bu"
-          value={formData.bu}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-          fullWidth
-        />
+          <TextField
+            id="outlined-basic"
+            label="BU"
+            variant="outlined"
+            type="text"
+            name="bu"
+            value={formData.bu}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+            fullWidth
+          />
 
-        <TextField
-          id="outlined-basic"
-          label="Certification"
-          variant="outlined"
-          type="text"
-          name="certification"
-          value={formData.certification}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-          fullWidth
-        />
+          <TextField
+            id="outlined-basic"
+            label="Certification"
+            variant="outlined"
+            type="text"
+            name="certification"
+            value={formData.certification}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+            fullWidth
+          />
         </div>
 
         <div className="inputBox">
-        <TextField
-          id="outlined-basic"
-          label="CTC"
-          variant="outlined"
-          type="text"
-          name="ctc"
-          value={formData.ctc}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-          fullWidth
-        />
+          <TextField
+            id="outlined-basic"
+            label="CTC"
+            variant="outlined"
+            type="text"
+            name="ctc"
+            value={formData.ctc}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+            fullWidth
+          />
 
-        <TextField
-          id="outlined-basic"
-          label="Keywords"
-          variant="outlined"
-          type="text"
-          name="keywords"
-          value={formData.keywords}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          fullWidth
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-        />
+          <TextField
+            id="outlined-basic"
+            label="Keywords"
+            variant="outlined"
+            type="text"
+            name="keywords"
+            value={formData.keywords}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            fullWidth
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+          />
         </div>
 
         <div className="inputBox">
-        <TextField
-          id="outlined-basic"
-          label="Hiring Manager"
-          variant="outlined"
-          type="text"
-          name="hiringManager"
-          value={formData.hiringManager}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          fullWidth
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-        />
+          <TextField
+            id="outlined-basic"
+            label="Hiring Manager"
+            variant="outlined"
+            type="text"
+            name="hiringManager"
+            value={formData.hiringManager}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            fullWidth
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+          />
 
-        <TextField
-          id="outlined-basic"
-          label="Recruiter"
-          variant="outlined"
-          type="text"
-          name="recruiter"
-          value={formData.recruiter}
-          onChange={handleChange}
-          sx={{ backgroundColor: "#F6F6FB" }}
-          inputProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: "#626264",
-              fontSize: "0.8rem",
-              fontWeight: "400",
-            },
-          }}
-          disabled={jdExist}
-          fullWidth
-        />
+          <TextField
+            id="outlined-basic"
+            label="Recruiter"
+            variant="outlined"
+            type="text"
+            name="recruiter"
+            value={formData.recruiter}
+            onChange={handleChange}
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            disabled={jdExist}
+            fullWidth
+          />
         </div>
 
         <div className="inputBox">
-        <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
-          <InputLabel id="demo-simple-select-label">Worker Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={formData.workType}
-            label="Worker Type"
-            onChange={handleChange}
-            name="workType"
-            size="small"
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            sx={{
-              padding: "0rem 0 0.5rem 0",
-            }}
-            disabled={jdExist}
-          >
-            <MenuItem value="Full-time">Full-time</MenuItem>
-            <MenuItem value="Part-time">Part-time</MenuItem>
-            <MenuItem value="Contract">Contract</MenuItem>
-          </Select>
-        </FormControl>
+          <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
+            <InputLabel id="demo-simple-select-label">Worker Type</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={formData.workType}
+              label="Worker Type"
+              onChange={handleChange}
+              name="workType"
+              size="small"
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              sx={{
+                padding: "0rem 0 0.5rem 0",
+              }}
+              disabled={jdExist}
+            >
+              <MenuItem value="Full-time">Full-time</MenuItem>
+              <MenuItem value="Part-time">Part-time</MenuItem>
+              <MenuItem value="Contract">Contract</MenuItem>
+            </Select>
+          </FormControl>
 
-        <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
-          <InputLabel id="demo-simple-select-label">Notice Period</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Notice Period"
-            name="noticePeriod"
-            value={formData.noticePeriod}
-            onChange={handleChange}
-            size="small"
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            sx={{
-              padding: "0rem 0 0.5rem 0",
-            }}
-            disabled={jdExist}
-          >
-            <MenuItem value="Immediate">Immediate</MenuItem>
-            <MenuItem value="1week">1 Week</MenuItem>
-            <MenuItem value="2weeks">2 Weeks</MenuItem>
-            <MenuItem value="1month">1 Month</MenuItem>
-            <MenuItem value="2months">2 Months</MenuItem>
-            <MenuItem value="3months">3 Months</MenuItem>
-            <MenuItem value="6months">6 Months</MenuItem>
-          </Select>
-        </FormControl>
+          <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
+            <InputLabel id="demo-simple-select-label">Notice Period</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Notice Period"
+              name="noticePeriod"
+              value={formData.noticePeriod}
+              onChange={handleChange}
+              size="small"
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              sx={{
+                padding: "0rem 0 0.5rem 0",
+              }}
+              disabled={jdExist}
+            >
+              <MenuItem value="Immediate">Immediate</MenuItem>
+              <MenuItem value="1week">1 Week</MenuItem>
+              <MenuItem value="2weeks">2 Weeks</MenuItem>
+              <MenuItem value="1month">1 Month</MenuItem>
+              <MenuItem value="2months">2 Months</MenuItem>
+              <MenuItem value="3months">3 Months</MenuItem>
+              <MenuItem value="6months">6 Months</MenuItem>
+            </Select>
+          </FormControl>
         </div>
 
         <div className="inputBox">
-        <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
-          <InputLabel id="demo-simple-select-label">Company Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Company Type"
-            name="companyType"
-            value={formData.companyType}
-            onChange={handleChange}
-            size="small"
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            sx={{
-              padding: "0rem 0 0.5rem 0",
-            }}
-            disabled={jdExist}
-          >
-            <MenuItem value="service">Service</MenuItem>
-            <MenuItem value="product">Product</MenuItem>
-            <MenuItem value="serviceStartup">Service Start up</MenuItem>
-            <MenuItem value="productStartup">Product Start up</MenuItem>
-          </Select>
-        </FormControl>
+          <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
+            <InputLabel id="demo-simple-select-label">Company Type</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Company Type"
+              name="companyType"
+              value={formData.companyType}
+              onChange={handleChange}
+              size="small"
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              sx={{
+                padding: "0rem 0 0.5rem 0",
+              }}
+              disabled={jdExist}
+            >
+              <MenuItem value="service">Service</MenuItem>
+              <MenuItem value="product">Product</MenuItem>
+              <MenuItem value="serviceStartup">Service Start up</MenuItem>
+              <MenuItem value="productStartup">Product Start up</MenuItem>
+            </Select>
+          </FormControl>
 
-        <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
-          <InputLabel id="demo-simple-select-label">
-            Candidate Availability
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Candidate Availability"
-            name="candidateAvl"
-            value={formData.candidateAvl}
-            onChange={handleChange}
-            size="small"
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            sx={{
-              padding: "0rem 0 0.5rem 0",
-            }}
-            disabled={jdExist}
-          >
-            <MenuItem value="Immediate">Immediate</MenuItem>
-            <MenuItem value="1week">1 Week</MenuItem>
-            <MenuItem value="2weeks">2 Weeks</MenuItem>
-            <MenuItem value="1month">1 Month</MenuItem>
-            <MenuItem value="2months">2 Months</MenuItem>
-            <MenuItem value="3months">3 Months</MenuItem>
-          </Select>
-        </FormControl>
+          <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
+            <InputLabel id="demo-simple-select-label">
+              Candidate Availability
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Candidate Availability"
+              name="candidateAvl"
+              value={formData.candidateAvl}
+              onChange={handleChange}
+              size="small"
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              sx={{
+                padding: "0rem 0 0.5rem 0",
+              }}
+              disabled={jdExist}
+            >
+              <MenuItem value="Immediate">Immediate</MenuItem>
+              <MenuItem value="1week">1 Week</MenuItem>
+              <MenuItem value="2weeks">2 Weeks</MenuItem>
+              <MenuItem value="1month">1 Month</MenuItem>
+              <MenuItem value="2months">2 Months</MenuItem>
+              <MenuItem value="3months">3 Months</MenuItem>
+            </Select>
+          </FormControl>
         </div>
 
-        <div className="inputBox" style={{width: 'calc(50% - 1rem)'}}>
-        <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth required>
-          <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Visibility"
-            name="visibility"
-            value={formData.visibility}
-            onChange={handleChange}
-            size="small"
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            sx={{
-              padding: "0rem 0 0.5rem 0",
-            }}
-            disabled={jdExist}
-          >
-            <MenuItem value="PUBLIC">Public</MenuItem>
-            <MenuItem value="PRIVATE">Private</MenuItem>
-          </Select>
-        </FormControl>
+        <div className="inputBox" style={{ width: 'calc(50% - 1rem)' }}>
+          <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth required>
+            <InputLabel id="demo-simple-select-label">Visibility</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Visibility"
+              name="visibility"
+              value={formData.visibility}
+              onChange={handleChange}
+              size="small"
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              sx={{
+                padding: "0rem 0 0.5rem 0",
+              }}
+              disabled={jdExist}
+            >
+              <MenuItem value="PUBLIC">Public</MenuItem>
+              <MenuItem value="PRIVATE">Private</MenuItem>
+            </Select>
+          </FormControl>
         </div>
 
         <Button type="submit" disabled={jdExist}>

@@ -8,33 +8,30 @@ import emailIcon from '../../../../assets/icons/Profile/email.png'
 import logo from '../../../../assets/IntelliViewSmallLogo.png'
 import editIcon from '../../../../assets/icons/editBlack.png'
 import { getEmployer } from '../../../../functions/api/employers/profile/getEmployer';
+import ModalHOC from '../../SeekerDashboard/ModalHOC';
+import BasicDetails from '../profileForms/BasicDetails';
+import ContactDetails from '../profileForms/ContactDetails';
+import AccountDetails from '../profileForms/AccountDetails';
+import { editEmployerDetails } from '../../../../functions/api/employers/profile/editEmployerDetails';
+import { toast } from 'react-toastify';
+import Saved from '../../../commonComponents/infoDialog/Saved';
 
 const EmployerProfileDetails = () => {
     const accessToken = useSelector((state) => state.auth.userData.accessToken);
     const clientCode = useSelector((state) => state.auth.userData.user.clientCode);
     const [user, setUser] = useState();
 
-    useEffect(() => {
-        const getUser = async () => {
-            const res = await getEmployer(accessToken, clientCode);
-            if (res) {
-                setUser(res?.data);
-            }
-        }
-        getUser();
-    }, []);
+    const [formData, setFormData] = useState();
 
-    console.log(user);
+    const [profileTrigger, setProfileTrigger] = useState(false);
+    const [openBasicDetails, setOpenBasicDetails] = useState(false);
+    const [openContactDetails, setOpenContactDetails] = useState(false);
+    const [openAccountDetails, setOpenAccountDetails] = useState(false);
+
+    const [savedPopup, setSavedPopup] = useState(false);
 
     const textAreaRef = useRef(null);
     const [aboutEdit, setAboutEdit] = useState(false);
-    // const [aboutCompany, setAboutCompany] = useState();
-
-    const handleAboutSave = () => {
-        setAboutEdit(false);
-    }
-
-
 
     useEffect(() => {
         // Focus and set the cursor at the end of the textarea when aboutEdit becomes true
@@ -45,25 +42,87 @@ const EmployerProfileDetails = () => {
         }
     }, [aboutEdit, user?.companyDescription]);
 
+    useEffect(() => {
+        const getUser = async () => {
+            const res = await getEmployer(accessToken, clientCode);
+            if (res) {
+                setUser(res?.data);
+            }
+        }
+        getUser();
+    }, [profileTrigger]);
+
+    useEffect(() => {
+        setFormData(user);
+    }, [openBasicDetails, openContactDetails, openAccountDetails, profileTrigger, aboutEdit])
+
+    console.log(user);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleEdit = async () => {
+        try {
+            const editRes = await editEmployerDetails(formData, accessToken, clientCode);
+
+            if (editRes) {
+                console.log(editRes);
+                setSavedPopup(true);
+                setProfileTrigger(!profileTrigger);
+                setOpenBasicDetails(false);
+                setOpenContactDetails(false);
+                setOpenAccountDetails(false);
+            }
+        } catch (error) {
+            const errMsg =
+                error.response.data.notify.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 8000, // Time in milliseconds, adjust as needed
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+        }
+    }
+
 
     return (
         <Box>
+            <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails formData={formData} setFormData={setFormData} handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openContactDetails} setOpenNewInterviewModal={setOpenContactDetails} component={<ContactDetails formData={formData} setFormData={setFormData} handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openAccountDetails} setOpenNewInterviewModal={setOpenAccountDetails} component={<AccountDetails formData={formData} setFormData={setFormData} handleEdit={handleEdit} />} />
+            {
+                savedPopup &&
+                <Saved
+                    handleClose={() => setSavedPopup(false)}
+                    open={savedPopup}
+                    msg='Profile changes successfully updated.'
+                />
+            }
             <div className='topBox'>
                 <img src={logo} className='profileImg' />
                 <div className='middleBox'>
                     <span className='name'>{user?.companyName}</span>
                     <div className='infoBox'>
-                        <a href={user?.companyUrl}><img src={website} className='socialIcon' />{user?.companyUrl}</a>
-                        <a href={user?.companySocialUrl}><img src={linkedin} className='socialIcon' />{user?.companySocialUrl?.slice(0, 35)}</a>
+                        <a href={user?.companyUrl} target="_blank"><img src={website} className='socialIcon' />{user?.companyUrl}</a>
+                        <a href={user?.companySocialUrl} target="_blank"><img src={linkedin} className='socialIcon' />{user?.companySocialUrl?.slice(0, 35)}</a>
                     </div>
                 </div>
-                <span className='editBtn'><img src={editIcon} /></span>
+                <span className='editBtn' onClick={() => setOpenBasicDetails(true)}><img src={editIcon} /></span>
             </div>
 
             <div className='contactMainBox'>
                 <span className='mainTitle'>
                     <span>Contact Details</span>
-                    <span className='editBtn'><img src={editIcon} /></span>
+                    <span className='editBtn' onClick={() => setOpenContactDetails(true)}><img src={editIcon} /></span>
                 </span>
 
                 <div className='contactBox'>
@@ -83,7 +142,7 @@ const EmployerProfileDetails = () => {
             <div className='contactMainBox'>
                 <span className='mainTitle'>
                     <span>Account Information</span>
-                    <span className='editBtn'><img src={editIcon} /></span>
+                    <span className='editBtn' onClick={() => setOpenAccountDetails(true)}><img src={editIcon} /></span>
                 </span>
 
                 <div className='contactBox'>
@@ -109,11 +168,16 @@ const EmployerProfileDetails = () => {
             <div className='contactMainBox'>
                 <span className='mainTitle'>
                     <span>About Company</span>
-                    <span className='editBtn2'>{aboutEdit ? <button onClick={handleAboutSave}>Save</button> : <img src={editIcon} onClick={() => setAboutEdit(true)} />}</span>
+                    <span className='editBtn2'>{aboutEdit ? <button onClick={async () => {
+                        handleEdit();
+                        setAboutEdit(false);
+                    }}>Save</button> : <img src={editIcon} onClick={() => setAboutEdit(true)} />}</span>
                 </span>
 
                 <textarea
-                    value={user?.companyDescription}
+                    value={aboutEdit ? formData?.companyDescription : user?.companyDescription}
+                    name='companyDescription'
+                    onChange={handleChange}
                     disabled={!aboutEdit}
                     rows={10}
                     className='textarea'
