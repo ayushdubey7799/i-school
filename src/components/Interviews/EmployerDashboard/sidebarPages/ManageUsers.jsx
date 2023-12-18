@@ -30,7 +30,7 @@ import Deleted from "../../../commonComponents/infoDialog/Deleted";
 import DeactivateDialogContent from "../../../commonComponents/DeactivateDialogContent";
 
 function Row(props) {
-  const { row, rowsLength, index } = props;
+  const { row, rowsLength, index, userTrigger, setUserTrigger } = props;
   const [openBasic2, setOpenBasic2] = useState(false);
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
@@ -44,9 +44,6 @@ function Row(props) {
   const [savedPopup, setSavedPopup] = useState(false);
   const [deactivatePopup, setDeactivatePopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [deleteErrorPopup, setDeleteErrorPopup] = useState(false);
-  const [deactivateErrorPopup, setDeactivateErrorPopup] = useState(false);
 
 
   const openDropdown = (index) => {
@@ -72,8 +69,14 @@ function Row(props) {
       const errMsg =
         error.response.data.notify.message ||
         "An error occurred. Please try again.";
-      setErrorMsg(errMsg);
-      setDeleteErrorPopup(true);
+      toast.error(errMsg, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 8000, // Time in milliseconds, adjust as needed
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setOpen(false);
     }
@@ -85,13 +88,21 @@ function Row(props) {
     try {
       row.active = false;
       const res = await editEmployee(id, row, accessToken, clientCode);
-      if (res) setDeactivatePopup(true);
+      if (res) {
+        setDeactivatePopup(true);
+      }
     } catch (error) {
       const errMsg =
         error.response.data.notify.message ||
         "An error occurred. Please try again.";
-      setErrorMsg(errMsg);
-      setDeactivateErrorPopup(true);
+      toast.error(errMsg, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 8000, // Time in milliseconds, adjust as needed
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setOpenDeactivate(false);
     }
@@ -111,9 +122,42 @@ function Row(props) {
     };
   }, []);
 
+  const formatRole = (role) => {
+    switch (role) {
+      case 'ROLE_SUSER':
+        return 'Super User';
+      case 'ROLE_USER':
+        return 'User';
+      case 'ROLE_EMPLOYER':
+        return 'Employer';
+      case 'ROLE_SYS_ADMIN':
+        return 'System Admin';
+      case 'ROLE_CLIENT_ADMIN':
+        return 'Client Admin';
+      case 'ROLE_TEST':
+        return 'Testing';
+      case 'ROLE_RECRUITER':
+        return 'Recruiter';
+      case 'ROLE_AGENCY':
+        return 'Agency';
+      case 'ROLE_OPERATOR':
+        return 'Operator';
+      default:
+        return 'Unknown';
+    }
+  }
+
   return (
     <React.Fragment>
-      <ModalHOC openNewInterviewModal={openBasic2} setOpenNewInterviewModal={setOpenBasic2} component={<ManageUserForm array={[row, "edit"]} handleClose={() => setOpenBasic2(false)} setSavedPopup={setSavedPopup} />} />
+      <ModalHOC
+        openNewInterviewModal={openBasic2}
+        setOpenNewInterviewModal={setOpenBasic2}
+        component={<ManageUserForm array={[row, "edit"]}
+          handleClose={() => {
+            setOpenBasic2(false);
+            setUserTrigger(!userTrigger);
+          }}
+          setSavedPopup={setSavedPopup} />} />
 
       {savedPopup && (
         <Saved
@@ -124,29 +168,19 @@ function Row(props) {
       )}
       {deactivatePopup && (
         <Success
-          handleClose={() => setDeactivatePopup(false)}
+          handleClose={() => {
+            setDeactivatePopup(false);
+            setUserTrigger(!userTrigger);
+          }}
           open={deactivatePopup}
           msg={`${row.email} successfully deactivated`} />
       )}
-      {deleteErrorPopup && (
-        <Error
-          handleClose={() => setDeleteErrorPopup(false)}
-          open={deleteErrorPopup}
-          msg={errorMsg}
-          handleRetryFunc={() => handleDelete(row.id)}
-        />
-      )}
-      {deactivateErrorPopup && (
-        <Error
-          handleClose={() => setErrorPopup(false)}
-          open={deactivateErrorPopup}
-          msg={errorMsg}
-          handleRetryFunc={() => handleDeactivate(row.id)}
-        />
-      )}
       {deletePopup && (
         <Deleted
-          handleClose={() => setDeletePopup(false)}
+          handleClose={() => {
+            setDeletePopup(false);
+            setUserTrigger(!userTrigger);
+          }}
           open={deletePopup}
           msg={`${row.email} successfully deleted`}
         />
@@ -156,11 +190,11 @@ function Row(props) {
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          {row.name}
+          {row?.name}
         </TableCell>{" "}
-        <TableCell align="center" className="tableCell">{row.email}</TableCell>
-        <TableCell align="center" className="tableCell">{row.contact}</TableCell>
-        <TableCell align="center" className="tableCell">{row.role}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.email}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.contact}</TableCell>
+        <TableCell align="center" className="tableCell">{formatRole(row?.role)}</TableCell>
         <TableCell align="center" className="tableCell">
           <BoxRow isLast={index >= rowsLength - 2}>
             <img
@@ -207,6 +241,8 @@ export default function ManageUsers() {
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
   const [successPopup, setSuccessPopup] = useState(false);
+  const [userTrigger, setUserTrigger] = useState(false);
+
 
   useEffect(() => {
     const getData = async () => {
@@ -214,12 +250,20 @@ export default function ManageUsers() {
       setUsers(res?.data?.data)
     }
     getData();
-  }, [])
+  }, [userTrigger])
 
   return (
     <StyledDiv>
       <TableContainer component={Paper} className="tableBox">
-        <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} component={<ManageUserForm array={[null, "create"]} handleClose={() => setOpenBasic(false)} setSuccessPopup={setSuccessPopup} />} />
+        <ModalHOC
+          openNewInterviewModal={openBasic}
+          setOpenNewInterviewModal={setOpenBasic}
+          component={<ManageUserForm array={[null, "create"]}
+            handleClose={() => {
+              setOpenBasic(false);
+              setUserTrigger(!userTrigger);
+            }}
+            setSuccessPopup={setSuccessPopup} />} />
 
         {successPopup && (
           <Created
@@ -248,7 +292,7 @@ export default function ManageUsers() {
           </TableHead>
           <TableBody className="tableBody">
             {users?.map((row, index) => (
-              <Row key={row.id} row={row} rowsLength={users.length} index={index} />
+              <Row key={row.id} row={row} rowsLength={users.length} index={index} userTrigger={userTrigger} setUserTrigger={setUserTrigger} />
             ))}
           </TableBody>
         </Table>
