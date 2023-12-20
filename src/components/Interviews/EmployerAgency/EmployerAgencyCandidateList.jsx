@@ -16,97 +16,97 @@ import { useSelector } from "react-redux";
 import TableSearchBar from "../EmployerDashboard/commonComponents/TableSearchBar";
 
 function Row(props) {
-    const { row, jdId, index } = props;
+  const { row, jdId, index } = props;
 
 
 
-    const [state, setState] = React.useState({
-        right: false,
-    });
+  const [state, setState] = React.useState({
+    right: false,
+  });
 
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setState({ ...state, [anchor]: open });
-    };
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell align="center" className="tableCell">{row?.interview?.userName}</TableCell>
-                <TableCell align="center" className="tableCell">{row?.interview?.userContact}</TableCell>
-                <TableCell align="center" className="tableCell">...</TableCell>
-                <TableCell align="center" className="tableCell">{row?.interview?.stage}</TableCell>
-                <TableCell component="th" scope="row" align="center" className="tableCell">
-                    <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-                        <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails jdId={jdId} />} />
-                        <img src={visibleIcon} className="icon" />
-                    </div>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell align="center" className="tableCell">{row?.interview?.userName}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.interview?.userContact}</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">{row?.interview?.stage}</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
+            <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails jdId={jdId} />} />
+            <img src={visibleIcon} className="icon" />
+          </div>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const EmployerAgencyCandidateList = ({ page, setPage }) => {
-    const [tableRows, setTableRows] = useState([]);
-    const [total, setTotal] = useState(0);
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
-    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const [tableRows, setTableRows] = useState([]);
+  const [total, setTotal] = useState(0);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
-    const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
-    useEffect(() => {
-        const getData = async () => {
-            const res = await getAllTrackers(accessToken, clientCode, page.jdId);
-            console.log(res?.data?.data);
-            setTotal(res?.data?.total);
-            setTableRows(res?.data?.data);
-        }
-
-        getData();
-    }, []);
-
-
-    const handleSearch = () => {
-        console.log("Search");
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getAllTrackers(accessToken, clientCode, page.jdId);
+      console.log(res?.data?.data);
+      setTotal(res?.data?.total);
+      setTableRows(res?.data?.data);
     }
 
+    getData();
+  }, []);
 
-    return (
-        <Content>
-            <TableContainer component={Paper} className="tableBox">
-                <div className="titleBox">
-                    <span className="title">Candidate Lists for JD ID:- {page.jdId}</span>
-                    <button className="btn1" onClick={() => setPage(1)}>Back to JD List</button>
-                </div>
 
-                <SearchBarContainer>
-                    <TableSearchBar value={searchValue} setValue={setSearchValue} />
-                    <span className="headerText">Total Candidates: {total}</span>
-                </SearchBarContainer>
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center" className="tableCell">Candidate Name</TableCell>
-                            <TableCell align="center" className="tableCell">Contact</TableCell>
-                            <TableCell align="center" className="tableCell">Role</TableCell>
-                            <TableCell align="center" className="tableCell">Current Round</TableCell>
-                            <TableCell align="center" className="tableCell">Details</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {tableRows?.map((row, index) => (
-                            <Row key={row.id} row={row} jdId={page.jdId} index={index} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Content>
-    )
+  const handleSearch = () => {
+    console.log("Search");
+  }
+
+
+  return (
+    <Content>
+      <TableContainer component={Paper} className="tableBox">
+        <div className="titleBox">
+          <span className="title">Candidate Lists for JD ID:- {page.jdId}</span>
+          <button className="btn1" onClick={() => setPage({ index: 1, jdId: null })}>Back to JD List</button>
+        </div>
+
+        <SearchBarContainer>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
+          <span className="headerText">Total Candidates: {total}</span>
+        </SearchBarContainer>
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center" className="tableCell">Candidate Name</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Role</TableCell>
+              <TableCell align="center" className="tableCell">Current Round</TableCell>
+              <TableCell align="center" className="tableCell">Details</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {tableRows?.map((row, index) => (
+              <Row key={row.id} row={row} jdId={page.jdId} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Content>
+  )
 }
 
 export default EmployerAgencyCandidateList

@@ -44,7 +44,7 @@ function Row(props) {
 }
 
 const InterviewDashboard = ({ page, setPage }) => {
-  const [currMetric, setCurrMetric] = useState("");
+  const [currMetric, setCurrMetric] = useState("scheduled-Interviews");
   const [metrics, setMetrics] = useState([]);
 
   const [searchParams, setSearchParams] = useState("");
@@ -105,6 +105,19 @@ const InterviewDashboard = ({ page, setPage }) => {
     <MainContainer>
       <Container>
         <div
+          className={`achievedNumberBox ${currMetric === "scheduled-Interviews" ? "selected" : ""
+            }`}
+          onClick={() => setCurrMetric("scheduled-Interviews")}
+        >
+          <div className="top">
+            <img src={metric2} />
+            <span className="achievedNumberDigit">{scheduled ? scheduled : "0"}</span>
+          </div>
+          <span className="hrLine"></span>
+          <span className="achievedNumberText">Scheduled Interviews</span>
+        </div>
+
+        <div
           className={`achievedNumberBox ${currMetric === "upcoming" ? "selected" : ""
             }`}
           onClick={() => setCurrMetric("upcoming")}
@@ -116,18 +129,7 @@ const InterviewDashboard = ({ page, setPage }) => {
           <span className="hrLine"></span>
           <span className="achievedNumberText">Upcoming</span>
         </div>
-        <div
-          className={`achievedNumberBox ${currMetric === "scheduledToday" ? "selected" : ""
-            }`}
-          onClick={() => setCurrMetric("scheduledToday")}
-        >
-          <div className="top">
-            <img src={metric2} />
-            <span className="achievedNumberDigit">{scheduled ? scheduled : "0"}</span>
-          </div>
-          <span className="hrLine"></span>
-          <span className="achievedNumberText">Scheduled Today</span>
-        </div>
+
         <div
           className={`achievedNumberBox ${currMetric === "completed" ? "selected" : ""
             }`}
@@ -153,8 +155,8 @@ const InterviewDashboard = ({ page, setPage }) => {
           <span className="achievedNumberText">In Progress</span>
         </div>
       </Container>
-      {(page?.index === 1 && currMetric === '') && <EmpScheduledInterviews setPage={setPage} />}
-      {(page?.index === 2 && currMetric === '') && <EmpScheduledCandidateList page={page} setPage={setPage} />}
+      {(page?.index === 1 && currMetric === 'scheduled-Interviews') && <EmpScheduledInterviews setPage={setPage} />}
+      {(page?.index === 2 && currMetric === 'scheduled-Interviews') && <EmpScheduledCandidateList page={page} setPage={setPage} />}
       {currMetric === 'upcoming' && <UpcomingInterview />}
       {currMetric === 'scheduledToday' && <ScheduledTodayInterview />}
       {currMetric === 'completed' && <CompletedLast7Days />}

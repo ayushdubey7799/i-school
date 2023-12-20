@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import titleIcon1 from '../../../assets/icons/titleIcon1.png'
 
 const Container = styled.div`
-width: 17rem;
+width: 15rem;
 height: calc(98% - 4rem);
 padding-top: 1.5rem;
 display: flex;

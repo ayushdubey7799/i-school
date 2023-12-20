@@ -23,6 +23,7 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell align="center" className="tableCell">...</TableCell>
         <TableCell align="center" className="tableCell">{row.jdId.toUpperCase()}</TableCell>
         <TableCell align="center" className="tableCell">{row.numOfReqs}</TableCell>
         <TableCell align="center" className="tableCell">{row.openReqs}</TableCell>
@@ -35,7 +36,7 @@ function Row(props) {
           <button className="btn"><img src={uploadIcon} className="icon" /></button>
         </TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          <button className="btn2" onClick={() => setPage(2)}>View Details</button>
+          <button className="btn2" onClick={() => setPage({ index: 2, jdId: row.jdId })}>View Details</button>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -104,6 +105,7 @@ const EmployerAgencyJdList = ({ setPage }) => {
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
+              <TableCell align="center" className="tableCell">Employer</TableCell>
               <TableCell align="center" className="tableCell">JD ID</TableCell>
               <TableCell align="center" className="tableCell">No. of Reqs</TableCell>
               <TableCell align="center" className="tableCell">Open Reqs</TableCell>
@@ -118,7 +120,7 @@ const EmployerAgencyJdList = ({ setPage }) => {
           </TableHead>
           <TableBody className="tableBody">
             {tableRows?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} setPage={setPage}/>
+              <Row key={row.id} row={row} index={index} setPage={setPage} />
             ))}
           </TableBody>
         </Table>

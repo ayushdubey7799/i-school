@@ -17,6 +17,8 @@ import { addResumes } from "../../../../slices/invitationSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import TableSearchBar from "../commonComponents/TableSearchBar";
+import EmpSelectInput from "../commonComponents/EmpSelectInput";
+import EmpCommonButton from "../commonComponents/EmpCommonButton";
 function Row(props) {
   const { row, rowsLength, index } = props;
 
@@ -76,6 +78,10 @@ function Row(props) {
                 }
               }}
             />
+            <input
+              type="checkbox"
+              className="three-dots"
+            />
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
             >
@@ -93,7 +99,7 @@ function Row(props) {
 
 const InterviewFlow = ({ setPage }) => {
   const [tableRows, setTableRows] = useState([]);
-  const [searchParams, setSearchParams] = useState('');
+  const [filterParams, setFilterParams] = useState('');
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
@@ -132,12 +138,14 @@ const InterviewFlow = ({ setPage }) => {
   }, [])
 
   const handleSearch = () => {
-    
+
   }
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  }
+  const filterArr = [
+    { value: "COMPLETED", text: "Completed" },
+    { value: "SCHEDULED", text: "Scheduled" },
+    { value: "EXPIRED", text: "Expired" },
+  ];
 
 
   return (
@@ -149,6 +157,7 @@ const InterviewFlow = ({ setPage }) => {
 
         <SearchBarContainer>
           <TableSearchBar value={searchValue} setValue={setSearchValue} />
+          <EmpSelectInput value={filterParams} setValue={setFilterParams} optionsArr={filterArr} />
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
@@ -159,7 +168,7 @@ const InterviewFlow = ({ setPage }) => {
               <TableCell align="center" className="tableCell">Recruiter</TableCell>
               <TableCell align="center" className="tableCell">Hiring Manager</TableCell>
               <TableCell align="center" className="tableCell">Current Round</TableCell>
-              <TableCell align="center" className="tableCell">Interview Name</TableCell>
+              <TableCell align="center" className="tableCell">Feeback</TableCell>
               <TableCell align="center" className="tableCell">Status</TableCell>
               <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
@@ -171,6 +180,10 @@ const InterviewFlow = ({ setPage }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <div className="btnBox">
+        <EmpCommonButton text='Put on Hold' />
+        <EmpCommonButton text='Move out from Interview' />
+      </div>
     </Content>
   )
 }
@@ -209,6 +222,7 @@ align-items: center;
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
   border-radius: 0.5rem;
   padding-top: 1rem;
+  margin-bottom: 1.5rem;
 
 
   .title {
@@ -276,6 +290,10 @@ align-items: center;
   }
 }
 
+.btnBox {
+  display: flex;
+  gap: 2rem;
+}
 
 `
 
