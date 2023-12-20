@@ -25,6 +25,7 @@ import {
 } from "../../../commonComponents/Pagination";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
 import TableSearchBar from "../commonComponents/TableSearchBar";
+import EmpSelectInput from "../commonComponents/EmpSelectInput";
 
 function Row(props) {
   const { row, handleSelectArray, index } = props;
@@ -104,6 +105,7 @@ export default function MatchedResumes() {
   );
   const dispatch = useDispatch();
 
+  const [filterParams, setFilterParams] = useState('');
   const [searchValue, setSearchValue] = useState('');
 
   const [total, setTotal] = useState(0);
@@ -158,6 +160,12 @@ export default function MatchedResumes() {
     }
   };
 
+  const filterArr = [
+    { value: "MATCHED", text: "Matched" },
+    { value: "SHORTLISTED", text: "Shortlisted" },
+    { value: "REJECTED", text: "Rejected" },
+];
+
   return (
     <StyledDiv>
       <LogoHeader />
@@ -177,6 +185,7 @@ export default function MatchedResumes() {
           </span>
           <SearchBarContainer>
             <TableSearchBar value={searchValue} setValue={setSearchValue} />
+            <EmpSelectInput value={filterParams} setValue={setFilterParams} optionsArr={filterArr} />
           </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">

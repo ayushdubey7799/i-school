@@ -4,24 +4,21 @@ import EmployerAgencyJdList from '../components/Interviews/EmployerAgency/Employ
 import EmployerAgencyCandidateList from '../components/Interviews/EmployerAgency/EmployerAgencyCandidateList';
 import EmployerAgencySidebar from '../components/Interviews/EmployerAgency/EmployerAgencySidebar';
 import EmployerAgencyHeader from '../components/Interviews/EmployerAgency/EmployerAgencyHeader';
+import EmployerAgencyMetrics from '../components/Interviews/EmployerAgency/EmployerAgencyMetrics';
 
 
 const EmployerAgencyDashboard = () => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState({ index: 1, jdId: null });
     const [currentItem, setCurrentItem] = useState('dashboard');
 
     return (
         <Box>
-            <EmployerAgencyHeader/>
+            <EmployerAgencyHeader />
             <StyledBox>
                 <EmployerAgencySidebar currentItem={currentItem} setCurrentItem={setCurrentItem} />
                 <MainContent>
-
-                    {currentItem === 'dashboard' &&
-                        <>
-                            {page === 1 && <EmployerAgencyJdList setPage={setPage} />}
-                            {page === 2 && <EmployerAgencyCandidateList page={page} setPage={setPage} />}
-                        </>
+                    {
+                        currentItem === 'dashboard' && <EmployerAgencyMetrics page={page} setPage={setPage} />
                     }
                 </MainContent>
             </StyledBox>
@@ -53,7 +50,7 @@ background-color: #f4f4f4;
 
 const MainContent = styled.div`
   flex-grow: 1;
-  margin-left: 17rem;
+  margin-left: 15rem;
   padding-top: 1rem;
   display: flex;
   flex-direction: column;

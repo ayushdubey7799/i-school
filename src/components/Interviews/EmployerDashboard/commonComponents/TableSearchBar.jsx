@@ -24,9 +24,11 @@ export default TableSearchBar
 const InputBox = styled.div`
     position: relative;
     width: 35%;
+    height: 80%;
     display: flex;
     align-items: center;
     background-color: #ececec;
+    color: var(--color);
     padding: 0.3rem 0.5rem;
     border-radius: 0.5rem;
     font-family: Quicksand, sans-serif;

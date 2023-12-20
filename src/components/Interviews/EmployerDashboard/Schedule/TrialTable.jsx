@@ -30,6 +30,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { InputLabel } from "@mui/material";
+import EmpSelectInput from "../commonComponents/EmpSelectInput";
 
 function Row(props) {
     const { row, handleSelectArray, index } = props;
@@ -111,6 +112,7 @@ export default function TrialTable() {
     );
     const dispatch = useDispatch();
 
+    const [filterParams, setFilterParams] = useState('');
     const [searchValue, setSearchValue] = useState('');
 
     const [total, setTotal] = useState(0);
@@ -165,6 +167,11 @@ export default function TrialTable() {
         }
     };
 
+    const filterArr = [
+        { value: "SHORTLISTED", text: "Shortlisted" },
+        { value: "REJECTED", text: "Rejected" },
+    ];
+
     return (
         <StyledDiv>
             <LogoHeader />
@@ -184,35 +191,7 @@ export default function TrialTable() {
                     </span>
                     <SearchBarContainer>
                         <TableSearchBar value={searchValue} setValue={setSearchValue} />
-                        <FormControl sx={{ backgroundColor: "#F6F6FB", width: '12rem' }}>
-                            <InputLabel id="demo-simple-select-label">Select</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="Select"
-                                size="small"
-                                inputProps={{
-                                    sx: {
-                                        color: "#626264",
-                                        fontSize: "0.8rem",
-                                        fontWeight: "400",
-                                    },
-                                }}
-                                InputLabelProps={{
-                                    sx: {
-                                        color: "#626264",
-                                        fontSize: "0.8rem",
-                                        fontWeight: "400",
-                                    },
-                                }}
-                                sx={{
-                                    padding: "0rem 0 0.5rem 0",
-                                }}
-                            >
-                                <MenuItem value="shortlisted">Shortlisted Candidates</MenuItem>
-                                <MenuItem value="rejected">Rejected Candidates</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <EmpSelectInput value={filterParams} setValue={setFilterParams} optionsArr={filterArr} />
                     </SearchBarContainer>
                     <Table aria-label="collapsible table">
                         <TableHead className="tableHead">
@@ -440,7 +419,7 @@ const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 96%;
+  width: calc(98% - 1rem);
   margin: 0.5rem auto;
   height: 3rem;
   background-color: var(--white);

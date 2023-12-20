@@ -15,11 +15,16 @@ import AccountDetails from '../profileForms/AccountDetails';
 import { editEmployerDetails } from '../../../../functions/api/employers/profile/editEmployerDetails';
 import { toast } from 'react-toastify';
 import Saved from '../../../commonComponents/infoDialog/Saved';
+import { formatRole } from '../../../../utils/globalFunctions';
+import { useJwt } from 'react-jwt';
 
 const EmployerProfileDetails = () => {
     const accessToken = useSelector((state) => state.auth.userData.accessToken);
     const clientCode = useSelector((state) => state.auth.userData.user.clientCode);
     const [user, setUser] = useState();
+
+    const [userRole, setUserRole] = useState('');
+    const decodedToken = useJwt(accessToken);
 
     const [formData, setFormData] = useState();
 
@@ -93,6 +98,15 @@ const EmployerProfileDetails = () => {
         }
     }
 
+    // Access Roles by access Token  
+    useEffect(() => {
+        const getUserRoles = () => {
+            const userRoles = decodedToken?.decodedToken?.grants || '';
+            setUserRole(userRoles);
+        }
+        getUserRoles();
+    }, [accessToken, decodedToken]);
+
 
     return (
         <Box>
@@ -148,7 +162,7 @@ const EmployerProfileDetails = () => {
                 <div className='contactBox'>
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>UserName:</span>...</span>
-                        <span className='text'><span className='boldText'>User Type:</span>...</span>
+                        <span className='text'><span className='boldText'>User Type:</span>{formatRole(userRole)}</span>
                     </div>
                     <div className='childBox'>
                         <span className='text'><span className='boldText'>Coordinator Name:</span> {user?.coOrdinatorName}</span>
