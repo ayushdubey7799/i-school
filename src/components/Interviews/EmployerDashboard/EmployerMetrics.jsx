@@ -133,7 +133,7 @@ const EmployeMetrics = ({ page, setPage }) => {
 
 
   useEffect(() => {
-    if (metrics.length) {
+    if (metrics?.length) {
       setCompleted(metrics.find((item) => item.status == "COMPLETED")?.count);
       setScheduled(metrics.find((item) => item.status == "SCHEDULED")?.count)
     }
