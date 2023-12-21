@@ -183,6 +183,7 @@ export const StyledScorecard = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-top: 3rem;
+    width: 100%;
   }
 `;
 
