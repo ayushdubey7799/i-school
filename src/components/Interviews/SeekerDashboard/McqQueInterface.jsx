@@ -97,8 +97,8 @@ gap: 2rem;
 
     .innerBox {
     display: block;
-    width: 1rem;
-    height: 1rem;
+    width: 0.8rem;
+    height: 0.8rem;
     background-color: var(--white);
     border-radius: 50%; 
     margin: 0.2rem;
@@ -108,8 +108,7 @@ gap: 2rem;
   .mcqOptionText {
     display: flex;
     flex-flow: row wrap;
-    border: 0.075rem solid grey;
-    padding: 0.7rem 1rem;
+    padding: 0.5rem;
     width: 75%;
     border-radius: 0.3rem;
   }
