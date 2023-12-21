@@ -36,7 +36,7 @@ function Row(props) {
   };
 
   const handleMove = () => {
-    dispatch(addResumes([row.resumeId, row.jdId]));
+    dispatch(addResumes([row?.resumeId, row?.jdId]));
     navigate(`/schedule/invite/${row.jdId}`);
   }
 
@@ -121,13 +121,14 @@ const InterviewFlow = ({ setPage }) => {
             round: it?.stage,
             interviewName: current?.interviewName,
             status: current?.status,
-            resumeId: current.resumeId
+            resumeId: current?.resumeId
           }
 
           return [...acc, jdInfoReq];
         }, []);
-
         setTableRows(finalResult);
+
+        console.log(finalResult);
       }
 
     }
