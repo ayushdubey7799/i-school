@@ -22,6 +22,7 @@ import { codingQuestionFormat } from "../utils/codingQuestionFormat";
 import CodingQueInterface from '../components/Interviews/SeekerDashboard/CodingQueInterface'
 import CommonButton from "../components/Interviews/SeekerDashboard/seekerCommonComponents/CommonButton";
 import InterviewTerms from "../components/Interviews/SeekerDashboard/seekerCommonComponents/InterviewTerms";
+import McqQueInterface from "../components/Interviews/SeekerDashboard/McqQueInterface";
 
 
 const OngoingInterview = ({ start, handleStart }) => {
@@ -194,6 +195,13 @@ const OngoingInterview = ({ start, handleStart }) => {
                   codeEditorComp={<CodeEditor input={input} setInput={setInput} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />}
                   theme={theme}
                 />
+              ) : data?.questionType === "mcq" ? (
+                <McqQueInterface
+                  queComp={<div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText"></div>}
+                  options={data?.mcqOptions}
+                  value={input}
+                  setValue={setInput}
+                />
               ) : (
                 <div className="subjectiveBox">
                   <div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText questionText2"></div>
@@ -226,68 +234,70 @@ const OngoingInterview = ({ start, handleStart }) => {
                       width='15%'
                     />
 
-                    <div className="btnBox2">
-                      <ReactMediaRecorder
-                        audio
-                        onStop={handleStop}
-                        render={({
-                          status,
-                          startRecording,
-                          stopRecording,
-                          mediaBlobUrl,
-                        }) => {
-                          return (
-                            <AudioBox>
-                              <div className="btnImgBox">
-                                <div className="btn1">
-                                  <img
-                                    onClick={startRecording}
-                                    className="btnImg"
-                                    src={startRecBtn}
-                                  />
-                                  <span className="btn1Text">Start recording your answer</span>
-                                </div>
+                    {data?.questionType == 'general' &&
+                      <div className="btnBox2">
+                        <ReactMediaRecorder
+                          audio
+                          onStop={handleStop}
+                          render={({
+                            status,
+                            startRecording,
+                            stopRecording,
+                            mediaBlobUrl,
+                          }) => {
+                            return (
+                              <AudioBox>
+                                <div className="btnImgBox">
+                                  <div className="btn1">
+                                    <img
+                                      onClick={startRecording}
+                                      className="btnImg"
+                                      src={startRecBtn}
+                                    />
+                                    <span className="btn1Text">Start recording your answer</span>
+                                  </div>
 
-                                <div className="btn2">
-                                  <img
-                                    onClick={stopRecording}
-                                    className="btnImg"
-                                    src={stopRecBtn}
-                                  />
-                                  <span className="btn2Text">Stop recording</span>
-                                </div>
+                                  <div className="btn2">
+                                    <img
+                                      onClick={stopRecording}
+                                      className="btnImg"
+                                      src={stopRecBtn}
+                                    />
+                                    <span className="btn2Text">Stop recording</span>
+                                  </div>
 
-                              </div>
-                              <audio src={mediaBlobUrl} controls />
-                              <span id="status1">
-                                {status === "idle" && (
-                                  <img
-                                    id="idle"
-                                    src={idle}
-                                    className="statusIcon"
-                                  />
-                                )}
-                                {status === "recording" && (
-                                  <img
-                                    id="rec"
-                                    src={recording}
-                                    className="statusIcon"
-                                  />
-                                )}
-                                {status === "stopped" && (
-                                  <img
-                                    id="stop"
-                                    src={stopped}
-                                    className="statusIcon"
-                                  />
-                                )}
-                                <span id="status2">{status}</span>
-                              </span>
-                            </AudioBox>
-                          );
-                        }}
-                      />
-                    </div>
+                                </div>
+                                <audio src={mediaBlobUrl} controls />
+                                <span id="status1">
+                                  {status === "idle" && (
+                                    <img
+                                      id="idle"
+                                      src={idle}
+                                      className="statusIcon"
+                                    />
+                                  )}
+                                  {status === "recording" && (
+                                    <img
+                                      id="rec"
+                                      src={recording}
+                                      className="statusIcon"
+                                    />
+                                  )}
+                                  {status === "stopped" && (
+                                    <img
+                                      id="stop"
+                                      src={stopped}
+                                      className="statusIcon"
+                                    />
+                                  )}
+                                  <span id="status2">{status}</span>
+                                </span>
+                              </AudioBox>
+                            );
+                          }}
+                        />
+                      </div>
+                    }
 
                     <CommonButton
                       text='Next Question'
