@@ -49,7 +49,7 @@ const McqQueInterface = ({ queComp, options, value, setValue }) => {
                                     selectedOption === index
                                         ? "var(--lightOrange)"
                                         : "var(--color)",
-                            }}>{option.split(".")[1]}</span>
+                            }}>{option.split(".").slice(1).join(".")}</span>
                     </div>
                 ))}
             </div>

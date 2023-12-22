@@ -16,19 +16,19 @@ export default function InterviewTabs() {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const [value, setValue] = useState("COMPLETED");
   const [filteredData, setFilteredData] = useState({});
-  const [mock,setMock] = useState(false);
+  const [mock, setMock] = useState(false);
 
   if (filteredData.status == 'SUCCESS') {
     console.log(filteredData.data.data);
   }
 
   const handleChange = (event, newValue) => {
-    if(newValue == "MOCK"){
+    if (newValue == "MOCK") {
       setMock(true);
       setValue("COMPLETED");
 
     }
-    else{
+    else {
       setMock(false);
       setValue(newValue);
     }
@@ -56,7 +56,7 @@ export default function InterviewTabs() {
               borderRadius: '3rem',
               backgroundColor: 'var(--lightOrange)'
             }}
-            value={mock?"MOCK":value}
+            value={mock ? "MOCK" : value}
             onChange={handleChange}
             TabIndicatorProps={{
               style: {
@@ -110,7 +110,7 @@ const StyledBox = styled.div`
     width: 90%;
     min-height: 30rem;
     margin: 0 5%;
-    margin-top: 6rem;
+    margin-top: 0rem;
     display: flex;
     flex-direction: column;
     justify-content: start;
