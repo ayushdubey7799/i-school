@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-export const getAllTrackers = async (accessToken,clientCode, page, size, jdId) => {
+export const getAllTrackers = async (accessToken,clientCode, jdId, page=1, size=1000) => {
 
 const config = {
   headers: {
