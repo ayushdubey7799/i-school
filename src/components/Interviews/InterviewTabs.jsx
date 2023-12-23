@@ -18,8 +18,25 @@ export default function InterviewTabs() {
   const [filteredData, setFilteredData] = useState({});
   const [mock, setMock] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page < Math.ceil(+total / +size)) {
+      setPage((prev) => prev + 1);
+    } else if (!change && page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
   if (filteredData.status == 'SUCCESS') {
-    console.log(filteredData.data.data);
+    console.log(filteredData?.data?.data);
   }
 
   const handleChange = (event, newValue) => {
@@ -36,13 +53,14 @@ export default function InterviewTabs() {
 
   useEffect(() => {
     async function getData(value) {
-      const response = await getInterviewByStatus(value, accessToken);
+      const response = await getInterviewByStatus(value, accessToken, page, size);
       if (response) {
         setFilteredData(response);
+        setTotal(response?.data?.total);
       }
     }
     getData(value);
-  }, [value]);
+  }, [value, size, page]);
 
 
 
@@ -94,9 +112,9 @@ export default function InterviewTabs() {
               classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
             />
           </Tabs>
-          {value === 'COMPLETED' && !mock && <InterviewList filteredData={filteredData} />}
+          {value === 'COMPLETED' && !mock && <InterviewList filteredData={filteredData} page={page} setPage={setPage} size={size} setSize={setSize} total={total} handlePageChange={handlePageChange} handleSizeChange={handleSizeChange} />}
           {value === 'NOT_STARTED' && <ScheduledInterviewList />}
-          {mock && <MockInterviews filteredData={filteredData} />}
+          {mock && <MockInterviews filteredData={filteredData} page={page} setPage={setPage} size={size} setSize={setSize} total={total} handlePageChange={handlePageChange} handleSizeChange={handleSizeChange} />}
         </StyledBox>
       }
     </>
@@ -107,9 +125,9 @@ export default function InterviewTabs() {
 
 
 const StyledBox = styled.div`
-    width: 90%;
+    width: 99%;
     min-height: 30rem;
-    margin: 0 5%;
+    margin: 0 auto;
     margin-top: 0rem;
     display: flex;
     flex-direction: column;

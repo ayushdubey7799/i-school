@@ -88,7 +88,7 @@ const SkillInterview = () => {
 
     if (ongoing?.data?.id) {
       localStorage.setItem("currentInterview", "skill");
-      navigate(`/create-interview/${ongoing.data.id}`)
+      navigate(`/create-interview/${ongoing?.data?.id}`)
     }
   }
 

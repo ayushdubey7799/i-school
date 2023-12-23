@@ -12,6 +12,7 @@ import { getActiveJds } from "../../../../slices/jdSlice";
 import { useDispatch } from "react-redux";
 import { getJdsForMatching } from "../../../../functions/api/employers/match/getJdsForMatching";
 import TableSearchBar from "../commonComponents/TableSearchBar";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
   const { row, index, setPage } = props;
@@ -46,15 +47,32 @@ const EmpScheduledInterviews = ({ setPage }) => {
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
 
   const [searchValue, setSearchValue] = useState('');
+  const [page1, setPage1] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage1(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page1 < Math.ceil(+total / +size)) {
+      setPage1((prev) => prev + 1);
+    } else if (!change && page1 > 1) {
+      setPage1((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
     async function getData() {
       dispatch(getActiveJds({ accessToken, clientCode }));
-      const res = await getJdsForMatching(accessToken, clientCode);
+      const res = await getJdsForMatching(accessToken, clientCode, page1, size);
       setJdData(res?.data?.data);
+      setTotal(res?.data?.total)
     }
     getData();
-  }, []);
+  }, [page1, size]);
 
   // const jdData = useSelector(state => state?.jd?.activeJds);
 
@@ -81,10 +99,10 @@ const EmpScheduledInterviews = ({ setPage }) => {
   }, [jdData])
 
   const handleSearch = () => {
-    
+
   }
 
-  
+
   return (
     <Content>
       <TableContainer component={Paper} className="tableBox">
@@ -115,6 +133,19 @@ const EmpScheduledInterviews = ({ setPage }) => {
             ))}
           </TableBody>
         </Table>
+        <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page1}
+            handlePageChange={handlePageChange}
+            setPage={setPage1}
+          />
+        </div>
       </TableContainer>
     </Content>
   )
@@ -147,6 +178,13 @@ align-items: center;
 
 .colored {
   background-color: #ececec;
+}
+
+.paginationBox {
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+  margin: 1rem 3rem 1.5rem 0;
 }
 
 .tableBox {

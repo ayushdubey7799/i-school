@@ -29,6 +29,7 @@ import Error from "../../../commonComponents/infoDialog/Error";
 import Deleted from "../../../commonComponents/infoDialog/Deleted";
 import DeactivateDialogContent from "../../../commonComponents/DeactivateDialogContent";
 import { formatRole } from "../../../../utils/globalFunctions";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
   const { row, rowsLength, index, userTrigger, setUserTrigger } = props;
@@ -219,14 +220,32 @@ export default function ManageUsers() {
   const [successPopup, setSuccessPopup] = useState(false);
   const [userTrigger, setUserTrigger] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page < Math.ceil(+total / +size)) {
+      setPage((prev) => prev + 1);
+    } else if (!change && page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getEmployees(accessToken, clientCode);
+      const res = await getEmployees(accessToken, clientCode, page, size);
       setUsers(res?.data?.data)
+      setTotal(res?.data?.total);
     }
     getData();
-  }, [userTrigger])
+  }, [userTrigger, page, size])
 
   return (
     <StyledDiv>
@@ -272,6 +291,19 @@ export default function ManageUsers() {
             ))}
           </TableBody>
         </Table>
+        <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+          />
+        </div>
       </TableContainer>
     </StyledDiv>
   );
@@ -287,6 +319,13 @@ const StyledDiv = styled.div`
 
   .colored {
     background-color: #ececec;
+  }
+
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
   }
 
   .tableBox {

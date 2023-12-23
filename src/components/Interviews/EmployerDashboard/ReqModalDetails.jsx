@@ -68,7 +68,7 @@ function Row(props) {
       }
 
     } catch (error) {
-      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      const errMsg = error?.response?.data?.notify?.message || "An error occurred. Please try again."
       setErrorMsg(errMsg);
       setErrorPopup(true);
     }

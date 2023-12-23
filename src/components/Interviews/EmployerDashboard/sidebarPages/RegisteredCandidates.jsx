@@ -22,6 +22,7 @@ import Error from "../../../commonComponents/infoDialog/Error";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
 import TableSearchBar from "../commonComponents/TableSearchBar";
 import { dateConversion } from "../../../../utils/timeZoneConversation";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
   const { row, index, candidateTrigger, setCandidateTrigger } = props;
@@ -223,17 +224,34 @@ export default function RegisteredCandidates({ setCurrentItem }) {
   );
 
   const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page < Math.ceil(+total / +size)) {
+      setPage((prev) => prev + 1);
+    } else if (!change && page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
     const getCandidates = async () => {
-      const res = await getProfiles(accessToken, clientCode);
+      const res = await getProfiles(accessToken, clientCode, page, size);
       if (res) {
         setCandidates(res?.data?.data);
+        setTotal(res?.data?.total);
       }
     };
 
     getCandidates();
-  }, [candidateTrigger]);
+  }, [candidateTrigger, page, size]);
 
   const handleSearch = () => {
 
@@ -267,6 +285,19 @@ export default function RegisteredCandidates({ setCurrentItem }) {
             ))}
           </TableBody>
         </Table>
+        <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+          />
+        </div>
       </TableContainer>
     </Content>
   );
@@ -282,6 +313,13 @@ const Content = styled.div`
 
   .colored {
     background-color: #ececec;
+  }
+  
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
   }
 
   .tableBox {

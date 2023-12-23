@@ -5,7 +5,7 @@ const EmpSelectInput = ({ value, setValue, optionsArr }) => {
   return <Select value={value} onChange={(e) => setValue(e.target.value)}>
     <option value="" disabled selected>Filter By</option>
     {
-      optionsArr.map((option, i) => (
+      optionsArr?.map((option, i) => (
         <option value={option.value} key={i} className="option">{option.text}</option>
       ))
     }
@@ -13,6 +13,8 @@ const EmpSelectInput = ({ value, setValue, optionsArr }) => {
 };
 
 export default EmpSelectInput;
+
+
 
 const Select = styled.select`
   height: 2.5rem;

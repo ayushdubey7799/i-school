@@ -249,7 +249,7 @@ function Row(props) {
           align="center"
           className="tableCell"
         >
-          {row.jdId.toUpperCase()}
+          {row.jdId?.toUpperCase()}
         </TableCell>
         {userRole === 'ROLE_AGENCY' && <TableCell
           component="th"

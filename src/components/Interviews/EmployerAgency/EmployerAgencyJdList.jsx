@@ -24,13 +24,13 @@ function Row(props) {
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell align="center" className="tableCell">...</TableCell>
-        <TableCell align="center" className="tableCell">{row.jdId.toUpperCase()}</TableCell>
-        <TableCell align="center" className="tableCell">{row.numOfReqs}</TableCell>
-        <TableCell align="center" className="tableCell">{row.openReqs}</TableCell>
-        <TableCell align="center" className="tableCell">{row.inProgress}</TableCell>
-        <TableCell align="center" className="tableCell">{row.firstStage ? row.firstStage : '0'}</TableCell>
-        <TableCell align="center" className="tableCell">{row.secondStage ? row.secondStage : '0'}</TableCell>
-        <TableCell align="center" className="tableCell">{row.thirdStage ? row.thirdStage : '0'}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.jdId.toUpperCase()}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.numOfReqs}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.openReqs}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.inProgress}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.firstStage ? row?.firstStage : '0'}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.secondStage ? row?.secondStage : '0'}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.thirdStage ? row?.thirdStage : '0'}</TableCell>
         <TableCell align="center" className="tableCell">...</TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell" style={{ display: 'flex', justifyContent: 'center' }}>
           <button className="btn"><img src={uploadIcon} className="icon" /></button>
@@ -67,7 +67,7 @@ const EmployerAgencyJdList = ({ setPage }) => {
 
   useEffect(() => {
     if (jdData?.length) {
-      const finalResult = jdData.reduce((acc, it) => {
+      const finalResult = jdData?.reduce((acc, it) => {
         let jdInfoReq = {
           jdId: it.jdId,
           numOfReqs: it.numOfReqs,

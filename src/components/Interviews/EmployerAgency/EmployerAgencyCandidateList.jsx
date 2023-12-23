@@ -80,7 +80,7 @@ const EmployerAgencyCandidateList = ({ page, setPage }) => {
     <Content>
       <TableContainer component={Paper} className="tableBox">
         <div className="titleBox">
-          <span className="title">Candidate Lists for JD ID:- {page.jdId}</span>
+          <span className="title">Candidate Lists for JD ID:- {page?.jdId}</span>
           <button className="btn1" onClick={() => setPage({ index: 1, jdId: null })}>Back to JD List</button>
         </div>
 
@@ -100,7 +100,7 @@ const EmployerAgencyCandidateList = ({ page, setPage }) => {
           </TableHead>
           <TableBody className="tableBody">
             {tableRows?.map((row, index) => (
-              <Row key={row.id} row={row} jdId={page.jdId} index={index} />
+              <Row key={row.id} row={row} jdId={page?.jdId} index={index} />
             ))}
           </TableBody>
         </Table>

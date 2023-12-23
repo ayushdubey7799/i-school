@@ -2,7 +2,9 @@ import axios from "axios";
 
 export const getProfiles = async (
   accessToken,
-  clientCode
+  clientCode,
+  page=1,
+  size=1000,
 ) => {
   const config = {
     headers: {
@@ -13,8 +15,7 @@ export const getProfiles = async (
   };
   try {
     const response =
-      await axios.get(`https://dev-api.intelliview.in/api/candidates?page=1&size=100
-        `,config);
+      await axios.get(`https://dev-api.intelliview.in/api/candidates?page=${page}&size=${size}`,config);
 
     console.log("Data:", response.data);
     return response.data;

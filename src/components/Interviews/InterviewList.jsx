@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import searchBlack from '../../assets/icons/searchBlack.png'
 import ProgressBar from "../commonComponents/ProgressBar";
 import SeekerTableSearchBar from "./SeekerDashboard/seekerCommonComponents/SeekerTableSearchBar";
+import { Pagination, PaginationSizeFilter } from "../commonComponents/Pagination";
 
 
 const Row = (props) => {
@@ -48,12 +49,17 @@ const Row = (props) => {
   );
 }
 
-const InterviewList = ({ filteredData }) => {
+const InterviewList = ({ filteredData, page, setPage, size, setSize, total, handlePageChange, handleSizeChange }) => {
   const [searchValue, setSearchValue] = useState('');
 
   if (!filteredData?.data?.data?.length) {
     return <h6 style={{ fontSize: '1.2rem' }}>No interview Here</h6>
   }
+
+  useEffect(() => {
+    setPage(1);
+    setSize(5);
+  }, [])
 
   return (
     <StyledInterviews>
@@ -73,11 +79,24 @@ const InterviewList = ({ filteredData }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {filteredData?.data?.data?.filter?.((item) => item.jdId?true:false)?.map((row, index) => (
+            {filteredData?.data?.data?.filter?.((item) => item.jdId ? true : false)?.map((row, index) => (
               <Row key={index} row={row} index={index} />
             ))}
           </TableBody>
         </Table>
+        <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+          />
+        </div>
       </TableContainer>
     </StyledInterviews>
   );
@@ -130,6 +149,13 @@ const StyledInterviews = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     font-family: var(--font);
+  }
+
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
   }
 
   .tableHead {
