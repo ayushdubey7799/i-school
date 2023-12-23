@@ -28,10 +28,10 @@ import Error from "../components/commonComponents/infoDialog/Error";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [errorPopup,setErrorPopup] = useState(false);
+  const [errorPopup, setErrorPopup] = useState(false);
   const userData = useSelector((state) => state.auth.userData);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
-  
+
   const clientCodeStore = useSelector(
     (state) => state.auth.userData?.user?.clientCode
   );
@@ -53,6 +53,7 @@ const Login = () => {
 
   const token = searchParams.get("token");
   const key = searchParams.get("key");
+
   if (key == "invite" || key == "interview") {
     console.log(token, key);
 
@@ -66,6 +67,7 @@ const Login = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setClientCode("");
     setEmail("");
     setPassword("");
     setPasswordVisible(false);
@@ -128,322 +130,318 @@ const Login = () => {
         {
           console.log("IN LOGIN", clientCode);
           dispatch(performLogin({ password, email, clientCode }));
-          setClientCode("");
         }
       }
-      setEmail("");
-      setPassword("");
     }
   };
 
   useEffect(() => {
-    if(error && JSON.parse(error)?.status == "FAILED"){
+    if (error && JSON.parse(error)?.status == "FAILED") {
       setErrorPopup(true);
     }
 
-  },[error])
+  }, [error])
 
   const handleRetryFunc = () => {
-   dispatch(logout())
+    dispatch(logout())
     setErrorPopup(false);
   }
 
-   
 
   return (
     <>
-    {errorPopup && <Error open={errorPopup} handleClose={setErrorPopup} msg={JSON.parse(error)?.notify?.message} handleRetryFunc={handleRetryFunc}/>}
-    <StyledLogin>
-      <div
-        style={{
-          height: "3.5rem",
-          position: "absolute",
-          top: "1rem",
-          left: "3rem",
-        }}
-      >
-        <img src={logo} style={{ height: "100%" }} />
-      </div>
-
-      <IconButton onClick={() => navigate("/")} className="prev">
-        <ArrowBackIcon sx={{ fontSize: "30px" }} />
-      </IconButton>
-
-      <Box
-        sx={{
-          width: "70%",
-          position: "relative",
-          top: "6rem",
-          margin: "0 1rem",
-          marginBottom: "7rem",
-        }}
-        className="box"
-      >
-        <Tabs
+      {errorPopup && <Error open={errorPopup} handleClose={setErrorPopup} msg={JSON.parse(error)?.notify?.message} handleRetryFunc={handleRetryFunc} />}
+      <StyledLogin>
+        <div
           style={{
-            width: "35rem",
-            borderRadius: "3rem",
-            backgroundColor: "var(--lightOrange)",
+            height: "3.5rem",
+            position: "absolute",
+            top: "1rem",
+            left: "3rem",
           }}
-          value={value}
-          onChange={handleChange}
-          TabIndicatorProps={{
-            style: {
-              backgroundColor: "var(--lightOrange)",
-            },
-          }}
-          variant="fullWidth"
-          aria-label="wrapped label tabs example"
         >
-          <Tab
-            value="job-seeker"
-            label="Job Seeker"
-            sx={{
-              color: "var(--lightOrange)",
-              fontSize: "0.8rem",
+          <img src={logo} style={{ height: "100%" }} />
+        </div>
+
+        <IconButton onClick={() => navigate("/")} className="prev">
+          <ArrowBackIcon sx={{ fontSize: "30px" }} />
+        </IconButton>
+
+        <Box
+          sx={{
+            width: "70%",
+            position: "relative",
+            top: "6rem",
+            margin: "0 1rem",
+            marginBottom: "7rem",
+          }}
+          className="box"
+        >
+          <Tabs
+            style={{
+              width: "35rem",
+              borderRadius: "3rem",
+              backgroundColor: "var(--lightOrange)",
             }}
-            classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
-          />
-          <Tab
-            value="employer"
-            label="Employer"
-            sx={{
-              color: "var(--lightOrange)",
-              fontSize: "0.8rem",
+            value={value}
+            onChange={handleChange}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "var(--lightOrange)",
+              },
             }}
-            classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
-          />
-          <Tab
-            value="recruitment-agency"
-            label="Recruitment Agency"
-            sx={{
-              color: "var(--lightOrange)",
-              fontSize: "0.8rem",
-            }}
-            classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
-          />
-        </Tabs>
-        {value == "job-seeker" ? (
-          <div id="form">
-            <form onSubmit={handleSubmit}>
-              <div className="inputBox">
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+            variant="fullWidth"
+            aria-label="wrapped label tabs example"
+          >
+            <Tab
+              value="job-seeker"
+              label="Job Seeker"
+              sx={{
+                color: "var(--lightOrange)",
+                fontSize: "0.8rem",
+              }}
+              classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
+            />
+            <Tab
+              value="employer"
+              label="Employer"
+              sx={{
+                color: "var(--lightOrange)",
+                fontSize: "0.8rem",
+              }}
+              classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
+            />
+            <Tab
+              value="recruitment-agency"
+              label="Recruitment Agency"
+              sx={{
+                color: "var(--lightOrange)",
+                fontSize: "0.8rem",
+              }}
+              classes={{ root: "custom-tab", selected: "custom-tab-selected" }}
+            />
+          </Tabs>
+          {value == "job-seeker" ? (
+            <div id="form">
+              <form onSubmit={handleSubmit}>
+                <div className="inputBox">
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="email">Email</label>
+                </div>
+
+                <div className="inputBox">
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="password">Password</label>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    id="eye"
+                    onClick={togglePasswordVisibility}
+                    className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                  />
+                </div>
+
+                <div className="resetBox">
+                  <span className="remember">
+                    <input type="checkbox" />
+                    Remember me
+                  </span>
+                  <span>
+                    <Link to="/reset" className="reset">
+                      Forgot Password
+                    </Link>
+                  </span>
+                </div>
+
+                <ReCAPTCHA
+                  sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
+                  ref={captchaRef}
+                  size="normal"
                 />
-                <label htmlFor="email">Email</label>
+                {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
+                <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
+
+                <button type="submit" className="btn">
+                  Login
+                </button>
+              </form>
+
+              <div className="bottomBox">
+                <div className="textBox">
+                  <span className="or">OR</span>
+                  <span className="loginWith">Login with</span>
+                </div>
+
+                <div className="logoBox">
+                  <img src={googleAuthIcon} className="logo" />
+                  <img src={linkedinAuthIcon} className="logo" />
+                </div>
               </div>
 
-              <div className="inputBox">
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <label htmlFor="password">Password</label>
-                <FontAwesomeIcon
-                  icon={faEye}
-                  id="eye"
-                  onClick={togglePasswordVisibility}
-                  className={`eye-icon ${passwordVisible ? "visible" : ""}`}
-                />
-              </div>
-
-              <div className="resetBox">
-                <span className="remember">
-                  <input type="checkbox" />
-                  Remember me
-                </span>
-                <span>
-                  <Link to="/reset" className="reset">
-                    Forgot Password
-                  </Link>
-                </span>
-              </div>
-
-              <ReCAPTCHA
-                sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
-                ref={captchaRef}
-                size="normal"
-              />
-              {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
-              <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
-
-              <button type="submit" className="btn">
-                Login
-              </button>
-            </form>
-
-            <div className="bottomBox">
-              <div className="textBox">
-                <span className="or">OR</span>
-                <span className="loginWith">Login with</span>
-              </div>
-
-              <div className="logoBox">
-                <img src={googleAuthIcon} className="logo" />
-                <img src={linkedinAuthIcon} className="logo" />
-              </div>
+              <p>
+                <Link to="/signup" className="link">
+                  Don't have an account ? <span className="link1">Sign Up</span>
+                </Link>
+              </p>
             </div>
+          ) : value == "employer" ? (
+            <div id="form">
+              <form onSubmit={handleSubmit}>
+                <div className="inputBox">
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="email">Email</label>
+                </div>
 
-            <p>
-              <Link to="/signup" className="link">
-                Don't have an account ? <span className="link1">Sign Up</span>
-              </Link>
-            </p>
-          </div>
-        ) : value == "employer" ? (
-          <div id="form">
-            <form onSubmit={handleSubmit}>
-              <div className="inputBox">
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                <div className="inputBox">
+                  <input
+                    type="text"
+                    id="clientCode"
+                    value={clientCode}
+                    onChange={(e) => setClientCode(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="clientCode">Client Code</label>
+                </div>
+
+                <div className="inputBox">
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="password">Password</label>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    id="eye"
+                    onClick={togglePasswordVisibility}
+                    className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                  />
+                </div>
+
+                <div className="resetBox">
+                  <span className="remember">
+                    <input type="checkbox" />
+                    Remember me
+                  </span>
+                  <span>
+                    <Link to="/reset" className="reset">
+                      Forgot Password
+                    </Link>
+                  </span>
+                </div>
+
+                <ReCAPTCHA
+                  sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
+                  ref={captchaRef}
+                  size="normal"
                 />
-                <label htmlFor="email">Email</label>
-              </div>
+                {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
+                <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
-              <div className="inputBox">
-                <input
-                  type="text"
-                  id="clientCode"
-                  value={clientCode}
-                  onChange={(e) => setClientCode(e.target.value)}
-                  required
+                <button type="submit" className="btn">
+                  Login
+                </button>
+              </form>
+              <p>
+                <Link to="/signup" className="link">
+                  Don't have an account ? <span className="link1">Sign Up</span>
+                </Link>
+              </p>
+            </div>
+          ) : (
+            <div id="form">
+              <form onSubmit={handleSubmit}>
+                <div className="inputBox">
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="email">Email</label>
+                </div>
+
+                <div className="inputBox">
+                  <input
+                    type="text"
+                    id="clientCode"
+                    value={clientCode}
+                    onChange={(e) => setClientCode(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="clientCode">Client Code</label>
+                </div>
+
+                <div className="inputBox">
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="password">Password</label>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    id="eye"
+                    onClick={togglePasswordVisibility}
+                    className={`eye-icon ${passwordVisible ? "visible" : ""}`}
+                  />
+                </div>
+
+                <div className="resetBox">
+                  <span className="remember">
+                    <input type="checkbox" />
+                    Remember me
+                  </span>
+                  <span>
+                    <Link to="/reset" className="reset">
+                      Forgot Password
+                    </Link>
+                  </span>
+                </div>
+
+                <ReCAPTCHA
+                  sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
+                  ref={captchaRef}
+                  size="normal"
                 />
-                <label htmlFor="clientCode">Client Code</label>
-              </div>
+                {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
+                <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
 
-              <div className="inputBox">
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <label htmlFor="password">Password</label>
-                <FontAwesomeIcon
-                  icon={faEye}
-                  id="eye"
-                  onClick={togglePasswordVisibility}
-                  className={`eye-icon ${passwordVisible ? "visible" : ""}`}
-                />
-              </div>
-
-              <div className="resetBox">
-                <span className="remember">
-                  <input type="checkbox" />
-                  Remember me
-                </span>
-                <span>
-                  <Link to="/reset" className="reset">
-                    Forgot Password
-                  </Link>
-                </span>
-              </div>
-
-              <ReCAPTCHA
-                sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
-                ref={captchaRef}
-                size="normal"
-              />
-              {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
-              <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
-
-              <button type="submit" className="btn">
-                Login
-              </button>
-            </form>
-            <p>
-              <Link to="/signup" className="link">
-                Don't have an account ? <span className="link1">Sign Up</span>
-              </Link>
-            </p>
-          </div>
-        ) : (
-          <div id="form">
-            <form onSubmit={handleSubmit}>
-              <div className="inputBox">
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <label htmlFor="email">Email</label>
-              </div>
-
-              <div className="inputBox">
-                <input
-                  type="text"
-                  id="clientCode"
-                  value={clientCode}
-                  onChange={(e) => setClientCode(e.target.value)}
-                  required
-                />
-                <label htmlFor="clientCode">Client Code</label>
-              </div>
-
-              <div className="inputBox">
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <label htmlFor="password">Password</label>
-                <FontAwesomeIcon
-                  icon={faEye}
-                  id="eye"
-                  onClick={togglePasswordVisibility}
-                  className={`eye-icon ${passwordVisible ? "visible" : ""}`}
-                />
-              </div>
-
-              <div className="resetBox">
-                <span className="remember">
-                  <input type="checkbox" />
-                  Remember me
-                </span>
-                <span>
-                  <Link to="/reset" className="reset">
-                    Forgot Password
-                  </Link>
-                </span>
-              </div>
-
-              <ReCAPTCHA
-                sitekey="6Lcm1kAoAAAAAOqVJ8zxs6JqSTw2Go4qIfNHBdPM"
-                ref={captchaRef}
-                size="normal"
-              />
-              {captchaError && <span className="captchaErrorText">Error: please verify captcha</span>}
-              <a className="terms" onClick={() => navigate('/terms')}>By logging in, you agree to our Terms and Conditions.</a>
-
-              <button type="submit" className="btn">
-                Login
-              </button>
-            </form>
-            <p>
-              <Link to="/signup" className="link">
-                Don't have an account ? <span className="link1">Sign Up</span>
-              </Link>
-            </p>
-          </div>
-        )}
-      </Box>
-    </StyledLogin>
+                <button type="submit" className="btn">
+                  Login
+                </button>
+              </form>
+              <p>
+                <Link to="/signup" className="link">
+                  Don't have an account ? <span className="link1">Sign Up</span>
+                </Link>
+              </p>
+            </div>
+          )}
+        </Box>
+      </StyledLogin>
     </>
   );
 };

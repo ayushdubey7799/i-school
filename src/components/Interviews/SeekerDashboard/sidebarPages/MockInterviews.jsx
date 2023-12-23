@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import searchBlack from '../../../../assets/icons/searchBlack.png'
 import ProgressBar from "../../../commonComponents/ProgressBar";
 import SeekerTableSearchBar from "../seekerCommonComponents/SeekerTableSearchBar";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 
 const Row = (props) => {
@@ -46,7 +47,7 @@ const Row = (props) => {
   );
 }
 
-const MockInterviews = ({ filteredData }) => {
+const MockInterviews = ({ filteredData, page, setPage, size, setSize, total, handlePageChange, handleSizeChange }) => {
   const [searchValue, setSearchValue] = useState();
 
 
@@ -54,12 +55,17 @@ const MockInterviews = ({ filteredData }) => {
     return <h6 style={{ fontSize: '1.2rem' }}>No interview Here</h6>
   }
 
+  useEffect(() => {
+    setPage(1);
+    setSize(5);
+  }, [])
+
   return (
     <StyledInterviews>
       <TableContainer component={Paper} className="tableBox">
         <span className='title'>Mock Interviews</span>
         <SearchBarContainer>
-          <SeekerTableSearchBar value={searchValue} setValue={setSearchValue}/>
+          <SeekerTableSearchBar value={searchValue} setValue={setSearchValue} />
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
@@ -71,11 +77,24 @@ const MockInterviews = ({ filteredData }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {filteredData?.data?.data?.filter?.((item) => item.jdId?false:true)?.map((row, index) => (
+            {filteredData?.data?.data?.filter?.((item) => item.jdId ? false : true)?.map((row, index) => (
               <Row key={index} row={row} index={index} />
             ))}
           </TableBody>
         </Table>
+        <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+          />
+        </div>
       </TableContainer>
     </StyledInterviews>
   );
@@ -90,6 +109,13 @@ const StyledInterviews = styled.div`
 
   .colored {
     background-color: #ececec;
+  }
+
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
   }
 
   .tableBox {

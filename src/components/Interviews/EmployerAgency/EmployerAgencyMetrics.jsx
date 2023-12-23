@@ -131,8 +131,8 @@ const EmployerAgencyMetrics = ({ page, setPage }) => {
 
     useEffect(() => {
         if (metrics.length) {
-            setCompleted(metrics.find((item) => item.status == "COMPLETED")?.count);
-            setScheduled(metrics.find((item) => item.status == "SCHEDULED")?.count)
+            setCompleted(metrics?.find((item) => item.status == "COMPLETED")?.count);
+            setScheduled(metrics?.find((item) => item.status == "SCHEDULED")?.count)
         }
     }, [metrics])
 

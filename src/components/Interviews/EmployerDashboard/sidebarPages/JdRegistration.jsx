@@ -239,7 +239,7 @@ function Row(props) {
           align="center"
           className="tableCell"
         >
-          {row.jdId.toUpperCase()}
+          {row.jdId?.toUpperCase()}
         </TableCell>
         <TableCell
           component="th"
@@ -401,7 +401,7 @@ const JdRegistration = () => {
   useEffect(() => {
     if (searchValue?.trim()) {
       setSearch(true);
-      setFilteredData(() => jdData.filter((item => item.jdId.toLowerCase().includes(searchValue.toLowerCase()) || item.title.toLowerCase().includes(searchValue.toLowerCase()))))
+      setFilteredData(() => jdData?.filter((item => item.jdId.toLowerCase().includes(searchValue.toLowerCase()) || item.title.toLowerCase().includes(searchValue.toLowerCase()))))
     } else {
       setSearch(false);
     }

@@ -69,7 +69,6 @@ import InviteSuccess2 from "./components/Interviews/EmployerDashboard2.jsx/Sched
 import Login2 from "./pages/Login2"
 import InterviewerInviteDashboard from "./components/commonComponents/InterviewerInviteDashboard"
 import EmployerAgencyDashboard from "./pages/EmployerAgencyDashboard"
-import TrialTable from "./components/Interviews/EmployerDashboard/Schedule/TrialTable"
 import EmployerFeedback from "./components/Interviews/EmployerDashboard/EmployerFeedback"
 
 
@@ -155,7 +154,6 @@ const App = () => {
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/trial" element={<EmployerAgencyDashboard />} />
           <Route path='/trial2' element={<InterviewerInviteDashboard />} />
-          <Route path='/trial/table' element={<TrialTable />} />
           <Route path="/feedback" element={<EmployerFeedback/>} />
         </Routes>
       </ScrollToTop>

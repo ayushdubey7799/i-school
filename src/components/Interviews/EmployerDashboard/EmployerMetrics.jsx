@@ -115,7 +115,7 @@ const EmployeMetrics = ({ page, setPage }) => {
 
     async function getData() {
       const res = await getJdsForMatching(accessToken, clientCode);
-      if (res?.data?.data?.length) setCount(res?.data?.data.length);
+      if (res?.data?.data?.length) setCount(res?.data?.data?.length);
     }
     getData();
 
@@ -134,8 +134,8 @@ const EmployeMetrics = ({ page, setPage }) => {
 
   useEffect(() => {
     if (metrics?.length) {
-      setCompleted(metrics.find((item) => item.status == "COMPLETED")?.count);
-      setScheduled(metrics.find((item) => item.status == "SCHEDULED")?.count)
+      setCompleted(metrics?.find((item) => item.status == "COMPLETED")?.count);
+      setScheduled(metrics?.find((item) => item.status == "SCHEDULED")?.count)
     }
   }, [metrics])
 

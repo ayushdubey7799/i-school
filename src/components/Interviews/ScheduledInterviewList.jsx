@@ -19,6 +19,7 @@ import CommonDrawer from '../commonComponents/CommonDrawer';
 import SeekerInterviewDetails from './SeekerDashboard/sidebarPages/SeekerInterviewDetails';
 import { timeZoneConversion } from '../../utils/timeZoneConversation';
 import SeekerTableSearchBar from './SeekerDashboard/seekerCommonComponents/SeekerTableSearchBar';
+import { Pagination, PaginationSizeFilter } from '../commonComponents/Pagination';
 
 
 function Row(props) {
@@ -91,26 +92,37 @@ const ScheduledInterviewList = () => {
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
 
   const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
 
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page < Math.ceil(+total / +size)) {
+      setPage((prev) => prev + 1);
+    } else if (!change && page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
-
     const getScheduledData = async () => {
-      const res = await getInterviewByStatus("SCHEDULED", accessToken);
+      const res = await getInterviewByStatus("SCHEDULED", accessToken, page, size,);
       if (res) {
         setFilteredJobs(res?.data?.data);
+        setTotal(res?.data?.total);
       }
     }
-
     getScheduledData();
     const filteredJobs = jobListings.filter(job => job.applied === true);
-
     if (filteredJobs) {
       setAppliedJobs(filteredJobs);
     }
-
-  }, [])
-
+  }, [size, page])
 
 
   return (
@@ -120,7 +132,7 @@ const ScheduledInterviewList = () => {
         {!isLoading && <TableContainer component={Paper} className="tableBox">
           <span className='title'>Scheduled Interviews</span>
           <SearchBarContainer>
-            <SeekerTableSearchBar value={searchValue} setValue={setSearchValue}/>
+            <SeekerTableSearchBar value={searchValue} setValue={setSearchValue} />
           </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
@@ -142,6 +154,19 @@ const ScheduledInterviewList = () => {
               ))}
             </TableBody>
           </Table>
+          <div className="paginationBox">
+            <PaginationSizeFilter
+              size={size}
+              handleSizeChange={handleSizeChange}
+            />
+            <Pagination
+              total={total}
+              size={size}
+              page={page}
+              handlePageChange={handlePageChange}
+              setPage={setPage}
+            />
+          </div>
         </TableContainer>}
       </StyledBox>
 
@@ -162,6 +187,13 @@ const StyledBox = styled.div`
 
   .colored {
     background-color: #ececec;
+  }
+
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
   }
 
   .tableBox {

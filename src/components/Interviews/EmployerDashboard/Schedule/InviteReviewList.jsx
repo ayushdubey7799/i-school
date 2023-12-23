@@ -23,13 +23,13 @@ function Row(props) {
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          {row.name ? row.name : "..."}
+          {row?.name ? row?.name : "..."}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          {row.email}
+          {row?.email}
         </TableCell>
         <TableCell align="center" className="tableCell">
-          {row.contact ? row.contact : "..."}
+          {row?.contact ? row?.contact : "..."}
         </TableCell>
         <TableCell
           align="center"
@@ -49,7 +49,7 @@ function Row(props) {
 }
 
 const InviteReviewList = () => {
-  const invites = useSelector((state) => state.invite.selectedResumes).slice(
+  const invites = useSelector((state) => state.invite.selectedResumes)?.slice(
     0,
     -1
   );

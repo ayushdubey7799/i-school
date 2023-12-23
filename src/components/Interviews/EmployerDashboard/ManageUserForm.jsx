@@ -152,9 +152,9 @@ function ManageUserForm({ array, handleClose, setSuccessPopup, setSavedPopup }) 
                 }
             }
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Error:', error?.message);
             const errMsg =
-                error.response.data.notify.message ||
+                error?.response?.data?.notify?.message ||
                 "An error occurred. Please try again.";
             toast.error(errMsg, {
                 position: toast.POSITION.TOP_RIGHT,

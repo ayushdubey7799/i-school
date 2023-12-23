@@ -19,6 +19,7 @@ import { useNavigate } from "react-router";
 import TableSearchBar from "../commonComponents/TableSearchBar";
 import EmpSelectInput from "../commonComponents/EmpSelectInput";
 import EmpCommonButton from "../commonComponents/EmpCommonButton";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 function Row(props) {
   const { row, rowsLength, index } = props;
 
@@ -104,10 +105,26 @@ const InterviewFlow = ({ setPage }) => {
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
   const [searchValue, setSearchValue] = useState('');
+  const [page1, setPage1] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage1(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page1 < Math.ceil(+total / +size)) {
+      setPage1((prev) => prev + 1);
+    } else if (!change && page1 > 1) {
+      setPage1((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken, clientCode);
+      const res = await getAllTrackers(accessToken, clientCode, page1, size);
       let array = res?.data?.data;
       if (array) {
         const finalResult = array.reduce((acc, it) => {
@@ -127,16 +144,12 @@ const InterviewFlow = ({ setPage }) => {
           return [...acc, jdInfoReq];
         }, []);
         setTableRows(finalResult);
-
-        console.log(finalResult);
+        setTotal(res?.data?.total);
       }
-
     }
 
-
-
     getData();
-  }, [])
+  }, [page1, size])
 
   const handleSearch = () => {
 
@@ -180,6 +193,19 @@ const InterviewFlow = ({ setPage }) => {
             ))}
           </TableBody>
         </Table>
+        <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page1}
+            handlePageChange={handlePageChange}
+            setPage={setPage1}
+          />
+        </div>
       </TableContainer>
       <div className="btnBox">
         <EmpCommonButton text='Put on Hold' />
@@ -217,6 +243,13 @@ align-items: center;
 
 .colored {
   background-color: #ececec;
+}
+
+.paginationBox {
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+  margin: 1rem 3rem 1.5rem 0;
 }
 
 .tableBox {

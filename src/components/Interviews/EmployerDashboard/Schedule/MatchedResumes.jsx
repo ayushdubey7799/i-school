@@ -230,7 +230,7 @@ export default function MatchedResumes() {
   const handleTrackerUpdate = async (val) => {
     const payloadData = {
       "jdId": jdId,
-      "resumeIds": selectedArray.map(user => user.resumeId),
+      "resumeIds": selectedArray?.map(user => user.resumeId),
       "status": val,
       "trackerIds": [],
     }
@@ -350,8 +350,8 @@ export default function MatchedResumes() {
             Next
           </button>
 
-          {(selectedArray.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('SHORTLISTED')}>Mark Shortlisted</button>}
-          {(selectedArray.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('NOT_SHORTLISTED')}>Mark Rejected</button>}
+          {(selectedArray?.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('SHORTLISTED')}>Mark Shortlisted</button>}
+          {(selectedArray?.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('NOT_SHORTLISTED')}>Mark Rejected</button>}
 
         </div>
       </Content>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-export const getAllTrackers = async (accessToken,clientCode,jdId) => {
+export const getAllTrackers = async (accessToken,clientCode, jdId, page=1, size=1000) => {
 
 const config = {
   headers: {
@@ -13,8 +13,8 @@ const config = {
   }
 };
 
-let url = `https://dev-api.intelliview.in/api/interviews/trackers?jdId=${jdId}&page=1&size=100`;
-if(!jdId)url = `https://dev-api.intelliview.in/api/interviews/trackers?page=1&size=100`;
+let url = `https://dev-api.intelliview.in/api/interviews/trackers?jdId=${jdId}&page=${page}&size=${size}`;
+if(!jdId)url = `https://dev-api.intelliview.in/api/interviews/trackers?page=${page}&size=${size}`;
 
     try {
         const response = await axios.get(url,config);

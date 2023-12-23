@@ -36,18 +36,22 @@ const UploadCandidateProfile = () => {
     e.preventDefault()
 
     try {
-      setLoading(true);
-      const formData = new FormData();
-      files.forEach((file, index) => {
-        formData.append(`files`, file);
-      });
+      if (files.length == 0) {
+        toast.warning("Please select files/folder");
+      } else {
+        setLoading(true);
+        const formData = new FormData();
+        files.forEach((file, index) => {
+          formData.append(`files`, file);
+        });
 
-      const res = await bulkUpload(formData, accessToken, clientCode);
+        const res = await bulkUpload(formData, accessToken, clientCode);
 
-      if (res) {
-        setSuccessPopup("Profiles uploaded successfully");
-        setFiles([]);
-        setLoading(false);
+        if (res) {
+          setSuccessPopup("Profiles uploaded successfully");
+          setFiles([]);
+          setLoading(false);
+        }
       }
     } catch (error) {
       const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
@@ -72,17 +76,15 @@ const UploadCandidateProfile = () => {
         <input
           id='input'
           type="file"
-          // accept=".zip,.rar,.7z"
           accept='*'
           onChange={handleFileChange}
-          style={{ display: 'none' }}
+          className='fileInput'
           multiple
-          required
         />
         <span>Select Folder or Zip File</span>
         <button className='registerBtn' type='submit'>Upload</button>
       </form>
-      
+
     </Box>
   )
 }
@@ -135,6 +137,11 @@ const Box = styled.div`
 
     span {
       font-size: 0.8rem;
+    }
+
+    .fileInput {
+      position: absolute;
+    left: -9999px;
     }
   }
 `;

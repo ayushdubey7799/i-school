@@ -135,6 +135,8 @@ const Label = styled.label`
 
 const FileInput = styled.input`
   margin-bottom: 0rem;
+  position: absolute;
+  left: -9999px;
 `;
 
 
@@ -179,16 +181,20 @@ const RegisterCandidate = () => {
 
   const handleRegister = async () => {
     try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      formData.append("payload", JSON.stringify({
-        email,
-        firstName,
-        lastName,
-        contact,
-        source
-      }));
+      if (selectedFileName == '') {
+        toast.warning("All fields required");
+      } else {
+
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("payload", JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          contact,
+          source
+        }));
 
       const res = await addProfileWithFile(formData, accessToken, clientCode);
 
@@ -204,6 +210,7 @@ const RegisterCandidate = () => {
         setSelectedFileName('');
         setRefText('');
       }
+    }
     } catch (error) {
       const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
       setErrorMsg(errMsg);
@@ -361,6 +368,7 @@ const RegisterCandidate = () => {
             errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
             validators={['required', 'minStringLength:3', 'maxStringLength:29']}
             fullWidth
+            required
             inputProps={{
               sx: {
                 color: '#626264',
@@ -384,8 +392,6 @@ const RegisterCandidate = () => {
               type="file"
               accept="*"
               onChange={handleFileChange}
-              style={{ display: 'none' }}
-              required
             />
             <span>Select Resume</span>
           </div>

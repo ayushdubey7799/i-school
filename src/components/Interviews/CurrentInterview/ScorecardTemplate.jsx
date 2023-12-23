@@ -19,7 +19,7 @@ import { codingQuestionFormat } from '../../../utils/codingQuestionFormat';
 function Row(props) {
   const { row } = props;
   let expected = "";
-  if (row.summaryJson) expected = JSON.parse(row.summaryJson)["Expected answer"].expected_answer;
+  if (row?.summaryJson) expected = JSON.parse(row?.summaryJson)["Expected answer"]?.expected_answer;
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >
@@ -35,7 +35,7 @@ function Row(props) {
         <TableCell component="th" scope="row" dangerouslySetInnerHTML={{ __html: codingQuestionFormat(`${row.question.slice(0, 300)} <strong> <span class="clickable-span">...</span></strong>`) }} onClick={() => props.onToggle(row)}>
 
         </TableCell>
-        <TableCell align="right">{row.skipped ? "0" : row.processingState == "FAILED" ? "Failed" : (row.processingState == "NEW" || row.processingState == "PROCESSING" ? <Loader></Loader> : row.score)}</TableCell>
+        <TableCell align="right">{row.skipped ? "0" : row?.processingState == "FAILED" ? "Failed" : (row?.processingState == "NEW" || row?.processingState == "PROCESSING" ? <Loader></Loader> : row?.score)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
@@ -44,7 +44,7 @@ function Row(props) {
               <Typography variant="body1" gutterBottom>
                 <strong>Question:</strong> <div style={{ fontSize: "0.7rem" }} dangerouslySetInnerHTML={{ __html: codingQuestionFormat(row.question) }}></div>
                 <br />
-                <strong>Options:</strong> <div style={{ fontSize: "0.7rem" }}>{row.mcqOptions?row?.mcqOptions.map((item,index) => <p>{item}</p>):""}</div>
+                <strong>Options:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.mcqOptions ? row?.mcqOptions.map((item,index) => <p>{item}</p>):""}</div>
                 <br />
                 <strong>Your Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.answer ? row?.answer : row?.answerFile ? "Recorded Audio file" : "skipped"}</div>
                 <br />
@@ -71,10 +71,10 @@ export default function ScorecardTemplate({ rows, setTrigger, apiCall, setApiCal
   };
 
   useEffect(() => {
-    setApiCall(rows.some((item) => item.processingState == "PROCESSING" || (item.processingState == "NEW" && item.skipped == false)));
+    setApiCall(rows?.some((item) => item.processingState == "PROCESSING" || (item.processingState == "NEW" && item.skipped == false)));
 
     return () => {
-      if (idRef.current) {
+      if (idRef?.current) {
         clearTimeout(idRef.current);
         idRef.current = null;
       }

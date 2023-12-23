@@ -32,12 +32,12 @@ export default function ScheduleModal({ array, handleClose }) {
     const getTypes = async () => {
       const response1 = await getProductTypes(accessToken, clientCode);
       if (response1.code == 2000) {
-        setProductTypes(response1.data.value.split(','));
+        setProductTypes(response1?.data?.value?.split(','));
       }
 
       const response2 = await getTestTypes(accessToken, clientCode);
       if (response2.code == 2000) {
-        setTestTypes(response2.data.value.split(','));
+        setTestTypes(response2?.data?.value?.split(','));
       }
     }
 

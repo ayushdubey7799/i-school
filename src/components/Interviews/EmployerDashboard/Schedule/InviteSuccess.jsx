@@ -21,9 +21,9 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? 'colored' : ''}`}
       >
-        <TableCell component="th" scope="row" align="center" className="tableCell">{row.name?row.name:"..."}</TableCell>
-        <TableCell component="th" scope="row" align="center" className="tableCell">{row.email}</TableCell>
-        <TableCell align="center" className="tableCell">{row.contact?row.contact:"..."}</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">{row?.name ? row?.name:"..."}</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">{row?.email}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.contact ? row?.contact:"..."}</TableCell>
         <TableCell align="center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }} className="tableCell">
           <img src={eyeIcon} />
         </TableCell>
@@ -35,7 +35,7 @@ function Row(props) {
 
 const InviteSuccess = () => {
   const navigate = useNavigate();
-  const invites = useSelector((state) => state.invite.selectedResumes).slice(0,-1);
+  const invites = useSelector((state) => state.invite.selectedResumes)?.slice(0,-1);
 
   return (
     <MainContainer>

@@ -85,7 +85,7 @@ const EmployerProfileDetails = () => {
             }
         } catch (error) {
             const errMsg =
-                error.response.data.notify.message ||
+                error?.response?.data?.notify?.message ||
                 "An error occurred. Please try again.";
             toast.error(errMsg, {
                 position: toast.POSITION.TOP_RIGHT,

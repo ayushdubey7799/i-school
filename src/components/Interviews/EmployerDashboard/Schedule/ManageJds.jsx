@@ -40,7 +40,7 @@ function Row(props) {
           </IconButton>
         </TableCell >
         <TableCell component="th" scope="row" align="center" className="tableCell">
-          {row.jdId.toUpperCase()}
+          {row.jdId?.toUpperCase()}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.reqNumber ? row.reqNumber.toUpperCase() : '...'}
