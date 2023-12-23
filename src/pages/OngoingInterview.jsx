@@ -197,7 +197,7 @@ const OngoingInterview = ({ start, handleStart }) => {
                 />
               ) : data?.questionType === "mcq" ? (
                 <McqQueInterface
-                  queComp={<div dangerouslySetInnerHTML={{ __html: codingQuestionFormat(data?.question) }} className="questionText"></div>}
+                  queComp={<div className="questionText">{data?.question}</div>}
                   options={data?.mcqOptions}
                   value={input}
                   setValue={setInput}

@@ -288,13 +288,12 @@ const JobSeekerSidebar = ({ currentItem, setCurrentItem }) => {
         <AccordionDetails className='details'>
           <MenuItem isSelected={currentItem === 'interview-dashboard'} onClick={() => {
             handleItemClick('interview-dashboard')
-            navigate('/dashboard/interviews')
           }}>
             <img src={interviewDashboardIcon} className='icon' />
-            <a>Interview Dashboard</a>
+            Interview Dashboard
           </MenuItem>
           <MenuItem isSelected={currentItem === 'practice-mock'} onClick={() => {
-            navigate('/dashboard/interviews')
+            handleItemClick('interview-dashboard')
             handleLinkClick()
           }}>
             <img src={practiceInterviewIcon} className='icon' />

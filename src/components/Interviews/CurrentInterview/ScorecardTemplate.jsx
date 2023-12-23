@@ -44,12 +44,12 @@ function Row(props) {
               <Typography variant="body1" gutterBottom>
                 <strong>Question:</strong> <div style={{ fontSize: "0.7rem" }} dangerouslySetInnerHTML={{ __html: codingQuestionFormat(row.question) }}></div>
                 <br />
-                <strong>Options:</strong> <div style={{ fontSize: "0.7rem" }}>{row.mcqOptions?row.mcqOptions.map((item,index) => <p>{item}</p>):""}</div>
+                <strong>Options:</strong> <div style={{ fontSize: "0.7rem" }}>{row.mcqOptions?row?.mcqOptions.map((item,index) => <p>{item}</p>):""}</div>
                 <br />
-                <strong>Your Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row.answer ? row.answer : row.answerFile ? "Recorded Audio file" : "skipped"}</div>
+                <strong>Your Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.answer ? row?.answer : row?.answerFile ? "Recorded Audio file" : "skipped"}</div>
                 <br />
                 <br />
-                <strong>Expected Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row.expectedAnswer ? row.expectedAnswer : "Not Available"}</div>
+                <strong>Expected Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.expectedAnswer ? row?.expectedAnswer : "Not Available"}</div>
               </Typography>
             </Box>
           </Collapse>

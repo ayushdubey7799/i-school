@@ -22,7 +22,8 @@ const SkillInterview = () => {
     skills: "",
     experience: "",
     difficultyLevel: "easy",
-    testType: "mcq"
+    testType: "mcq",
+    noOfQuestions: '0'
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +56,9 @@ const SkillInterview = () => {
       case 'testType':
         setInterviewDetails({ ...interviewDetails, testType: val })
         break;
+      case 'noOfQuestions':
+        setInterviewDetails({ ...interviewDetails, noOfQuestions: val })
+        break;
       default:
         console.log('Hello there!');
     }
@@ -78,6 +82,7 @@ const SkillInterview = () => {
       testType: interviewDetails.testType,
       jobSummary: interviewDetails.skills.trim(),
       resumeText: `Experience ${interviewDetails.experience.trim()}`,
+      noOfQuestions: interviewDetails.noOfQuestions,
     };
     const ongoing = await createInterview(payload, accessToken)
 
@@ -146,6 +151,38 @@ const SkillInterview = () => {
               <MenuItem value="mcq">MCQ</MenuItem>
               <MenuItem value="coding">Coding</MenuItem>
               <MenuItem value="general">General Subjective</MenuItem>
+            </Select>
+          </FormControl>
+
+
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Number of Questions</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={interviewDetails.noOfQuestions}
+              label="Number of Questions"
+              onChange={handleInputChange}
+              name="noOfQuestions"
+            >
+              {interviewDetails.testType === 'coding' &&
+                Array.from({ length: 5 }, (_, index) => (
+                  <MenuItem key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </MenuItem>
+                ))}
+              {interviewDetails.testType === 'general' &&
+                Array.from({ length: 15 }, (_, index) => (
+                  <MenuItem key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </MenuItem>
+                ))}
+              {interviewDetails.testType === 'mcq' &&
+                Array.from({ length: 30 }, (_, index) => (
+                  <MenuItem key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
 

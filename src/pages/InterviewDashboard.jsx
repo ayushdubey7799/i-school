@@ -30,7 +30,9 @@ const InterviewDashboard = () => {
                         openNewInterviewModal={openNewInterviewModal}
                         setOpenNewInterviewModal={setOpenNewInterviewModal}
                     />
-                    <InterviewTabs />
+                    <div className="box">
+                        <InterviewTabs />
+                    </div>
                     <Footer />
                 </>
             )}
@@ -47,4 +49,8 @@ const StyledContent = styled.div`
   // margin: 1rem auto;
   background-color: var(--backgroundColor);
   color: var(--color);
+
+  .box {
+    margin-top: 6rem;
+  }
 `;

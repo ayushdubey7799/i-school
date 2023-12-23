@@ -27,11 +27,19 @@ import { getBlobData } from "../../../../functions/api/resume/getBlobData";
 import TableSearchBar from "../commonComponents/TableSearchBar";
 import EmpSelectInput from "../commonComponents/EmpSelectInput";
 
+import { getAllTrackers } from '../../../../functions/api/employers/tracker/getAllTrackers'
+import { addTrackers } from '../../../../functions/api/employers/tracker/addTrackers'
+
 function Row(props) {
-  const { row, handleSelectArray, index } = props;
+  const { row, handleSelectArray, index, filterParams, updateTrigger } = props;
   const [selected, setSelected] = useState(false);
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+  // set selected as false to unCheck all checkbox on some sideEffects.
+  useEffect(() => {
+    setSelected(false);
+  }, [filterParams, updateTrigger])
 
   const handleSelectChange = (row) => {
     if (selected) {
@@ -105,13 +113,17 @@ export default function MatchedResumes() {
   );
   const dispatch = useDispatch();
 
-  const [filterParams, setFilterParams] = useState('');
+  const [filterParams, setFilterParams] = useState('MATCHED');
   const [searchValue, setSearchValue] = useState('');
 
   const [total, setTotal] = useState(0);
 
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+
+  const [updateTrigger, setUpdateTrigger] = useState(false);
+  const [trackerData, setTrackerData] = useState([]);
+  const [matchedData, setMatchedData] = useState([]);
 
   const handleSizeChange = (event) => {
     setSize(parseInt(event.target.value, 10));
@@ -126,21 +138,73 @@ export default function MatchedResumes() {
     }
   };
 
+  // running an effect to empty selectedArray whenever filter value changes
+  useEffect(() => {
+    setSelectedArray([]);
+  }, [filterParams]);
+
+
   useEffect(() => {
     if (!accessToken || !clientCode) {
       toast.error("Login First");
       navigate("/login");
     }
+
+    // func to get tracker data by trackerStatus
+    async function getTrackersData() {
+      const trackerRes = await getAllTrackers(jdId, accessToken, page, size, filterParams);
+
+      if (trackerRes) {
+        setTrackerData(trackerRes?.data?.data);
+      }
+    }
+
+    // func to get all matched resume
     async function getData() {
       const resObj = await getMatches(jdId, accessToken, clientCode, page, size);
       if (resObj) {
-        setTotal(resObj.data[0].records.total)
-        setTableRows(resObj.data[0].records.data);
-        setIdToSendInvite(resObj.data[0].jdId);
+
+        setMatchedData(resObj?.data[0]?.records?.data);
+
+        if (filterParams === 'MATCHED') {
+          setTotal(resObj?.data[0]?.records?.total)
+          setTableRows(resObj?.data[0]?.records?.data);
+        }
+        setIdToSendInvite(resObj?.data[0]?.jdId);
       }
     }
+
     getData();
-  }, [page, size]);
+
+    // tracker data api to be called when filter params are valid, like here:- SHORTLISTED & NOT_SHORTLISTED
+    if (filterParams === 'SHORTLISTED' || filterParams === 'NOT_SHORTLISTED') {
+      getTrackersData();
+    }
+
+  }, [page, size, filterParams]);
+
+
+  useEffect(() => {
+
+    // func to filter matched resumes data on the basis of trackers status.
+    const filterData = (array1, array2) => {
+      const array2Lookup = array2?.reduce((lookup, { id, status }) => {
+        lookup[id] = status;
+        return lookup;
+      }, {});
+
+      return array1?.filter(({ id }) => array2Lookup[id] === filterParams);
+    }
+
+    // filter only when filterParams are valid
+    if (filterParams === 'SHORTLISTED' || filterParams === 'NOT_SHORTLISTED') {
+      const filteredData = filterData(matchedData, trackerData);
+      setTableRows(filteredData);
+    }
+
+  }, [page, size, filterParams, matchedData, trackerData]);
+
+
 
 
   const handleSelectArray = (id, action) => {
@@ -151,6 +215,8 @@ export default function MatchedResumes() {
     }
   };
 
+
+
   const handleSchedule = () => {
     if (selectedArray?.length > 0) {
       dispatch(addResumes([...selectedArray, idToSendInvite]));
@@ -160,16 +226,32 @@ export default function MatchedResumes() {
     }
   };
 
+  // func to update tracker status as Shortlist or Rejected
+  const handleTrackerUpdate = async (val) => {
+    const payloadData = {
+      "jdId": jdId,
+      "resumeIds": selectedArray.map(user => user.resumeId),
+      "status": val,
+      "trackerIds": [],
+    }
+
+    const updatedRes = await addTrackers(payloadData, accessToken, clientCode);
+
+    if (updatedRes) {
+      setUpdateTrigger(!updateTrigger);
+      toast.success(`${val === 'SHORTLISTED' ? 'Shortlisted' : 'Rejected'} Successfully`);
+    }
+  }
+
   const filterArr = [
     { value: "MATCHED", text: "Matched" },
     { value: "SHORTLISTED", text: "Shortlisted" },
-    { value: "REJECTED", text: "Rejected" },
-];
+    { value: "NOT_SHORTLISTED", text: "Rejected" },
+  ];
 
   return (
     <StyledDiv>
       <LogoHeader />
-
       <Content>
         <TableContainer component={Paper} className="tableBox">
           <ModalHOC
@@ -180,7 +262,7 @@ export default function MatchedResumes() {
           />
 
           <span className='mainTitle'>
-            <span className="title">Matched Resumes for JD ID: {jdId}</span>
+            <span className="title">Matched Resumes for JD ID: {jdId} </span>
             <Button onClick={() => navigate("/schedule")}>Back</Button>
           </span>
           <SearchBarContainer>
@@ -241,6 +323,8 @@ export default function MatchedResumes() {
                   row={row}
                   handleSelectArray={handleSelectArray}
                   index={index}
+                  filterParams={filterParams}
+                  updateTrigger={updateTrigger}
                 />
               ))}
             </TableBody>
@@ -266,8 +350,8 @@ export default function MatchedResumes() {
             Next
           </button>
 
-          {selectedArray.length !== 0 && <button className="btn" onClick={() => navigate('/trial/table')}>Mark Shortlisted</button>}
-          {selectedArray.length !== 0 && <button className="btn" onClick={() => navigate('/trial/table')}>Mark Rejected</button>}
+          {(selectedArray.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('SHORTLISTED')}>Mark Shortlisted</button>}
+          {(selectedArray.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('NOT_SHORTLISTED')}>Mark Rejected</button>}
 
         </div>
       </Content>

@@ -40,7 +40,7 @@ const Header = ({
       </div>
 
       <div id="right">
-        <Link to="/dashboard/interviews" className="link">
+        <Link to="/dashboard/jobseeker" className="link">
           <span className="coloredText">Back to Dashboard</span>
         </Link>
         <div className="profileIcon">
