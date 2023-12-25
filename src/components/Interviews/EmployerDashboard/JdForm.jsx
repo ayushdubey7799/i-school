@@ -21,12 +21,18 @@ import Error from "../../commonComponents/infoDialog/Error";
 import { checkJdExist } from "../../../functions/api/employers/checkJdExist";
 import { setJdTrigger } from "../../../slices/jdSlice";
 import { useDispatch } from "react-redux";
+import ReactQuill from "react-quill";
 
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 1rem;
   border-radius: 0.3rem;
+
+  .textEditor {
+    background-color: #F6F6FB;
+    height: calc(100% - 3rem);
+  }
 
   .mainTitle {
     font-size: 0.9rem;
@@ -61,6 +67,8 @@ const Container = styled.div`
   .fileInputBox {
     position: relative;
     width: 100%;
+    height: 12rem;
+    background-color: #f6f6fb;
 
     textarea {
       width: 100%;
@@ -141,8 +149,11 @@ const Label = styled.label`
   position: absolute;
   top: -0.5rem;
   left: 1rem;
-  background-color: var(--white);
+  background-color: #F6F6FB;
   font-family: var(--font);
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+  padding: 0 0.2rem;
 `;
 
 const Button = styled.button`
@@ -163,6 +174,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
   const [jdExist, setJdExist] = useState(false);
   const [mode, setMode] = useState("create");
   const [autoReq, setAutoReq] = useState(false);
+  const [description, setDescription] = useState('');
   const [formData, setFormData] = useState({
     jdId: "",
     reqNumber: "",
@@ -229,6 +241,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
     if (array[0]) {
       if (array[1] != 'edit') checkJdPresent(array[0].jdId)
       setFormData(array[0]);
+      setDescription(array[0].description);
       setInitialReqs(array[0].numOfReqs);
       setSelectedSkills(array[0].skills.split(", "));
       setSelectedLocations(array[0].location.split(", "));
@@ -252,6 +265,17 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    if(description !== ''){
+      setFormData({
+        ...formData,
+        description: description,
+      })
+    }
+  }, [description])
+
+
 
   const checkReqs = () => {
     if (formData.numOfReqs < initialReqs) {
@@ -454,14 +478,15 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
 
         <div className="fileInputBox">
           <Label>Job Description</Label>
-          <textarea
+          {/* <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             rows={5}
             required
             disabled={jdExist}
-          ></textarea>
+          ></textarea> */}
+          <ReactQuill theme="snow" name='description' value={description} onChange={setDescription} className="textEditor" />
         </div>
 
         <div className="inputBox">
