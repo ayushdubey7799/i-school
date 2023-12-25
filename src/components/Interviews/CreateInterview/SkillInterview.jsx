@@ -23,7 +23,7 @@ const SkillInterview = () => {
     experience: "",
     difficultyLevel: "easy",
     testType: "mcq",
-    noOfQuestions: '0'
+    noOfQuestions: '1'
   });
 
   const [isLoading, setIsLoading] = useState(false);
