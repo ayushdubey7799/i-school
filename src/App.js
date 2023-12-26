@@ -154,7 +154,7 @@ const App = () => {
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/trial" element={<EmployerAgencyDashboard />} />
           <Route path='/trial2' element={<InterviewerInviteDashboard />} />
-          <Route path="/feedback" element={<EmployerFeedback/>} />
+          <Route path="/interviewer-feedbacks/:token" element={<EmployerFeedback />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

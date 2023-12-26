@@ -178,12 +178,30 @@ const OngoingInterview = ({ start, handleStart }) => {
             <span className="title">Interview Id : {interviewId}</span>
 
             <div className="topLastBox">
+              {(!data?.lastQuestion && start && data?.questionType == 'coding') && <CommonButton
+                text='Next Question'
+                func={() => {
+                  handleSubmitAnswer(data.id, data.lastQuestion);
+                  getData(false);
+                }}
+                className="btn"
+              />}
               <Timer minutes={minutes} seconds={seconds} />
-              {(start && data?.questionType == 'coding') &&
+              {(start && data?.questionType == 'coding') && (data?.lastQuestion ?
                 <CommonButton text='Submit' func={() => {
                   handleSubmitAnswer(data.id, data.lastQuestion);
                   handleSubmitInterview();
-                }} />}
+                }} />
+                :
+                <CommonButton
+                  text='Finish Interview'
+                  func={async () => {
+                    await handleSubmitAnswer(data.id, data.lastQuestion);
+                    await handleSubmitInterview();
+                  }}
+                />
+              )
+              }
             </div>
           </div>
 

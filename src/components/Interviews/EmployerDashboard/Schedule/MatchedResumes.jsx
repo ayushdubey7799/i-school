@@ -215,6 +215,7 @@ export default function MatchedResumes() {
     }
   };
 
+  console.log(selectedArray);
 
 
   const handleSchedule = () => {
