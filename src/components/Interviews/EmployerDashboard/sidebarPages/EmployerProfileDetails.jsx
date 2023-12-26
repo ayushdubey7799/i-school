@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import Saved from '../../../commonComponents/infoDialog/Saved';
 import { formatRole } from '../../../../utils/globalFunctions';
 import { useJwt } from 'react-jwt';
+import ReactQuill from 'react-quill';
 
 const EmployerProfileDetails = () => {
     const accessToken = useSelector((state) => state.auth.userData.accessToken);
@@ -32,6 +33,7 @@ const EmployerProfileDetails = () => {
     const [openBasicDetails, setOpenBasicDetails] = useState(false);
     const [openContactDetails, setOpenContactDetails] = useState(false);
     const [openAccountDetails, setOpenAccountDetails] = useState(false);
+    const [companyDesc, setCompanyDesc] = useState('');
 
     const [savedPopup, setSavedPopup] = useState(false);
 
@@ -52,6 +54,7 @@ const EmployerProfileDetails = () => {
             const res = await getEmployer(accessToken, clientCode);
             if (res) {
                 setUser(res?.data);
+                setCompanyDesc(res?.data?.companyDescription);
             }
         }
         getUser();
@@ -70,6 +73,16 @@ const EmployerProfileDetails = () => {
             [name]: value,
         });
     };
+
+    useEffect(() => {
+        if (companyDesc !== '') {
+            setFormData({
+                ...formData,
+                companyDescription: companyDesc,
+            })
+        }
+    }, [companyDesc])
+
 
     const handleEdit = async () => {
         try {
@@ -179,7 +192,7 @@ const EmployerProfileDetails = () => {
                 </div>
             </div>
 
-            <div className='contactMainBox'>
+            <div className='contactMainBox descBox'>
                 <span className='mainTitle'>
                     <span>About Company</span>
                     <span className='editBtn2'>{aboutEdit ? <button onClick={async () => {
@@ -188,14 +201,13 @@ const EmployerProfileDetails = () => {
                     }}>Save</button> : <img src={editIcon} onClick={() => setAboutEdit(true)} />}</span>
                 </span>
 
-                <textarea
-                    value={aboutEdit ? formData?.companyDescription : user?.companyDescription}
-                    name='companyDescription'
-                    onChange={handleChange}
-                    disabled={!aboutEdit}
-                    rows={10}
-                    className='textarea'
-                    ref={textAreaRef} />
+                {
+                    aboutEdit ?
+                        <ReactQuill value={companyDesc} onChange={setCompanyDesc} className='textEditor' />
+                        :
+                        <span dangerouslySetInnerHTML={{ __html: user?.companyDescription }} className='textarea' />
+                }
+
             </div>
         </Box>
     )
@@ -289,7 +301,13 @@ align-items: center;
 }
 
 
+.textEditor {
+    height: calc(100% - 6rem);
+}
 
+.descBox {
+    min-height: 10rem;
+}
 
 
 .contactMainBox {
@@ -373,7 +391,7 @@ align-items: center;
 
     .textarea {
         background-color: var(--white);
-        padding: 1rem;
+        padding: 0.5rem 1rem;
         line-height: 1.2rem;
         font-size: 0.9rem;
         border-radius: 0.75rem;

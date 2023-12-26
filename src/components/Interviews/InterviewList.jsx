@@ -56,10 +56,10 @@ const InterviewList = ({ filteredData, page, setPage, size, setSize, total, hand
     return <h6 style={{ fontSize: '1.2rem' }}>No interview Here</h6>
   }
 
-  useEffect(() => {
-    setPage(1);
-    setSize(5);
-  }, [])
+  // useEffect(() => {
+  //   setPage(1);
+  //   setSize(5);
+  // }, [])
 
   return (
     <StyledInterviews>

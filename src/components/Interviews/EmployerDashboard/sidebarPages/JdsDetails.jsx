@@ -42,7 +42,7 @@ const JdsDetails = ({ Jds }) => {
 
                 <div className='box2'>
                     <span className='title'>Job description</span>
-                    <span className='text'>{Jds.description}</span>
+                    <span dangerouslySetInnerHTML={{ __html: Jds.description }} className='text'/>
                 </div>
 
                 <div className='box3'>
