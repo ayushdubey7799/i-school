@@ -20,8 +20,12 @@ import TableSearchBar from "../commonComponents/TableSearchBar";
 import EmpSelectInput from "../commonComponents/EmpSelectInput";
 import EmpCommonButton from "../commonComponents/EmpCommonButton";
 import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
+import { updateTrackers } from "../../../../functions/api/employers/tracker/updateTrackers";
+import { toast } from "react-toastify";
 function Row(props) {
-  const { row, rowsLength, index } = props;
+  const { row, rowsLength, index, handleSelectArray, filterParams, updateTrigger } = props;
+
+  const [selected, setSelected] = useState(false);
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
@@ -30,6 +34,10 @@ function Row(props) {
   const openDropdown = (index) => {
     setOpenDropdownIndex(index);
   };
+
+  useEffect(() => {
+    setSelected(false);
+  }, [filterParams, updateTrigger])
 
 
   const closeAllDropdowns = () => {
@@ -40,6 +48,15 @@ function Row(props) {
     dispatch(addResumes([row?.resumeId, row?.jdId]));
     navigate(`/schedule/invite/${row.jdId}`);
   }
+
+  const handleSelectChange = (row) => {
+    if (selected) {
+      handleSelectArray(row.id, false);
+    } else {
+      handleSelectArray(row, true);
+    }
+    setSelected((prev) => !prev);
+  };
 
   useEffect(() => {
     const handleDocumentClick = (event) => {
@@ -82,6 +99,8 @@ function Row(props) {
             <input
               type="checkbox"
               className="three-dots"
+              checked={selected}
+              onChange={() => handleSelectChange(row)}
             />
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
@@ -100,11 +119,17 @@ function Row(props) {
 
 const InterviewFlow = ({ setPage }) => {
   const [tableRows, setTableRows] = useState([]);
-  const [filterParams, setFilterParams] = useState('');
+  const [filterParams, setFilterParams] = useState('COMPLETED');
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
-  const [searchValue, setSearchValue] = useState('');
+  const [selectedArray, setSelectedArray] = useState([]);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [search, setSearch] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [allInterviews, setAllInterviews] = useState([]);
   const [page1, setPage1] = useState(1);
   const [size, setSize] = useState(5);
   const [total, setTotal] = useState(0);
@@ -114,6 +139,11 @@ const InterviewFlow = ({ setPage }) => {
     setPage1(1);
   };
 
+  // running an effect to empty selectedArray whenever filter value changes
+  useEffect(() => {
+    setSelectedArray([]);
+  }, [filterParams]);
+
   const handlePageChange = (change) => {
     if (change && page1 < Math.ceil(+total / +size)) {
       setPage1((prev) => prev + 1);
@@ -122,9 +152,19 @@ const InterviewFlow = ({ setPage }) => {
     }
   };
 
+  const handleSelectArray = (id, action) => {
+    if (action) {
+      setSelectedArray((prev) => [...prev, id]);
+    } else {
+      setSelectedArray((prev) => [...prev].filter((item) => item.id != id));
+    }
+  };
+
+  console.log(selectedArray);
+
   useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken, clientCode, page1, size);
+      const res = await getAllTrackers(accessToken, clientCode, search ? 1 : page1, search ? 10000 : size, "", filterParams);
       let array = res?.data?.data;
       if (array) {
         const finalResult = array.reduce((acc, it) => {
@@ -138,21 +178,58 @@ const InterviewFlow = ({ setPage }) => {
             round: it?.stage,
             interviewName: current?.interviewName,
             status: current?.status,
-            resumeId: current?.resumeId
+            resumeId: current?.resumeId,
+            id: it.id,
           }
 
           return [...acc, jdInfoReq];
         }, []);
         setTableRows(finalResult);
+        setAllInterviews(finalResult);
         setTotal(res?.data?.total);
       }
     }
 
     getData();
-  }, [page1, size])
+  }, [page1, size, filterParams, search])
 
-  const handleSearch = () => {
+  console.log(allInterviews);
 
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() =>
+        allInterviews?.filter(
+          (item) =>
+            item?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+            item?.jdId?.toLowerCase().includes(searchValue?.toLowerCase())
+        )
+      );
+    } else {
+      setSearch(false);
+    }
+  }, [searchValue]);
+
+
+  // func to update tracker status as Shortlist or Rejected
+  const handleTrackerUpdate = async (val) => {
+    const payloadData = {
+      "jdId": "",
+      "resumeIds": selectedArray?.map(user => user.resumeId),
+      "status": val,
+      "trackerIds": selectedArray?.map(user => user.id),
+    }
+
+    console.log(payloadData);
+
+    const updatedRes = await updateTrackers(payloadData, accessToken, clientCode);
+
+    console.log(updatedRes);
+
+    if (updatedRes) {
+      setUpdateTrigger(!updateTrigger);
+      toast.success(`${val === 'HOLD' ? 'Hold' : 'Moved out of Interview'} Successfully`);
+    }
   }
 
   const filterArr = [
@@ -188,12 +265,18 @@ const InterviewFlow = ({ setPage }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {tableRows?.map((row, index) => (
-              <Row key={row.id} rowsLength={tableRows.length} row={row} index={index} />
-            ))}
+            {search ?
+              filteredData?.map((row, index) => (
+                <Row key={row.id} rowsLength={tableRows.length} row={row} index={index} handleSelectArray={handleSelectArray} filterParams={filterParams} updateTrigger={updateTrigger} />
+              ))
+              :
+              tableRows?.map((row, index) => (
+                <Row key={row.id} rowsLength={tableRows.length} row={row} index={index} handleSelectArray={handleSelectArray} filterParams={filterParams} updateTrigger={updateTrigger} />
+              ))
+            }
           </TableBody>
         </Table>
-        <div className="paginationBox">
+        {!search && <div className="paginationBox">
           <PaginationSizeFilter
             size={size}
             handleSizeChange={handleSizeChange}
@@ -205,11 +288,11 @@ const InterviewFlow = ({ setPage }) => {
             handlePageChange={handlePageChange}
             setPage={setPage1}
           />
-        </div>
+        </div>}
       </TableContainer>
       <div className="btnBox">
-        <EmpCommonButton text='Put on Hold' />
-        <EmpCommonButton text='Move out from Interview' />
+        {selectedArray.length > 0 && <EmpCommonButton text='Put on Hold' func={() => handleTrackerUpdate('HOLD')} />}
+        {selectedArray.length > 0 && <EmpCommonButton text='Move out from Interview' func={() => handleTrackerUpdate('NOT_SELECTED')} />}
       </div>
     </Content>
   )

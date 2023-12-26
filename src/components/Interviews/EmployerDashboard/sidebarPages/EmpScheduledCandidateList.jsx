@@ -15,6 +15,7 @@ import SeekerInterviewDetails from "../../SeekerDashboard/sidebarPages/SeekerInt
 import { getAllTrackers } from "../../../../functions/api/interview/getAllTrackers";
 import { useSelector } from "react-redux";
 import TableSearchBar from "../commonComponents/TableSearchBar";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
   const { row, jdId, index } = props;
@@ -44,7 +45,7 @@ function Row(props) {
         <TableCell align="center" className="tableCell">...</TableCell>
         <TableCell component="th" scope="row" align="center" className="tableCell">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
-            <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails jdId={jdId}/>} />
+            <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<SeekerInterviewDetails jdId={jdId} />} />
             <img src={visibleIcon} className="icon" onClick={toggleDrawer('right', true)} />
           </div>
         </TableCell>
@@ -60,22 +61,61 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
+  const [search, setSearch] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [allCandidateData, setAllCandidateData] = useState([]);
+
+  const [page1, setPage1] = useState(1);
+  const [size, setSize] = useState(5);
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken, clientCode, page.jdId);
+      const res = await getAllTrackers(accessToken, clientCode, page1, size, page.jdId, "");
       setTotal(res?.data?.total);
       setTableRows(res?.data?.data);
     }
-
     getData();
-  }, []);
+  }, [page1, size]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getAllTrackers(accessToken, clientCode, 1, 10000, page.jdId, "");
+      setTotal(res?.data?.total);
+      setAllCandidateData(res?.data?.data);
+    }
+    getData();
+  }, [])
+
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() =>
+        allCandidateData?.filter(
+          (item) =>
+            item?.interview?.userName.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setSearch(false);
+    }
+  }, [searchValue]);
+
+  console.log(filteredData);
 
 
-  const handleSearch = () => {
-    
-  }
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage1(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && (page1 < Math.ceil(+total / +size))) {
+      setPage1((prev) => prev + 1);
+    } else if (!change && page1 > 1) {
+      setPage1((prev) => prev - 1);
+    }
+  };
 
 
   return (
@@ -103,11 +143,30 @@ const EmpScheduledCandidateList = ({ page, setPage }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {tableRows?.map((row, index) => (
+            {search ? filteredData?.map((row, index) => (
               <Row key={row.id} row={row} jdId={page.jdId} index={index} />
-            ))}
+            ))
+              :
+              tableRows?.map((row, index) => (
+                <Row key={row.id} row={row} jdId={page.jdId} index={index} />
+              ))
+            }
           </TableBody>
         </Table>
+
+        {!search && <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page1}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+          />
+        </div>}
       </TableContainer>
     </Content>
   )
@@ -149,6 +208,8 @@ const SearchBarContainer = styled.div`
   }
 
 
+  
+
 
   .skillInput {
   flex-grow: 1;
@@ -173,6 +234,13 @@ flex-direction: column;
 align-items: center;
 font-family: var(--font);
 color: var(--color);
+
+.paginationBox {
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+  margin: 1rem 3rem 1.5rem 0;
+}
 
 .icon {
   width: 0.8rem;

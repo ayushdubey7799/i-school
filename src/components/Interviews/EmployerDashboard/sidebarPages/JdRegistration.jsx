@@ -387,6 +387,10 @@ const JdRegistration = () => {
   };
 
   useEffect(() => {
+    dispatch(getAvailableJds(accessToken, clientCode));
+  }, []);
+
+  useEffect(() => {
     async function getData() {
       dispatch(getAvailableJds({ accessToken, clientCode }));
       const res = await getJds(accessToken, clientCode, page, size);

@@ -223,7 +223,11 @@ export default function RegisteredCandidates({ setCurrentItem }) {
     (state) => state.auth.userData?.user?.clientCode
   );
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
+  const [search, setSearch] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [allCandidatesData, setAllCandidatesData] = useState([]);
+
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
   const [total, setTotal] = useState(0);
@@ -242,6 +246,16 @@ export default function RegisteredCandidates({ setCurrentItem }) {
   };
 
   useEffect(() => {
+    const getAllCandidates = async () => {
+      const res = await getProfiles(accessToken, clientCode, 1, 10000);
+      if (res) {
+        setAllCandidatesData(res?.data?.data);
+      }
+    };
+    getAllCandidates();
+  }, [])
+
+  useEffect(() => {
     const getCandidates = async () => {
       const res = await getProfiles(accessToken, clientCode, page, size);
       if (res) {
@@ -253,9 +267,23 @@ export default function RegisteredCandidates({ setCurrentItem }) {
     getCandidates();
   }, [candidateTrigger, page, size]);
 
-  const handleSearch = () => {
+  console.log(allCandidatesData);
 
-  };
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() =>
+        allCandidatesData?.filter(
+          (item) =>
+            item.firstName.toLowerCase().includes(searchValue.toLowerCase()) ||
+            item.email.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setSearch(false);
+    }
+  }, [searchValue]);
+
 
   return (
     <Content>
@@ -280,12 +308,18 @@ export default function RegisteredCandidates({ setCurrentItem }) {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {candidates?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger} />
-            ))}
+            {search ?
+              filteredData?.map((row, index) => (
+                <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger} />
+              ))
+              :
+              candidates?.map((row, index) => (
+                <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger} />
+              ))
+            }
           </TableBody>
         </Table>
-        <div className="paginationBox">
+        {!search && <div className="paginationBox">
           <PaginationSizeFilter
             size={size}
             handleSizeChange={handleSizeChange}
@@ -297,7 +331,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
             handlePageChange={handlePageChange}
             setPage={setPage}
           />
-        </div>
+        </div>}
       </TableContainer>
     </Content>
   );

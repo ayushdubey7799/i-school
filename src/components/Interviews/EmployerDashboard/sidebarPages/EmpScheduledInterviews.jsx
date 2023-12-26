@@ -45,8 +45,12 @@ const EmpScheduledInterviews = ({ setPage }) => {
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
+  const allJdData = useSelector((state) => state?.jd?.activeJds);
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
+  const [search, setSearch] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [finalJds, setFinalJds] = useState([]);
   const [page1, setPage1] = useState(1);
   const [size, setSize] = useState(5);
   const [total, setTotal] = useState(0);
@@ -63,6 +67,10 @@ const EmpScheduledInterviews = ({ setPage }) => {
       setPage1((prev) => prev - 1);
     }
   };
+
+  useEffect(() => {
+    dispatch(getActiveJds(accessToken, clientCode));
+  }, []);
 
   useEffect(() => {
     async function getData() {
@@ -98,6 +106,43 @@ const EmpScheduledInterviews = ({ setPage }) => {
     }
   }, [jdData])
 
+  useEffect(() => {
+    if (allJdData?.length) {
+      const finalResult = allJdData.reduce((acc, it) => {
+        let jdInfoReq = {
+          jdId: it.jdId,
+          numOfReqs: it.numOfReqs,
+          openReqs: it.numOfReqs !== 0 ? it.reqNumbers?.filter((item) => !item.closed)?.length : 0,
+          totalCandidates: it.metrics?.find((item) => item.type == 'TOTAL')?.count,
+          closed: it.metrics?.find((item) => item.type == 'CLOSED')?.count,
+          inProgress: it.metrics?.find((item) => item.type == 'PROGRESS')?.count,
+          firstStage: it.metrics?.find((item) => item.stage == 1)?.count,
+          secondStage: it.metrics?.find((item) => item.stage == 2)?.count,
+          thirdStage: it.metrics?.find((item) => item.stage == 3)?.count,
+        }
+
+        return [...acc, jdInfoReq];
+      }, [])
+
+      setFinalJds(finalResult);
+    }
+  }, [allJdData])
+
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() =>
+        finalJds?.filter(
+          (item) =>
+            item.jdId.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setSearch(false);
+    }
+  }, [searchValue]);
+
+
   const handleSearch = () => {
 
   }
@@ -128,12 +173,19 @@ const EmpScheduledInterviews = ({ setPage }) => {
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {tableRows?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} setPage={setPage} />
-            ))}
+            {
+              search ?
+                filteredData?.map((row, index) => (
+                  <Row key={row.id} row={row} index={index} setPage={setPage} />
+                ))
+                :
+                tableRows?.map((row, index) => (
+                  <Row key={row.id} row={row} index={index} setPage={setPage} />
+                ))
+            }
           </TableBody>
         </Table>
-        <div className="paginationBox">
+        {!search && <div className="paginationBox">
           <PaginationSizeFilter
             size={size}
             handleSizeChange={handleSizeChange}
@@ -145,7 +197,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
             handlePageChange={handlePageChange}
             setPage={setPage1}
           />
-        </div>
+        </div>}
       </TableContainer>
     </Content>
   )
