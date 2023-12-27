@@ -294,6 +294,7 @@ export default function RegisteredCandidates({ setCurrentItem }) {
 
         <SearchBarContainer>
           <TableSearchBar value={searchValue} setValue={setSearchValue} />
+          <span className="title">Total Candidates: {total}</span>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
