@@ -1,11 +1,12 @@
 import React from 'react'
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import styled from 'styled-components';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import ReactQuill from 'react-quill';
 
-const BasicDetails = ({ formData, setFormData, handleEdit }) => {
+const ProjectDetails = ({ formData, setFormData, handleEdit }) => {
 
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
@@ -17,13 +18,13 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
 
   return (
     <Box>
-      <span className='title'>Basic Details</span>
+      <span className='title'>Add Project</span>
 
       <Form>
         <div className="inputBox">
           <TextField
             id="outlined-basic"
-            label="Name"
+            label="Project Name"
             variant="outlined"
             type="text"
             sx={{ backgroundColor: "#F6F6FB" }}
@@ -43,9 +44,10 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
             }}
             fullWidth
           />
+
           <TextField
             id="outlined-basic"
-            label="Designation"
+            label="Role (your role on project)"
             variant="outlined"
             type="text"
             sx={{ backgroundColor: "#F6F6FB" }}
@@ -65,155 +67,82 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
             }}
             fullWidth
           />
+        </div>
+
+        <div className="inputBox">
+          <TextField
+            id="outlined-basic"
+            label="Project URL"
+            variant="outlined"
+            type="url"
+            sx={{ backgroundColor: "#F6F6FB" }}
+            inputProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#626264",
+                fontSize: "0.8rem",
+                fontWeight: "400",
+              },
+            }}
+            fullWidth
+          />
+          <FormControl sx={{ backgroundColor: '#F6F6FB', padding: '0' }} fullWidth>
+            <InputLabel id="demo-simple-select-label">Current Status</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Current Status"
+              size='small'
+              inputProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              sx={{
+                padding: '0rem 0 0.3rem 0',
+              }}
+            >
+              <MenuItem value="ongoing">Ongoing</MenuItem>
+              <MenuItem value="completed">Completed</MenuItem>
+            </Select>
+          </FormControl>
         </div>
 
         <div className='inputBox'>
-          <TextField
-            id="outlined-basic"
-            label="Email"
-            variant="outlined"
-            type="email"
-            sx={{ backgroundColor: "#F6F6FB" }}
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            fullWidth
-          />
-          <TextField
-            id="outlined-basic"
-            label="Contact"
-            variant="outlined"
-            type="tel"
-            sx={{ backgroundColor: "#F6F6FB" }}
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            fullWidth
-          />
-        </div>
-
-        <div className="inputBox">
-          <TextField
-            id="outlined-basic"
-            label="Profile URL"
-            variant="outlined"
-            type="url"
-            sx={{ backgroundColor: "#F6F6FB" }}
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            fullWidth
-          />
-          <TextField
-            id="outlined-basic"
-            label="Portfolio URL"
-            variant="outlined"
-            type="url"
-            sx={{ backgroundColor: "#F6F6FB" }}
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            fullWidth
-          />
-        </div>
-        <div className="inputBox">
-          <TextField
-            id="outlined-basic"
-            label="LinkedIn Profile URL"
-            variant="outlined"
-            type="url"
-            sx={{ backgroundColor: "#F6F6FB" }}
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            fullWidth
-          />
-          <TextField
-            id="outlined-basic"
-            label="Github Profile URL"
-            variant="outlined"
-            type="url"
-            sx={{ backgroundColor: "#F6F6FB" }}
-            inputProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#626264",
-                fontSize: "0.8rem",
-                fontWeight: "400",
-              },
-            }}
-            fullWidth
-          />
-        </div>
-
-        <div className='inputBox' style={{ width: 'calc(50% - 1rem)' }}>
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="Date of Birth" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="Start Date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
             </DemoContainer>
           </LocalizationProvider>
 
+
+          <LocalizationProvider dateAdapter={AdapterDayjs} >
+            <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
+              <DatePicker label="End date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
+
+        <div className="textAreaBox">
+          <label className="textAreaLabel">
+            Description
+          </label>
+          <ReactQuill theme="snow" className="textEditor" />
         </div>
 
         <Button onClick={handleEdit}>Save Changes</Button>
@@ -222,7 +151,7 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
   )
 }
 
-export default BasicDetails
+export default ProjectDetails
 
 const Box = styled.div`
   width: 100%;
@@ -252,6 +181,21 @@ display: flex;
     gap: 2rem;
     margin-bottom: 1rem;
   }
+
+  .textAreaBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    .textEditor {
+      background-color: #F6F6FB;
+     }
+
+    .textAreaLabel {
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+}
 
   @media (max-width: 2000px) {
     #outlined-basic {
