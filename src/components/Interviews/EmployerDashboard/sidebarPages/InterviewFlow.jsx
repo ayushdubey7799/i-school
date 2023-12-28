@@ -22,6 +22,9 @@ import EmpCommonButton from "../commonComponents/EmpCommonButton";
 import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 import { updateTrackers } from "../../../../functions/api/employers/tracker/updateTrackers";
 import { toast } from "react-toastify";
+import filterIcon from '../../../../assets/icons/filter.png'
+
+
 function Row(props) {
   const { row, rowsLength, index, handleSelectArray, filterParams, updateTrigger } = props;
 
@@ -57,6 +60,8 @@ function Row(props) {
     }
     setSelected((prev) => !prev);
   };
+
+
 
   useEffect(() => {
     const handleDocumentClick = (event) => {
@@ -122,6 +127,8 @@ const InterviewFlow = ({ setPage }) => {
   const [filterParams, setFilterParams] = useState('COMPLETED');
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [selectedArray, setSelectedArray] = useState([]);
   const [updateTrigger, setUpdateTrigger] = useState(false);
@@ -133,6 +140,25 @@ const InterviewFlow = ({ setPage }) => {
   const [page1, setPage1] = useState(1);
   const [size, setSize] = useState(5);
   const [total, setTotal] = useState(0);
+
+  const filterRef = useRef(null);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [jdSet, setJdSet] = useState([]);
+  const [filteredJdId, setFilteredJdId] = useState('');
+
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
+    };
+  }, []);
 
   const handleSizeChange = (event) => {
     setSize(parseInt(event.target.value, 10));
@@ -163,8 +189,20 @@ const InterviewFlow = ({ setPage }) => {
   console.log(selectedArray);
 
   useEffect(() => {
+    const getAllData = async () => {
+      const res = await getAllTrackers(accessToken, clientCode, 1, 10000, "", "");
+      let allTrackers = res?.data?.data;
+
+      const uniqueSet = new Set(allTrackers.map(item => item.jdId));
+      setJdSet([...uniqueSet]);
+    }
+
+    getAllData()
+  }, []);
+
+  useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken, clientCode, search ? 1 : page1, search ? 10000 : size, "", filterParams);
+      const res = await getAllTrackers(accessToken, clientCode, search ? 1 : page1, search ? 10000 : size, filteredJdId === 'all' ? "" : filteredJdId, filterParams);
       let array = res?.data?.data;
       if (array) {
         const finalResult = array.reduce((acc, it) => {
@@ -191,9 +229,8 @@ const InterviewFlow = ({ setPage }) => {
     }
 
     getData();
-  }, [page1, size, filterParams, search])
+  }, [page1, size, filterParams, search, filteredJdId])
 
-  console.log(allInterviews);
 
   useEffect(() => {
     if (searchValue?.trim()) {
@@ -232,6 +269,13 @@ const InterviewFlow = ({ setPage }) => {
     }
   }
 
+
+  const handleMoveNextRound = () => {
+    const resumeIds = selectedArray?.filter(item => item.jdId == selectedArray[0]?.jdId)?.map(item => item.resumeId);
+    dispatch(addResumes([...resumeIds, selectedArray[0]?.jdId]));
+    navigate(`/schedule/invite/${selectedArray[0]?.jdId}`);
+  }
+
   const filterArr = [
     { value: "COMPLETED", text: "Completed" },
     { value: "SCHEDULED", text: "Scheduled" },
@@ -255,7 +299,33 @@ const InterviewFlow = ({ setPage }) => {
             <TableRow>
               <TableCell align="center" className="tableCell">Name</TableCell>
               <TableCell align="center" className="tableCell">Contact</TableCell>
-              <TableCell align="center" className="tableCell">JD ID</TableCell>
+              <TableCell align="center" className="tableCell flexCell">JD ID
+                <img src={filterIcon} className={`icon ${filterOpen == true ? "active" : ""}`}
+                  onClick={() => setFilterOpen(!filterOpen)} />
+                <div className={`filterBox ${filterOpen ? "open" : ""}`} ref={filterRef}>
+                  <div className="checkboxInput">
+                    <input
+                      type="radio"
+                      value='all'
+                      checked={filteredJdId === 'all'}
+                      onChange={() => setFilteredJdId('all')}
+                      id="all"
+                    />
+                    <label htmlFor="all">ALL</label>
+                  </div>
+                  {jdSet.map((jd, i) => (
+                    <div className="checkboxInput">
+                      <input
+                        type="radio"
+                        value={jd}
+                        checked={filteredJdId === jd}
+                        onChange={() => setFilteredJdId(jd)}
+                        id={jd} />
+                      <label htmlFor={jd}>{jd?.toUpperCase()}</label>
+                    </div>
+                  ))}
+                </div>
+              </TableCell>
               <TableCell align="center" className="tableCell">Recruiter</TableCell>
               <TableCell align="center" className="tableCell">Hiring Manager</TableCell>
               <TableCell align="center" className="tableCell">Current Round</TableCell>
@@ -293,6 +363,7 @@ const InterviewFlow = ({ setPage }) => {
       <div className="btnBox">
         {selectedArray.length > 0 && <EmpCommonButton text='Put on Hold' func={() => handleTrackerUpdate('HOLD')} />}
         {selectedArray.length > 0 && <EmpCommonButton text='Move out from Interview' func={() => handleTrackerUpdate('NOT_SELECTED')} />}
+        {(selectedArray.length > 0 && filterParams == 'COMPLETED') && <EmpCommonButton text='Move to next Round' func={() => handleMoveNextRound()} />}
       </div>
     </Content>
   )
@@ -342,6 +413,7 @@ align-items: center;
   margin-bottom: 1.5rem;
 
 
+
   .title {
     padding-left: 1.2rem;
     font-size: 0.9rem;
@@ -386,6 +458,75 @@ align-items: center;
 .tableHead {
   background-color: #d1fff0;
   width: 100%;
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  } 
+
+  .flexCell {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    position: relative;
+  }
+
+  .filterBox {
+    position: absolute;
+    left: 75%;
+    top: -1rem;
+    display: none;
+    background-color: var(--white);
+    border: 0.075rem solid grey;
+    border-radius: 0.3rem;
+    height: 7rem;
+    overflow-y: auto;
+    padding: 1rem 0;
+    z-index: 100;
+
+    .checkboxInput {
+      display: flex;
+      padding: 0.2rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      align-items: start;
+      gap: 0.3rem;
+    }
+
+    input {
+      height: 1rem;
+      cursor: pointer;
+    }
+
+    label {
+      cursor: pointer;
+    }
+
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+  }
+  
+    &::-webkit-scrollbar-track {
+      background: lightgrey;
+      border-radius: 0.4rem;
+  }
+  
+    &::-webkit-scrollbar-thumb {
+      background: grey;
+      width: 0.4rem;
+      border-radius: 0.4rem;
+  }
+  
+  & {
+    scrollbar-width: none;
+  } 
+  }
+
+  .filterBox.open {
+    display: block;
+  }
+
 
   .tableCell {
     font-size: 0.9rem;
