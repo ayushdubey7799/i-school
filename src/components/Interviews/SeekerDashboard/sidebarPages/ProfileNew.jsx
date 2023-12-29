@@ -160,13 +160,13 @@ const ProfileNew = () => {
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.experience.map((exp, index) => (
+                        userProfileData?.employments?.map((exp, index) => (
                             <div className='card'>
-                                <span className='title'>{exp.company} | {exp.title}</span>
-                                <span className='subTitle'>{exp.location}</span>
-                                <span className='text'>{exp.date.split('-')[0]}-{exp.date.split('-')[1]}</span>
+                                <span className='title'>{exp?.orgName} | {exp?.designation}</span>
+                                <span className='subTitle'>{exp?.employmentType}</span>
+                                <span className='text'>{exp?.startDate} to {exp?.endDate}</span>
                                 <div className='skillBox'>{
-                                    exp.skillsUsed.map((skill) => (
+                                    exp?.skillsUsed?.split(',')?.map((skill) => (
                                         <span className='skill'>{skill}</span>
                                     ))
                                 }</div>
@@ -183,11 +183,11 @@ const ProfileNew = () => {
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.certifications.map((cert, index) => (
+                        userProfileData?.certifications2?.map((cert, index) => (
                             <div className='card'>
-                                <span className='title'>{cert.title}</span>
-                                <span className='subTitle'>{cert.organization}</span>
-                                <span className='text'>Issued {cert.date} to {cert.expirationDate}</span>
+                                <span className='title'>{cert?.title}</span>
+                                <span className='subTitle'>{cert?.issuingOrganization}</span>
+                                <span className='text'>Issued {cert?.issueDate} to {cert?.expirationDate}</span>
 
                                 <button>Verify Certificate</button>
                             </div>
