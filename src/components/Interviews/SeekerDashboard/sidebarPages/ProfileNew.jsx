@@ -9,13 +9,30 @@ import addIcon from '../../../../assets/icons/addIcon.png'
 import editIcon from '../../../../assets/icons/editBlack.png'
 import shareIcon from '../../../../assets/icons/share.png'
 import Rating from '@mui/material/Rating';
+import BasicDetails from '../profileForms/BasicDetails';
+import ModalHOC from '../ModalHOC';
+import SkillDetails from '../profileForms/SkillDetails';
+import EducationDetails from '../profileForms/EducationDetails';
+import ProjectDetails from '../profileForms/ProjectDetails';
+import EmploymentDetails from '../profileForms/EmploymentDetails';
+import CertificationDetails from '../profileForms/CertificationDetails';
 
 const ProfileNew = () => {
 
     // const [profileData, setProfileData] = useState();
 
-    const [resumeArr, setResumeArr] = useState([]);
+    const [openBasicDetails, setOpenBasicDetails] = useState(false);
+    const [openSkills, setOpenSkills] = useState(false);
+    const [openEducations, setOpenEducations] = useState(false);
+    const [openProjects, setOpenProjects] = useState(false);
+    const [openEmployments, setOpenEmployments] = useState(false);
+    const [openCertifications, setOpenCertifications] = useState(false);
 
+    const handleEdit = () => {
+
+    }
+
+    const [resumeArr, setResumeArr] = useState([]);
     const [resumeFile, setResumeFile] = useState([]);
 
     const handleFileChange = (e) => {
@@ -29,6 +46,13 @@ const ProfileNew = () => {
 
     return (
         <Box>
+            <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails handleEdit={handleEdit} />} />
+
             <div className='topBox'>
                 <img src={profileData.personalInfo.img} className='profileImg' />
                 <div className='middleBox'>
@@ -46,7 +70,7 @@ const ProfileNew = () => {
                 </div>
                 <div className='editBox'>
                     <span className='editBtn'><img src={shareIcon} /></span>
-                    <span className='editBtn'><img src={editIcon} /></span>
+                    <span className='editBtn' onClick={() => setOpenBasicDetails(true)}><img src={editIcon} /></span>
                 </div>
             </div>
 
@@ -54,7 +78,7 @@ const ProfileNew = () => {
             <div className='skillsMainBox'>
                 <span className='mainTitle'>
                     <span>Skills</span>
-                    {profileData.skills.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenSkills(true)}>Edit Skills</button>
                 </span>
                 <span className='title'>Add top 5 skills here to increase your chances of getting shortlisted.</span>
                 <div className='cardBox'>
@@ -62,7 +86,7 @@ const ProfileNew = () => {
                         profileData.skills.map((skill, index) => (
                             <div className='card'>
                                 <span className='skill'>{skill.name}</span>
-                                <Rating name="read-only" value={skill.score} readOnly className='score'/>
+                                <Rating name="read-only" value={skill.score} readOnly className='score' />
                                 {/* <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span> */}
                                 <button className='btn'>Take Assessment</button>
                             </div>
@@ -75,7 +99,7 @@ const ProfileNew = () => {
             <div className='educationBox'>
                 <span className='mainTitle'>
                     <span>Education</span>
-                    {profileData.education.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenEducations(true)}>Add New</button>
                 </span>
                 <div className='cardBox'>
                     {
@@ -94,7 +118,7 @@ const ProfileNew = () => {
             <div className='projectBox'>
                 <span className='mainTitle'>
                     <span>Projects</span>
-                    {profileData.projects.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenProjects(true)}>Add New</button>
                 </span>
                 <div className='cardBox'>
                     {
@@ -117,7 +141,7 @@ const ProfileNew = () => {
             <div className='experienceBox'>
                 <span className='mainTitle'>
                     <span>Employment</span>
-                    {profileData.experience.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenEmployments(true)}>Add New</button>
                 </span>
                 <div className='cardBox'>
                     {
@@ -140,7 +164,7 @@ const ProfileNew = () => {
             <div className='certificationBox'>
                 <span className='mainTitle'>
                     <span>Certifications</span>
-                    {profileData.certifications.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenCertifications(true)}>Add New</button>
                 </span>
                 <div className='cardBox'>
                     {

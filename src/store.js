@@ -13,8 +13,6 @@ const persistConfig = {
 };
 
 
-
-
 const rootReducer = combineReducers({
     auth: authReducer,
     interview: interviewReducer,
