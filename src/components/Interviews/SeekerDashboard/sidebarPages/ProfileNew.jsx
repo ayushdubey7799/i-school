@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { profileData } from '../../../../utils/contantData';
 import linkedin from '../../../../assets/icons/linkedinBlack.png'
@@ -16,6 +16,8 @@ import EducationDetails from '../profileForms/EducationDetails';
 import ProjectDetails from '../profileForms/ProjectDetails';
 import EmploymentDetails from '../profileForms/EmploymentDetails';
 import CertificationDetails from '../profileForms/CertificationDetails';
+import { getProfile } from '../../../../functions/api/jobSeekers/getProfile';
+import { useSelector } from 'react-redux';
 
 const ProfileNew = () => {
 
@@ -27,6 +29,8 @@ const ProfileNew = () => {
     const [openProjects, setOpenProjects] = useState(false);
     const [openEmployments, setOpenEmployments] = useState(false);
     const [openCertifications, setOpenCertifications] = useState(false);
+
+    const [userProfileData, setUserProfileData] = useState();
 
     const handleEdit = () => {
 
@@ -44,6 +48,20 @@ const ProfileNew = () => {
         }
     };
 
+    const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+    const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+    const userBasicDetails = useSelector((state) => state.auth.userData?.user);
+
+
+    useEffect(() => {
+        const getProfileData = async () => {
+            const res = await getProfile(profileId, accessToken);
+            setUserProfileData(res?.data);
+        }
+        getProfileData();
+    }, [])
+
+
     return (
         <Box>
             <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails handleEdit={handleEdit} />} />
@@ -56,11 +74,11 @@ const ProfileNew = () => {
             <div className='topBox'>
                 <img src={profileData.personalInfo.img} className='profileImg' />
                 <div className='middleBox'>
-                    <span className='name'>{profileData.personalInfo.name}</span>
+                    <span className='name'>{userBasicDetails?.firstName}</span>
                     <div className='infoBox'>
                         <div className='infoBox1'>
-                            <span className='text'><img src={callIcon} />{profileData.personalInfo.phone}</span>
-                            <span className='text'><img src={emailIcon} />{profileData.personalInfo.email}</span>
+                            <span className='text'><img src={callIcon} />{userBasicDetails?.primaryContact}</span>
+                            <span className='text'><img src={emailIcon} />{userBasicDetails?.email}</span>
                         </div>
                         <div className='infoBox2'>
                             <a href={profileData.personalInfo.linkedin}><img src={linkedin} className='socialIcon' />{profileData.personalInfo.linkedin.slice(0, 35)}</a>
@@ -83,10 +101,10 @@ const ProfileNew = () => {
                 <span className='title'>Add top 5 skills here to increase your chances of getting shortlisted.</span>
                 <div className='cardBox'>
                     {
-                        profileData.skills.map((skill, index) => (
+                        userProfileData?.skills?.map((skill, index) => (
                             <div className='card'>
-                                <span className='skill'>{skill.name}</span>
-                                <Rating name="read-only" value={skill.score} readOnly className='score' />
+                                <span className='skill'>{skill?.name}</span>
+                                <Rating name="read-only" value={skill?.rating} readOnly className='score' />
                                 {/* <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span> */}
                                 <button className='btn'>Take Assessment</button>
                             </div>
@@ -103,11 +121,12 @@ const ProfileNew = () => {
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.education.map((edu, index) => (
+                        userProfileData?.educations?.map((edu, index) => (
                             <div className='card'>
-                                <span className='title'>{edu.degree}</span>
-                                <span className='subTitle'>{edu.university}</span>
-                                <span className='text'>{edu.year.split('-')[0]}-{edu.year.split('-')[1]} | {edu.courseType}</span>
+                                <span className='title'>{edu?.degree}</span>
+                                <span className='subTitle'>{edu?.school}</span>
+                                <span className='text'>{edu?.startDate} to {edu?.endDate} | {edu?.courseType}</span>
+                                <span className='text'>{edu?.grade} {edu?.gradeType}</span>
                             </div>
                         ))
                     }
@@ -122,15 +141,11 @@ const ProfileNew = () => {
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.projects.map((project, index) => (
+                        userProfileData?.projects?.map((project, index) => (
                             <div className='card'>
-                                <span className='title'>{project.title}</span>
-                                <span className='text'>{project.date.split('-')[0]}-{project.date.split('-')[1]} | {project.status}</span>
-                                <ul className='subTitle'>{
-                                    project.description.map((desc) => (
-                                        <li className='list'>{desc}</li>
-                                    ))
-                                }</ul>
+                                <span className='title'>{project?.title}</span>
+                                <span className='text'>{project?.startDate} to {project?.endDate} | {project?.status}</span>
+                                <span className='desc'>{project?.description}</span>
                             </div>
                         ))
                     }
@@ -528,15 +543,8 @@ align-items: center;
             font-weight: 400;
         }
 
-        .subTitle {
-            display: flex;
-            flex-direction: column;
-            margin: 0rem;
-            gap: 0.2rem;
-
-            .list {
-                font-size: 0.8rem;
-            }
+        .desc {
+            font-size: 0.85rem;
         }
     }
 }
