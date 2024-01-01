@@ -1,15 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { toast } from 'react-toastify';
+import { getMappings } from '../../functions/api/employers/agency/getMapping';
+import { useSelector } from 'react-redux';
 
-const agencies = ['agency1', 'agency2', 'agency3', 'agency4', 'agency5', 'agency6']
 
 const AgencyShareDialogContent = ({ handleClose }) => {
     const [selectedAgency, setSelectedAgency] = useState('');
+    const [mapped,setMapped] = useState([]);
+    
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+
+    useEffect(() => {
+        const getData  = async () => {
+            const res = await getMappings(accessToken,clientCode);
+            console.log(res);
+            if(res)setMapped(res?.data);
+        }
+        getData();
+    },[]);
 
     const handleShare = () => {
         toast.success(`Shared with ${selectedAgency}`);
@@ -29,8 +44,8 @@ const AgencyShareDialogContent = ({ handleClose }) => {
                     onChange={(e) => setSelectedAgency(e.target.value)}
                 >
                     {
-                        agencies.map((agency, i) => (
-                            <MenuItem value={agency}>{agency}</MenuItem>
+                        mapped.map((item, i) => (
+                            <MenuItem value={item.agencyName}>{item.agencyName}</MenuItem>
                         ))
                     }
                 </Select>
