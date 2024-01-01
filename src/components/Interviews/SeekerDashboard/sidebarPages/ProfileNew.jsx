@@ -64,12 +64,12 @@ const ProfileNew = () => {
 
     return (
         <Box>
-            <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails handleEdit={handleEdit} />} />
-            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails handleEdit={handleEdit} />} />
-            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails handleEdit={handleEdit} />} />
-            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails handleEdit={handleEdit} />} />
-            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails handleEdit={handleEdit} />} />
-            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails handleEdit={handleEdit} />} />
+            <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails />} />
+            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails data={userProfileData?.skills} />} />
+            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails data={userProfileData?.educations} />} />
+            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails />} data={userProfileData?.projects} />
+            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails data={userProfileData?.employments} />} />
+            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={userProfileData?.certifications2} />} />
 
             <div className='topBox'>
                 <img src={profileData.personalInfo.img} className='profileImg' />
@@ -96,7 +96,7 @@ const ProfileNew = () => {
             <div className='skillsMainBox'>
                 <span className='mainTitle'>
                     <span>Skills</span>
-                    <button onClick={() => setOpenSkills(true)}>Edit Skills</button>
+                    <button onClick={() => setOpenSkills(true)}>{userProfileData?.skills?.length > 0 ? 'Edit Skills' : 'Add Skills'}</button>
                 </span>
                 <span className='title'>Add top 5 skills here to increase your chances of getting shortlisted.</span>
                 <div className='cardBox'>
@@ -117,7 +117,7 @@ const ProfileNew = () => {
             <div className='educationBox'>
                 <span className='mainTitle'>
                     <span>Education</span>
-                    <button onClick={() => setOpenEducations(true)}>Add New</button>
+                    <button onClick={() => setOpenEducations(true)}>{userProfileData?.educations?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
@@ -137,7 +137,7 @@ const ProfileNew = () => {
             <div className='projectBox'>
                 <span className='mainTitle'>
                     <span>Projects</span>
-                    <button onClick={() => setOpenProjects(true)}>Add New</button>
+                    <button onClick={() => setOpenProjects(true)}>{userProfileData?.projects?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
@@ -156,7 +156,7 @@ const ProfileNew = () => {
             <div className='experienceBox'>
                 <span className='mainTitle'>
                     <span>Employment</span>
-                    <button onClick={() => setOpenEmployments(true)}>Add New</button>
+                    <button onClick={() => setOpenEmployments(true)}>{userProfileData?.employments?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
@@ -179,7 +179,7 @@ const ProfileNew = () => {
             <div className='certificationBox'>
                 <span className='mainTitle'>
                     <span>Certifications</span>
-                    <button onClick={() => setOpenCertifications(true)}>Add New</button>
+                    <button onClick={() => setOpenCertifications(true)}>{userProfileData?.certifications2?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {

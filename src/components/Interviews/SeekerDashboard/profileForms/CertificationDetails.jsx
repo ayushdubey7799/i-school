@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useSelector } from 'react-redux';
 
-const CertificationDetails = ({ formData, setFormData, handleEdit }) => {
+const CertificationDetails = ({ data }) => {
 
-    // const handleChange = (e) => {
-    //   const { name, value } = e.target;
-    //   setFormData({
-    //     ...formData,
-    //     [name]: value,
-    //   });
-    // };
+    const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+    const [formData, setFormData] = useState();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
 
     return (
         <Box>
@@ -129,7 +133,7 @@ const CertificationDetails = ({ formData, setFormData, handleEdit }) => {
                     </LocalizationProvider>
                 </div>
 
-                <Button onClick={handleEdit}>Save Changes</Button>
+                <Button>Save Changes</Button>
             </Form>
         </Box>
     )

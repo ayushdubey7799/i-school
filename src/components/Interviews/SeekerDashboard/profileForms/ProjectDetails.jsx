@@ -6,15 +6,18 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import ReactQuill from 'react-quill';
 
-const ProjectDetails = ({ formData, setFormData, handleEdit }) => {
+const ProjectDetails = ({ data }) => {
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
+  const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+  const [formData, setFormData] = useState();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   return (
     <Box>
@@ -27,6 +30,8 @@ const ProjectDetails = ({ formData, setFormData, handleEdit }) => {
             label="Project Name"
             variant="outlined"
             type="text"
+            name="title"
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -50,6 +55,8 @@ const ProjectDetails = ({ formData, setFormData, handleEdit }) => {
             label="Role (your role on project)"
             variant="outlined"
             type="text"
+            name="role"
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -75,6 +82,8 @@ const ProjectDetails = ({ formData, setFormData, handleEdit }) => {
             label="Project URL"
             variant="outlined"
             type="url"
+            name="projectUrl"
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -99,6 +108,8 @@ const ProjectDetails = ({ formData, setFormData, handleEdit }) => {
               id="demo-simple-select"
               label="Current Status"
               size='small'
+              name="status"
+              onChange={handleChange}
               inputProps={{
                 sx: {
                   color: '#626264',
@@ -145,7 +156,7 @@ const ProjectDetails = ({ formData, setFormData, handleEdit }) => {
           <ReactQuill theme="snow" className="textEditor" />
         </div>
 
-        <Button onClick={handleEdit}>Save Changes</Button>
+        <Button>Save Changes</Button>
       </Form>
     </Box>
   )

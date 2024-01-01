@@ -82,6 +82,13 @@ function Row(props) {
     right: false,
   });
 
+  // state to open and close Drawer
+  const [agencyState, setAgencyState] = React.useState({
+    right: false,
+  });
+
+
+
   const handleEdit = (row) => {
     setEditOpen(true);
     setJdData(row);
@@ -164,6 +171,19 @@ function Row(props) {
     setReqState({ ...reqState, [anchor]: open });
   };
 
+  //function to open and close Drawer
+  const toggleAgencyDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setAgencyState({ ...agencyState, [anchor]: open });
+  };
+
+
+
   const openDropdown = (index) => {
     setOpenDropdownIndex(index);
   };
@@ -213,6 +233,12 @@ function Row(props) {
             setSavedPopup={setSavedPopup}
           />
         }
+      />
+
+      <CommonDrawer
+        toggleDrawer={toggleAgencyDrawer}
+        state={agencyState}
+        component={<div>Agency List</div>}
       />
       {errorPopup && (
         <Error
@@ -303,9 +329,9 @@ function Row(props) {
         {userRole === 'ROLE_AGENCY' && <TableCell component="th" scope="row" align="center" className="tableCell" style={{ display: 'flex', justifyContent: 'center' }}>
           <button className="btn1"><img src={uploadIcon} className="icon" /></button>
         </TableCell>}
-        {/* <TableCell component="th" scope="row" align="center">
-          ...
-        </TableCell> */}
+        <TableCell component="th" scope="row" align="center" onClick={toggleAgencyDrawer("right", true)}>
+          <img src={eyeIcon} className="threeDotIcon" />
+        </TableCell>
         <TableCell
           component="th"
           scope="row"
@@ -538,6 +564,9 @@ const ActiveJds = () => {
                 <TableCell align="center" className="tableCell">
                   Hiring Manager
                 </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Agencies
+                </TableCell>
                 {userRole === 'ROLE_AGENCY' && <TableCell align="center" className="tableCell">
                   JD Source
                 </TableCell>}
@@ -732,6 +761,15 @@ const Container1 = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+
+  .threeDotIcon {
+    width: 0.6rem;
+    height: 0.6rem;
+    cursor: pointer;
+    border: 0.08rem solid grey;
+    padding: 0.15rem;
+    border-radius: 0.2rem;
+  }
 `;
 
 const SearchBarContainer = styled.div`
