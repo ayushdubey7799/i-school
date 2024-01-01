@@ -31,6 +31,61 @@ import DeactivateDialogContent from "../../../commonComponents/DeactivateDialogC
 import { formatRole } from "../../../../utils/globalFunctions";
 import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 import ManageAgencyForm from "../ManageAgencyForm";
+import { getMappings } from "../../../../functions/api/employers/agency/getMapping";
+
+const total = [
+  {
+    clientCode: 'C001',
+    companyName: 'ABC Corporation',
+    companyLogo: 'https://example.com/logos/abc-logo.png'
+  },
+  {
+    clientCode: 'C002',
+    companyName: 'XYZ Ltd.',
+    companyLogo: 'https://example.com/logos/xyz-logo.png'
+  },
+  {
+    clientCode: 'C003',
+    companyName: 'PQR Enterprises',
+    companyLogo: 'https://example.com/logos/pqr-logo.png'
+  },
+  {
+    clientCode: 'C004',
+    companyName: 'LMN Innovations',
+    companyLogo: 'https://example.com/logos/lmn-logo.png'
+  },
+  {
+    clientCode: 'C005',
+    companyName: 'EFG Solutions',
+    companyLogo: 'https://example.com/logos/efg-logo.png'
+  },
+  {
+    clientCode: 'C006',
+    companyName: 'JKL Technologies',
+    companyLogo: 'https://example.com/logos/jkl-logo.png'
+  },
+  {
+    clientCode: 'C007',
+    companyName: 'RST Systems',
+    companyLogo: 'https://example.com/logos/rst-logo.png'
+  },
+  {
+    clientCode: 'C008',
+    companyName: 'UVW Innovations',
+    companyLogo: 'https://example.com/logos/uvw-logo.png'
+  },
+  {
+    clientCode: 'C009',
+    companyName: 'MNO Solutions',
+    companyLogo: 'https://example.com/logos/mno-logo.png'
+  },
+  {
+    clientCode: 'C010',
+    companyName: 'GHI Corporation',
+    companyLogo: 'https://example.com/logos/ghi-logo.png'
+
+  }];
+
 
 function Row(props) {
     const { row, index } = props;
@@ -43,11 +98,11 @@ function Row(props) {
                 className={`${index % 2 == 1 ? "colored" : ""}`}
             >
                 <TableCell component="th" scope="row" align="center" className="tableCell">
-                    ...
+                    {row.agencyName}
                 </TableCell>
-                <TableCell align="center" className="tableCell">...</TableCell>
-                <TableCell align="center" className="tableCell">...</TableCell>
-                <TableCell align="center" className="tableCell">...</TableCell>
+                <TableCell align="center" className="tableCell">{row.agencySpocName}</TableCell>
+                <TableCell align="center" className="tableCell">{row.agencySpocEmail}</TableCell>
+                <TableCell align="center" className="tableCell">{row.agencySpocContact}</TableCell>
             </TableRow>
         </React.Fragment>
     );
@@ -57,29 +112,54 @@ function Row(props) {
 
 export default function ManageAgencies() {
     const [openBasic, setOpenBasic] = useState(false);
-    const [users, setUsers] = useState([]);
+    const [mapped, setMapped] = useState([]);
 
     const accessToken = useSelector(state => state.auth.userData?.accessToken);
     const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
     const [userTrigger, setUserTrigger] = useState(false);
 
-    const [page, setPage] = useState(1);
-    const [size, setSize] = useState(5);
-    const [total, setTotal] = useState(0);
+    // const [page, setPage] = useState(1);
+    // const [size, setSize] = useState(5);
+    // const [total, setTotal] = useState(0);
 
-    const handleSizeChange = (event) => {
-        setSize(parseInt(event.target.value, 10));
-        setPage(1);
-    };
+    // const handleSizeChange = (event) => {
+    //     setSize(parseInt(event.target.value, 10));
+    //     setPage(1);
+    // };
 
-    const handlePageChange = (change) => {
-        if (change && page < Math.ceil(+total / +size)) {
-            setPage((prev) => prev + 1);
-        } else if (!change && page > 1) {
-            setPage((prev) => prev - 1);
+    // const handlePageChange = (change) => {
+    //     if (change && page < Math.ceil(+total / +size)) {
+    //         setPage((prev) => prev + 1);
+    //     } else if (!change && page > 1) {
+    //         setPage((prev) => prev - 1);
+    //     }
+    // };
+
+    useEffect(() => {
+      const remainingAgencies = JSON.parse(localStorage.getItem(clientCode+"all"));
+      const mappedAgencies = JSON.parse(localStorage.getItem(clientCode+"mapped"));
+
+      if(!remainingAgencies?.length){
+         localStorage.setItem(clientCode+"all",JSON.stringify(total));
+      }
+
+      if(!mappedAgencies?.length){
+        localStorage.setItem(clientCode+"mapped",JSON.stringify([]));
+      }
+      else{
+        setMapped(mappedAgencies);
+      }
+    },[])
+
+    useEffect(() => {
+        const getData = async () => {
+          const res = await getMappings(accessToken,clientCode);
+          console.log("Mapped Agencies",res);
+          if(res)setMapped(res?.data);
         }
-    };
+        getData();
+    },[])
 
 
     return (
@@ -108,12 +188,12 @@ export default function ManageAgencies() {
                         </TableRow>
                     </TableHead>
                     <TableBody className="tableBody">
-                        {users?.map((row, index) => (
+                        {mapped?.map((row, index) => (
                             <Row key={row.id} row={row} index={index} />
                         ))}
                     </TableBody>
                 </Table>
-                <div className="paginationBox">
+                {/* <div className="paginationBox">
                     <PaginationSizeFilter
                         size={size}
                         handleSizeChange={handleSizeChange}
@@ -125,7 +205,7 @@ export default function ManageAgencies() {
                         handlePageChange={handlePageChange}
                         setPage={setPage}
                     />
-                </div>
+                </div> */}
             </TableContainer>
         </StyledDiv>
     );

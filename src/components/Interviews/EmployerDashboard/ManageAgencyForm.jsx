@@ -6,6 +6,9 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { addMapping } from '../../../functions/api/employers/agency/addMapping';
+import { useSelector } from 'react-redux';
+import { getAgencies } from '../../../functions/api/employers/agency/getAgencies';
 
 
 const Container = styled.div`
@@ -94,8 +97,10 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-function ManageAgencyForm({ array }) {
+function ManageAgencyForm({ array,handleClose }) {
     const [mode, setMode] = useState(array[1]);
+    const [agencies,setAgencies] = useState([]);
+    const [trigger,setTrigger] = useState(false);
     const [formData, setFormData] = useState({
         agencyCode: '',
         agencySpocName: '',
@@ -103,6 +108,17 @@ function ManageAgencyForm({ array }) {
         agencySpocContact: '',
     });
 
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+    useEffect(() => {
+      const getData = async () => {
+        const res = await getAgencies(accessToken,clientCode);
+        console.log(res);
+        if(res)setAgencies(res?.data?.data);
+      }
+      getData();
+    },[trigger])
 
     useEffect(() => {
         if (array[0]) {
@@ -120,10 +136,13 @@ function ManageAgencyForm({ array }) {
     };
 
     const handleSubmit = async (e) => {
+        const res = await addMapping(formData,accessToken,clientCode);
+        console.log("========>>>>>>>",res);
+        setTrigger(prev => !prev);
+        handleClose();
         e.preventDefault();
 
     };
-
 
     return (
         <Container>
@@ -160,9 +179,11 @@ function ManageAgencyForm({ array }) {
                                     padding: '0rem 0 0.6rem 0',
                                 }}
                             >
-                                <MenuItem value="ag1">Agency 1</MenuItem>
-                                <MenuItem value="ag2">Agency 2</MenuItem>
-                                <MenuItem value="ag3">Agency 3</MenuItem>
+                                {
+                                    agencies?.map((item) => {
+                                        return <MenuItem value={item.clientCode}>{item.companyName}</MenuItem>
+                                    })
+                                }
                             </Select>
                         </FormControl>
                     </div>
