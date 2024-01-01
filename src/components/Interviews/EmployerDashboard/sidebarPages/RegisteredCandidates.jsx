@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
-import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import deleteIcon from "../../../../assets/icons/delete.png";
 import searchBlack from "../../../../assets/icons/searchBlack.png";
 import visibleIcon from "../../../../assets/icons/visible.png";
@@ -17,14 +16,16 @@ import { useSelector } from "react-redux";
 import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
-import { toast } from "react-toastify";
 import { deleteCandidate } from "../../../../functions/api/resume/deleteCandidate";
 import Deleted from "../../../commonComponents/infoDialog/Deleted";
 import Error from "../../../commonComponents/infoDialog/Error";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
+import TableSearchBar from "../commonComponents/TableSearchBar";
+import { dateConversion } from "../../../../utils/timeZoneConversation";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, index, candidateTrigger, setCandidateTrigger } = props;
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
@@ -55,7 +56,6 @@ function Row(props) {
       }
     } catch (error) {
       // Handle network errors or unexpected issues
-      console.log("Abhi");
       const errMsg =
         error.response.data.notify.message ||
         "An error occurred. Please try again.";
@@ -90,24 +90,19 @@ function Row(props) {
     setState({ ...state, [anchor]: open });
   };
 
-  {
-    errorMsg && console.log(errorMsg);
-  }
-
   const handleDownload = async (id, name) => {
     const res = await getBlobData(
       `api/media/downloadById?fileType=resume&id=${id}`,
       accessToken,
       clientCode
     );
-    console.log(res);
     const a = document.createElement("a");
     a.href = res;
     a.setAttribute("download", name);
     a.click();
   };
 
-  console.log(row);
+
   return (
     <React.Fragment>
       {errorPopup && (
@@ -120,7 +115,10 @@ function Row(props) {
       )}
       {deletePopup && (
         <Deleted
-          handleClose={handleDeletePopUpClose}
+          handleClose={() => {
+            handleDeletePopUpClose()
+            setCandidateTrigger(!candidateTrigger)
+          }}
           open={deletePopup}
           msg="Candidate successfully deleted"
         />
@@ -129,12 +127,12 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
-        <TableCell align="center">
+        <TableCell align="center" className="tableCell">
           {row.firstName ? row.firstName : "..."}
         </TableCell>
-        <TableCell align="center">{row.email ? row.email : "..."}</TableCell>
-        <TableCell align="center">{row.contact ? row.contact : "..."}</TableCell>
-        <TableCell align="center">{row.createdAt ? row.createdAt.slice(0, 10) : "..."}</TableCell>
+        <TableCell align="center" className="tableCell">{row.email ? row.email : "..."}</TableCell>
+        <TableCell align="center" className="tableCell">{row.contact ? row.contact : "..."}</TableCell>
+        <TableCell align="center" className="tableCell">{row.createdAt ? dateConversion(row.createdAt) : "..."}</TableCell>
         {/* <TableCell align="center">{row.source ? row.source : "..."}</TableCell> */}
         {/* <TableCell align="center">
           <input
@@ -152,7 +150,7 @@ function Row(props) {
         <TableCell align="center">
           <input type="checkbox" className="checkBox" />
         </TableCell>*/}
-        <TableCell align="center">
+        <TableCell align="center" className="tableCell">
           <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
           <CommonDialog
             open={open}
@@ -219,24 +217,73 @@ function Row(props) {
 
 export default function RegisteredCandidates({ setCurrentItem }) {
   const [candidates, setCandidates] = useState([]);
+  const [candidateTrigger, setCandidateTrigger] = useState(false);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const clientCode = useSelector(
     (state) => state.auth.userData?.user?.clientCode
   );
+
+  const [searchValue, setSearchValue] = useState("");
+  const [search, setSearch] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [allCandidatesData, setAllCandidatesData] = useState([]);
+
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page < Math.ceil(+total / +size)) {
+      setPage((prev) => prev + 1);
+    } else if (!change && page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
+  useEffect(() => {
+    const getAllCandidates = async () => {
+      const res = await getProfiles(accessToken, clientCode, 1, 10000);
+      if (res) {
+        setAllCandidatesData(res?.data?.data);
+      }
+    };
+    getAllCandidates();
+  }, [])
+
   useEffect(() => {
     const getCandidates = async () => {
-      const res = await getProfiles(accessToken, clientCode);
+      const res = await getProfiles(accessToken, clientCode, page, size);
       if (res) {
         setCandidates(res?.data?.data);
+        setTotal(res?.data?.total);
       }
     };
 
     getCandidates();
-  }, []);
+  }, [candidateTrigger, page, size]);
 
-  const handleSearch = () => {
-    console.log("Search");
-  };
+  console.log(allCandidatesData);
+
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() =>
+        allCandidatesData?.filter(
+          (item) =>
+            item.firstName.toLowerCase().includes(searchValue.toLowerCase()) ||
+            item.email.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setSearch(false);
+    }
+  }, [searchValue]);
+
 
   return (
     <Content>
@@ -246,29 +293,46 @@ export default function RegisteredCandidates({ setCurrentItem }) {
         </div>
 
         <SearchBarContainer>
-          <div className="skillBox">
-            <img src={searchBlack} />
-            <input className="skillInput" type="text" placeholder="Search" />
-          </div>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
+          <span className="title">Total Candidates: {total}</span>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Contact</TableCell>
-              <TableCell align="center">Date of Reg</TableCell>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Email</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Date of Reg</TableCell>
               {/* <TableCell align="center">Source</TableCell> */}
               {/* <TableCell align="center">Select</TableCell> */}
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {candidates?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} />
-            ))}
+            {search ?
+              filteredData?.map((row, index) => (
+                <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger} />
+              ))
+              :
+              candidates?.map((row, index) => (
+                <Row key={row.id} row={row} index={index} candidateTrigger={candidateTrigger} setCandidateTrigger={setCandidateTrigger} />
+              ))
+            }
           </TableBody>
         </Table>
+        {!search && <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+          />
+        </div>}
       </TableContainer>
     </Content>
   );
@@ -285,6 +349,13 @@ const Content = styled.div`
   .colored {
     background-color: #ececec;
   }
+  
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
+  }
 
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
@@ -293,8 +364,8 @@ const Content = styled.div`
 
     .title {
       padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
     .titleBox {
@@ -322,38 +393,31 @@ const Content = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
-  }
-
-  .btn {
-    padding: 0.5rem 1rem;
-    margin-top: 3rem;
-    background-color: var(--lightOrange);
-    border: none;
-    color: var(--white);
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
   .checkBox {
     cursor: pointer;
   }
 
-  .resumeBtn {
-    background-color: var(--lightOrange);
-    padding: 0.4rem 0.7rem;
-    border: none;
-    color: var(--white);
-    font-size: 0.9rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    text-decoration: none;
-  }
 `;
 
 const SearchBarContainer = styled.div`
@@ -361,35 +425,11 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
+  margin: 0.5rem auto;
   height: 3rem;
   background-color: var(--white);
   border-radius: 0.5rem;
   padding: 0rem 1rem;
   gap: 1rem;
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-    flex-grow: 1;
-    border: none;
-    height: 1rem;
-    width: 50%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    background-color: transparent;
-    outline: none;
-  }
 `;
+

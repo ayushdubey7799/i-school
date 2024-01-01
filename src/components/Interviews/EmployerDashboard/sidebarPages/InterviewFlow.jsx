@@ -6,9 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import styled from "styled-components";
-import { data as interviews } from "../../../../utils/contantData";
-import searchBlack from '../../../../assets/icons/searchBlack.png'
+import styled, { css } from 'styled-components';
 import actionDot from '../../../../assets/icons/threeDot.png'
 import moveNextRoundIcon from '../../../../assets/icons/moveNextRoundIcon.png'
 import putHoldIcon from '../../../../assets/icons/putOnHoldIcon.png'
@@ -18,8 +16,19 @@ import { useSelector } from "react-redux";
 import { addResumes } from "../../../../slices/invitationSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import TableSearchBar from "../commonComponents/TableSearchBar";
+import EmpSelectInput from "../commonComponents/EmpSelectInput";
+import EmpCommonButton from "../commonComponents/EmpCommonButton";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
+import { updateTrackers } from "../../../../functions/api/employers/tracker/updateTrackers";
+import { toast } from "react-toastify";
+import filterIcon from '../../../../assets/icons/filter.png'
+
+
 function Row(props) {
-  const { row, index } = props;
+  const { row, rowsLength, index, handleSelectArray, filterParams, updateTrigger } = props;
+
+  const [selected, setSelected] = useState(false);
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
@@ -29,15 +38,30 @@ function Row(props) {
     setOpenDropdownIndex(index);
   };
 
+  useEffect(() => {
+    setSelected(false);
+  }, [filterParams, updateTrigger])
+
 
   const closeAllDropdowns = () => {
     setOpenDropdownIndex(-1);
   };
 
   const handleMove = () => {
-     dispatch(addResumes([row.resumeId,row.jdId]));
-     navigate(`/schedule/invite/${row.jdId}`);
+    dispatch(addResumes([row?.resumeId, row?.jdId]));
+    navigate(`/schedule/invite/${row.jdId}`);
   }
+
+  const handleSelectChange = (row) => {
+    if (selected) {
+      handleSelectArray(row.id, false);
+    } else {
+      handleSelectArray(row, true);
+    }
+    setSelected((prev) => !prev);
+  };
+
+
 
   useEffect(() => {
     const handleDocumentClick = (event) => {
@@ -57,16 +81,16 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell align="center">{row.name}</TableCell>
-        <TableCell align="center">{row.contact}</TableCell>
-        <TableCell align="center">{row.jdId}</TableCell>
-        <TableCell align="center">{row.recruiter}</TableCell>
-        <TableCell align="center">{row.hiringManager}</TableCell>
-        <TableCell align="center">{row.round}</TableCell>
-        <TableCell align="center">{row.interviewName}</TableCell>
-        <TableCell align="center">{row.status}</TableCell>
-        <TableCell component="th" scope="row" align="center">
-          <BoxRow>
+        <TableCell align="center" className="tableCell">{row.name}</TableCell>
+        <TableCell align="center" className="tableCell">{row.contact}</TableCell>
+        <TableCell align="center" className="tableCell">{row.jdId.toUpperCase()}</TableCell>
+        <TableCell align="center" className="tableCell">{row.recruiter}</TableCell>
+        <TableCell align="center" className="tableCell">{row.hiringManager}</TableCell>
+        <TableCell align="center" className="tableCell">{row.round}</TableCell>
+        <TableCell align="center" className="tableCell">{row.interviewName}</TableCell>
+        <TableCell align="center" className="tableCell">{row.status}</TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          <BoxRow isLast={index >= rowsLength - 2}>
             <img src={actionDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
               onClick={() => {
                 if (openDropdownIndex === index) {
@@ -76,6 +100,12 @@ function Row(props) {
                   openDropdown(index);
                 }
               }}
+            />
+            <input
+              type="checkbox"
+              className="three-dots"
+              checked={selected}
+              onChange={() => handleSelectChange(row)}
             />
             <div
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
@@ -93,50 +123,164 @@ function Row(props) {
 
 
 const InterviewFlow = ({ setPage }) => {
-  const [tableRows,setTableRows] = useState([]);
-  const [searchParams, setSearchParams] = useState('');
+  const [tableRows, setTableRows] = useState([]);
+  const [filterParams, setFilterParams] = useState('COMPLETED');
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [selectedArray, setSelectedArray] = useState([]);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [search, setSearch] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [allInterviews, setAllInterviews] = useState([]);
+  const [page1, setPage1] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const filterRef = useRef(null);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [jdSet, setJdSet] = useState([]);
+  const [filteredJdId, setFilteredJdId] = useState('');
+
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
+    };
+  }, []);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage1(1);
+  };
+
+  // running an effect to empty selectedArray whenever filter value changes
+  useEffect(() => {
+    setSelectedArray([]);
+  }, [filterParams]);
+
+  const handlePageChange = (change) => {
+    if (change && page1 < Math.ceil(+total / +size)) {
+      setPage1((prev) => prev + 1);
+    } else if (!change && page1 > 1) {
+      setPage1((prev) => prev - 1);
+    }
+  };
+
+  const handleSelectArray = (id, action) => {
+    if (action) {
+      setSelectedArray((prev) => [...prev, id]);
+    } else {
+      setSelectedArray((prev) => [...prev].filter((item) => item.id != id));
+    }
+  };
+
+  console.log(selectedArray);
+
+  useEffect(() => {
+    const getAllData = async () => {
+      const res = await getAllTrackers(accessToken, clientCode, 1, 10000, "", "");
+      let allTrackers = res?.data?.data;
+
+      const uniqueSet = new Set(allTrackers.map(item => item.jdId));
+      setJdSet([...uniqueSet]);
+    }
+
+    getAllData()
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getAllTrackers(accessToken,clientCode);
+      const res = await getAllTrackers(accessToken, clientCode, search ? 1 : page1, search ? 10000 : size, filteredJdId === 'all' ? "" : filteredJdId, filterParams);
       let array = res?.data?.data;
-     if(array){ 
-      const finalResult = array.reduce((acc,it) => {
-        let current = it.interview;
-        let jdInfoReq = {
-           name: current?.userName,
-           contact: current?.userContact,
-           jdId: it.jdId,
-           recruiter: current?.recruiter,
-           hiringManager: current?.hiringManager,
-           round: current?.stage,
-           interviewName: current?.interviewName,
-           status: current?.status,
-           resumeId: current.resumeId
-        }
-  
-        return [...acc,jdInfoReq];
-      },[]);
-    
-      setTableRows(finalResult);
-    }
+      if (array) {
+        const finalResult = array.reduce((acc, it) => {
+          let current = it.interview;
+          let jdInfoReq = {
+            name: current?.userName,
+            contact: current?.userContact,
+            jdId: it.jdId,
+            recruiter: current?.recruiter,
+            hiringManager: current?.hiringManager,
+            round: it?.stage,
+            interviewName: current?.interviewName,
+            status: current?.status,
+            resumeId: current?.resumeId,
+            id: it.id,
+          }
 
+          return [...acc, jdInfoReq];
+        }, []);
+        setTableRows(finalResult);
+        setAllInterviews(finalResult);
+        setTotal(res?.data?.total);
+      }
     }
-
-   
 
     getData();
-  }, [])
+  }, [page1, size, filterParams, search, filteredJdId])
 
-  const handleSearch = () => {
-    console.log("Search");
+
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() =>
+        allInterviews?.filter(
+          (item) =>
+            item?.name?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+            item?.jdId?.toLowerCase().includes(searchValue?.toLowerCase())
+        )
+      );
+    } else {
+      setSearch(false);
+    }
+  }, [searchValue]);
+
+
+  // func to update tracker status as Shortlist or Rejected
+  const handleTrackerUpdate = async (val) => {
+    const payloadData = {
+      "jdId": "",
+      "resumeIds": selectedArray?.map(user => user.resumeId),
+      "status": val,
+      "trackerIds": selectedArray?.map(user => user.id),
+    }
+
+    console.log(payloadData);
+
+    const updatedRes = await updateTrackers(payloadData, accessToken, clientCode);
+
+    console.log(updatedRes);
+
+    if (updatedRes) {
+      setUpdateTrigger(!updateTrigger);
+      toast.success(`${val === 'HOLD' ? 'Hold' : 'Moved out of Interview'} Successfully`);
+    }
   }
 
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
+
+  const handleMoveNextRound = () => {
+    const resumeIds = selectedArray?.filter(item => item.jdId == selectedArray[0]?.jdId)?.map(item => item.resumeId);
+    dispatch(addResumes([...resumeIds, selectedArray[0]?.jdId]));
+    navigate(`/schedule/invite/${selectedArray[0]?.jdId}`);
   }
+
+  const filterArr = [
+    { value: "COMPLETED", text: "Completed" },
+    { value: "SCHEDULED", text: "Scheduled" },
+    { value: "EXPIRED", text: "Expired" },
+  ];
 
 
   return (
@@ -147,38 +291,80 @@ const InterviewFlow = ({ setPage }) => {
         </div>
 
         <SearchBarContainer>
-          <div className='skillBox'>
-            <img src={searchBlack} />
-            <input
-              className='skillInput'
-              type="text"
-              placeholder="Search"
-              value={searchParams}
-              onChange={handleSearchParams}
-            />
-          </div>
+          <TableSearchBar value={searchValue} setValue={setSearchValue} />
+          <EmpSelectInput value={filterParams} setValue={setFilterParams} optionsArr={filterArr} />
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Contact</TableCell>
-              <TableCell align="center">JD ID</TableCell>
-              <TableCell align="center">Recruiter</TableCell>
-              <TableCell align="center">Hiring Manager</TableCell>
-              <TableCell align="center">Current Round</TableCell>
-              <TableCell align="center">Interview Name</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell flexCell">JD ID
+                <img src={filterIcon} className={`icon ${filterOpen == true ? "active" : ""}`}
+                  onClick={() => setFilterOpen(!filterOpen)} />
+                <div className={`filterBox ${filterOpen ? "open" : ""}`} ref={filterRef}>
+                  <div className="checkboxInput">
+                    <input
+                      type="radio"
+                      value='all'
+                      checked={filteredJdId === 'all'}
+                      onChange={() => setFilteredJdId('all')}
+                      id="all"
+                    />
+                    <label htmlFor="all">ALL</label>
+                  </div>
+                  {jdSet.map((jd, i) => (
+                    <div className="checkboxInput">
+                      <input
+                        type="radio"
+                        value={jd}
+                        checked={filteredJdId === jd}
+                        onChange={() => setFilteredJdId(jd)}
+                        id={jd} />
+                      <label htmlFor={jd}>{jd?.toUpperCase()}</label>
+                    </div>
+                  ))}
+                </div>
+              </TableCell>
+              <TableCell align="center" className="tableCell">Recruiter</TableCell>
+              <TableCell align="center" className="tableCell">Hiring Manager</TableCell>
+              <TableCell align="center" className="tableCell">Current Round</TableCell>
+              <TableCell align="center" className="tableCell">Feeback</TableCell>
+              <TableCell align="center" className="tableCell">Status</TableCell>
+              <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
-            {tableRows?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} />
-            ))}
+            {search ?
+              filteredData?.map((row, index) => (
+                <Row key={row.id} rowsLength={tableRows.length} row={row} index={index} handleSelectArray={handleSelectArray} filterParams={filterParams} updateTrigger={updateTrigger} />
+              ))
+              :
+              tableRows?.map((row, index) => (
+                <Row key={row.id} rowsLength={tableRows.length} row={row} index={index} handleSelectArray={handleSelectArray} filterParams={filterParams} updateTrigger={updateTrigger} />
+              ))
+            }
           </TableBody>
         </Table>
+        {!search && <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page1}
+            handlePageChange={handlePageChange}
+            setPage={setPage1}
+          />
+        </div>}
       </TableContainer>
+      <div className="btnBox">
+        {selectedArray.length > 0 && <EmpCommonButton text='Put on Hold' func={() => handleTrackerUpdate('HOLD')} />}
+        {selectedArray.length > 0 && <EmpCommonButton text='Move out from Interview' func={() => handleTrackerUpdate('NOT_SELECTED')} />}
+        {(selectedArray.length > 0 && filterParams == 'COMPLETED') && <EmpCommonButton text='Move to next Round' func={() => handleMoveNextRound()} />}
+      </div>
     </Content>
   )
 }
@@ -192,40 +378,11 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
-  height: 3rem;
+  margin: 0.5rem auto;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
 
 `
 
@@ -242,16 +399,25 @@ align-items: center;
   background-color: #ececec;
 }
 
+.paginationBox {
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+  margin: 1rem 3rem 1.5rem 0;
+}
+
 .tableBox {
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
   border-radius: 0.5rem;
   padding-top: 1rem;
+  margin-bottom: 1.5rem;
+
 
 
   .title {
     padding-left: 1.2rem;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   .titleBox {
@@ -292,23 +458,99 @@ align-items: center;
 .tableHead {
   background-color: #d1fff0;
   width: 100%;
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  } 
+
+  .flexCell {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    position: relative;
+  }
+
+  .filterBox {
+    position: absolute;
+    left: 75%;
+    top: -1rem;
+    display: none;
+    background-color: var(--white);
+    border: 0.075rem solid grey;
+    border-radius: 0.3rem;
+    height: 7rem;
+    overflow-y: auto;
+    padding: 1rem 0;
+    z-index: 100;
+
+    .checkboxInput {
+      display: flex;
+      padding: 0.2rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      align-items: start;
+      gap: 0.3rem;
+    }
+
+    input {
+      height: 1rem;
+      cursor: pointer;
+    }
+
+    label {
+      cursor: pointer;
+    }
+
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+  }
+  
+    &::-webkit-scrollbar-track {
+      background: lightgrey;
+      border-radius: 0.4rem;
+  }
+  
+    &::-webkit-scrollbar-thumb {
+      background: grey;
+      width: 0.4rem;
+      border-radius: 0.4rem;
+  }
+  
+  & {
+    scrollbar-width: none;
+  } 
+  }
+
+  .filterBox.open {
+    display: block;
+  }
+
+
+  .tableCell {
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font);
+    color: var(--color);
+  }
+  
 }
 
 .tableBody {
   width: 100%;
+
+  .tableCell {
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: var(--font);
+    color: var(--color);
+  }
 }
 
-
-.btn {
-  padding: 0.3rem 0.2rem;
-  background-color: var(--lightOrange);
-  border: none;
-  color: var(--white);
-  font-size: 0.8rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  
+.btnBox {
+  display: flex;
+  gap: 2rem;
 }
 
 `
@@ -334,6 +576,13 @@ const BoxRow = styled.div`
   min-width: 13rem;
   justify-content: start;
   padding: 0.5rem 0.5rem;
+
+  ${(props) =>
+    props.isLast &&
+    css`
+      bottom: 1.4rem;
+      right: 10%;
+    `}s
 }
 
 

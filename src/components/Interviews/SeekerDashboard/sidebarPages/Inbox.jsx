@@ -44,7 +44,6 @@ const Inbox = () => {
                     />
                     <img src={searchIcon} />
                 </div>
-                <img src={notificationIcon} className='notificationIcon' />
             </div>
 
             <div className='box2'>
@@ -141,13 +140,13 @@ margin: 0 auto 3rem auto;
 
 
         .title {
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 600;
         }
 
         .text {
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 400;
         }
     }
 

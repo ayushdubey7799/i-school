@@ -30,7 +30,6 @@ const JobSeekerHeader = ({ setCurrentItem }) => {
     navigate("/");
   };
 
-  console.log(accessToken);
 
   return (
     <StyledDiv>

@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { auth } from "../api/authApis";
 import { auth } from "../functions/api/authentication/auth";
 
 
 
-export const performLogin = createAsyncThunk('auth/performLogin', async ({password,email,clientCode}) => {
-    console.log("IN LOGIN",clientCode);
-    
+export const performLogin = createAsyncThunk('auth/performLogin', async ({ password, email, clientCode }) => {
+    console.log("IN LOGIN", clientCode);
+
     const response = await auth(password, email, clientCode);
-    console.log("From slice->",response);
-    if(response.response?.data?.status == "FAILED")throw new Error(JSON.stringify(response.response?.data));
+    console.log("From slice->", response);
+    if (response.response?.data?.status == "FAILED") throw new Error(JSON.stringify(response.response?.data));
     return response.data;
 })
 
@@ -28,7 +29,7 @@ const authSlice = createSlice({
             state.error = null;
         }
     },
-    
+
     extraReducers: (builder) => {
         builder.addCase(performLogin.pending, (state) => {
             state.status = 'loading';
@@ -37,12 +38,12 @@ const authSlice = createSlice({
             state.status = 'succeeded';
         }).addCase(performLogin.rejected, (state, action) => {
             state.status = 'failed';
-            console.log("Action---->",action);
+            console.log("Action---->", action);
             state.error = action.error.message;
         })
     }
 });
-export const {logout} = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
 
 

@@ -36,25 +36,24 @@ const UploadCandidateProfile = () => {
     e.preventDefault()
 
     try {
-      setLoading(true);
-      const formData = new FormData();
-      files.forEach((file, index) => {
-        formData.append(`files`, file);
-        // console.log(file.name);
-      });
+      if (files.length == 0) {
+        toast.warning("Please select files/folder");
+      } else {
+        setLoading(true);
+        const formData = new FormData();
+        files.forEach((file, index) => {
+          formData.append(`files`, file);
+        });
 
-      // console.log(formData.getAll("files"))
+        const res = await bulkUpload(formData, accessToken, clientCode);
 
-      const res = await bulkUpload(formData, accessToken, clientCode);
-
-      if (res) {
-        setSuccessPopup("Profiles uploaded successfully");
-        setFiles([]);
-        setLoading(false);
+        if (res) {
+          setSuccessPopup("Profiles uploaded successfully");
+          setFiles([]);
+          setLoading(false);
+        }
       }
     } catch (error) {
-      // Handle network errors or unexpected issues
-      console.error("Error during file upload:", error);
       const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
       setErrorMsg(errMsg);
       setLoading(false);
@@ -77,17 +76,15 @@ const UploadCandidateProfile = () => {
         <input
           id='input'
           type="file"
-          // accept=".zip,.rar,.7z"
           accept='*'
           onChange={handleFileChange}
-          style={{ display: 'none' }}
+          className='fileInput'
           multiple
-          required
         />
         <span>Select Folder or Zip File</span>
-        <button className='registerBtn'>Upload</button>
+        <button className='registerBtn' type='submit'>Upload</button>
       </form>
-      
+
     </Box>
   )
 }
@@ -116,14 +113,16 @@ const Box = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     color: var(--white);
-    font-size: 1rem;
-    margin-top: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    font-family: var(--font);
   }
 
   .title {
     margin-bottom: 2rem;
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
 
   }
 
@@ -135,12 +134,20 @@ const Box = styled.div`
     width: 100%;
     gap: 1rem;
     margin-top: 0rem;
+
+    span {
+      font-size: 0.8rem;
+    }
+
+    .fileInput {
+      position: absolute;
+    left: -9999px;
+    }
   }
 `;
 
 
 const Label = styled.label`
-  font-weight: 600;
   margin: 0.7rem 1rem;
   display: flex;
   align-items: center;
@@ -153,10 +160,7 @@ const Label = styled.label`
   
   span {
     color: var(--color);
-    
+    font-weight: 400;
+    font-size: 0.8rem;
   }
-`;
-
-const FileInput = styled.input`
-  margin-bottom: 0rem;
 `;

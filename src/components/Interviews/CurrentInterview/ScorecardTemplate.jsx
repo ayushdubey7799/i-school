@@ -19,10 +19,10 @@ import { codingQuestionFormat } from '../../../utils/codingQuestionFormat';
 function Row(props) {
   const { row } = props;
   let expected = "";
- if(row.summaryJson)expected = JSON.parse(row.summaryJson)["Expected answer"].expected_answer;
+  if (row?.summaryJson) expected = JSON.parse(row?.summaryJson)["Expected answer"]?.expected_answer;
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -32,20 +32,24 @@ function Row(props) {
             {row.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row" dangerouslySetInnerHTML={{ __html: codingQuestionFormat(row.question)}} >
-          
+        <TableCell component="th" scope="row" dangerouslySetInnerHTML={{ __html: codingQuestionFormat(`${row.question.slice(0, 300)} <strong> <span class="clickable-span">...</span></strong>`) }} onClick={() => props.onToggle(row)}>
+
         </TableCell>
-        <TableCell align="right">{row.skipped?"0":row.processingState=="FAILED"?"Failed":(row.processingState == "NEW" || row.processingState == "PROCESSING"?<Loader></Loader>:row.score)}</TableCell>
+        <TableCell align="right">{row.skipped ? "0" : row?.processingState == "FAILED" ? "Failed" : (row?.processingState == "NEW" || row?.processingState == "PROCESSING" ? <Loader></Loader> : row?.score)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
           <Collapse in={row.open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1}}>
+            <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
-                <strong>Your Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.answer?row.answer:row.answerFile?"Recorded Audio file":"skipped"}</div>
-                <br/>
-                <br/>
-                <strong>Expected Answer:</strong> <div style={{fontSize: "0.7rem"}}>{row.expectedAnswer?row.expectedAnswer:"Not Available"}</div>
+                <strong>Question:</strong> <div style={{ fontSize: "0.7rem" }} dangerouslySetInnerHTML={{ __html: codingQuestionFormat(row.question) }}></div>
+                <br />
+                <strong>Options:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.mcqOptions ? row?.mcqOptions.map((item,index) => <p>{item}</p>):""}</div>
+                <br />
+                <strong>Your Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.answer ? row?.answer : row?.answerFile ? "Recorded Audio file" : "skipped"}</div>
+                <br />
+                <br />
+                <strong>Expected Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.expectedAnswer ? row?.expectedAnswer : "Not Available"}</div>
               </Typography>
             </Box>
           </Collapse>
@@ -55,7 +59,7 @@ function Row(props) {
   );
 }
 
-export default function ScorecardTemplate({rows,setTrigger,apiCall,setApiCall}) {
+export default function ScorecardTemplate({ rows, setTrigger, apiCall, setApiCall }) {
   const [tableRows, setTableRows] = useState(rows);
   const idRef = useRef(null);
 
@@ -66,22 +70,22 @@ export default function ScorecardTemplate({rows,setTrigger,apiCall,setApiCall}) 
     setTableRows(updatedRows);
   };
 
-useEffect(() => {
-  setApiCall(rows.some((item) => item.processingState == "PROCESSING" || (item.processingState == "NEW" && item.skipped == false)));
+  useEffect(() => {
+    setApiCall(rows?.some((item) => item.processingState == "PROCESSING" || (item.processingState == "NEW" && item.skipped == false)));
 
-  return () => {
-    if(idRef.current){
-      clearTimeout(idRef.current);
-      idRef.current = null;
+    return () => {
+      if (idRef?.current) {
+        clearTimeout(idRef.current);
+        idRef.current = null;
+      }
     }
-  }
-},[])
+  }, [])
 
-if(apiCall){
-  idRef.current = setTimeout(() => {
-    setTrigger(prev => !prev);
-  },30000);
-}
+  if (apiCall) {
+    idRef.current = setTimeout(() => {
+      setTrigger(prev => !prev);
+    }, 30000);
+  }
 
 
   return (

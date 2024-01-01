@@ -116,7 +116,7 @@ export default function Invite() {
     // }
     // getTypes();
     setProductTypes(["JD", "Resume", "JD + Resume", "Skill"]);
-    setTestTypes(["MCQs", "Subjective", "coding"]);
+    setTestTypes(["mcq", "general", "coding"]);
   }, []);
 
   const handleProductTypeChange = (inp) => {
@@ -132,8 +132,6 @@ export default function Invite() {
     setInterviewType(inp);
   }
 
-  console.log(selectedTimeSlot);
-
   const handleInvite = () => {
 
     const makeApiCall = async () => {
@@ -141,7 +139,6 @@ export default function Invite() {
       const dateTime = moment(value.format("YYYY-MM-DD") + "T" + (selectedTimeSlot.$H < 10 ? '0' + selectedTimeSlot.$H : selectedTimeSlot.$H) + ":" + (selectedTimeSlot.$m < 10 ? '0' + selectedTimeSlot.$m : selectedTimeSlot.$m) + ":" + "00.000").utc().format('YYYY-MM-DD HH:mm');
       const date = dateTime.slice(0, 10);
       const time = dateTime.slice(11);
-      console.log(dateTime);
       if (!productType || !testType || !value.format("YYYY-MM-DD")) {
         toast.error("Fill all fields");
         return;
@@ -161,10 +158,14 @@ export default function Invite() {
       };
 
       if (isTime) delete payload.slotTime;
-      console.log(payload);
+      if (testType == 'InPerson') {
+        payload.interviewerEmail = interviewerEmail;
+        payload.meetingLink = meetUrl;
+      }
+
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
-        console.log("=======>", response);
+
         if (response.status == "FAILED") {
           setErrorPopup({ status: true, msg: response?.notify?.message })
         } else {
@@ -173,7 +174,6 @@ export default function Invite() {
         }
       } catch (error) {
         toast.error("error-> ", error?.message);
-        console.error("API call failed:", error);
       }
     };
 
@@ -251,8 +251,8 @@ export default function Invite() {
 
                   <div className="slotBox">
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox' sx={{width: '40%'}}>
-                        {!isTime && <TimeSlot selectedTimeSlot={selectedTimeSlot} setSelectedTimeSlot={setSelectedTimeSlot}/>}
+                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox' sx={{ width: '40%' }}>
+                        {!isTime && <TimeSlot selectedTimeSlot={selectedTimeSlot} setSelectedTimeSlot={setSelectedTimeSlot} />}
                       </DemoContainer>
                     </LocalizationProvider>
                     <label className="smallTextBox">
@@ -352,18 +352,18 @@ export default function Invite() {
                     <label className="label">
                       <input
                         type="radio"
-                        value="MCQs"
-                        checked={testType === 'MCQs'}
-                        onChange={() => handleTestTypeChange('MCQs')}
+                        value="mcq"
+                        checked={testType === 'mcq'}
+                        onChange={() => handleTestTypeChange('mcq')}
                       />
                       <span>MCQs</span>
                     </label>
                     <label className="label">
                       <input
                         type="radio"
-                        value="Subjective"
-                        checked={testType === 'Subjective'}
-                        onChange={() => handleTestTypeChange('Subjective')}
+                        value="general"
+                        checked={testType === 'general'}
+                        onChange={() => handleTestTypeChange('general')}
                       />
                       <span>Subjective</span>
                     </label>
@@ -379,9 +379,9 @@ export default function Invite() {
                     <label className="label">
                       <input
                         type="radio"
-                        value="General"
-                        checked={testType === 'General'}
-                        onChange={() => handleTestTypeChange('General')}
+                        value="general"
+                        checked={testType === 'general'}
+                        onChange={() => handleTestTypeChange('general')}
                       />
                       <span>General (Includes all types of Que)</span>
                     </label>
@@ -551,13 +551,13 @@ input[type="number"] {
 
 
   .numberBox {
-    width: 50%;
+    width: 40%;
     height: 3rem;
     display: flex;
 
     .numberBtn {
       height: 100%;
-      width: 4rem;
+      width: 3.5rem;
       border: none;
       background-color: var(--lightOrange);
       color: var(--white);
@@ -568,22 +568,26 @@ input[type="number"] {
     .btn1 {
       border-top-left-radius: 0.4rem;
       border-bottom-left-radius: 0.4rem;
+      font-family: var(--font);
     }
 
     .btn2 {
       border-top-right-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
+      font-family: var(--font);
     }
 
     .numberInput {
       height: 100%;
-      width: 8rem;
-      padding: 0 3rem;
+      width: 6rem;
+      padding: 0 2.3rem;
       box-sizing: border-box;
-      font-size: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
       border: none;
       outline: none;
       background-color: #F0F0F0;
+      font-family: var(--font);
     }
 
   }
@@ -601,6 +605,7 @@ input[type="number"] {
     top: 5rem;
     left: 1.5rem;
     color: var(--white);
+    font-family: var(--font);
   }
 
   .prev:hover {
@@ -617,6 +622,7 @@ input[type="number"] {
     font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
+    font-family: var(--font);
   }
 
   .smallTextBox {
@@ -632,10 +638,11 @@ input[type="number"] {
     align-items: start;
     width: 100%;
     gap: 2rem;
+
   }
   
   .smallText {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
 
   .mainBox {
@@ -727,8 +734,8 @@ input[type="number"] {
       }
 
       .title {
-        font-size: 1rem;
-        font-weight: 500;
+        font-size: 0.9rem;
+        font-weight: 600;
         position: absolute;
         top: -0.8rem;
         background-color: var(--white);
@@ -804,9 +811,10 @@ background-color: var(--lightOrange);
 color: var(--white);
 border: none;
 padding: 0.4rem 0.9rem;
-font-size: 1rem;
+font-size: 0.9rem;
 font-weight: 600;
 border-radius: 0.5rem;
 cursor: pointer;
+font-family: var(--font);
 
 `

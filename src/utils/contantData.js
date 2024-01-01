@@ -19,7 +19,6 @@ import EmpMetric7 from '../assets/icons/metric2.7.png'
 import EmpMetric8 from '../assets/icons/metric2.8.png'
 
 
-
 export const technicalSkills = [
     "account management",
     "accounting",
@@ -55,7 +54,6 @@ export const technicalSkills = [
     "CFA",
     "client relationships",
     "client service",
-    "client services",
     "compliance",
     "consulting experience",
     "consulting services",
@@ -158,16 +156,11 @@ export const technicalSkills = [
     "vendor management",
     "vendors",
     "beverage",
-    "billing",
     "build relationships",
-    "client relationships",
-    "client service",
-    "consumers",
     "customer experience",
     "customer-facing",
     "customer requirements",
     "customer service",
-    "customer-facing",
     "employee relations",
     "filing",
     "help desk",
@@ -260,21 +253,15 @@ export const technicalSkills = [
     "C (programming language)",
     "C#",
     "C++",
-    "CAD",
     "certification",
     "Cisco",
     "cloud",
-    "compliance",
     "computer applications",
-    "computer science",
     "controls",
     "CSS",
     "D (programming language)",
     "data center",
-    "data collection",
     "data entry",
-    "data management",
-    "database",
     "datasets",
     "design",
     "development activities",
@@ -308,7 +295,6 @@ export const technicalSkills = [
     "LAN",
     "licensing",
     "Linux",
-    "machine learning",
     "MATLAB",
     "matrix",
     "mechanical engineering",
@@ -320,9 +306,7 @@ export const technicalSkills = [
     "oracle",
     "OS",
     "process development",
-    "process improvement",
     "process improvements",
-    "product design",
     "product development",
     "product knowledge",
     "program management",
@@ -350,10 +334,7 @@ export const technicalSkills = [
     "SQL",
     "SQL server",
     "tablets",
-    "technical",
     "technical issues",
-    "technical knowledge",
-    "technical skills",
     "technical support",
     "test cases",
     "test plans",
@@ -365,25 +346,17 @@ export const technicalSkills = [
     "user experience",
     "UX",
     "variances",
-    "vendor management",
     "VMware",
     "web services",
     "workflows",
     "assembly",
-    "asset management",
-    "audit",
-    "auditing",
     "automation",
     "aviation",
     "budget",
-    "budget management",
-    "budgeting",
     "chemicals",
     "circuits",
     "construction",
-    "cost reduction",
     "cross-functional team",
-    "distribution",
     "documentation",
     "documenting",
     "drafting",
@@ -397,8 +370,6 @@ export const technicalSkills = [
     "installation",
     "instructional design",
     "instrumentation",
-    "inventory",
-    "inventory management",
     "ISO",
     "life cycle",
     "lifecycle",
@@ -406,56 +377,41 @@ export const technicalSkills = [
     "management experience",
     "mining",
     "operations",
-    "operations management",
     "outsourcing",
     "performance improvement",
-    "process improvement",
-    "process improvements",
     "procurement",
-    "product design",
-    "product development",
-    "product knowledge",
     "product line",
     "product marketing",
     "product quality",
     "project delivery",
-    "project management",
     "project management skills",
     "project plan",
     "QA",
-    "quality assurance",
     "quality control",
     "quality management",
     "quality standards",
     "raw materials",
-    "regulatory",
     "regulatory compliance",
     "regulatory requirements",
     "repairs",
-    "safety",
     "six sigma",
     "SolidWorks",
     "sourcing",
     "specifications",
     "standard operating procedures",
     "supply chain",
-    "supply chain management",
     "transport",
     "transportation",
     "valid drivers license",
-    "vendor management",
     "warehouse",
-    "workflows",
-    "account management",
     "acquisition",
-    "acquisitions",
-    "administrative support",
     "Adobe",
     "Adobe Creative Suite",
     "advertising",
     "affiliate",
     "agile",
 ];
+
 
 
 export const locations = [
@@ -483,7 +439,6 @@ export const locations = [
     "Vadodara",
     "Ludhiana",
     "Agra",
-    "Kochi",
     "Surat",
     "Visakhapatnam",
     "Bhopal",
@@ -501,6 +456,7 @@ export const locations = [
     "Thiruvananthapuram",
     "Ooty",
 ];
+
 
 export const jds = [
     {
@@ -1098,24 +1054,28 @@ export const seekerMetricOptions = [{
 
 
 export const EmpMetrics1 = {
+    id: 1,
     title: 'Interviews',
     text: 'interviews',
     img: EmpMetric1
 }
 
 export const EmpMetrics2 = {
+    id: 2,
     title: 'Active JDs',
     text: 'activeJDs',
     img: EmpMetric2
 }
 
 export const EmpMetrics3 = {
+    id: 3,
     title: 'Applications',
     text: 'applications',
     img: EmpMetric3
 }
 
 export const EmpMetrics4 = {
+    id: 4,
     title: 'Candidates Pool',
     text: 'candidatesPool',
     img: EmpMetric4
@@ -1123,21 +1083,25 @@ export const EmpMetrics4 = {
 
 
 export const EmpMetricOptions = [{
+    id: 5,
     title: 'Invite Sent (Last 30 Days)',
     text: 'inviteSent',
     img: EmpMetric5
 },
 {
+    id: 6,
     title: 'Reviewed Profiles (Last 30 Days)',
     text: 'reviewedProfile',
     img: EmpMetric6
 },
 {
+    id: 7,
     title: 'JD Views (Last 30 Days)',
     text: 'jdViews',
     img: EmpMetric7
 },
 {
+    id: 8,
     title: 'Offers (Last 30 Days)',
     text: 'offers',
     img: EmpMetric8

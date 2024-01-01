@@ -48,24 +48,29 @@ const SelectWrapper = styled.div`
   margin-right: 1rem;
   height: 2rem;
   box-sizing: border-box;
+  font-family: Quicksand, sans-serif;
 
   label {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.9rem;
+    font-family: Quicksand, sans-serif;
   }
 `;
 
 const Select = styled.select`
-  width: 5rem;
-  padding: 0.5rem 0.5rem;
+  width: 3.5rem;
+  padding: 0.3rem 0rem 0.3rem 1rem;
   margin-left: 0.5rem;
   box-sizing: border-box;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   border: 0.075rem solid #ccc;
   border-radius: 0.25rem;
+  font-family: Quicksand, sans-serif;
+
 
   option {
-    
+    font-family: Quicksand, sans-serif;
   }
 `;
 
@@ -74,10 +79,12 @@ const PaginationWrapper = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
+  font-family: Quicksand, sans-serif;
 
   .text {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.9rem;
+    font-family: Quicksand, sans-serif;
   }
 `;
 
@@ -91,6 +98,7 @@ const PaginationButton = styled.button`
   border-radius: 0.25rem;
   background-color: #fff;
   cursor: ${({ inActive }) => (inActive ? 'default' : 'pointer')};
+  font-family: Quicksand, sans-serif;
 
   &:hover {
     background-color: #f0f0f0;

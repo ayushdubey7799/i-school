@@ -92,7 +92,7 @@ const Scorecard = () => {
           </div>
           <div className="head">
             <h2>SCORECARD</h2>
-            <Link to='/dashboard/interviews'><button id="another">Back to Dashboard</button></Link>
+            <Link to='/dashboard/jobseeker'><button id="another">Back to Dashboard</button></Link>
           </div>
 
           <div className="summary">
@@ -183,6 +183,7 @@ export const StyledScorecard = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-top: 3rem;
+    width: 100%;
   }
 `;
 

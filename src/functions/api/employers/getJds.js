@@ -3,9 +3,9 @@ import axios from "axios";
 export const getJds = async (
   accessToken,
   clientCode,
-  page,
-  size
-  ) => {
+  page = 1,
+  size = 1000
+) => {
   const config = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -16,7 +16,7 @@ export const getJds = async (
   try {
     const response =
       await axios.get(`https://dev-api.intelliview.in/api/jds?page=${page}&size=${size}
-        `,config);
+        `, config);
 
     console.log("Data:", response.data);
     return response.data;

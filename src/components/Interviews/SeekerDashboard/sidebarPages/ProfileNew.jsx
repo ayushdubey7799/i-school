@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { profileData } from '../../../../utils/contantData';
 import linkedin from '../../../../assets/icons/linkedinBlack.png'
@@ -9,13 +9,34 @@ import addIcon from '../../../../assets/icons/addIcon.png'
 import editIcon from '../../../../assets/icons/editBlack.png'
 import shareIcon from '../../../../assets/icons/share.png'
 import Rating from '@mui/material/Rating';
+import BasicDetails from '../profileForms/BasicDetails';
+import ModalHOC from '../ModalHOC';
+import SkillDetails from '../profileForms/SkillDetails';
+import EducationDetails from '../profileForms/EducationDetails';
+import ProjectDetails from '../profileForms/ProjectDetails';
+import EmploymentDetails from '../profileForms/EmploymentDetails';
+import CertificationDetails from '../profileForms/CertificationDetails';
+import { getProfile } from '../../../../functions/api/jobSeekers/getProfile';
+import { useSelector } from 'react-redux';
 
 const ProfileNew = () => {
 
     // const [profileData, setProfileData] = useState();
 
-    const [resumeArr, setResumeArr] = useState([]);
+    const [openBasicDetails, setOpenBasicDetails] = useState(false);
+    const [openSkills, setOpenSkills] = useState(false);
+    const [openEducations, setOpenEducations] = useState(false);
+    const [openProjects, setOpenProjects] = useState(false);
+    const [openEmployments, setOpenEmployments] = useState(false);
+    const [openCertifications, setOpenCertifications] = useState(false);
 
+    const [userProfileData, setUserProfileData] = useState();
+
+    const handleEdit = () => {
+
+    }
+
+    const [resumeArr, setResumeArr] = useState([]);
     const [resumeFile, setResumeFile] = useState([]);
 
     const handleFileChange = (e) => {
@@ -27,16 +48,37 @@ const ProfileNew = () => {
         }
     };
 
+    const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+    const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+    const userBasicDetails = useSelector((state) => state.auth.userData?.user);
+
+
+    useEffect(() => {
+        const getProfileData = async () => {
+            const res = await getProfile(profileId, accessToken);
+            setUserProfileData(res?.data);
+        }
+        getProfileData();
+    }, [])
+
+
     return (
         <Box>
+            <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails />} />
+            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails data={userProfileData?.skills} />} />
+            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails data={userProfileData?.educations} />} />
+            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails />} data={userProfileData?.projects} />
+            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails data={userProfileData?.employments} />} />
+            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={userProfileData?.certifications2} />} />
+
             <div className='topBox'>
                 <img src={profileData.personalInfo.img} className='profileImg' />
                 <div className='middleBox'>
-                    <span className='name'>{profileData.personalInfo.name}</span>
+                    <span className='name'>{userBasicDetails?.firstName}</span>
                     <div className='infoBox'>
                         <div className='infoBox1'>
-                            <span className='text'><img src={callIcon} />{profileData.personalInfo.phone}</span>
-                            <span className='text'><img src={emailIcon} />{profileData.personalInfo.email}</span>
+                            <span className='text'><img src={callIcon} />{userBasicDetails?.primaryContact}</span>
+                            <span className='text'><img src={emailIcon} />{userBasicDetails?.email}</span>
                         </div>
                         <div className='infoBox2'>
                             <a href={profileData.personalInfo.linkedin}><img src={linkedin} className='socialIcon' />{profileData.personalInfo.linkedin.slice(0, 35)}</a>
@@ -46,7 +88,7 @@ const ProfileNew = () => {
                 </div>
                 <div className='editBox'>
                     <span className='editBtn'><img src={shareIcon} /></span>
-                    <span className='editBtn'><img src={editIcon} /></span>
+                    <span className='editBtn' onClick={() => setOpenBasicDetails(true)}><img src={editIcon} /></span>
                 </div>
             </div>
 
@@ -54,15 +96,15 @@ const ProfileNew = () => {
             <div className='skillsMainBox'>
                 <span className='mainTitle'>
                     <span>Skills</span>
-                    {profileData.skills.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenSkills(true)}>{userProfileData?.skills?.length > 0 ? 'Edit Skills' : 'Add Skills'}</button>
                 </span>
                 <span className='title'>Add top 5 skills here to increase your chances of getting shortlisted.</span>
                 <div className='cardBox'>
                     {
-                        profileData.skills.map((skill, index) => (
+                        userProfileData?.skills?.map((skill, index) => (
                             <div className='card'>
-                                <span className='skill'>{skill.name}</span>
-                                <Rating name="read-only" value={skill.score} readOnly className='score'/>
+                                <span className='skill'>{skill?.name}</span>
+                                <Rating name="read-only" value={skill?.rating} readOnly className='score' />
                                 {/* <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span> */}
                                 <button className='btn'>Take Assessment</button>
                             </div>
@@ -75,15 +117,16 @@ const ProfileNew = () => {
             <div className='educationBox'>
                 <span className='mainTitle'>
                     <span>Education</span>
-                    {profileData.education.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenEducations(true)}>{userProfileData?.educations?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.education.map((edu, index) => (
+                        userProfileData?.educations?.map((edu, index) => (
                             <div className='card'>
-                                <span className='title'>{edu.degree}</span>
-                                <span className='subTitle'>{edu.university}</span>
-                                <span className='text'>{edu.year.split('-')[0]}-{edu.year.split('-')[1]} | {edu.courseType}</span>
+                                <span className='title'>{edu?.degree}</span>
+                                <span className='subTitle'>{edu?.school}</span>
+                                <span className='text'>{edu?.startDate} to {edu?.endDate} | {edu?.courseType}</span>
+                                <span className='text'>{edu?.grade} {edu?.gradeType}</span>
                             </div>
                         ))
                     }
@@ -94,19 +137,15 @@ const ProfileNew = () => {
             <div className='projectBox'>
                 <span className='mainTitle'>
                     <span>Projects</span>
-                    {profileData.projects.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenProjects(true)}>{userProfileData?.projects?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.projects.map((project, index) => (
+                        userProfileData?.projects?.map((project, index) => (
                             <div className='card'>
-                                <span className='title'>{project.title}</span>
-                                <span className='text'>{project.date.split('-')[0]}-{project.date.split('-')[1]} | {project.status}</span>
-                                <ul className='subTitle'>{
-                                    project.description.map((desc) => (
-                                        <li className='list'>{desc}</li>
-                                    ))
-                                }</ul>
+                                <span className='title'>{project?.title}</span>
+                                <span className='text'>{project?.startDate} to {project?.endDate} | {project?.status}</span>
+                                <span className='desc'>{project?.description}</span>
                             </div>
                         ))
                     }
@@ -117,17 +156,17 @@ const ProfileNew = () => {
             <div className='experienceBox'>
                 <span className='mainTitle'>
                     <span>Employment</span>
-                    {profileData.experience.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenEmployments(true)}>{userProfileData?.employments?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.experience.map((exp, index) => (
+                        userProfileData?.employments?.map((exp, index) => (
                             <div className='card'>
-                                <span className='title'>{exp.company} | {exp.title}</span>
-                                <span className='subTitle'>{exp.location}</span>
-                                <span className='text'>{exp.date.split('-')[0]}-{exp.date.split('-')[1]}</span>
+                                <span className='title'>{exp?.orgName} | {exp?.designation}</span>
+                                <span className='subTitle'>{exp?.employmentType}</span>
+                                <span className='text'>{exp?.startDate} to {exp?.endDate}</span>
                                 <div className='skillBox'>{
-                                    exp.skillsUsed.map((skill) => (
+                                    exp?.skillsUsed?.split(',')?.map((skill) => (
                                         <span className='skill'>{skill}</span>
                                     ))
                                 }</div>
@@ -140,15 +179,15 @@ const ProfileNew = () => {
             <div className='certificationBox'>
                 <span className='mainTitle'>
                     <span>Certifications</span>
-                    {profileData.certifications.length > 0 && <button>Add New</button>}
+                    <button onClick={() => setOpenCertifications(true)}>{userProfileData?.certifications2?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
-                        profileData.certifications.map((cert, index) => (
+                        userProfileData?.certifications2?.map((cert, index) => (
                             <div className='card'>
-                                <span className='title'>{cert.title}</span>
-                                <span className='subTitle'>{cert.organization}</span>
-                                <span className='text'>Issued {cert.date} to {cert.expirationDate}</span>
+                                <span className='title'>{cert?.title}</span>
+                                <span className='subTitle'>{cert?.issuingOrganization}</span>
+                                <span className='text'>Issued {cert?.issueDate} to {cert?.expirationDate}</span>
 
                                 <button>Verify Certificate</button>
                             </div>
@@ -504,15 +543,8 @@ align-items: center;
             font-weight: 400;
         }
 
-        .subTitle {
-            display: flex;
-            flex-direction: column;
-            margin: 0rem;
-            gap: 0.2rem;
-
-            .list {
-                font-size: 0.8rem;
-            }
+        .desc {
+            font-size: 0.85rem;
         }
     }
 }

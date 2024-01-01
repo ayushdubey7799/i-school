@@ -11,7 +11,7 @@ const CommonDrawer = ({ toggleDrawer, state, component }) => {
             role="presentation"
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <img src={drawerIcon} style={{ width: '2rem', cursor: 'pointer', position: 'fixed', top: '50%', right: 'calc(50vw + 2.4rem)' }} onClick={toggleDrawer(anchor, false)} />
+            <img src={drawerIcon} style={{ width: '2rem', cursor: 'pointer', position: 'fixed', top: '50%', right: 'calc(50vw + 2.2rem)' }} onClick={toggleDrawer(anchor, false)} />
             {component && component}
         </Box>
     );

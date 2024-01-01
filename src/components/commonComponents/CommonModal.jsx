@@ -13,7 +13,6 @@ export default function CommonModal({
         setOpen(true);
     };
     const handleClose = (event) => {
-        console.log(event);
         setOpen(false);
     };
 

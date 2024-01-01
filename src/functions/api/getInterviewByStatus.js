@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 
-export const getInterviewByStatus = async (status,accessToken) => {
+export const getInterviewByStatus = async (status, accessToken, page, size) => {
   // const token = JSON.parse(localStorage.getItem("token"));
 
     const config = {
@@ -13,8 +13,8 @@ export const getInterviewByStatus = async (status,accessToken) => {
         },
       
         params: {
-          page: 1,
-          size: 100,
+          page: page,
+          size: size,
           status: status
         }
     };

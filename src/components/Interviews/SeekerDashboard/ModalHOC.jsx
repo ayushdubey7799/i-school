@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import closeIcon from '../../../assets/icons/closeIcon.png'
-
+import Backdrop from '@mui/material/Backdrop';
 
 export default function ModalHOC({
   openNewInterviewModal,
@@ -15,16 +15,20 @@ export default function ModalHOC({
   };
   
   const handleClose = (event, reason) => {
-    console.log(event, reason);
     setOpenNewInterviewModal(false);
   };
 
 
   return (
     <Modal
-      open={openNewInterviewModal}
-      onClose={handleClose}
-      closeAfterTransition
+    open={openNewInterviewModal}
+    onClose={handleClose}
+    closeAfterTransition
+    BackdropComponent={Backdrop}
+    BackdropProps={{
+      invisible: true, // This will make the backdrop invisible
+      onClick: (event) => event.stopPropagation(), // Prevent closing on backdrop click
+    }}
     >
       <MainBox>
         <Btn onClick={handleClose}><img src={closeIcon} /></Btn>
@@ -41,15 +45,15 @@ export default function ModalHOC({
 
 const Btn = styled.button`
 position: absolute;
-right: 0.8rem;
-top: 0.8rem;
+right: 1rem;
+top: 1rem;
 background-color: transparent;
 border: none;
 cursor: pointer;
 
 
 img {
-  width: 2rem;
+  width: 1.2rem;
 }
 
 `
@@ -59,13 +63,11 @@ const MainBox = styled.div`
 
 display: flex;
   margin: 0 auto;
-  width: 40%;
-  height: 60vh;
+  width: 80%;
+  height: 80vh;
   background-color: var(--white);
-  padding-top: 2rem;
-  padding-left: 6rem;
-  padding-right: 6rem;
-  padding-bottom: 6rem;
+  padding: 2rem 3rem 3rem 2rem;
+  box-sizing: border-box;
   margin-bottom: 0.2rem;
   border-radius: 0.3rem;
   margin-top: 5rem;

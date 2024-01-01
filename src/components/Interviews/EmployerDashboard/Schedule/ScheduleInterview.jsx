@@ -6,13 +6,19 @@ import LogoHeader from '../../../commonComponents/LogoHeader'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+
+
 const ScheduleInterview = () => {
   const [rows, setRows] = useState([])
   const navigate = useNavigate();
   const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
   const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
 
-  console.log("token--->", accessToken, "clientcode --> ", clientCode)
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+
+  
   useEffect(() => {
 
     if (!accessToken || !clientCode) {
@@ -20,17 +26,20 @@ const ScheduleInterview = () => {
       navigate("/login");
     }
     async function getData() {
-      const resObj = await getJdsForMatching(accessToken, clientCode);
-      if (resObj) setRows(resObj.data.data);
+      const resObj = await getJdsForMatching(accessToken, clientCode, page, size);
+      if (resObj) {
+        setRows(resObj?.data?.data);
+        setTotal(resObj?.data?.total);
+      }
     }
     getData()
-  }, [])
+  }, [page, size])
 
   return (
     <StyledDiv>
       <LogoHeader />
       <Content>
-        <ManageJds rows={rows} />
+        <ManageJds rows={rows} total={total} page={page} setPage={setPage} size={size} setSize={setSize} />
       </Content>
     </StyledDiv>
   )

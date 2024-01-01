@@ -18,12 +18,12 @@ import CommonDrawer from "../../../commonComponents/CommonDrawer";
 import Billing from "./Billing";
 import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
+import TableSearchBar from "../commonComponents/TableSearchBar";
 
 function Row(props) {
   const { row, index } = props;
 
   const handleDelete = () => {
-    console.log('deleted');
     handleClose();
   }
 
@@ -54,15 +54,15 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           ...
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           ...
         </TableCell>{" "}
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">...</TableCell>
+        <TableCell align="center" className="tableCell">
           <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
             <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='Test' handleDelete={handleDelete} />} />
@@ -78,7 +78,8 @@ function Row(props) {
 
 
 export default function AvailableTest() {
-
+  
+  const [searchValue, setSearchValue] = useState('');
   const handleSearch = () => {
 
   }
@@ -88,23 +89,16 @@ export default function AvailableTest() {
       <TableContainer component={Paper} className="tableBox">
         <span className="title">Available Tests</span>
         <SearchBarContainer>
-          <div className='skillBox'>
-            <img src={searchBlack} />
-            <input
-              className='skillInput'
-              type="text"
-              placeholder="Search"
-            />
-          </div>
+          <TableSearchBar value={searchValue} setValue={setSearchValue}/>
         </SearchBarContainer>
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Role</TableCell>
-              <TableCell align="center">Date of Creation</TableCell>
-              <TableCell align="center">Created By</TableCell>
-              <TableCell align="center">Test Type</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" className="tableCell">Role</TableCell>
+              <TableCell align="center" className="tableCell">Date of Creation</TableCell>
+              <TableCell align="center" className="tableCell">Created By</TableCell>
+              <TableCell align="center" className="tableCell">Test Type</TableCell>
+              <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
@@ -139,8 +133,8 @@ align-items: center;
 
   .title {
     padding-left: 1.2rem;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 }
 
@@ -160,25 +154,27 @@ align-items: center;
 .tableHead {
   background-color: #d1fff0;
   width: 100%;
+
+  .tableCell {
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font);
+    color: var(--color);
+  }
+  
 }
 
 .tableBody {
   width: 100%;
+
+  .tableCell {
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: var(--font);
+    color: var(--color);
+  }
 }
 
-
-.btn {
-  padding: 0.5rem 1rem;
-  margin-top: 3rem;
-  background-color: var(--lightOrange);
-  border: none;
-  color: var(--white);
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  
-}
 
 
 .checkBox {
@@ -191,40 +187,10 @@ const SearchBarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
+  margin: 0.5rem auto;
   height: 3rem;
   background-color: var(--white);
   border-radius: 0.5rem;;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
-
-
 `

@@ -7,6 +7,11 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { toast } from 'react-toastify';
+import { addEmployee } from '../../../functions/api/employers/profile/addEmployee';
+import { useSelector } from 'react-redux';
+import { editEmployee } from '../../../functions/api/employers/profile/editEmployee';
+import Created from '../../commonComponents/infoDialog/Created';
 
 const Container = styled.div`
   width: 100%;
@@ -15,6 +20,13 @@ const Container = styled.div`
   border-radius: 5px;
   background-color: var(--white);
 
+  .title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
   form {
     display: flex;
   flex-direction: column;
@@ -22,18 +34,52 @@ const Container = styled.div`
   padding-bottom: 1rem;
   gap: 1rem;
 
+  .inputBox {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+  .input {
+    width: 50%;
+  }
+
   .MuiFormHelperText-root {
     font-size: 0.6rem;
   }
   
-  #outlined-basic {
-    padding: 0.5rem 0.5rem;
-    background-color: #F6F6FB;
+  @media (max-width: 2000px) {
+    #outlined-basic {
+      padding: 0.75rem 0.5rem;
+      background-color: #F6F6FB;
+      font-family: var(--font);
+    }
   }
 
-//   #demo-simple-select-label {
-//     font-size: 0.8rem;
-//   }
+  @media (max-width: 1700px) {
+    #outlined-basic {
+      padding: 0.85rem 0.5rem;
+      background-color: #F6F6FB;
+      font-family: var(--font);
+    }
+  }
+
+  @media (max-width: 1350px) {
+    #outlined-basic {
+      padding: 0.95rem 0.5rem;
+      background-color: #F6F6FB;
+      font-family: var(--font);
+    }
+  }
+
+  @media (max-width: 1200px) {
+    #outlined-basic {
+      padding: 1rem 0.5rem;
+      background-color: #F6F6FB;
+      font-family: var(--font);
+    }
+  }
+
   }
 `;
 
@@ -48,10 +94,13 @@ const Button = styled.button`
   border-radius: 0.3rem;
   cursor: pointer;
   align-self: center;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
 `;
 
-function ManageUserForm({ array, handleClose }) {
-    const [mode, setMode] = useState("create");
+function ManageUserForm({ array, handleClose, setSuccessPopup, setSavedPopup }) {
+    const [mode, setMode] = useState(array[1]);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -61,16 +110,17 @@ function ManageUserForm({ array, handleClose }) {
         agencyContact: '',
     });
 
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
 
     useEffect(() => {
         if (array[0]) {
             setFormData(array[0]);
         }
         setMode(array[1])
-        console.log("props", array[1]);
     }, [])
 
-    console.log(formData);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -79,139 +129,58 @@ function ManageUserForm({ array, handleClose }) {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        handleClose();
+
+        try {
+            if (mode === "create") {
+                const res = await addEmployee(formData, accessToken, clientCode);
+                if (res) {
+                    setSuccessPopup(true);
+                    handleClose();
+                }
+            } else if (mode === 'edit') {
+                const payload = {
+                    name: formData.name,
+                    contact: formData.contact,
+                    active: true
+                };
+                const res = await editEmployee(formData.id, payload, accessToken, clientCode);
+                if (res) {
+                    setSavedPopup(true);
+                    handleClose();
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error?.message);
+            const errMsg =
+                error?.response?.data?.notify?.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 8000, // Time in milliseconds, adjust as needed
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+        }
     };
+
 
     return (
         <Container>
-            <h3>User Registration</h3>
+            <span className='title'>User Registration</span>
 
             <ValidatorForm onSubmit={handleSubmit} instantFeedback={false}>
 
-                <TextValidator id="outlined-basic" label="Name" variant="outlined"
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    size='small'
-                    errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
-                    validators={['required', 'minStringLength:3', 'maxStringLength:29']}
-                    fullWidth
-                    inputProps={{
-                        sx: {
-                            color: '#626264',
-                            fontSize: '0.8rem',
-                            fontWeight: '400'
-                        },
-                    }}
-                    InputLabelProps={{
-                        sx: {
-                            color: '#626264',
-                            fontSize: '0.8rem',
-                            fontWeight: '400'
-                        },
-                    }}
-                />
-
-                <TextValidator id="outlined-basic" label="Email" variant="outlined"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    disabled={mode == "edit"}
-                    size='small'
-                    errorMessages={["This field is required", 'Email is not valid']}
-                    validators={['required', 'isEmail']}
-                    fullWidth
-                    inputProps={{
-                        sx: {
-                            color: '#626264',
-                            fontSize: '0.8rem',
-                            fontWeight: '400'
-                        },
-                    }}
-                    InputLabelProps={{
-                        sx: {
-                            color: '#626264',
-                            fontSize: '0.8rem',
-                            fontWeight: '400'
-                        },
-                    }}
-                />
-
-                <TextValidator id="outlined-basic" label="Contact" variant="outlined"
-                    type="tel"
-                    name="contact"
-                    value={formData.contact}
-                    onChange={handleChange}
-                    disabled={mode == "edit"}
-                    size='small'
-                    errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
-                    validators={['required', 'isNumber', 'minStringLength:10']}
-                    fullWidth
-                    inputProps={{
-                        sx: {
-                            color: '#626264',
-                            fontSize: '0.8rem',
-                            fontWeight: '400'
-                        },
-                    }}
-                    InputLabelProps={{
-                        sx: {
-                            color: '#626264',
-                            fontSize: '0.8rem',
-                            fontWeight: '400'
-                        },
-                    }}
-                />
-
-
-                <FormControl sx={{ backgroundColor: '#F6F6FB', padding: '0' }} fullWidth required>
-                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Role"
-                        name="role"
-                        value={formData.role}
-                        onChange={handleChange}
-                        size='small'
-                        inputProps={{
-                            sx: {
-                                color: '#626264',
-                                fontSize: '0.8rem',
-                                fontWeight: '400'
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: {
-                                color: '#626264',
-                                fontSize: '0.8rem',
-                                fontWeight: '400'
-                            },
-                        }}
-                        sx={{
-                            padding: '0rem 0 0.3rem 0',
-                        }}
-                    >
-                        <MenuItem value="Admin">Admin</MenuItem>
-                        <MenuItem value="Agency">Agency</MenuItem>
-                        <MenuItem value="Recruiter">Recruiter</MenuItem>
-                        <MenuItem value="Operator">Operator (Read Only)</MenuItem>
-                    </Select>
-                </FormControl>
-
-                {
-                    formData.role === 'Agency' &&
-                    <>
-                        <TextValidator id="outlined-basic" label="Agency Name" variant="outlined"
+                <div className="inputBox">
+                    <div className='input'>
+                        <TextValidator id="outlined-basic" label="Name" variant="outlined"
                             type="text"
-                            name="agencyName"
-                            value={formData.agencyName}
+                            name="name"
+                            value={formData.name}
                             onChange={handleChange}
-                            size='small'
                             errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
                             validators={['required', 'minStringLength:3', 'maxStringLength:29']}
                             fullWidth
@@ -230,15 +199,18 @@ function ManageUserForm({ array, handleClose }) {
                                 },
                             }}
                         />
-                        <TextValidator id="outlined-basic" label="Agency Contact" variant="outlined"
-                            type="tel"
-                            name="agencyContact"
-                            value={formData.agencyContact}
+                    </div>
+
+                    <div className='input'>
+                        <TextValidator id="outlined-basic" label="Email" variant="outlined"
+                            type="email"
+                            name="email"
+                            value={formData.email}
                             onChange={handleChange}
-                            size='small'
+                            disabled={mode == "edit"}
+                            errorMessages={["This field is required", 'Email is not valid']}
+                            validators={['required', 'isEmail']}
                             fullWidth
-                            errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
-                            validators={['required', 'isNumber', 'minStringLength:10']}
                             inputProps={{
                                 sx: {
                                     color: '#626264',
@@ -254,6 +226,131 @@ function ManageUserForm({ array, handleClose }) {
                                 },
                             }}
                         />
+                    </div>
+                </div>
+
+                <div className="inputBox">
+                    <div className='input'>
+                        <TextValidator id="outlined-basic" label="Contact" variant="outlined"
+                            type="tel"
+                            name="contact"
+                            value={formData.contact}
+                            onChange={handleChange}
+                            errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+                            validators={['required', 'isNumber', 'minStringLength:10']}
+                            fullWidth
+                            inputProps={{
+                                sx: {
+                                    color: '#626264',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '400'
+                                },
+                            }}
+                            InputLabelProps={{
+                                sx: {
+                                    color: '#626264',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '400'
+                                },
+                            }}
+                        />
+
+                    </div>
+
+                    <div className='input'>
+                        <FormControl sx={{ backgroundColor: '#F6F6FB', padding: '0' }} fullWidth required>
+                            <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                label="Role"
+                                name="role"
+                                value={formData.role}
+                                onChange={handleChange}
+                                size='small'
+                                inputProps={{
+                                    sx: {
+                                        color: '#626264',
+                                        fontSize: '0.8rem',
+                                        fontWeight: '400'
+                                    },
+                                }}
+                                InputLabelProps={{
+                                    sx: {
+                                        color: '#626264',
+                                        fontSize: '0.8rem',
+                                        fontWeight: '400'
+                                    },
+                                }}
+                                sx={{
+                                    padding: '0rem 0 0.6rem 0',
+                                }}
+                            >
+                                <MenuItem value="Admin">Admin</MenuItem>
+                                <MenuItem value="Agency">Agency</MenuItem>
+                                <MenuItem value="Recruiter">Recruiter</MenuItem>
+                                <MenuItem value="Operator">Operator (Read Only)</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                </div>
+
+                {
+                    formData.role === 'Agency' &&
+                    <>
+                        <div className="inputBox">
+                            <div className='input'>
+                                <TextValidator id="outlined-basic" label="Agency Name" variant="outlined"
+                                    type="text"
+                                    name="agencyName"
+                                    value={formData.agencyName}
+                                    onChange={handleChange}
+                                    errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
+                                    validators={['required', 'minStringLength:3', 'maxStringLength:29']}
+                                    fullWidth
+                                    inputProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.8rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.8rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                />
+                            </div>
+
+                            <div className='input'>
+                                <TextValidator id="outlined-basic" label="Agency Contact" variant="outlined"
+                                    type="tel"
+                                    name="agencyContact"
+                                    value={formData.agencyContact}
+                                    onChange={handleChange}
+                                    fullWidth
+                                    errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
+                                    validators={['required', 'isNumber', 'minStringLength:10']}
+                                    inputProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.8rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.8rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </>
                 }
 

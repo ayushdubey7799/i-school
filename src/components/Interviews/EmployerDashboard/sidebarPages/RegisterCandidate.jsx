@@ -31,7 +31,7 @@ const Component = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   border-radius: 0.7rem;
   font-size: 0.9rem;
   background-color: var(--white);
@@ -44,15 +44,17 @@ const Component = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     color: var(--white);
-    font-size: 1rem;
-    margin-top: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    align-self: center;
+    font-family: var(--font);
   }
 
   .title {
-    margin-bottom: 4rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   form {
@@ -68,12 +70,35 @@ const Component = styled.div`
 
     span {
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 0.2rem;
     }
   
-    #outlined-basic {
-      padding: 0.5rem 0.5rem;
-      background-color: #F6F6FB;
+    @media (max-width: 2000px) {
+      #outlined-basic {
+        padding: 0.75rem 0.5rem;
+        background-color: #F6F6FB;
+      }
+    }
+  
+    @media (max-width: 1700px) {
+      #outlined-basic {
+        padding: 0.85rem 0.5rem;
+        background-color: #F6F6FB;
+      }
+    }
+  
+    @media (max-width: 1350px) {
+      #outlined-basic {
+        padding: 0.95rem 0.5rem;
+        background-color: #F6F6FB;
+      }
+    }
+  
+    @media (max-width: 1200px) {
+      #outlined-basic {
+        padding: 1rem 0.5rem;
+        background-color: #F6F6FB;
+      }
     }
     
     .resumeBox {
@@ -82,7 +107,7 @@ const Component = styled.div`
       align-items: center;
       justify-content: center;
       width: 100%;
-      gap: 1rem;
+      gap: 0.5rem;
       margin-top: 0rem;
     }
   }
@@ -110,6 +135,8 @@ const Label = styled.label`
 
 const FileInput = styled.input`
   margin-bottom: 0rem;
+  position: absolute;
+  left: -9999px;
 `;
 
 
@@ -154,16 +181,20 @@ const RegisterCandidate = () => {
 
   const handleRegister = async () => {
     try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      formData.append("payload", JSON.stringify({
-        email,
-        firstName,
-        lastName,
-        contact,
-        source
-      }));
+      if (selectedFileName == '') {
+        toast.warning("All fields required");
+      } else {
+
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("payload", JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          contact,
+          source
+        }));
 
       const res = await addProfileWithFile(formData, accessToken, clientCode);
 
@@ -179,6 +210,7 @@ const RegisterCandidate = () => {
         setSelectedFileName('');
         setRefText('');
       }
+    }
     } catch (error) {
       const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
       setErrorMsg(errMsg);
@@ -186,8 +218,6 @@ const RegisterCandidate = () => {
       setErrorPopup(true);
     }
   };
-
-  { errorMsg && console.log(errorMsg) }
 
   const DecideComponent = () => {
     return <div>working</div>
@@ -199,7 +229,6 @@ const RegisterCandidate = () => {
       {successPopup && <Created handleClose={handleSuccessPopUpClose} open={successPopup} msg='Profile successfully created' />}
       <Component>
         <span className='title'>Register New Candidate</span>
-        {/* {loading && <span>Loading...</span>} */}
         <ValidatorForm onSubmit={handleRegister}>
           <TextValidator id="outlined-basic" label="Email" variant="outlined"
             type='email'
@@ -207,7 +236,6 @@ const RegisterCandidate = () => {
             onChange={(e) => setEmail(e.target.value)}
             errorMessages={["This field is required", 'Email is not valid']}
             validators={['required', 'isEmail']}
-            size='small'
             required
             inputProps={{
               sx: {
@@ -232,7 +260,6 @@ const RegisterCandidate = () => {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
-            size='small'
             errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
             validators={['required', 'minStringLength:3', 'maxStringLength:29']}
             fullWidth
@@ -256,7 +283,6 @@ const RegisterCandidate = () => {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
-            size='small'
             errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
             validators={['required', 'minStringLength:3', 'maxStringLength:29']}
             fullWidth
@@ -279,7 +305,6 @@ const RegisterCandidate = () => {
             type='tel'
             value={contact}
             onChange={(e) => setContact(e.target.value)}
-            size='small'
             errorMessages={["This field is required", 'Must be a number', 'Must be at least 10 characters long',]}
             validators={['required', 'isNumber', 'minStringLength:10']}
             fullWidth
@@ -340,10 +365,10 @@ const RegisterCandidate = () => {
             type='text'
             value={refText}
             onChange={(e) => setRefText(e.target.value)}
-            size='small'
             errorMessages={["This field is required", 'Must be a least 3 characters long', 'Must be less than 30 chatacters long']}
             validators={['required', 'minStringLength:3', 'maxStringLength:29']}
             fullWidth
+            required
             inputProps={{
               sx: {
                 color: '#626264',
@@ -367,14 +392,11 @@ const RegisterCandidate = () => {
               type="file"
               accept="*"
               onChange={handleFileChange}
-              style={{ display: 'none' }}
-              required
             />
             <span>Select Resume</span>
           </div>
-          <button className='registerBtn'>Register Candidate</button>
+          <button className='registerBtn' type='submit'>Register Candidate</button>
         </ValidatorForm>
-
 
       </Component>
     </Container>

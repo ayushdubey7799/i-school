@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef } from "react";
+import styled, { css } from "styled-components";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,56 +7,70 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
-import { jds } from '../../../../utils/contantData';
-import editIcon from '../../../../assets/icons/edit.png'
-import deleteIcon from '../../../../assets/icons/delete.png'
-import searchIcon from '../../../../assets/icons/searchIcon.png'
-import searchBlack from '../../../../assets/icons/searchBlack.png'
-import threeDot from '../../../../assets/icons/threeDot.png'
-import shareIcon from '../../../../assets/icons/share.png'
-import shareWithEmp from '../../../../assets/icons/shareWithEmp.png'
-import eyeIcon from '../../../../assets/icons/visible.png'
-import exportIcon from '../../../../assets/icons/export.png'
-import { getJdsForMatching } from '../../../../functions/api/employers/match/getJdsForMatching';
-import CommonDrawer from '../../../commonComponents/CommonDrawer';
-import CommonDialog from '../../../commonComponents/CommonDialog';
-import JdDetails from '../../../../pages/JdDetails';
-import ExportDialogContent from '../../../commonComponents/ExportDialogContent';
-import { toast } from 'react-toastify';
-import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
-import AgencyShareDialogContent from '../../../commonComponents/AgencyShareDialogContent';
-import { deleteJd } from '../../../../functions/api/employers/deleteJd';
-import ModalHOC from '../../SeekerDashboard/ModalHOC';
-import JdForm from '../JdForm';
-import { getActiveJds } from '../../../../slices/jdSlice';
-import { useDispatch } from 'react-redux';
-import JdsDetails from './JdsDetails';
-import ReqModalDetails from '../ReqModalDetails';
-import Deleted from '../../../commonComponents/infoDialog/Deleted';
-import Error from '../../../commonComponents/infoDialog/Error';
-import { exportJd } from '../../../../functions/api/employers/exportJd';
-import { Pagination, PaginationSizeFilter } from '../../../commonComponents/Pagination';
-import Saved from '../../../commonComponents/infoDialog/Saved';
+import editIcon from "../../../../assets/icons/edit.png";
+import deleteIcon from "../../../../assets/icons/delete.png";
+import threeDot from "../../../../assets/icons/threeDot.png";
+import shareIcon from "../../../../assets/icons/share.png";
+import shareWithEmp from "../../../../assets/icons/shareWithEmp.png";
+import eyeIcon from "../../../../assets/icons/visible.png";
+import exportIcon from "../../../../assets/icons/export.png";
+import { getJdsForMatching } from "../../../../functions/api/employers/match/getJdsForMatching";
+import CommonDrawer from "../../../commonComponents/CommonDrawer";
+import CommonDialog from "../../../commonComponents/CommonDialog";
+import JdDetails from "../../../../pages/JdDetails";
+import ExportDialogContent from "../../../commonComponents/ExportDialogContent";
+import { toast } from "react-toastify";
+import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
+import AgencyShareDialogContent from "../../../commonComponents/AgencyShareDialogContent";
+import { deleteJd } from "../../../../functions/api/employers/deleteJd";
+import ModalHOC from "../../SeekerDashboard/ModalHOC";
+import JdForm from "../JdForm";
+import { getActiveJds, setJdTrigger } from "../../../../slices/jdSlice";
+import { useDispatch } from "react-redux";
+import JdsDetails from "./JdsDetails";
+import ReqModalDetails from "../ReqModalDetails";
+import Deleted from "../../../commonComponents/infoDialog/Deleted";
+import Error from "../../../commonComponents/infoDialog/Error";
+import { exportJd } from "../../../../functions/api/employers/exportJd";
+import {
+  Pagination,
+  PaginationSizeFilter,
+} from "../../../commonComponents/Pagination";
+import Saved from "../../../commonComponents/infoDialog/Saved";
+import TableSearchBar from "../commonComponents/TableSearchBar";
+import { dateConversion } from "../../../../utils/timeZoneConversation";
+import uploadIcon from '../../../../assets/icons/upload.png'
+
+import { useJwt } from 'react-jwt';
+
 
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, rowsLength, index } = props;
 
+  const dispatch = useDispatch();
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
   const [jdData, setJdData] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
 
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
   const [errorPopup, setErrorPopup] = useState(false);
   const [deletePopup, setDeletePopup] = useState(false);
   const [savedPopup, setSavedPopup] = useState(false);
 
-  const accessToken = useSelector(state => state.auth.userData.accessToken);
-  const clientCode = useSelector(state => state.auth.userData.user.clientCode);
+  const accessToken = useSelector((state) => state.auth.userData.accessToken);
+  const clientCode = useSelector(
+    (state) => state.auth.userData.user.clientCode
+  );
+
+
+  const [userRole, setUserRole] = useState('');
+  const decodedToken = useJwt(accessToken);
 
   // state to open and close Drawer
   const [state, setState] = React.useState({
@@ -68,10 +82,17 @@ function Row(props) {
     right: false,
   });
 
+  // state to open and close Drawer
+  const [agencyState, setAgencyState] = React.useState({
+    right: false,
+  });
+
+
+
   const handleEdit = (row) => {
     setEditOpen(true);
     setJdData(row);
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -83,7 +104,9 @@ function Row(props) {
       }
     } catch (error) {
       // Handle network errors or unexpected issues
-      const errMsg = error.response.data.notify.message || "An error occurred. Please try again."
+      const errMsg =
+        error.response.data.notify.message ||
+        "An error occurred. Please try again.";
       setErrorMsg(errMsg);
       setErrorPopup(true);
     } finally {
@@ -116,11 +139,11 @@ function Row(props) {
 
   const handleErrorPopUpClose = () => {
     setErrorPopup(false);
-  }
+  };
 
   const handleDeletePopUpClose = () => {
     setDeletePopup(false);
-  }
+  };
 
   const handleSavedPopUpClose = () => {
     setSavedPopup(false);
@@ -128,7 +151,10 @@ function Row(props) {
 
   // function to open and close Drawer
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setState({ ...state, [anchor]: open });
@@ -136,25 +162,39 @@ function Row(props) {
 
   //function to open and close Drawer
   const toggleReqDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setReqState({ ...reqState, [anchor]: open });
   };
 
+  //function to open and close Drawer
+  const toggleAgencyDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setAgencyState({ ...agencyState, [anchor]: open });
+  };
+
+
+
   const openDropdown = (index) => {
     setOpenDropdownIndex(index);
   };
-
 
   const closeAllDropdowns = () => {
     setOpenDropdownIndex(-1);
   };
 
-
   const handleShareSocial = () => {
-    console.log('Share Social')
-  }
+
+  };
 
   useEffect(() => {
     const handleDocumentClick = (event) => {
@@ -163,22 +203,57 @@ function Row(props) {
       }
     };
 
-    document.addEventListener('mousedown', handleDocumentClick);
+    document.addEventListener("mousedown", handleDocumentClick);
 
     return () => {
-      document.removeEventListener('mousedown', handleDocumentClick);
+      document.removeEventListener("mousedown", handleDocumentClick);
     };
   }, []);
 
-
+  // Access Roles by access Token  
+  useEffect(() => {
+    const getUserRoles = () => {
+      const userRoles = decodedToken?.decodedToken?.grants || '';
+      setUserRole(userRoles);
+    }
+    getUserRoles();
+  }, [accessToken, decodedToken]);
 
   return (
     <React.Fragment>
-      <ModalHOC setOpenNewInterviewModal={setEditOpen} openNewInterviewModal={editOpen} component={<JdForm array={[jdData, 'edit']} handleClose={() => setEditOpen(false)} setErrorMsg={setErrorMsg} setErrorPopup={setErrorPopup} setSavedPopup={setSavedPopup} />} />
-      {errorPopup && <Error handleClose={handleErrorPopUpClose} open={errorPopup} msg={errorMsg} handleRetryFunc={() => handleDelete(row.id)} />}
+      <ModalHOC
+        setOpenNewInterviewModal={setEditOpen}
+        openNewInterviewModal={editOpen}
+        component={
+          <JdForm
+            array={[jdData, "edit"]}
+            handleClose={() => setEditOpen(false)}
+            setErrorMsg={setErrorMsg}
+            setErrorPopup={setErrorPopup}
+            setSavedPopup={setSavedPopup}
+          />
+        }
+      />
+
+      <CommonDrawer
+        toggleDrawer={toggleAgencyDrawer}
+        state={agencyState}
+        component={<div>Agency List</div>}
+      />
+      {errorPopup && (
+        <Error
+          handleClose={handleErrorPopUpClose}
+          open={errorPopup}
+          msg={errorMsg}
+          handleRetryFunc={() => handleDelete(row.id)}
+        />
+      )}
       {deletePopup && (
         <Deleted
-          handleClose={handleDeletePopUpClose}
+          handleClose={() => {
+            handleDeletePopUpClose();
+            dispatch(setJdTrigger(!jdTrigger));
+          }}
           open={deletePopup}
           msg={`JD ID ${row.jdId} successfully deleted`}
         />
@@ -191,49 +266,153 @@ function Row(props) {
         />
       )}
       <TableRow
-        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-        <TableCell component="th" scope="row" align='center'>
-          {row.jdId}
+        sx={{ "& > *": { borderBottom: "unset" } }}
+        className={`${index % 2 == 1 ? "colored" : ""}`}
+      >
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
+          {row.jdId?.toUpperCase()}
         </TableCell>
-        <TableCell component="th" scope="row" align='center'>
+        {userRole === 'ROLE_AGENCY' && <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
+          ...
+        </TableCell>}
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           ...
         </TableCell>{" "}
-        <TableCell component="th" scope="row" align="center">
-          {row.createdAt?.slice(0, 10)}
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
+          {dateConversion(row.createdAt)}
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           {row.recruiter}
-
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           {row.hiringManager}
         </TableCell>
-        {/* <TableCell component="th" scope="row" align="center">
+
+        {userRole === 'ROLE_AGENCY' && <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
           ...
-        </TableCell> */}
-        <TableCell component="th" scope="row" align="center">
-          <BoxRow>
-            <img src={threeDot} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer' }} className={`three-dots ${openDropdownIndex === index ? "active" : ""}`}
+        </TableCell>}
+        {userRole === 'ROLE_AGENCY' && <TableCell component="th" scope="row" align="center" className="tableCell" style={{ display: 'flex', justifyContent: 'center' }}>
+          <button className="btn1"><img src={uploadIcon} className="icon" /></button>
+        </TableCell>}
+        <TableCell component="th" scope="row" align="center" onClick={toggleAgencyDrawer("right", true)}>
+          <img src={eyeIcon} className="threeDotIcon" />
+        </TableCell>
+        <TableCell
+          component="th"
+          scope="row"
+          align="center"
+          className="tableCell"
+        >
+          <BoxRow isLast={index >= rowsLength - 2}>
+            <img
+              src={threeDot}
+              style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
+              className={`three-dots ${openDropdownIndex === index ? "active" : ""
+                }`}
               onClick={() => {
                 if (openDropdownIndex === index) {
                   closeAllDropdowns();
                 } else {
                   openDropdown(index);
                 }
-              }} />
+              }}
+            />
             <div
-              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""}`} ref={dropdownRef}
+              className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
+                }`}
+              ref={dropdownRef}
             >
-              <CommonDrawer toggleDrawer={toggleReqDrawer} state={reqState} component={<ReqModalDetails reqs={row.reqNumbers} jdId={row.jdId} id={row?.id} />} />
-              <CommonDrawer toggleDrawer={toggleDrawer} state={state} component={<JdsDetails Jds={row} />} />
-              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='JD' handleDelete={handleDelete} deleteId={row.id} />} />
-              <CommonDialog open={openShareAgency} handleClose={handleCloseShareAgency} component={<AgencyShareDialogContent handleClose={handleCloseShareAgency} />} />
-              <span onClick={() => handleEdit(row)}><img src={editIcon} className='threeDotIcon' /> Edit</span>
-              <span onClick={handleClickOpen}><img src={deleteIcon} className='threeDotIcon' /> Delete</span>
-              <span onClick={toggleDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Details</span>
-              <span onClick={toggleReqDrawer('right', true)}><img src={eyeIcon} className='threeDotIcon' /> View Reqs</span>
-              <span onClick={handleShareSocial}><img src={shareIcon} className='threeDotIcon' /> Share on Social</span>
-              <span onClick={handleClickOpenShareAgency}><img src={shareWithEmp} className='threeDotIcon' /> Share with Agency</span>
+              <CommonDrawer
+                toggleDrawer={toggleReqDrawer}
+                state={reqState}
+                component={
+                  <ReqModalDetails
+                    reqs={row.reqNumbers}
+                    jdId={row.jdId}
+                    id={row?.id}
+                  />
+                }
+              />
+              <CommonDrawer
+                toggleDrawer={toggleDrawer}
+                state={state}
+                component={<JdsDetails Jds={row} />}
+              />
+              <CommonDialog
+                open={open}
+                handleClose={handleClose}
+                component={
+                  <DeleteDialogContent
+                    handleClose={handleClose}
+                    text="JD"
+                    handleDelete={handleDelete}
+                    deleteId={row.id}
+                  />
+                }
+              />
+              <CommonDialog
+                open={openShareAgency}
+                handleClose={handleCloseShareAgency}
+                component={
+                  <AgencyShareDialogContent
+                    handleClose={handleCloseShareAgency}
+                  />
+                }
+              />
+              <span onClick={() => handleEdit(row)}>
+                <img src={editIcon} className="threeDotIcon" /> Edit
+              </span>
+              <span onClick={handleClickOpen}>
+                <img src={deleteIcon} className="threeDotIcon" /> Delete
+              </span>
+              <span onClick={toggleDrawer("right", true)}>
+                <img src={eyeIcon} className="threeDotIcon" /> View Details
+              </span>
+              <span onClick={toggleReqDrawer("right", true)}>
+                <img src={eyeIcon} className="threeDotIcon" /> View Reqs
+              </span>
+              <span onClick={handleShareSocial}>
+                <img src={shareIcon} className="threeDotIcon" /> Share on Social
+              </span>
+              <span onClick={handleClickOpenShareAgency}>
+                <img src={shareWithEmp} className="threeDotIcon" /> Share with
+                Agency
+              </span>
             </div>
           </BoxRow>
         </TableCell>
@@ -242,14 +421,26 @@ function Row(props) {
   );
 }
 
-
 const ActiveJds = () => {
   const [tableRows, setTableRows] = useState([]);
   const dispatch = useDispatch();
-  const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
-  const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
-  // const jdData = useSelector(state => state?.jd?.activeJds);
+  const accessToken = useSelector(
+    (state) => state?.auth?.userData?.accessToken
+  );
+  const clientCode = useSelector(
+    (state) => state?.auth?.userData?.user?.clientCode
+  );
+  const jdData = useSelector((state) => state?.jd?.activeJds);
+  const jdTrigger = useSelector((state) => state.jd.JdTrigger);
+
+  const [userRole, setUserRole] = useState('');
+  const decodedToken = useJwt(accessToken);
+
   const [total, setTotal] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [search, setSearch] = useState(null);
 
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
@@ -260,12 +451,17 @@ const ActiveJds = () => {
   };
 
   const handlePageChange = (change) => {
-    if (change && (page < Math.ceil(+total / +size))) {
+    if (change && page < Math.ceil(+total / +size)) {
       setPage((prev) => prev + 1);
     } else if (!change && page > 1) {
       setPage((prev) => prev - 1);
     }
   };
+
+
+  useEffect(() => {
+    dispatch(getActiveJds(accessToken, clientCode));
+  }, []);
 
   useEffect(() => {
     async function getData() {
@@ -274,7 +470,22 @@ const ActiveJds = () => {
       setTotal(res?.data?.total);
     }
     getData();
-  }, [page, size]);
+  }, [page, size, jdTrigger, dispatch]);
+
+  useEffect(() => {
+    if (searchValue?.trim()) {
+      setSearch(true);
+      setFilteredData(() =>
+        jdData?.filter(
+          (item) =>
+            item.jdId.toLowerCase().includes(searchValue.toLowerCase()) ||
+            item.title.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+    } else {
+      setSearch(false);
+    }
+  }, [searchValue]);
 
   // State, function to Open and close Export Dialog Box
   const [openExport, setOpenExport] = React.useState(false);
@@ -289,62 +500,121 @@ const ActiveJds = () => {
 
   // function to handle delete operation, which need to be passed to confirm delete dialog Comp as props
   const handleExport = async (exportType) => {
-    console.log('Exporting');
-    const res = await exportJd(exportType,accessToken,clientCode)
+    const res = await exportJd(exportType, accessToken, clientCode);
 
     handleExportClose();
-    toast.success('Exported Successfully');
-  }
+    toast.success("Exported Successfully");
+  };
 
-  const handleSearch = () => {
 
-  }
+  // Access Roles by access Token  
+  useEffect(() => {
+    const getUserRoles = () => {
+      const userRoles = decodedToken?.decodedToken?.grants || '';
+      setUserRole(userRoles);
+    }
+    getUserRoles();
+  }, [accessToken, decodedToken]);
+
 
   return (
     <Container1>
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
-          <CommonDialog open={openExport} handleClose={handleExportClose} component={<ExportDialogContent handleClose={handleExportClose} handleExport={handleExport} />} />
-          <span className='titleBox'>
-            <span className='title'>Active JDs</span>
-            <span className='btn' onClick={handleExportClickOpen}><img src={exportIcon} className='icon' />Export</span>
+          <CommonDialog
+            open={openExport}
+            handleClose={handleExportClose}
+            component={
+              <ExportDialogContent
+                handleClose={handleExportClose}
+                handleExport={handleExport}
+              />
+            }
+          />
+          <span className="titleBox">
+            <span className="title">Active JDs</span>
+            <span className="btn" onClick={handleExportClickOpen}>
+              <img src={exportIcon} className="icon" />
+              Export
+            </span>
           </span>
           <div style={{ display: "flex" }}>
             <SearchBarContainer>
-              <div className="skillBox">
-                <img src={searchBlack} />
-                <input
-                  className="skillInput"
-                  type="text"
-                  placeholder="Search"
-                />
-              </div>
+              <TableSearchBar value={searchValue} setValue={setSearchValue} />
             </SearchBarContainer>
           </div>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align='center'>JD ID</TableCell>
-                <TableCell align='center'>Test ID</TableCell>
-                <TableCell align='center'>Active Since</TableCell>
-                <TableCell align='center'>Recruiter</TableCell>
-                <TableCell align='center'>Hiring Manager</TableCell>
-                {/* <TableCell align='center'>Comments</TableCell> */}
-                <TableCell align='center'>Actions</TableCell>
+                <TableCell align="center" className="tableCell">
+                  JD ID
+                </TableCell>
+                {userRole === 'ROLE_AGENCY' && <TableCell align="center" className="tableCell">
+                  Employer
+                </TableCell>}
+                <TableCell align="center" className="tableCell">
+                  Test ID
+                </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Active Since
+                </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Recruiter
+                </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Hiring Manager
+                </TableCell>
+                <TableCell align="center" className="tableCell">
+                  Agencies
+                </TableCell>
+                {userRole === 'ROLE_AGENCY' && <TableCell align="center" className="tableCell">
+                  JD Source
+                </TableCell>}
+                {userRole === 'ROLE_AGENCY' && <TableCell align="center" className="tableCell">
+                  Upload Candidates
+                </TableCell>}
+                {/* <TableCell align='center' className="tableCell">Comments</TableCell> */}
+                <TableCell align="center" className="tableCell">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {tableRows?.map((row, index) => (
-                <Row key={row.id} row={row} index={index} />
-              ))}
+              {search
+                ? filteredData?.map((row, index) => {
+                  return (
+                    <Row
+                      key={row.id}
+                      row={row}
+                      rowsLength={filteredData.length}
+                      index={index}
+                    />
+                  );
+                })
+                : tableRows?.map((row, index) => (
+                  <Row
+                    key={row.id}
+                    row={row}
+                    rowsLength={tableRows.length}
+                    index={index}
+                  />
+                ))}
             </TableBody>
           </Table>
 
-          <div className='paginationBox'>
-            <PaginationSizeFilter size={size} handleSizeChange={handleSizeChange} />
-            <Pagination total={total} size={size} page={page} handlePageChange={handlePageChange} setPage={setPage} />
-          </div>
-
+          {!search && <div className="paginationBox">
+            <PaginationSizeFilter
+              size={size}
+              handleSizeChange={handleSizeChange}
+            />
+            <Pagination
+              total={total}
+              size={size}
+              page={page}
+              handlePageChange={handlePageChange}
+              setPage={setPage}
+            />
+          </div>}
         </TableContainer>
       </StyledBox>
     </Container1>
@@ -352,7 +622,6 @@ const ActiveJds = () => {
 };
 
 export default ActiveJds;
-
 
 const StyledBox = styled.div`
   display: flex;
@@ -371,23 +640,21 @@ const StyledBox = styled.div`
     gap: 2rem;
     margin: 1rem 3rem 1.5rem 0;
   }
-  
 
   .tableBox {
-    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.20);
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
     padding-top: 1rem;
-
 
     .titleBox {
       display: flex;
       padding: 0 1rem;
       justify-content: space-between;
-      
 
       .title {
-        font-size: 1.2rem;
-        font-weight: 700;
+        padding-left: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
       }
 
       .btn {
@@ -403,19 +670,18 @@ const StyledBox = styled.div`
         width: 1rem;
       }
     }
-    
+
     &::-webkit-scrollbar {
       width: 0rem;
-  }
+    }
 
-  
     &::-webkit-scrollbar-thumb {
       width: 0rem;
-  }
-  
-  & {
-    scrollbar-width: none;
-  } 
+    }
+
+    & {
+      scrollbar-width: none;
+    }
   }
 
   .MuiTableCell-root {
@@ -431,10 +697,31 @@ const StyledBox = styled.div`
     padding: 0.4rem 0.7rem;
     border: none;
     color: var(--white);
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
     text-decoration: none;
+    font-family: var(--font);
+  }
+
+  .btn1 {
+    background-color: var(--lightOrange);
+    border: none;
+    color: var(--white);
+    border-radius: 0.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  
+  
+    .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 0.2rem;
+  }
   }
 
   .selected {
@@ -445,16 +732,26 @@ const StyledBox = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
   .tableBody {
     width: 100%;
+
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
-
-  
 `;
-
-
 
 const Container1 = styled.div`
   width: 98%;
@@ -464,95 +761,79 @@ const Container1 = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+
+  .threeDotIcon {
+    width: 0.6rem;
+    height: 0.6rem;
+    cursor: pointer;
+    border: 0.08rem solid grey;
+    padding: 0.15rem;
+    border-radius: 0.2rem;
+  }
 `;
-
-
 
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
-  height: 3rem;
+  margin: 0.5rem auto;
   background-color: var(--white);
-  border-radius: 0.5rem;;
+  border-radius: 0.5rem;
   padding: 0rem 1rem;
   gap: 1rem;
-
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-  flex-grow: 1;
-  border: none;
-  height: 1rem;
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  background-color: transparent;
-  outline: none;
-  }
-
-`
+`;
 
 const BoxRow = styled.div`
   position: relative;
   display: inline-block;
 
-.three-dots {
-  cursor: pointer;
-}
+  .three-dots {
+    cursor: pointer;
+  }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--white);
-  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  right: 10%;
-  border-radius: 0.5rem;
-  font-size: 0.7rem;
-  min-width: 10rem;
-  justify-content: start;
-  padding: 0.5rem 0.5rem;
-}
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 10%;
+    border-radius: 0.5rem;
+    font-size: 0.7rem;
+    min-width: 10rem;
+    justify-content: start;
+    padding: 0.5rem 0.5rem;
 
+    ${(props) =>
+    props.isLast &&
+    css`
+        bottom: 1.4rem;
+        right: 10%;
+      `}
+  }
 
-.dropdown-content span {
-  padding: 0.3rem 0.8rem;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color);
-  cursor: pointer;
-}
+  .dropdown-content span {
+    padding: 0.3rem 0.8rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color);
+    cursor: pointer;
+  }
 
+  .dropdown:hover .dropdown-content,
+  .dropdown-content.open {
+    display: block;
+  }
 
-.dropdown:hover .dropdown-content, .dropdown-content.open {
-  display: block;
-}
-
-.threeDotIcon {
-  width: 0.6rem;
-  height: 0.6rem;
-  cursor: pointer;
-  border: 0.08rem solid grey;
-  padding: 0.15rem;
-  border-radius: 0.2rem;
-}
-`
-
+  .threeDotIcon {
+    width: 0.6rem;
+    height: 0.6rem;
+    cursor: pointer;
+    border: 0.08rem solid grey;
+    padding: 0.15rem;
+    border-radius: 0.2rem;
+  }
+`;

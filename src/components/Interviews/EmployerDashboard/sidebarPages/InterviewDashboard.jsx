@@ -44,7 +44,7 @@ function Row(props) {
 }
 
 const InterviewDashboard = ({ page, setPage }) => {
-  const [currMetric, setCurrMetric] = useState("interviews");
+  const [currMetric, setCurrMetric] = useState("scheduled-Interviews");
   const [metrics, setMetrics] = useState([]);
 
   const [searchParams, setSearchParams] = useState("");
@@ -52,15 +52,15 @@ const InterviewDashboard = ({ page, setPage }) => {
   const [started, setStarted] = useState(0);
   const [scheduled, setScheduled] = useState(0);
   const [completed, setCompleted] = useState(0);
-  const [inProgress,setInProgress] = useState(0);
-  const [upcoming,setUpcoming] = useState(0);
+  const [inProgress, setInProgress] = useState(0);
+  const [upcoming, setUpcoming] = useState(0);
 
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const [filteredData, setFilteredData] = useState({});
   const [value, setValue] = useState("COMPLETED");
 
   useEffect(() => {
-    setPage({index: 1, jdId: null});
+    setPage({ index: 1, jdId: null });
     const getCount = async () => {
       const res = await Promise.allSettled([
         getPreFilteredCount(accessToken, "UPCOMING"),
@@ -68,8 +68,8 @@ const InterviewDashboard = ({ page, setPage }) => {
         getPreFilteredCount(accessToken, "COMPLETED"),
         getPreFilteredCount(accessToken, "IN_PROGRESS"),
       ]);
-      console.log(res);
-      
+
+
       setUpcoming(res[0]?.value?.data["UPCOMING"])
       setScheduled(res[1]?.value?.data["SCHEDULED_TODAY"])
       setCompleted(res[2]?.value?.data["COMPLETED"])
@@ -93,76 +93,74 @@ const InterviewDashboard = ({ page, setPage }) => {
   };
 
   const handleSearch = () => {
-    console.log("Search");
+
   };
 
   const handleSearchParams = (e) => {
     setSearchParams(e.target.value);
   };
-  console.log("--------->>>>", upcoming, completed, scheduled, inProgress);
+
 
   return (
     <MainContainer>
       <Container>
         <div
-          className={`achievedNumberBox ${
-            currMetric === "upcoming" ? "selected" : ""
-          }`}
+          className={`achievedNumberBox ${currMetric === "scheduled-Interviews" ? "selected" : ""
+            }`}
+          onClick={() => setCurrMetric("scheduled-Interviews")}
+        >
+          <div className="top">
+            <img src={metric2} />
+            <span className="achievedNumberDigit">{scheduled ? scheduled : "0"}</span>
+          </div>
+          <span className="hrLine"></span>
+          <span className="achievedNumberText">Scheduled Interviews</span>
+        </div>
+
+        <div
+          className={`achievedNumberBox ${currMetric === "upcoming" ? "selected" : ""
+            }`}
           onClick={() => setCurrMetric("upcoming")}
         >
           <div className="top">
             <img src={metric1} />
-            <span className="achievedNumberDigit">{upcoming?upcoming:"0"}</span>
+            <span className="achievedNumberDigit">{upcoming ? upcoming : "0"}</span>
           </div>
           <span className="hrLine"></span>
           <span className="achievedNumberText">Upcoming</span>
         </div>
+
         <div
-          className={`achievedNumberBox ${
-            currMetric === "scheduledToday" ? "selected" : ""
-          }`}
-          onClick={() => setCurrMetric("scheduledToday")}
-        >
-          <div className="top">
-            <img src={metric2} />
-            <span className="achievedNumberDigit">{scheduled?scheduled:"0"}</span>
-          </div>
-          <span className="hrLine"></span>
-          <span className="achievedNumberText">Scheduled Today</span>
-        </div>
-        <div
-          className={`achievedNumberBox ${
-            currMetric === "completed" ? "selected" : ""
-          }`}
+          className={`achievedNumberBox ${currMetric === "completed" ? "selected" : ""
+            }`}
           onClick={() => setCurrMetric("completed")}
         >
           <div className="top">
             <img src={metric3} />
-            <span className="achievedNumberDigit">{completed?completed:"0"}</span>
+            <span className="achievedNumberDigit">{completed ? completed : "0"}</span>
           </div>
           <span className="hrLine"></span>
           <span className="achievedNumberText">Completed (last 7 days)</span>
         </div>
         <div
-          className={`achievedNumberBox ${
-            currMetric === "inprogress" ? "selected" : ""
-          }`}
+          className={`achievedNumberBox ${currMetric === "inprogress" ? "selected" : ""
+            }`}
           onClick={() => setCurrMetric("inprogress")}
         >
           <div className="top">
             <img src={metric4} />
-            <span className="achievedNumberDigit">{inProgress?inProgress:"0"}</span>
+            <span className="achievedNumberDigit">{inProgress ? inProgress : "0"}</span>
           </div>
           <span className="hrLine"></span>
           <span className="achievedNumberText">In Progress</span>
         </div>
       </Container>
-      {page?.index === 1 && <EmpScheduledInterviews setPage={setPage} />}
-      {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}
-      {currMetric === 'upcoming' && <UpcomingInterview/>}
-      {currMetric === 'scheduledToday' && <ScheduledTodayInterview/>}
-      {currMetric === 'completed' && <CompletedLast7Days/>}
-      {currMetric === 'inprogress' && <InProgressInterview/>}
+      {(page?.index === 1 && currMetric === 'scheduled-Interviews') && <EmpScheduledInterviews setPage={setPage} />}
+      {(page?.index === 2 && currMetric === 'scheduled-Interviews') && <EmpScheduledCandidateList page={page} setPage={setPage} />}
+      {currMetric === 'upcoming' && <UpcomingInterview />}
+      {currMetric === 'scheduledToday' && <ScheduledTodayInterview />}
+      {currMetric === 'completed' && <CompletedLast7Days />}
+      {currMetric === 'inprogress' && <InProgressInterview />}
     </MainContainer>
   );
 };
@@ -174,7 +172,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   gap: 0rem;
   width: 96%;
-  padding: 0 2.5%;
+  padding: 0 2%;
   margin: 1rem 0% 2rem 0%;
   align-items: center;
 `;
@@ -188,6 +186,10 @@ const Container = styled.div`
   padding: 1rem 0% 2rem 0%;
   gap: 2%;
 
+  .selected {
+    background: linear-gradient(to bottom, #f0f0f0, #d9fbf9);
+  }
+
   .achievedNumberBox {
     display: flex;
     flex-direction: column;
@@ -196,7 +198,7 @@ const Container = styled.div`
     gap: 1.7rem;
     background-color: var(--white);
     padding: 1rem 0 1.5rem 0;
-    width: 23%;
+    width: 22%;
     height: 6rem;
     border-radius: 0.5rem;
     box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
@@ -225,8 +227,8 @@ const Container = styled.div`
   }
 
   .achievedNumberText {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
     color: var(--color);
     text-align: center;
   }

@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 import { data as users } from "../../../../utils/contantData";
 
 import unVisible from "../../../../assets/icons/unVisible.png";
@@ -17,23 +17,35 @@ import threeDot from "../../../../assets/icons/threeDot.png";
 import CommonDialog from "../../../commonComponents/CommonDialog";
 import DeleteDialogContent from "../../../commonComponents/DeleteDialogContent";
 import ManageUserForm from "../ManageUserForm";
+import { getEmployees, getEmployers } from "../../../../functions/api/employers/profile/getEmployees";
+import { useSelector } from "react-redux";
+import { editEmployee } from "../../../../functions/api/employers/profile/editEmployee";
+import { toast } from "react-toastify";
+import Created from "../../../commonComponents/infoDialog/Created";
+import Saved from "../../../commonComponents/infoDialog/Saved";
+import Success from "../../../commonComponents/infoDialog/Success";
+import { deleteEmployee } from "../../../../functions/api/employers/profile/deleteEmployee";
+import Error from "../../../commonComponents/infoDialog/Error";
+import Deleted from "../../../commonComponents/infoDialog/Deleted";
+import DeactivateDialogContent from "../../../commonComponents/DeactivateDialogContent";
+import { formatRole } from "../../../../utils/globalFunctions";
+import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 
 function Row(props) {
-  const { row, index } = props;
+  const { row, rowsLength, index, userTrigger, setUserTrigger } = props;
+  const [openBasic2, setOpenBasic2] = useState(false);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
   const dropdownRef = useRef(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(-1);
 
   // State, function to Open and close Dialog Box
   const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [openDeactivate, setOpenDeactivate] = useState(false);
+  const [savedPopup, setSavedPopup] = useState(false);
+  const [deactivatePopup, setDeactivatePopup] = useState(false);
+  const [deletePopup, setDeletePopup] = useState(false);
 
 
   const openDropdown = (index) => {
@@ -45,16 +57,57 @@ function Row(props) {
   };
 
   const handleEdit = () => {
-    console.log("Edit");
+    setOpenBasic2(true);
   };
 
-  const handleDelete = () => {
-    console.log("Delete");
-    handleClose();
+  const handleDelete = async (id) => {
+    try {
+      const res = await deleteEmployee(id, accessToken, clientCode);
+      if (res) {
+        setDeletePopup(true);
+      }
+    } catch (error) {
+      // Handle network errors or unexpected issues
+      const errMsg =
+        error.response.data.notify.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 8000, // Time in milliseconds, adjust as needed
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setOpen(false);
+    }
+
   };
 
-  const handleDeactivate = () => {
-    console.log("Deactivate");
+
+  const handleDeactivate = async (id) => {
+    try {
+      row.active = false;
+      const res = await editEmployee(id, row, accessToken, clientCode);
+      if (res) {
+        setDeactivatePopup(true);
+      }
+    } catch (error) {
+      const errMsg =
+        error.response.data.notify.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 8000, // Time in milliseconds, adjust as needed
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setOpenDeactivate(false);
+    }
   }
 
   useEffect(() => {
@@ -73,18 +126,54 @@ function Row(props) {
 
   return (
     <React.Fragment>
+      <ModalHOC
+        openNewInterviewModal={openBasic2}
+        setOpenNewInterviewModal={setOpenBasic2}
+        component={<ManageUserForm array={[row, "edit"]}
+          handleClose={() => {
+            setOpenBasic2(false);
+            setUserTrigger(!userTrigger);
+          }}
+          setSavedPopup={setSavedPopup} />} />
+
+      {savedPopup && (
+        <Saved
+          handleClose={() => setSavedPopup(false)}
+          open={savedPopup}
+          msg={`User successfully updated`}
+        />
+      )}
+      {deactivatePopup && (
+        <Success
+          handleClose={() => {
+            setDeactivatePopup(false);
+            setUserTrigger(!userTrigger);
+          }}
+          open={deactivatePopup}
+          msg={`${row.email} successfully deactivated`} />
+      )}
+      {deletePopup && (
+        <Deleted
+          handleClose={() => {
+            setDeletePopup(false);
+            setUserTrigger(!userTrigger);
+          }}
+          open={deletePopup}
+          msg={`${row.email} successfully deleted`}
+        />
+      )}
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
-        <TableCell component="th" scope="row" align="center">
-          ...
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          {row?.name}
         </TableCell>{" "}
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">...</TableCell>
-        <TableCell align="center">
-          <BoxRow>
+        <TableCell align="center" className="tableCell">{row?.email}</TableCell>
+        <TableCell align="center" className="tableCell">{row?.contact}</TableCell>
+        <TableCell align="center" className="tableCell">{formatRole(row?.role)}</TableCell>
+        <TableCell align="center" className="tableCell">
+          <BoxRow isLast={index >= rowsLength - 2}>
             <img
               src={threeDot}
               style={{ width: "0.8rem", height: "0.8rem", cursor: "pointer" }}
@@ -102,14 +191,15 @@ function Row(props) {
               className={`dropdown-content ${openDropdownIndex === index ? "open" : ""
                 }`} ref={dropdownRef}
             >
-              <CommonDialog open={open} handleClose={handleClose} component={<DeleteDialogContent handleClose={handleClose} text='user' handleDelete={handleDelete} />} />
+              <CommonDialog open={open} handleClose={() => setOpen(false)} component={<DeleteDialogContent handleClose={() => setOpen(false)} text='user' handleDelete={() => handleDelete(row.id)} />} />
+              <CommonDialog open={openDeactivate} handleClose={() => setOpenDeactivate(false)} component={<DeactivateDialogContent handleClose={() => setOpenDeactivate(false)} text='user' handleDeactivate={() => handleDeactivate(row.id)} />} />
               <span onClick={handleEdit}>
                 <img src={editIcon} className="threeDotIcon" /> Edit
               </span>
-              <span onClick={handleClickOpen}>
+              <span onClick={() => setOpen(true)}>
                 <img src={deleteIcon} className="threeDotIcon" /> Delete
               </span>
-              <span onClick={handleDeactivate}>
+              <span onClick={() => setOpenDeactivate(true)}>
                 <img src={unVisible} className="threeDotIcon" /> Deactivate
               </span>
             </div>
@@ -122,11 +212,61 @@ function Row(props) {
 
 export default function ManageUsers() {
   const [openBasic, setOpenBasic] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+  const [successPopup, setSuccessPopup] = useState(false);
+  const [userTrigger, setUserTrigger] = useState(false);
+
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page < Math.ceil(+total / +size)) {
+      setPage((prev) => prev + 1);
+    } else if (!change && page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getEmployees(accessToken, clientCode, page, size);
+      setUsers(res?.data?.data)
+      setTotal(res?.data?.total);
+    }
+    getData();
+  }, [userTrigger, page, size])
 
   return (
     <StyledDiv>
       <TableContainer component={Paper} className="tableBox">
-        <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} component={<ManageUserForm array={[null, "create"]} handleClose={() => setOpenBasic(false)} />} />
+        <ModalHOC
+          openNewInterviewModal={openBasic}
+          setOpenNewInterviewModal={setOpenBasic}
+          component={<ManageUserForm array={[null, "create"]}
+            handleClose={() => {
+              setOpenBasic(false);
+              setUserTrigger(!userTrigger);
+            }}
+            setSuccessPopup={setSuccessPopup} />} />
+
+        {successPopup && (
+          <Created
+            handleClose={() => setSuccessPopup(false)}
+            open={successPopup}
+            msg="User successfully added"
+          />
+        )}
         <Component>
           <span className="title">Manage Users</span>
 
@@ -138,19 +278,32 @@ export default function ManageUsers() {
         <Table aria-label="collapsible table">
           <TableHead className="tableHead">
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Contact</TableCell>
-              <TableCell align="center">Role</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align="center" className="tableCell">Name</TableCell>
+              <TableCell align="center" className="tableCell">Email</TableCell>
+              <TableCell align="center" className="tableCell">Contact</TableCell>
+              <TableCell align="center" className="tableCell">Role</TableCell>
+              <TableCell align="center" className="tableCell">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="tableBody">
             {users?.map((row, index) => (
-              <Row key={row.id} row={row} index={index} />
+              <Row key={row.id} row={row} rowsLength={users.length} index={index} userTrigger={userTrigger} setUserTrigger={setUserTrigger} />
             ))}
           </TableBody>
         </Table>
+        <div className="paginationBox">
+          <PaginationSizeFilter
+            size={size}
+            handleSizeChange={handleSizeChange}
+          />
+          <Pagination
+            total={total}
+            size={size}
+            page={page}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+          />
+        </div>
       </TableContainer>
     </StyledDiv>
   );
@@ -168,6 +321,13 @@ const StyledDiv = styled.div`
     background-color: #ececec;
   }
 
+  .paginationBox {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin: 1rem 3rem 1.5rem 0;
+  }
+
   .tableBox {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
@@ -175,8 +335,8 @@ const StyledDiv = styled.div`
 
     .title {
       padding-left: 1.2rem;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
 
@@ -210,85 +370,30 @@ const StyledDiv = styled.div`
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
 
-  .btn {
-    padding: 0.5rem 1rem;
-    margin-top: 3rem;
-    background-color: var(--lightOrange);
-    border: none;
-    color: var(--white);
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    cursor: pointer;
-  }
 
   .checkBox {
     cursor: pointer;
-  }
-`;
-
-const SearchBarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 96%;
-  margin: 1rem auto 0.5rem auto;
-  height: 3rem;
-  background-color: var(--white);
-  border-radius: 0.5rem;
-  padding: 0rem 1rem;
-  gap: 1rem;
-
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-    flex-grow: 1;
-    border: none;
-    height: 1rem;
-    width: 50%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    background-color: transparent;
-    outline: none;
-  }
-
-  .selectBox {
-    width: 30%;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .selectInput {
-    padding: 0.7rem 0.5rem;
-    border: none;
-    background-color: #ececec;
-    border-radius: 0.3rem;
-    font-size: 0.8rem;
-    width: 50%;
-    outline: none;
-
-    option {
-      font-size: 0.8rem;
-      font-weight: 400;
-    }
   }
 `;
 
@@ -313,6 +418,13 @@ const BoxRow = styled.div`
   font-size: 0.7rem;
   min-width: 10rem;
   justify-content: start;
+
+  ${(props) =>
+    props.isLast &&
+    css`
+      bottom: 1.4rem;
+      right: 10%;
+    `}
 }
 
 
@@ -356,9 +468,10 @@ const EditButton = styled.button`
   cursor: pointer;
   color: var(--white);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   margin-right: 0.6rem;
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
-
+  font-family: var(--font);
 `;

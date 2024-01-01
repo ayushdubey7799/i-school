@@ -409,6 +409,10 @@ const EmployerSidebar = ({ currentItem, setCurrentItem }) => {
             <img src={manageUsersIcon} className='icon' />
             Manage Users
           </MenuItem>
+          <MenuItem isSelected={currentItem === 'manage-agencies'} onClick={() => handleItemClick('manage-agencies')}>
+            <img src={manageUsersIcon} className='icon' />
+            Manage Agencies
+          </MenuItem>
           <MenuItem isSelected={currentItem === 'subscriptions'} onClick={() => handleItemClick('subscriptions')}>
             <img src={subsIcon} className='icon' />
             Subscriptions

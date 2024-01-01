@@ -125,7 +125,7 @@ justify-content: space-evenly;
 
 
 .btn {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     background-color: var(--lightOrange);
     color: var(--white);
@@ -135,6 +135,7 @@ justify-content: space-evenly;
     cursor: pointer;
     margin-top: 1rem;
     align-self: center;
+    font-family: var(--font);
 }
 
 

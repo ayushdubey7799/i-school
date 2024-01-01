@@ -16,6 +16,7 @@ import AllJobs from "../components/Interviews/SeekerDashboard/sidebarPages/AllJo
 import AppliedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/AppliedJobs";
 import RecommendedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/RecommendedJobs";
 import SavedJobs from "../components/Interviews/SeekerDashboard/sidebarPages/SavedJobs";
+import InterviewTabs from "../components/Interviews/InterviewTabs";
 
 
 const JobSeekerDashboard = () => {
@@ -43,6 +44,7 @@ const JobSeekerDashboard = () => {
           {currentItem === 'create-resume' && <CreateResume />}
           {currentItem === 'enhance-resume' && <EnhanceResume />}
 
+          {currentItem === 'interview-dashboard' && <InterviewTabs/>}
           {currentItem === 'profile' && <ProfileNew />}
           {currentItem === 'subscriptions' && <Subscription />}
           {currentItem === 'inbox' && <Inbox />}

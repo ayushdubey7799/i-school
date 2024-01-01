@@ -63,11 +63,13 @@ import ProtectedRoute from "./components/commonComponents/ProtectedRoute"
 import { AuthenticationConstants } from "./utils/constants"
 import Trial from "./pages/Trial"
 // import Resume from "./components/commonComponents/Resume"
-import ReqModalDetails from "./components/Interviews/EmployerDashboard/ReqModalDetails"
 import EmployerDashboard2 from "./pages/EmployerDashboard2"
 import Invite2 from "./components/Interviews/EmployerDashboard2.jsx/Schedule/Invite2"
 import InviteSuccess2 from "./components/Interviews/EmployerDashboard2.jsx/Schedule/InviteSuccess2"
 import Login2 from "./pages/Login2"
+import InterviewerInviteDashboard from "./components/commonComponents/InterviewerInviteDashboard"
+import EmployerAgencyDashboard from "./pages/EmployerAgencyDashboard"
+import EmployerFeedback from "./components/Interviews/EmployerDashboard/EmployerFeedback"
 
 
 const App = () => {
@@ -150,7 +152,9 @@ const App = () => {
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
           <Route path='/access-denied' element={<AccessDenied />} />
-          <Route path="/trial" element={<Trial />} />
+          <Route path="/trial" element={<EmployerAgencyDashboard />} />
+          <Route path='/trial2' element={<InterviewerInviteDashboard />} />
+          <Route path="/interviewer-feedbacks/:token" element={<EmployerFeedback />} />
         </Routes>
       </ScrollToTop>
     </BrowserRouter>

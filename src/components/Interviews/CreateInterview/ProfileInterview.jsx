@@ -49,8 +49,6 @@ const ProfileInterview = () => {
 
   useEffect(() => {
     if (jd) {
-      console.log(jd.type);
-
       if (jd.type === "text/plain") {
         handleTxtFile(jd, "jd");
       } else if (
@@ -70,7 +68,6 @@ const ProfileInterview = () => {
   const handleInputChange = (e) => {
     const name = e.target.name;
     const val = e.target.value;
-    console.log(name, val);
 
     switch (name) {
       case "jobSummary":
@@ -82,7 +79,6 @@ const ProfileInterview = () => {
       default:
         console.log("Hello there!");
     }
-    console.log(interviewDetails.jobSummary, interviewDetails.resumeText);
   };
 
   const handleCreateInterview = async (e) => {
@@ -116,14 +112,11 @@ const ProfileInterview = () => {
       resumeText: interviewDetails.resumeText.trim(),
     }
 
-    console.log('Payload', payload);
-
     const ongoing = await createInterview(
       payload,
       accessToken
     );
 
-    console.log(ongoing);
     if (ongoing?.data?.id) {
       localStorage.setItem("currentInterview", "profile");
       navigate(`/create-interview/${ongoing.data.id}`)
@@ -249,18 +242,18 @@ const ProfileInterview = () => {
               <label className="label1">
                 <input
                   type="radio"
-                  value="MCQs"
-                  checked={testType === 'MCQs'}
-                  onChange={() => setTestType('MCQs')}
+                  value="mcq"
+                  checked={testType === 'mcq'}
+                  onChange={() => setTestType('mcq')}
                 />
                 <span>MCQs</span>
               </label>
               <label className="label1">
                 <input
                   type="radio"
-                  value="Subjective"
-                  checked={testType === 'Subjective'}
-                  onChange={() => setTestType('Subjective')}
+                  value="general"
+                  checked={testType === 'general'}
+                  onChange={() => setTestType('general')}
                 />
                 <span>Subjective</span>
               </label>
@@ -276,9 +269,9 @@ const ProfileInterview = () => {
               <label className="label1">
                 <input
                   type="radio"
-                  value="General"
-                  checked={testType === 'General'}
-                  onChange={() => setTestType('General')}
+                  value="general"
+                  checked={testType === 'general'}
+                  onChange={() => setTestType('general')}
                 />
                 <span>General (Includes all types of Que)</span>
               </label>
@@ -380,9 +373,10 @@ const StyledForm = styled.form`
     padding: 0.7rem 1rem;
     border: 0.1rem solid var(--lightOrange);
     border-radius: 0.4rem;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
+    font-family: var(--font);
   }
 
   .inputCont {

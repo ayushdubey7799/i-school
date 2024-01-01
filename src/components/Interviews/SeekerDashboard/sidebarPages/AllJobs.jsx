@@ -30,10 +30,9 @@ display: flex;
 flex-direction: column;
 width: 100%;
 
-
 .mainBox {
   display: grid;
-  width: 100%;
+  width: 99%;
   align-items: center;
   grid-template-columns: 9fr 1fr;
 }

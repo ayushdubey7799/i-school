@@ -9,15 +9,12 @@ import Paper from "@mui/material/Paper";
 import { getMatches } from "../../../../functions/api/employers/match/getResumes";
 import { useNavigate, useParams } from "react-router";
 import LogoHeader from "../../../commonComponents/LogoHeader";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { IconButton } from "@mui/material";
 import styled from "styled-components";
 import ModalHOC from "../../SeekerDashboard/ModalHOC";
 import ScheduleModal from "./ScheduleModal";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import eyeIcon from "../../../../assets/icons/visible.png";
-import searchBlack from "../../../../assets/icons/searchBlack.png";
 import { useDispatch } from "react-redux";
 import { addResumes } from "../../../../slices/invitationSlice";
 import iIcon from "../../../../assets/icons/iIcon.png";
@@ -27,12 +24,22 @@ import {
   PaginationSizeFilter,
 } from "../../../commonComponents/Pagination";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
+import TableSearchBar from "../commonComponents/TableSearchBar";
+import EmpSelectInput from "../commonComponents/EmpSelectInput";
+
+import { getAllTrackers } from '../../../../functions/api/employers/tracker/getAllTrackers'
+import { addTrackers } from '../../../../functions/api/employers/tracker/addTrackers'
 
 function Row(props) {
-  const { row, handleSelectArray, index } = props;
+  const { row, handleSelectArray, index, filterParams, updateTrigger } = props;
   const [selected, setSelected] = useState(false);
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+  // set selected as false to unCheck all checkbox on some sideEffects.
+  useEffect(() => {
+    setSelected(false);
+  }, [filterParams, updateTrigger])
 
   const handleSelectChange = (row) => {
     if (selected) {
@@ -49,7 +56,6 @@ function Row(props) {
       accessToken,
       clientCode
     );
-    console.log(res);
     const a = document.createElement("a");
     a.href = res;
     a.setAttribute("download", name);
@@ -62,13 +68,13 @@ function Row(props) {
         sx={{ "& > *": { borderBottom: "unset" } }}
         className={`${index % 2 == 1 ? "colored" : ""}`}
       >
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="center" className="tableCell">
           {row.name}
         </TableCell>
-        <TableCell align="center">{row.email}</TableCell>
-        <TableCell align="center">{row.contact}</TableCell>
-        <TableCell align="center">{row.score}</TableCell>
-        <TableCell align="center">{row.aiScore}</TableCell>
+        <TableCell align="center" className="tableCell">{row.email}</TableCell>
+        <TableCell align="center" className="tableCell">{row.contact}</TableCell>
+        <TableCell align="center" className="tableCell">{row.score}</TableCell>
+        <TableCell align="center" className="tableCell">{row.aiScore}</TableCell>
         <TableCell
           align="center"
           style={{
@@ -77,6 +83,7 @@ function Row(props) {
             justifyContent: "center",
             gap: "0.5rem",
           }}
+          className="tableCell"
         >
           <input
             type="checkbox"
@@ -106,25 +113,17 @@ export default function MatchedResumes() {
   );
   const dispatch = useDispatch();
 
-  const [searchParams, setSearchParams] = useState("");
-  const [sortParams, setSortParams] = useState("");
-
-  const handleSortParams = (e) => {
-    setSortParams(e.target.value);
-  };
-
-  const handleSearch = () => {
-    console.log("Search");
-  };
-
-  const handleSearchParams = (e) => {
-    setSearchParams(e.target.value);
-  };
+  const [filterParams, setFilterParams] = useState('MATCHED');
+  const [searchValue, setSearchValue] = useState('');
 
   const [total, setTotal] = useState(0);
 
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+
+  const [updateTrigger, setUpdateTrigger] = useState(false);
+  const [trackerData, setTrackerData] = useState([]);
+  const [matchedData, setMatchedData] = useState([]);
 
   const handleSizeChange = (event) => {
     setSize(parseInt(event.target.value, 10));
@@ -139,22 +138,74 @@ export default function MatchedResumes() {
     }
   };
 
+  // running an effect to empty selectedArray whenever filter value changes
+  useEffect(() => {
+    setSelectedArray([]);
+  }, [filterParams]);
+
+
   useEffect(() => {
     if (!accessToken || !clientCode) {
       toast.error("Login First");
       navigate("/login");
     }
+
+    // func to get tracker data by trackerStatus
+    async function getTrackersData() {
+      const trackerRes = await getAllTrackers(jdId, accessToken, page, size, filterParams);
+
+      if (trackerRes) {
+        setTrackerData(trackerRes?.data?.data);
+      }
+    }
+
+    // func to get all matched resume
     async function getData() {
       const resObj = await getMatches(jdId, accessToken, clientCode, page, size);
       if (resObj) {
-        setTotal(resObj.data[0].records.total)
-        setTableRows(resObj.data[0].records.data);
-        setIdToSendInvite(resObj.data[0].jdId);
+
+        setMatchedData(resObj?.data[0]?.records?.data);
+
+        if (filterParams === 'MATCHED') {
+          setTotal(resObj?.data[0]?.records?.total)
+          setTableRows(resObj?.data[0]?.records?.data);
+        }
+        setIdToSendInvite(resObj?.data[0]?.jdId);
       }
     }
+
     getData();
-  }, [page, size]);
-  console.log(tableRows);
+
+    // tracker data api to be called when filter params are valid, like here:- SHORTLISTED & NOT_SHORTLISTED
+    if (filterParams === 'SHORTLISTED' || filterParams === 'NOT_SHORTLISTED') {
+      getTrackersData();
+    }
+
+  }, [page, size, filterParams]);
+
+
+  useEffect(() => {
+
+    // func to filter matched resumes data on the basis of trackers status.
+    const filterData = (array1, array2) => {
+      const array2Lookup = array2?.reduce((lookup, { id, status }) => {
+        lookup[id] = status;
+        return lookup;
+      }, {});
+
+      return array1?.filter(({ id }) => array2Lookup[id] === filterParams);
+    }
+
+    // filter only when filterParams are valid
+    if (filterParams === 'SHORTLISTED' || filterParams === 'NOT_SHORTLISTED') {
+      const filteredData = filterData(matchedData, trackerData);
+      setTableRows(filteredData);
+    }
+
+  }, [page, size, filterParams, matchedData, trackerData]);
+
+
+
 
   const handleSelectArray = (id, action) => {
     if (action) {
@@ -163,6 +214,9 @@ export default function MatchedResumes() {
       setSelectedArray((prev) => [...prev].filter((item) => item.id != id));
     }
   };
+
+  console.log(selectedArray);
+
 
   const handleSchedule = () => {
     if (selectedArray?.length > 0) {
@@ -173,15 +227,33 @@ export default function MatchedResumes() {
     }
   };
 
-  console.log(selectedArray);
+  // func to update tracker status as Shortlist or Rejected
+  const handleTrackerUpdate = async (val) => {
+    const payloadData = {
+      "jdId": jdId,
+      "resumeIds": selectedArray?.map(user => user.resumeId),
+      "status": val,
+      "trackerIds": [],
+    }
+
+    const updatedRes = await addTrackers(payloadData, accessToken, clientCode);
+
+    if (updatedRes) {
+      setUpdateTrigger(!updateTrigger);
+      toast.success(`${val === 'SHORTLISTED' ? 'Shortlisted' : 'Rejected'} Successfully`);
+    }
+  }
+
+  const filterArr = [
+    { value: "MATCHED", text: "Matched" },
+    { value: "SHORTLISTED", text: "Shortlisted" },
+    { value: "NOT_SHORTLISTED", text: "Rejected" },
+  ];
+
   return (
     <StyledDiv>
       <LogoHeader />
-
       <Content>
-        <IconButton onClick={() => navigate("/schedule")} className="prev">
-          <ArrowBackIcon sx={{ fontSize: "30px" }} />
-        </IconButton>
         <TableContainer component={Paper} className="tableBox">
           <ModalHOC
             openNewInterviewModal={open}
@@ -190,38 +262,27 @@ export default function MatchedResumes() {
             array={[...selectedArray, idToSendInvite]}
           />
 
-          <span
-            style={{
-              fontSize: "1.1rem",
-              fontWeight: "600",
-              padding: "1rem 0rem 0rem 3rem",
-              display: "block",
-            }}
-          >
-            Matched Resumes for JD ID: {jdId}
+          <span className='mainTitle'>
+            <span className="title">Matched Resumes for JD ID: {jdId} </span>
+            <Button onClick={() => navigate("/schedule")}>Back</Button>
           </span>
           <SearchBarContainer>
-            <div className="skillBox">
-              <img src={searchBlack} />
-              <input
-                className="skillInput"
-                type="text"
-                placeholder="Search"
-              />
-            </div>
+            <TableSearchBar value={searchValue} setValue={setSearchValue} />
+            <EmpSelectInput value={filterParams} setValue={setFilterParams} optionsArr={filterArr} />
           </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align="center">Name</TableCell>
-                {/* <TableCell align="center">Match Percentage</TableCell> */}
-                <TableCell align="center">Email</TableCell>
-                <TableCell align="center">Contact</TableCell>
-                <TableCell align="center">
+                <TableCell align="center" className="tableCell">Name</TableCell>
+                {/* <TableCell align="center" className="tableCell">Match Percentage</TableCell> */}
+                <TableCell align="center" className="tableCell">Email</TableCell>
+                <TableCell align="center" className="tableCell">Contact</TableCell>
+                <TableCell align="center" className="tableCell">
                   <span
                     style={{
                       display: "flex",
                       alignItems: "center",
+                      justifyContent: 'center',
                       gap: "0.4rem",
                     }}
                   >
@@ -235,7 +296,7 @@ export default function MatchedResumes() {
                   </span>
                   <Tooltip id="score" />
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" className="tableCell">
                   <span
                     style={{
                       display: "flex",
@@ -253,7 +314,7 @@ export default function MatchedResumes() {
                   </span>
                   <Tooltip id="AI-Score" />
                 </TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell align="center" className="tableCell">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
@@ -263,6 +324,8 @@ export default function MatchedResumes() {
                   row={row}
                   handleSelectArray={handleSelectArray}
                   index={index}
+                  filterParams={filterParams}
+                  updateTrigger={updateTrigger}
                 />
               ))}
             </TableBody>
@@ -283,9 +346,15 @@ export default function MatchedResumes() {
           </div>
 
         </TableContainer>
-        <button onClick={() => handleSchedule()} className="btn">
-          Next
-        </button>
+        <div className="btnBox">
+          <button onClick={() => handleSchedule()} className="btn">
+            Next
+          </button>
+
+          {(selectedArray?.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('SHORTLISTED')}>Mark Shortlisted</button>}
+          {(selectedArray?.length !== 0 && filterParams === 'MATCHED') && <button className="btn" onClick={() => handleTrackerUpdate('NOT_SHORTLISTED')}>Mark Rejected</button>}
+
+        </div>
       </Content>
     </StyledDiv>
   );
@@ -297,9 +366,9 @@ const StyledDiv = styled.div`
 `;
 
 const Content = styled.div`
-  margin: 8rem 0% 2rem 0%;
-  width: 90%;
-  padding: 0 5%;
+  margin: 6rem 0% 2rem 0%;
+  width: 96%;
+  padding: 0 2%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -314,6 +383,21 @@ const Content = styled.div`
     gap: 2rem;
     margin: 1rem 3rem 1.5rem 0;
   }
+
+  .mainTitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 1rem 0 1rem 3rem;
+    width: calc(98% - 3rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+}
   
 
   .prev {
@@ -347,18 +431,39 @@ const Content = styled.div`
     color: white;
   }
 
+
   .tableHead {
     background-color: #d1fff0;
     width: 100%;
-
+  
+    .tableCell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color);
+    }
+    
     .iIcon {
       width: 1.1rem;
     }
   }
-
+  
   .tableBody {
     width: 100%;
+  
+    .tableCell {
+      font-size: 0.8rem;
+      font-weight: 400;
+      font-family: var(--font);
+      color: var(--color);
+    }
   }
+
+  .btnBox {
+    display: flex;
+    gap: 1rem;
+  }
+
 
   .btn {
     padding: 0.5rem 1rem;
@@ -366,10 +471,11 @@ const Content = styled.div`
     background-color: var(--lightOrange);
     border: none;
     color: var(--white);
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     border-radius: 0.5rem;
     cursor: pointer;
+    font-family: var(--font);
   }
 
   .checkBox {
@@ -384,40 +490,30 @@ const Content = styled.div`
   }
 `;
 
+
+const Button = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: var(--lightOrange);
+  color: #fff;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  align-self: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font);
+`
+
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 96%;
-  margin: 1rem auto 0.5rem auto;
+  margin: 0.5rem auto;
   height: 3rem;
   background-color: var(--white);
   border-radius: 0.5rem;
   padding: 0rem 1rem;
   gap: 1rem;
 
-  .skillBox {
-    position: relative;
-    width: 35%;
-    display: flex;
-    align-items: center;
-    background-color: #ececec;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.5rem;
-
-    img {
-      width: 1.2rem;
-    }
-  }
-
-  .skillInput {
-    flex-grow: 1;
-    border: none;
-    height: 1rem;
-    width: 50%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    background-color: transparent;
-    outline: none;
-  }
 `;

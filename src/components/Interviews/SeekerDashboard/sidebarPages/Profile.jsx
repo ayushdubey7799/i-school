@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BasicDetails from '../profileForms/BasicDetails';
-import ModalHOC from '../ModalHOC';
-import KeySkills from '../profileForms/Keyskills';
-import Education from '../profileForms/Education';
-import Projects from '../profileForms/Projects';
-import ProfessionalInfo from '../profileForms/ProfessionalInfo';
 import editIcon from '../../../../assets/icons/edit.png'
 import uploadIcon from '../../../../assets/icons/upload.png'
 import browseIcon from '../../../../assets/icons/browse.png'
@@ -115,12 +109,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle the file upload here, for example, by sending the file to a server.
-    if (selectedFile) {
-      console.log('Selected File:', selectedFile);
-      // You can add code to upload the file to a server or perform any other actions here.
-    } else {
-      console.log('No file selected.');
-    }
+  
   };
 
   const DecideComponent = () => {
@@ -128,52 +117,7 @@ const Profile = () => {
   }
   return (
     <Container>
-      <ModalHOC openNewInterviewModal={openBasic} setOpenNewInterviewModal={setOpenBasic} Component={BasicDetails} />
-      <Component>
-        <span>Basic Details</span>
-        <EditButton onClick={() => setOpenBasic(true)}><img src={editIcon} /></EditButton>
-      </Component>
-      <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} Component={ProfessionalInfo} />
-      <Component>
-        <span>Professional Information</span>
-        <EditButton onClick={() => setOpenSkills(true)}><img src={editIcon} /></EditButton>
-      </Component>
-      <Component>
-        <span>Verification</span>
-        <EditButton><img src={editIcon} /></EditButton>
-      </Component>
-
-      <ModalHOC openNewInterviewModal={openEducation} setOpenNewInterviewModal={setOpenEducation} Component={Education} />
-      <Component>
-        <span>Education</span>
-        <EditButton onClick={() => setOpenEducation(true)}><img src={editIcon} /></EditButton>
-      </Component>
-      <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} Component={Projects} />
-      <Component>
-        <span>Projects</span>
-        <EditButton onClick={() => setOpenProjects(true)}><img src={editIcon} /></EditButton>
-      </Component>
-
-      <Component>
-        <Form onSubmit={handleSubmit}>
-          <span>Resume</span>
-          <br />
-          <>
-            <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName}</span></Label>
-            <FileInput
-              id='input'
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={handleFileChange}
-              style={{ display: 'none' }}
-            />
-          </>
-          <SubmitButton type="submit"><img src={uploadIcon} /></SubmitButton>
-          <br />
-          <span>Upload Resume</span>
-        </Form>
-      </Component>
-
+      Profile Page
     </Container>
   );
 };

@@ -11,10 +11,39 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 1rem;
 
+  .title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 1rem;
+  }
 
-  #outlined-basic {
-    padding: 0.5rem 0.5rem;
-    background-color: #F6F6FB;
+  @media (max-width: 2000px) {
+    #outlined-basic {
+      padding: 0.75rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1700px) {
+    #outlined-basic {
+      padding: 0.85rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1350px) {
+    #outlined-basic {
+      padding: 0.95rem 0.5rem;
+      background-color: #F6F6FB;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    #outlined-basic {
+      padding: 1rem 0.5rem;
+      background-color: #F6F6FB;
+    }
   }
 
   .textAreaBox {
@@ -39,6 +68,25 @@ const Form = styled.form`
   flex-direction: column;
   padding-bottom: 1rem;
   gap: 0.7rem;
+
+  .inputBox {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .inputBoxMap {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    flex-flow: row wrap;
+  }
+
+  .box {
+    width: calc(50% - 1rem);
+  }
 `;
 
 const Label = styled.label`
@@ -55,7 +103,7 @@ const Textarea = styled.textarea`
   border-radius: 5px;
   box-sizing: border-box;
   outline-color: #1976d2;
-    background-color: #F6F6FB;
+  background-color: #F6F6FB;
 `;
 
 
@@ -66,11 +114,16 @@ const Button = styled.button`
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
+  font-size: 0.9rem;
   font-weight: 600;
+  font-family: var(--font);
+  display: flex;
+  align-self: center;
+  margin: 1rem auto;
 `;
 
 
-function CreateQuestionForm({editingIndex, setEditingIndex}) {
+function CreateQuestionForm({ editingIndex, setEditingIndex }) {
   const [formData, setFormData] = useState({
     type: '',
     role: '',
@@ -143,168 +196,18 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
 
   return (
     <Container>
-      <h3>{editingIndex === -1 ? 'Create' : 'Update' } Question Form</h3>
+      <span className='title'>{editingIndex === -1 ? 'Create' : 'Update'} Question Form</span>
       <Form onSubmit={editingIndex === -1 ? handleAddQuestion : handleUpdateQuestion}>
 
-        <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
-          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Question Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Question Type"
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            size='small'
-            inputProps={{
-              sx: {
-                color: '#626264',
-                fontSize: '0.8rem',
-                fontWeight: '400'
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: '#626264',
-                fontSize: '0.8rem',
-                fontWeight: '400'
-              },
-            }}
-            sx={{
-              padding: '0rem 0 0.5rem 0',
-            }}
-          >
-            <MenuItem value="Subjective">Subjective</MenuItem>
-            <MenuItem value="Objective">Objective</MenuItem>
-            <MenuItem value="Coding">Coding</MenuItem>
-          </Select>
-        </FormControl>
-
-        <TextField id="outlined-basic" label="Role (SDE, HR, Manager...)" variant="outlined"
-          type='text'
-          name="role"
-          value={formData.role}
-          onChange={handleChange}
-          size='small'
-          inputProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          required
-        />
-
-        <TextField id="outlined-basic" label="Tag" variant="outlined"
-          type='text'
-          name="tag"
-          value={formData.tag}
-          onChange={handleChange}
-          size='small'
-          inputProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          InputLabelProps={{
-            sx: {
-              color: '#626264',
-              fontSize: '0.8rem',
-              fontWeight: '400'
-            },
-          }}
-          required
-        />
-
-        <div className='textAreaBox'>
-          <label>Que Description</label>
-          <Textarea
-            name="description"
-            rows={5}
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
-          <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            size='small'
-            inputProps={{
-              sx: {
-                color: '#626264',
-                fontSize: '0.8rem',
-                fontWeight: '400'
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: '#626264',
-                fontSize: '0.8rem',
-                fontWeight: '400'
-              },
-            }}
-            sx={{
-              padding: '0rem 0 0.5rem 0',
-            }}
-          >
-            <MenuItem value="Technical">Technical</MenuItem>
-            <MenuItem value="Non-technical">Non-technical</MenuItem>
-            <MenuItem value="Aptitude">Aptitude</MenuItem>
-            <MenuItem value="Cultural">Cultural</MenuItem>
-          </Select>
-        </FormControl>
-
-        {formData.type === 'Objective' && (
-          <>
-            <Label>Choices</Label>
-            {formData.choices.map((choice, index) => (
-              <div key={index}>
-                <TextField id="outlined-basic" label={index + 1} variant="outlined"
-                  type='text'
-                  value={choice}
-                  onChange={(e) => handleChoiceChange(e, index)}
-                  size='small'
-                  inputProps={{
-                    sx: {
-                      color: '#626264',
-                      fontSize: '0.8rem',
-                      fontWeight: '400'
-                    },
-                  }}
-                  InputLabelProps={{
-                    sx: {
-                      color: '#626264',
-                      fontSize: '0.8rem',
-                      fontWeight: '400'
-                    },
-                  }}
-                  required
-                />
-              </div>
-            ))}
-
-            <TextField id="outlined-basic" label="Correct Answer" variant="outlined"
-              type='text'
-              name="correctAnswer"
-              value={formData.correctAnswer}
+        <div className="inputBox">
+          <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
+            <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Question Type</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Question Type"
+              name="type"
+              value={formData.type}
               onChange={handleChange}
               size='small'
               inputProps={{
@@ -321,8 +224,169 @@ function CreateQuestionForm({editingIndex, setEditingIndex}) {
                   fontWeight: '400'
                 },
               }}
+              sx={{
+                padding: '0rem 0 0.5rem 0',
+              }}
+            >
+              <MenuItem value="Subjective">Subjective</MenuItem>
+              <MenuItem value="Objective">Objective</MenuItem>
+              <MenuItem value="Coding">Coding</MenuItem>
+            </Select>
+          </FormControl>
+
+          <TextField id="outlined-basic" label="Role (SDE, HR, Manager...)" variant="outlined"
+            type='text'
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            required
+            fullWidth
+          />
+        </div>
+
+        <div className="inputBox">
+          <TextField id="outlined-basic" label="Tag" variant="outlined"
+            type='text'
+            name="tag"
+            value={formData.tag}
+            onChange={handleChange}
+            inputProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: '#626264',
+                fontSize: '0.8rem',
+                fontWeight: '400'
+              },
+            }}
+            required
+            fullWidth
+          />
+
+          <FormControl sx={{ backgroundColor: '#F6F6FB' }} required fullWidth>
+            <InputLabel id="demo-simple-select-label" style={{ fontSize: '0.8rem' }}>Category</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              size='small'
+              inputProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              sx={{
+                padding: '0rem 0 0.5rem 0',
+              }}
+            >
+              <MenuItem value="Technical">Technical</MenuItem>
+              <MenuItem value="Non-technical">Non-technical</MenuItem>
+              <MenuItem value="Aptitude">Aptitude</MenuItem>
+              <MenuItem value="Cultural">Cultural</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+
+        <div className='textAreaBox'>
+          <label>Que Description</label>
+          <Textarea
+            name="description"
+            rows={5}
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+
+
+
+        {formData.type === 'Objective' && (
+          <>
+            <Label>Choices</Label>
+            <div className="inputBoxMap">
+            {formData.choices.map((choice, index) => (
+              <div key={index} className='box'>
+                <TextField id="outlined-basic" label={index + 1} variant="outlined"
+                  type='text'
+                  value={choice}
+                  onChange={(e) => handleChoiceChange(e, index)}
+                  inputProps={{
+                    sx: {
+                      color: '#626264',
+                      fontSize: '0.8rem',
+                      fontWeight: '400'
+                    },
+                  }}
+                  InputLabelProps={{
+                    sx: {
+                      color: '#626264',
+                      fontSize: '0.8rem',
+                      fontWeight: '400'
+                    },
+                  }}
+                  required
+                  fullWidth
+                />
+              </div>
+            ))}
+            </div>
+
+            <div style={{width: 'calc(50% - 1rem)'}}>
+            <TextField id="outlined-basic" label="Correct Answer" variant="outlined"
+              type='text'
+              name="correctAnswer"
+              value={formData.correctAnswer}
+              onChange={handleChange}
+              inputProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: '#626264',
+                  fontSize: '0.8rem',
+                  fontWeight: '400'
+                },
+              }}
               required
+              fullWidth
             />
+            </div>
           </>
         )}
 

@@ -49,8 +49,8 @@ gap: 2rem;
     gap: 1rem;
 
     .titleCenter {
-        font-size: 1.4rem;
-        font-weight: 500;
+        font-size: 1rem;
+        font-weight: 600;
         text-align: center;
     }
 
@@ -76,6 +76,7 @@ gap: 2rem;
         color: var(--white);
         border-radius: 0.5rem;
         cursor: pointer;
+        font-family: var(--font);
     }
 }
 
@@ -89,15 +90,15 @@ gap: 2rem;
     gap: 0.5rem;
 
     .title {
-        font-size: 1.2rem;
-        font-weight: 500;
+        font-size: 1rem;
+        font-weight: 600;
         text-align: center;
         margin-top: 2rem;
     }
 
     .titleCenter {
-        font-size: 1.2rem;
-        font-weight: 500;
+        font-size: 1rem;
+        font-weight: 600;
         width: 100%;
         display: flex;
         justify-content: center;

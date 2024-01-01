@@ -9,6 +9,7 @@ import bg1 from '../../assets/bg1.jpg'
 import bg2 from '../../assets/bg5.jpg'
 import { useNavigate } from 'react-router'
 import BenefitsSection from './BenefitsSection'
+import ReviewsSection from './ReviewsSection'
 
 const DetailedContent = () => {
     const navigate = useNavigate();
@@ -45,8 +46,6 @@ const DetailedContent = () => {
                 </div>
             </div>
 
-            {/* <VideoContent/> */}
-
             <div className='visualDetail'>
                 <div className='visualDetailBox'>
                     <div className='visualDetailTextBox'>
@@ -69,6 +68,8 @@ const DetailedContent = () => {
             </div>
 
             <BenefitsSection />
+
+            <ReviewsSection/>
 
             <div className='contactSection'>
                 <span className='contactSectionTitle'>Become part of advanced Recruitment Solutions powered by AI, same time with Human Touch in your journey of growth.</span>
@@ -386,7 +387,7 @@ margin-top: 5rem;
 
 .productCard:hover {
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
-    background-color: #c0f8f4;
+    background: linear-gradient(to bottom, #f0f0f0, #89f3eb);
 }
 
 .productCardImg {

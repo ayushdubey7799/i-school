@@ -352,8 +352,8 @@ border-radius: 0.5rem;
 }
 
 .title {
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
 
 }
 
@@ -411,6 +411,7 @@ const FilterContainer = styled.div`
       padding: 0.2rem 0.3rem;
       border-radius: 0.2rem;
       cursor: pointer;
+      font-family: var(--font);
     }
 
     .image {
@@ -431,10 +432,11 @@ const FilterContainer = styled.div`
     cursor: pointer;
     height: 3rem;
     width: 3rem;
+    
 
     img {
-      width: 2rem;
-      height: 2rem;
+      width: 1.75rem;
+      height: 1.75rem;
     }
   }
   

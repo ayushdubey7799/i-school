@@ -15,45 +15,45 @@ const BenefitsSection = () => {
         <Box>
             <span className='title'>The Benefits</span>
             <span className='text'>
-                IntelliView Search resume matching software offers advanced CV searching capability and delivers a dramatic reduction in time to shortlist the most suitable and available candidates, creating an impressive improvement in productivity.
+                IntelliView offers comprehensive process automation, minimizing manual efforts in recruitment. Our solution streamlines the entire hiring process by eliminating initial sourcing, shortlisting efforts, and the first rounds of interviews. With highly customizable AI-powered systems, we ensure the delivery of top talent, providing peace of mind throughout the application life cycle. This not only optimizes your hiring process but also reduces costs and time spent on each hire, allowing you to invest those resources in further growth.
             </span>
 
             <div className='cardBox'>
                 <div className='card'>
                     <img src={img1} />
-                    <span className='cardText'>Maximize the value of your existing CRM database with Natural Language Search technology</span>
+                    <span className='cardText'>Leverage the potential of Natural Language Search technology to optimize the value derived from your current CRM database.</span>
                 </div>
                 <div className='card'>
                     <img src={img2} />
-                    <span className='cardText'>Exploit existing data quickly and efficiently</span>
+                    <span className='cardText'>Harness current data rapidly and effectively.</span>
                 </div>
                 <div className='card'>
                     <img src={img3} />
-                    <span className='cardText'>Unify and streamline online resourcing activity</span>
+                    <span className='cardText'>Consolidate and simplify online resourcing operations.</span>
                 </div>
                 <div className='card'>
                     <img src={img4} />
-                    <span className='cardText'>Leverage all available sources, and currently available candidate community</span>
+                    <span className='cardText'>Utilize every accessible source, including the presently available pool of candidates.</span>
                 </div>
                 <div className='card'>
                     <img src={img5} />
-                    <span className='cardText'>Increase productivity of recruiters and sourcers</span>
+                    <span className='cardText'>Enhance the efficiency of recruiters and sourcers.</span>
                 </div>
                 <div className='card'>
                     <img src={img6} />
-                    <span className='cardText'>Reduce time to deliver the best-matched resumes and CVs to clients</span>
+                    <span className='cardText'>Minimize the time required to provide clients with the most suitable resumes and CVs.</span>
                 </div>
                 <div className='card'>
                     <img src={img7} />
-                    <span className='cardText'>Measure performance of all resourcing activities</span>
+                    <span className='cardText'>Evaluate the effectiveness of all resource-related activities.</span>
                 </div>
                 <div className='card'>
                     <img src={img8} />
-                    <span className='cardText'>Calculate your return against online CV spend</span>
+                    <span className='cardText'>Assess the ROI of your online CV expenditure.</span>
                 </div>
                 <div className='card'>
                     <img src={img9} />
-                    <span className='cardText'>Easily build your own CRM database with the best-quality data and candidates available</span>
+                    <span className='cardText'>Effortlessly construct your CRM database using the highest-quality data and available candidates.</span>
                 </div>
             </div>
         </Box>
@@ -65,7 +65,7 @@ export default BenefitsSection
 
 const Box = styled.div`
 width: 90%;
-margin: 2rem auto;
+margin: 2.5rem auto;
 display: flex;
 flex-direction: column;
 
@@ -76,8 +76,8 @@ flex-direction: column;
 }
 
 .text {
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 0.9rem;
+    font-weight: 500;
     line-height: 1.2rem;
 }
 
@@ -99,11 +99,11 @@ flex-direction: column;
         .cardText {
             font-size: 0.9rem;
             font-weight: 500;
-            line-height: 1.2rem;
+            line-height: 1.1rem;
         }
 
         img {
-            width: 5rem;
+            width: 3.5rem;
         }
     }
 }

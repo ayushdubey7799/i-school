@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { createBlobUrl } from "../../../commonComponents/Resume";
 import { getBlobData } from "../../../../functions/api/resume/getBlobData";
 import { timeZoneConversion } from "../../../../utils/timeZoneConversation";
+import download from '../../../../assets/icons/download.png'
 
 const Inbox = () => {
   const [notifications, setNotifications] = useState(null);
@@ -20,13 +21,11 @@ const Inbox = () => {
       const res = await getAllAlerts(accessToken, clientCode);
 
       if (res) setNotifications(res?.messages);
-      console.log(res);
     };
     getAlerts();
   }, []);
   const handleDownload = async (url) => {
     const res = await getBlobData(url, accessToken, clientCode);
-    console.log(res);
     const a = document.createElement('a');
     a.href = res;
     a.setAttribute('download', 'your-filename.ext');
@@ -40,7 +39,6 @@ const Inbox = () => {
           <input type="text" placeholder="Search" />
           <img src={searchIcon} />
         </div>
-        <img src={notificationIcon} className="notificationIcon" />
       </div>
       <div className="box2">
         <div className="left">
@@ -63,20 +61,19 @@ const Inbox = () => {
                 </div>
                 <div className="text">
                   {notify?.message}{" "}
-                  {notify.url ? 
-                  <button onClick={() => handleDownload(notify.url)}>
-                  Download file
-                  </button>
-                  :
-                  <></>
-                    
-                }
+
                 </div>
                 <div className="text">
-                    {timeZoneConversion(notify.updatedAt)}
+                  <span className="time">{timeZoneConversion(notify.updatedAt)}</span>
                 </div>
               </div>
-              <span className="btn">View</span>
+              <span className="btn"> {notify.url ?
+                <span onClick={() => handleDownload(notify.url)}>
+                  <img src={download} />
+                </span>
+                :
+                <></>
+              }</span>
             </div>
           </div>
         ))}
@@ -93,8 +90,6 @@ display: flex;
 flex-direction: column;
 gap: 2.5rem;
 margin-bottom: 3rem;
-
-
 
 
 
@@ -148,7 +143,7 @@ margin-bottom: 3rem;
 
 
         .title {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
@@ -191,12 +186,12 @@ margin-bottom: 1rem;
 .textBox {
     display: flex;
     flex-direction: column;
-
+    gap: 0.3rem;
 
 
     .title {
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .text {
@@ -212,10 +207,13 @@ margin-bottom: 1rem;
 }
 
 .btn {
-    color: var(--lightOrange);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
+
+    img {
+      width: 2rem;
+    }
 }
 }
 
