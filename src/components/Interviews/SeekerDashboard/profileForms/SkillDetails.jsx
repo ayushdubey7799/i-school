@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import addIcon from '../../../../assets/icons/Profile/addIcon.png'
 import deleteIcon from '../../../../assets/icons/Profile/deleteIcon.png'
+import { useSelector } from 'react-redux';
 
-const SkillDetails = ({ formData, setFormData, handleEdit }) => {
+const SkillDetails = ({ data }) => {
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
+  const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+  const [formData, setFormData] = useState();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
 
   return (
     <Box>
@@ -25,6 +30,8 @@ const SkillDetails = ({ formData, setFormData, handleEdit }) => {
             label="Skill"
             variant="outlined"
             type="text"
+            name="name"
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -47,6 +54,8 @@ const SkillDetails = ({ formData, setFormData, handleEdit }) => {
             label="Years of Experience"
             variant="outlined"
             type="number"
+            name="experienceMonths"
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -71,7 +80,7 @@ const SkillDetails = ({ formData, setFormData, handleEdit }) => {
           </div>
         </div>
 
-        <Button onClick={handleEdit}>Save Changes</Button>
+        <Button>Save Changes</Button>
       </Form>
     </Box>
   )

@@ -28,6 +28,7 @@ import UploadCandidateProfile from "../components/Interviews/EmployerDashboard/s
 import EmpConfigureDash from "../components/Interviews/EmployerDashboard/sidebarPages/EmpConfigureDash";
 import InterviewFlow from "../components/Interviews/EmployerDashboard/sidebarPages/InterviewFlow";
 import RequestDemoPage from "../components/Interviews/EmployerDashboard/sidebarPages/RequestDemoPage";
+import ManageAgencies from "../components/Interviews/EmployerDashboard/sidebarPages/ManageAgencies";
 // const JobSearch = () => <div>Job Search Content</div>;
 // const Profile = () => <div>Profile Content</div>;
 
@@ -112,6 +113,7 @@ const EmployerDashboard = () => {
 
           {currentItem === "profile" && <EmployeProfile />}
           {currentItem === "manage-users" && <ManageUsers />}
+          {currentItem === "manage-agencies" && <ManageAgencies />}
           {currentItem === "subscriptions" && <Subscription />}
           {currentItem === "billing" && <Billing />}
           {currentItem === "inbox" && <Inbox />}

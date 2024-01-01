@@ -6,15 +6,18 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ReactQuill from 'react-quill';
 
-const EmploymentDetails = ({ formData, setFormData, handleEdit }) => {
+const EmploymentDetails = ({ data }) => {
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
+  const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+  const [formData, setFormData] = useState();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   return (
     <Box>
@@ -238,7 +241,7 @@ const EmploymentDetails = ({ formData, setFormData, handleEdit }) => {
           <ReactQuill theme="snow" className="textEditor" />
         </div>
 
-        <Button onClick={handleEdit}>Save Changes</Button>
+        <Button>Save Changes</Button>
       </Form>
     </Box>
   )

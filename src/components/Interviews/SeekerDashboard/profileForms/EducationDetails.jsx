@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import styled from 'styled-components';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { useSelector } from 'react-redux';
 
-const EducationDetails = ({ formData, setFormData, handleEdit }) => {
+const EducationDetails = ({ data }) => {
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
+  const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+  const [formData, setFormData] = useState();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   return (
     <Box>
@@ -26,6 +30,8 @@ const EducationDetails = ({ formData, setFormData, handleEdit }) => {
             label="University Name"
             variant="outlined"
             type="text"
+            name='school'
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -48,6 +54,8 @@ const EducationDetails = ({ formData, setFormData, handleEdit }) => {
             label="Degree"
             variant="outlined"
             type="tel"
+            name='degree'
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -73,6 +81,8 @@ const EducationDetails = ({ formData, setFormData, handleEdit }) => {
             label="Course"
             variant="outlined"
             type="text"
+            name='course'
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -94,7 +104,9 @@ const EducationDetails = ({ formData, setFormData, handleEdit }) => {
             id="outlined-basic"
             label="Course Type"
             variant="outlined"
-            type="text"
+            type="courseType"
+            name='school'
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -122,6 +134,8 @@ const EducationDetails = ({ formData, setFormData, handleEdit }) => {
               id="demo-simple-select"
               label="Grade type"
               size='small'
+              name='gradeType'
+              onChange={handleChange}
               inputProps={{
                 sx: {
                   color: '#626264',
@@ -151,6 +165,8 @@ const EducationDetails = ({ formData, setFormData, handleEdit }) => {
             label="Grades"
             variant="outlined"
             type="text"
+            name='grade'
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -173,19 +189,19 @@ const EducationDetails = ({ formData, setFormData, handleEdit }) => {
         <div className='inputBox'>
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="Start Date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="Start Date" name="startDate" onChange={handleChange} sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
             </DemoContainer>
           </LocalizationProvider>
 
 
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="End date (or expected)" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="End date (or expected)" name="endDate" onChange={handleChange} sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
             </DemoContainer>
           </LocalizationProvider>
         </div>
 
-        <Button onClick={handleEdit}>Save Changes</Button>
+        <Button>Save Changes</Button>
       </Form>
     </Box>
   )
