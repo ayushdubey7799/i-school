@@ -92,7 +92,6 @@ const Signup = () => {
     }
   };
 
-
   const handleSubmitEmployer = async (e) => {
     e.preventDefault();
 
@@ -109,8 +108,8 @@ const Signup = () => {
       "spocContact": contact,
       "spocEmail": email,
       "spocPassword": password,
+      "agencyFeature": value=="recruitment-agency"?true:false
     }
-
 
 
     const registerRes = await employerRegister(details);
@@ -156,6 +155,7 @@ const Signup = () => {
       ValidatorForm.removeValidationRule('hasMinLength');
     };
   }, [password]);
+  console.log("/////////",value);
 
   return (
     <StyledSignup>
