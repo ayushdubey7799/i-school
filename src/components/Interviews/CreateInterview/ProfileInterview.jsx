@@ -242,18 +242,18 @@ const ProfileInterview = () => {
               <label className="label1">
                 <input
                   type="radio"
-                  value="MCQs"
-                  checked={testType === 'MCQs'}
-                  onChange={() => setTestType('MCQs')}
+                  value="mcq"
+                  checked={testType === 'mcq'}
+                  onChange={() => setTestType('mcq')}
                 />
                 <span>MCQs</span>
               </label>
               <label className="label1">
                 <input
                   type="radio"
-                  value="Subjective"
-                  checked={testType === 'Subjective'}
-                  onChange={() => setTestType('Subjective')}
+                  value="general"
+                  checked={testType === 'general'}
+                  onChange={() => setTestType('general')}
                 />
                 <span>Subjective</span>
               </label>
@@ -269,9 +269,9 @@ const ProfileInterview = () => {
               <label className="label1">
                 <input
                   type="radio"
-                  value="General"
-                  checked={testType === 'General'}
-                  onChange={() => setTestType('General')}
+                  value="general"
+                  checked={testType === 'general'}
+                  onChange={() => setTestType('general')}
                 />
                 <span>General (Includes all types of Que)</span>
               </label>
