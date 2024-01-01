@@ -116,7 +116,7 @@ export default function Invite() {
     // }
     // getTypes();
     setProductTypes(["JD", "Resume", "JD + Resume", "Skill"]);
-    setTestTypes(["MCQs", "Subjective", "coding"]);
+    setTestTypes(["mcq", "general", "coding"]);
   }, []);
 
   const handleProductTypeChange = (inp) => {
@@ -158,14 +158,14 @@ export default function Invite() {
       };
 
       if (isTime) delete payload.slotTime;
-      if(testType == 'InPerson'){
+      if (testType == 'InPerson') {
         payload.interviewerEmail = interviewerEmail;
         payload.meetingLink = meetUrl;
       }
-      
+
       try {
         const response = await sendInvite(payload, accessToken, clientCode);
-        
+
         if (response.status == "FAILED") {
           setErrorPopup({ status: true, msg: response?.notify?.message })
         } else {
@@ -251,8 +251,8 @@ export default function Invite() {
 
                   <div className="slotBox">
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
-                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox' sx={{width: '40%'}}>
-                        {!isTime && <TimeSlot selectedTimeSlot={selectedTimeSlot} setSelectedTimeSlot={setSelectedTimeSlot}/>}
+                      <DemoContainer components={['TimePicker', 'TimePicker']} className='slotChildBox' sx={{ width: '40%' }}>
+                        {!isTime && <TimeSlot selectedTimeSlot={selectedTimeSlot} setSelectedTimeSlot={setSelectedTimeSlot} />}
                       </DemoContainer>
                     </LocalizationProvider>
                     <label className="smallTextBox">
@@ -352,18 +352,18 @@ export default function Invite() {
                     <label className="label">
                       <input
                         type="radio"
-                        value="MCQs"
-                        checked={testType === 'MCQs'}
-                        onChange={() => handleTestTypeChange('MCQs')}
+                        value="mcq"
+                        checked={testType === 'mcq'}
+                        onChange={() => handleTestTypeChange('mcq')}
                       />
                       <span>MCQs</span>
                     </label>
                     <label className="label">
                       <input
                         type="radio"
-                        value="Subjective"
-                        checked={testType === 'Subjective'}
-                        onChange={() => handleTestTypeChange('Subjective')}
+                        value="general"
+                        checked={testType === 'general'}
+                        onChange={() => handleTestTypeChange('general')}
                       />
                       <span>Subjective</span>
                     </label>
@@ -379,9 +379,9 @@ export default function Invite() {
                     <label className="label">
                       <input
                         type="radio"
-                        value="General"
-                        checked={testType === 'General'}
-                        onChange={() => handleTestTypeChange('General')}
+                        value="general"
+                        checked={testType === 'general'}
+                        onChange={() => handleTestTypeChange('general')}
                       />
                       <span>General (Includes all types of Que)</span>
                     </label>
