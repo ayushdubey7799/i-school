@@ -12,7 +12,7 @@ import { addCertificationWithFile } from '../../../../functions/api/jobSeekers/a
 import { toast } from 'react-toastify';
 import { updateCertification } from '../../../../functions/api/jobSeekers/updateCertification';
 
-const CertificationDetails = ({ data, mode, id, handleClose }) => {
+const CertificationDetails = ({ data, mode, id, handleClose, trigger, setTrigger }) => {
 
     const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
     const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -87,6 +87,7 @@ const CertificationDetails = ({ data, mode, id, handleClose }) => {
                 if (res) {
                     toast.success('Certification added successfully', 5000);
                     handleClose()
+                    setTrigger(!trigger)
                 }
             } else {
 
@@ -105,6 +106,7 @@ const CertificationDetails = ({ data, mode, id, handleClose }) => {
                 if (res) {
                     toast.success('Certification updated successfully')
                     handleClose();
+                    setTrigger(!trigger)
                 }
 
             }

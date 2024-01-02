@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { addEmployments } from '../../../../functions/api/jobSeekers/addEmployments';
 import { updateEmployment } from '../../../../functions/api/jobSeekers/updateEmployment';
 
-const EmploymentDetails = ({ data, mode, handleClose, id }) => {
+const EmploymentDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) => {
 
   const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -71,6 +71,7 @@ const EmploymentDetails = ({ data, mode, handleClose, id }) => {
         if (res) {
           toast.success('Employment added successfully')
           handleClose();
+          setTrigger(!trigger)
         }
       } else {
         const payload = {
@@ -91,8 +92,9 @@ const EmploymentDetails = ({ data, mode, handleClose, id }) => {
         const res = await updateEmployment(id, payload, accessToken)
 
         if (res) {
-          toast.success('Employment edited successfully')
+          toast.success('Employment updated successfully')
           handleClose();
+          setTrigger(!trigger)
         }
       }
     } catch (error) {
@@ -244,7 +246,7 @@ const EmploymentDetails = ({ data, mode, handleClose, id }) => {
               label="Employment Type"
               size='small'
               name='employmentType'
-              value={formData?.employmentType}
+              value={formData?.employmentType?.length > 0 && formData?.employmentType}
               onChange={handleChange}
               inputProps={{
                 sx: {
