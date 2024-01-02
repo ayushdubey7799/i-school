@@ -16,6 +16,7 @@ export const getProfile = async (profileId, accessToken) => {
         return response.data;
     } catch (error) {
         console.log('Error:', error);
+        throw error;
     }
 }
 

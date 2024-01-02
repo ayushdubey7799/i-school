@@ -1,22 +1,22 @@
 import axios from "axios"
 
 
-export const addCertifications = async (profileId, data, accessToken) => {
+export const addCertificationWithFile = async (profileId, formdata, accessToken) => {
 
     const config = {
         headers: {
             Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     };
 
     try {
-        const response = await axios.post(`https://dev-api.intelliview.in/api/profiles/${profileId}/certificationFiles`, data, config);
+        const response = await axios.post(`https://dev-api.intelliview.in/api/profiles/${profileId}/certificationFiles`, formdata, config);
         console.log('Data:', response.data);
         return response.data;
     } catch (error) {
-        toast.error(error.message);
         console.error('Error:', error);
+        throw error;
     }
 }
 
