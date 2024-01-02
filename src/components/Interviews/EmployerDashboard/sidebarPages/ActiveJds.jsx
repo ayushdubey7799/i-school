@@ -44,6 +44,7 @@ import { dateConversion } from "../../../../utils/timeZoneConversation";
 import uploadIcon from '../../../../assets/icons/upload.png'
 
 import { useJwt } from 'react-jwt';
+import AgencyList from "../commonComponents/AgencyList";
 
 
 
@@ -238,7 +239,7 @@ function Row(props) {
       <CommonDrawer
         toggleDrawer={toggleAgencyDrawer}
         state={agencyState}
-        component={<div>Agency List</div>}
+        component={<div><AgencyList jdId={row?.jdId}/></div>}
       />
       {errorPopup && (
         <Error
