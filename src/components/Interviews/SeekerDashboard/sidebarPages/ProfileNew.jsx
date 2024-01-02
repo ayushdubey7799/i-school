@@ -18,6 +18,8 @@ import EmploymentDetails from '../profileForms/EmploymentDetails';
 import CertificationDetails from '../profileForms/CertificationDetails';
 import { getProfile } from '../../../../functions/api/jobSeekers/getProfile';
 import { useSelector } from 'react-redux';
+import { dateConversion } from '../../../../utils/timeZoneConversation';
+
 
 const ProfileNew = () => {
 
@@ -61,7 +63,7 @@ const ProfileNew = () => {
     const [employmentId, setEmploymentId] = useState('');
     const [employmentData, setEmploymentData] = useState();
 
-
+    const [trigger, setTrigger] = useState(false);
 
 
     useEffect(() => {
@@ -70,17 +72,23 @@ const ProfileNew = () => {
             setUserProfileData(res?.data);
         }
         getProfileData();
-    }, [])
+    }, [trigger])
+
+    useEffect(() => {
+        if (!openSkills) {
+            setTrigger(!trigger);
+        }
+    }, [openSkills])
 
 
     return (
         <Box>
             <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails />} />
-            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails data={skillData} mode={mode} handleClose={() => setOpenSkills(false)} id={skillId} />} />
-            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails data={educationData} mode={mode} handleClose={() => setOpenEducations(false)} id={educationId} />} />
-            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails data={projectData} mode={mode} handleClose={() => setOpenProjects(false)} id={projectId} />} />
-            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails data={employmentData} mode={mode} handleClose={() => setOpenEmployments(false)} id={employmentId} />} />
-            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={certificateData} mode={mode} handleClose={() => setOpenCertifications(false)} id={certificateId} />} />
+            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails data={skillData} mode={mode} handleClose={() => setOpenSkills(false)} id={skillId} trigger={trigger} setTrigger={setTrigger} />} />
+            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails data={educationData} mode={mode} handleClose={() => setOpenEducations(false)} id={educationId} trigger={trigger} setTrigger={setTrigger} />} />
+            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails data={projectData} mode={mode} handleClose={() => setOpenProjects(false)} id={projectId} trigger={trigger} setTrigger={setTrigger} />} />
+            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails data={employmentData} mode={mode} handleClose={() => setOpenEmployments(false)} id={employmentId} trigger={trigger} setTrigger={setTrigger} />} />
+            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={certificateData} mode={mode} handleClose={() => setOpenCertifications(false)} id={certificateId} trigger={trigger} setTrigger={setTrigger} />} />
 
             <div className='topBox'>
                 <img src={profileData.personalInfo.img} className='profileImg' />
@@ -152,8 +160,8 @@ const ProfileNew = () => {
                                     setEducationData(edu)
                                 }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{edu?.school}</span>
-                                <span className='text'>{edu?.startDate} to {edu?.endDate} | {edu?.courseType}</span>
-                                <span className='text'>{edu?.grade} {edu?.gradeType}</span>
+                                <span className='text'>{dateConversion(edu?.startDate)} to {dateConversion(edu?.endDate)} | {edu?.courseType}</span>
+                                <span className='text'>{edu?.grade} {edu?.gradeType === '0-10cgpa' ? 'CGPA' : edu?.gradeType === '0-4cgpa' ? 'CGPA' : '%'}</span>
                             </div>
                         ))
                     }
@@ -179,8 +187,8 @@ const ProfileNew = () => {
                                     setProjectId(project?.id)
                                     setProjectData(project)
                                 }}><img src={editIcon} /></span></span>
-                                <span className='text'>{project?.startDate} to {project?.endDate} | {project?.status}</span>
-                                <span className='desc'>{project?.description}</span>
+                                <span className='text'>{dateConversion(project?.startDate)} to {dateConversion(project?.endDate)} | {project?.status}</span>
+                                <span dangerouslySetInnerHTML={{ __html: project?.description }} className='desc' />
                             </div>
                         ))
                     }
@@ -200,14 +208,14 @@ const ProfileNew = () => {
                     {
                         userProfileData?.employments?.map((exp, index) => (
                             <div className='card'>
-                                <span className='title'><>{exp?.orgName} | {exp?.designation}</> <span className='editBtn' onClick={() => {
+                                <span className='title'><>{exp?.orgDetail?.name} | {exp?.designation}</> <span className='editBtn' onClick={() => {
                                     setMode('edit')
                                     setOpenEmployments(true)
                                     setEmploymentId(exp?.id)
                                     setEmploymentData(exp)
                                 }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{exp?.employmentType}</span>
-                                <span className='text'>{exp?.startDate} to {exp?.endDate}</span>
+                                <span className='text'>{dateConversion(exp?.startDate)} to {dateConversion(exp?.endDate)}</span>
                                 <div className='skillBox'>{
                                     exp?.skillsUsed?.split(',')?.map((skill) => (
                                         <span className='skill'>{skill}</span>
@@ -238,7 +246,7 @@ const ProfileNew = () => {
                                     setCertificateData(cert)
                                 }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{cert?.issuingOrganization}</span>
-                                <span className='text'>Issued {cert?.issueDate} to {cert?.expirationDate}</span>
+                                <span className='text'>Issued {dateConversion(cert?.issueDate)} to {dateConversion(cert?.expirationDate)}</span>
 
                                 <button>Verify Certificate</button>
                             </div>
@@ -635,6 +643,8 @@ align-items: center;
 
         .desc {
             font-size: 0.85rem;
+            margin-top: -1rem;
+            margin-bottom: -0.5rem;
         }
     }
 }

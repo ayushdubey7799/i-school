@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { addProjects } from '../../../../functions/api/jobSeekers/addProjects';
 import { updateProjects } from '../../../../functions/api/jobSeekers/updateProject';
 
-const ProjectDetails = ({ data, mode, handleClose, id }) => {
+const ProjectDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) => {
 
   const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -61,6 +61,7 @@ const ProjectDetails = ({ data, mode, handleClose, id }) => {
         if (res) {
           toast.success('Project added successfully')
           handleClose();
+          setTrigger(!trigger)
         }
       } else {
         const payload = {
@@ -76,8 +77,9 @@ const ProjectDetails = ({ data, mode, handleClose, id }) => {
         const res = await updateProjects(id, payload, accessToken)
 
         if (res) {
-          toast.success('Project edited successfully')
+          toast.success('Project updated successfully')
           handleClose();
+          setTrigger(!trigger)
         }
       }
     } catch (error) {
@@ -181,7 +183,7 @@ const ProjectDetails = ({ data, mode, handleClose, id }) => {
               label="Current Status"
               size='small'
               name="status"
-              value={formData?.status}
+              value={formData?.status.length > 0 && formData?.status}
               onChange={handleChange}
               inputProps={{
                 sx: {

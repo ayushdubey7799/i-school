@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { updateEducation } from '../../../../functions/api/jobSeekers/updateEducation';
 import { addEducations } from '../../../../functions/api/jobSeekers/addEducations';
 
-const EducationDetails = ({ data, mode, handleClose, id }) => {
+const EducationDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) => {
 
   const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -59,6 +59,7 @@ const EducationDetails = ({ data, mode, handleClose, id }) => {
         if (res) {
           toast.success('Education added successfully')
           handleClose();
+          setTrigger(!trigger)
         }
       } else {
         const payload = {
@@ -75,8 +76,9 @@ const EducationDetails = ({ data, mode, handleClose, id }) => {
         const res = await updateEducation(id, payload, accessToken)
 
         if (res) {
-          toast.success('Education edited successfully')
+          toast.success('Education updated successfully')
           handleClose();
+          setTrigger(!trigger)
         }
       }
     } catch (error) {
@@ -207,7 +209,7 @@ const EducationDetails = ({ data, mode, handleClose, id }) => {
               label="Grade type"
               size='small'
               name='gradeType'
-              value={formData?.gradeType}
+              value={formData?.gradeType.length > 0 && formData?.gradeType}
               onChange={handleChange}
               inputProps={{
                 sx: {

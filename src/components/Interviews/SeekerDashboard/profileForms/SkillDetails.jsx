@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import styled from 'styled-components';
 import addIcon from '../../../../assets/icons/Profile/addIcon.png'
 import deleteIcon from '../../../../assets/icons/Profile/deleteIcon.png'
@@ -8,7 +8,8 @@ import { addSkills } from '../../../../functions/api/jobSeekers/addSkills';
 import { updateSkill } from '../../../../functions/api/jobSeekers/updateSkill';
 import { toast } from 'react-toastify';
 
-const SkillDetails = ({ data, mode, handleClose, id }) => {
+
+const SkillDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) => {
 
   const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
@@ -25,6 +26,7 @@ const SkillDetails = ({ data, mode, handleClose, id }) => {
   useEffect(() => {
     if (mode === 'edit') {
       setFormData(data)
+      console.log(data?.expertiseLevel)
     }
   }, [])
 
@@ -33,19 +35,22 @@ const SkillDetails = ({ data, mode, handleClose, id }) => {
       if (mode === 'create') {
         const payload = {
           name: formData?.name,
-          experienceMonths: formData?.experienceMonths
+          experienceMonths: formData?.experienceMonths,
+          expertiseLevel: formData?.expertiseLevel,
+          rating: formData?.rating
         }
 
         const res = await addSkills(profileId, payload, accessToken);
 
         if (res) {
           toast.success('Skill added successfully')
-          handleClose();
         }
       } else {
         const payload = {
           name: formData?.name,
-          experienceMonths: formData?.experienceMonths
+          experienceMonths: formData?.experienceMonths,
+          expertiseLevel: formData?.expertiseLevel,
+          rating: formData?.rating
         }
 
         const res = await updateSkill(id, payload, accessToken);
@@ -53,6 +58,7 @@ const SkillDetails = ({ data, mode, handleClose, id }) => {
         if (res) {
           toast.success('Skill updated successfully')
           handleClose();
+          setTrigger(!trigger)
         }
       }
 
@@ -121,11 +127,81 @@ const SkillDetails = ({ data, mode, handleClose, id }) => {
             }}
             fullWidth
           />
+        </div>
 
-          {/* <div className='iconBox'>
-            <img className='addIcon' src={addIcon} />
-            <img className='deleteIcon' src={deleteIcon} />
-          </div> */}
+        <div className="inputBox">
+
+          <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
+            <InputLabel id="demo-simple-select-label">Rating</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Rating"
+              name='rating'
+              value={parseInt(formData?.rating, 10)}
+              onChange={handleChange}
+              size="small"
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              sx={{
+                padding: "0rem 0 0.5rem 0",
+              }}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ backgroundColor: "#F6F6FB" }} fullWidth>
+            <InputLabel id="demo-simple-select-label">Expertise Level</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Expertise Level"
+              name='expertiseLevel'
+              value={formData?.expertiseLevel?.length > 0 && formData?.expertiseLevel}
+              onChange={handleChange}
+              size="small"
+              inputProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#626264",
+                  fontSize: "0.8rem",
+                  fontWeight: "400",
+                },
+              }}
+              sx={{
+                padding: "0rem 0 0.5rem 0",
+              }}
+            >
+              <MenuItem value="beginner">Beginner</MenuItem>
+              <MenuItem value="novice">Novice</MenuItem>
+              <MenuItem value="intermediate">Intermediate</MenuItem>
+              <MenuItem value="proficient">Proficient</MenuItem>
+              <MenuItem value="expert ">Expert </MenuItem>
+            </Select>
+          </FormControl>
+
         </div>
 
         <Button onClick={handleSubmit}>{mode === 'create' ? 'Add' : 'Save Changes'}</Button>
