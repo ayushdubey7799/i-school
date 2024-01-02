@@ -15,8 +15,8 @@ export const addSkills = async (profileId, data, accessToken) => {
         console.log('Data:', response.data);
         return response.data;
     } catch (error) {
-        toast.error(error.message);
         console.error('Error:', error);
+        throw error;
     }
 }
 

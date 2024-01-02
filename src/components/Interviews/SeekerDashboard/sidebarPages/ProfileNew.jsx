@@ -31,10 +31,8 @@ const ProfileNew = () => {
     const [openCertifications, setOpenCertifications] = useState(false);
 
     const [userProfileData, setUserProfileData] = useState();
+    const [mode, setMode] = useState();
 
-    const handleEdit = () => {
-
-    }
 
     const [resumeArr, setResumeArr] = useState([]);
     const [resumeFile, setResumeFile] = useState([]);
@@ -52,6 +50,19 @@ const ProfileNew = () => {
     const accessToken = useSelector((state) => state.auth.userData?.accessToken);
     const userBasicDetails = useSelector((state) => state.auth.userData?.user);
 
+    const [projectId, setProjectId] = useState('');
+    const [projectData, setProjectData] = useState();
+    const [certificateId, setCertificateId] = useState('');
+    const [certificateData, setCertificateData] = useState();
+    const [educationId, setEducationId] = useState('');
+    const [educationData, setEducationData] = useState();
+    const [skillId, setSkillId] = useState('');
+    const [skillData, setSkillData] = useState();
+    const [employmentId, setEmploymentId] = useState('');
+    const [employmentData, setEmploymentData] = useState();
+
+
+
 
     useEffect(() => {
         const getProfileData = async () => {
@@ -65,11 +76,11 @@ const ProfileNew = () => {
     return (
         <Box>
             <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails />} />
-            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails data={userProfileData?.skills} />} />
-            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails data={userProfileData?.educations} />} />
-            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails />} data={userProfileData?.projects} />
-            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails data={userProfileData?.employments} />} />
-            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={userProfileData?.certifications2} />} />
+            <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails data={skillData} mode={mode} handleClose={() => setOpenSkills(false)} id={skillId} />} />
+            <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails data={educationData} mode={mode} handleClose={() => setOpenEducations(false)} id={educationId} />} />
+            <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails data={projectData} mode={mode} handleClose={() => setOpenProjects(false)} id={projectId} />} />
+            <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails data={employmentData} mode={mode} handleClose={() => setOpenEmployments(false)} id={employmentId} />} />
+            <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={certificateData} mode={mode} handleClose={() => setOpenCertifications(false)} id={certificateId} />} />
 
             <div className='topBox'>
                 <img src={profileData.personalInfo.img} className='profileImg' />
@@ -96,14 +107,22 @@ const ProfileNew = () => {
             <div className='skillsMainBox'>
                 <span className='mainTitle'>
                     <span>Skills</span>
-                    <button onClick={() => setOpenSkills(true)}>{userProfileData?.skills?.length > 0 ? 'Edit Skills' : 'Add Skills'}</button>
+                    <button onClick={() => {
+                        setMode('create')
+                        setOpenSkills(true)
+                    }}>{userProfileData?.skills?.length > 0 ? 'Add Skills' : 'Add Skills'}</button>
                 </span>
                 <span className='title'>Add top 5 skills here to increase your chances of getting shortlisted.</span>
                 <div className='cardBox'>
                     {
                         userProfileData?.skills?.map((skill, index) => (
                             <div className='card'>
-                                <span className='skill'>{skill?.name}</span>
+                                <span className='skill'>{skill?.name} <span className='editBtn' onClick={() => {
+                                    setMode('edit')
+                                    setOpenSkills(true)
+                                    setSkillId(skill?.id)
+                                    setSkillData(skill)
+                                }}><img src={editIcon} /></span></span>
                                 <Rating name="read-only" value={skill?.rating} readOnly className='score' />
                                 {/* <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span> */}
                                 <button className='btn'>Take Assessment</button>
@@ -117,13 +136,21 @@ const ProfileNew = () => {
             <div className='educationBox'>
                 <span className='mainTitle'>
                     <span>Education</span>
-                    <button onClick={() => setOpenEducations(true)}>{userProfileData?.educations?.length > 0 ? 'Add New' : 'Add'}</button>
+                    <button onClick={() => {
+                        setMode('create')
+                        setOpenEducations(true)
+                    }}>{userProfileData?.educations?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
                         userProfileData?.educations?.map((edu, index) => (
                             <div className='card'>
-                                <span className='title'>{edu?.degree}</span>
+                                <span className='title'>{edu?.degree} <span className='editBtn' onClick={() => {
+                                    setMode('edit')
+                                    setOpenEducations(true)
+                                    setEducationId(edu?.id)
+                                    setEducationData(edu)
+                                }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{edu?.school}</span>
                                 <span className='text'>{edu?.startDate} to {edu?.endDate} | {edu?.courseType}</span>
                                 <span className='text'>{edu?.grade} {edu?.gradeType}</span>
@@ -137,13 +164,21 @@ const ProfileNew = () => {
             <div className='projectBox'>
                 <span className='mainTitle'>
                     <span>Projects</span>
-                    <button onClick={() => setOpenProjects(true)}>{userProfileData?.projects?.length > 0 ? 'Add New' : 'Add'}</button>
+                    <button onClick={() => {
+                        setMode('create')
+                        setOpenProjects(true)
+                    }}>{userProfileData?.projects?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
                         userProfileData?.projects?.map((project, index) => (
                             <div className='card'>
-                                <span className='title'>{project?.title}</span>
+                                <span className='title'>{project?.title} <span className='editBtn' onClick={() => {
+                                    setMode('edit')
+                                    setOpenProjects(true)
+                                    setProjectId(project?.id)
+                                    setProjectData(project)
+                                }}><img src={editIcon} /></span></span>
                                 <span className='text'>{project?.startDate} to {project?.endDate} | {project?.status}</span>
                                 <span className='desc'>{project?.description}</span>
                             </div>
@@ -156,13 +191,21 @@ const ProfileNew = () => {
             <div className='experienceBox'>
                 <span className='mainTitle'>
                     <span>Employment</span>
-                    <button onClick={() => setOpenEmployments(true)}>{userProfileData?.employments?.length > 0 ? 'Add New' : 'Add'}</button>
+                    <button onClick={() => {
+                        setMode('create')
+                        setOpenEmployments(true)
+                    }}>{userProfileData?.employments?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
                         userProfileData?.employments?.map((exp, index) => (
                             <div className='card'>
-                                <span className='title'>{exp?.orgName} | {exp?.designation}</span>
+                                <span className='title'><>{exp?.orgName} | {exp?.designation}</> <span className='editBtn' onClick={() => {
+                                    setMode('edit')
+                                    setOpenEmployments(true)
+                                    setEmploymentId(exp?.id)
+                                    setEmploymentData(exp)
+                                }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{exp?.employmentType}</span>
                                 <span className='text'>{exp?.startDate} to {exp?.endDate}</span>
                                 <div className='skillBox'>{
@@ -179,13 +222,21 @@ const ProfileNew = () => {
             <div className='certificationBox'>
                 <span className='mainTitle'>
                     <span>Certifications</span>
-                    <button onClick={() => setOpenCertifications(true)}>{userProfileData?.certifications2?.length > 0 ? 'Add New' : 'Add'}</button>
+                    <button onClick={() => {
+                        setMode('create')
+                        setOpenCertifications(true)
+                    }}>{userProfileData?.certifications2?.length > 0 ? 'Add New' : 'Add'}</button>
                 </span>
                 <div className='cardBox'>
                     {
                         userProfileData?.certifications2?.map((cert, index) => (
                             <div className='card'>
-                                <span className='title'>{cert?.title}</span>
+                                <span className='title'>{cert?.title} <span className='editBtn' onClick={() => {
+                                    setMode('edit')
+                                    setOpenCertifications(true)
+                                    setCertificateId(cert?.id)
+                                    setCertificateData(cert)
+                                }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{cert?.issuingOrganization}</span>
                                 <span className='text'>Issued {cert?.issueDate} to {cert?.expirationDate}</span>
 
@@ -202,7 +253,7 @@ const ProfileNew = () => {
                 </span>
                 <span className='title'>Add upto 3 Resumes</span>
 
-                <div className='resumeChildBox'>
+                {/* <div className='resumeChildBox'>
                     {
                         resumeArr.map((resume) => (
                             <div className='resumeCard'>
@@ -226,7 +277,7 @@ const ProfileNew = () => {
                             />
                         </div>
                     }
-                </div>
+                </div> */}
             </div>
         </Box>
     )
@@ -243,7 +294,6 @@ display: flex;
 flex-direction: column;
 gap: 1.5rem;
 align-items: center;
-
 
 
 .topBox {
@@ -353,6 +403,7 @@ align-items: center;
     border-radius: 0.5rem;
     background-color: #FEFFFE;
 
+    
 
     .mainTitle {
         font-size: 1.2rem;
@@ -398,6 +449,19 @@ align-items: center;
         .skill {
             font-size: 0.9rem;
             font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            .editBtn {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            
+                img {
+                    width: 1rem;
+                }
+            }
         }
 
         .score {
@@ -414,6 +478,7 @@ align-items: center;
             border-radius: 0.5rem;
             cursor: pointer;
         }
+        
     }
 }
 
@@ -465,6 +530,19 @@ align-items: center;
         .title {
             font-size: 0.9rem;
             font-weight: 600;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .editBtn {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            
+                img {
+                    width: 1rem;
+                }
+            }
         }
 
         .subTitle {
@@ -532,10 +610,22 @@ align-items: center;
         align-items: start;
         gap: 0.4rem;
 
-
         .title {
             font-size: 0.9rem;
             font-weight: 600;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .editBtn {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            
+                img {
+                    width: 1rem;
+                }
+            }
         }
 
         .text {
@@ -597,6 +687,19 @@ align-items: center;
         .title {
             font-size: 0.9rem;
             font-weight: 600;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .editBtn {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            
+                img {
+                    width: 1rem;
+                }
+            }
         }
 
         .subTitle {
@@ -671,6 +774,19 @@ align-items: center;
         .title {
             font-size: 0.9rem;
             font-weight: 600;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .editBtn {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+            
+                img {
+                    width: 1rem;
+                }
+            }
         }
 
         .subTitle {

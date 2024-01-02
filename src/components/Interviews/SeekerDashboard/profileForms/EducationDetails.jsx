@@ -1,15 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import styled from 'styled-components';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
+import moment from 'moment-timezone';
+import { toast } from 'react-toastify';
+import { updateEducation } from '../../../../functions/api/jobSeekers/updateEducation';
+import { addEducations } from '../../../../functions/api/jobSeekers/addEducations';
 
-const EducationDetails = ({ data }) => {
+const EducationDetails = ({ data, mode, handleClose, id }) => {
 
   const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const [formData, setFormData] = useState();
+
+  const [issueDate, setIssueDate] = useState(dayjs(new Date()));
+  const [expirationDate, setExpirationDate] = useState(dayjs(new Date()));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,9 +28,68 @@ const EducationDetails = ({ data }) => {
     });
   };
 
+  useEffect(() => {
+    if (mode === 'edit') {
+      setFormData(data);
+      setIssueDate(dayjs(data?.startDate))
+      setExpirationDate(dayjs(data?.endDate))
+    }
+  }, [])
+
+
+  const handleSubmit = async () => {
+    try {
+      const startDate = moment(issueDate.format("YYYY-MM-DD")).utc().format('YYYY-MM-DD');
+      const endDate = moment(expirationDate.format("YYYY-MM-DD")).utc().format('YYYY-MM-DD');
+
+      if (mode === 'create') {
+        const payload = {
+          school: formData?.school,
+          degree: formData?.degree,
+          course: formData?.course,
+          courseType: formData?.courseType,
+          grade: formData?.grade,
+          gradeType: formData?.gradeType,
+          startDate: startDate,
+          endDate: endDate
+        }
+
+        const res = await addEducations(profileId, payload, accessToken);
+
+        if (res) {
+          toast.success('Education added successfully')
+          handleClose();
+        }
+      } else {
+        const payload = {
+          school: formData?.school,
+          degree: formData?.degree,
+          course: formData?.course,
+          courseType: formData?.courseType,
+          grade: formData?.grade,
+          gradeType: formData?.gradeType,
+          startDate: startDate,
+          endDate: endDate
+        }
+
+        const res = await updateEducation(id, payload, accessToken)
+
+        if (res) {
+          toast.success('Education edited successfully')
+          handleClose();
+        }
+      }
+    } catch (error) {
+      const errMsg =
+        error?.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 5000);
+    }
+  }
+
   return (
     <Box>
-      <span className='title'>Add Your Education</span>
+      <span className='title'>{mode === 'create' ? 'Add Your Education' : 'Update Your Education'}</span>
 
       <Form>
         <div className="inputBox">
@@ -30,6 +98,7 @@ const EducationDetails = ({ data }) => {
             label="University Name"
             variant="outlined"
             type="text"
+            value={formData?.school}
             name='school'
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
@@ -54,6 +123,7 @@ const EducationDetails = ({ data }) => {
             label="Degree"
             variant="outlined"
             type="tel"
+            value={formData?.degree}
             name='degree'
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
@@ -82,6 +152,7 @@ const EducationDetails = ({ data }) => {
             variant="outlined"
             type="text"
             name='course'
+            value={formData?.course}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -104,8 +175,9 @@ const EducationDetails = ({ data }) => {
             id="outlined-basic"
             label="Course Type"
             variant="outlined"
-            type="courseType"
-            name='school'
+            type="text"
+            name='courseType'
+            value={formData?.courseType}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -135,6 +207,7 @@ const EducationDetails = ({ data }) => {
               label="Grade type"
               size='small'
               name='gradeType'
+              value={formData?.gradeType}
               onChange={handleChange}
               inputProps={{
                 sx: {
@@ -166,6 +239,7 @@ const EducationDetails = ({ data }) => {
             variant="outlined"
             type="text"
             name='grade'
+            value={formData?.grade}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -189,19 +263,18 @@ const EducationDetails = ({ data }) => {
         <div className='inputBox'>
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="Start Date" name="startDate" onChange={handleChange} sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="Start Date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} value={issueDate} onChange={(newValue) => setIssueDate(dayjs(newValue))} />
             </DemoContainer>
           </LocalizationProvider>
 
-
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="End date (or expected)" name="endDate" onChange={handleChange} sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="End Date (or Expected)" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} value={expirationDate} onChange={(newValue) => setExpirationDate(dayjs(newValue))} />
             </DemoContainer>
           </LocalizationProvider>
         </div>
 
-        <Button>Save Changes</Button>
+        <Button onClick={handleSubmit}>{mode === 'create' ? 'Add' : 'Save Changes'}</Button>
       </Form>
     </Box>
   )

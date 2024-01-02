@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-export const addEducations = async (profileId, data, accessToken) => {
+export const updateSkill = async (skillId, data, accessToken) => {
 
     const config = {
         headers: {
@@ -11,7 +11,7 @@ export const addEducations = async (profileId, data, accessToken) => {
     };
 
     try {
-        const response = await axios.post(`https://dev-api.intelliview.in/api/profiles/${profileId}/educations`, data, config);
+        const response = await axios.put(`https://dev-api.intelliview.in/api/profiles/${skillId}/skill`, data, config);
         console.log('Data:', response.data);
         return response.data;
     } catch (error) {

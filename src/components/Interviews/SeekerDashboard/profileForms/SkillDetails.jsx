@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import addIcon from '../../../../assets/icons/Profile/addIcon.png'
 import deleteIcon from '../../../../assets/icons/Profile/deleteIcon.png'
 import { useSelector } from 'react-redux';
+import { addSkills } from '../../../../functions/api/jobSeekers/addSkills';
+import { updateSkill } from '../../../../functions/api/jobSeekers/updateSkill';
+import { toast } from 'react-toastify';
 
-const SkillDetails = ({ data }) => {
+const SkillDetails = ({ data, mode, handleClose, id }) => {
 
   const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const [formData, setFormData] = useState();
 
   const handleChange = (e) => {
@@ -18,10 +22,52 @@ const SkillDetails = ({ data }) => {
     });
   };
 
+  useEffect(() => {
+    if (mode === 'edit') {
+      setFormData(data)
+    }
+  }, [])
+
+  const handleSubmit = async () => {
+    try {
+      if (mode === 'create') {
+        const payload = {
+          name: formData?.name,
+          experienceMonths: formData?.experienceMonths
+        }
+
+        const res = await addSkills(profileId, payload, accessToken);
+
+        if (res) {
+          toast.success('Skill added successfully')
+          handleClose();
+        }
+      } else {
+        const payload = {
+          name: formData?.name,
+          experienceMonths: formData?.experienceMonths
+        }
+
+        const res = await updateSkill(id, payload, accessToken);
+
+        if (res) {
+          toast.success('Skill updated successfully')
+          handleClose();
+        }
+      }
+
+    } catch (error) {
+      const errMsg =
+        error?.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 5000);
+    }
+  }
+
 
   return (
     <Box>
-      <span className='title'>Add Skills</span>
+      <span className='title'>{mode === 'create' ? 'Add Skills' : 'Update Skill'}</span>
 
       <Form>
         <div className="inputBox">
@@ -31,6 +77,7 @@ const SkillDetails = ({ data }) => {
             variant="outlined"
             type="text"
             name="name"
+            value={formData?.name}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -51,10 +98,11 @@ const SkillDetails = ({ data }) => {
           />
           <TextField
             id="outlined-basic"
-            label="Years of Experience"
+            label="Months of Experience"
             variant="outlined"
             type="number"
             name="experienceMonths"
+            value={formData?.experienceMonths}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -74,13 +122,13 @@ const SkillDetails = ({ data }) => {
             fullWidth
           />
 
-          <div className='iconBox'>
+          {/* <div className='iconBox'>
             <img className='addIcon' src={addIcon} />
             <img className='deleteIcon' src={deleteIcon} />
-          </div>
+          </div> */}
         </div>
 
-        <Button>Save Changes</Button>
+        <Button onClick={handleSubmit}>{mode === 'create' ? 'Add' : 'Save Changes'}</Button>
       </Form>
     </Box>
   )

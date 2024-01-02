@@ -1,15 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import styled from 'styled-components';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import ReactQuill from 'react-quill';
+import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
+import moment from 'moment-timezone';
+import { toast } from 'react-toastify';
+import { addProjects } from '../../../../functions/api/jobSeekers/addProjects';
+import { updateProjects } from '../../../../functions/api/jobSeekers/updateProject';
 
-const ProjectDetails = ({ data }) => {
+const ProjectDetails = ({ data, mode, handleClose, id }) => {
 
   const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
   const [formData, setFormData] = useState();
+
+  const [issueDate, setIssueDate] = useState(dayjs(new Date()));
+  const [expirationDate, setExpirationDate] = useState(dayjs(new Date()));
+  const [projectDesc, setProjectDesc] = useState('');
+
+  useEffect(() => {
+    if (mode === 'edit') {
+      setFormData(data);
+      setIssueDate(dayjs(data?.startDate))
+      setExpirationDate(dayjs(data?.endDate))
+      setProjectDesc(data?.description)
+    }
+  }, [])
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,9 +40,57 @@ const ProjectDetails = ({ data }) => {
     });
   };
 
+  const handleSubmit = async () => {
+    try {
+      const startDate = moment(issueDate.format("YYYY-MM-DD")).utc().format('YYYY-MM-DD');
+      const endDate = moment(expirationDate.format("YYYY-MM-DD")).utc().format('YYYY-MM-DD');
+
+      if (mode === 'create') {
+        const payload = {
+          title: formData?.title,
+          description: projectDesc,
+          status: formData?.status,
+          projectUrl: formData?.projectUrl,
+          role: formData?.role,
+          startDate: startDate,
+          endDate: endDate
+        }
+
+        const res = await addProjects(profileId, payload, accessToken);
+
+        if (res) {
+          toast.success('Project added successfully')
+          handleClose();
+        }
+      } else {
+        const payload = {
+          title: formData?.title,
+          description: projectDesc,
+          status: formData?.status,
+          projectUrl: formData?.projectUrl,
+          role: formData?.role,
+          startDate: startDate,
+          endDate: endDate
+        }
+
+        const res = await updateProjects(id, payload, accessToken)
+
+        if (res) {
+          toast.success('Project edited successfully')
+          handleClose();
+        }
+      }
+    } catch (error) {
+      const errMsg =
+        error?.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 5000);
+    }
+  }
+
   return (
     <Box>
-      <span className='title'>Add Project</span>
+      <span className='title'>{mode === 'create' ? 'Add Project' : 'Update Project'}</span>
 
       <Form>
         <div className="inputBox">
@@ -31,6 +100,7 @@ const ProjectDetails = ({ data }) => {
             variant="outlined"
             type="text"
             name="title"
+            value={formData?.title}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -56,6 +126,7 @@ const ProjectDetails = ({ data }) => {
             variant="outlined"
             type="text"
             name="role"
+            value={formData?.role}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -83,6 +154,7 @@ const ProjectDetails = ({ data }) => {
             variant="outlined"
             type="url"
             name="projectUrl"
+            value={formData?.projectUrl}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
@@ -109,6 +181,7 @@ const ProjectDetails = ({ data }) => {
               label="Current Status"
               size='small'
               name="status"
+              value={formData?.status}
               onChange={handleChange}
               inputProps={{
                 sx: {
@@ -137,14 +210,13 @@ const ProjectDetails = ({ data }) => {
         <div className='inputBox'>
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="Start Date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="Start Date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} value={issueDate} onChange={(newValue) => setIssueDate(dayjs(newValue))} />
             </DemoContainer>
           </LocalizationProvider>
 
-
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="End date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="End Date" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} value={expirationDate} onChange={(newValue) => setExpirationDate(dayjs(newValue))} />
             </DemoContainer>
           </LocalizationProvider>
         </div>
@@ -153,10 +225,10 @@ const ProjectDetails = ({ data }) => {
           <label className="textAreaLabel">
             Description
           </label>
-          <ReactQuill theme="snow" className="textEditor" />
+          <ReactQuill theme="snow" className="textEditor" value={projectDesc} onChange={setProjectDesc} />
         </div>
 
-        <Button>Save Changes</Button>
+        <Button onClick={handleSubmit}>{mode === 'create' ? 'Add' : 'Save Changes'}</Button>
       </Form>
     </Box>
   )
