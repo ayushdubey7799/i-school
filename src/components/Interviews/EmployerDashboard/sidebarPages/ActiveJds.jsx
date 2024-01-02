@@ -391,6 +391,7 @@ function Row(props) {
                 component={
                   <AgencyShareDialogContent
                     handleClose={handleCloseShareAgency}
+                    jdId={row?.jdId}
                   />
                 }
               />
