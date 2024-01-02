@@ -9,6 +9,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { addMapping } from '../../../functions/api/employers/agency/addMapping';
 import { useSelector } from 'react-redux';
 import { getAgencies } from '../../../functions/api/employers/agency/getAgencies';
+import { toast } from 'react-toastify';
 
 
 const Container = styled.div`
@@ -137,9 +138,8 @@ function ManageAgencyForm({ array,handleClose }) {
 
     const handleSubmit = async (e) => {
         const res = await addMapping(formData,accessToken,clientCode);
-        console.log("========>>>>>>>",res);
+        if(res)toast.success("Mapping added")
         setTrigger(prev => !prev);
-        handleClose();
         e.preventDefault();
 
     };

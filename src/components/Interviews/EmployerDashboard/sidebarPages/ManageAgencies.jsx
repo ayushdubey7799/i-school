@@ -32,64 +32,20 @@ import { formatRole } from "../../../../utils/globalFunctions";
 import { Pagination, PaginationSizeFilter } from "../../../commonComponents/Pagination";
 import ManageAgencyForm from "../ManageAgencyForm";
 import { getMappings } from "../../../../functions/api/employers/agency/getMapping";
-
-const total = [
-  {
-    clientCode: 'C001',
-    companyName: 'ABC Corporation',
-    companyLogo: 'https://example.com/logos/abc-logo.png'
-  },
-  {
-    clientCode: 'C002',
-    companyName: 'XYZ Ltd.',
-    companyLogo: 'https://example.com/logos/xyz-logo.png'
-  },
-  {
-    clientCode: 'C003',
-    companyName: 'PQR Enterprises',
-    companyLogo: 'https://example.com/logos/pqr-logo.png'
-  },
-  {
-    clientCode: 'C004',
-    companyName: 'LMN Innovations',
-    companyLogo: 'https://example.com/logos/lmn-logo.png'
-  },
-  {
-    clientCode: 'C005',
-    companyName: 'EFG Solutions',
-    companyLogo: 'https://example.com/logos/efg-logo.png'
-  },
-  {
-    clientCode: 'C006',
-    companyName: 'JKL Technologies',
-    companyLogo: 'https://example.com/logos/jkl-logo.png'
-  },
-  {
-    clientCode: 'C007',
-    companyName: 'RST Systems',
-    companyLogo: 'https://example.com/logos/rst-logo.png'
-  },
-  {
-    clientCode: 'C008',
-    companyName: 'UVW Innovations',
-    companyLogo: 'https://example.com/logos/uvw-logo.png'
-  },
-  {
-    clientCode: 'C009',
-    companyName: 'MNO Solutions',
-    companyLogo: 'https://example.com/logos/mno-logo.png'
-  },
-  {
-    clientCode: 'C010',
-    companyName: 'GHI Corporation',
-    companyLogo: 'https://example.com/logos/ghi-logo.png'
-
-  }];
+import { removeMapping } from "../../../../functions/api/employers/agency/removeMapping";
 
 
 function Row(props) {
     const { row, index } = props;
+    const accessToken = useSelector(state => state.auth.userData?.accessToken);
+    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
+    const handleRemove = async () => {
+      const res = await removeMapping(row.id,accessToken,clientCode);
+      if(res){
+        toast.success(`Mapping for Agency id ${row.agencyName} Removed Successfully`);
+      }
+    }
 
     return (
         <React.Fragment>
@@ -103,6 +59,7 @@ function Row(props) {
                 <TableCell align="center" className="tableCell">{row.agencySpocName}</TableCell>
                 <TableCell align="center" className="tableCell">{row.agencySpocEmail}</TableCell>
                 <TableCell align="center" className="tableCell">{row.agencySpocContact}</TableCell>
+                <TableCell align="center" className="tableCell"><img src={deleteIcon} style={{width: "1.2rem"}} onClick={handleRemove} /></TableCell>
             </TableRow>
         </React.Fragment>
     );
@@ -137,29 +94,13 @@ export default function ManageAgencies() {
     // };
 
     useEffect(() => {
-      const remainingAgencies = JSON.parse(localStorage.getItem(clientCode+"all"));
-      const mappedAgencies = JSON.parse(localStorage.getItem(clientCode+"mapped"));
-
-      if(!remainingAgencies?.length){
-         localStorage.setItem(clientCode+"all",JSON.stringify(total));
-      }
-
-      if(!mappedAgencies?.length){
-        localStorage.setItem(clientCode+"mapped",JSON.stringify([]));
-      }
-      else{
-        setMapped(mappedAgencies);
-      }
-    },[])
-
-    useEffect(() => {
         const getData = async () => {
           const res = await getMappings(accessToken,clientCode);
           console.log("Mapped Agencies",res);
           if(res)setMapped(res?.data);
         }
         getData();
-    },[])
+    },[userTrigger])
 
 
     return (
@@ -168,7 +109,11 @@ export default function ManageAgencies() {
                 <ModalHOC
                     openNewInterviewModal={openBasic}
                     setOpenNewInterviewModal={setOpenBasic}
-                    component={<ManageAgencyForm array={[null, "create"]} />} />
+                    component={<ManageAgencyForm array={[null, "create"]} />} 
+                    handleClose={() => {
+                      setOpenBasic(false);
+                      setUserTrigger(!userTrigger);
+                    }}/>
 
                 <Component>
                     <span className="title">Manage Agencies</span>
@@ -185,6 +130,7 @@ export default function ManageAgencies() {
                             <TableCell align="center" className="tableCell">Spoc Name</TableCell>
                             <TableCell align="center" className="tableCell">Spoc Email</TableCell>
                             <TableCell align="center" className="tableCell">Spoc Contact</TableCell>
+                            <TableCell align="center" className="tableCell">Remove Agency</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody className="tableBody">

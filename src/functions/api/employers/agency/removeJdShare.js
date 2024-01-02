@@ -1,8 +1,7 @@
 import axios from "axios"
 
 
-export const removeJdShare = async (payload, accessToken, clientCode) => {
-
+export const removeJdShare = async (jdId,payload, accessToken, clientCode) => {
 const config = {
   headers: {
     Authorization: `Bearer ${accessToken}`,
@@ -11,7 +10,7 @@ const config = {
   }
 };
   const requestData = {...payload};
-
+console.log(config.headers);
     try {
         const response = await axios.delete(`https://dev-api.intelliview.in/api/jds/${jdId}/jdShares`,requestData,config);
         console.log('Data:', response.data);
