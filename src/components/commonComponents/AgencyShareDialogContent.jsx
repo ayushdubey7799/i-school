@@ -7,9 +7,10 @@ import Select from '@mui/material/Select';
 import { toast } from 'react-toastify';
 import { getMappings } from '../../functions/api/employers/agency/getMapping';
 import { useSelector } from 'react-redux';
+import { addJdShare } from '../../functions/api/employers/agency/addJdShare';
 
 
-const AgencyShareDialogContent = ({ handleClose }) => {
+const AgencyShareDialogContent = ({ handleClose,jdId }) => {
     const [selectedAgency, setSelectedAgency] = useState('');
     const [mapped,setMapped] = useState([]);
     
@@ -26,11 +27,18 @@ const AgencyShareDialogContent = ({ handleClose }) => {
         getData();
     },[]);
 
-    const handleShare = () => {
-        toast.success(`Shared with ${selectedAgency}`);
+    const handleShare = async () => {
+        const payload = {
+            agencyIds: [
+                selectedAgency
+              ],
+              jdId
+        }
+        const res = await addJdShare(jdId,payload,accessToken,clientCode);
+        if(res)toast.success(`Shared with ${selectedAgency}`);
         handleClose();
     }
-
+console.log("=============>>>>>>>>>>>>",jdId);
     return (
         <Box>
             <span className='title'>Share JD with Agency</span>
@@ -45,7 +53,7 @@ const AgencyShareDialogContent = ({ handleClose }) => {
                 >
                     {
                         mapped.map((item, i) => (
-                            <MenuItem value={item.agencyName}>{item.agencyName}</MenuItem>
+                            <MenuItem value={item.agencyCode}>{item.agencyName}</MenuItem>
                         ))
                     }
                 </Select>
