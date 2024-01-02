@@ -8,13 +8,22 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
-
+import view from '../../../../assets/icons/visible.png';
 import { jobListings } from '../../../../utils/contantData';
+import CommonDrawer from '../../../commonComponents/CommonDrawer';
 
 
 function Row(props) {
     const { row, index } = props;
-
+    const [state, setState] = React.useState({
+        right: false,
+      });
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+          return;
+        }
+        setState({ ...state, [anchor]: open });
+      };
     return (
         <React.Fragment>
             <TableRow
@@ -37,11 +46,10 @@ function Row(props) {
                 <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.status}
                 </TableCell>
+               
                 <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    {row.matchPercentage}%
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    <Link to={`/attend/${row.jobId}`} className="btn">Attend</Link>
+                <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
+                <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
                 </TableCell>
             </TableRow>
         </React.Fragment>
@@ -76,8 +84,7 @@ const AppliedJobsList = () => {
                                     <TableCell align='center' className='tableCell'>Location</TableCell>
                                     <TableCell align='center' className='tableCell'>Applied Date</TableCell>
                                     <TableCell align='center' className='tableCell'>Status</TableCell>
-                                    <TableCell align='center' className='tableCell'>% Match with Profile</TableCell>
-                                    <TableCell align='center' className='tableCell'>Interview Link</TableCell>
+                                    <TableCell align='center' className='tableCell'>View JD</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody className="tableBody">
