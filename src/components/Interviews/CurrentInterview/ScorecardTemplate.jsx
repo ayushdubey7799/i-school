@@ -20,6 +20,8 @@ function Row(props) {
   const { row } = props;
   let expected = "";
   if (row?.summaryJson) expected = JSON.parse(row?.summaryJson)["Expected answer"]?.expected_answer;
+
+
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} >

@@ -29,7 +29,6 @@ const Scorecard = () => {
     async function fetchScore(id, accessToken) {
       setIsLoading(true);
       const scoreRes = await getScore(id, accessToken);
-      console.log(scoreRes?.data?.questions[0]);
       if (!scoreRes) {
         setFetchAgainOption(true);
         setTrigger(false);
@@ -74,7 +73,6 @@ const Scorecard = () => {
   }, [trigger, countDown]);
 
 
-  console.log(scoreArray);
 
   return (
     <StyledScorecard>
@@ -91,16 +89,16 @@ const Scorecard = () => {
             <img src={logo} style={{ height: '100%' }} />
           </div>
           <div className="head">
-            <h2>SCORECARD</h2>
+            <h3>SCORECARD</h3>
             <Link to='/dashboard/jobseeker'><button id="another">Back to Dashboard</button></Link>
           </div>
 
           <div className="summary">
-            <h3>Total Questions: {data.data.totalQuestions}</h3>
-            <h3>Attempted: {data.data.answeredCnt}</h3>
-            {time && <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}>Time Taken: {time}</h3>}
-            <h3>Your Score: {apiCall ? <Loader1></Loader1> : data.data.score}</h3>
-            <h3>Maximum Score: {data.data.maxScore}</h3>
+            <h4>Total Questions: {data.data.totalQuestions}</h4>
+            <h4>Attempted: {data.data.answeredCnt}</h4>
+            {time && <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}>Time Taken: {time}</h4>}
+            <h4>Your Score: {apiCall ? <Loader1></Loader1> : data.data.score}</h4>
+            <h4>Maximum Score: {data.data.maxScore}</h4>
           </div>
           <div>
             <ScorecardTemplate rows={scoreArray} setTrigger={setTrigger} apiCall={apiCall} setApiCall={setApiCall} />
@@ -132,10 +130,10 @@ export const StyledScorecard = styled.div`
     display: flex;
     justify-content: space-evenly;
 
-    h3 {
-      border: 0.1rem solid var(--color);
-      padding: 0.7rem;
-      border-radius: 0.2rem;
+    h4 {
+      border: 0.075rem solid var(--color);
+      padding: 0.75rem;
+      border-radius: 0.25rem;
     }
   }
 
@@ -165,14 +163,16 @@ export const StyledScorecard = styled.div`
     color: var(--backgroundColor);
     height: 2.4rem;
     border-radius: 0.4rem;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     padding: 0.2rem 1.5rem;
     cursor: pointer;
     border: none;
+    font-family: var(--font);
+    font-weight: 600;
   }
 
   .bottomText {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 600;
     line-height: 5rem;
     text-align: center;

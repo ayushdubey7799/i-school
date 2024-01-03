@@ -19,11 +19,19 @@ import CertificationDetails from '../profileForms/CertificationDetails';
 import { getProfile } from '../../../../functions/api/jobSeekers/getProfile';
 import { useSelector } from 'react-redux';
 import { dateConversion } from '../../../../utils/timeZoneConversation';
-
+import { addResume } from '../../../../functions/api/jobSeekers/addResume';
+import { toast } from 'react-toastify';
+import { getAllResumes } from '../../../../functions/api/jobSeekers/getAllResumes';
+import deleteIcon from '../../../../assets/icons/delete.png'
+import CommonDialog from '../../../commonComponents/CommonDialog';
+import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
+import { deleteResume } from '../../../../functions/api/jobSeekers/deleteResume';
 
 const ProfileNew = () => {
 
     // const [profileData, setProfileData] = useState();
+    const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
+    const accessToken = useSelector((state) => state.auth.userData?.accessToken);
 
     const [openBasicDetails, setOpenBasicDetails] = useState(false);
     const [openSkills, setOpenSkills] = useState(false);
@@ -35,21 +43,78 @@ const ProfileNew = () => {
     const [userProfileData, setUserProfileData] = useState();
     const [mode, setMode] = useState();
 
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [resumeId, setResumeId] = useState('');
 
     const [resumeArr, setResumeArr] = useState([]);
-    const [resumeFile, setResumeFile] = useState([]);
+    const [resumeFile, setResumeFile] = useState(null);
+    const [resumeUploadTrigger, setResumeUploadTrigger] = useState(false);
 
-    const handleFileChange = (e) => {
+    const handleFileChange = async (e) => {
         const file = e.target.files[0];
 
         if (file) {
-            setResumeFile([...resumeFile, file]);
-            setResumeArr([...resumeArr, file.name]);
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const uploadRes = await addResume(profileId, formData, accessToken);
+
+                if (uploadRes) {
+                    toast.success("Resume uploaded successfully", 5000);
+                    setResumeUploadTrigger(!resumeUploadTrigger);
+                }
+
+                // setResumeFile([...resumeFile, file]);
+                // setResumeArr([...resumeArr, file.name]);
+            } catch (error) {
+                const errMsg =
+                    error?.message ||
+                    "An error occurred. Please try again.";
+                toast.error(errMsg, 5000);
+            }
         }
     };
 
-    const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
-    const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+    useEffect(() => {
+        const getAllResume = async () => {
+            try {
+                const allResumeRes = await getAllResumes(profileId, accessToken);
+
+                if (allResumeRes) {
+                    console.log(allResumeRes);
+                    setResumeArr(allResumeRes.data);
+                }
+            } catch (error) {
+                const errMsg =
+                    error?.message ||
+                    "An error occurred. Please try again.";
+                toast.error(errMsg, 5000);
+            }
+        }
+        getAllResume();
+
+    }, [resumeUploadTrigger])
+
+
+    const handleResumeDelete = async (id) => {
+        try {
+
+            const res = await deleteResume(profileId, id, accessToken);
+
+            if (res) {
+                toast.success('Resume deleted successfully');
+                setOpenDeleteDialog(false);
+            }
+        } catch (error) {
+            const errMsg =
+                error?.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, 5000);
+        }
+    }
+
+
     const userBasicDetails = useSelector((state) => state.auth.userData?.user);
 
     const [projectId, setProjectId] = useState('');
@@ -256,17 +321,31 @@ const ProfileNew = () => {
             </div>
 
             <div className='resumeBox'>
+                <CommonDialog
+                    open={openDeleteDialog}
+                    handleClose={() => setOpenDeleteDialog(false)}
+                    component={
+                        <DeleteDialogContent
+                            handleClose={() => setOpenDeleteDialog(false)}
+                            text="Resume"
+                            handleDelete={handleResumeDelete}
+                            deleteId={resumeId}
+                        />
+                    }
+                />
                 <span className='mainTitle'>
                     Resume
                 </span>
                 <span className='title'>Add upto 3 Resumes</span>
 
-                {/* <div className='resumeChildBox'>
+                <div className='resumeChildBox'>
                     {
                         resumeArr.map((resume) => (
                             <div className='resumeCard'>
-                                <span className='resumeText'>{resume.slice(0, 12)}</span>
-                                <span className='resumeBtn'>Make Default</span>
+                                <span className='resumeText'>{resume?.srcFilename} <span className='deleteIcon' onClick={() => {
+                                    setOpenDeleteDialog(true)
+                                    setResumeId(resume?.id)
+                                }}><img src={deleteIcon} /></span></span>
                             </div>
                         ))
                     }
@@ -285,7 +364,7 @@ const ProfileNew = () => {
                             />
                         </div>
                     }
-                </div> */}
+                </div>
             </div>
         </Box>
     )
@@ -850,16 +929,28 @@ align-items: center;
     .resumeChildBox {
         display: flex;
         gap: 1rem;
-        align-items: center;
+        align-items: start;
+        flex-direction: column;
 
+        .deleteIcon {
+            border: 0.075rem solid grey;
+            border-radius: 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+
+            img {
+                width: 0.9rem;
+                height: 0.9rem;
+            }
+        }
 
         .resumeCard {
-            border: 0.1rem solid lightgrey;
             border-radius: 0.3rem;
-            height: 8rem;
-            width: 6rem;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             justify-content: space-evenly;
             box-sizing: border-box;
@@ -867,30 +958,15 @@ align-items: center;
 
 
             .resumeText {
-                font-size: 0.75rem;
+                font-size: 0.85rem;
                 font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 2rem;
             }
 
-            .resumeBtn {
-                background-color: var(--white);
-                color: var(--color);
-                border: 0.08rem solid var(--color);
-                font-size: 0.7rem;
-                font-weight: 600;
-                padding: 0.2rem 0.3rem;
-                border-radius: 0.5rem;
-                margin: 0 0.3rem;
-                box-sizing: border-box;
-                display: none;
-            }
         }
 
-        .resumeCard:hover {
-
-            .resumeBtn {
-                display: block;
-            }
-        }
 
         .addBtn {
             width: 2rem;
@@ -933,3 +1009,5 @@ const Label = styled.label`
     
   }
 `;
+
+

@@ -8,9 +8,10 @@ import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import browseIcon from '../../../../assets/icons/browse.png'
 import moment from 'moment-timezone';
-import { addCertificationWithFile } from '../../../../functions/api/jobSeekers/addCertifications';
 import { toast } from 'react-toastify';
 import { updateCertification } from '../../../../functions/api/jobSeekers/updateCertification';
+import { addCertificationWithFile } from '../../../../functions/api/jobSeekers/addCertificationWithFile';
+
 
 const CertificationDetails = ({ data, mode, id, handleClose, trigger, setTrigger }) => {
 
@@ -219,9 +220,9 @@ const CertificationDetails = ({ data, mode, id, handleClose, trigger, setTrigger
 
                     {mode === 'edit' && <div style={{ width: '100%' }}></div>}
                     {mode === 'create' && <div className='resumeBox'>
-                        <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedFileName} </span></Label>
+                        <Label htmlFor='modalInput'><img src={browseIcon} /> <span>{selectedFileName} </span></Label>
                         <FileInput
-                            id='input'
+                            id='modalInput'
                             type="file"
                             accept="*"
                             onChange={handleFileChange2}
