@@ -14,12 +14,16 @@ import save from '../../../../assets/icons/save2.png'
 import share from '../../../../assets/icons/share.png'
 import view from '../../../../assets/icons/visible.png'
 import CommonDrawer from '../../../commonComponents/CommonDrawer';
+import ModalHOC from '../ModalHOC';
+import JobApplicationModal from '../seekerCommonComponents/JobApplicationModal';
+import ConfigurableModal from '../seekerCommonComponents/ConfigurableModal';
 
 
 
 
 function Row(props) {
   const { row, index } = props;
+  const [openBasic,setOpenBasic] = useState(false);
 
   const [state, setState] = React.useState({
     right: false,
@@ -35,6 +39,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
+      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal/>} style={{width:'40%',height: '60%'}}/>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`tableRow ${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo tableCell'>
@@ -53,9 +58,6 @@ function Row(props) {
           {row.postedDate}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-          {row.matchPercentage}%
-        </TableCell>
-        <TableCell component="th" scope="row" align="center" className='tableCell'>
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
             <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
@@ -64,7 +66,7 @@ function Row(props) {
           </div>
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-          <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
+          <button onClick={() => setOpenBasic(true)} className="btn">Apply</button>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -87,7 +89,6 @@ const AllJobsList = () => {
                 <TableCell align='center' className='tableCell'>Company</TableCell>
                 <TableCell align='center' className='tableCell'>Location</TableCell>
                 <TableCell align='center' className='tableCell'>Posted Date</TableCell>
-                <TableCell align='center' className='tableCell'>% Match with Profile</TableCell>
                 <TableCell align='center' className='tableCell'>Actions</TableCell>
                 <TableCell align='center' className='tableCell'>Apply</TableCell>
               </TableRow>

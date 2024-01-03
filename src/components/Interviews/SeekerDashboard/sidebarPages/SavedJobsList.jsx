@@ -44,9 +44,7 @@ function Row(props) {
         <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.postedDate}
         </TableCell>
-        <TableCell component="th" scope="row" align="center" className='tableCell'>
-          {row.matchPercentage}%
-        </TableCell>
+       
         <TableCell component="th" scope="row" align="center" className='tableCell'>
           <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
         </TableCell>
@@ -71,7 +69,6 @@ const SavedJobsList = () => {
                 <TableCell align='center' className='tableCell'>Company</TableCell>
                 <TableCell align='center' className='tableCell'>Location</TableCell>
                 <TableCell align='center' className='tableCell'>Posted Date</TableCell>
-                <TableCell align='center' className='tableCell'>% Match with Profile</TableCell>
                 <TableCell align='center' className='tableCell'>Apply</TableCell>
               </TableRow>
             </TableHead>
