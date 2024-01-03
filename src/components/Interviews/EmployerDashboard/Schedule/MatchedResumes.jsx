@@ -100,7 +100,7 @@ function Row(props) {
   );
 }
 
-export default function MatchedResumes() {
+export default function MatchedResumes({filterParams}) {
   const { jdId } = useParams();
   const [tableRows, setTableRows] = useState([]);
   const [idToSendInvite, setIdToSendInvite] = useState(null);
@@ -113,7 +113,6 @@ export default function MatchedResumes() {
   );
   const dispatch = useDispatch();
 
-  const [filterParams, setFilterParams] = useState('MATCHED');
   const [searchValue, setSearchValue] = useState('');
 
   const [total, setTotal] = useState(0);
@@ -244,15 +243,8 @@ export default function MatchedResumes() {
     }
   }
 
-  const filterArr = [
-    { value: "MATCHED", text: "Matched" },
-    { value: "SHORTLISTED", text: "Shortlisted" },
-    { value: "NOT_SHORTLISTED", text: "Rejected" },
-  ];
-
   return (
     <StyledDiv>
-      <LogoHeader />
       <Content>
         <TableContainer component={Paper} className="tableBox">
           <ModalHOC
@@ -263,12 +255,11 @@ export default function MatchedResumes() {
           />
 
           <span className='mainTitle'>
-            <span className="title">Matched Resumes for JD ID: {jdId} </span>
+            <span className="title">{filterParams === 'MATCHED' ? 'Matched' : filterParams === 'SHORTLISTED' ? 'Shortlisted' : 'Rejected'} Resumes for JD ID: {jdId} </span>
             <Button onClick={() => navigate("/schedule")}>Back</Button>
           </span>
           <SearchBarContainer>
             <TableSearchBar value={searchValue} setValue={setSearchValue} />
-            <EmpSelectInput value={filterParams} setValue={setFilterParams} optionsArr={filterArr} />
           </SearchBarContainer>
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
@@ -363,12 +354,13 @@ export default function MatchedResumes() {
 const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const Content = styled.div`
-  margin: 6rem 0% 2rem 0%;
-  width: 96%;
-  padding: 0 2%;
+  width: 98%;
+  padding: 0 1%;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;

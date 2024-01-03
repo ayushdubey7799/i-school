@@ -27,6 +27,7 @@ import CommonDialog from '../../../commonComponents/CommonDialog';
 import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 import { deleteResume } from '../../../../functions/api/jobSeekers/deleteResume';
 
+
 const ProfileNew = () => {
 
     // const [profileData, setProfileData] = useState();
@@ -156,7 +157,7 @@ const ProfileNew = () => {
             <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={certificateData} mode={mode} handleClose={() => setOpenCertifications(false)} id={certificateId} trigger={trigger} setTrigger={setTrigger} />} />
 
             <div className='topBox'>
-                <img src={profileData.personalInfo.img} className='profileImg' />
+                <img src={profileData?.personalInfo?.img} className='profileImg' />
                 <div className='middleBox'>
                     <span className='name'>{userBasicDetails?.firstName}</span>
                     <div className='infoBox'>
@@ -165,8 +166,8 @@ const ProfileNew = () => {
                             <span className='text'><img src={emailIcon} />{userBasicDetails?.email}</span>
                         </div>
                         <div className='infoBox2'>
-                            <a href={profileData.personalInfo.linkedin}><img src={linkedin} className='socialIcon' />{profileData.personalInfo.linkedin.slice(0, 35)}</a>
-                            <a href={profileData.personalInfo.github}><img src={github} className='socialIcon' />{profileData.personalInfo.github.slice(0, 30)}</a>
+                            <a href={profileData?.personalInfo?.linkedin}><img src={linkedin} className='socialIcon' />{profileData.personalInfo.linkedin.slice(0, 35)}</a>
+                            <a href={profileData?.personalInfo?.github}><img src={github} className='socialIcon' />{profileData.personalInfo.github.slice(0, 30)}</a>
                         </div>
                     </div>
                 </div>
@@ -225,7 +226,7 @@ const ProfileNew = () => {
                                     setEducationData(edu)
                                 }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{edu?.school}</span>
-                                <span className='text'>{dateConversion(edu?.startDate)} to {dateConversion(edu?.endDate)} | {edu?.courseType}</span>
+                                <span className='text'>{edu?.startDate && dateConversion(edu?.startDate)} to {edu?.endDate && dateConversion(edu?.endDate)} | {edu?.courseType}</span>
                                 <span className='text'>{edu?.grade} {edu?.gradeType === '0-10cgpa' ? 'CGPA' : edu?.gradeType === '0-4cgpa' ? 'CGPA' : '%'}</span>
                             </div>
                         ))
@@ -252,7 +253,7 @@ const ProfileNew = () => {
                                     setProjectId(project?.id)
                                     setProjectData(project)
                                 }}><img src={editIcon} /></span></span>
-                                <span className='text'>{dateConversion(project?.startDate)} to {dateConversion(project?.endDate)} | {project?.status}</span>
+                                <span className='text'>{project?.startDate && dateConversion(project?.startDate)} to {project?.endDate && dateConversion(project?.endDate)} | {project?.status}</span>
                                 <span dangerouslySetInnerHTML={{ __html: project?.description }} className='desc' />
                             </div>
                         ))
@@ -280,7 +281,7 @@ const ProfileNew = () => {
                                     setEmploymentData(exp)
                                 }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{exp?.employmentType}</span>
-                                <span className='text'>{dateConversion(exp?.startDate)} to {dateConversion(exp?.endDate)}</span>
+                                <span className='text'>{exp?.startDate && dateConversion(exp?.startDate)} to {exp?.endDate && dateConversion(exp?.endDate)}</span>
                                 <div className='skillBox'>{
                                     exp?.skillsUsed?.split(',')?.map((skill) => (
                                         <span className='skill'>{skill}</span>
@@ -311,7 +312,7 @@ const ProfileNew = () => {
                                     setCertificateData(cert)
                                 }}><img src={editIcon} /></span></span>
                                 <span className='subTitle'>{cert?.issuingOrganization}</span>
-                                <span className='text'>Issued {dateConversion(cert?.issueDate)} to {dateConversion(cert?.expirationDate)}</span>
+                                <span className='text'>Issued {cert?.issueDate && dateConversion(cert?.issueDate)} to {cert?.expirationDate && dateConversion(cert?.expirationDate)}</span>
 
                                 <button>Verify Certificate</button>
                             </div>
