@@ -70,6 +70,7 @@ import Login2 from "./pages/Login2"
 import InterviewerInviteDashboard from "./components/commonComponents/InterviewerInviteDashboard"
 import EmployerAgencyDashboard from "./pages/EmployerAgencyDashboard"
 import EmployerFeedback from "./components/Interviews/EmployerDashboard/EmployerFeedback"
+import MatchedResumeTabs from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumeTabs"
 
 
 const App = () => {
@@ -105,7 +106,7 @@ const App = () => {
             <Route element={<ProtectedRoute role={AuthenticationConstants.employer} />}>
               <Route path="/dashboard/employer" element={<EmployerDashboard />} />
               <Route path="/schedule" element={<ScheduleInterview />} />
-              <Route path="/schedule/matches/:jdId" element={<MatchedResumes />} />
+              <Route path="/schedule/matches/:jdId" element={<MatchedResumeTabs />} />
               <Route path="/schedule/invite/:jdId" element={<Invite />} />
               <Route path="/schedule/invite/success" element={<InviteSuccess />} />
               <Route path="/employer/interview-status/:jdId" element={<EmployerInterviewsStatus />} />
