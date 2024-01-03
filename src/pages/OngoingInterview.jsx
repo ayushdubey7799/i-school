@@ -36,6 +36,7 @@ const OngoingInterview = ({ start, handleStart }) => {
   const [audioData, setAudioData] = useState(null);
 
   const [agreed, setAgreed] = useState(false);
+  const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);
 
   const [language, setLanguage] = useState("javascript");
   const [theme, setTheme] = useState(false);
@@ -335,8 +336,8 @@ const OngoingInterview = ({ start, handleStart }) => {
             </>
           ) : (
             <div className="startInterviewBox">
-              <InterviewTerms />
-              <label><input type="checkbox" onClick={() => setAgreed(!agreed)} className="checkbox" />I agree</label>
+              <InterviewTerms setIsCheckboxEnabled={setIsCheckboxEnabled}/>
+              <label><input type="checkbox" onClick={() => setAgreed(!agreed)} className="checkbox" disabled={!isCheckboxEnabled}/>I agree</label>
               <CommonButton text='Start Interview' func={() => getData(true)} disabled={!agreed} />
             </div>
           )}
@@ -365,6 +366,7 @@ const StyledInterview = styled.div`
   .checkbox {
     width: 1rem;
     height: 1rem;
+    cursor: pointer;
   }
 
   .startInterviewBox {

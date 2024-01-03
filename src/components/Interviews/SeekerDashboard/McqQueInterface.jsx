@@ -9,6 +9,7 @@ const McqQueInterface = ({ queComp, options, value, setValue }) => {
         setSelectedOption(index);
     }
 
+
     return (
         <Box>
             <div className='queText'>{queComp && queComp}</div>
@@ -24,7 +25,7 @@ const McqQueInterface = ({ queComp, options, value, setValue }) => {
                         style={{
                             cursor: selectedOption == index ? "" : "pointer",
                         }}>
-                        <span className='optionNumber'>{option.split(".")[0]}.</span>
+                        <span className='optionNumber'>{option?.split(".")[0]}.</span>
                         <span
                             id="optionCheckBox"
                             style={{
@@ -49,7 +50,7 @@ const McqQueInterface = ({ queComp, options, value, setValue }) => {
                                     selectedOption === index
                                         ? "var(--lightOrange)"
                                         : "var(--color)",
-                            }}>{option.split(".").slice(1).join(".")}</span>
+                            }}>{option?.split(".").slice(1).join(".")}</span>
                     </div>
                 ))}
             </div>
