@@ -17,17 +17,37 @@ import CommonDrawer from '../../../commonComponents/CommonDrawer';
 import ModalHOC from '../ModalHOC';
 import JobApplicationModal from '../seekerCommonComponents/JobApplicationModal';
 import ConfigurableModal from '../seekerCommonComponents/ConfigurableModal';
+import { searchJds } from '../../../../functions/api/jobApplication/searchJds';
+import { saveJob } from '../../../../functions/api/jobApplication/saveJob';
+import { useSelector } from 'react-redux';
+import { timeZoneConversion } from '../../../../utils/timeZoneConversation';
+import { toast } from 'react-toastify';
 
 
 
 
 function Row(props) {
   const { row, index } = props;
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  
   const [openBasic,setOpenBasic] = useState(false);
 
   const [state, setState] = React.useState({
     right: false,
   });
+
+  const handleSave = async () => {
+    const payload = {
+      clientCode: row.clientCode,
+      jdId: row.jdId
+    }
+    const res = await saveJob(payload,accessToken,clientCode);
+    if(res){
+      console.log(res);
+      toast.success("Successfully saved");
+    }
+  }
 
   // Open and close drawer for job details view.
   const toggleDrawer = (anchor, open) => (event) => {
@@ -37,16 +57,20 @@ function Row(props) {
     setState({ ...state, [anchor]: open });
   };
 
+  const handleClose = () => {
+    setOpenBasic(false);
+  }
+
   return (
     <React.Fragment>
-      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal/>} style={{width:'40%',height: '60%'}}/>
+      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal jdId={row?.jdId} empClientCode={row?.clientCode} handleClose={handleClose}/>} style={{width:'40%',height: '60%'}}/>
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`tableRow ${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo tableCell'>
           <img src={row.companyLogo} />
         </TableCell>
         <TableCell component="th" scope="row" align='center' className='tableCell'>
-          {row.jobTitle}
+          {row.title}
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.companyName}
@@ -55,13 +79,13 @@ function Row(props) {
           {row.location}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-          {row.postedDate}
+        {timeZoneConversion(row?.jdFile?.createdAt)}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
             <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
-            <img src={save} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
+            <img src={save} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleSave}/>
             <img src={share} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
@@ -75,6 +99,20 @@ function Row(props) {
 
 
 const AllJobsList = () => {
+  const [jobListings,setJobListings] = useState([]);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await searchJds(accessToken, clientCode);
+      console.log("Searched Jobs =====>>>>> ", res?.data?.data);
+      setJobListings(res?.data?.data);
+    }
+
+    getData();
+  }, [])
 
   return (
     <Container1>

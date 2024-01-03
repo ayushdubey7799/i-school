@@ -1,25 +1,25 @@
 import axios from "axios"
 
 
-export const removeJdShare = async (jdId,payload, accessToken, clientCode) => {
-  const requestData = {...payload};
+export const saveJob = async (formData, accessToken, clientCode) => {
+
 const config = {
   headers: {
     Authorization: `Bearer ${accessToken}`,
     'Content-Type': 'application/json',
     'X-Client-Code': clientCode,
-  },
-  data: requestData
+  }
 };
-console.log(requestData);
+  const requestData = {...formData};
+
     try {
-        const response = await axios.delete(`https://dev-api.intelliview.in/api/jds/${jdId}/jdShares`,config);
+        const response = await axios.post('https://dev-api.intelliview.in/api/jds/savedJobs',requestData,config);
         console.log('Data:', response.data);
         console.log("Status", response.status)
         return response.data;
       } catch (error) {
         console.error('Error:', error);
-        throw error;
+        // throw error;
       }
 }
 

@@ -37,7 +37,7 @@ import { removeJdShare } from "../../../../functions/api/employers/agency/remove
 
 
 function Row(props) {
-    const { row, index } = props;
+    const { row, index,setUserTrigger,userTrigger } = props;
     const accessToken = useSelector(state => state.auth.userData?.accessToken);
     const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
@@ -51,7 +51,10 @@ function Row(props) {
         }
 
         const res = await removeJdShare(row.jdId,payload,accessToken,clientCode);
-        if(res)toast.success("Removed Agency Successfully");
+        if(res){
+          toast.success("Removed Agency Successfully");
+          setUserTrigger(userTrigger => !userTrigger);
+        }
     }
 
     return (
@@ -111,7 +114,7 @@ export default function AgencyList({jdId}) {
           if(res)setMapped(res?.data);
         }
         getData();
-    },[])
+    },[userTrigger])
 
 
     return (
@@ -140,7 +143,7 @@ export default function AgencyList({jdId}) {
                     </TableHead>
                     <TableBody className="tableBody">
                         {mapped?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} />
+                            <Row key={row.id} row={row} index={index} setUserTrigger={setUserTrigger} userTrigger={userTrigger} />
                         ))}
                     </TableBody>
                 </Table>

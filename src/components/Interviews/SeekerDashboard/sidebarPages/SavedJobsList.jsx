@@ -10,30 +10,27 @@ import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 
 import { jobListings } from '../../../../utils/contantData';
-import save from '../../../../assets/icons/save.png'
-import share from '../../../../assets/icons/share.png'
-import searchBlack from '../../../../assets/icons/searchBlack.png'
-import ProfileFilter from '../seekerCommonComponents/ProfileFilter';
-import { technicalSkills } from '../../../../utils/contantData';
-import { locations } from '../../../../utils/contantData';
-import searchIcon from '../../../../assets/icons/searchIcon.png'
-
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
+import { getSavedJobs } from '../../../../functions/api/jobApplication/getSavedJobs';
+import ConfigurableModal from '../seekerCommonComponents/ConfigurableModal';
+import JobApplicationModal from '../seekerCommonComponents/JobApplicationModal';
+import { useSelector } from 'react-redux';
 
 function Row(props) {
   const { row, index } = props;
-
+  const [openBasic, setOpenBasic] = useState(false);
+ const handleClose = () => {
+  setOpenBasic(false);
+ }
   return (
     <React.Fragment>
+      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal jdId={row?.jdId} empClientCode={row?.clientCode} handleClose={handleClose}/>}  style={{ width: '40%', height: '60%' }} />
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo tableCell'>
           <img src={row.companyLogo} />
         </TableCell>
         <TableCell component="th" scope="row" align='center' className='tableCell'>
-          {row.jobTitle}
+          {row.jdId}
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center" className='tableCell'>
           {row.companyName}
@@ -42,11 +39,11 @@ function Row(props) {
           {row.location}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-          {row.postedDate}
+          {row?.jdFile?.createdAt}
         </TableCell>
-       
+
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-          <Link to={`/apply/${row.jobId}`} className="btn">Apply</Link>
+          <button onClick={() => setOpenBasic(true)} className="btn">Apply</button>
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -55,9 +52,25 @@ function Row(props) {
 
 
 const SavedJobsList = () => {
+  const [jobListings,setJobListings] = useState([]);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getSavedJobs(accessToken, clientCode);
+      if(res)setJobListings(res?.data);
+    }
+
+    getData();
+  }, [])
+  console.log("Saved Jobs =====>>>>> ", jobListings);
+
 
   return (
     <Container1>
+
       <StyledBox>
         <TableContainer component={Paper} className="tableBox">
           <span className='title'>Saved Jobs</span>

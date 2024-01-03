@@ -1,7 +1,7 @@
 const utcDateTimeString = "2023-11-30T15:54:00";
 
 export const timeZoneConversion = (utcDateTimeString) => {
-  if (utcDateTimeString.slice(-1) != 'Z') utcDateTimeString = utcDateTimeString + "Z";
+  if (utcDateTimeString?.slice(-1) != 'Z') utcDateTimeString = utcDateTimeString + "Z";
   const utcDateTime = new Date(utcDateTimeString);
 
   const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -23,7 +23,7 @@ export const timeZoneConversion = (utcDateTimeString) => {
 
 
 export const dateConversion = (utcDateTimeString) => {
-  if (utcDateTimeString.slice(-1) != 'Z') utcDateTimeString = utcDateTimeString + "Z";
+  if (utcDateTimeString && utcDateTimeString?.slice(-1) != 'Z') utcDateTimeString = utcDateTimeString + "Z";
   const utcDateTime = new Date(utcDateTimeString);
 
   const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;

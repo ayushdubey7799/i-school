@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { addJobApplication } from '../../../../functions/api/jobApplication/addJobApplication';
+import { useSelector } from 'react-redux';
+import { getAllResumes } from '../../../../functions/api/jobSeekers/getAllResumes';
+import { toast } from 'react-toastify';
 
 // Dummy data for resumes
 const resumeData = [
@@ -51,20 +55,43 @@ const SendApplication = styled.button`
   cursor: pointer;
 `;
 
-const JobApplicationModal = ({ showModal, closeModal }) => {
-  // State to track selected resumes
-  const [selectedResumes, setSelectedResumes] = useState([]);
+const JobApplicationModal = ({jdId,empClientCode,handleClose}) => {
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const profileId = useSelector(state => state.auth.userData?.user?.profileId);
+  const [resumeId, setResumeId] = useState(null);
+  const [resumeData,setResumeData] = useState([]);
+  useEffect(() => {
+   const getData = async () => {
+    const res = await getAllResumes(profileId,accessToken);
+    if(res){
+      setResumeData(res?.data);
+    }
+   }
+   getData();
+  },[])
 
-  // Function to handle checkbox change
-  const handleCheckboxChange = (resumeId) => {
-    setSelectedResumes([resumeId]);
+  const handleCheckboxChange = (id) => {
+    setResumeId(id);
   };
 
-  // Dummy function for adding a new resume
   const handleAddNewResume = () => {
     console.log('Add new resume functionality goes here.');
-    // Implement logic to add a new resume
   };
+
+  const handleApply = async () => {
+    const payload = {
+      clientCode: empClientCode,
+      jdId: jdId,
+      resumeId: resumeId
+    }
+    console.log(payload);
+     const res = await addJobApplication(payload,accessToken,clientCode);
+     if(res){
+handleClose();
+      toast.success("Applied Successfully");
+    }
+  }
 
   return (
     <ModalWrapper>
@@ -72,14 +99,14 @@ const JobApplicationModal = ({ showModal, closeModal }) => {
       {resumeData.map((resume) => (
         <ResumeItem key={resume.id}>
           <Checkbox
-            checked={selectedResumes.includes(resume.id)}
+            checked={resumeId == resume.id}
             onChange={() => handleCheckboxChange(resume.id)}
           />
-          {resume.filename}
+          {resume.srcFilename}
         </ResumeItem>
       ))}
       <AddButton onClick={handleAddNewResume}>Add New</AddButton>
-      <SendApplication onClick={handleAddNewResume}>Send Application</SendApplication>
+      <SendApplication onClick={handleApply}>Send Application</SendApplication>
 
       {/* Add apply button or other actions as needed */}
     </ModalWrapper>

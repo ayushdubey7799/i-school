@@ -11,6 +11,9 @@ import Paper from "@mui/material/Paper";
 import view from '../../../../assets/icons/visible.png';
 import { jobListings } from '../../../../utils/contantData';
 import CommonDrawer from '../../../commonComponents/CommonDrawer';
+import { getJobApplications } from '../../../../functions/api/jobApplication/getJobApplications';
+import { timeZoneConversion } from '../../../../utils/timeZoneConversation';
+import { useSelector } from 'react-redux';
 
 
 function Row(props) {
@@ -35,13 +38,13 @@ function Row(props) {
                     {row.jobTitle}
                 </TableCell>{" "}
                 <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    {row.companyName}
+                    {row.clientCode}
                 </TableCell>
                 <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.location}
                 </TableCell>
                 <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    {row.appliedDate}
+                    {timeZoneConversion(row.appliedAt)}
                 </TableCell>
                 <TableCell component="th" scope="row" align="center" className='tableCell'>
                     {row.status}
@@ -58,14 +61,17 @@ function Row(props) {
 
 
 const AppliedJobsList = () => {
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
     const [appliedJobs, setAppliedJobs] = useState();
 
     useEffect(() => {
-        const filteredJobs = jobListings.filter(job => job.applied === true);
-
-        if (filteredJobs) {
-            setAppliedJobs(filteredJobs);
-        }
+      const getData = async () => {
+        const res = await getJobApplications(accessToken, clientCode);
+        if(res)setAppliedJobs(res?.data);
+      }
+  
+      getData();
 
     }, [])
 

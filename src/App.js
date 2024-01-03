@@ -70,7 +70,12 @@ import Login2 from "./pages/Login2"
 import InterviewerInviteDashboard from "./components/commonComponents/InterviewerInviteDashboard"
 import EmployerAgencyDashboard from "./pages/EmployerAgencyDashboard"
 import EmployerFeedback from "./components/Interviews/EmployerDashboard/EmployerFeedback"
+<<<<<<< Updated upstream
 import MatchedResumeTabs from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumeTabs"
+=======
+import JdListingTabs from "./pages/agency/JdListingTabs"
+import CandidateListingTabs from "./pages/agency/CandidateListingTabs"
+>>>>>>> Stashed changes
 
 
 const App = () => {
@@ -155,6 +160,9 @@ const App = () => {
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/trial" element={<EmployerAgencyDashboard />} />
           <Route path='/trial2' element={<InterviewerInviteDashboard />} />
+          <Route path='/JdListing' element={<JdListingTabs />} />
+          <Route path='/candidateListing/:jdId' element={<CandidateListingTabs />} />
+
           <Route path="/interviewer-feedbacks/:token" element={<EmployerFeedback />} />
         </Routes>
       </ScrollToTop>
