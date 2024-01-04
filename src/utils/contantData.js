@@ -1031,6 +1031,12 @@ export const seekerMetric4 = {
     img: metric4
 }
 
+export const seekerMetric5 = {
+    title: 'Mock Interviews',
+    text: 'mockInterviews',
+    img: EmpMetric1
+}
+
 export const seekerMetricOptions = [{
     title: 'Interviews Upcoming (next 7 days)',
     text: 'interviewsUpcoming',

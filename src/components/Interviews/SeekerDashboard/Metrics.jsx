@@ -8,11 +8,13 @@ import { seekerMetric1 } from '../../../utils/contantData';
 import { seekerMetric2 } from '../../../utils/contantData';
 import { seekerMetric3 } from '../../../utils/contantData';
 import { seekerMetric4 } from '../../../utils/contantData';
+import { seekerMetric5 } from '../../../utils/contantData';
 
 import { getInterviewByStatus } from '../../../functions/api/getInterviewByStatus';
 import InterviewList from '../InterviewList';
 import ScheduledInterviewList from '../ScheduledInterviewList';
 import AppliedJobs from './sidebarPages/AppliedJobs';
+import MockInterviews from './sidebarPages/MockInterviews';
 
 
 const MainContainer = styled.div`
@@ -105,6 +107,23 @@ const Metrics = () => {
   const [filteredData, setFilteredData] = useState({});
   const [value, setValue] = useState("COMPLETED");
 
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [total, setTotal] = useState(0);
+
+  const handleSizeChange = (event) => {
+    setSize(parseInt(event.target.value, 10));
+    setPage(1);
+  };
+
+  const handlePageChange = (change) => {
+    if (change && page < Math.ceil(+total / +size)) {
+      setPage((prev) => prev + 1);
+    } else if (!change && page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
   useEffect(() => {
     const getCount = async () => {
       const res = await getStatusWiseCount(accessToken);
@@ -122,13 +141,16 @@ const Metrics = () => {
 
   useEffect(() => {
     async function getData(value) {
-      const response = await getInterviewByStatus(value, accessToken);
+      const response = await getInterviewByStatus(value, accessToken, page, size);
       if (response) {
         setFilteredData(response);
+        setTotal(response?.data?.total);
       }
     }
     getData(value);
-  }, [value]);
+  }, [value, page, size]);
+
+
 
   return (
     <MainContainer>
@@ -148,6 +170,14 @@ const Metrics = () => {
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>{seekerMetric2.title}</span>
+        </div>
+        <div className={`achievedNumberBox ${currMetric === seekerMetric5.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric5.text)}>
+          <div className='top'>
+            <img src={seekerMetric5.img} />
+            <span className='achievedNumberDigit'>{completed ? completed : 0}</span>
+          </div>
+          <span className='hrLine'></span>
+          <span className='achievedNumberText'>{seekerMetric5.title}</span>
         </div>
         <div className={`achievedNumberBox ${currMetric === seekerMetric3.text ? 'selected' : ''}`} onClick={() => setCurrMetric(seekerMetric3.text)}>
           <div className='top'>
@@ -169,10 +199,12 @@ const Metrics = () => {
 
       {currMetric === 'recommendedJobs' && <RecommendedJobs />}
       {currMetric === 'appliedJobs' && <AppliedJobs />}
-      {currMetric === 'interviewCompleted' && <InterviewList filteredData={filteredData} />}
+      {currMetric === 'interviewCompleted' && <InterviewList filteredData={filteredData} page={page} setPage={setPage} size={size} setSize={setSize} total={total} handlePageChange={handlePageChange} handleSizeChange={handleSizeChange} />}
       {currMetric === 'interviewScheduled' && <ScheduledInterviewList />}
+      {currMetric === 'mockInterviews' && <MockInterviews filteredData={filteredData} page={page} setPage={setPage} size={size} setSize={setSize} total={total} handlePageChange={handlePageChange} handleSizeChange={handleSizeChange} />}
     </MainContainer>
   );
 };
+
 
 export default Metrics;

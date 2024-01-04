@@ -77,33 +77,33 @@ const EmpConfigureDash = () => {
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
-    
+
         const { source, destination } = result;
-    
+
         // Clone the data to avoid modifying the state directly
         const updatedData = { ...data };
-    
+
         // Swap the items between source and destination lists
         const sourceList = [...updatedData[source.droppableId]];
         const destinationList = [...updatedData[destination.droppableId]];
-    
+
         const [movedItem] = sourceList.splice(source.index, 1);
         const [replacedItem] = destinationList.splice(destination.index, 1);
-    
+
         // Replace the source index with the destination index in source list
         sourceList.splice(destination.index, 0, replacedItem);
-    
+
         // Replace the destination index with the source index in destination list
         destinationList.splice(source.index, 0, movedItem);
-    
+
         // Update the data with the modified lists
         updatedData[source.droppableId] = sourceList;
         updatedData[destination.droppableId] = destinationList;
-    
+
         // Update the state with the modified data
         setData(updatedData);
     };
-    
+
 
 
     return (
@@ -175,11 +175,13 @@ export default EmpConfigureDash
 
 const Container = styled.div`
 display: flex;
-width: 100%;
+width: 94%;
 flex-direction: row;
 align-items: start;
 margin: 2rem auto
 gap: 2rem;
+background-color: var(--backgroundColor);
+border-radius: 0.5rem;
 
 
 .cardBox {
@@ -195,7 +197,7 @@ gap: 2rem;
 
 const LeftBox = styled.div`
 width: 60%;
-margin: 1rem 20% 1rem 2rem;
+margin: 1rem 2rem 1rem 20%;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -216,7 +218,7 @@ gap: 2rem;
 
 const RightBox = styled.div`
 width: 60%;
-margin: 1rem 2rem 1rem 20%;
+margin: 1rem 20% 1rem 2rem;
 display: flex;
 flex-direction: column;
 justify-content: space-between;

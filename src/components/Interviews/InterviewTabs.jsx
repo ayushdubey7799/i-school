@@ -56,6 +56,7 @@ export default function InterviewTabs() {
       const response = await getInterviewByStatus(value, accessToken, page, size);
       if (response) {
         setFilteredData(response);
+        console.log(response);
         setTotal(response?.data?.total);
       }
     }
@@ -112,7 +113,7 @@ export default function InterviewTabs() {
               classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
             />
           </Tabs>
-          {value === 'COMPLETED' && !mock && <InterviewList filteredData={filteredData} page={page} setPage={setPage} size={size} setSize={setSize} total={total} handlePageChange={handlePageChange} handleSizeChange={handleSizeChange} />}
+          {(value === 'COMPLETED' && !mock) && <InterviewList filteredData={filteredData} page={page} setPage={setPage} size={size} setSize={setSize} total={total} handlePageChange={handlePageChange} handleSizeChange={handleSizeChange} />}
           {value === 'NOT_STARTED' && <ScheduledInterviewList />}
           {mock && <MockInterviews filteredData={filteredData} page={page} setPage={setPage} size={size} setSize={setSize} total={total} handlePageChange={handlePageChange} handleSizeChange={handleSizeChange} />}
         </StyledBox>

@@ -175,11 +175,13 @@ export default ConfigureDash
 
 const Container = styled.div`
 display: flex;
-width: 100%;
+width: 95%;
 flex-direction: row;
 align-items: start;
-margin: 2rem auto
+margin: 0rem 2.5%;
 gap: 2rem;
+background-color: var(--backgroundColor);
+border-radius: 0.5rem;
 
 
 .cardBox {
@@ -195,7 +197,7 @@ gap: 2rem;
 
 const LeftBox = styled.div`
 width: 60%;
-margin: 1rem 20% 1rem 2rem;
+margin: 1rem 2rem 1rem 20%;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -216,7 +218,7 @@ gap: 2rem;
 
 const RightBox = styled.div`
 width: 60%;
-margin: 1rem 2rem 1rem 20%;
+margin: 1rem 20% 1rem 2rem;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -243,7 +245,7 @@ const Card = styled.div`
   gap: 1.7rem;
   background-color: var(--white);
   padding: 1rem 0 1.5rem 0;
-  width: 90%;
+  width: 95%;
   height: 7rem;
   border-radius: 0.5rem;
   box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
