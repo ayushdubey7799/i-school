@@ -26,6 +26,7 @@ import deleteIcon from '../../../../assets/icons/delete.png'
 import CommonDialog from '../../../commonComponents/CommonDialog';
 import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 import { deleteResume } from '../../../../functions/api/jobSeekers/deleteResume';
+import { getBlobData } from '../../../../functions/api/resume/getBlobData';
 
 
 const ProfileNew = () => {
@@ -33,6 +34,9 @@ const ProfileNew = () => {
     // const [profileData, setProfileData] = useState();
     const profileId = useSelector((state) => state.auth.userData?.user?.profileId);
     const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+    const clientCode = useSelector(
+        (state) => state.auth.userData?.user?.clientCode
+    );
 
     const [openBasicDetails, setOpenBasicDetails] = useState(false);
     const [openSkills, setOpenSkills] = useState(false);
@@ -115,8 +119,21 @@ const ProfileNew = () => {
         }
     }
 
+    const handleDownload = async (id, name) => {
+        const res = await getBlobData(
+            `api/media/downloadById?fileType=resume&id=${id}`,
+            accessToken,
+            clientCode
+        );
+        const a = document.createElement("a");
+        a.href = res;
+        a.setAttribute("download", name);
+        a.click();
+    };
+
 
     const userBasicDetails = useSelector((state) => state.auth.userData?.user);
+
 
     const [projectId, setProjectId] = useState('');
     const [projectData, setProjectData] = useState();
@@ -343,7 +360,7 @@ const ProfileNew = () => {
                     {
                         resumeArr.map((resume) => (
                             <div className='resumeCard'>
-                                <span className='resumeText'>{resume?.srcFilename} <span className='deleteIcon' onClick={() => {
+                                <span className='resumeText'><span onClick={() => handleDownload(resume?.id, resume?.modFilename)}>{resume?.srcFilename}</span> <span className='deleteIcon' onClick={() => {
                                     setOpenDeleteDialog(true)
                                     setResumeId(resume?.id)
                                 }}><img src={deleteIcon} /></span></span>

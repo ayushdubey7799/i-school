@@ -45,8 +45,9 @@ function Row(props) {
             <Box sx={{ margin: 1 }}>
               <Typography variant="body1" gutterBottom>
                 <strong>Question:</strong> <div style={{ fontSize: "0.7rem" }} dangerouslySetInnerHTML={{ __html: codingQuestionFormat(row.question) }}></div>
-                <br />
-                <strong>Options:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.mcqOptions ? row?.mcqOptions.map((item,index) => <p>{item}</p>):""}</div>
+                {row?.questionType === 'mcq' && <><br />
+                  <strong>Options:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.mcqOptions ? row?.mcqOptions.map((item, index) => <p>{item}</p>) : ""}</div>
+                </>}
                 <br />
                 <strong>Your Answer:</strong> <div style={{ fontSize: "0.7rem" }}>{row?.answer ? row?.answer : row?.answerFile ? "Recorded Audio file" : "skipped"}</div>
                 <br />
