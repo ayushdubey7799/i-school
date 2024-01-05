@@ -19,9 +19,11 @@ import { formatRole } from '../../../../utils/globalFunctions';
 import { useJwt } from 'react-jwt';
 import ReactQuill from 'react-quill';
 
+
 const EmployerProfileDetails = () => {
     const accessToken = useSelector((state) => state.auth.userData.accessToken);
     const clientCode = useSelector((state) => state.auth.userData.user.clientCode);
+
     const [user, setUser] = useState();
 
     const [userRole, setUserRole] = useState('');
@@ -64,7 +66,6 @@ const EmployerProfileDetails = () => {
         setFormData(user);
     }, [openBasicDetails, openContactDetails, openAccountDetails, profileTrigger, aboutEdit])
 
-    console.log(user);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

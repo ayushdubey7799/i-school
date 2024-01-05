@@ -404,6 +404,7 @@ export default function Invite2() {
                       getOptionLabel={(option) => option}
                       onChange={handleSkillsChange}
                       value={selectedSkills}
+                      freeSolo
                       renderInput={(params) => (
                         <TextField
                           {...params}

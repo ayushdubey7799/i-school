@@ -7,7 +7,7 @@ import greyPrevIcon from '../../assets/icons/greyPrevIcon.png'
 
 export const Pagination = ({ total, size, page, handlePageChange, setPage }) => {
 
-  const totalPages = Math.ceil(+total / +size);
+  const totalPages = total ? Math.ceil(+total / +size) : 0;
 
   return (
     <PaginationWrapper>

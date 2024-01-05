@@ -498,6 +498,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
               getOptionLabel={(option) => option}
               onChange={handleSkillsChange}
               value={selectedSkills}
+              freeSolo
               required
               fullWidth
               renderInput={(params) => (
@@ -519,6 +520,7 @@ function JdForm({ array, handleClose, setErrorMsg, setErrorPopup, setCreatedPopu
               getOptionLabel={(option) => option}
               onChange={handleLocationsChange}
               value={selectedLocations}
+              freeSolo
               renderInput={(params) => (
                 <TextField
                   {...params}

@@ -48,6 +48,7 @@ const JobSearchBar = ({exp, setExp, selectedLocations, setSelectedLocations, sel
                 getOptionLabel={(option) => option}
                 onChange={handleSkillsChange}
                 value={selectedSkills}
+                freeSolo
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -69,6 +70,7 @@ const JobSearchBar = ({exp, setExp, selectedLocations, setSelectedLocations, sel
                 getOptionLabel={(option) => option}
                 onChange={handleLocationsChange}
                 value={selectedLocations}
+                freeSolo
                 renderInput={(params) => (
                   <TextField
                     {...params}
