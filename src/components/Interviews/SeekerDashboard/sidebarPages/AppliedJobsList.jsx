@@ -17,93 +17,100 @@ import { useSelector } from 'react-redux';
 
 
 function Row(props) {
-    const { row, index } = props;
-    const [state, setState] = React.useState({
-        right: false,
-      });
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
-        }
-        setState({ ...state, [anchor]: open });
-      };
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
-                <TableCell component="th" scope="row" align='center' className='logo tableCell'>
-                    <img src={row.companyLogo} />
-                </TableCell>
-                <TableCell component="th" scope="row" align='center' className='tableCell'>
-                    {row.jobTitle}
-                </TableCell>{" "}
-                <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    {row.clientCode}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    {row.location}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    {timeZoneConversion(row.appliedAt)}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className='tableCell'>
-                    {row.status}
-                </TableCell>
-               
-                <TableCell component="th" scope="row" align="center" className='tableCell'>
-                <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
-                <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  const { row, index } = props;
+  const [state, setState] = React.useState({
+    right: false,
+  });
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
+        <TableCell component="th" scope="row" align='center' className='logo tableCell'>
+          <img src={row.companyLogo} />
+        </TableCell>
+        <TableCell component="th" scope="row" align='center' className='tableCell'>
+          {row.jobTitle}
+        </TableCell>{" "}
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
+          {row.clientCode}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
+          {row.location}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
+          {timeZoneConversion(row.appliedAt)}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
+          {row.status}
+        </TableCell>
+
+        <TableCell component="th" scope="row" align="center" className='tableCell'>
+          <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
+          <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 const AppliedJobsList = () => {
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
-    const [appliedJobs, setAppliedJobs] = useState();
+  const [appliedJobs, setAppliedJobs] = useState();
 
-    useEffect(() => {
+  useEffect(() => {
+    try {
       const getData = async () => {
         const res = await getJobApplications(accessToken, clientCode);
-        if(res)setAppliedJobs(res?.data);
+        if (res) setAppliedJobs(res?.data);
       }
-  
+
       getData();
+    }
+    catch (error) {
+      const errMsg =
+        error.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 8000);
+    }
+  }, [])
 
-    }, [])
-
-    return (
-        <Container1>
-            {appliedJobs &&
-                <StyledBox>
-                    <TableContainer component={Paper} className="tableBox">
-                        <span className='title'>Applied Jobs</span>
-                        <Table aria-label="collapsible table">
-                            <TableHead className="tableHead">
-                                <TableRow>
-                                    <TableCell align='center' className='tableCell'></TableCell>
-                                    <TableCell align='center' className='tableCell'>Job Title</TableCell>
-                                    <TableCell align='center' className='tableCell'>Company</TableCell>
-                                    <TableCell align='center' className='tableCell'>Location</TableCell>
-                                    <TableCell align='center' className='tableCell'>Applied Date</TableCell>
-                                    <TableCell align='center' className='tableCell'>Status</TableCell>
-                                    <TableCell align='center' className='tableCell'>View JD</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody className="tableBody">
-                                {appliedJobs?.map((row, index) => (
-                                    <Row key={row.jobId} row={row} index={index} />
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </StyledBox>
-            }
-        </Container1>
-    )
+  return (
+    <Container1>
+      {appliedJobs &&
+        <StyledBox>
+          <TableContainer component={Paper} className="tableBox">
+            <span className='title'>Applied Jobs</span>
+            <Table aria-label="collapsible table">
+              <TableHead className="tableHead">
+                <TableRow>
+                  <TableCell align='center' className='tableCell'></TableCell>
+                  <TableCell align='center' className='tableCell'>Job Title</TableCell>
+                  <TableCell align='center' className='tableCell'>Company</TableCell>
+                  <TableCell align='center' className='tableCell'>Location</TableCell>
+                  <TableCell align='center' className='tableCell'>Applied Date</TableCell>
+                  <TableCell align='center' className='tableCell'>Status</TableCell>
+                  <TableCell align='center' className='tableCell'>View JD</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className="tableBody">
+                {appliedJobs?.map((row, index) => (
+                  <Row key={row.jobId} row={row} index={index} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </StyledBox>
+      }
+    </Container1>
+  )
 }
 
 export default AppliedJobsList

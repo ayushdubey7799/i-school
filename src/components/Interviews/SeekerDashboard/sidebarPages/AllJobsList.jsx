@@ -30,22 +30,30 @@ function Row(props) {
   const { row, index } = props;
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
-  
-  const [openBasic,setOpenBasic] = useState(false);
+
+  const [openBasic, setOpenBasic] = useState(false);
 
   const [state, setState] = React.useState({
     right: false,
   });
 
   const handleSave = async () => {
-    const payload = {
-      clientCode: row.clientCode,
-      jdId: row.jdId
+    try {
+      const payload = {
+        clientCode: row.clientCode,
+        jdId: row.jdId
+      }
+      const res = await saveJob(payload, accessToken, clientCode);
+      if (res) {
+        console.log(res);
+        toast.success("Successfully saved");
+      }
     }
-    const res = await saveJob(payload,accessToken,clientCode);
-    if(res){
-      console.log(res);
-      toast.success("Successfully saved");
+    catch (error) {
+      const errMsg =
+        error.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 8000);
     }
   }
 
@@ -63,7 +71,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal jdId={row?.jdId} empClientCode={row?.clientCode} handleClose={handleClose}/>} style={{width:'40%',height: '60%'}}/>
+      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal jdId={row?.jdId} empClientCode={row?.clientCode} handleClose={handleClose} />} style={{ width: '40%', height: '60%' }} />
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`tableRow ${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo tableCell'>
@@ -79,13 +87,13 @@ function Row(props) {
           {row.location}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-        {timeZoneConversion(row?.jdFile?.createdAt)}
+          {timeZoneConversion(row?.jdFile?.createdAt)}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
             <CommonDrawer toggleDrawer={toggleDrawer} state={state} />
             <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={toggleDrawer('right', true)} />
-            <img src={save} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleSave}/>
+            <img src={save} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} onClick={handleSave} />
             <img src={share} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
@@ -99,16 +107,23 @@ function Row(props) {
 
 
 const AllJobsList = () => {
-  const [jobListings,setJobListings] = useState([]);
+  const [jobListings, setJobListings] = useState([]);
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
-  
+
 
   useEffect(() => {
     const getData = async () => {
-      const res = await searchJds(accessToken, clientCode);
-      console.log("Searched Jobs =====>>>>> ", res?.data?.data);
-      setJobListings(res?.data?.data);
+      try {
+        const res = await searchJds(accessToken, clientCode);
+        setJobListings(res?.data?.data);
+      }
+      catch (error) {
+        const errMsg =
+          error.message ||
+          "An error occurred. Please try again.";
+        toast.error(errMsg, 8000);
+      }
     }
 
     getData();

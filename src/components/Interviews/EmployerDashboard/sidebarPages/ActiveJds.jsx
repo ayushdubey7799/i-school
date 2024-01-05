@@ -183,7 +183,7 @@ function Row(props) {
     setAgencyState({ ...agencyState, [anchor]: open });
   };
 
-
+console.log(decodedToken);
 
   const openDropdown = (index) => {
     setOpenDropdownIndex(index);

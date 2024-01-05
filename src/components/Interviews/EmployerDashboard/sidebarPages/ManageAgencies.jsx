@@ -36,110 +36,118 @@ import { removeMapping } from "../../../../functions/api/employers/agency/remove
 
 
 function Row(props) {
-    const { row, index } = props;
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
-    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const { row, index } = props;
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
-    const handleRemove = async () => {
-      const res = await removeMapping(row.id,accessToken,clientCode);
-      if(res){
+  const handleRemove = async () => {
+    try {
+      const res = await removeMapping(row.id, accessToken, clientCode);
+      if (res) {
         toast.success(`Mapping for Agency id ${row.agencyName} Removed Successfully`);
       }
     }
+    catch (error) {
+      const errMsg =
+        error.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 8000);
+    }
+  }
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}
-                className={`${index % 2 == 1 ? "colored" : ""}`}
-            >
-                <TableCell component="th" scope="row" align="center" className="tableCell">
-                    {row.agencyName}
-                </TableCell>
-                <TableCell align="center" className="tableCell">{row.agencySpocName}</TableCell>
-                <TableCell align="center" className="tableCell">{row.agencySpocEmail}</TableCell>
-                <TableCell align="center" className="tableCell">{row.agencySpocContact}</TableCell>
-                <TableCell align="center" className="tableCell"><img src={deleteIcon} style={{width: "1.2rem"}} onClick={handleRemove} /></TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }}
+        className={`${index % 2 == 1 ? "colored" : ""}`}
+      >
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          {row.agencyName}
+        </TableCell>
+        <TableCell align="center" className="tableCell">{row.agencySpocName}</TableCell>
+        <TableCell align="center" className="tableCell">{row.agencySpocEmail}</TableCell>
+        <TableCell align="center" className="tableCell">{row.agencySpocContact}</TableCell>
+        <TableCell align="center" className="tableCell"><img src={deleteIcon} style={{ width: "1.2rem" }} onClick={handleRemove} /></TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 
 export default function ManageAgencies() {
-    const [openBasic, setOpenBasic] = useState(false);
-    const [mapped, setMapped] = useState([]);
+  const [openBasic, setOpenBasic] = useState(false);
+  const [mapped, setMapped] = useState([]);
 
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
-    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
-    const [userTrigger, setUserTrigger] = useState(false);
+  const [userTrigger, setUserTrigger] = useState(false);
 
-    // const [page, setPage] = useState(1);
-    // const [size, setSize] = useState(5);
-    // const [total, setTotal] = useState(0);
+  // const [page, setPage] = useState(1);
+  // const [size, setSize] = useState(5);
+  // const [total, setTotal] = useState(0);
 
-    // const handleSizeChange = (event) => {
-    //     setSize(parseInt(event.target.value, 10));
-    //     setPage(1);
-    // };
+  // const handleSizeChange = (event) => {
+  //     setSize(parseInt(event.target.value, 10));
+  //     setPage(1);
+  // };
 
-    // const handlePageChange = (change) => {
-    //     if (change && page < Math.ceil(+total / +size)) {
-    //         setPage((prev) => prev + 1);
-    //     } else if (!change && page > 1) {
-    //         setPage((prev) => prev - 1);
-    //     }
-    // };
+  // const handlePageChange = (change) => {
+  //     if (change && page < Math.ceil(+total / +size)) {
+  //         setPage((prev) => prev + 1);
+  //     } else if (!change && page > 1) {
+  //         setPage((prev) => prev - 1);
+  //     }
+  // };
 
-    useEffect(() => {
-        const getData = async () => {
-          const res = await getMappings(accessToken,clientCode);
-          console.log("Mapped Agencies",res);
-          if(res)setMapped(res?.data);
-        }
-        getData();
-    },[userTrigger])
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getMappings(accessToken, clientCode);
+      console.log("Mapped Agencies", res);
+      if (res) setMapped(res?.data);
+    }
+    getData();
+  }, [userTrigger])
 
 
-    return (
-        <StyledDiv>
-            <TableContainer component={Paper} className="tableBox">
-                <ModalHOC
-                    openNewInterviewModal={openBasic}
-                    setOpenNewInterviewModal={setOpenBasic}
-                    component={<ManageAgencyForm array={[null, "create"]} />} 
-                    handleClose={() => {
-                      setOpenBasic(false);
-                      setUserTrigger(!userTrigger);
-                    }}/>
+  return (
+    <StyledDiv>
+      <TableContainer component={Paper} className="tableBox">
+        <ModalHOC
+          openNewInterviewModal={openBasic}
+          setOpenNewInterviewModal={setOpenBasic}
+          component={<ManageAgencyForm array={[null, "create"]} />}
+          handleClose={() => {
+            setOpenBasic(false);
+            setUserTrigger(!userTrigger);
+          }} />
 
-                <Component>
-                    <span className="title">Manage Agencies</span>
+        <Component>
+          <span className="title">Manage Agencies</span>
 
-                    <div className='btnBox'>
-                        <EditButton onClick={() => setOpenBasic(true)}>Add Agency</EditButton>
-                    </div>
-                </Component>
+          <div className='btnBox'>
+            <EditButton onClick={() => setOpenBasic(true)}>Add Agency</EditButton>
+          </div>
+        </Component>
 
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center" className="tableCell">Agency Name</TableCell>
-                            <TableCell align="center" className="tableCell">Spoc Name</TableCell>
-                            <TableCell align="center" className="tableCell">Spoc Email</TableCell>
-                            <TableCell align="center" className="tableCell">Spoc Contact</TableCell>
-                            <TableCell align="center" className="tableCell">Remove Agency</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {mapped?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} />
-                        ))}
-                    </TableBody>
-                </Table>
-                {/* <div className="paginationBox">
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center" className="tableCell">Agency Name</TableCell>
+              <TableCell align="center" className="tableCell">Spoc Name</TableCell>
+              <TableCell align="center" className="tableCell">Spoc Email</TableCell>
+              <TableCell align="center" className="tableCell">Spoc Contact</TableCell>
+              <TableCell align="center" className="tableCell">Remove Agency</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {mapped?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} />
+            ))}
+          </TableBody>
+        </Table>
+        {/* <div className="paginationBox">
                     <PaginationSizeFilter
                         size={size}
                         handleSizeChange={handleSizeChange}
@@ -152,9 +160,9 @@ export default function ManageAgencies() {
                         setPage={setPage}
                     />
                 </div> */}
-            </TableContainer>
-        </StyledDiv>
-    );
+      </TableContainer>
+    </StyledDiv>
+  );
 }
 
 
@@ -269,8 +277,8 @@ const BoxRow = styled.div`
   justify-content: start;
 
   ${(props) =>
-        props.isLast &&
-        css`
+    props.isLast &&
+    css`
       bottom: 1.4rem;
       right: 10%;
     `}

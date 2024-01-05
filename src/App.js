@@ -155,7 +155,7 @@ const App = () => {
           <Route path="/solution/job-seeker" element={<JobSeeker />} />
           <Route path='/create-resume/:resumeId' element={<CreateResumePage />} />
           <Route path='/access-denied' element={<AccessDenied />} />
-          <Route path="/trial" element={<EmployerAgencyDashboard />} />
+          <Route path="/dashboard/agency" element={<EmployerAgencyDashboard />} />
           <Route path='/trial2' element={<InterviewerInviteDashboard />} />
           <Route path='/JdListing' element={<JdListingTabs />} />
           <Route path='/candidateListing/:jdId' element={<CandidateListingTabs />} />

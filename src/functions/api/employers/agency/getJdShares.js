@@ -22,6 +22,6 @@ export const getJdShares = async (
     console.log(response.status);
     return response.data;
   } catch (error) {
-    console.error("Error:", error);
+    throw error;
   }
 };

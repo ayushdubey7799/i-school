@@ -23,6 +23,6 @@ export const getAgencies = async (
     console.log("Status3:", response.status);
     return response.data;
   } catch (error) {
-    console.error("Error:", error);
+    throw error;
   }
 };

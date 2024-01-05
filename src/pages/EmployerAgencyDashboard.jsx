@@ -5,11 +5,12 @@ import EmployerAgencyCandidateList from '../components/Interviews/EmployerAgency
 import EmployerAgencySidebar from '../components/Interviews/EmployerAgency/EmployerAgencySidebar';
 import EmployerAgencyHeader from '../components/Interviews/EmployerAgency/EmployerAgencyHeader';
 import EmployerAgencyMetrics from '../components/Interviews/EmployerAgency/EmployerAgencyMetrics';
+import JdListingTabs from './agency/JdListingTabs';
 
 
 const EmployerAgencyDashboard = () => {
     const [page, setPage] = useState({ index: 1, jdId: null });
-    const [currentItem, setCurrentItem] = useState('dashboard');
+    const [currentItem, setCurrentItem] = useState('jdListing');
 
     return (
         <Box>
@@ -19,6 +20,11 @@ const EmployerAgencyDashboard = () => {
                 <MainContent>
                     {
                         currentItem === 'dashboard' && <EmployerAgencyMetrics page={page} setPage={setPage} />
+
+                    }
+                    {
+                        currentItem === 'jdListing' && <JdListingTabs />
+
                     }
                 </MainContent>
             </StyledBox>

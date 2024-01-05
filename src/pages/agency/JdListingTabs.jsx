@@ -99,7 +99,7 @@ const StyledBox = styled.div`
     width: 90%;
     min-height: 30rem;
     margin: 0 auto;
-    margin-top: 5rem;
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: start;

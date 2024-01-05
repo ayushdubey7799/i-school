@@ -10,35 +10,50 @@ import { useSelector } from 'react-redux';
 import { addJdShare } from '../../functions/api/employers/agency/addJdShare';
 
 
-const AgencyShareDialogContent = ({ handleClose,jdId }) => {
+const AgencyShareDialogContent = ({ handleClose, jdId }) => {
     const [selectedAgency, setSelectedAgency] = useState('');
-    const [mapped,setMapped] = useState([]);
-    
+    const [mapped, setMapped] = useState([]);
+
     const accessToken = useSelector(state => state.auth.userData?.accessToken);
     const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
 
     useEffect(() => {
-        const getData  = async () => {
-            const res = await getMappings(accessToken,clientCode);
-            console.log(res);
-            if(res)setMapped(res?.data);
+        try {
+            const getData = async () => {
+                const res = await getMappings(accessToken, clientCode);
+                console.log(res);
+                if (res) setMapped(res?.data);
+            }
+            getData();
         }
-        getData();
-    },[]);
+        catch (error) {
+            const errMsg =
+                error.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, 8000);
+        }
+    }, []);
 
     const handleShare = async () => {
-        const payload = {
-            agencyIds: [
-                selectedAgency
-              ],
-              jdId
+        try {
+            const payload = {
+                agencyIds: [
+                    selectedAgency
+                ],
+                jdId
+            }
+            const res = await addJdShare(jdId, payload, accessToken, clientCode);
+            if (res) toast.success(`Shared with ${selectedAgency}`);
+            handleClose();
         }
-        const res = await addJdShare(jdId,payload,accessToken,clientCode);
-        if(res)toast.success(`Shared with ${selectedAgency}`);
-        handleClose();
+        catch (error) {
+            const errMsg =
+                error?.response?.data?.notify?.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, 8000);
+        }
     }
-console.log("=============>>>>>>>>>>>>",jdId);
     return (
         <Box>
             <span className='title'>Share JD with Agency</span>

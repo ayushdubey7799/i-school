@@ -4,13 +4,34 @@ import { addJobApplication } from '../../../../functions/api/jobApplication/addJ
 import { useSelector } from 'react-redux';
 import { getAllResumes } from '../../../../functions/api/jobSeekers/getAllResumes';
 import { toast } from 'react-toastify';
-
+import { addResume } from '../../../../functions/api/jobSeekers/addResume';
+import addIcon from '../../../../assets/icons/addIcon.png';
 // Dummy data for resumes
 const resumeData = [
   { id: 1, filename: 'Resume_1.pdf' },
   { id: 2, filename: 'Resume_2.pdf' },
   // Add more resumes as needed
 ];
+
+const Label = styled.label`
+  font-weight: 600;
+  margin: 0.7rem 0rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+
+  img {
+    width: 2rem;
+  }
+  
+  span {
+    color: var(--color);
+    
+  }
+`;
+
 
 // Styled components
 const ModalWrapper = styled.div`
@@ -55,21 +76,45 @@ const SendApplication = styled.button`
   cursor: pointer;
 `;
 
-const JobApplicationModal = ({jdId,empClientCode,handleClose}) => {
+const JobApplicationModal = ({ jdId, empClientCode, handleClose }) => {
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
   const profileId = useSelector(state => state.auth.userData?.user?.profileId);
+  const [resumeUploadTrigger, setResumeUploadTrigger] = useState(false);
   const [resumeId, setResumeId] = useState(null);
-  const [resumeData,setResumeData] = useState([]);
+  const [resumeData, setResumeData] = useState([]);
   useEffect(() => {
-   const getData = async () => {
-    const res = await getAllResumes(profileId,accessToken);
-    if(res){
-      setResumeData(res?.data);
+    const getData = async () => {
+      const res = await getAllResumes(profileId, accessToken);
+      if (res) {
+        setResumeData(res?.data);
+      }
     }
-   }
-   getData();
-  },[])
+    getData();
+  }, [resumeUploadTrigger]);
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const uploadRes = await addResume(profileId, formData, accessToken);
+
+        if (uploadRes) {
+          toast.success("Resume uploaded successfully", 5000);
+          setResumeUploadTrigger(!resumeUploadTrigger);
+        }
+      } catch (error) {
+        const errMsg =
+          error?.message ||
+          "An error occurred. Please try again.";
+        toast.error(errMsg, 5000);
+      }
+    }
+  };
 
   const handleCheckboxChange = (id) => {
     setResumeId(id);
@@ -80,16 +125,24 @@ const JobApplicationModal = ({jdId,empClientCode,handleClose}) => {
   };
 
   const handleApply = async () => {
-    const payload = {
-      clientCode: empClientCode,
-      jdId: jdId,
-      resumeId: resumeId
+    try {
+      const payload = {
+        clientCode: empClientCode,
+        jdId: jdId,
+        resumeId: resumeId
+      }
+      console.log(payload);
+      const res = await addJobApplication(payload, accessToken, clientCode);
+      if (res) {
+        handleClose();
+        toast.success("Applied Successfully");
+      }
     }
-    console.log(payload);
-     const res = await addJobApplication(payload,accessToken,clientCode);
-     if(res){
-handleClose();
-      toast.success("Applied Successfully");
+    catch (error) {
+      const errMsg =
+        error.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 8000);
     }
   }
 
@@ -105,7 +158,16 @@ handleClose();
           {resume.srcFilename}
         </ResumeItem>
       ))}
-      <AddButton onClick={handleAddNewResume}>Add New</AddButton>
+      <div className='addResumeBox'>
+        <Label htmlFor='input'><img src={addIcon} /></Label>
+        <input
+          id='input'
+          type="file"
+          onChange={handleFileChange}
+          accept='.pdf, .doc'
+          style={{ display: 'none' }}
+        />
+      </div>
       <SendApplication onClick={handleApply}>Send Application</SendApplication>
 
       {/* Add apply button or other actions as needed */}

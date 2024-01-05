@@ -98,10 +98,10 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-function ManageAgencyForm({ array,handleClose }) {
+function ManageAgencyForm({ array, handleClose }) {
     const [mode, setMode] = useState(array[1]);
-    const [agencies,setAgencies] = useState([]);
-    const [trigger,setTrigger] = useState(false);
+    const [agencies, setAgencies] = useState([]);
+    const [trigger, setTrigger] = useState(false);
     const [formData, setFormData] = useState({
         agencyCode: '',
         agencySpocName: '',
@@ -113,13 +113,21 @@ function ManageAgencyForm({ array,handleClose }) {
     const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
     useEffect(() => {
-      const getData = async () => {
-        const res = await getAgencies(accessToken,clientCode);
-        console.log(res);
-        if(res)setAgencies(res?.data?.data);
-      }
-      getData();
-    },[trigger])
+        try {
+            const getData = async () => {
+                const res = await getAgencies(accessToken, clientCode);
+                console.log(res);
+                if (res) setAgencies(res?.data?.data);
+            }
+            getData();
+        }
+        catch (error) {
+            const errMsg =
+                error.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, 8000);
+        }
+    }, [trigger])
 
     useEffect(() => {
         if (array[0]) {
@@ -137,9 +145,17 @@ function ManageAgencyForm({ array,handleClose }) {
     };
 
     const handleSubmit = async (e) => {
-        const res = await addMapping(formData,accessToken,clientCode);
-        if(res)toast.success("Mapping added")
-        setTrigger(prev => !prev);
+        try {
+            const res = await addMapping(formData, accessToken, clientCode);
+            if (res) toast.success("Mapping added")
+            setTrigger(prev => !prev);
+        }
+        catch (error) {
+            const errMsg =
+                error.response.data.notify.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, 8000);
+        }
         e.preventDefault();
 
     };

@@ -37,117 +37,144 @@ import { removeJdShare } from "../../../../functions/api/employers/agency/remove
 
 
 function Row(props) {
-    const { row, index,setUserTrigger,userTrigger } = props;
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
-    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const { row, index, setUserTrigger, userTrigger } = props;
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const [openRemove,setOpenRemove] = useState(false);
 
+  const handleRemove = async () => {
+    try {
+      const payload = {
+        agencyIds: [
+          row.agencyCode
+        ],
+        jdId: row.jdId
+      }
 
-    const handleRemove = async () => {
-        const payload = {
-            agencyIds: [
-                row.agencyCode
-              ],
-             jdId:  row.jdId
-        }
-
-        const res = await removeJdShare(row.jdId,payload,accessToken,clientCode);
-        if(res){
-          toast.success("Removed Agency Successfully");
-          setUserTrigger(userTrigger => !userTrigger);
-        }
+      const res = await removeJdShare(row.jdId, payload, accessToken, clientCode);
+      if (res) {
+        toast.success("Removed Agency Successfully");
+        setUserTrigger(userTrigger => !userTrigger);
+      }
     }
+    catch (error) {
+      const errMsg =
+        error.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 8000);
+    }
+  }
 
-    return (
-        <React.Fragment>
-            <TableRow
-                sx={{ "& > *": { borderBottom: "unset" } }}
-                className={`${index % 2 == 1 ? "colored" : ""}`}
-            >
-                 <TableCell component="th" scope="row" align="center" className="tableCell">
-                    {row.agencyCode}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center" className="tableCell">
-                    {row.agencyName}
-                </TableCell>
-                <TableCell align="center" className="tableCell">{row.agencySpocName}</TableCell>
-                <TableCell align="center" className="tableCell">{row.agencySpocEmail}</TableCell>
-                <TableCell align="center" className="tableCell">{row.agencySpocContact}</TableCell>
-                <TableCell align="center" className="tableCell"><img src={deleteIcon} style={{width: "1.2rem"}} onClick={handleRemove} /></TableCell>
-            </TableRow>
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+       <CommonDialog
+                open={openRemove}
+                handleClose={() => setOpenRemove(false)}
+                component={
+                  <DeleteDialogContent
+                    handleClose={() => setOpenRemove(false)}
+                    text="Agency Mapping"
+                    handleDelete={handleRemove}
+                  />
+                }
+              />
+      <TableRow
+        sx={{ "& > *": { borderBottom: "unset" } }}
+        className={`${index % 2 == 1 ? "colored" : ""}`}
+      >
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          {row.agencyCode}
+        </TableCell>
+        <TableCell component="th" scope="row" align="center" className="tableCell">
+          {row.agencyName}
+        </TableCell>
+        <TableCell align="center" className="tableCell">{row.agencySpocName}</TableCell>
+        <TableCell align="center" className="tableCell">{row.agencySpocEmail}</TableCell>
+        <TableCell align="center" className="tableCell">{row.agencySpocContact}</TableCell>
+        <TableCell align="center" className="tableCell"><img src={deleteIcon} style={{ width: "1.2rem",cursor: "pointer" }} onClick={() => setOpenRemove(true)} /></TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
 }
 
 
 
-export default function AgencyList({jdId}) {
-    const [openBasic, setOpenBasic] = useState(false);
-    const [mapped, setMapped] = useState([]);
+export default function AgencyList({ jdId }) {
+  const [openBasic, setOpenBasic] = useState(false);
+  const [mapped, setMapped] = useState([]);
 
-    const accessToken = useSelector(state => state.auth.userData?.accessToken);
-    const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
-    const [userTrigger, setUserTrigger] = useState(false);
+  const [userTrigger, setUserTrigger] = useState(false);
 
-    // const [page, setPage] = useState(1);
-    // const [size, setSize] = useState(5);
-    // const [total, setTotal] = useState(0);
+  // const [page, setPage] = useState(1);
+  // const [size, setSize] = useState(5);
+  // const [total, setTotal] = useState(0);
 
-    // const handleSizeChange = (event) => {
-    //     setSize(parseInt(event.target.value, 10));
-    //     setPage(1);
-    // };
+  // const handleSizeChange = (event) => {
+  //     setSize(parseInt(event.target.value, 10));
+  //     setPage(1);
+  // };
 
-    // const handlePageChange = (change) => {
-    //     if (change && page < Math.ceil(+total / +size)) {
-    //         setPage((prev) => prev + 1);
-    //     } else if (!change && page > 1) {
-    //         setPage((prev) => prev - 1);
-    //     }
-    // };
-
-
-    useEffect(() => {
-        const getData = async () => {
-          const res = await getJdShares(jdId,accessToken,clientCode);
-          console.log("Mapped Agencies",res);
-          if(res)setMapped(res?.data);
-        }
-        getData();
-    },[userTrigger])
+  // const handlePageChange = (change) => {
+  //     if (change && page < Math.ceil(+total / +size)) {
+  //         setPage((prev) => prev + 1);
+  //     } else if (!change && page > 1) {
+  //         setPage((prev) => prev - 1);
+  //     }
+  // };
 
 
-    return (
-        <StyledDiv>
-            <TableContainer component={Paper} className="tableBox">
-                <ModalHOC
-                    openNewInterviewModal={openBasic}
-                    setOpenNewInterviewModal={setOpenBasic}
-                    component={<ManageAgencyForm array={[null, "create"]} />} />
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await getJdShares(jdId, accessToken, clientCode);
+        console.log("Mapped Agencies", res);
+        if (res) setMapped(res?.data);
+      }
+      catch (error) {
+        const errMsg =
+          error.message ||
+          "An error occurred. Please try again.";
+        toast.error(errMsg, 8000);
+      }
+    }
+    getData();
+  }, [userTrigger])
 
-                <Component>
-                    <span className="title">List of Agencies shared with JD: {jdId}</span>
-                </Component>
 
-                <Table aria-label="collapsible table">
-                    <TableHead className="tableHead">
-                        <TableRow>
-                            <TableCell align="center" className="tableCell">Agency Code</TableCell>
-                            <TableCell align="center" className="tableCell">Agency Name</TableCell>
-                            <TableCell align="center" className="tableCell">Spoc Name</TableCell>
-                            <TableCell align="center" className="tableCell">Spoc Email</TableCell>
-                            <TableCell align="center" className="tableCell">Spoc Contact</TableCell>
-                            <TableCell align="center" className="tableCell">Remove</TableCell>
+  return (
+    <StyledDiv>
+      <TableContainer component={Paper} className="tableBox">
+        <ModalHOC
+          openNewInterviewModal={openBasic}
+          setOpenNewInterviewModal={setOpenBasic}
+          component={<ManageAgencyForm array={[null, "create"]} />} />
 
-                        </TableRow>
-                    </TableHead>
-                    <TableBody className="tableBody">
-                        {mapped?.map((row, index) => (
-                            <Row key={row.id} row={row} index={index} setUserTrigger={setUserTrigger} userTrigger={userTrigger} />
-                        ))}
-                    </TableBody>
-                </Table>
-                {/* <div className="paginationBox">
+        <Component>
+          <span className="title">List of Agencies shared with JD: {jdId}</span>
+        </Component>
+
+        <Table aria-label="collapsible table">
+          <TableHead className="tableHead">
+            <TableRow>
+              <TableCell align="center" className="tableCell">Agency Code</TableCell>
+              <TableCell align="center" className="tableCell">Agency Name</TableCell>
+              <TableCell align="center" className="tableCell">Spoc Name</TableCell>
+              <TableCell align="center" className="tableCell">Spoc Email</TableCell>
+              <TableCell align="center" className="tableCell">Spoc Contact</TableCell>
+              <TableCell align="center" className="tableCell">Remove</TableCell>
+
+            </TableRow>
+          </TableHead>
+          <TableBody className="tableBody">
+            {mapped?.map((row, index) => (
+              <Row key={row.id} row={row} index={index} setUserTrigger={setUserTrigger} userTrigger={userTrigger} />
+            ))}
+          </TableBody>
+        </Table>
+        {/* <div className="paginationBox">
                     <PaginationSizeFilter
                         size={size}
                         handleSizeChange={handleSizeChange}
@@ -160,9 +187,9 @@ export default function AgencyList({jdId}) {
                         setPage={setPage}
                     />
                 </div> */}
-            </TableContainer>
-        </StyledDiv>
-    );
+      </TableContainer>
+    </StyledDiv>
+  );
 }
 
 
@@ -277,8 +304,8 @@ const BoxRow = styled.div`
   justify-content: start;
 
   ${(props) =>
-        props.isLast &&
-        css`
+    props.isLast &&
+    css`
       bottom: 1.4rem;
       right: 10%;
     `}

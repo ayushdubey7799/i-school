@@ -21,6 +21,6 @@ export const searchJds = async (
     console.log("Data:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error:", error);
+    throw error;
   }
 };

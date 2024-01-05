@@ -9,6 +9,7 @@ import styled from "styled-components";
 import Loader from "../../components/commonComponents/Loader";
 import JDListing from "./JdListing";
 import CandidateListing from "./CandidateListing";
+import EmployerAgencyHeader from "../../components/Interviews/EmployerAgency/EmployerAgencyHeader";
 
 export default function CandidateListingTabs() {
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
@@ -49,7 +50,10 @@ export default function CandidateListingTabs() {
 
   return (
     <>
+          <EmployerAgencyHeader/>
+
       {filteredData.status == 'SUCCESS' ? <Loader /> :
+      <>
         <StyledBox>
           <Tabs
             style={{
@@ -100,6 +104,7 @@ export default function CandidateListingTabs() {
           {value === 'PROCESSED' && <CandidateListing/>}
 
         </StyledBox>
+        </>
       }
     </>
   );
@@ -112,15 +117,11 @@ const StyledBox = styled.div`
     width: 90%;
     min-height: 30rem;
     margin: 0 auto;
-    margin-top: 3rem;
+    padding-top: 6rem;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-
-
-
-    // Custom styled for tabs
 
     .custom-tab {
       color: white;

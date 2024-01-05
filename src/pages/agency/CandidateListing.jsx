@@ -96,18 +96,21 @@ const CandidateListing = () => {
         <StyledContainer>
       <LeftSide>
         <div>BRAJ01</div>
-        <JDIDDropdown value={selectedJDID} onChange={handleJDIDChange}>
-          <option value="">Select JDID</option>
-          <option value="JDID1">JDID1</option>
-          <option value="JDID2">JDID2</option>
+        <Select value={selectedJDID} onChange={handleJDIDChange}>
+          <Option value="">Select JD ID</Option>
+          <Option value="JDID1">JDID1</Option>
+          <Option value="JDID2">JDID2</Option>
           {/* Add more options as needed */}
-        </JDIDDropdown>
-      </LeftSide>
-      <RightSide>
-        <button>
+        </Select>
+        <Button>
           Upload
           {/* <FileInput type="file" onChange={handleFileUpload} /> */}
-        </button>
+        </Button>
+      </LeftSide>
+      <RightSide>
+       
+        <Button onClick={() => navigate("/schedule")}>Back</Button>
+
       </RightSide>
     </StyledContainer>
           {/* <SearchBarContainer> */}
@@ -301,3 +304,42 @@ const JDIDDropdown = styled.select`
 const FileInput = styled.input`
   margin-left: 10px;
 `;
+
+const Button = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: var(--lightOrange);
+  color: #fff;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  align-self: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font);
+`
+
+
+const Select = styled.select`
+  height: 2.5rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+  background-color: #ececec;
+  outline: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #7D87A9;
+  font-family: var(--font);
+
+  
+`;
+
+
+const Option = styled.option`
+font-size: 0.9rem;
+font-weight: 500;
+border: none;
+color: var(--color);
+`;
+

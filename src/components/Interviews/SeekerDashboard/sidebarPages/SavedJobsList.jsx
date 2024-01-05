@@ -18,12 +18,12 @@ import { useSelector } from 'react-redux';
 function Row(props) {
   const { row, index } = props;
   const [openBasic, setOpenBasic] = useState(false);
- const handleClose = () => {
-  setOpenBasic(false);
- }
+  const handleClose = () => {
+    setOpenBasic(false);
+  }
   return (
     <React.Fragment>
-      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal jdId={row?.jdId} empClientCode={row?.clientCode} handleClose={handleClose}/>}  style={{ width: '40%', height: '60%' }} />
+      <ConfigurableModal open={openBasic} setOpen={setOpenBasic} component={<JobApplicationModal jdId={row?.jdId} empClientCode={row?.clientCode} handleClose={handleClose} />} style={{ width: '40%', height: '60%' }} />
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='logo tableCell'>
@@ -52,18 +52,26 @@ function Row(props) {
 
 
 const SavedJobsList = () => {
-  const [jobListings,setJobListings] = useState([]);
+  const [jobListings, setJobListings] = useState([]);
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
 
 
   useEffect(() => {
-    const getData = async () => {
-      const res = await getSavedJobs(accessToken, clientCode);
-      if(res)setJobListings(res?.data);
-    }
+    try {
+      const getData = async () => {
+        const res = await getSavedJobs(accessToken, clientCode);
+        if (res) setJobListings(res?.data);
+      }
 
-    getData();
+      getData();
+    }
+    catch (error) {
+      const errMsg =
+        error.message ||
+        "An error occurred. Please try again.";
+      toast.error(errMsg, 8000);
+    }
   }, [])
   console.log("Saved Jobs =====>>>>> ", jobListings);
 
