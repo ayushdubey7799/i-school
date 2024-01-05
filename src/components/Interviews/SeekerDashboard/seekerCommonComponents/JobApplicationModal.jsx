@@ -77,12 +77,14 @@ const SendApplication = styled.button`
 `;
 
 const JobApplicationModal = ({ jdId, empClientCode, handleClose }) => {
+
+  const profileId = useSelector(state => state.auth.userData?.user?.profileId);
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
   const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
-  const profileId = useSelector(state => state.auth.userData?.user?.profileId);
   const [resumeUploadTrigger, setResumeUploadTrigger] = useState(false);
   const [resumeId, setResumeId] = useState(null);
   const [resumeData, setResumeData] = useState([]);
+  
   useEffect(() => {
     const getData = async () => {
       const res = await getAllResumes(profileId, accessToken);

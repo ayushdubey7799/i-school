@@ -1,19 +1,70 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import dayjs from 'dayjs';
+import moment from 'moment-timezone';
+import { updateResource } from '../../../../functions/api/jobSeekers/updateResource';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
-const BasicDetails = ({ formData, setFormData, handleEdit }) => {
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
+const BasicDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) => {
+
+  const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const [formData, setFormData] = useState();
+  const [dob, setDob] = useState(dayjs(new Date()));
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    if (mode === 'edit') {
+      setFormData(data);
+      setDob(dayjs(data?.dob));
+    }
+  }, [])
+
+  const handleSubmit = async () => {
+    try {
+      const dobData = moment(dob.format("YYYY-MM-DD")).format('YYYY-MM-DD');
+
+      const payload = {
+        active: true,
+        address: formData?.address,
+        city: formData?.city,
+        dob: dobData,
+        email: formData?.email,
+        firstName: formData?.firstName,
+        lastName: formData?.lastName,
+        primaryContact: formData?.primaryContact,
+        username: formData?.username,
+        linkedin: formData?.linkedin,
+        github: formData?.github
+      }
+
+      const res = await updateResource(id, payload, accessToken)
+
+      if (res) {
+        toast.success('Basic Details updated successfully')
+        handleClose();
+        setTrigger(!trigger)
+    }
+
+    } catch(error) {
+      const errMsg = error?.message ||
+                "An error occurred. Please try again.";
+            toast.error(errMsg, 5000);
+    }
+  }
+
 
   return (
     <Box>
@@ -23,9 +74,12 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
         <div className="inputBox">
           <TextField
             id="outlined-basic"
-            label="Name"
+            label="First Name"
             variant="outlined"
             type="text"
+            name='firstName'
+            value={formData?.firstName}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -45,9 +99,12 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
           />
           <TextField
             id="outlined-basic"
-            label="Designation"
+            label="Last Name"
             variant="outlined"
             type="text"
+            name='lastName'
+            value={formData?.lastName}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -73,6 +130,9 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
             label="Email"
             variant="outlined"
             type="email"
+            name='email'
+            value={formData?.email}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -95,6 +155,9 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
             label="Contact"
             variant="outlined"
             type="tel"
+            name='primaryContact'
+            value={formData?.primaryContact}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -117,9 +180,12 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
         <div className="inputBox">
           <TextField
             id="outlined-basic"
-            label="Profile URL"
+            label="LinkedIn Profile URL"
             variant="outlined"
             type="url"
+            name='linkedin'
+            value={formData?.linkedin}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -142,6 +208,9 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
             label="Portfolio URL"
             variant="outlined"
             type="url"
+            name='github'
+            value={formData?.github}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -163,9 +232,12 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
         <div className="inputBox">
           <TextField
             id="outlined-basic"
-            label="LinkedIn Profile URL"
+            label="Address"
             variant="outlined"
-            type="url"
+            type="text"
+            name='address'
+            value={formData?.address}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -185,9 +257,12 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
           />
           <TextField
             id="outlined-basic"
-            label="Github Profile URL"
+            label="City"
             variant="outlined"
-            type="url"
+            type="text"
+            name='city'
+            value={formData?.city}
+            onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
               sx: {
@@ -210,17 +285,19 @@ const BasicDetails = ({ formData, setFormData, handleEdit }) => {
         <div className='inputBox' style={{ width: 'calc(50% - 1rem)' }}>
           <LocalizationProvider dateAdapter={AdapterDayjs} >
             <DemoContainer components={['DatePicker']} sx={{ width: '100%' }}>
-              <DatePicker label="Date of Birth" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} />
+              <DatePicker label="Date of Birth" sx={{ backgroundColor: '#F6F6FB', width: '100%' }} value={dob} onChange={(newValue) => setDob(dayjs(newValue))} />
             </DemoContainer>
           </LocalizationProvider>
 
         </div>
 
-        <Button onClick={handleEdit}>Save Changes</Button>
+        <Button onClick={handleSubmit}>Save Changes</Button>
       </Form>
     </Box>
   )
 }
+
+
 
 export default BasicDetails
 

@@ -1,32 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import uploadIcon from '../../../../assets/icons/upload.png'
-import browseIcon from '../../../../assets/icons/browse.png'
+import { getAllResumes } from '../../../../functions/api/jobSeekers/getAllResumes'
+import { useSelector } from 'react-redux'
 
 const EnhanceResume = () => {
-  const [selectedResumeFile, setSelectedResumeFile] = useState(null);
-  const [selectedResumeFileName, setSelectedResumeFileName] = useState('');
+  const profileId = useSelector(state => state.auth.userData?.user?.profileId);
+  const accessToken = useSelector(state => state.auth.userData?.accessToken);
+  const [resumeId, setResumeId] = useState(null);
+  const [resumeData, setResumeData] = useState([]);
+  const [jdText, setJdText] = useState('');
 
-  const [selectedJDFile, setSelectedJDFile] = useState(null);
-  const [selectedJDFileName, setSelectedJDFileName] = useState('');
-
-  const handleResumeFileChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      setSelectedResumeFile(file);
-      setSelectedResumeFileName(file.name);
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getAllResumes(profileId, accessToken);
+      if (res) {
+        setResumeData(res?.data);
+      }
     }
+    getData();
+  }, []);
+
+  const handleCheckboxChange = (id) => {
+    setResumeId(id);
   };
 
-  const handleJDFileChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      setSelectedJDFile(file);
-      setSelectedJDFileName(file.name);
-    }
-  };
 
   const handleSubmit = () => {
 
@@ -37,28 +34,25 @@ const EnhanceResume = () => {
     <Component>
       <Form onSubmit={handleSubmit}>
         <div className='mainBox'>
-          <div className='resumeBox'>
-            <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedResumeFileName}</span></Label>
-            <FileInput
-              id='input'
-              type="file"
-              accept=".doc, .pdf"
-              onChange={handleResumeFileChange}
-              style={{ display: 'none' }}
-            />
-            <span>Select Resume</span>
+          <div className='leftBox'>
+            <h4>Select Resume</h4>
+            {resumeData.map((resume) => (
+              <ResumeItem key={resume.id}>
+                <Checkbox
+                  checked={resumeId == resume.id}
+                  onChange={() => handleCheckboxChange(resume.id)}
+                />
+                {resume.srcFilename}
+              </ResumeItem>
+            ))}
           </div>
-
-          <div className='resumeBox'>
-            <Label htmlFor='input'><img src={browseIcon} /> <span>{selectedJDFileName}</span></Label>
-            <FileInput
-              id='input'
-              type="file"
-              accept=".doc, .pdf"
-              onChange={handleJDFileChange}
-              style={{ display: 'none' }}
+          <div className='rightBox'>
+            <h4>JD</h4>
+            <textarea
+              value={jdText}
+              onChange={(e) => setJdText(e.target.value)}
+              rows={5}
             />
-            <span>Select JD</span>
           </div>
         </div>
         <SubmitButton type="submit">Create Cover Letter</SubmitButton>
@@ -92,47 +86,33 @@ const Form = styled.form`
     display: flex;
     gap: 2rem;
     margin: 0 0 1rem 0;
+    width: 90%;
+    justify-content: space-between;
+
+    .leftBox {
+      width: 100%;
+    }
+
+    .rightBox {
+      width: 100%;
+
+      h4 {
+        line-height: 0.5rem;
+      }
+
+      textarea {
+        width: 100%;
+        height: calc(100% - 2rem);
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+    }
+
   }
 
-  .resumeBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  span {
-    font-weight: 600;
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
-  }
-  .title {
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-`;
-
-const Label = styled.label`
-  font-weight: 600;
-  margin: 0.7rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-
-  img {
-    width: 2.3rem;
-  }
   
-  span {
-    color: var(--color);
-    
-  }
 `;
 
-
-const FileInput = styled.input`
-  margin-bottom: 20px;
-`;
 
 const SubmitButton = styled.button`
   padding: 0.6rem 1.1rem;
@@ -144,4 +124,16 @@ const SubmitButton = styled.button`
   font-weight: 600;
   font-size: 0.9rem;
   font-family: var(--font);
+  margin-top: 1.5rem;
+`;
+
+const ResumeItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  margin-right: 10px;
+  cursor: pointer;
 `;

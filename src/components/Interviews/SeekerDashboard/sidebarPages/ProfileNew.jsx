@@ -27,6 +27,7 @@ import CommonDialog from '../../../commonComponents/CommonDialog';
 import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 import { deleteResume } from '../../../../functions/api/jobSeekers/deleteResume';
 import { getBlobData } from '../../../../functions/api/resume/getBlobData';
+import { getResourceById } from '../../../../functions/api/jobSeekers/getResource';
 
 
 const ProfileNew = () => {
@@ -37,6 +38,7 @@ const ProfileNew = () => {
     const clientCode = useSelector(
         (state) => state.auth.userData?.user?.clientCode
     );
+    const userId = useSelector((state) => state.auth.userData?.user?.id);
 
     const [openBasicDetails, setOpenBasicDetails] = useState(false);
     const [openSkills, setOpenSkills] = useState(false);
@@ -45,6 +47,7 @@ const ProfileNew = () => {
     const [openEmployments, setOpenEmployments] = useState(false);
     const [openCertifications, setOpenCertifications] = useState(false);
 
+    const [userBasicDetails, setUserBasicDetails] = useState();
     const [userProfileData, setUserProfileData] = useState();
     const [mode, setMode] = useState();
 
@@ -70,8 +73,6 @@ const ProfileNew = () => {
                     setResumeUploadTrigger(!resumeUploadTrigger);
                 }
 
-                // setResumeFile([...resumeFile, file]);
-                // setResumeArr([...resumeArr, file.name]);
             } catch (error) {
                 const errMsg =
                     error?.message ||
@@ -132,8 +133,8 @@ const ProfileNew = () => {
     };
 
 
-    const userBasicDetails = useSelector((state) => state.auth.userData?.user);
 
+    console.log(userId)
 
     const [projectId, setProjectId] = useState('');
     const [projectData, setProjectData] = useState();
@@ -154,6 +155,13 @@ const ProfileNew = () => {
             const res = await getProfile(profileId, accessToken);
             setUserProfileData(res?.data);
         }
+
+        const getResourceData = async () => {
+            const res = await getResourceById(userId, accessToken);
+            console.log(res);
+            setUserBasicDetails(res);
+        }
+        getResourceData();
         getProfileData();
     }, [trigger])
 
@@ -164,9 +172,10 @@ const ProfileNew = () => {
     }, [openSkills])
 
 
+
     return (
         <Box>
-            <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails />} />
+            <ModalHOC openNewInterviewModal={openBasicDetails} setOpenNewInterviewModal={setOpenBasicDetails} component={<BasicDetails data={userBasicDetails} mode={mode} handleClose={() => setOpenBasicDetails(false)} id={userId} trigger={trigger} setTrigger={setTrigger} />} />
             <ModalHOC openNewInterviewModal={openSkills} setOpenNewInterviewModal={setOpenSkills} component={<SkillDetails data={skillData} mode={mode} handleClose={() => setOpenSkills(false)} id={skillId} trigger={trigger} setTrigger={setTrigger} />} />
             <ModalHOC openNewInterviewModal={openEducations} setOpenNewInterviewModal={setOpenEducations} component={<EducationDetails data={educationData} mode={mode} handleClose={() => setOpenEducations(false)} id={educationId} trigger={trigger} setTrigger={setTrigger} />} />
             <ModalHOC openNewInterviewModal={openProjects} setOpenNewInterviewModal={setOpenProjects} component={<ProjectDetails data={projectData} mode={mode} handleClose={() => setOpenProjects(false)} id={projectId} trigger={trigger} setTrigger={setTrigger} />} />
@@ -176,21 +185,24 @@ const ProfileNew = () => {
             <div className='topBox'>
                 <img src={profileData?.personalInfo?.img} className='profileImg' />
                 <div className='middleBox'>
-                    <span className='name'>{userBasicDetails?.firstName}</span>
+                    <span className='name'>{userBasicDetails?.firstName} {userBasicDetails?.lastName}</span>
                     <div className='infoBox'>
                         <div className='infoBox1'>
                             <span className='text'><img src={callIcon} />{userBasicDetails?.primaryContact}</span>
                             <span className='text'><img src={emailIcon} />{userBasicDetails?.email}</span>
                         </div>
                         <div className='infoBox2'>
-                            <a href={profileData?.personalInfo?.linkedin}><img src={linkedin} className='socialIcon' />{profileData.personalInfo.linkedin.slice(0, 35)}</a>
-                            <a href={profileData?.personalInfo?.github}><img src={github} className='socialIcon' />{profileData.personalInfo.github.slice(0, 30)}</a>
+                            <a href={userBasicDetails?.linkedin}><img src={linkedin} className='socialIcon' />{userBasicDetails?.linkedin?.slice(0, 35)}</a>
+                            <a href={userBasicDetails?.github}><img src={github} className='socialIcon' />{userBasicDetails?.github?.slice(0, 30)}</a>
                         </div>
                     </div>
                 </div>
                 <div className='editBox'>
                     <span className='editBtn'><img src={shareIcon} /></span>
-                    <span className='editBtn' onClick={() => setOpenBasicDetails(true)}><img src={editIcon} /></span>
+                    <span className='editBtn' onClick={() => {
+                        setMode('edit')
+                        setOpenBasicDetails(true)
+                    }}><img src={editIcon} /></span>
                 </div>
             </div>
 
