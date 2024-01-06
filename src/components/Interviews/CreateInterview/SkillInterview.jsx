@@ -32,7 +32,7 @@ const SkillInterview = () => {
   const navigate = useNavigate();
 
   const handleSkillsChange = (_, newSkills) => {
-    setSelectedSkills(newSkills);
+        setSelectedSkills(newSkills);
   };
 
   useEffect(() => {

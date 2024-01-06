@@ -73,6 +73,7 @@ import EmployerFeedback from "./components/Interviews/EmployerDashboard/Employer
 import MatchedResumeTabs from "./components/Interviews/EmployerDashboard/Schedule/MatchedResumeTabs"
 import JdListingTabs from "./pages/agency/JdListingTabs"
 import CandidateListingTabs from "./pages/agency/CandidateListingTabs"
+import ParameterSelector from "./components/Interviews/CreateInterview/ParamaterSelector"
 
 
 const App = () => {
@@ -157,6 +158,8 @@ const App = () => {
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/dashboard/agency" element={<EmployerAgencyDashboard />} />
           <Route path='/trial2' element={<InterviewerInviteDashboard />} />
+          <Route path='/trial' element={<ParameterSelector />} />
+
           <Route path='/JdListing' element={<JdListingTabs />} />
           <Route path='/candidateListing/:jdId' element={<CandidateListingTabs />} />
 

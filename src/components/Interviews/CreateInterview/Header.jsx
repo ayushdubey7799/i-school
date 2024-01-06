@@ -74,7 +74,6 @@ const StyledDiv = styled.div`
   width: 90%;
   padding: 0% 5%;
   height: 4rem;
-  position: fixed;
   z-index: 2000;
   background-color: var(--white);
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
