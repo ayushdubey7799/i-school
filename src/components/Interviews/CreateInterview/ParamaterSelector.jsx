@@ -557,6 +557,8 @@ const Container = styled.div`
   justify-content: space;
   box-sizing: border-box;
 
+ 
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -569,7 +571,8 @@ input[type="number"] {
 }
 
 .maintitle{
-    font-size: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin: 1rem auto ;
 }
 
