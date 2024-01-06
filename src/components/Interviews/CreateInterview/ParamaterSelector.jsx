@@ -11,6 +11,9 @@ import { toast } from "react-toastify";
 import Header from "../../../components/Interviews/CreateInterview/Header"
 import { createInterview } from "../../../functions/api/interview/createInterview";
 import Footer from "../../commonComponents/Footer";
+import { pdfjs } from 'react-pdf';
+import CustomInput from "../../commonComponents/CustomInput";
+
 const ParameterSelector = () => {
 
     const [productType, setProductType] = useState("");
@@ -23,13 +26,15 @@ const ParameterSelector = () => {
     const [jobSummary, setJobSummary] = useState("");
     const [resumeText, setResumeText] = useState("");
     const [selectedSkills, setSelectedSkills] = useState([]);
-   const [isLoading,setIsLoading] = useState(false);
-   const [loaderMessage,setLoaderMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [loaderMessage, setLoaderMessage] = useState("");
     const [successPopup, setSuccessPopup] = useState(false);
     const [errorPopup, setErrorPopup] = useState(null);
     const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
     const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
     const navigate = useNavigate();
+    const [jd, setJd] = useState();
+    const [resume, setResume] = useState();
 
 
     useEffect(() => {
@@ -41,10 +46,10 @@ const ParameterSelector = () => {
 
 
     useEffect(() => {
-       setJobSummary("");
-       setResumeText("");
-       setSelectedSkills([]);
-    },[productType])
+        setJobSummary("");
+        setResumeText("");
+        setSelectedSkills([]);
+    }, [productType])
 
     const handleSkillsChange = (_, newSkills) => {
         setSelectedSkills(newSkills);
@@ -130,7 +135,7 @@ const ParameterSelector = () => {
                 setLoaderMessage("");
                 return;
             }
-           
+
         }
         else {
             toast.error("Please Select Product Type")
@@ -138,290 +143,385 @@ const ParameterSelector = () => {
             setLoaderMessage("");
         }
 
-            const payload = {
-                difficultyLevel: difficultyLevel,
-                testType: testType,
-                jobSummary: productType == 'Skill' ? selectedSkills.join(', ').trim() : jobSummary,
-                resumeText: productType == 'Skill' ? `Experience ${resumeText.trim()}` : resumeText,
-                noOfQuestions: numberOfQue,
-            };
-            const ongoing = await createInterview(payload, accessToken)
+        const payload = {
+            difficultyLevel: difficultyLevel,
+            testType: testType,
+            jobSummary: productType == 'Skill' ? selectedSkills.join(', ').trim() : jobSummary,
+            resumeText: productType == 'Skill' ? `Experience ${resumeText.trim()}` : resumeText,
+            noOfQuestions: numberOfQue,
+        };
+        const ongoing = await createInterview(payload, accessToken)
 
-            if (ongoing?.data?.id) {
-                localStorage.setItem("currentInterview", "skill");
-                navigate(`/create-interview/${ongoing?.data?.id}`)
+        if (ongoing?.data?.id) {
+            localStorage.setItem("currentInterview", "skill");
+            navigate(`/create-interview/${ongoing?.data?.id}`)
+        }
+    }
+
+    useEffect(() => {
+        if (resume) {
+            if (resume.type === "text/plain") {
+                handleTxtFile(resume, "resume");
+            } else if (
+                resume.type === "application/msword" ||
+                resume.type ===
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ) {
+                handleDocxFile(resume, "resume");
+            } else if (resume.type === "application/pdf") {
+                handlePdfFile(resume, "resume");
+            } else {
+                console.log("Unsupported file type");
             }
         }
+    }, [resume]);
 
-        return <MainContainer>
-            <Header/>
-                {isLoading ? (
-                    <Loader message={loaderMessage} />
-                ) : (
-                    <Container>
-                        <p className="maintitle">Create Your Mock</p>
-                        <div className="mainBox">
-                            <div className="step2Box">
-                                <div className="inputBox">
-                                    <span className="title">Product Type</span>
-                                    <div className="childInputBox">
-                                        <label className="label">
-                                            <input
-                                                type="radio"
-                                                value="Profile"
-                                                checked={productType === 'Profile'}
-                                                onChange={() => handleProductTypeChange('Profile')}
-                                            />
-                                            <span>Profile (JD + Resume)</span>
-                                        </label>
-                                        <label className="label">
-                                            <input
-                                                type="radio"
-                                                value="Skill"
-                                                checked={productType === 'Skill'}
-                                                onChange={() => handleProductTypeChange('Skill')}
-                                            />
-                                            <span>Skill</span>
-                                        </label>
-                                    </div>
-                                </div>
+    useEffect(() => {
+        if (jd) {
+            if (jd.type === "text/plain") {
+                handleTxtFile(jd, "jd");
+            } else if (
+                jd.type === "application/msword" ||
+                jd.type ===
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ) {
+                handleDocxFile(jd, "jd");
+            } else if (jd.type === "application/pdf") {
+                handlePdfFile(jd, "jd");
+            } else {
+                console.log("Unsupported file type");
+            }
+        }
+    }, [jd]);
 
-                                {productType === 'Profile' &&
-                                    <div className="textBox">
-                                        <TextField id="outlined-basic" label="JD" variant="outlined" fullWidth
-                                            type='text'
+    const handleJd = (file) => {
+        setJd(file);
+    };
+
+    const handleResume = (file) => {
+        setResume(file);
+    };
+
+    // reading the uploaded .txt, .doc, .docx file
+
+    const handleTxtFile = (file, type) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const fileContent = event.target.result;
+            if (type === "jd") {
+                setJobSummary(fileContent);
+            } else if (type === "resume") {
+                setResumeText(fileContent);
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    const handleDocxFile = (file, type) => {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            const arrayBuffer = event.target.result;
+            const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+            if (type === "jd") {
+                setJobSummary(result.value);
+            } else if (type === "resume") {
+                setResumeText(result.value);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    };
+
+    const handlePdfFile = async (file, type) => {
+
+        if (file) {
+            const pdfData = await file.arrayBuffer();
+
+            // Initialize PDF.js
+            const pdf = await pdfjs.getDocument({ data: pdfData }).promise;
+            const textArray = [];
+
+            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+                const page = await pdf.getPage(pageNumber);
+                const textContent = await page.getTextContent();
+
+                // Extract text from the page
+                const pageText = textContent.items.map((item) => item.str).join(' ');
+                textArray.push(pageText);
+            }
+
+            const fullText = textArray.join('\n');
+            if (type === "jd") {
+                setJobSummary(fullText);
+            } else if (type === "resume") {
+                setResumeText(fullText);
+            }
+        }
+    }
+
+    return <MainContainer>
+        <Header />
+        {isLoading ? (
+            <Loader message={loaderMessage} />
+        ) : (
+            <Container>
+                <p className="maintitle">Create Your Mock</p>
+                <div className="mainBox">
+                    <div className="step2Box">
+                        <div className="inputBox">
+                            <span className="title">Product Type</span>
+                            <div className="childInputBox">
+                                <label className="label">
+                                    <input
+                                        type="radio"
+                                        value="Profile"
+                                        checked={productType === 'Profile'}
+                                        onChange={() => handleProductTypeChange('Profile')}
+                                    />
+                                    <span>Profile (JD + Resume)</span>
+                                </label>
+                                <label className="label">
+                                    <input
+                                        type="radio"
+                                        value="Skill"
+                                        checked={productType === 'Skill'}
+                                        onChange={() => handleProductTypeChange('Skill')}
+                                    />
+                                    <span>Skill</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        {productType === 'Profile' &&
+                            <div className="textBox">
+
+                                <div className="inputCont">
+                                    <div className="box1">
+                                        <label for="jobDescription" className="label1">Job Description</label>
+                                        <br />
+                                        <textarea
+                                            rows={7}
+                                            type="text"
                                             value={jobSummary}
                                             onChange={(e) => setJobSummary(e.target.value)}
-                                            inputProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400',
-                                                    height: '5rem'
-                                                },
-                                            }}
-                                            InputLabelProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-
-                                                },
-                                            }}
-                                        />
-                                        <TextField id="outlined-basic" label="Resume Text" variant="outlined" fullWidth
-                                            type='url'
-                                            value={resumeText}
-                                            onChange={(e) => setResumeText(e.target.value)}
-                                            inputProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400',
-                                                    height: '5rem'
-
-                                                },
-                                            }}
-                                            InputLabelProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-
-                                                },
-                                            }}
                                         />
                                     </div>
-                                }
-
-                                {productType === 'Skill' &&
-                                    <div className="textBox">
-                                        <Stack spacing={3} sx={{ width: '100%' }}>
-                                            <Autocomplete
-                                                multiple
-                                                id="tags-standard"
-                                                options={technicalSkills}
-                                                getOptionLabel={(option) => option}
-                                                onChange={handleSkillsChange}
-                                                value={selectedSkills}
-                                                freeSolo
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-                                                        label="Skills"
-                                                    />
-                                                )}
-                                            />
-                                        </Stack>
-                                        <TextField id="outlined-basic" label="Experience" variant="outlined" fullWidth
-                                            type='url'
-                                            value={resumeText}
-                                            onChange={(e) => setResumeText(e.target.value)}
-                                            inputProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-                                                },
-                                            }}
-                                            InputLabelProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-                                                },
-                                            }}
-                                        />
-                                    </div>
-                                }
-
-
-                                <div className="inputBox">
-                                    <span className="title">Interview Type</span>
-                                    <div className="childInputBox">
-                                        <label className="label">
-                                            <input
-                                                type="radio"
-                                                value="mcq"
-                                                checked={testType === 'mcq'}
-                                                onChange={() => handleTestTypeChange('mcq')}
-                                            />
-                                            <span>MCQs</span>
-                                        </label>
-                                        <label className="label">
-                                            <input
-                                                type="radio"
-                                                value="general"
-                                                checked={testType === 'general'}
-                                                onChange={() => handleTestTypeChange('general')}
-                                            />
-                                            <span>Subjective</span>
-                                        </label>
-                                        <label className="label">
-                                            <input
-                                                type="radio"
-                                                value="coding"
-                                                checked={testType === 'coding'}
-                                                onChange={() => handleTestTypeChange('coding')}
-                                            />
-                                            <span>Coding</span>
-                                        </label>
-                                        <label className="label">
-                                            <input
-                                                type="radio"
-                                                value="general"
-                                                checked={testType === 'general'}
-                                                onChange={() => handleTestTypeChange('general')}
-                                            />
-                                            <span>General (Includes all types of Que)</span>
-                                        </label>
-                                        <label className="label">
-                                            <input
-                                                type="radio"
-                                                value="InPerson"
-                                                checked={testType === 'InPerson'}
-                                                onChange={() => handleTestTypeChange('InPerson')}
-                                            />
-                                            <span>In Person</span>
-                                        </label>
-                                    </div>
+                                    <CustomInput
+                                        accept={".doc, .docx, .txt, .pdf"}
+                                        id="jdInput"
+                                        fileHandleFnc={handleJd}
+                                        text={"Upload JD"}
+                                    />
                                 </div>
 
-                                {testType === 'InPerson' &&
-                                    <div className="textBox">
-                                        <TextField id="outlined-basic" label="Interviewer Email" variant="outlined" fullWidth
-                                            type='email'
-                                            value={interviewerEmail}
-                                            onChange={(e) => setInterviewerEmail(e.target.value)}
-                                            inputProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-                                                },
-                                            }}
-                                            InputLabelProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-                                                },
-                                            }}
-                                        />
-                                        <TextField id="outlined-basic" label="Meet Link (Optional)" variant="outlined" fullWidth
-                                            type='url'
-                                            value={meetUrl}
-                                            onChange={(e) => setMeetUrl(e.target.value)}
-                                            inputProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-                                                },
-                                            }}
-                                            InputLabelProps={{
-                                                sx: {
-                                                    color: '#626264',
-                                                    fontSize: '0.9rem',
-                                                    fontWeight: '400'
-                                                },
-                                            }}
+                                <div className="inputCont">
+                                    <div className="box2">
+                                        <label for="resumeText" className="label1">Resume Text</label>
+                                        <br />
+                                        <textarea
+                                            rows={7}
+                                            type="text"
+                                            value={resumeText}
+                                            onChange={(e) => setResumeText(e.target.value)}
                                         />
                                     </div>
-                                }
+                                    <CustomInput
+                                        accept={".doc, .docx, .txt, .pdf"}
+                                        id="resumeInput"
+                                        fileHandleFnc={handleResume}
+                                        text={"Upload Resume"}
+                                    />
+                                </div>
+                            </div>
+                        }
 
-                                <div className="textBox">
-                                    <div className="inputBox">
-                                        <span className="title">Difficulty Level</span>
-                                        <div className="childInputBox">
-                                            <label className="label">
-                                                <input
-                                                    type="radio"
-                                                    value="easy"
-                                                    checked={difficultyLevel === 'easy'}
-                                                    onChange={() => setDifficultyLevel('easy')}
-                                                />
-                                                <span>Easy</span>
-                                            </label>
-                                            <label className="label">
-                                                <input
-                                                    type="radio"
-                                                    value="moderate"
-                                                    checked={difficultyLevel === 'moderate'}
-                                                    onChange={() => setDifficultyLevel('moderate')}
-                                                />
-                                                <span>Moderate</span>
-                                            </label>
-                                            <label className="label">
-                                                <input
-                                                    type="radio"
-                                                    value="difficult"
-                                                    checked={difficultyLevel === 'difficult'}
-                                                    onChange={() => setDifficultyLevel('difficult')}
-                                                />
-                                                <span>Difficult</span>
-                                            </label>
-                                        </div>
-                                    </div>
+                        {productType === 'Skill' &&
+                            <div className="textBox">
+                                <Stack spacing={3} sx={{ width: '100%' }}>
+                                    <Autocomplete
+                                        multiple
+                                        id="tags-standard"
+                                        options={technicalSkills}
+                                        getOptionLabel={(option) => option}
+                                        onChange={handleSkillsChange}
+                                        value={selectedSkills}
+                                        freeSolo
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Skills"
+                                            />
+                                        )}
+                                    />
+                                </Stack>
+                                <TextField id="outlined-basic" label="Experience" variant="outlined" fullWidth
+                                    type='url'
+                                    value={resumeText}
+                                    onChange={(e) => setResumeText(e.target.value)}
+                                    inputProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                />
+                            </div>
+                        }
 
-                                    <div className="numberMainBox">
-                                        <label className="label">Number of Questions</label>
-                                        <div className="numberBox">
 
-                                            <button className="numberBtn btn1" onClick={handleDecreaseNumber}>-</button>
-                                            <input className="numberInput" type="number" value={numberOfQue} onChange={(e) => setNumberOfQue(e.target.value)} max={testType === 'coding' ? 5 : 30} />
-                                            <button className="numberBtn btn2" onClick={handleIncreaseNumber}>+</button>
-                                        </div>
-                                    </div>
+                        <div className="inputBox">
+                            <span className="title">Interview Type</span>
+                            <div className="childInputBox">
+                                <label className="label">
+                                    <input
+                                        type="radio"
+                                        value="mcq"
+                                        checked={testType === 'mcq'}
+                                        onChange={() => handleTestTypeChange('mcq')}
+                                    />
+                                    <span>MCQs</span>
+                                </label>
+                                <label className="label">
+                                    <input
+                                        type="radio"
+                                        value="general"
+                                        checked={testType === 'general'}
+                                        onChange={() => handleTestTypeChange('general')}
+                                    />
+                                    <span>Subjective</span>
+                                </label>
+                                <label className="label">
+                                    <input
+                                        type="radio"
+                                        value="coding"
+                                        checked={testType === 'coding'}
+                                        onChange={() => handleTestTypeChange('coding')}
+                                    />
+                                    <span>Coding</span>
+                                </label>
+                                <label className="label">
+                                    <input
+                                        type="radio"
+                                        value="general"
+                                        checked={testType === 'general'}
+                                        onChange={() => handleTestTypeChange('general')}
+                                    />
+                                    <span>General (Includes all types of Que)</span>
+                                </label>
+                                <label className="label">
+                                    <input
+                                        type="radio"
+                                        value="InPerson"
+                                        checked={testType === 'InPerson'}
+                                        onChange={() => handleTestTypeChange('InPerson')}
+                                    />
+                                    <span>In Person</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        {testType === 'InPerson' &&
+                            <div className="textBox">
+                                <TextField id="outlined-basic" label="Interviewer Email" variant="outlined" fullWidth
+                                    type='email'
+                                    value={interviewerEmail}
+                                    onChange={(e) => setInterviewerEmail(e.target.value)}
+                                    inputProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                />
+                                <TextField id="outlined-basic" label="Meet Link (Optional)" variant="outlined" fullWidth
+                                    type='url'
+                                    value={meetUrl}
+                                    onChange={(e) => setMeetUrl(e.target.value)}
+                                    inputProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            color: '#626264',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '400'
+                                        },
+                                    }}
+                                />
+                            </div>
+                        }
+
+                        <div className="textBox">
+                            <div className="inputBox">
+                                <span className="title">Difficulty Level</span>
+                                <div className="childInputBox">
+                                    <label className="label">
+                                        <input
+                                            type="radio"
+                                            value="easy"
+                                            checked={difficultyLevel === 'easy'}
+                                            onChange={() => setDifficultyLevel('easy')}
+                                        />
+                                        <span>Easy</span>
+                                    </label>
+                                    <label className="label">
+                                        <input
+                                            type="radio"
+                                            value="moderate"
+                                            checked={difficultyLevel === 'moderate'}
+                                            onChange={() => setDifficultyLevel('moderate')}
+                                        />
+                                        <span>Moderate</span>
+                                    </label>
+                                    <label className="label">
+                                        <input
+                                            type="radio"
+                                            value="difficult"
+                                            checked={difficultyLevel === 'difficult'}
+                                            onChange={() => setDifficultyLevel('difficult')}
+                                        />
+                                        <span>Difficult</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="numberMainBox">
+                                <label className="label">Number of Questions</label>
+                                <div className="numberBox">
+
+                                    <button className="numberBtn btn1" onClick={handleDecreaseNumber}>-</button>
+                                    <input className="numberInput" type="number" value={numberOfQue} onChange={(e) => setNumberOfQue(e.target.value)} max={testType === 'coding' ? 5 : 30} />
+                                    <button className="numberBtn btn2" onClick={handleIncreaseNumber}>+</button>
                                 </div>
                             </div>
                         </div>
-                    </Container>)}
-                    <button onClick={handleCreateInterview} className='btn'>Start Interview</button>
-                    <Footer/>
-            </MainContainer>
-        
-    }
+                    </div>
+                </div>
+            </Container>)}
+        <button onClick={handleCreateInterview} className='btn'>Start Interview</button>
+        <Footer />
+    </MainContainer>
+
+}
 
 
 export default ParameterSelector;
@@ -430,6 +530,8 @@ const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: center;
+width: 100%;
+
 .btn{
     background-color: var(--backgroundColor);
       color: var(--color);
@@ -452,8 +554,10 @@ const Container = styled.div`
   padding: 0rem 3rem 2rem 3rem;
   align-items: center;
   width: 100%;
-  // height: calc(100vh - 8rem);
   justify-content: space;
+  box-sizing: border-box;
+
+ 
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -467,7 +571,8 @@ input[type="number"] {
 }
 
 .maintitle{
-    font-size: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin: 1rem auto ;
 }
 
@@ -485,6 +590,35 @@ input[type="number"] {
     font-weight: 500;
   }
 }
+
+.inputCont {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    width: 100%;
+  }
+
+  .label1 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    position: absolute;
+    top: 0.8rem;
+    left: 1rem;
+    background-color: var(--white);
+    color: #757575;
+    padding: 0 0.5rem;
+  }
+
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    border: 0.08rem solid #C4C4C4;
+    border-radius: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
 
 
   .numberBox {

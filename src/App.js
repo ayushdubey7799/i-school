@@ -101,7 +101,8 @@ const App = () => {
               <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
               <Route path="/proctor-test" element={<QuestionComponent />} />
               <Route path="/slot-selection/:token" element={<SlotSelection />} />
-              <Route path="/create" element={<NewInterviewDetails />} />
+              {/* <Route path="/create" element={<NewInterviewDetails />} /> */}
+              <Route path='/create' element={<ParameterSelector />} />
               <Route path="/create-interview/:interviewId" element={<CreateInterview />} />
               <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
             </Route>
@@ -158,7 +159,6 @@ const App = () => {
           <Route path='/access-denied' element={<AccessDenied />} />
           <Route path="/dashboard/agency" element={<EmployerAgencyDashboard />} />
           <Route path='/trial2' element={<InterviewerInviteDashboard />} />
-          <Route path='/trial' element={<ParameterSelector />} />
 
           <Route path='/JdListing' element={<JdListingTabs />} />
           <Route path='/candidateListing/:jdId' element={<CandidateListingTabs />} />
