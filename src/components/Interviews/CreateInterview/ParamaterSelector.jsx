@@ -415,61 +415,10 @@ const ParameterSelector = () => {
                                     />
                                     <span>General (Includes all types of Que)</span>
                                 </label>
-                                <label className="label">
-                                    <input
-                                        type="radio"
-                                        value="InPerson"
-                                        checked={testType === 'InPerson'}
-                                        onChange={() => handleTestTypeChange('InPerson')}
-                                    />
-                                    <span>In Person</span>
-                                </label>
                             </div>
                         </div>
 
-                        {testType === 'InPerson' &&
-                            <div className="textBox">
-                                <TextField id="outlined-basic" label="Interviewer Email" variant="outlined" fullWidth
-                                    type='email'
-                                    value={interviewerEmail}
-                                    onChange={(e) => setInterviewerEmail(e.target.value)}
-                                    inputProps={{
-                                        sx: {
-                                            color: '#626264',
-                                            fontSize: '0.9rem',
-                                            fontWeight: '400'
-                                        },
-                                    }}
-                                    InputLabelProps={{
-                                        sx: {
-                                            color: '#626264',
-                                            fontSize: '0.9rem',
-                                            fontWeight: '400'
-                                        },
-                                    }}
-                                />
-                                <TextField id="outlined-basic" label="Meet Link (Optional)" variant="outlined" fullWidth
-                                    type='url'
-                                    value={meetUrl}
-                                    onChange={(e) => setMeetUrl(e.target.value)}
-                                    inputProps={{
-                                        sx: {
-                                            color: '#626264',
-                                            fontSize: '0.9rem',
-                                            fontWeight: '400'
-                                        },
-                                    }}
-                                    InputLabelProps={{
-                                        sx: {
-                                            color: '#626264',
-                                            fontSize: '0.9rem',
-                                            fontWeight: '400'
-                                        },
-                                    }}
-                                />
-                            </div>
-                        }
-
+                       
                         <div className="textBox">
                             <div className="inputBox">
                                 <span className="title">Difficulty Level</span>
