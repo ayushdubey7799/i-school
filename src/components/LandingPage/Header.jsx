@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IconButton } from "@mui/material";
@@ -8,15 +8,32 @@ import logo from "../../assets/IntelliViewLogo.png";
 import { useSelector } from "react-redux";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useJwt } from "react-jwt";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [dashboardLink,setDashboardLink] = useState("");
   const accessToken = useSelector(state => state.auth.userData?.accessToken);
-  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode)
+  const clientCode = useSelector(state => state.auth.userData?.user?.clientCode);
+
+  const role = useJwt(accessToken);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
   const [hover3, setHover3] = useState(false);
+
+  useEffect(() => {
+    const currentUser = role?.decodedToken?.type;
+    if(currentUser == "EMPLOYER"){
+        setDashboardLink("/dashboard/employer");
+    }
+    else if(currentUser == "AGENCY"){
+        setDashboardLink("/dashboard/agency");
+    }
+    else{
+        setDashboardLink("/dashboard/jobseeker");
+    }
+  },[role])
 
   const handleMouseEnter1 = () => {
     setHover1(true);
@@ -101,7 +118,7 @@ const Header = () => {
       </div>
       <div id="right">
         {accessToken ? (
-          <Link to={clientCode == "intelliview"?"/dashboard/jobseeker":"/dashboard/employer"} className="link">
+          <Link to={dashboardLink} className="link">
             {" "}
             <span id="sign-in" style={{ paddingRight: '0.5rem' }}>Go to Dashboard</span>
           </Link>
