@@ -82,7 +82,7 @@ const EmpScheduledInterviews = ({ setPage }) => {
     getData();
   }, [page1, size]);
 
-  // const jdData = useSelector(state => state?.jd?.activeJds);
+
 
   useEffect(() => {
     if (jdData?.length) {

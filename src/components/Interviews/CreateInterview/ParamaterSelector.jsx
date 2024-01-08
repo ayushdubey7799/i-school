@@ -754,24 +754,3 @@ input[type="number"] {
 `;
 
 
-
-const ButtonBox = styled.div`
-display: flex;
-margin: 2rem 0;
-gap: 2rem;
-
-
-`
-
-
-const Button = styled.button`
-background-color: var(--lightOrange);
-color: var(--white);
-border: none;
-padding: 0.4rem 0.9rem;
-font-size: 0.9rem;
-font-weight: 600;
-border-radius: 0.5rem;
-cursor: pointer;
-font-family: var(--font);
-`

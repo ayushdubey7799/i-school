@@ -13,6 +13,9 @@ import { EmpMetrics1 } from '../../../utils/contantData';
 import { EmpMetrics2 } from '../../../utils/contantData';
 import { EmpMetrics3 } from '../../../utils/contantData';
 import { EmpMetrics4 } from '../../../utils/contantData';
+import EmpApplications from './sidebarPages/EmpApplications';
+import EmpApplicationCandidatesList from './sidebarPages/EmpApplicationCandidatesList';
+import { getJobApplications } from '../../../functions/api/jobApplication/getJobApplications';
 
 const MainContainer = styled.div`
 display: flex;
@@ -103,6 +106,7 @@ const EmployeMetrics = ({ page, setPage }) => {
   const [completed, setCompleted] = useState(0);
   const [scheduled, setScheduled] = useState(0);
   const [poolCount, setPoolCount] = useState(0);
+  const [applicationCount, setApplicationCount] = useState(0);
 
   const accessToken = useSelector(state => state.auth.userData?.accessToken)
   const clientCode = useSelector(state => state.auth.userData?.clientCode)
@@ -125,8 +129,12 @@ const EmployeMetrics = ({ page, setPage }) => {
         setPoolCount(res?.data?.data?.length);
       }
     }
-
     getCandidates();
+
+    const getApplicationsCount = async () => {
+      
+    }
+    getApplicationsCount();
 
   }, [currMetric])
 
@@ -141,7 +149,7 @@ const EmployeMetrics = ({ page, setPage }) => {
 
 
   useEffect(() => {
-    setPage({index: 1,jdId:null});
+    setPage({ index: 1, jdId: null });
   }, []);
 
   return (
@@ -166,7 +174,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         <div className={`achievedNumberBox ${currMetric === EmpMetrics3.text ? 'selected' : ''}`} onClick={() => setCurrMetric(EmpMetrics3.text)}>
           <div className='top'>
             <img src={EmpMetrics3.img} />
-            <span className='achievedNumberDigit'>0</span>
+            <span className='achievedNumberDigit'>{applicationCount ? applicationCount : 0}</span>
           </div>
           <span className='hrLine'></span>
           <span className='achievedNumberText'>{EmpMetrics3.title}</span>
@@ -181,6 +189,7 @@ const EmployeMetrics = ({ page, setPage }) => {
         </div>
       </Container>
       {currMetric === 'interviews' && <>{page?.index === 1 && <EmpScheduledInterviews page={page} setPage={setPage} />}  {page?.index === 2 && <EmpScheduledCandidateList page={page} setPage={setPage} />}</>}
+      {currMetric === 'applications' && <>{page?.index === 1 && <EmpApplications page={page} setPage={setPage} />}  {page?.index === 2 && <EmpApplicationCandidatesList page={page} setPage={setPage} />}</>}
       {currMetric === 'activeJDs' && <ActiveJds />}
       {currMetric === 'candidatesPool' && <RegisteredCandidates />}
     </MainContainer>
@@ -188,3 +197,5 @@ const EmployeMetrics = ({ page, setPage }) => {
 };
 
 export default EmployeMetrics;
+
+

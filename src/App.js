@@ -101,7 +101,6 @@ const App = () => {
               <Route path="/dashboard/jobseeker" element={<JobSeekerDashboard />} />
               <Route path="/proctor-test" element={<QuestionComponent />} />
               <Route path="/slot-selection/:token" element={<SlotSelection />} />
-              {/* <Route path="/create" element={<NewInterviewDetails />} /> */}
               <Route path='/create' element={<ParameterSelector />} />
               <Route path="/create-interview/:interviewId" element={<CreateInterview />} />
               <Route path="/ongoing-interview/:interviewId" element={<Proctored />} />
