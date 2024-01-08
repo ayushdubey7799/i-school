@@ -23,6 +23,7 @@ const EmploymentDetails = ({ data, mode, handleClose, id, trigger, setTrigger })
   const [desc, setDesc] = useState('');
   const [orgName, setOrgName] = useState('');
   const [orgLocation, setOrgLocation] = useState('');
+  const [orgId, setOrgId] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +41,7 @@ const EmploymentDetails = ({ data, mode, handleClose, id, trigger, setTrigger })
       setDesc(data?.description)
       setOrgName(data?.orgDetail?.name)
       setOrgLocation(data?.orgDetail?.address)
+      setOrgId(data?.orgDetail?.id)
     }
   }, [])
 
@@ -85,7 +87,8 @@ const EmploymentDetails = ({ data, mode, handleClose, id, trigger, setTrigger })
           endDate: endDate,
           orgDetail: {
             address: orgLocation,
-            name: orgName
+            name: orgName,
+            id: orgId
           }
         }
 

@@ -209,7 +209,7 @@ const EducationDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) 
               label="Grade type"
               size='small'
               name='gradeType'
-              value={formData?.gradeType.length > 0 && formData?.gradeType}
+              value={formData?.gradeType?.length > 0 && formData?.gradeType}
               onChange={handleChange}
               inputProps={{
                 sx: {

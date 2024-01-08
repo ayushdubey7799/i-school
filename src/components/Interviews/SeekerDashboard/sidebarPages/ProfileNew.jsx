@@ -28,6 +28,11 @@ import DeleteDialogContent from '../../../commonComponents/DeleteDialogContent';
 import { deleteResume } from '../../../../functions/api/jobSeekers/deleteResume';
 import { getBlobData } from '../../../../functions/api/resume/getBlobData';
 import { getResourceById } from '../../../../functions/api/jobSeekers/getResource';
+import { deleteSkill } from '../../../../functions/api/jobApplication/deleteSkill';
+import { deleteEducation } from '../../../../functions/api/jobApplication/deleteEducation';
+import { deleteProject } from '../../../../functions/api/jobApplication/deleteProject';
+import { deleteEmployment } from '../../../../functions/api/jobApplication/deleteEmployment';
+import { deleteCertification } from '../../../../functions/api/jobApplication/deleteCertification';
 
 
 const ProfileNew = () => {
@@ -111,6 +116,7 @@ const ProfileNew = () => {
             if (res) {
                 toast.success('Resume deleted successfully');
                 setOpenDeleteDialog(false);
+                setResumeUploadTrigger(!resumeUploadTrigger);
             }
         } catch (error) {
             const errMsg =
@@ -126,15 +132,13 @@ const ProfileNew = () => {
             accessToken,
             clientCode
         );
+
         const a = document.createElement("a");
         a.href = res;
         a.setAttribute("download", name);
         a.click();
     };
 
-
-
-    console.log(userId)
 
     const [projectId, setProjectId] = useState('');
     const [projectData, setProjectData] = useState();
@@ -148,6 +152,44 @@ const ProfileNew = () => {
     const [employmentData, setEmploymentData] = useState();
 
     const [trigger, setTrigger] = useState(false);
+
+    const [openCommonDeleteDialog, setOpenCommonDeleteDialog] = useState(false);
+    const [commonDeleteDialogText, setCommonDeleteDialogText] = useState('');
+    const [commonDeleteId, setCommonDeleteId] = useState('');
+    const [commonDeleteType, setCommonDeleteType] = useState('');
+
+    const commonDeleteFunc = async (id) => {
+        try {
+            let res;
+
+            if (commonDeleteType === 'skill') {
+                res = await deleteSkill(profileId, id, accessToken);
+
+            } else if (commonDeleteType === 'education') {
+                res = await deleteEducation(profileId, id, accessToken);
+
+            } else if (commonDeleteType === 'project') {
+                res = await deleteProject(profileId, id, accessToken);
+
+            } else if (commonDeleteType === 'employment') {
+                res = await deleteEmployment(profileId, id, accessToken);
+
+            } else if (commonDeleteType === 'certification') {
+                res = await deleteCertification(profileId, id, accessToken);
+
+            }
+
+            if (res) {
+                toast.success(`${commonDeleteDialogText} deleted successfully`, 5000);
+                setOpenCommonDeleteDialog(false);
+                setTrigger(!trigger);
+            }
+
+        } catch (error) {
+            const errMsg = error.message || "an Error accured, please try again"
+            toast.error(errMsg, 5000);
+        }
+    }
 
 
     useEffect(() => {
@@ -182,6 +224,19 @@ const ProfileNew = () => {
             <ModalHOC openNewInterviewModal={openEmployments} setOpenNewInterviewModal={setOpenEmployments} component={<EmploymentDetails data={employmentData} mode={mode} handleClose={() => setOpenEmployments(false)} id={employmentId} trigger={trigger} setTrigger={setTrigger} />} />
             <ModalHOC openNewInterviewModal={openCertifications} setOpenNewInterviewModal={setOpenCertifications} component={<CertificationDetails data={certificateData} mode={mode} handleClose={() => setOpenCertifications(false)} id={certificateId} trigger={trigger} setTrigger={setTrigger} />} />
 
+            <CommonDialog
+                open={openCommonDeleteDialog}
+                handleClose={() => setOpenCommonDeleteDialog(false)}
+                component={
+                    <DeleteDialogContent
+                        handleClose={() => setOpenCommonDeleteDialog(false)}
+                        text={commonDeleteDialogText}
+                        handleDelete={commonDeleteFunc}
+                        deleteId={commonDeleteId}
+                    />
+                }
+            />
+
             <div className='topBox'>
                 <img src={profileData?.personalInfo?.img} className='profileImg' />
                 <div className='middleBox'>
@@ -192,7 +247,7 @@ const ProfileNew = () => {
                             <span className='text'><img src={emailIcon} />{userBasicDetails?.email}</span>
                         </div>
                         <div className='infoBox2'>
-                            <a href={userBasicDetails?.linkedin}><img src={linkedin} className='socialIcon' />{userBasicDetails?.linkedin?.slice(0, 35)}</a>
+                            <a href={userBasicDetails?.linkedIn}><img src={linkedin} className='socialIcon' />{userBasicDetails?.linkedIn?.slice(0, 35)}</a>
                             <a href={userBasicDetails?.github}><img src={github} className='socialIcon' />{userBasicDetails?.github?.slice(0, 30)}</a>
                         </div>
                     </div>
@@ -220,12 +275,20 @@ const ProfileNew = () => {
                     {
                         userProfileData?.skills?.map((skill, index) => (
                             <div className='card'>
-                                <span className='skill'>{skill?.name} <span className='editBtn' onClick={() => {
-                                    setMode('edit')
-                                    setOpenSkills(true)
-                                    setSkillId(skill?.id)
-                                    setSkillData(skill)
-                                }}><img src={editIcon} /></span></span>
+                                <span className='skill'>{skill?.name}
+                                    <span className='editBtn'>
+                                        <img src={deleteIcon} onClick={() => {
+                                            setOpenCommonDeleteDialog(true)
+                                            setCommonDeleteType('skill')
+                                            setCommonDeleteDialogText('Skill')
+                                            setCommonDeleteId(skill?.id)
+                                        }} />
+                                        <img src={editIcon} onClick={() => {
+                                            setMode('edit')
+                                            setOpenSkills(true)
+                                            setSkillId(skill?.id)
+                                            setSkillData(skill)
+                                        }} /></span></span>
                                 <Rating name="read-only" value={skill?.rating} readOnly className='score' />
                                 {/* <span className='score'>{skill.score > 3 ? "Expert" : "Beginner"}</span> */}
                                 <button className='btn'>Take Assessment</button>
@@ -248,12 +311,19 @@ const ProfileNew = () => {
                     {
                         userProfileData?.educations?.map((edu, index) => (
                             <div className='card'>
-                                <span className='title'>{edu?.degree} <span className='editBtn' onClick={() => {
-                                    setMode('edit')
-                                    setOpenEducations(true)
-                                    setEducationId(edu?.id)
-                                    setEducationData(edu)
-                                }}><img src={editIcon} /></span></span>
+                                <span className='title'>{edu?.degree} <span className='editBtn'>
+                                    <img src={deleteIcon} onClick={() => {
+                                        setOpenCommonDeleteDialog(true)
+                                        setCommonDeleteType('education')
+                                        setCommonDeleteDialogText('Education')
+                                        setCommonDeleteId(edu?.id)
+                                    }} />
+                                    <img src={editIcon} onClick={() => {
+                                        setMode('edit')
+                                        setOpenEducations(true)
+                                        setEducationId(edu?.id)
+                                        setEducationData(edu)
+                                    }} /></span></span>
                                 <span className='subTitle'>{edu?.school}</span>
                                 <span className='text'>{edu?.startDate && dateConversion(edu?.startDate)} to {edu?.endDate && dateConversion(edu?.endDate)} | {edu?.courseType}</span>
                                 <span className='text'>{edu?.grade} {edu?.gradeType === '0-10cgpa' ? 'CGPA' : edu?.gradeType === '0-4cgpa' ? 'CGPA' : '%'}</span>
@@ -276,12 +346,19 @@ const ProfileNew = () => {
                     {
                         userProfileData?.projects?.map((project, index) => (
                             <div className='card'>
-                                <span className='title'>{project?.title} <span className='editBtn' onClick={() => {
-                                    setMode('edit')
-                                    setOpenProjects(true)
-                                    setProjectId(project?.id)
-                                    setProjectData(project)
-                                }}><img src={editIcon} /></span></span>
+                                <span className='title'>{project?.title} <span className='editBtn'>
+                                    <img src={deleteIcon} onClick={() => {
+                                        setOpenCommonDeleteDialog(true)
+                                        setCommonDeleteType('project')
+                                        setCommonDeleteDialogText('Project')
+                                        setCommonDeleteId(project?.id)
+                                    }} />
+                                    <img src={editIcon} onClick={() => {
+                                        setMode('edit')
+                                        setOpenProjects(true)
+                                        setProjectId(project?.id)
+                                        setProjectData(project)
+                                    }} /></span></span>
                                 <span className='text'>{project?.startDate && dateConversion(project?.startDate)} to {project?.endDate && dateConversion(project?.endDate)} | {project?.status}</span>
                                 <span dangerouslySetInnerHTML={{ __html: project?.description }} className='desc' />
                             </div>
@@ -303,17 +380,24 @@ const ProfileNew = () => {
                     {
                         userProfileData?.employments?.map((exp, index) => (
                             <div className='card'>
-                                <span className='title'><>{exp?.orgDetail?.name} | {exp?.designation}</> <span className='editBtn' onClick={() => {
-                                    setMode('edit')
-                                    setOpenEmployments(true)
-                                    setEmploymentId(exp?.id)
-                                    setEmploymentData(exp)
-                                }}><img src={editIcon} /></span></span>
+                                <span className='title'><>{exp?.orgDetail?.name} | {exp?.designation}</> <span className='editBtn'>
+                                    <img src={deleteIcon} onClick={() => {
+                                        setOpenCommonDeleteDialog(true)
+                                        setCommonDeleteType('employment')
+                                        setCommonDeleteDialogText('Employment')
+                                        setCommonDeleteId(exp?.id)
+                                    }} />
+                                    <img src={editIcon} onClick={() => {
+                                        setMode('edit')
+                                        setOpenEmployments(true)
+                                        setEmploymentId(exp?.id)
+                                        setEmploymentData(exp)
+                                    }} /></span></span>
                                 <span className='subTitle'>{exp?.employmentType}</span>
                                 <span className='text'>{exp?.startDate && dateConversion(exp?.startDate)} to {exp?.endDate && dateConversion(exp?.endDate)}</span>
                                 <div className='skillBox'>{
-                                    exp?.skillsUsed?.split(',')?.map((skill) => (
-                                        <span className='skill'>{skill}</span>
+                                    exp?.skillsUsed2?.map((skill) => (
+                                        <span className='skill'>{skill?.name}</span>
                                     ))
                                 }</div>
                             </div>
@@ -334,12 +418,19 @@ const ProfileNew = () => {
                     {
                         userProfileData?.certifications2?.map((cert, index) => (
                             <div className='card'>
-                                <span className='title'>{cert?.title} <span className='editBtn' onClick={() => {
-                                    setMode('edit')
-                                    setOpenCertifications(true)
-                                    setCertificateId(cert?.id)
-                                    setCertificateData(cert)
-                                }}><img src={editIcon} /></span></span>
+                                <span className='title'>{cert?.title} <span className='editBtn'>
+                                    <img src={deleteIcon} onClick={() => {
+                                        setOpenCommonDeleteDialog(true)
+                                        setCommonDeleteType('certification')
+                                        setCommonDeleteDialogText('Certification')
+                                        setCommonDeleteId(cert?.id)
+                                    }} />
+                                    <img src={editIcon} onClick={() => {
+                                        setMode('edit')
+                                        setOpenCertifications(true)
+                                        setCertificateId(cert?.id)
+                                        setCertificateData(cert)
+                                    }} /></span></span>
                                 <span className='subTitle'>{cert?.issuingOrganization}</span>
                                 <span className='text'>Issued {cert?.issueDate && dateConversion(cert?.issueDate)} to {cert?.expirationDate && dateConversion(cert?.expirationDate)}</span>
 
@@ -501,12 +592,14 @@ align-items: center;
 .editBtn {
     cursor: pointer;
     width: 1rem;
+    display: flex;
+    gap: 0.3rem;
+    margin-right: 0.5rem;
 
     img {
         width: 100%;
     }
 }
-
 
 
 .skillsMainBox {
@@ -574,6 +667,8 @@ align-items: center;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
+                margin-right: 0.5rem;
+                gap: 0.3rem;
             
                 img {
                     width: 1rem;
@@ -655,6 +750,8 @@ align-items: center;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
+                margin-right: 1.5rem;
+                gap: 0.5rem;
             
                 img {
                     width: 1rem;
@@ -738,6 +835,8 @@ align-items: center;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
+                margin-right: 1.5rem;
+                gap: 0.5rem;
             
                 img {
                     width: 1rem;
@@ -814,6 +913,8 @@ align-items: center;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
+                margin-right: 1.5rem;
+                gap: 0.5rem;
             
                 img {
                     width: 1rem;
@@ -901,6 +1002,8 @@ align-items: center;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
+                margin-right: 1.5rem;
+                gap: 0.5rem;
             
                 img {
                     width: 1rem;

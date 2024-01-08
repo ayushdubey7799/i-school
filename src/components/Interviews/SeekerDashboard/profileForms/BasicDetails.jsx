@@ -46,7 +46,7 @@ const BasicDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) => {
         lastName: formData?.lastName,
         primaryContact: formData?.primaryContact,
         username: formData?.username,
-        linkedin: formData?.linkedin,
+        linkedIn: formData?.linkedIn,
         github: formData?.github
       }
 
@@ -183,8 +183,8 @@ const BasicDetails = ({ data, mode, handleClose, id, trigger, setTrigger }) => {
             label="LinkedIn Profile URL"
             variant="outlined"
             type="url"
-            name='linkedin'
-            value={formData?.linkedin}
+            name='linkedIn'
+            value={formData?.linkedIn}
             onChange={handleChange}
             sx={{ backgroundColor: "#F6F6FB" }}
             inputProps={{
