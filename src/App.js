@@ -160,7 +160,7 @@ const App = () => {
           <Route path='/trial2' element={<InterviewerInviteDashboard />} />
 
           <Route path='/JdListing' element={<JdListingTabs />} />
-          <Route path='/candidateListing/:jdId' element={<CandidateListingTabs />} />
+          <Route path='/candidateListing/:empClientCode/:jdId' element={<CandidateListingTabs />} />
 
           <Route path="/interviewer-feedbacks/:token" element={<EmployerFeedback />} />
         </Routes>

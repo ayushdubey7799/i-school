@@ -11,6 +11,7 @@ import Paper from "@mui/material/Paper";
 import { useSelector } from 'react-redux';
 import Loader from '../../components/commonComponents/Loader';
 import view from '../../assets/icons/visible.png'
+import { timeZoneConversion } from '../../utils/timeZoneConversation';
 
 // import { Pagination, PaginationSizeFilter } from '../commonComponents/Pagination';
 
@@ -27,19 +28,19 @@ function Row(props) {
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }} className={`${index % 2 == 1 ? 'colored' : ''}`}>
         <TableCell component="th" scope="row" align='center' className='tableCell'>
-         ...
+         {row?.employerName}
         </TableCell>{" "}
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-...
+         {row?.jdId}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-...
+         {row?.jdInfo?.title}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-...
+        {/* {timeZoneConversion(row?.createdAt)} */}
         </TableCell>
         <TableCell component="th" scope="row" align="center" className='tableCell'>
-          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }} onClick={() => navigate(`/candidateListing/${index}`)}>
+          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }} onClick={() => navigate(`/candidateListing/${row?.clientCode}/${row?.jdId}`)}>
             <img src={view} style={{ width: '0.8rem', height: '0.8rem', cursor: 'pointer', border: '0.08rem solid grey', padding: '0.3rem', borderRadius: '0.3rem' }} />
           </div>
         </TableCell>
@@ -49,7 +50,7 @@ function Row(props) {
 }
 
 
-const JDListing = () => {
+const JDListing = ({filteredData}) => {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
@@ -89,15 +90,15 @@ const JDListing = () => {
           <Table aria-label="collapsible table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell align='center' className='tableCell'>JD Id</TableCell>
-                <TableCell align='center' className='tableCell'>Job Title</TableCell>
                 <TableCell align='center' className='tableCell'>Employer</TableCell>
+                <TableCell align='center' className='tableCell'>Job Title</TableCell>
+                <TableCell align='center' className='tableCell'>Jd Id</TableCell>
                 <TableCell align='center' className='tableCell'>Shared At</TableCell>
                 <TableCell align='center' className='tableCell'>Details</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="tableBody">
-              {(new Array(10)).fill(0)?.map((row, index) => (
+              {filteredData && filteredData?.map((row, index) => (
                 <Row key={row.jobId} row={row} index={index} isLoading={isLoading} setIsLoading={setIsLoading} loaderMessage={loaderMessage} setLoaderMessage={setLoaderMessage} />
               ))}
             </TableBody>

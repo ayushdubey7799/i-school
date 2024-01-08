@@ -73,17 +73,14 @@ function Row(props) {
   const [userRole, setUserRole] = useState('');
   const decodedToken = useJwt(accessToken);
 
-  // state to open and close Drawer
   const [state, setState] = React.useState({
     right: false,
   });
 
-  // state to open and close Drawer
   const [reqState, setReqState] = React.useState({
     right: false,
   });
 
-  // state to open and close Drawer
   const [agencyState, setAgencyState] = React.useState({
     right: false,
   });

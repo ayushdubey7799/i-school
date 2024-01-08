@@ -6,11 +6,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import { useSelector } from 'react-redux';
 import Loader from '../../components/commonComponents/Loader';
 import view from '../../assets/icons/visible.png'
+import { getUniqueJds } from '../../functions/api/employers/getUniqueJds';
 
 // import { Pagination, PaginationSizeFilter } from '../commonComponents/Pagination';
 
@@ -51,15 +52,18 @@ function Row(props) {
 
 const CandidateListing = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
+  const { empClientCode, jdId } = useParams();
+
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState("");
-  const accessToken = useSelector(state => state.auth.userData?.accessToken);
-
+  const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
+  const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
   const [total, setTotal] = useState(0);
-  const [selectedJDID, setSelectedJDID] = useState('');
-
+  const [jdOptions, setJdOptions] = useState([]);
+  const [selectedJDID, setSelectedJDID] = useState(jdId);
+  const navigate = useNavigate();
   const handleJDIDChange = (event) => {
     setSelectedJDID(event.target.value);
   };
@@ -84,7 +88,12 @@ const CandidateListing = () => {
   };
 
   useEffect(() => {
-   
+    async function getData(value) {
+      const res = await getUniqueJds(accessToken,clientCode,empClientCode);
+      console.log(res?.data);
+      if(res)setJdOptions(res?.data);
+    }
+    getData();
   }, [size, page])
 
 
@@ -95,12 +104,13 @@ const CandidateListing = () => {
         {!isLoading && <TableContainer component={Paper} className="tableBox">
         <StyledContainer>
       <LeftSide>
-        <div>BRAJ01</div>
+        <div>{empClientCode}</div>
         <Select value={selectedJDID} onChange={handleJDIDChange}>
-          <Option value="">Select JD ID</Option>
-          <Option value="JDID1">JDID1</Option>
-          <Option value="JDID2">JDID2</Option>
-          {/* Add more options as needed */}
+          {
+            jdOptions?.map((jd) => {
+              return <Option value={jd}>{jd}</Option>
+            })
+          }
         </Select>
         <Button>
           Upload
@@ -109,7 +119,7 @@ const CandidateListing = () => {
       </LeftSide>
       <RightSide>
        
-        <Button onClick={() => navigate("/schedule")}>Back</Button>
+        <Button onClick={() => navigate("/dashboard/agency")}>Back</Button>
 
       </RightSide>
     </StyledContainer>

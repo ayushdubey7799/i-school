@@ -8,10 +8,12 @@ import '../../App.css';
 import styled from "styled-components";
 import Loader from "../../components/commonComponents/Loader";
 import JDListing from "./JdListing";
+import { getJds } from "../../functions/api/employers/getJds";
 export default function JdListingTabs() {
-  const accessToken = useSelector(state => state.auth.userData?.accessToken)
-  const [value, setValue] = useState("ACTIVE");
-  const [filteredData, setFilteredData] = useState({});
+  const accessToken = useSelector(state => state?.auth?.userData?.accessToken);
+  const clientCode = useSelector(state => state?.auth?.userData?.user?.clientCode);
+    const [value, setValue] = useState("ACTIVE");
+  const [filteredData, setFilteredData] = useState([]);
 
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
@@ -38,7 +40,9 @@ export default function JdListingTabs() {
 
   useEffect(() => {
     async function getData(value) {
-     
+       const res = await getJds(accessToken,clientCode);
+       console.log(res?.data?.data);
+       if(res)setFilteredData(res?.data?.data);
     }
     getData();
   }, [value, size, page]);
@@ -84,7 +88,7 @@ export default function JdListingTabs() {
               classes={{ root: 'custom-tab', selected: 'custom-tab-selected' }}
             />
           </Tabs>
-          {value === 'ACTIVE' && <JDListing/>}
+          {value === 'ACTIVE' && <JDListing filteredData={filteredData}/>}
           {value === 'INACTIVE' && <JDListing/>}
         </StyledBox>
       }

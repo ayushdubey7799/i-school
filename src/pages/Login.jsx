@@ -24,6 +24,11 @@ import googleAuthIcon from '../assets/googleAuthIcon.png'
 import linkedinAuthIcon from '../assets/linkedinAuthIcon.png'
 import Success from "../components/commonComponents/infoDialog/Success";
 import Error from "../components/commonComponents/infoDialog/Error";
+import { useJwt } from 'react-jwt';
+
+const navigation = (decodedToken,navigate) => {
+  console.log(decodedToken);
+}
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,6 +36,7 @@ const Login = () => {
   const [errorPopup, setErrorPopup] = useState(false);
   const userData = useSelector((state) => state.auth.userData);
   const accessToken = useSelector((state) => state.auth.userData?.accessToken);
+  const role = useJwt(accessToken);
 
   const clientCodeStore = useSelector(
     (state) => state.auth.userData?.user?.clientCode
@@ -44,22 +50,12 @@ const Login = () => {
   const [value, setValue] = useState("job-seeker");
   const error = useSelector((state) => state.auth?.error);
 
-  // console.log("error-------> ",JSON.parse(error)?.status);
-
   const captchaRef = useRef(null);
   const [captchaError, setCaptchaError] = useState(false);
 
   const [searchParams] = useSearchParams();
-
   const token = searchParams.get("token");
   const key = searchParams.get("key");
-
-  if (key == "invite" || key == "interview") {
-    console.log(token, key);
-
-    localStorage.setItem("token", token);
-    localStorage.setItem("key", key);
-  }
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -75,42 +71,46 @@ const Login = () => {
     setCaptchaError(false);
   };
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const key = localStorage.getItem("key");
-
-    console.log(token, key, accessToken, clientCodeStore)
-    if (accessToken && key == "interview" && clientCodeStore == "intelliview") navigate('/dashboard/jobseeker');
+    const currentUser = role?.decodedToken?.type;
 
     if (token && accessToken && clientCodeStore && key == "invite") {
       (async function () {
         const res = await getInviteDetails(token, accessToken);
         if (res) {
           navigate(`/slot-selection/${token}`)
-
         } else {
           const userConfirmed = confirm("You are already logged in with different email id, do you want to logout first?");
           if (userConfirmed) {
             persistor.purge();
             dispatch(logout());
           } else {
-            clientCodeStore == "intelliview"
-              ? navigate("/dashboard/jobseeker")
-              : navigate("/dashboard/employer");
+
+            if(currentUser == "EMPLOYER"){
+              navigate("/dashboard/employer");
+           }
+           else if (currentUser == "AGENCY"){
+             navigate("/dashboard/agency");
+           }
+           else{
+             navigate("/dashboard/jobseeker");
+           }
           }
         }
       })();
     }
 
-    if (!token && accessToken) {
-      clientCodeStore == "intelliview"
-        ? navigate("/dashboard/jobseeker")
-        : navigate("/dashboard/employer");
+    if (accessToken && currentUser) {
+      if(currentUser == "EMPLOYER"){
+         navigate("/dashboard/employer");
+      }
+      else if (currentUser == "AGENCY"){
+        navigate("/dashboard/agency");
+      }
+      else{
+        navigate("/dashboard/jobseeker");
+      }
     }
-
-    if (clientCodeStore && clientCodeStore != 'intelliview') {
-      navigate('/dashboard/employer')
-    }
-  }, [accessToken]);
+  }, [role]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

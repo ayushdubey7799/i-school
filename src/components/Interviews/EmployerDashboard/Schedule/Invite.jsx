@@ -31,33 +31,6 @@ import FormControl from '@mui/material/FormControl';
 import TimeSlot from "../commonComponents/TimeSlot";
 
 
-const timezonesName = {
-  'GMT': 'Greenwich Mean Time',
-  'CET': 'Central European Time',
-  'EET': 'Eastern European Time',
-  'MSK': 'Moscow Standard Time',
-  'PKT': 'Pakistan Standard Time',
-  'IST': 'Indian Standard Time',
-  'ICT': 'Indochina Time',
-  'SGT': 'Singapore Time',
-  'JST': 'Japan Standard Time',
-  'AEST': 'Australian Eastern Standard Time',
-  'VLAT': 'Vladivostok Time',
-  'NZST': 'New Zealand Standard Time',
-  'NUT': 'Niue Time',
-  'SST': 'Samoa Standard Time',
-  'ChST': 'Chamorro Standard Time',
-  'HST': 'Hawaii Standard Time',
-  'AKST': 'Alaska Standard Time',
-  'PST': 'Pacific Standard Time',
-  'MST': 'Mountain Standard Time',
-  'CST': 'Central Standard Time',
-  'EST': 'Eastern Standard Time',
-  'AST': 'Atlantic Standard Time',
-  'NST': 'Newfoundland Standard Time',
-  'WGT': 'West Greenland Time'
-};
-
 
 export default function Invite() {
   const { jdId } = useParams();
@@ -104,17 +77,6 @@ export default function Invite() {
       toast.error("Login First");
       navigate("/login");
     }
-    // const getTypes = async () => {
-    //   const response1 = await getProductTypes(accessToken, clientCode);
-    //   if (response1.code == 2000) {
-    //     setProductTypes(response1.data.value.split(','));
-    //   }
-    //   const response2 = await getTestTypes(accessToken, clientCode);
-    //   if (response2.code == 2000) {
-    //     setTestTypes(response2.data.value.split(','));
-    //   }
-    // }
-    // getTypes();
     setProductTypes(["JD", "Resume", "JD + Resume", "Skill"]);
     setTestTypes(["mcq", "general", "coding"]);
   }, []);

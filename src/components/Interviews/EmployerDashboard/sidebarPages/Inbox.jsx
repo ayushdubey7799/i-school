@@ -27,8 +27,9 @@ const Inbox = () => {
   const handleDownload = async (url) => {
     const res = await getBlobData(url, accessToken, clientCode);
     const a = document.createElement('a');
+    console.log(res);
     a.href = res;
-    a.setAttribute('download', 'your-filename.ext');
+    a.setAttribute('download',".pdf" );
     a.click();
   };
 
